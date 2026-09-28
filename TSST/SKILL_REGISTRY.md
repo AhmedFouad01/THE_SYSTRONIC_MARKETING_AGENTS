@@ -2,8 +2,8 @@
 
 Source: [historical specialist skill matrix](../TSST_Specialist_Skill_Matrix_v0.1.xlsx)  
 Imported: 2026-09-20  
-Specialist registry total: 41 skills; team total: 71 including the [30 Lead skills](LEAD/SKILL_REGISTRY.md)  
-Current validation state: 1 `VALIDATED`, 2 `LAB_VALIDATED`, 38 `UNVALIDATED` among specialists. Team total: 1 `VALIDATED`, 2 `LAB_VALIDATED`, 68 `UNVALIDATED`. Every imported skill started as `UNVALIDATED`.
+Specialist registry total: 57 skills; team total: 87 including the [30 Lead skills](LEAD/SKILL_REGISTRY.md)
+Current validation state: 1 `VALIDATED`, 2 `LAB_VALIDATED`, 54 `UNVALIDATED` among specialists. Team total: 1 `VALIDATED`, 2 `LAB_VALIDATED`, 84 `UNVALIDATED`. Every imported skill started as `UNVALIDATED`.
 
 Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CREATIVE-SK-006, TSST-LENS-SK-001–TSST-LENS-SK-006, and TSST-SPARK-SK-001–TSST-SPARK-SK-006. These 18 skills have internal packages and queued evaluations. The art-direction package and production stack SK-009–019 are installed; 11 team packages remain backlog (CREATIVE SK-007, four LENS, six SPARK). Registration does not imply installation or validation.
 
@@ -424,10 +424,10 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Status: `UNVALIDATED`
 
 
-## DEV_AG proposed core catalog — 2026-09-28
+## DEV_AG approved core catalog — 2026-09-28
 
 Change owner: TSST Lead. IDs: `TSST-DEV-SK-001`–`TSST-DEV-SK-016`. Reason: user-requested controlled implementation. Source impact: authored adaptations of the specified openai/plugins and wshobson/agents skills plus custom TSST communication guidance, with exact paths and pinned revisions in [DEV attribution](DEV/references/SOURCES.md).
 
-[DEV core registry](DEV/SKILL_REGISTRY.md) is the L0 catalog for all 16 exact names, triggers, categories/tags, package links, validation states and sources. All 16 are installed repository-local and UNVALIDATED; specialist status is PROPOSED. Load only activated skill instructions and needed references.
+[DEV core registry](DEV/SKILL_REGISTRY.md) is the L0 catalog for all 16 exact names, triggers, categories/tags, package links, validation states and sources. All 16 are installed repository-local and UNVALIDATED; specialist governance status is APPROVED (registration only), with NOT_READY readiness under [TSST-ADR-002](decisions/TSST-ADR-002.md). Load only activated skill instructions and needed references.
 
-The opening figures retain the pre-DEV baseline: 41 specialist / 71 team skills. Including the proposed catalog: 57 specialist / 87 team skills, 76 installed packages, 11 backlog; specialist states 1 VALIDATED, 2 LAB_VALIDATED, 54 UNVALIDATED; team states 1 VALIDATED, 2 LAB_VALIDATED, 84 UNVALIDATED. Existing states are unchanged. Registration and packaging do not imply durable governance approval, evaluation or production activation.
+The pre-DEV baseline was 41 specialist / 71 team skills. Including the approved catalog: 57 specialist / 87 team skills, 76 installed packages, 11 backlog; specialist states 1 VALIDATED, 2 LAB_VALIDATED, 54 UNVALIDATED; team states 1 VALIDATED, 2 LAB_VALIDATED, 84 UNVALIDATED. Existing states are unchanged. User approval grants registration and repository merge only, not evaluation, production activation, autonomous execution or skill validation.

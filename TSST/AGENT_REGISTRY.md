@@ -28,7 +28,7 @@ CREATIVE_AG remains the single top-level creative specialist. It may delegate ex
 - `CREATIVE/DESIGNER_AG/AGENT.md` — Senior Social / Graphic Designer.
 - `CREATIVE/MOTION_AG/AGENT.md` — Senior Motion Designer / Video Editor.
 
-These workers do not report to the user, do not change strategy/claims/budget, and do not alter the four-agent TSST topology. CREATIVE_AG owns their final visual QA and handoff.
+These workers do not report to the user, do not change strategy/claims/budget, and do not create additional top-level TSST agents. CREATIVE_AG owns their final visual QA and handoff.
 
 ## Routing rules
 
@@ -54,7 +54,7 @@ These workers do not report to the user, do not change strategy/claims/budget, a
 - [LENS_AG agent definition](LENS/AGENT.md)
 - [SPARK_AG agent definition](SPARK/AGENT.md)
 
-## Current four-agent registration
+## Existing team baseline before DEV_AG registration
 
 | Official name | Directory and contract | Installed / registered skills | Current readiness |
 | --- | --- | --- | --- |
@@ -63,17 +63,17 @@ These workers do not report to the user, do not change strategy/claims/budget, a
 | LENS_AG | [LENS](LENS/AGENT.md) | 6 / 10 | `NOT_READY` |
 | SPARK_AG | [SPARK](SPARK/AGENT.md) | 6 / 12 | `NOT_READY` |
 
-The preceding Phase-1 language is historical foundation context. The current registry has 71 skills, 60 installed packages and 11 backlog packages. See [Lead registry](LEAD/SKILL_REGISTRY.md). LENS owns strategic analysis and recommendations; TSST Lead integrates company strategy for user decision. None of the specialists independently changes company strategy.
+The preceding Phase-1 language is historical foundation context. The pre-DEV registry had 71 skills, 60 installed packages and 11 backlog packages. See [Lead registry](LEAD/SKILL_REGISTRY.md). LENS owns strategic analysis and recommendations; TSST Lead integrates company strategy for user decision. None of the specialists independently changes company strategy.
 
 
-## Proposed DEV_AG registration — 2026-09-28
+## Approved DEV_AG registration — 2026-09-28
 
 Owner: TSST Lead. Reason: user-requested controlled engineering specialist implementation. Source impact: 16 authored adaptations/custom packages; pinned attribution in [DEV sources](DEV/references/SOURCES.md). Existing validation and historical records are unchanged.
 
 | Agent | Mission / ownership | Packages | Governance / readiness | Acceptance gate |
 | --- | --- | --- | --- | --- |
-| [DEV_AG — Software Engineering & Solutions Agent](DEV/AGENT.md) | Routed technical solutions, implementation, data, integrations, testing, security and operations engineering under TSST Lead | [16 / 16](DEV/SKILL_REGISTRY.md), all `UNVALIDATED` | `PROPOSED` / `NOT_READY`; no durable approval or production activation | Fresh requirement and technical verification evidence, applicable domain reviews, clear handoff and Lead integration acceptance within user authority |
+| [DEV_AG — Software Engineering & Solutions Agent](DEV/AGENT.md) | Routed technical solutions, implementation, data, integrations, testing, security and operations engineering under TSST Lead | [16 / 16](DEV/SKILL_REGISTRY.md), all `UNVALIDATED` | `APPROVED` (registration only) / `NOT_READY`; no production activation | Fresh requirement and technical verification evidence, applicable domain reviews, clear handoff and Lead integration acceptance within user authority |
 
-Proposed routing: software work → TSST Lead → DEV_AG for an explicitly authorized scope. CREATIVE_AG reviews affected visual/brand decisions; LENS_AG reviews business claims and strategic implications; SPARK_AG reviews measurement definitions and paid-media logic. DEV_AG owns technical implementation and verification, not those domain approvals. Backend, Frontend, Database, QA, Security, DevOps and Architecture remain internal lanes.
+Registered routing: software work → TSST Lead → DEV_AG for an explicitly authorized scope. CREATIVE_AG reviews affected visual/brand decisions; LENS_AG reviews business claims and strategic implications; SPARK_AG reviews measurement definitions and paid-media logic. DEV_AG owns technical implementation and verification, not those domain approvals. Backend, Frontend, Database, QA, Security, DevOps and Architecture remain internal lanes.
 
-The four-agent registration above is the existing team baseline. Including the proposed DEV catalog yields 87 registered skills, 76 installed repository packages and 11 backlog packages; 84 skills are UNVALIDATED, 1 VALIDATED and 2 LAB_VALIDATED. Catalog totals do not activate DEV_AG.
+The four-agent registration above is the existing team baseline. Including the approved DEV catalog yields 87 registered skills, 76 installed repository packages and 11 backlog packages; 84 skills are UNVALIDATED, 1 VALIDATED and 2 LAB_VALIDATED. [TSST-ADR-002](decisions/TSST-ADR-002.md) records user approval. Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted. Dynamic Packs remain scaffolding, excluded from skill counts.

@@ -8,7 +8,7 @@ The user authorized direct training of CREATIVE_AG after the ANVIL pilot exposed
 - SK-009 and SK-010 moved from backlog to installed training packages.
 - New production skills SK-011–019 added and installed.
 - CREATIVE now has **19 registered / 18 installed** skills; SK-007 remains backlog.
-- Team registry now has **71 skills / 60 installed packages / 11 backlog packages**.
+- Team registry at this historical production update had **71 skills / 60 installed packages / 11 backlog packages**; see the DEV_AG registration update below for current totals.
 - Validation totals: 1 `VALIDATED`, 2 `LAB_VALIDATED`, 68 `UNVALIDATED`.
 - New production skills are trained/packaged but remain `UNVALIDATED`.
 - ANVIL prior production is retained as a supervised failure/postmortem fixture, not proof of production mastery.
@@ -25,7 +25,7 @@ As of: 2026-09-20
 Overall readiness: `NOT_READY`  
 Campaign activity started: No
 
-Current four-agent summary: see the TSST migration update below. Earlier tables retain the specialist foundation scope and historical test states.
+Historical four-agent summary: see the TSST migration update below. Earlier tables retain the specialist foundation scope and historical test states.
 
 ## Specialist bootstrap result
 
@@ -143,10 +143,10 @@ Ready to begin progressive Deep Onboarding when the user requests it: **Yes, as 
 See [audit](AUDIT_REPORT.md), [preserved evaluation index](EVALUATION_INDEX.md) and [Lead onboarding framework](LEAD/DEEP_ONBOARDING.md).
 
 
-## DEV_AG controlled implementation — 2026-09-28
+## DEV_AG approved registration — 2026-09-28
 
-DEV_AG governance status is PROPOSED, readiness NOT_READY. Its [16 core packages](DEV/SKILL_REGISTRY.md) are all UNVALIDATED. Repository implementation does not constitute durable governance approval or production activation. No DEV_AG practical evaluation, bootstrap rerun or historical evaluation was executed.
+DEV_AG governance status is APPROVED (registration only), readiness NOT_READY; see [TSST-ADR-002](decisions/TSST-ADR-002.md). Its [16 core packages](DEV/SKILL_REGISTRY.md) are all UNVALIDATED. Repository implementation does not constitute durable governance approval or production activation. No DEV_AG practical evaluation, bootstrap rerun or historical evaluation was executed.
 
-Current catalog including the proposed DEV_AG: 87 registered skills, 76 installed packages, 11 backlog; 1 VALIDATED, 2 LAB_VALIDATED and 84 UNVALIDATED. The pre-DEV current catalog is 71 / 60 / 11; earlier dated tables remain historical evidence. No existing skill validation or team readiness is promoted.
+Current catalog including registered DEV_AG: 87 registered skills, 76 installed packages, 11 backlog; 1 VALIDATED, 2 LAB_VALIDATED and 84 UNVALIDATED. The pre-DEV current catalog is 71 / 60 / 11; earlier dated tables remain historical evidence. No existing skill validation or team readiness is promoted.
 
-Remaining DEV gates: separately authorized governance decision and scope-specific practical evaluation, fresh technical verification, applicable cross-domain review, operational/security/recovery evidence and TSST Lead acceptance within user authority. Structural package checks establish only repository integrity, not engineering capability. Overall team status remains NOT_READY.
+Governance registration is approved; no readiness promotion follows. Remaining DEV gates: separately authorized scope-specific practical evaluation, fresh technical verification, applicable cross-domain review, operational/security/recovery evidence and TSST Lead acceptance within user authority. Structural package checks establish only repository integrity, not engineering capability. Overall team status remains NOT_READY. Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted.

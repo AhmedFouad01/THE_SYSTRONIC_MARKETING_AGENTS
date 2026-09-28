@@ -6,9 +6,9 @@ Shared work packages: `TSST-WP-###`. Handoffs: `TSST-HO-###`. Architecture/opera
 
 Reserve the next unused number in the appropriate index before creating a record. Never recycle an ID. Read [evaluation index](EVALUATION_INDEX.md) and [historical map](../LEGACY_ID_MAP.md). Lead evaluation 001–030 are reserved but not designed or run. Specialist evaluation IDs correspond to the existing 19 record files plus remediation 011. Pilot 001 is proposed only. No work-package or handoff instance was created during migration; templates are not active instances. ADR 001 records this migration.
 
-Use lowercase canonical skill folder names with the same role and number. Official agent names are TSST Lead, CREATIVE_AG, LENS_AG and SPARK_AG; canonical directories are LEAD, CREATIVE, LENS and SPARK under TSST.
+Use lowercase canonical skill folder names with the same role and number. Official agent names are TSST Lead, CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG; canonical directories are LEAD, CREATIVE, LENS, SPARK and DEV under TSST.
 
 
-## Proposed DEV namespace — 2026-09-28
+## Registered DEV namespace — 2026-09-28
 
-Reserve `TSST-DEV-SK-001`–`TSST-DEV-SK-016` for the [DEV core catalog](DEV/SKILL_REGISTRY.md). Proposed official name: DEV_AG; directory: `TSST/DEV/`; package folders: lowercase `tsst-dev-sk-###-<slug>`. These IDs do not create evaluations or activate governance. Future DEV evaluation records would follow `TSST-DEV-EV-###` only when separately authorized and reserved in the evaluation index.
+Reserve `TSST-DEV-SK-001`–`TSST-DEV-SK-016` for the [DEV core catalog](DEV/SKILL_REGISTRY.md). Registered official name: DEV_AG; directory: `TSST/DEV/`; package folders: lowercase `tsst-dev-sk-###-<slug>`. These IDs do not create evaluations or authorize execution. [TSST-ADR-002](decisions/TSST-ADR-002.md) records governance registration approval only. Future DEV evaluation records would follow `TSST-DEV-EV-###` only when separately authorized and reserved in the evaluation index.

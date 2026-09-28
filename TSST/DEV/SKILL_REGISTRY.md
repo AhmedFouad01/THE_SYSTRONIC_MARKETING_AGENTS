@@ -1,6 +1,6 @@
 # DEV_AG Core Skill Registry
 
-Owner: DEV_AG, subordinate to TSST Lead. Proposal status: `PROPOSED`; all 16 repository-local packages are `UNVALIDATED`. No practical evaluations or production activation are implied.
+Owner: DEV_AG, subordinate to TSST Lead. Governance status: `APPROVED` (registration only; [TSST-ADR-002](../decisions/TSST-ADR-002.md)); all 16 repository-local packages are `UNVALIDATED`. No practical evaluations or production activation are implied.
 
 L0 contains selection metadata only. Load the chosen SKILL.md at L1, and only relevant reference detail at L2. Sources were inspected on 2026-09-28; exact repository paths and revisions are in [source attribution](references/SOURCES.md).
 

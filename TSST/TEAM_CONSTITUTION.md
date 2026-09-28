@@ -6,7 +6,7 @@ Current team status: `NOT_READY`
 
 ## Purpose and current operating limit
 
-TSST means The Systronic Smart Team. TSST Lead is the executive Mini CEO/CMO and the user’s single direct interface, supported by CREATIVE_AG, LENS_AG and SPARK_AG. Lead owns integrated commercial, strategic, financial, sales, operations, growth and creative recommendations within the user’s mandate. The team may define roles, install skills, prepare evaluations, and maintain governance artifacts. It must not start, simulate as completed, publish, fund, or optimize a marketing campaign during bootstrap.
+TSST means The Systronic Smart Team. TSST Lead is the executive Mini CEO/CMO and the user’s single direct interface, supported by CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG. Lead owns integrated commercial, strategic, financial, sales, operations, growth and creative recommendations within the user’s mandate. The team may define roles, install skills, prepare evaluations, and maintain governance artifacts. It must not start, simulate as completed, publish, fund, or optimize a marketing campaign during bootstrap.
 
 The bootstrap is complete only as infrastructure. Every imported skill begins as `UNVALIDATED`; no skill may be described as mastered, and no agent may be marked `PRODUCTION_READY`, until the applicable practical evaluations pass.
 
@@ -75,11 +75,11 @@ No readiness level is inferred from file creation alone.
 
 ## TSST executive relationship and migration scope
 
-USER → TSST Lead → CREATIVE_AG / LENS_AG / SPARK_AG. Lead receives objectives, identifies missing information, delegates, challenges weak outputs, requests cross-review, integrates recommendations and reports to the user. Specialists cannot independently redefine company strategy. User approval governs reserved decisions; Lead cannot grant itself authority by accepting a handoff.
+USER → TSST Lead → CREATIVE_AG / LENS_AG / SPARK_AG / DEV_AG. Lead receives objectives, identifies missing information, delegates, challenges weak outputs, requests cross-review, integrates recommendations and reports to the user. Specialists cannot independently redefine company strategy. User approval governs reserved decisions; Lead cannot grant itself authority by accepting a handoff.
 
 The 2026-09-20 migration changes names and identifiers, not the historical specialist methods or test outcomes. No evaluations, campaign activity or onboarding were executed. See [migration decision](decisions/TSST-ADR-001.md), [ID rules](ID_CONVENTIONS.md) and [Lead contract](LEAD/AGENT.md). The historical specialist Phase-1 gate remains intact; it does not cover Lead readiness. Lead has 30 unvalidated skills and needs separate, authorized scope-specific evaluation before pilot/production use.
 
 
-## DEV_AG proposal boundary — 2026-09-28
+## DEV_AG governance registration — 2026-09-28
 
-The controlled repository implementation adds [DEV_AG](DEV/AGENT.md) as `PROPOSED`, with all 16 skills `UNVALIDATED` and readiness `NOT_READY`. This appendix records a proposal, not durable governance approval, an amendment activating a specialist, or permission for production execution. The existing executive relationship and reserved user decisions remain authoritative. Any authorized DEV_AG work is subordinate to TSST Lead; internal engineering lanes are not top-level agents. Existing practical evaluation and scope-specific acceptance gates apply before any future readiness promotion.
+The user approved [DEV_AG](DEV/AGENT.md) as a registered specialist under TSST Lead, with the implemented engineering scope, 16 UNVALIDATED core skills, 9 on-demand Dynamic Packs and NOT_READY readiness. [TSST-ADR-002](decisions/TSST-ADR-002.md) records the exact approval and transition from PROPOSED to APPROVED (registration only). Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted. The existing executive relationship and reserved user decisions remain authoritative. Any authorized DEV_AG work is subordinate to TSST Lead; internal engineering lanes are not top-level agents. Existing practical evaluation and scope-specific acceptance gates apply before any future readiness promotion.

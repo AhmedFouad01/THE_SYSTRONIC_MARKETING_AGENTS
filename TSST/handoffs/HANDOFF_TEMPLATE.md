@@ -65,7 +65,7 @@ Connect each recommendation to the facts, assumptions, constraints, and tradeoff
 - No external execution implied by acceptance.
 
 
-## Engineering supplement — when routed to proposed DEV_AG
+## Engineering supplement — when routed to DEV_AG
 
 - Repository/system, branch and revision or artifact version:
 - Objective, acceptance criteria, constraints and Spike / Bounded / Architectural classification:
