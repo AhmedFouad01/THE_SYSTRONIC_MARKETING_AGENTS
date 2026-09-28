@@ -422,3 +422,12 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Guardrail: ممنوع optimization بالـROAS وحده
 - Package: backlog
 - Status: `UNVALIDATED`
+
+
+## DEV_AG proposed core catalog — 2026-09-28
+
+Change owner: TSST Lead. IDs: `TSST-DEV-SK-001`–`TSST-DEV-SK-016`. Reason: user-requested controlled implementation. Source impact: authored adaptations of the specified openai/plugins and wshobson/agents skills plus custom TSST communication guidance, with exact paths and pinned revisions in [DEV attribution](DEV/references/SOURCES.md).
+
+[DEV core registry](DEV/SKILL_REGISTRY.md) is the L0 catalog for all 16 exact names, triggers, categories/tags, package links, validation states and sources. All 16 are installed repository-local and UNVALIDATED; specialist status is PROPOSED. Load only activated skill instructions and needed references.
+
+The opening figures retain the pre-DEV baseline: 41 specialist / 71 team skills. Including the proposed catalog: 57 specialist / 87 team skills, 76 installed packages, 11 backlog; specialist states 1 VALIDATED, 2 LAB_VALIDATED, 54 UNVALIDATED; team states 1 VALIDATED, 2 LAB_VALIDATED, 84 UNVALIDATED. Existing states are unchanged. Registration and packaging do not imply durable governance approval, evaluation or production activation.

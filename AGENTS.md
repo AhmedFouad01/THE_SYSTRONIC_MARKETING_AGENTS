@@ -10,3 +10,8 @@ Use canonical TSST IDs and preserve validation boundaries. The [specialist regis
 ## CREATIVE production rule — 2026-09-24
 
 When a task requests actual social creative or video, load `TSST/CREATIVE/AGENT.md`, `CREATIVE_PRODUCTION_STANDARD.md`, `FINAL_ASSET_GATE.md` and only the relevant production skills. CREATIVE_AG may invoke its internal DESIGNER_AG and MOTION_AG workers. HTML/browser layouts, prompts, briefs or storyboards are `PREVIS`, not final PNG/MP4 campaign assets. Final creative requires actual render QA.
+
+
+## Proposed DEV_AG implementation — 2026-09-28
+
+[DEV_AG](TSST/DEV/AGENT.md) is a `PROPOSED` Software Engineering & Solutions specialist under TSST Lead with 16 `UNVALIDATED` core skills. Use its [lightweight registry](TSST/DEV/SKILL_REGISTRY.md) only for relevant routed technical scope. Repository packaging does not activate it or constitute durable governance approval; the existing approved specialist authority and readiness gates remain unchanged.

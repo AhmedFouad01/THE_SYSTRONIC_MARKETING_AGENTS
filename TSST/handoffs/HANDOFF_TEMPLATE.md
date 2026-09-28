@@ -63,3 +63,17 @@ Connect each recommendation to the facts, assumptions, constraints, and tradeoff
 - Cross-review owner and evidence:
 - Dissent or returned defects:
 - No external execution implied by acceptance.
+
+
+## Engineering supplement — when routed to proposed DEV_AG
+
+- Repository/system, branch and revision or artifact version:
+- Objective, acceptance criteria, constraints and Spike / Bounded / Architectural classification:
+- Solution rationale and meaningful alternatives:
+- Changed artifacts, setup/use and operational owner:
+- Review findings, security/data implications and unresolved risks:
+- Failure behavior, rollback/recovery and required execution authority:
+- Claim / Evidence / Verification Method / Result / Remaining Unverified Items:
+- Applicable CREATIVE / LENS / SPARK review and Lead integration decision:
+
+Use proportionately. A technical handoff does not grant durable governance approval, skill validation or production activation.

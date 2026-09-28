@@ -78,3 +78,8 @@ No readiness level is inferred from file creation alone.
 USER → TSST Lead → CREATIVE_AG / LENS_AG / SPARK_AG. Lead receives objectives, identifies missing information, delegates, challenges weak outputs, requests cross-review, integrates recommendations and reports to the user. Specialists cannot independently redefine company strategy. User approval governs reserved decisions; Lead cannot grant itself authority by accepting a handoff.
 
 The 2026-09-20 migration changes names and identifiers, not the historical specialist methods or test outcomes. No evaluations, campaign activity or onboarding were executed. See [migration decision](decisions/TSST-ADR-001.md), [ID rules](ID_CONVENTIONS.md) and [Lead contract](LEAD/AGENT.md). The historical specialist Phase-1 gate remains intact; it does not cover Lead readiness. Lead has 30 unvalidated skills and needs separate, authorized scope-specific evaluation before pilot/production use.
+
+
+## DEV_AG proposal boundary — 2026-09-28
+
+The controlled repository implementation adds [DEV_AG](DEV/AGENT.md) as `PROPOSED`, with all 16 skills `UNVALIDATED` and readiness `NOT_READY`. This appendix records a proposal, not durable governance approval, an amendment activating a specialist, or permission for production execution. The existing executive relationship and reserved user decisions remain authoritative. Any authorized DEV_AG work is subordinate to TSST Lead; internal engineering lanes are not top-level agents. Existing practical evaluation and scope-specific acceptance gates apply before any future readiness promotion.

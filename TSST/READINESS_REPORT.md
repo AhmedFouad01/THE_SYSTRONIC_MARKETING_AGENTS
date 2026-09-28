@@ -141,3 +141,12 @@ The historical figures above describe the 32 specialist skills. Current team tot
 Ready to begin progressive Deep Onboarding when the user requests it: **Yes, as a supervised information-gathering conversation**. Onboarding state: `NOT_STARTED`; profile shell contains no inferred business facts. Onboarding readiness is not pilot/production readiness. No campaign, onboarding or skill evaluation was executed during migration.
 
 See [audit](AUDIT_REPORT.md), [preserved evaluation index](EVALUATION_INDEX.md) and [Lead onboarding framework](LEAD/DEEP_ONBOARDING.md).
+
+
+## DEV_AG controlled implementation — 2026-09-28
+
+DEV_AG governance status is PROPOSED, readiness NOT_READY. Its [16 core packages](DEV/SKILL_REGISTRY.md) are all UNVALIDATED. Repository implementation does not constitute durable governance approval or production activation. No DEV_AG practical evaluation, bootstrap rerun or historical evaluation was executed.
+
+Current catalog including the proposed DEV_AG: 87 registered skills, 76 installed packages, 11 backlog; 1 VALIDATED, 2 LAB_VALIDATED and 84 UNVALIDATED. The pre-DEV current catalog is 71 / 60 / 11; earlier dated tables remain historical evidence. No existing skill validation or team readiness is promoted.
+
+Remaining DEV gates: separately authorized governance decision and scope-specific practical evaluation, fresh technical verification, applicable cross-domain review, operational/security/recovery evidence and TSST Lead acceptance within user authority. Structural package checks establish only repository integrity, not engineering capability. Overall team status remains NOT_READY.

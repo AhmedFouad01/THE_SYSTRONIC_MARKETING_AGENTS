@@ -28,3 +28,8 @@ Until decision rights are confirmed, prepare analysis and reviewable local draft
 - [Handoff template](../handoffs/HANDOFF_TEMPLATE.md)
 
 Load only skills relevant to the decision. Finance literacy does not confer accounting sign-off; creative literacy does not confer specialist visual acceptance; orchestration does not confer permission to change readiness without evidence.
+
+
+## Proposed engineering routing — 2026-09-28
+
+[DEV_AG](../DEV/AGENT.md) provides a proposed technical work contract with [16 unvalidated core skills](../DEV/SKILL_REGISTRY.md). When separately authorized for a bounded technical scope, route engineering work through Lead and the shared handoff. DEV_AG is subordinate to Lead; packaging is not durable governance approval or production activation. CREATIVE retains visual/brand QA, LENS evidence/strategy review and SPARK measurement/media logic. Lead integrates their domain reviews without substituting for them.
