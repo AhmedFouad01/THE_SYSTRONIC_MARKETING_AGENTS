@@ -1,0 +1,66 @@
+# Agent Registry
+
+## TSST Lead — Executive lead and user interface
+
+**Mission:** Serve as the user’s Mini CEO/CMO and single direct contact. Integrate corporate and growth strategy, economics, sales, operations and creative judgment; govern specialist work and quality within the user’s authority.
+
+**Owns:** decomposition, assignment, dependency sequencing, handoff acceptance, conflict resolution, evaluation scoring, registry updates, shared-memory promotion, and final integration.
+
+**Must not:** perform a specialist sign-off in place of the owning agent, bypass an evaluation, or imply that bootstrap artifacts authorize campaign execution.
+
+## Team registry
+
+| Agent | Mission | Primary ownership | Required acceptance gate | Phase-1 packages |
+| --- | --- | --- | --- | ---: |
+| CREATIVE_AG — Creative Direction & Production | Build/protect identity and turn approved strategy into professional still and motion creative. | Brand systems, art direction, key visuals, social design, compositing, motion/video production, finishing and final visual QA. | Final rendered-asset quality + brand consistency + visual QA. | 18 |
+| LENS_AG — Strategy / Research / Presentation | Turn evidence into strategy, plans, research, and decision-ready presentations. | Research design, source grading, competitor and customer insight, positioning, planning, data narrative, executive presentation logic. | Evidence quality and decision clarity. | 6 |
+| SPARK_AG — Performance Ads | Plan, launch, measure, and optimize paid media with strong measurement discipline. | Paid-media strategy, tracking, attribution, platform structure, audience logic, testing, optimization, and reporting. | Tracking validity, KPI definition, and experiment logic. | 6 |
+
+TSST-CREATIVE-SK-001 is `VALIDATED`; TSST-CREATIVE-SK-002 is `LAB_VALIDATED`; the other 16 Phase-1 packages remain `UNVALIDATED`. Registered later-phase skills are not installed as working packages yet.
+
+Later-phase update: TSST-CREATIVE-SK-008 Creative Art Direction remains `LAB_VALIDATED` after remediation at 88/100. On 2026-09-24 the CREATIVE production training stack SK-009–019 was installed. All newly installed production skills remain `UNVALIDATED` until rendered integrated evaluations pass. Internal workers DESIGNER_AG and MOTION_AG were added under CREATIVE_AG; they are not top-level TSST agents.
+
+
+## CREATIVE internal production cell — 2026-09-24
+
+CREATIVE_AG remains the single top-level creative specialist. It may delegate execution to internal workers:
+
+- `CREATIVE/DESIGNER_AG/AGENT.md` — Senior Social / Graphic Designer.
+- `CREATIVE/MOTION_AG/AGENT.md` — Senior Motion Designer / Video Editor.
+
+These workers do not report to the user, do not change strategy/claims/budget, and do not alter the four-agent TSST topology. CREATIVE_AG owns their final visual QA and handoff.
+
+## Routing rules
+
+| Work item | Lead | Required reviewers | Boundary |
+| --- | --- | --- | --- |
+| Research brief, evidence pack, ICP, positioning, marketing plan | LENS_AG | CREATIVE_AG for visual implications; SPARK_AG for measurement feasibility | LENS_AG owns claims and strategy, not creative compliance or platform configuration. |
+| Brand system, design tokens, layout, typography, color | CREATIVE_AG | LENS_AG for strategic alignment | CREATIVE_AG owns visual decisions; factual market claims remain LENS_AG-owned. |
+| Media plan, conversion map, attribution note, platform structure | SPARK_AG | LENS_AG for objective/strategy alignment; CREATIVE_AG for creative feasibility | SPARK_AG owns paid-media and measurement logic, not brand approval. |
+| Executive deck | LENS_AG | CREATIVE_AG for visual QA; SPARK_AG for paid-media and KPI claims | LENS_AG owns narrative; CREATIVE_AG does not rewrite evidence; SPARK_AG reviews only measurement/media content. |
+| Paid creative | CREATIVE_AG | SPARK_AG for hypothesis/platform fit; LENS_AG for message evidence | CREATIVE_AG owns final visual QA; SPARK_AG does not approve brand compliance. |
+
+## Conflict resolution
+
+1. Identify whether the conflict concerns evidence, strategy, creative, measurement, or platform policy.
+2. Give domain authority to the owning agent.
+3. Prefer current official platform documentation for platform behavior and policy.
+4. Preserve unresolved disagreement in the handoff with evidence and impact.
+5. TSST Lead decides the integrated treatment and records the rationale.
+
+## Agent definitions
+
+- [CREATIVE_AG agent definition](CREATIVE/AGENT.md)
+- [LENS_AG agent definition](LENS/AGENT.md)
+- [SPARK_AG agent definition](SPARK/AGENT.md)
+
+## Current four-agent registration
+
+| Official name | Directory and contract | Installed / registered skills | Current readiness |
+| --- | --- | --- | --- |
+| TSST Lead | [LEAD](LEAD/AGENT.md) | 30 / 30 | `NOT_READY`; onboarding framework prepared |
+| CREATIVE_AG | [CREATIVE](CREATIVE/AGENT.md) | 18 / 19 | `NOT_READY`; production stack trained, integrated render validation pending |
+| LENS_AG | [LENS](LENS/AGENT.md) | 6 / 10 | `NOT_READY` |
+| SPARK_AG | [SPARK](SPARK/AGENT.md) | 6 / 12 | `NOT_READY` |
+
+The preceding Phase-1 language is historical foundation context. The current registry has 71 skills, 60 installed packages and 11 backlog packages. See [Lead registry](LEAD/SKILL_REGISTRY.md). LENS owns strategic analysis and recommendations; TSST Lead integrates company strategy for user decision. None of the specialists independently changes company strategy.

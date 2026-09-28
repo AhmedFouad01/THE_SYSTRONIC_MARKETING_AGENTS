@@ -1,0 +1,501 @@
+You are GPT-6 Astra operating as **TSST Lead** inside the existing TSST repository.
+
+This is the first real integrated pilot for:
+
+* TSST Lead
+* CREATIVE_AG
+* LENS_AG
+* SPARK_AG
+
+## PILOT ID
+
+`TSST-PILOT-001`
+
+## CLIENT / BRAND
+
+ANVIL SUPPS
+
+## CAMPAIGN
+
+**The Switch Campaign**
+
+Brand transition:
+
+**Shark X Store → ANVIL SUPPS**
+
+This is not simply a logo/name-change announcement.
+
+The campaign must communicate that the established business is entering a stronger, more professional phase while preserving the trust, history, customer relationships, and credibility built under Shark X Store.
+
+## CAMPAIGN OBJECTIVE
+
+Primary objective:
+
+**Brand Awareness**
+
+Secondary objectives:
+
+* Transfer existing Shark recognition and trust into ANVIL.
+* Establish ANVIL as the new brand people should remember and follow.
+* Introduce ANVIL's premium visual and strategic direction.
+* Reduce confusion around the transition.
+* Generate useful awareness/engagement data for the next campaign stage.
+
+Do NOT optimize this campaign primarily for direct sales.
+
+## DURATION
+
+7 days.
+
+Campaign architecture:
+
+**TEASE → REVEAL → REINFORCE**
+
+Recommended rhythm:
+
+* Days 1–2: TEASE
+* Day 3: REVEAL
+* Days 4–7: REINFORCE / STORY / MEMORY BUILDING
+
+You may improve the exact daily structure if the team can justify it.
+
+## CHANNELS
+
+* Facebook
+* Instagram
+* TikTok
+
+## MEDIA BUDGET
+
+Total paid-media budget:
+
+**1,500 EGP**
+
+This is media spend only.
+
+Production, planning, design and editing are handled internally.
+
+Treat 1,500 EGP as a **controlled awareness pilot budget**, not as a representative long-term ANVIL media budget.
+
+Suggested starting allocation:
+
+* Meta: approximately 1,100 EGP
+* TikTok: approximately 400 EGP
+
+Suggested campaign-phase weighting:
+
+* Tease: ~25%
+* Reveal: ~50%
+* Reinforce: ~25%
+
+SPARK_AG may improve this allocation if it provides clear reasoning.
+
+Do not increase total spend.
+
+## MESSAGE TERRITORY
+
+Strategic direction:
+
+**Shark X Store is evolving into ANVIL SUPPS.**
+
+Underlying message:
+
+Same foundations and accumulated trust.
+A stronger identity.
+A higher standard.
+A new stage.
+
+The campaign should avoid communicating:
+
+“we closed Shark and started an unrelated company.”
+
+Instead communicate:
+
+**continuity + evolution + stronger future.**
+
+ANVIL's established verbal territory includes:
+
+* Forged Performance
+* Stronger People. Brighter Tomorrow.
+* Real Brands. Real Progress.
+* Trusted brands
+* Authentic products
+* Performance
+* Discipline
+* Progress
+
+Do not force all phrases into the campaign.
+
+Use only what strengthens the idea.
+
+## CTA PRINCIPLE
+
+This is an awareness campaign.
+
+Avoid aggressive sales CTAs as the primary campaign behavior.
+
+Suitable CTA territory:
+
+TEASE:
+“Something stronger is coming.”
+
+REVEAL:
+“Meet ANVIL SUPPS.”
+
+REINFORCE:
+“Follow ANVIL. This is only the beginning.”
+
+The team may improve the wording.
+
+---
+
+# AVAILABLE BRAND DIRECTION
+
+Use the existing ANVIL brand material as authoritative visual context.
+
+The existing identity establishes:
+
+* industrial premium mood
+* black/off-black dominant environment
+* white typography
+* controlled ANVIL orange accent
+* sharp angles
+* A-tip geometry
+* industrial textures
+* strong negative space
+* cinematic photography
+* authentic athletes / real people
+* product curation
+* clean modular layouts
+* Cairo for Arabic
+* Monument Extended for major English headlines
+* Inter for English body/UI
+* no decorative random flames
+* no uncontrolled orange
+* no curves as dominant graphic language
+* no generic oversaturated supplement aesthetic
+* no modification of the official ANVIL logo geometry
+
+Respect the existing visual system.
+
+Do not redesign the identity during this pilot.
+
+---
+
+# TEAM EXECUTION
+
+TSST Lead owns the final integrated campaign.
+
+The three agents must work as specialists.
+
+## LENS_AG
+
+Own:
+
+1. Campaign research
+2. Audience/context analysis
+3. Shark → ANVIL transition strategy
+4. Awareness communication strategy
+5. Campaign narrative
+6. Content architecture
+7. 7-day content plan
+8. Messaging hierarchy
+9. Content objectives by day
+10. Platform behavior considerations
+11. Campaign risks
+12. Success measurement framework
+
+Do not produce generic marketing-plan filler.
+
+Every content item must have a specific purpose inside the transition narrative.
+
+## CREATIVE_AG
+
+Using the approved strategy, own:
+
+1. Campaign creative concept
+2. Art direction
+3. Tease visual system
+4. Reveal visual system
+5. Reinforcement visual system
+6. Reels/TikTok concepts
+7. Static/carousel concepts
+8. Story concepts
+9. Motion direction
+10. Copy-on-creative hierarchy
+11. Shot / image-generation briefs where required
+12. Video scripts and scene structure
+13. Design specifications
+14. Visual QA against ANVIL brand guidelines
+
+Do not merely write descriptions.
+
+Produce **production-ready creative briefs** detailed enough that a designer/editor/image-generation workflow can execute them.
+
+Avoid generic supplement advertising.
+
+## SPARK_AG
+
+Using the strategy and creative inventory, own:
+
+1. Meta campaign architecture
+2. TikTok campaign architecture
+3. 1,500 EGP allocation
+4. Campaign/ad-set/ad structure
+5. Audience strategy
+6. Placement strategy
+7. Optimization objective
+8. Creative-to-audience mapping
+9. Daily/phase spend logic
+10. Testing logic
+11. Frequency/reach considerations
+12. KPI framework
+13. Measurement plan
+14. UTM/naming convention
+15. End-of-week decision rules
+
+Because the budget is small, avoid unnecessary fragmentation.
+
+Do not create many tiny ad sets that cannot collect useful signal.
+
+---
+
+# CROSS-AGENT REVIEW
+
+After first drafts:
+
+LENS_AG reviews CREATIVE_AG for strategic consistency.
+
+CREATIVE_AG reviews SPARK_AG to confirm that proposed formats and media placements fit actual creative behavior.
+
+SPARK_AG reviews the creative plan for paid-media usability and flags missing formats/hooks.
+
+TSST Lead resolves disagreements.
+
+Do not allow agents to simply agree with each other.
+
+Each specialist must identify at least:
+
+* one strength
+* one risk
+* one improvement
+
+in another agent's work.
+
+---
+
+# RESEARCH RULE
+
+Use current research only where it materially improves the campaign.
+
+Do not perform broad research for the sake of research.
+
+For volatile Meta/TikTok platform mechanics, prefer current official platform guidance.
+
+Separate:
+
+FACT
+ASSUMPTION
+HYPOTHESIS
+RECOMMENDATION
+
+Do not fabricate competitor data, audience sizes or performance benchmarks.
+
+---
+
+# NO-QUESTION MODE
+
+The user explicitly requested that the team avoid unnecessary clarification questions.
+
+Use the existing brand files, business context, TSST Operating Profile and reasonable professional assumptions.
+
+If information is missing but not campaign-blocking:
+
+* make the strongest reasonable assumption,
+* label it clearly,
+* continue.
+
+Ask the user only if a missing fact makes responsible execution impossible.
+
+---
+
+# REQUIRED OUTPUT
+
+Create a complete pilot package under:
+
+`TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/`
+
+Recommended structure:
+
+01_BRIEF/
+02_RESEARCH_STRATEGY/
+03_CONTENT_PLAN/
+04_CREATIVE_DIRECTION/
+05_CREATIVE_PRODUCTION/
+06_MEDIA_STRATEGY/
+07_MEASUREMENT/
+08_CROSS_REVIEW/
+09_FINAL_PLAN/
+10_EVIDENCE/
+
+The final integrated output must include:
+
+### A. Executive Campaign Strategy
+
+Concise strategic rationale.
+
+### B. Audience Logic
+
+Who needs to understand the switch and why.
+
+### C. Campaign Narrative
+
+TEASE → REVEAL → REINFORCE.
+
+### D. Complete 7-Day Content Calendar
+
+For every piece specify:
+
+* Day
+* Phase
+* Platform
+* Format
+* Objective
+* Hook
+* Main message
+* Caption direction
+* CTA
+* Creative concept
+* Production requirement
+* Paid / organic role
+
+### E. Creative Execution Pack
+
+Include production-ready:
+
+* visual concepts
+* static concepts
+* carousel concepts where useful
+* Stories
+* Reels/TikTok
+* video scripts
+* scene sequencing
+* on-screen copy
+* motion direction
+* image/shot requirements
+* editing direction
+
+### F. Media Plan
+
+Include:
+
+* exact total spend
+* platform allocation
+* phase allocation
+* campaign structure
+* audiences
+* placements
+* objectives
+* creative mapping
+* daily logic
+* measurement
+* naming convention
+
+### G. KPI Framework
+
+Because this is awareness-first, prioritize suitable metrics such as:
+
+* Reach
+* Frequency
+* Video views / completion
+* Engagement quality
+* Profile/page activity
+* Brand-transition response signals
+
+Do not pretend 1,500 EGP can establish statistically robust long-term performance benchmarks.
+
+### H. Post-Pilot Decision Framework
+
+State clearly:
+
+* what qualifies as a promising signal
+* what should be changed
+* what should not be concluded from one week
+* what should be carried into the next campaign
+
+---
+
+# PILOT EVALUATION
+
+This campaign is also a TSST team evaluation.
+
+Do not automatically validate skills merely because the campaign was completed.
+
+At the end, separately assess:
+
+## TSST Lead
+
+* orchestration
+* commercial judgment
+* integration quality
+* decision quality
+
+## LENS_AG
+
+* research quality
+* strategic reasoning
+* content architecture
+* usefulness
+
+## CREATIVE_AG
+
+* originality
+* art direction
+* brand consistency
+* production realism
+* cross-platform execution
+
+## SPARK_AG
+
+* media logic
+* budget discipline
+* platform fit
+* measurement quality
+* ability to work with a small budget
+
+Record weaknesses honestly.
+
+---
+
+# EXECUTION GATE
+
+Important:
+
+Produce the entire strategy, content, creative-production package and media plan.
+
+Do NOT:
+
+* publish content
+* launch campaigns
+* spend money
+* access live ad accounts
+* change ANVIL's identity
+* modify existing brand assets
+
+without user approval.
+
+At completion, TSST Lead must first return a concise approval report containing:
+
+1. Core campaign idea
+2. 7-day structure
+3. Number and type of content assets
+4. Media-budget allocation
+5. Main creative direction
+6. Key assumptions
+7. Key risks
+8. Files produced
+9. Recommendation: READY FOR USER REVIEW or NEEDS INTERNAL REVISION
+
+Do not dump every generated file into the final chat response.
+
+The user will review the executive summary first.

@@ -1,0 +1,2302 @@
+[
+  {
+    "path": "TSST_Specialist_Skill_Matrix_v0.1.xlsx",
+    "sha256_before": "629b1b7fa54f9dc44d4d7dadfd2f779e65be2e2de16f7ba15341483c20a09835",
+    "sha256_migrated": "8401acd0431536be91b85c2590aab4142be2520ca40f90fe128ea9f027c967d3"
+  },
+  {
+    "path": "TSST_TEAM_BOOTSTRAP_PROMPT_v0.1.md",
+    "sha256_before": "783ebdf4f2e8c1a44f6b242ae0bebd69f5ee3a2073d04d636768e62bb0ce364f",
+    "sha256_migrated": "5ccd158ae11126197bec1604101b309d2e69078001316231a08db7c62087bfe6"
+  },
+  {
+    "path": "TSST/AGENT_REGISTRY.md",
+    "sha256_before": "0e03d17126567d1139d3b902821f523d2e438bd83e6505a56b62b573ed1f8a1f",
+    "sha256_migrated": "44b5e1b1e934093c9903008082d19869606561c1841c3851ef7b0a9e8820f72d"
+  },
+  {
+    "path": "TSST/EVALUATION_SCORECARD.md",
+    "sha256_before": "19741a11eb96dd9ed2331cbf569ca1c635283040aebd3a7e33f4e68f817c1758",
+    "sha256_migrated": "431741e8eaf63c707e0efdbc80f00b0c56b483b9623a972bbfc6db8db88200a5"
+  },
+  {
+    "path": "TSST/READINESS_REPORT.md",
+    "sha256_before": "2db6698f4af889acbe2fc2f16ae1f6607cec15bcd6b5de7c4f733262e01bf336",
+    "sha256_migrated": "038918d6fb3cde676746877efda1f718b4caa08eb4afbe8278eb7221b9f79619"
+  },
+  {
+    "path": "TSST/SHARED_CONTEXT.md",
+    "sha256_before": "56146ae1ed213dae64a4e1e9681fdc2533bb594d1645b677a6f0ac6ff323cbce",
+    "sha256_migrated": "7ef056ed45e4fcfedf492995260b21fa0e68611a0a54fb96edc988c918131531"
+  },
+  {
+    "path": "TSST/SKILL_REGISTRY.md",
+    "sha256_before": "4e3aae9b489d1512cf4a21696ef2e15bbebb9e6aa9bfb6681c0e367703114ff0",
+    "sha256_migrated": "3595235083d8201e50c0b9b9c9faa5f7d7dda24cf01bf76cd5112b781121a5f3"
+  },
+  {
+    "path": "TSST/TEAM_CONSTITUTION.md",
+    "sha256_before": "692ba12bdc2b8f9eb471ba084fcd15996232557177df4ece9e89d7c0b4bc4760",
+    "sha256_migrated": "b7832754c2c5e57256841b32491b23316559cf582d358fa5dbad4bee8bbf977b"
+  },
+  {
+    "path": "TSST/handoffs/HANDOFF_TEMPLATE.md",
+    "sha256_before": "7796bb010509a818d0ace7c4a668d7c8333c65b3a12ff1044c2d3de68eb15818",
+    "sha256_migrated": "feaf71145a7769a37afb73b42bec9bb10d94e3f07e1e47e4783a65b4c0f05659"
+  },
+  {
+    "path": "TSST/CREATIVE/AGENT.md",
+    "sha256_before": "67175db4e1b4769c75fc0659650dbf7f0d0941446b3c6417ca8d020933ef232b",
+    "sha256_migrated": "abe8ad1b4f16fdd00bacfbd1472647ada096f04f6ef40d8b4df9facbe0329c5e"
+  },
+  {
+    "path": "TSST/LENS/AGENT.md",
+    "sha256_before": "8097df7cd55a89d3513ef5ceecb67af1cea8c1acdf41c52627e516589ccf6f82",
+    "sha256_migrated": "1f82c9960822ec1176f91761d863ad965831776175156824dadaf5f8c8c3007b"
+  },
+  {
+    "path": "TSST/SPARK/AGENT.md",
+    "sha256_before": "57fd5e48ca16cbe1f5d128a2a4b4f2b622d2d06234fe8a0e598cf3ab72dc1d13",
+    "sha256_migrated": "29cfbb6e6785b89fbb456fbbe844b2ca5514038ef340fb4145e18e39683c145f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-001-actual-output.md",
+    "sha256_before": "8b094900c3b9386abdbc0c935d5af4509ff57db8b39da1560a13660534bf16e9",
+    "sha256_migrated": "d67ab5a0209d6d28c4e930c4668e979cd7c6b23106e4cef11683772576c2d8ff"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-001-evaluation.md",
+    "sha256_before": "8dd4e6b6a02e2e5ee229bd6b0e69918209b5f45e49c0ab0b82f1faa65fd375ec",
+    "sha256_migrated": "bbc224a6e475f709af7b09e1606171f5a70a666f729ba41bca6ab8ff36a51d9e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-002-actual-output.md",
+    "sha256_before": "2f9d078fbec0920fe09ca818c965ae00dcdb20a319ce9b1d412f8daa6612a07d",
+    "sha256_migrated": "bd8a26b8ae8df048412e7f1974936a7737b551008f7724fec4aada711ff38b87"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-002-blind-review.md",
+    "sha256_before": "3a4591109f442b16e2104edee92c651ea0b1997a1d463107c005611dc9dcad8b",
+    "sha256_migrated": "79d9b37abfbacfdbb02fd7a2b4e072536dd9e1318f2430f336cd800b59b80f2f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-002-evaluation.md",
+    "sha256_before": "c8e8ced2a395da15c4304705dff61546fec4035675913560722e51e89593ca0a",
+    "sha256_migrated": "cf80e2401f8446225f0dfd2687ae76b2decbaef47a734a58e7a89a3c45582cd8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-003-evaluation.md",
+    "sha256_before": "4ec4afc750b48166734279904e82f8bfb7f6ce5accbf77415a8fdc7acaeaa2e5",
+    "sha256_migrated": "2ebb9c2678231e8c8b582f998039df4c46e959c504eae697915fc29f815e1eea"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-004-evaluation.md",
+    "sha256_before": "fa7d080c94e3ec72ebb27c7c579344054229b9f291e01874fd1e14daf4482c69",
+    "sha256_migrated": "5a323d1f514075fbec7885eee01dea82e8e7e9d01f07aaa94132096cd5b3868a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-005-evaluation.md",
+    "sha256_before": "e4b3b785025e2f58daf2bc4c0ee31aa86999b3148320193446e9ccc3ea692494",
+    "sha256_migrated": "761905363bd2790c9dd161155d6d11d04a535534cd7a5c131c760b1b666ecba7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-006-evaluation.md",
+    "sha256_before": "51dad51d5ff2c600a7458e5d32668acf414bc87e44d71d1024265499af636579",
+    "sha256_migrated": "b028e9db63e3d118ff7afd3562e9127e4c08ba9740f3177febd992e00dc7ab78"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-evaluation.md",
+    "sha256_before": "ef7c77b81957e293814479ee4159c53ccbf6932d20cd6859f30d589507b3c47e",
+    "sha256_migrated": "7489d06729fef714caa567dbe83f1c594b7fcc610ec3c8abaadae39fba9c421e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-fixture.md",
+    "sha256_before": "55ce6c5036f768e53f2417f937fdf8d09067546181d1c9dd20d19a7ed1938f4c",
+    "sha256_migrated": "84d4a8884aa6740b8b1d5db4cb3ddc21336db5495fb5e497d7d494bf87490ea8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-remediation-comparison.md",
+    "sha256_before": "cd4956c2ed85c248ca775f248641c207ee6ea055817fad934d62d938a3d11589",
+    "sha256_migrated": "474086d2deed0be5448ee147e3641520b7392bbafe50b98d2b45cdc125f8e19f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-visual-review.md",
+    "sha256_before": "8ae0875539228c7407348b03eda998b7f267b4c4186dd351f646b74d169f80a4",
+    "sha256_migrated": "f1af07e845b13725645b753a01fc02fa39461ccbc0f78e6626b34c61d314a4bd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/candidate-rationale-qa.md",
+    "sha256_before": "6866ea8d2058f3739c15868f058f1700f26c013c38ceda3bf76c982a3dc14590",
+    "sha256_migrated": "9debc0c2045eebc57728bf55362f30baed959e6df18c45d6a498218ff10aafee"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/common.css",
+    "sha256_before": "238c1b1bcc44d60fcc2583637f4e36f8501e20eb27523ab377a7a1e7a327d368",
+    "sha256_migrated": "238c1b1bcc44d60fcc2583637f4e36f8501e20eb27523ab377a7a1e7a327d368"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-01-civic-cutaway.html",
+    "sha256_before": "1c0697adff7833868135b7bb2af597a4a5621d22d18cb52dbd0a0feee3cc3fb1",
+    "sha256_migrated": "1c0697adff7833868135b7bb2af597a4a5621d22d18cb52dbd0a0feee3cc3fb1"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-01-civic-cutaway.png",
+    "sha256_before": "8bd95d4d0dfb175796ac5517d314adca84eb268baaecceffbacc467fa6d42199",
+    "sha256_migrated": "8bd95d4d0dfb175796ac5517d314adca84eb268baaecceffbacc467fa6d42199"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-02-operational-ledger.html",
+    "sha256_before": "117d67d6ff58ccfaec705ba2431e864eb0757c6dea669f4e8802a4781c2c0e71",
+    "sha256_migrated": "117d67d6ff58ccfaec705ba2431e864eb0757c6dea669f4e8802a4781c2c0e71"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-02-operational-ledger.png",
+    "sha256_before": "aca6f516d053ead3a4df9b0ca59278d1a2062a25bd5534e60f8fcfa19eaed1da",
+    "sha256_migrated": "aca6f516d053ead3a4df9b0ca59278d1a2062a25bd5534e60f8fcfa19eaed1da"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-03-pressure-echo.html",
+    "sha256_before": "c313fb7e2ba31078d0d9f839d5fc93a69cbf96afc2a9d70b7d61a393ddea89bf",
+    "sha256_migrated": "c313fb7e2ba31078d0d9f839d5fc93a69cbf96afc2a9d70b7d61a393ddea89bf"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/direction-03-pressure-echo.png",
+    "sha256_before": "326037ae5327bc424457dafa4b23a843810df67f4aa93273262ead7a39e58a0d",
+    "sha256_migrated": "326037ae5327bc424457dafa4b23a843810df67f4aa93273262ead7a39e58a0d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/executive-slide-v2.html",
+    "sha256_before": "ab5c3d2ae528b7c9eee132a06c5a2f4bc87c0318cd9a6f10a4c5e379ceadcd39",
+    "sha256_migrated": "ab5c3d2ae528b7c9eee132a06c5a2f4bc87c0318cd9a6f10a4c5e379ceadcd39"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/executive-slide-v2.png",
+    "sha256_before": "37b40da47b0f626f893d5dca5bebffb72aa676556d1f76002f14b313e5a8a0ab",
+    "sha256_migrated": "37b40da47b0f626f893d5dca5bebffb72aa676556d1f76002f14b313e5a8a0ab"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/executive-slide.html",
+    "sha256_before": "5a1cdb9d87da480c970c74099d32b7c46d1381caf7e3cdcf99f6d9356a0151f0",
+    "sha256_migrated": "5a1cdb9d87da480c970c74099d32b7c46d1381caf7e3cdcf99f6d9356a0151f0"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/executive-slide.png",
+    "sha256_before": "0e02ad232f47cc99d15e96b35dd6d6f63220f2b78bf612208cf9d12959644ee4",
+    "sha256_migrated": "0e02ad232f47cc99d15e96b35dd6d6f63220f2b78bf612208cf9d12959644ee4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/render-v2.cjs",
+    "sha256_before": "bd69e0bb4e35af0520b94e3449cc91d5046f85eabc59d9e7db58f6c3fd3846e5",
+    "sha256_migrated": "bd69e0bb4e35af0520b94e3449cc91d5046f85eabc59d9e7db58f6c3fd3846e5"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/social-ad-v2.html",
+    "sha256_before": "ff1339f33adfa779c1723172114473eaced1d59568689b62cc2de5cee02c8584",
+    "sha256_migrated": "ff1339f33adfa779c1723172114473eaced1d59568689b62cc2de5cee02c8584"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/social-ad-v2.png",
+    "sha256_before": "b7c5551c13a74e4c7697bc3ed7b6d62f33443f21f687db41290dae6005101a20",
+    "sha256_migrated": "b7c5551c13a74e4c7697bc3ed7b6d62f33443f21f687db41290dae6005101a20"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/social-ad.html",
+    "sha256_before": "1b8dd7dd15fc33f79a277e84c672e6f515ca9b6deeb2c83b10710d1becfdc1ac",
+    "sha256_migrated": "1b8dd7dd15fc33f79a277e84c672e6f515ca9b6deeb2c83b10710d1becfdc1ac"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/social-ad.png",
+    "sha256_before": "275d1cceb207c84947276cdeac475f28ce66fe6bc73941d11ff03c840fa68217",
+    "sha256_migrated": "275d1cceb207c84947276cdeac475f28ce66fe6bc73941d11ff03c840fa68217"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-desktop-v2.html",
+    "sha256_before": "cc4f48875ce80cdf210dd0d24a71381519e85e60f18ea6efda6af840a86eca8b",
+    "sha256_migrated": "cc4f48875ce80cdf210dd0d24a71381519e85e60f18ea6efda6af840a86eca8b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-desktop-v2.png",
+    "sha256_before": "b875302f627f59ec1c1c3723358b50a0ef74eab6992b9a487a7c7819e1bbbcd0",
+    "sha256_migrated": "b875302f627f59ec1c1c3723358b50a0ef74eab6992b9a487a7c7819e1bbbcd0"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-desktop.html",
+    "sha256_before": "31f4821618f27eadd106fc73ebdaf3ab88efd00a1b7d3b7cb9bb7022419a3a67",
+    "sha256_migrated": "31f4821618f27eadd106fc73ebdaf3ab88efd00a1b7d3b7cb9bb7022419a3a67"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-desktop.png",
+    "sha256_before": "a965816a8a2a24be25b17aae5967c4b1ebbaee62c047ece8fb1cadc3f7f30de6",
+    "sha256_migrated": "a965816a8a2a24be25b17aae5967c4b1ebbaee62c047ece8fb1cadc3f7f30de6"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-mobile-v2.html",
+    "sha256_before": "fef9cc4affe469c491b2200d6f613a2e420c1637a0fb71f4834e01d0cee8708e",
+    "sha256_migrated": "fef9cc4affe469c491b2200d6f613a2e420c1637a0fb71f4834e01d0cee8708e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-mobile-v2.png",
+    "sha256_before": "5f2bc5dd3c629c8b2cf7d36b5b5198c3f4978d6c885631e32d3b22058e4bfd56",
+    "sha256_migrated": "5f2bc5dd3c629c8b2cf7d36b5b5198c3f4978d6c885631e32d3b22058e4bfd56"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-mobile.html",
+    "sha256_before": "3ff497cfc65bde9b5fd03a2e65054020b7561b7309e65736f9c0e81066a47256",
+    "sha256_migrated": "3ff497cfc65bde9b5fd03a2e65054020b7561b7309e65736f9c0e81066a47256"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/web-hero-mobile.png",
+    "sha256_before": "025b31613fb588a1f4570f334ff2ddcb1a0c5b4e204246883fd52675a6edf5eb",
+    "sha256_migrated": "025b31613fb588a1f4570f334ff2ddcb1a0c5b4e204246883fd52675a6edf5eb"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/FirstLaunchAfterInstallation",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Last Version",
+    "sha256_before": "75baac6a02c8f63abd477cf2c247d1bd2c6daf8275bab211fdf9b966c370df0c",
+    "sha256_migrated": "75baac6a02c8f63abd477cf2c247d1bd2c6daf8275bab211fdf9b966c370df0c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Local State",
+    "sha256_before": "9284ede72dbc519f7358088c47a27e59d3a4af27783fd07135e299dabd79f51a",
+    "sha256_migrated": "9284ede72dbc519f7358088c47a27e59d3a4af27783fd07135e299dabd79f51a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Variations",
+    "sha256_before": "f7b24f2eb3d5eb0550527490395d2f61c3d2fe74bb9cb345197dad81b58b5fed",
+    "sha256_migrated": "f7b24f2eb3d5eb0550527490395d2f61c3d2fe74bb9cb345197dad81b58b5fed"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/VariationsRuntimeSeedV2",
+    "sha256_before": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad",
+    "sha256_migrated": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/VariationsSafeSeedV2",
+    "sha256_before": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad",
+    "sha256_migrated": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/VariationsSeedV2",
+    "sha256_before": "b4cc4174735c28360b9081be3c3d0552d8a4b3cdb54431ac00ed0d622bab6296",
+    "sha256_migrated": "b4cc4174735c28360b9081be3c3d0552d8a4b3cdb54431ac00ed0d622bab6296"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/FirstLaunchAfterInstallation",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Last Version",
+    "sha256_before": "75baac6a02c8f63abd477cf2c247d1bd2c6daf8275bab211fdf9b966c370df0c",
+    "sha256_migrated": "75baac6a02c8f63abd477cf2c247d1bd2c6daf8275bab211fdf9b966c370df0c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Local State",
+    "sha256_before": "b7dbb4fd0bf2537138c469888e4a24ddf2793006096e8c16503c1395f87e0d63",
+    "sha256_migrated": "b7dbb4fd0bf2537138c469888e4a24ddf2793006096e8c16503c1395f87e0d63"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Variations",
+    "sha256_before": "f7b24f2eb3d5eb0550527490395d2f61c3d2fe74bb9cb345197dad81b58b5fed",
+    "sha256_migrated": "f7b24f2eb3d5eb0550527490395d2f61c3d2fe74bb9cb345197dad81b58b5fed"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/VariationsRuntimeSeedV2",
+    "sha256_before": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad",
+    "sha256_migrated": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/VariationsSafeSeedV2",
+    "sha256_before": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad",
+    "sha256_migrated": "1560b22b2264f7cb6b7f6910164813f76c5e8a06fb1acf85b375e687ee49c1ad"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/VariationsSeedV2",
+    "sha256_before": "b4cc4174735c28360b9081be3c3d0552d8a4b3cdb54431ac00ed0d622bab6296",
+    "sha256_migrated": "b4cc4174735c28360b9081be3c3d0552d8a4b3cdb54431ac00ed0d622bab6296"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/metadata",
+    "sha256_before": "026a17c6130f8733045146239481679d2e1fea7775feafda6983e8afd8c0bd90",
+    "sha256_migrated": "026a17c6130f8733045146239481679d2e1fea7775feafda6983e8afd8c0bd90"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/settings.dat",
+    "sha256_before": "48d542c5de9522066753e1fa751622890755d15f8a04d50cdf3b6712a8a6084e",
+    "sha256_migrated": "48d542c5de9522066753e1fa751622890755d15f8a04d50cdf3b6712a8a6084e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/throttle_store.dat",
+    "sha256_before": "41c91a9c93d76295746a149dce7ebb3b9ee2cb551d84365fff108e59a61cc304",
+    "sha256_migrated": "41c91a9c93d76295746a149dce7ebb3b9ee2cb551d84365fff108e59a61cc304"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/watson_metadata",
+    "sha256_before": "11d42a5a450fa7797a08c56403c8a98b56e1bccdab9b18723733fd608135c6bc",
+    "sha256_migrated": "11d42a5a450fa7797a08c56403c8a98b56e1bccdab9b18723733fd608135c6bc"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Affiliation Database",
+    "sha256_before": "52b369ae1ac4db15be400b8d45b01d9e4c4054299fd3743f811e785a6abcbe3a",
+    "sha256_migrated": "52b369ae1ac4db15be400b8d45b01d9e4c4054299fd3743f811e785a6abcbe3a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Affiliation Database-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/declarative_performance_observer.db",
+    "sha256_before": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf",
+    "sha256_migrated": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/declarative_performance_observer.db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ExtensionActivityEdge",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ExtensionActivityEdge-journal",
+    "sha256_before": "fde86b0e4b3098931fde678d426b8bff2c29038d336f69762120325694608016",
+    "sha256_migrated": "fde86b0e4b3098931fde678d426b8bff2c29038d336f69762120325694608016"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Favicons",
+    "sha256_before": "1fbc7ea9722b2154b0d69c9d0ed80b6c0c98c5d389cf31ac1a2b8db030724840",
+    "sha256_migrated": "1fbc7ea9722b2154b0d69c9d0ed80b6c0c98c5d389cf31ac1a2b8db030724840"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Favicons-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/History",
+    "sha256_before": "3adc9779d6c81e98d763d8cf751be266ce71b76b8137e8bdf7053e1d786e2a30",
+    "sha256_migrated": "3adc9779d6c81e98d763d8cf751be266ce71b76b8137e8bdf7053e1d786e2a30"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/History-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/HubApps Icons",
+    "sha256_before": "5fb632fd6da74c7f797600382215cbeec68cbb132cc3beb0d57562ecdcff6b54",
+    "sha256_migrated": "5fb632fd6da74c7f797600382215cbeec68cbb132cc3beb0d57562ecdcff6b54"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/HubApps Icons-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/load_statistics.db",
+    "sha256_before": "97e8d54f8a7255106f66cf1b213c4a4d7b558d21310b1c2bfedc3d0d526dddda",
+    "sha256_migrated": "97e8d54f8a7255106f66cf1b213c4a4d7b558d21310b1c2bfedc3d0d526dddda"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/load_statistics.db-shm",
+    "sha256_before": "786161c43da0a9e7419dc20a9e4fd574c9c2fe74b9b3892b27653dc0d844d456",
+    "sha256_migrated": "786161c43da0a9e7419dc20a9e4fd574c9c2fe74b9b3892b27653dc0d844d456"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/load_statistics.db-wal",
+    "sha256_before": "1032f0502e74369e03f8f7579a9d3656c9f6038d8a6e51520425b5273108debe",
+    "sha256_migrated": "1032f0502e74369e03f8f7579a9d3656c9f6038d8a6e51520425b5273108debe"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Login Data",
+    "sha256_before": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683",
+    "sha256_migrated": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Login Data For Account",
+    "sha256_before": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683",
+    "sha256_migrated": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Login Data For Account-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Login Data-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/README",
+    "sha256_before": "a0c9abae18599f0a65fc654ad36251f6330794bea66b718a09d8b297f3e38e87",
+    "sha256_migrated": "a0c9abae18599f0a65fc654ad36251f6330794bea66b718a09d8b297f3e38e87"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ServerCertificate",
+    "sha256_before": "180ffbc2a4f10b5563f5a7bfe62d23909f0aa77572a06e59a9be4c6fca7176f7",
+    "sha256_migrated": "180ffbc2a4f10b5563f5a7bfe62d23909f0aa77572a06e59a9be4c6fca7176f7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ServerCertificate-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Top Sites",
+    "sha256_before": "4d9ebcf96faf105e25d6d3e14aece4730ffc7c87c242ab308dea324d6615ff14",
+    "sha256_migrated": "4d9ebcf96faf105e25d6d3e14aece4730ffc7c87c242ab308dea324d6615ff14"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Top Sites-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Vpn Tokens",
+    "sha256_before": "0750267321d06309dfd0bc3957b29483fe4f76cdb105e02e64dbe9ec240ddc03",
+    "sha256_migrated": "0750267321d06309dfd0bc3957b29483fe4f76cdb105e02e64dbe9ec240ddc03"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Vpn Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Web Data",
+    "sha256_before": "57fcd73eb602aa9cdbdc323397be34bf774bf50d2406ee961dbd174bdfd71d0f",
+    "sha256_migrated": "57fcd73eb602aa9cdbdc323397be34bf774bf50d2406ee961dbd174bdfd71d0f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Web Data-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Nurturing/campaign_history",
+    "sha256_before": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd",
+    "sha256_migrated": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Nurturing/campaign_history-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/ShaderCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/ShaderCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/ShaderCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/ShaderCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/ShaderCache/index",
+    "sha256_before": "534a0a54b3118cfb2e355eb0decd22326ecf8093248742410e08ba678603bef1",
+    "sha256_migrated": "534a0a54b3118cfb2e355eb0decd22326ecf8093248742410e08ba678603bef1"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/reports/4c1f47e2-9484-4477-a230-6ff8ddb2743d.dmp",
+    "sha256_before": "c4fe728d71b401f272694fa0c2b1c426445891d59e043742b985a311c2ee03b6",
+    "sha256_migrated": "c4fe728d71b401f272694fa0c2b1c426445891d59e043742b985a311c2ee03b6"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/reports/a2b49d44-9c16-4a04-8c96-c615a78b06f4.dmp",
+    "sha256_before": "9295242f9620b55a54669a83ea8e0ff9fd4bde98bae89c74f799aa714379d6e0",
+    "sha256_migrated": "9295242f9620b55a54669a83ea8e0ff9fd4bde98bae89c74f799aa714379d6e0"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Crashpad/temp/edge_shutdown_crash.txt",
+    "sha256_before": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "sha256_migrated": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ClientCertificates/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/ClientCertificates/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/commerce_subscription_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/commerce_subscription_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnGraphiteCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnGraphiteCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnGraphiteCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnGraphiteCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnGraphiteCache/index",
+    "sha256_before": "d39249b708637d3563f1021b8d9eaa6bdcdfd278d460a934ea134a89a1477b8e",
+    "sha256_migrated": "d39249b708637d3563f1021b8d9eaa6bdcdfd278d460a934ea134a89a1477b8e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnWebGPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnWebGPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnWebGPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnWebGPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/DawnWebGPUCache/index",
+    "sha256_before": "15a589b21de4430ade39f63d9c9e0dc4c1c95d69149cd29de4e4ce3769901787",
+    "sha256_migrated": "15a589b21de4430ade39f63d9c9e0dc4c1c95d69149cd29de4e4ce3769901787"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/discounts_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/discounts_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/discount_infos_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/discount_infos_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/EdgePushStorageWithConnectTokenAndKey/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/EdgePushStorageWithConnectTokenAndKey/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/EdgePushStorageWithConnectTokenAndKey/LOG.old",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Rules/000003.log",
+    "sha256_before": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da",
+    "sha256_migrated": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Rules/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Rules/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Rules/LOG",
+    "sha256_before": "859f238378aa92a4e60be1742a3114a5fafd008facb1d8cee7240ce7a4caf591",
+    "sha256_migrated": "859f238378aa92a4e60be1742a3114a5fafd008facb1d8cee7240ce7a4caf591"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Rules/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Scripts/000003.log",
+    "sha256_before": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da",
+    "sha256_migrated": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Scripts/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Scripts/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Scripts/LOG",
+    "sha256_before": "e4063317683b57ff45c83e745fc11443add7cbdd712bb9c294c65e018558c79d",
+    "sha256_migrated": "e4063317683b57ff45c83e745fc11443add7cbdd712bb9c294c65e018558c79d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension Scripts/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension State/000003.log",
+    "sha256_before": "388c5c95f0f54f32b499c03a37aabfa5e0a31030ec70d0956a239942544b0eea",
+    "sha256_migrated": "388c5c95f0f54f32b499c03a37aabfa5e0a31030ec70d0956a239942544b0eea"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension State/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension State/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension State/LOG",
+    "sha256_before": "cfdca3fd32d64135ea218cb67a978f6f1f83573c7aae11fee448cc08ec9869e2",
+    "sha256_migrated": "cfdca3fd32d64135ea218cb67a978f6f1f83573c7aae11fee448cc08ec9869e2"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Extension State/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/GPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/GPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/GPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/GPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/GPUCache/index",
+    "sha256_before": "bcf9a385df18fb0e09a3fa0f09d7e19ef201afbe4368390ee0e530f97c871540",
+    "sha256_migrated": "bcf9a385df18fb0e09a3fa0f09d7e19ef201afbe4368390ee0e530f97c871540"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Cookies",
+    "sha256_before": "8da294027e6ff01d4253e19f529e9af6f4ddf89ae08a4b50225a007ddffb43e4",
+    "sha256_migrated": "8da294027e6ff01d4253e19f529e9af6f4ddf89ae08a4b50225a007ddffb43e4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Cookies-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Device Bound Sessions",
+    "sha256_before": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2",
+    "sha256_migrated": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Device Bound Sessions-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/NetworkDataMigrated",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Reporting and NEL",
+    "sha256_before": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11",
+    "sha256_migrated": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Reporting and NEL-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/SCT Auditing Pending Reports",
+    "sha256_before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "sha256_migrated": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Trust Tokens",
+    "sha256_before": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812",
+    "sha256_migrated": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Network/Trust Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Nurturing/campaign_history",
+    "sha256_before": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd",
+    "sha256_migrated": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Nurturing/campaign_history-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/parcel_tracking_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/parcel_tracking_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/PersistentOriginTrials/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/PersistentOriginTrials/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Shared Dictionary/db",
+    "sha256_before": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba",
+    "sha256_migrated": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Shared Dictionary/db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/000003.log",
+    "sha256_before": "ab5c71347d95f319781df230012713c7819ac0d69373e8c9a7302cae3f9a04b7",
+    "sha256_migrated": "ab5c71347d95f319781df230012713c7819ac0d69373e8c9a7302cae3f9a04b7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/LOG",
+    "sha256_before": "c5de75b9448782227fb0ece611161c184f3e4d2ad1072919208186e60868e6db",
+    "sha256_migrated": "c5de75b9448782227fb0ece611161c184f3e4d2ad1072919208186e60868e6db"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Site Characteristics Database/000003.log",
+    "sha256_before": "f096bc366a931fba656bdcd77b24af15a5f29fc53281a727c79f82c608ecfab8",
+    "sha256_migrated": "f096bc366a931fba656bdcd77b24af15a5f29fc53281a727c79f82c608ecfab8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Site Characteristics Database/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Site Characteristics Database/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Site Characteristics Database/LOG",
+    "sha256_before": "8aed273cb2f48e3a7cac867fc386996bba745ea984616126f3f9316827e8e699",
+    "sha256_migrated": "8aed273cb2f48e3a7cac867fc386996bba745ea984616126f3f9316827e8e699"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Site Characteristics Database/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/WebStorage/QuotaManager",
+    "sha256_before": "357c5ad38435baa4037b4dded0263e1ae04e55f5c26416584b9b1e632088d8a5",
+    "sha256_migrated": "357c5ad38435baa4037b4dded0263e1ae04e55f5c26416584b9b1e632088d8a5"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/WebStorage/QuotaManager-journal",
+    "sha256_before": "121ac5bcb8b69d7b1606afcf14977e7fe78436b6f36f867997b2a4dde72c62c7",
+    "sha256_migrated": "121ac5bcb8b69d7b1606afcf14977e7fe78436b6f36f867997b2a4dde72c62c7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/Cache_Data/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/Cache_Data/data_1",
+    "sha256_before": "902f30c1fb0597d0734bc34b979ec5d131f8f39a4b71b338083821216ec8d61b",
+    "sha256_migrated": "902f30c1fb0597d0734bc34b979ec5d131f8f39a4b71b338083821216ec8d61b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/Cache_Data/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/Cache_Data/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/Cache_Data/index",
+    "sha256_before": "bea1ecd3a155bb20bb05f228c7966326227c5e6fe450bf21f5f90c8ef5047fcd",
+    "sha256_migrated": "bea1ecd3a155bb20bb05f228c7966326227c5e6fe450bf21f5f90c8ef5047fcd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/No_Vary_Search/journal.baj",
+    "sha256_before": "9c169428d852e25bd59b27652ed533d2a1f09f96e4c329fa5e06f47e16731543",
+    "sha256_migrated": "9c169428d852e25bd59b27652ed533d2a1f09f96e4c329fa5e06f47e16731543"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Cache/No_Vary_Search/snapshot.baf",
+    "sha256_before": "0c2dd377ed0cc66161e9db8f89f7d8bcb3ad8c06c4a054bdcba214ab05f58c9a",
+    "sha256_migrated": "0c2dd377ed0cc66161e9db8f89f7d8bcb3ad8c06c4a054bdcba214ab05f58c9a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Code Cache/js/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Code Cache/wasm/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Code Cache/js/index-dir/the-real-index",
+    "sha256_before": "eef90798ef820e7f20041b77f4327315d7db71340b0cb8a797945c826cfe1959",
+    "sha256_migrated": "eef90798ef820e7f20041b77f4327315d7db71340b0cb8a797945c826cfe1959"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Code Cache/wasm/index-dir/the-real-index",
+    "sha256_before": "6b49d8d7e9b6cdbe00ee86de034a96d5aa023d091a70bef6551610b5bc8de662",
+    "sha256_migrated": "6b49d8d7e9b6cdbe00ee86de034a96d5aa023d091a70bef6551610b5bc8de662"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/Database/000003.log",
+    "sha256_before": "c071a5dfb63feb68e8bcf5050ea3439db3cc97bb5703c17997f4cd503144f6e7",
+    "sha256_migrated": "c071a5dfb63feb68e8bcf5050ea3439db3cc97bb5703c17997f4cd503144f6e7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/Database/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/Database/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/Database/LOG",
+    "sha256_before": "57f699ecdfb5ba6b70f3b1f6acd36d1dca3a45938b1f81c399269dda5d68084b",
+    "sha256_migrated": "57f699ecdfb5ba6b70f3b1f6acd36d1dca3a45938b1f81c399269dda5d68084b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/Database/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/ScriptCache/2cc80dabc69f58b6_0",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Service Worker/ScriptCache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Shared Dictionary/cache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Shared Dictionary/cache/index-dir/the-real-index",
+    "sha256_before": "c57681d52d2fd84002b65b4f1ca5d9bca3346303047cee91382061d11a118cfa",
+    "sha256_migrated": "c57681d52d2fd84002b65b4f1ca5d9bca3346303047cee91382061d11a118cfa"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/metadata/000003.log",
+    "sha256_before": "7a5c34a5733f76d07abb2612b55b458f9dca9e64101a67a0b9f7a63c63a04d71",
+    "sha256_migrated": "7a5c34a5733f76d07abb2612b55b458f9dca9e64101a67a0b9f7a63c63a04d71"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/metadata/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/metadata/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/metadata/LOG",
+    "sha256_before": "b5c54c80cb073d3aa5d5e097ee18f379c3c60dcca091178af5fb59162fe45692",
+    "sha256_migrated": "b5c54c80cb073d3aa5d5e097ee18f379c3c60dcca091178af5fb59162fe45692"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/shared_proto_db/metadata/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/declarative_performance_observer.db",
+    "sha256_before": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf",
+    "sha256_migrated": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/declarative_performance_observer.db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/index",
+    "sha256_before": "e009595de9ccd7292b095f513377f1f9bf92990ff8f13fd4efa9aa5cb2c75499",
+    "sha256_migrated": "e009595de9ccd7292b095f513377f1f9bf92990ff8f13fd4efa9aa5cb2c75499"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/index",
+    "sha256_before": "489ebc5d364326cf46094ff403be820b64e536059928af4aee497c8dc2d87e63",
+    "sha256_migrated": "489ebc5d364326cf46094ff403be820b64e536059928af4aee497c8dc2d87e63"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/index",
+    "sha256_before": "80a594dbd02e17fe998977118ea1238d328548a35e48bf7f79c3cef78e7f91d5",
+    "sha256_migrated": "80a594dbd02e17fe998977118ea1238d328548a35e48bf7f79c3cef78e7f91d5"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Device Bound Sessions",
+    "sha256_before": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2",
+    "sha256_migrated": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Device Bound Sessions-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/NetworkDataMigrated",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Reporting and NEL",
+    "sha256_before": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11",
+    "sha256_migrated": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Reporting and NEL-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens",
+    "sha256_before": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812",
+    "sha256_migrated": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db",
+    "sha256_before": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba",
+    "sha256_migrated": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index-dir/the-real-index",
+    "sha256_before": "adeebd8e34ca5fc3df7dfa50cb7341594b0e1eb969e993cf38d7fac96b2120dc",
+    "sha256_migrated": "adeebd8e34ca5fc3df7dfa50cb7341594b0e1eb969e993cf38d7fac96b2120dc"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index-dir/the-real-index",
+    "sha256_before": "adeebd8e34ca5fc3df7dfa50cb7341594b0e1eb969e993cf38d7fac96b2120dc",
+    "sha256_migrated": "adeebd8e34ca5fc3df7dfa50cb7341594b0e1eb969e993cf38d7fac96b2120dc"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index-dir/the-real-index",
+    "sha256_before": "000672069b764fd4b964f2d75f32907fcf688b8b92e08237796d7f9f3fb8b658",
+    "sha256_migrated": "000672069b764fd4b964f2d75f32907fcf688b8b92e08237796d7f9f3fb8b658"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Sync Data/LevelDB/000003.log",
+    "sha256_before": "225d5ae4f9f239789da25e14ea1251600d0a4b71ba2521744392966950ad3744",
+    "sha256_migrated": "225d5ae4f9f239789da25e14ea1251600d0a4b71ba2521744392966950ad3744"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Sync Data/LevelDB/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Sync Data/LevelDB/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Sync Data/LevelDB/LOG",
+    "sha256_before": "9beb619f966364036e44fa0c0e2e829fd2c32f8701876976e7e48110e333a422",
+    "sha256_migrated": "9beb619f966364036e44fa0c0e2e829fd2c32f8701876976e7e48110e333a422"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/Default/Sync Data/LevelDB/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.db",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.db-wal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/SmartScreen/RemoteData/customSettings",
+    "sha256_before": "d8d672f953e823063955bd9981532fc3453800c2e74c0cc3653d091088abd3b3",
+    "sha256_migrated": "d8d672f953e823063955bd9981532fc3453800c2e74c0cc3653d091088abd3b3"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/SmartScreen/RemoteData/customSettings_F95BA787499AB4FA9EFFF472CE383A14",
+    "sha256_before": "2bae8302f9bd2d87ae26acf692663df1639b8e2068157451da4773bd8bd30a2b",
+    "sha256_migrated": "2bae8302f9bd2d87ae26acf692663df1639b8e2068157451da4773bd8bd30a2b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/SmartScreen/RemoteData/edgeSettings",
+    "sha256_before": "42ccb5159b168dbe5d5ddf026e5f7ed3dbf50873cfe47c7c3ef0677bb07b90d4",
+    "sha256_migrated": "42ccb5159b168dbe5d5ddf026e5f7ed3dbf50873cfe47c7c3ef0677bb07b90d4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/SmartScreen/RemoteData/edgeSettings_2.0-0",
+    "sha256_before": "e6beb5ac43dfa3e05ca3c40c4e5de7d763e2e0580203ad9034c6f0527ac0e45b",
+    "sha256_migrated": "e6beb5ac43dfa3e05ca3c40c4e5de7d763e2e0580203ad9034c6f0527ac0e45b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/metadata",
+    "sha256_before": "ec3498703baf9ad7511680277c4172d5a61bd09c3562c8f7af1c107959d40936",
+    "sha256_migrated": "ec3498703baf9ad7511680277c4172d5a61bd09c3562c8f7af1c107959d40936"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/settings.dat",
+    "sha256_before": "70b988ed826c85494ba5972c0630572d5ee2edf1af10210674b28725e2b849dd",
+    "sha256_migrated": "70b988ed826c85494ba5972c0630572d5ee2edf1af10210674b28725e2b849dd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/throttle_store.dat",
+    "sha256_before": "41c91a9c93d76295746a149dce7ebb3b9ee2cb551d84365fff108e59a61cc304",
+    "sha256_migrated": "41c91a9c93d76295746a149dce7ebb3b9ee2cb551d84365fff108e59a61cc304"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/watson_metadata",
+    "sha256_before": "6ed568728a6dba9f21d678cf0985a5a9ae40222afff9a27f2dd020b690c67b63",
+    "sha256_migrated": "6ed568728a6dba9f21d678cf0985a5a9ae40222afff9a27f2dd020b690c67b63"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Affiliation Database",
+    "sha256_before": "52b369ae1ac4db15be400b8d45b01d9e4c4054299fd3743f811e785a6abcbe3a",
+    "sha256_migrated": "52b369ae1ac4db15be400b8d45b01d9e4c4054299fd3743f811e785a6abcbe3a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Affiliation Database-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/declarative_performance_observer.db",
+    "sha256_before": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf",
+    "sha256_migrated": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/declarative_performance_observer.db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ExtensionActivityEdge",
+    "sha256_before": "2a3500805bafe1fef23b1de5b1638421781a5ae1eb49269e95def0a9b1150216",
+    "sha256_migrated": "2a3500805bafe1fef23b1de5b1638421781a5ae1eb49269e95def0a9b1150216"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ExtensionActivityEdge-journal",
+    "sha256_before": "17d055066d608f99b1e00df11c0bdaf50d77b211172052cb6a92e804235e800c",
+    "sha256_migrated": "17d055066d608f99b1e00df11c0bdaf50d77b211172052cb6a92e804235e800c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Favicons",
+    "sha256_before": "1fbc7ea9722b2154b0d69c9d0ed80b6c0c98c5d389cf31ac1a2b8db030724840",
+    "sha256_migrated": "1fbc7ea9722b2154b0d69c9d0ed80b6c0c98c5d389cf31ac1a2b8db030724840"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Favicons-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/History",
+    "sha256_before": "3adc9779d6c81e98d763d8cf751be266ce71b76b8137e8bdf7053e1d786e2a30",
+    "sha256_migrated": "3adc9779d6c81e98d763d8cf751be266ce71b76b8137e8bdf7053e1d786e2a30"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/History-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/HubApps Icons",
+    "sha256_before": "5fb632fd6da74c7f797600382215cbeec68cbb132cc3beb0d57562ecdcff6b54",
+    "sha256_migrated": "5fb632fd6da74c7f797600382215cbeec68cbb132cc3beb0d57562ecdcff6b54"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/HubApps Icons-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/load_statistics.db",
+    "sha256_before": "97e8d54f8a7255106f66cf1b213c4a4d7b558d21310b1c2bfedc3d0d526dddda",
+    "sha256_migrated": "97e8d54f8a7255106f66cf1b213c4a4d7b558d21310b1c2bfedc3d0d526dddda"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/load_statistics.db-shm",
+    "sha256_before": "4299693d194009fa8c208a216d3c0f1abdd67303a4b808fa6f3e5fbfcf8df282",
+    "sha256_migrated": "4299693d194009fa8c208a216d3c0f1abdd67303a4b808fa6f3e5fbfcf8df282"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/load_statistics.db-wal",
+    "sha256_before": "61ec852e6c10af1a9583104140a8948c0895a222c30e48237fd1f5c374342748",
+    "sha256_migrated": "61ec852e6c10af1a9583104140a8948c0895a222c30e48237fd1f5c374342748"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Login Data",
+    "sha256_before": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683",
+    "sha256_migrated": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Login Data For Account",
+    "sha256_before": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683",
+    "sha256_migrated": "4825922749265b3039e3d5fabc9e5cbdd00406b0d256bafea9a835234ab38683"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Login Data For Account-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Login Data-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/README",
+    "sha256_before": "a0c9abae18599f0a65fc654ad36251f6330794bea66b718a09d8b297f3e38e87",
+    "sha256_migrated": "a0c9abae18599f0a65fc654ad36251f6330794bea66b718a09d8b297f3e38e87"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ServerCertificate",
+    "sha256_before": "180ffbc2a4f10b5563f5a7bfe62d23909f0aa77572a06e59a9be4c6fca7176f7",
+    "sha256_migrated": "180ffbc2a4f10b5563f5a7bfe62d23909f0aa77572a06e59a9be4c6fca7176f7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ServerCertificate-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Top Sites",
+    "sha256_before": "4d9ebcf96faf105e25d6d3e14aece4730ffc7c87c242ab308dea324d6615ff14",
+    "sha256_migrated": "4d9ebcf96faf105e25d6d3e14aece4730ffc7c87c242ab308dea324d6615ff14"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Top Sites-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Vpn Tokens",
+    "sha256_before": "0750267321d06309dfd0bc3957b29483fe4f76cdb105e02e64dbe9ec240ddc03",
+    "sha256_migrated": "0750267321d06309dfd0bc3957b29483fe4f76cdb105e02e64dbe9ec240ddc03"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Vpn Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Web Data",
+    "sha256_before": "57fcd73eb602aa9cdbdc323397be34bf774bf50d2406ee961dbd174bdfd71d0f",
+    "sha256_migrated": "57fcd73eb602aa9cdbdc323397be34bf774bf50d2406ee961dbd174bdfd71d0f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Web Data-journal",
+    "sha256_before": "a3880f12c732cb7e77af16d25b2297ef6ea8125e72e9f5a1b3b63d5398355deb",
+    "sha256_migrated": "a3880f12c732cb7e77af16d25b2297ef6ea8125e72e9f5a1b3b63d5398355deb"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Nurturing/campaign_history",
+    "sha256_before": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd",
+    "sha256_migrated": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Nurturing/campaign_history-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/ShaderCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/ShaderCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/ShaderCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/ShaderCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/ShaderCache/index",
+    "sha256_before": "a2e95cb339fce8e6844ebd260560293d76bb3020b07a4b4fb9ac2faad7094d32",
+    "sha256_migrated": "a2e95cb339fce8e6844ebd260560293d76bb3020b07a4b4fb9ac2faad7094d32"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/reports/145781e5-3c69-4dbd-a405-a084632d2306.dmp",
+    "sha256_before": "ac5543e44fb200e4e40c2a1e527e03c3df1da6c0f64979edb1412f674943302c",
+    "sha256_migrated": "ac5543e44fb200e4e40c2a1e527e03c3df1da6c0f64979edb1412f674943302c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/reports/5d74c351-cb31-49ee-b16c-73d39cc09c94.dmp",
+    "sha256_before": "8eb8ce8676fa940b85832538ea8d3f6765ddc7320cbc463b1c86f3bfad7002b8",
+    "sha256_migrated": "8eb8ce8676fa940b85832538ea8d3f6765ddc7320cbc463b1c86f3bfad7002b8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Crashpad/temp/edge_shutdown_crash.txt",
+    "sha256_before": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+    "sha256_migrated": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ClientCertificates/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/ClientCertificates/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/commerce_subscription_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/commerce_subscription_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnGraphiteCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnGraphiteCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnGraphiteCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnGraphiteCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnGraphiteCache/index",
+    "sha256_before": "56c47d478faf402116e8f443a6ce29f4640f3d716811359af7ed82da3965670c",
+    "sha256_migrated": "56c47d478faf402116e8f443a6ce29f4640f3d716811359af7ed82da3965670c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnWebGPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnWebGPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnWebGPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnWebGPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/DawnWebGPUCache/index",
+    "sha256_before": "f7619dafe307d3c37d3ba0c3978605537439beee17361742ce8d3845aba49205",
+    "sha256_migrated": "f7619dafe307d3c37d3ba0c3978605537439beee17361742ce8d3845aba49205"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/discounts_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/discounts_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/discount_infos_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/discount_infos_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/EdgePushStorageWithConnectTokenAndKey/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/EdgePushStorageWithConnectTokenAndKey/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/EdgePushStorageWithConnectTokenAndKey/LOG.old",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Rules/000003.log",
+    "sha256_before": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da",
+    "sha256_migrated": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Rules/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Rules/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Rules/LOG",
+    "sha256_before": "b1d384a1626192abf4f6a6332eac3182a131bc9550da788f407824f4488595de",
+    "sha256_migrated": "b1d384a1626192abf4f6a6332eac3182a131bc9550da788f407824f4488595de"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Rules/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Scripts/000003.log",
+    "sha256_before": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da",
+    "sha256_migrated": "14f92b911f9fe774720461eec5bb4761ae6bfc9445c67e30bf624a8694b4b1da"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Scripts/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Scripts/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Scripts/LOG",
+    "sha256_before": "380696a5e15064c02abecec5b951f360e65767c11afa5b2f7aa84f421ec8bc2c",
+    "sha256_migrated": "380696a5e15064c02abecec5b951f360e65767c11afa5b2f7aa84f421ec8bc2c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension Scripts/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension State/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension State/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension State/LOG",
+    "sha256_before": "d4e4bcc93c2546e80d512db7a4cb5dca12a4c879bd8decd0e34d9107b47eafb8",
+    "sha256_migrated": "d4e4bcc93c2546e80d512db7a4cb5dca12a4c879bd8decd0e34d9107b47eafb8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Extension State/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/GPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/GPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/GPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/GPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/GPUCache/index",
+    "sha256_before": "759344b712c1d48bec9d1ad585b06826cb3e7cec27feea0be1a254d33451d27f",
+    "sha256_migrated": "759344b712c1d48bec9d1ad585b06826cb3e7cec27feea0be1a254d33451d27f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Cookies",
+    "sha256_before": "8da294027e6ff01d4253e19f529e9af6f4ddf89ae08a4b50225a007ddffb43e4",
+    "sha256_migrated": "8da294027e6ff01d4253e19f529e9af6f4ddf89ae08a4b50225a007ddffb43e4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Cookies-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Device Bound Sessions",
+    "sha256_before": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2",
+    "sha256_migrated": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Device Bound Sessions-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/NetworkDataMigrated",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Reporting and NEL",
+    "sha256_before": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11",
+    "sha256_migrated": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Reporting and NEL-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/SCT Auditing Pending Reports",
+    "sha256_before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "sha256_migrated": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Trust Tokens",
+    "sha256_before": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812",
+    "sha256_migrated": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Network/Trust Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Nurturing/campaign_history",
+    "sha256_before": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd",
+    "sha256_migrated": "bf3caa0226349b642e67dbccd9d8125c8c9c402a60a8e4e6295b7dad48feb3dd"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Nurturing/campaign_history-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/parcel_tracking_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/parcel_tracking_db/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/PersistentOriginTrials/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/PersistentOriginTrials/LOG",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Shared Dictionary/db",
+    "sha256_before": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba",
+    "sha256_migrated": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Shared Dictionary/db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/000003.log",
+    "sha256_before": "ab5c71347d95f319781df230012713c7819ac0d69373e8c9a7302cae3f9a04b7",
+    "sha256_migrated": "ab5c71347d95f319781df230012713c7819ac0d69373e8c9a7302cae3f9a04b7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/LOG",
+    "sha256_before": "ec3a065f84d734009160a944102d2c7c832e9cc1ad03972c0c899e6b4d3fbed5",
+    "sha256_migrated": "ec3a065f84d734009160a944102d2c7c832e9cc1ad03972c0c899e6b4d3fbed5"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Site Characteristics Database/000003.log",
+    "sha256_before": "f096bc366a931fba656bdcd77b24af15a5f29fc53281a727c79f82c608ecfab8",
+    "sha256_migrated": "f096bc366a931fba656bdcd77b24af15a5f29fc53281a727c79f82c608ecfab8"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Site Characteristics Database/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Site Characteristics Database/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Site Characteristics Database/LOG",
+    "sha256_before": "75a0aaa5ed7ec104e275fd4c4b6d2944a0bec4050137f2a94944a5a9d907b85f",
+    "sha256_migrated": "75a0aaa5ed7ec104e275fd4c4b6d2944a0bec4050137f2a94944a5a9d907b85f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Site Characteristics Database/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/WebStorage/QuotaManager",
+    "sha256_before": "ce6181fc1bb538e23316642b7c4fe1f61a65438b1187ec515ef5aace6c65f220",
+    "sha256_migrated": "ce6181fc1bb538e23316642b7c4fe1f61a65438b1187ec515ef5aace6c65f220"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/WebStorage/QuotaManager-journal",
+    "sha256_before": "c455a575392f819805de29ab5d5b41d10f3a55312cd3d63d76661dd425e905e3",
+    "sha256_migrated": "c455a575392f819805de29ab5d5b41d10f3a55312cd3d63d76661dd425e905e3"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/Cache_Data/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/Cache_Data/data_1",
+    "sha256_before": "902f30c1fb0597d0734bc34b979ec5d131f8f39a4b71b338083821216ec8d61b",
+    "sha256_migrated": "902f30c1fb0597d0734bc34b979ec5d131f8f39a4b71b338083821216ec8d61b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/Cache_Data/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/Cache_Data/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/Cache_Data/index",
+    "sha256_before": "2946d664bd6d487515b2585879c0ee2425aa4b65f6a0c4cdc68b1b30e32ebb0f",
+    "sha256_migrated": "2946d664bd6d487515b2585879c0ee2425aa4b65f6a0c4cdc68b1b30e32ebb0f"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/No_Vary_Search/journal.baj",
+    "sha256_before": "9c169428d852e25bd59b27652ed533d2a1f09f96e4c329fa5e06f47e16731543",
+    "sha256_migrated": "9c169428d852e25bd59b27652ed533d2a1f09f96e4c329fa5e06f47e16731543"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Cache/No_Vary_Search/snapshot.baf",
+    "sha256_before": "0c2dd377ed0cc66161e9db8f89f7d8bcb3ad8c06c4a054bdcba214ab05f58c9a",
+    "sha256_migrated": "0c2dd377ed0cc66161e9db8f89f7d8bcb3ad8c06c4a054bdcba214ab05f58c9a"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Code Cache/js/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Code Cache/wasm/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Code Cache/js/index-dir/the-real-index",
+    "sha256_before": "8ba62426038678cf0df32ce026afad1617c6553950b33a0961349b7b04e4aa82",
+    "sha256_migrated": "8ba62426038678cf0df32ce026afad1617c6553950b33a0961349b7b04e4aa82"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Code Cache/wasm/index-dir/the-real-index",
+    "sha256_before": "8ba62426038678cf0df32ce026afad1617c6553950b33a0961349b7b04e4aa82",
+    "sha256_migrated": "8ba62426038678cf0df32ce026afad1617c6553950b33a0961349b7b04e4aa82"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Service Worker/Database/000001.dbtmp",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Service Worker/Database/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Service Worker/Database/LOG",
+    "sha256_before": "0167175c1c294f3ae5880d3dada7715008a395224e37713bf847c09fa5c8ee3b",
+    "sha256_migrated": "0167175c1c294f3ae5880d3dada7715008a395224e37713bf847c09fa5c8ee3b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Service Worker/Database/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Service Worker/ScriptCache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Shared Dictionary/cache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Shared Dictionary/cache/index-dir/the-real-index",
+    "sha256_before": "88bff1d349961a54e0031c2da3c2d65975ac27505c1325fa77b0eb9414625615",
+    "sha256_migrated": "88bff1d349961a54e0031c2da3c2d65975ac27505c1325fa77b0eb9414625615"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/metadata/000003.log",
+    "sha256_before": "8d5127def53010e8a32c7d1ac7521bf6c5e4dfadbe4fa1e936e46c3443ef47ff",
+    "sha256_migrated": "8d5127def53010e8a32c7d1ac7521bf6c5e4dfadbe4fa1e936e46c3443ef47ff"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/metadata/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/metadata/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/metadata/LOG",
+    "sha256_before": "5203fb9d8bb0c208383b26bb6b4e3a88eade8c5d83fcac5a2b731454e5077a46",
+    "sha256_migrated": "5203fb9d8bb0c208383b26bb6b4e3a88eade8c5d83fcac5a2b731454e5077a46"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/shared_proto_db/metadata/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/declarative_performance_observer.db",
+    "sha256_before": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf",
+    "sha256_migrated": "eda4c9567974174f08a1dbcd8badf4d6199a7e9a8b78b8826548f49e20e7badf"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/declarative_performance_observer.db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnGraphiteCache/index",
+    "sha256_before": "6da3032f2580c25d5b13c59bc80f70421a8c62c584b195171280487ca3ca2968",
+    "sha256_migrated": "6da3032f2580c25d5b13c59bc80f70421a8c62c584b195171280487ca3ca2968"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/DawnWebGPUCache/index",
+    "sha256_before": "203ad764b02d99bb32feccde282df72363433640b7f48bc1c84e2224afa1ef01",
+    "sha256_migrated": "203ad764b02d99bb32feccde282df72363433640b7f48bc1c84e2224afa1ef01"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_0",
+    "sha256_before": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e",
+    "sha256_migrated": "d6a5fe39cd672781b256e0e3102f7022635f1d4bb7cfcc90a80fffe4d0f3877e"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_1",
+    "sha256_before": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec",
+    "sha256_migrated": "b1e963d702392fb7224786e7d56d43973e9b9efd1b89c17814d7c558ffc0cdec"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_2",
+    "sha256_before": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7",
+    "sha256_migrated": "ec1702806f4cc7c42a82fc2b38e89835fde7c64bb32060e0823c9077ca92efb7"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/data_3",
+    "sha256_before": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c",
+    "sha256_migrated": "e09f42c398d688dce168570291f1f92d079987deda3099a34adb9e8c0522b30c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/GPUCache/index",
+    "sha256_before": "cfbe25a07ef3ac1c92e3fc53890ec473b9e67f5de773230605b242fa34e12fe3",
+    "sha256_migrated": "cfbe25a07ef3ac1c92e3fc53890ec473b9e67f5de773230605b242fa34e12fe3"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Device Bound Sessions",
+    "sha256_before": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2",
+    "sha256_migrated": "6a22ff7ca6e53a73bc4578271e5f5bf34cdd7c1c9e8e13aea5db31ae5b2618d2"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Device Bound Sessions-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/NetworkDataMigrated",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Reporting and NEL",
+    "sha256_before": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11",
+    "sha256_migrated": "2d6dada0da20730019917ab502a8189099aa5ad98a1b23cd30715d6f9689ef11"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Reporting and NEL-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens",
+    "sha256_before": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812",
+    "sha256_migrated": "88bafa2a265212152b2405502209d64438a416ff594a040e666f031ef442a812"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Network/Trust Tokens-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db",
+    "sha256_before": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba",
+    "sha256_migrated": "0d6287fecedbc44ed9f51ded9de88629ec9f385ecff5da9a34e47e96fd5a9cba"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/db-journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/js/index-dir/the-real-index",
+    "sha256_before": "5f1d502aa8c758d6b8458058dda03542ea8268beed73741a10f4bb2e58c02d06",
+    "sha256_migrated": "5f1d502aa8c758d6b8458058dda03542ea8268beed73741a10f4bb2e58c02d06"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Code Cache/wasm/index-dir/the-real-index",
+    "sha256_before": "5f1d502aa8c758d6b8458058dda03542ea8268beed73741a10f4bb2e58c02d06",
+    "sha256_migrated": "5f1d502aa8c758d6b8458058dda03542ea8268beed73741a10f4bb2e58c02d06"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index",
+    "sha256_before": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d",
+    "sha256_migrated": "fbcfe23a2ecb82b7100c50811691dde0a33aa3da8d176be9882a9db485dc0f2d"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Storage/ext/ihmafllikibpmigkcoadcmckbfhibefp/def/Shared Dictionary/cache/index-dir/the-real-index",
+    "sha256_before": "1949412cdc393c06ee16452d17bd76590601678f6be2c76baa9606b669ed7639",
+    "sha256_migrated": "1949412cdc393c06ee16452d17bd76590601678f6be2c76baa9606b669ed7639"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Sync Data/LevelDB/000003.log",
+    "sha256_before": "225d5ae4f9f239789da25e14ea1251600d0a4b71ba2521744392966950ad3744",
+    "sha256_migrated": "225d5ae4f9f239789da25e14ea1251600d0a4b71ba2521744392966950ad3744"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Sync Data/LevelDB/CURRENT",
+    "sha256_before": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+    "sha256_migrated": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Sync Data/LevelDB/LOCK",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Sync Data/LevelDB/LOG",
+    "sha256_before": "c2a1c32a918acb83bfdba08fb408cebaa3cccd8c0edb75dd7f3a2decc6d5dd4c",
+    "sha256_migrated": "c2a1c32a918acb83bfdba08fb408cebaa3cccd8c0edb75dd7f3a2decc6d5dd4c"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/Default/Sync Data/LevelDB/MANIFEST-000001",
+    "sha256_before": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4",
+    "sha256_migrated": "f9d31b278e215eb0d0e9cd709edfa037e828f36214ab7906f612160fead4b2b4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.db",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.db-wal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/GPUPersistentCache/DawnGraphiteCache/ZBRSUVJ7IMDXK2RUP4UNAHPCKJL4BWQB/cache.journal",
+    "sha256_before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_migrated": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/SmartScreen/RemoteData/customSettings",
+    "sha256_before": "d8d672f953e823063955bd9981532fc3453800c2e74c0cc3653d091088abd3b3",
+    "sha256_migrated": "d8d672f953e823063955bd9981532fc3453800c2e74c0cc3653d091088abd3b3"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/SmartScreen/RemoteData/customSettings_F95BA787499AB4FA9EFFF472CE383A14",
+    "sha256_before": "2bae8302f9bd2d87ae26acf692663df1639b8e2068157451da4773bd8bd30a2b",
+    "sha256_migrated": "2bae8302f9bd2d87ae26acf692663df1639b8e2068157451da4773bd8bd30a2b"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/SmartScreen/RemoteData/edgeSettings",
+    "sha256_before": "42ccb5159b168dbe5d5ddf026e5f7ed3dbf50873cfe47c7c3ef0677bb07b90d4",
+    "sha256_migrated": "42ccb5159b168dbe5d5ddf026e5f7ed3dbf50873cfe47c7c3ef0677bb07b90d4"
+  },
+  {
+    "path": "TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/SmartScreen/RemoteData/edgeSettings_2.0-0",
+    "sha256_before": "e6beb5ac43dfa3e05ca3c40c4e5de7d763e2e0580203ad9034c6f0527ac0e45b",
+    "sha256_migrated": "e6beb5ac43dfa3e05ca3c40c4e5de7d763e2e0580203ad9034c6f0527ac0e45b"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-001-brand-system-architecture/SKILL.md",
+    "sha256_before": "4639796c01b76d4705b66bdd979dae47d8f1a400b3fade622a570910d0deca41",
+    "sha256_migrated": "8da20c998f121500c995283a88682a89be380d553a977c7069fb76c99a8d6e67"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-002-brand-guidelines-engineering/SKILL.md",
+    "sha256_before": "c0c39053e4d110b79070d342fd18980d16076f924b7fb0d42b351f126d185aa0",
+    "sha256_migrated": "3c33a427977de595a21dac452d089b126b7828464f691402d514427ce917c33b"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-003-design-tokens/SKILL.md",
+    "sha256_before": "903b54204d66802cbb239a71900a1b48588ff05637772a220ff653fd46f4c3a1",
+    "sha256_migrated": "437046f941544235c65ca5a8d6134849590a5d48eeb3a1cf6dfe26731dc4ae40"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-004-visual-hierarchy-layout/SKILL.md",
+    "sha256_before": "d81ab7cdcb5e451477d73659371863c53d923e4e90c8fb6932746aad98bfad7a",
+    "sha256_migrated": "5fdf39b873c6523fa9c9b5241d111d25b7b2785a104cf1dec32c5d488b26f24b"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-005-typography-system/SKILL.md",
+    "sha256_before": "8c54b3c7b45f37a4507c53d1b5255d6de0554b06537a8a6b765c1cff1d270168",
+    "sha256_migrated": "d4cc1e5fec1db3874bbe31ba8cae2dd8a08f100196d04be295dd44f3f641b53a"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-006-color-system-accessibility/SKILL.md",
+    "sha256_before": "aa3371926e4f792bbc045046b39fb12358aa936e77df33214dac6d16e691630a",
+    "sha256_migrated": "3725a8e1a8c8a83ca21acb6be0ad456e2ba2ceb328f5cb1eb5f0e225107766b6"
+  },
+  {
+    "path": "TSST/CREATIVE/skills/tsst-creative-sk-008-creative-art-direction/SKILL.md",
+    "sha256_before": "bc9ce6d285d33e3e64640ce09666fb2104f3d0c739c3c969becb44717a103847",
+    "sha256_migrated": "2969cf3e953cd2761864e14e86c073e115b5cee713449f01d9d27c5ef3529e16"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-001-evaluation.md",
+    "sha256_before": "e25ae6a79a2aeb14d46641f47939e6d0acaf29c35ed2b15a376514d14b8c1104",
+    "sha256_migrated": "7306e3e77e03831867bc9a7945b323fce82f5f372a9b617d9bd6828ce98f1309"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-002-evaluation.md",
+    "sha256_before": "bfd8541822b0df3ec21603d0741cf6c21643156f95ff7fbdbf845d7321f4ace8",
+    "sha256_migrated": "49a601c77eaec5c3dfdbfa95bc9daeb339a64c241451403a293f05c1289eca7e"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-003-evaluation.md",
+    "sha256_before": "51b033d10506112dc7e391ebe1d450b45f7fdc72501241a07dcd695d230c4bb2",
+    "sha256_migrated": "f59eeddf1be3a46b3cb966b60956780313826855ce111463ecf9609320a210e6"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-004-evaluation.md",
+    "sha256_before": "517bf8460f003d161ec100785257e177856426549bb68092bb9c2f0a409d1cb2",
+    "sha256_migrated": "057568029a7b027bf5a945c775bfe984017a0be20cc6098fae2ff9fff8f3f881"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-005-evaluation.md",
+    "sha256_before": "8d9c35b2d5b65d7248f37996447cfe772505c72e1287ec9b8cb00c3ffe73249d",
+    "sha256_migrated": "ec288441232a48690364bcfa7dedc5d469ceb8a412543d34c971ee44cbe213e7"
+  },
+  {
+    "path": "TSST/LENS/evaluations/TSST-LENS-EV-006-evaluation.md",
+    "sha256_before": "77c3864a533d1bbb6d8d21f49080c09a929f0c76523ef0aec8f2579a3970414a",
+    "sha256_migrated": "2f1a4beb006598d2d8a3a1696260e8d667d7742dd27fe331824e27c4a239768a"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-001-research-planning/SKILL.md",
+    "sha256_before": "dd9d4e91139e977ad696cc3e7098a33da8f27887e2c6f9d263f2bb016a6a1270",
+    "sha256_migrated": "f3cfbb031ff9c7ed29a4816d3536d58bc01d5eaea8e7fa2217ea6c0f3ad29b8f"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-002-source-validation-evidence-grading/SKILL.md",
+    "sha256_before": "d4ce6d554c9ebe1dd050ac28349297c475b1c3f3609190f14c9aed30e2a4e886",
+    "sha256_migrated": "915fab2b1797b1d92fa698c4e3fe38f67ded629ebb4300ae1d86ccde6630cb8c"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-003-competitor-intelligence/SKILL.md",
+    "sha256_before": "f0a35a1da22cb3c9bed9bcd4bf15ba2a95cca45e3d0ccf72c03be17262d75f6f",
+    "sha256_migrated": "e02d726ebe092b7da1b3f634a8cdf01baf75f7e10847851fb2fb54b0863b2449"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-004-customer-icp-jtbd/SKILL.md",
+    "sha256_before": "69f1a6c2a7602cd9a74d76b8ceccc6593b3881d01221cef7449e17e621cfc8f0",
+    "sha256_migrated": "4ac7403ee71ca9d47e7100d69b0ebfc9f1a670fbf5dffb24d5868ba803e73a06"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-005-positioning-messaging/SKILL.md",
+    "sha256_before": "b9ac5749ed8111f16ce079da50bbee69f40f3679726293a1c3408c82b47eaad2",
+    "sha256_migrated": "b7f214309a3fd5e64035335c733986665f22794826981745431f3256e39a0b2e"
+  },
+  {
+    "path": "TSST/LENS/skills/tsst-lens-sk-006-marketing-planning/SKILL.md",
+    "sha256_before": "02de0151d5309d8e818d55679f489c24f38415284781e1bba318a53b956734a7",
+    "sha256_migrated": "2964a3cfaf16cccb3d1e74f3dd7f4fbd20f2dcba38e6af0c5c880ea4c0d87099"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-001-evaluation.md",
+    "sha256_before": "d68428f6bcdd0ffbf58bc5e5845406330d7a43e28ba0e93bbae7869ad1d1ae99",
+    "sha256_migrated": "5fd30435fb57122124320d663c039c8000e1ebaf4f161f6e680ea1f0b5dee579"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-002-evaluation.md",
+    "sha256_before": "d22e8eee359421d3cccb5aed4d16ec16fcf12c38a93e83ffc0b72d821de4c652",
+    "sha256_migrated": "ae0fc4284ba493b9d6a17164eced3c742ba879985e796e602533e0fe07f87c59"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-003-evaluation.md",
+    "sha256_before": "fdc48991e17bdcf2249d522a42cb838b40b104cfc39b4c1ed31899e242ff9126",
+    "sha256_migrated": "ea745b6c78ac7fe3d44f713208a959e56b7251c8d82f8556724a477b31ecc87d"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-004-evaluation.md",
+    "sha256_before": "afcec554f41ef758b189f31cfc3bc0cbca4a00f61ff3c110077e4b0f60eb4993",
+    "sha256_migrated": "42120f982287738172a71377309404d516295e6674a4776650b027ea8d913d15"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-005-evaluation.md",
+    "sha256_before": "e7fb156cf677509735ac3f482d82360c8460bc4f70b951bd8cc3994a45f3cc3e",
+    "sha256_migrated": "f1ee2fac1282415f09972294d269f697f66c95c99811bcd3c94b144ec9a64b43"
+  },
+  {
+    "path": "TSST/SPARK/evaluations/TSST-SPARK-EV-006-evaluation.md",
+    "sha256_before": "b6a66ed400b16c0798d974db00e00337fc951fe67fef495d34a9aa7e979306c4",
+    "sha256_migrated": "5dd139d2866cc24a75609d80bd37f9aa0d2bb0f98c352c8c04d41be835b16c9e"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-001-paid-media-strategy/SKILL.md",
+    "sha256_before": "b36f9f45b8f738d1b5184ce178d5b480f6b43a106c56c6faa75abd87e7941abd",
+    "sha256_migrated": "78b61fae58ea212ea6ae616d218b69c4da9f69a3ec7d9832db60066f8030aee4"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-002-measurement-architecture/SKILL.md",
+    "sha256_before": "f37efdad795061b984be9e230815a4cf8daec6046562710248783ffca7fa8fbc",
+    "sha256_migrated": "8aa15a8677e5e4ed8474abd6686bdf04414b68f552080b66745e34c8861d661b"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-003-attribution-fundamentals/SKILL.md",
+    "sha256_before": "d8f38b38e2e715aa872305eb4ccf570d4b5300fd05836e27338525af2e5b1771",
+    "sha256_migrated": "16928a3d68a6584942b54050bffe8ba1385575f783073d9c531dc8d7bd1be9c8"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-004-meta-campaign-creative-fundamentals/SKILL.md",
+    "sha256_before": "0a84f850a9fde0e9c3277331449812829ccee7bae625b7a044984d9328e74f45",
+    "sha256_migrated": "c82a35100096c4b6057f4316436ab47617d7dd452803b71d63a889d2df7940c0"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-005-google-search-performance-fundamentals/SKILL.md",
+    "sha256_before": "7ba194c2792a246c93a1466fc39b88ed1c1af73c1ccfc533bb9b62212ea55147",
+    "sha256_migrated": "748ff6b177ba7040f9f4f0e1a6673b79b02f55c90b193fa4e38be88198652e70"
+  },
+  {
+    "path": "TSST/SPARK/skills/tsst-spark-sk-006-tiktok-ads-fundamentals/SKILL.md",
+    "sha256_before": "0872bd56d5009b503b5411ca4425b1f092c8e5822ff225312c82778ad1ea685a",
+    "sha256_migrated": "9c5733f3da1bbb53635cbc0c44af6bc11c5e5dcba42a369798866a5558f0ca3b"
+  }
+]

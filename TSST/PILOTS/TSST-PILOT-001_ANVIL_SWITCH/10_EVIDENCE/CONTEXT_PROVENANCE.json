@@ -1,0 +1,50 @@
+[
+  {
+    "Path": "TSST/LEAD/AGENT.md",
+    "SHA256": "AEC1F1CB9E76A4EB4E1BE6AE3424344D5FE8E63492CBC8765C8021F49AAA2581",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/TEAM_CONSTITUTION.md",
+    "SHA256": "1094158EEB1D0EAF54FBC377000897B5984B7B81BE9C3C4A05BACDCC1FDCDCBC",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/READINESS_REPORT.md",
+    "SHA256": "F851101C6303142F63731233E74D25B9CF1FC2C8DAED104F4FE9DCC0651A3C60",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/TSST_OPERATING_PROFILE.md",
+    "SHA256": "A12AB98A5C1257F6455E8A625D04E5F05DACFED11EE2D25E289A4B1508CA90C2",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/TSST_DECISION_RIGHTS.md",
+    "SHA256": "EB3522A494CFA1356764736B7F54B8EBF59EAF5B03FCCEA21619BE0EEA9F38E7",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/TSST_BUSINESS_CONTEXT.md",
+    "SHA256": "AF5ACF75C4BC0AAAC333205BC7904A53C344B063E123978E9F01A681823B9F21",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/SKILL_REGISTRY.md",
+    "SHA256": "67B5352C1FAD518B754781CC4E6E2998ADFA12C4E9D4F54222AA18DBFE4ADC33",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  },
+  {
+    "Path": "TSST/LEAD/SKILL_REGISTRY.md",
+    "SHA256": "B9A3DE896C4B79DB08322E2CC08AC133BB020D434B40CE7C32D55D81590F5A9D",
+    "Role": "Read-only operating context",
+    "Retrieved": "2026-09-22"
+  }
+]

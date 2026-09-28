@@ -1,0 +1,29 @@
+[
+  {
+    "text": "القوة ليها",
+    "font": "Cairo Bold",
+    "fontSize": 80,
+    "x": 628,
+    "y": 1000,
+    "width": 362,
+    "height": 77
+  },
+  {
+    "text": "ملامح.",
+    "font": "Cairo Bold",
+    "fontSize": 80,
+    "x": 766,
+    "y": 1090,
+    "width": 224,
+    "height": 81
+  },
+  {
+    "text": "مرحلة جديدة. بمعايير أقوى.",
+    "font": "Cairo Regular",
+    "fontSize": 37,
+    "x": 575,
+    "y": 1220,
+    "width": 415,
+    "height": 41
+  }
+]

@@ -1,0 +1,352 @@
+{
+  "SW-D01-C01": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.0347165,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.0347165,
+      "sourceEnd": 4.435873,
+      "targetStart": 3,
+      "targetEnd": 7,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 4.435873,
+      "sourceEnd": 5.96,
+      "targetStart": 7,
+      "targetEnd": 10,
+      "atempo": 1
+    }
+  ],
+  "SW-D01-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 1.6377324999999998,
+      "targetStart": 0,
+      "targetEnd": 2,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 1.6377324999999998,
+      "sourceEnd": 5.322517,
+      "targetStart": 2,
+      "targetEnd": 6,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 5.322517,
+      "sourceEnd": 6.69,
+      "targetStart": 6,
+      "targetEnd": 10,
+      "atempo": 1
+    }
+  ],
+  "SW-D02-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.800125,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.800125,
+      "sourceEnd": 7.133186,
+      "targetStart": 3,
+      "targetEnd": 8,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 7.133186,
+      "sourceEnd": 9.48,
+      "targetStart": 8,
+      "targetEnd": 12,
+      "atempo": 1
+    }
+  ],
+  "SW-D03-C01": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.85466,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.85466,
+      "sourceEnd": 5.6921205,
+      "targetStart": 3,
+      "targetEnd": 7,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 5.6921205,
+      "sourceEnd": 7.6885715,
+      "targetStart": 7,
+      "targetEnd": 12,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 7.6885715,
+      "sourceEnd": 10.234671,
+      "targetStart": 12,
+      "targetEnd": 16,
+      "atempo": 1
+    },
+    {
+      "scene": 4,
+      "sourceStart": 10.234671,
+      "sourceEnd": 12.43,
+      "targetStart": 16,
+      "targetEnd": 20,
+      "atempo": 1
+    }
+  ],
+  "SW-D03-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 3.0794215,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1.0618694827586208
+    },
+    {
+      "scene": 1,
+      "sourceStart": 3.0794215,
+      "sourceEnd": 5.884127,
+      "targetStart": 3,
+      "targetEnd": 8,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 5.884127,
+      "sourceEnd": 10.6653855,
+      "targetStart": 8,
+      "targetEnd": 14,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 10.6653855,
+      "sourceEnd": 15.07,
+      "targetStart": 14,
+      "targetEnd": 20,
+      "atempo": 1
+    }
+  ],
+  "SW-D04-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.9319275,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1.0110094827586207
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.9319275,
+      "sourceEnd": 6.7117915,
+      "targetStart": 3,
+      "targetEnd": 8,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 6.7117915,
+      "sourceEnd": 8.6513265,
+      "targetStart": 8,
+      "targetEnd": 12,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 8.6513265,
+      "sourceEnd": 10.68,
+      "targetStart": 12,
+      "targetEnd": 15,
+      "atempo": 1
+    }
+  ],
+  "SW-D05-C01": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 3.6226305,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1.2491829310344829
+    },
+    {
+      "scene": 1,
+      "sourceStart": 3.6226305,
+      "sourceEnd": 7.4585485,
+      "targetStart": 3,
+      "targetEnd": 8,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 7.4585485,
+      "sourceEnd": 10.930453499999999,
+      "targetStart": 8,
+      "targetEnd": 13,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 10.930453499999999,
+      "sourceEnd": 13.64,
+      "targetStart": 13,
+      "targetEnd": 18,
+      "atempo": 1
+    }
+  ],
+  "SW-D05-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 1.3126419999999999,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 1.3126419999999999,
+      "sourceEnd": 4.0576194999999995,
+      "targetStart": 3,
+      "targetEnd": 8,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 4.0576194999999995,
+      "sourceEnd": 7.304728,
+      "targetStart": 8,
+      "targetEnd": 13,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 7.304728,
+      "sourceEnd": 9.33,
+      "targetStart": 13,
+      "targetEnd": 18,
+      "atempo": 1
+    }
+  ],
+  "SW-D06-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.423662,
+      "targetStart": 0,
+      "targetEnd": 4,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.423662,
+      "sourceEnd": 5.908821,
+      "targetStart": 4,
+      "targetEnd": 10,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 5.908821,
+      "sourceEnd": 9.343843499999998,
+      "targetStart": 10,
+      "targetEnd": 15,
+      "atempo": 1
+    },
+    {
+      "scene": 3,
+      "sourceStart": 9.343843499999998,
+      "sourceEnd": 11.89,
+      "targetStart": 15,
+      "targetEnd": 20,
+      "atempo": 1
+    }
+  ],
+  "SW-D07-C01": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 2.825828,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1
+    },
+    {
+      "scene": 1,
+      "sourceStart": 2.825828,
+      "sourceEnd": 5.6004195,
+      "targetStart": 3,
+      "targetEnd": 6,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 5.6004195,
+      "sourceEnd": 8.694059,
+      "targetStart": 6,
+      "targetEnd": 9,
+      "atempo": 1.0667722413793101
+    },
+    {
+      "scene": 3,
+      "sourceStart": 8.694059,
+      "sourceEnd": 11.39,
+      "targetStart": 9,
+      "targetEnd": 12,
+      "atempo": 1
+    }
+  ],
+  "SW-D07-C01-TT": [
+    {
+      "scene": 0,
+      "sourceStart": 0,
+      "sourceEnd": 3.5913605,
+      "targetStart": 0,
+      "targetEnd": 3,
+      "atempo": 1.2384001724137932
+    },
+    {
+      "scene": 1,
+      "sourceStart": 3.5913605,
+      "sourceEnd": 7.098288,
+      "targetStart": 3,
+      "targetEnd": 7,
+      "atempo": 1
+    },
+    {
+      "scene": 2,
+      "sourceStart": 7.098288,
+      "sourceEnd": 9.33,
+      "targetStart": 7,
+      "targetEnd": 12,
+      "atempo": 1
+    }
+  ]
+}

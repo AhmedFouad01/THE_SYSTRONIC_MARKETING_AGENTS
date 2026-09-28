@@ -1,0 +1,520 @@
+[
+  {
+    "id": "SW-D02-C01_Feed_4x5_AR_v01",
+    "day": 2,
+    "lines": [
+      "مش بنبدأ",
+      "من الصفر."
+    ],
+    "progress": 29,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D02-C01_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "حكاية Shark X Store مكملة.",
+    "footer": "قريب… فصل جديد."
+  },
+  {
+    "id": "SW-D01-S01_F01_Stories_9x16_AR_v01",
+    "day": 1,
+    "lines": [
+      "الحكاية مكملة."
+    ],
+    "progress": 14,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D01-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D01-S01_F02_Stories_9x16_AR_v01",
+    "day": 1,
+    "lines": [
+      "فصل جديد.",
+      "وهوية أقوى."
+    ],
+    "progress": 14,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D01-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D01-S01_F03_Stories_9x16_AR_v01",
+    "day": 1,
+    "lines": [
+      "الكشف قريب.",
+      "تابعوا الحكاية."
+    ],
+    "progress": 14,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D01-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D02-S01_F01_Stories_9x16_AR_v01",
+    "day": 2,
+    "lines": [
+      "مش بنبدأ",
+      "من الصفر."
+    ],
+    "progress": 29,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D02-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D02-S01_F02_Stories_9x16_AR_v01",
+    "day": 2,
+    "lines": [
+      "اللي اتبنى معاكم…",
+      "بنكمل عليه."
+    ],
+    "progress": 29,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D02-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D02-S01_F03_Stories_9x16_AR_v01",
+    "day": 2,
+    "lines": [
+      "قريب نكشف",
+      "الهوية الجديدة."
+    ],
+    "progress": 29,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D02-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D03-S01_F01_Stories_9x16_AR_v01",
+    "day": 3,
+    "lines": [
+      "اسم جديد.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 43,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D03-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D03-S01_F02_Stories_9x16_AR_v01",
+    "day": 3,
+    "lines": [
+      "اسم جديد.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 43,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D03-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D03-S01_F03_Stories_9x16_AR_v01",
+    "day": 3,
+    "lines": [
+      "اتعرفوا على",
+      "ANVIL SUPPS."
+    ],
+    "progress": 43,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D03-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D04-S01_F01_Stories_9x16_AR_v01",
+    "day": 4,
+    "lines": [
+      "إيه معنى التغيير؟"
+    ],
+    "progress": 57,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D04-S01_F02_Stories_9x16_AR_v01",
+    "day": 4,
+    "lines": [
+      "اسم وهوية جديدين.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 57,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D04-S01_F03_Stories_9x16_AR_v01",
+    "day": 4,
+    "lines": [
+      "تابعوا ANVIL SUPPS.",
+      "الحكاية مكملة."
+    ],
+    "progress": 57,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D05-S01_F01_Stories_9x16_AR_v01",
+    "day": 5,
+    "lines": [
+      "وراء الاسم الجديد…",
+      "حكاية مكملة."
+    ],
+    "progress": 71,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D05-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D05-S01_F02_Stories_9x16_AR_v01",
+    "day": 5,
+    "lines": [
+      "بنقدّم هويتنا الجديدة",
+      "للفصل الجاي."
+    ],
+    "progress": 71,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D05-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D05-S01_F03_Stories_9x16_AR_v01",
+    "day": 5,
+    "lines": [
+      "لسه البداية.",
+      "تابعونا."
+    ],
+    "progress": 71,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D05-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D06-S01_F01_Stories_9x16_AR_v01",
+    "day": 6,
+    "lines": [
+      "إيه الاسم الجديد؟",
+      "ANVIL SUPPS"
+    ],
+    "progress": 86,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D06-S01_F02_Stories_9x16_AR_v01",
+    "day": 6,
+    "lines": [
+      "وحكاية Shark X Store؟",
+      "مكملة بهوية جديدة."
+    ],
+    "progress": 86,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D06-S01_F03_Stories_9x16_AR_v01",
+    "day": 6,
+    "lines": [
+      "لسه عندكم سؤال",
+      "عن التغيير؟"
+    ],
+    "progress": 86,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "ابعتوه هنا.",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D07-S01_F01_Stories_9x16_AR_v01",
+    "day": 7,
+    "lines": [
+      "فاكر الاسم الجديد",
+      "لـ Shark X Store؟"
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D07-S01_F01_Stories_9x16_AR_v01.png",
+    "hideNew": true,
+    "footer": "اكتب إجابتك.",
+    "index": "01 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D07-S01_F02_Stories_9x16_AR_v01",
+    "day": 7,
+    "lines": [
+      "اسم جديد.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D07-S01_F02_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "02 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D07-S01_F03_Stories_9x16_AR_v01",
+    "day": 7,
+    "lines": [
+      "تابعوا ANVIL SUPPS.",
+      "لسه البداية."
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D07-S01_F03_Stories_9x16_AR_v01.png",
+    "hideNew": false,
+    "footer": "",
+    "index": "03 / 03",
+    "fontSize": 70
+  },
+  {
+    "id": "SW-D04-C01_K01_Feed_4x5_AR_v01",
+    "day": 4,
+    "lines": [
+      "إيه معنى التغيير؟"
+    ],
+    "progress": 25,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-C01_K01_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "",
+    "index": "01 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D04-C01_K02_Feed_4x5_AR_v01",
+    "day": 4,
+    "lines": [
+      "اسم وهوية جديدين."
+    ],
+    "progress": 50,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-C01_K02_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "ANVIL SUPPS هو الاسم اللي هتشوفوه معانا.",
+    "index": "02 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D04-C01_K03_Feed_4x5_AR_v01",
+    "day": 4,
+    "lines": [
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 75,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-C01_K03_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "بنكمل على الأساس اللي اتبنى معاكم.",
+    "index": "03 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D04-C01_K04_Feed_4x5_AR_v01",
+    "day": 4,
+    "lines": [
+      "احفظوا الاسم."
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D04-C01_K04_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "ANVIL SUPPS — تابعوا الفصل الجديد.",
+    "index": "04 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D06-C01_K01_Feed_4x5_AR_v01",
+    "day": 6,
+    "lines": [
+      "Shark X Store",
+      "راح فين؟"
+    ],
+    "progress": 25,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-C01_K01_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "الحكاية مكملة باسم جديد.",
+    "index": "01 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D06-C01_K02_Feed_4x5_AR_v01",
+    "day": 6,
+    "lines": [
+      "إيه الاسم الجديد؟",
+      "ANVIL SUPPS"
+    ],
+    "progress": 50,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-C01_K02_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "ده الاسم اللي هتشوفوه في الفصل الجاي.",
+    "index": "02 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D06-C01_K03_Feed_4x5_AR_v01",
+    "day": 6,
+    "lines": [
+      "ده بداية منفصلة؟"
+    ],
+    "progress": 75,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-C01_K03_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "ده امتداد لحكاية Shark X Store بهوية جديدة.",
+    "index": "03 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D06-C01_K04_Feed_4x5_AR_v01",
+    "day": 6,
+    "lines": [
+      "عندكم سؤال",
+      "عن التغيير؟"
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\stills\\SW-D06-C01_K04_Feed_4x5_AR_v01.png",
+    "height": 1350,
+    "support": "اكتبوه في التعليقات. وتابعوا ANVIL SUPPS.",
+    "index": "04 / 04",
+    "fontSize": 64
+  },
+  {
+    "id": "SW-D01-C01_Cover_9x16_AR_v01",
+    "day": 1,
+    "lines": [
+      "الحكاية مكملة."
+    ],
+    "progress": 14,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D01-C01_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D01-C01-TT_Cover_9x16_AR_v01",
+    "day": 1,
+    "lines": [
+      "الحكاية مكملة."
+    ],
+    "progress": 14,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D01-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D02-C01-TT_Cover_9x16_AR_v01",
+    "day": 2,
+    "lines": [
+      "مش بنبدأ",
+      "من الصفر."
+    ],
+    "progress": 29,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D02-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D03-C01_Cover_9x16_AR_v01",
+    "day": 3,
+    "lines": [
+      "اسم جديد.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 43,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D03-C01_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D03-C01-TT_Cover_9x16_AR_v01",
+    "day": 3,
+    "lines": [
+      "اسم جديد.",
+      "امتداد لنفس الحكاية."
+    ],
+    "progress": 43,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D03-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D04-C01-TT_Cover_9x16_AR_v01",
+    "day": 4,
+    "lines": [
+      "إيه معنى التغيير؟"
+    ],
+    "progress": 57,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D04-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D05-C01_Cover_9x16_AR_v01",
+    "day": 5,
+    "lines": [
+      "هوية جديدة.",
+      "فصل جديد."
+    ],
+    "progress": 71,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D05-C01_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D05-C01-TT_Cover_9x16_AR_v01",
+    "day": 5,
+    "lines": [
+      "هوية جديدة.",
+      "فصل جديد."
+    ],
+    "progress": 71,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D05-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D06-C01-TT_Cover_9x16_AR_v01",
+    "day": 6,
+    "lines": [
+      "إيه الاسم الجديد؟"
+    ],
+    "progress": 86,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D06-C01-TT_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D07-C01_Cover_9x16_AR_v01",
+    "day": 7,
+    "lines": [
+      "احفظوا الاسم.",
+      "لسه البداية."
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D07-C01_Cover_9x16_AR_v01.png"
+  },
+  {
+    "id": "SW-D07-C01-TT_Cover_9x16_AR_v01",
+    "day": 7,
+    "lines": [
+      "احفظوا الاسم.",
+      "لسه البداية."
+    ],
+    "progress": 100,
+    "out": "C:\\Users\\10\\.codex\\visualizations\\2026\\09\\22\\01a0c9fb-b0d6-7680-9855-080fefb14900\\anvil-production\\covers\\SW-D07-C01-TT_Cover_9x16_AR_v01.png"
+  }
+]
