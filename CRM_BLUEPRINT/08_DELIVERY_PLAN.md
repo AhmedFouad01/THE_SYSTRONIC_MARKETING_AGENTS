@@ -4,7 +4,7 @@ No calendar promise until foundation, staffing and volumes are known. Work packa
 
 | Milestone | Deliverable | Exit gate | Owner |
 |---|---|---|---|
-| M0 Foundation spike | Twenty/Frappe/custom comparison; dependency/license boundary; Arabic prototype; connector eligibility investigation; architecture ADR | Two synthetic isolated tenants, one entity/transition, RBAC/revocation and replay probes, backup/restore, API extension and RTL demo; candidate evidence and blockers recorded; selection needs owner approval | DEV_AG proposed; Lead reviews |
+| M0 Custom-Build foundation spike | Freeze concrete TypeScript/PostgreSQL/queue/storage libraries and versions; dependency/license/security review; Arabic prototype; tenancy/RBAC/outbox/recovery proof | Two synthetic isolated tenants, one entity/transition, RBAC/revocation and replay probes, business event + outbox/worker idempotency, audit, migrations, backup/restore and RTL/LTR demo; evidence and blockers recorded | DEV_AG proposed; Lead reviews |
 | M1 CRM vertical slice | Tenancy/auth, manual contacts/lead intake, deals/stages, tasks, narrow automation, audit, internal event/outbox ledger | Only SRS M1 subsets pass with cross-tenant/object/field negative tests; no requirement to finish tracking, providers, segmentation or all profiles | Engineering |
 | M2 Journey and reporting | Web/form collection, identity links, campaign taxonomy, order import, attribution v1 | Deterministic known/unknown/refund fixtures; repeated events counted once | Engineering + measurement reviewer |
 | M3 Provider integrations | Meta, eligible Google conversion path, GA4, spend import, health UI | Test-account receipts, failure/retry evidence, permissions and consent tests | Engineering + SPARK_AG proposed |
@@ -14,7 +14,7 @@ No calendar promise until foundation, staffing and volumes are known. Work packa
 
 M3 may proceed in parallel with M2 only after M1 event contracts are stable. No live customer data or ad activation required for documentation completion. Audience access blockers are surfaced as unsupported capabilities, not hidden behind a generic Connected status.
 
-**Foundation / Vertical Slice gate** spans the M0 demonstration and narrow M1 slice. M0 READY FOR FOUNDATION SPIKE means ready to begin that investigation, not that its demonstrations passed. **Pilot Completion gate** is M4 after all M2–M4 and remaining M1 requirement coverage is complete. P0 capabilities are retained even when later than M1. Unsupported providers remain blockers to their required pilot capability unless the owner explicitly changes scope.
+**Foundation / Vertical Slice gate** spans the M0 demonstration and narrow M1 slice. Custom Build is owner-confirmed; M0 READY FOR CUSTOM-BUILD FOUNDATION SPIKE means ready to prove and freeze its concrete implementation baseline, not that its demonstrations passed. **Pilot Completion gate** is M4 after all M2–M4 and remaining M1 requirement coverage is complete. P0 capabilities are retained even when later than M1. Unsupported providers remain blockers to their required pilot capability unless the owner explicitly changes scope.
 
 ## Implementation order inside each milestone
 Write executable schemas/contracts → migration and indexes → domain service → permission checks → worker behavior → UI → meaningful tests → staging evidence → release note. Each ticket names requirement IDs, dependencies, acceptance fixture and rollback approach.
@@ -22,7 +22,7 @@ Write executable schemas/contracts → migration and indexes → domain service 
 ## Initial engineering backlog
 | Ticket | Scope | Depends on | Acceptance / SRS |
 |---|---|---|---|
-| ENG-001 | Foundation proof and ADR | None | M0 evidence; TEN-01, NFR-05 |
+| ENG-001 | Custom-Build foundation proof, stack/version freeze and ADR | None | M0 evidence; TEN-01, IAM-01, NFR-04/05/06 |
 | ENG-002 | Tenant/member/grant enforcement | 001 | TEN-01/02, IAM-01 |
 | ENG-003 | M1 manual contacts/intake/merge; remaining channels in M2/M3 | 002 | CRM-01/02/03; partial M1 acceptance only |
 | ENG-004 | Pipeline rules and concurrent transitions | 003 | CRM-04/06 |
@@ -100,6 +100,6 @@ Linked requirement passes acceptance test; permissions and tenant scope covered;
 Three synthetic tenants. Include direct purchase with no lead, recurring buyer, unpaid delivered order, partial refund, survey reschedule, rejected quote, repeated form, anonymous visitor never identified, late-arriving event, revoked agency grant and consent withdrawal. Report expected counts/values per fixture before running product tests.
 
 ## Validation status of this package
-Documentation only. Product tests, load tests, provider acceptance, license suitability, ERD rendering and real tenant isolation have not been performed. A structural document check is appropriate now; implementation verification belongs to the milestones above.
+Documentation only. Product tests, load tests, provider acceptance, dependency/license suitability, ERD rendering and real tenant isolation have not been performed. Custom Build is selected, but the concrete implementation stack has not yet passed M0 evidence gates. A structural document check is appropriate now; implementation verification belongs to the milestones above.
 
-v0.2 audit scope: requirement/model/contract/permission/milestone/test/evidence links and logical invariants. This does not promote TSST/DEV_AG readiness or validate skills. OQ-01–OQ-12 remain explicit; documentation may pass with open decisions while implementation/pilot gates remain unpassed.
+v0.2 audit scope: requirement/model/contract/permission/milestone/test/evidence links and logical invariants. This does not promote TSST/DEV_AG readiness or validate skills. Custom Build and scalable baseline defaults are owner-confirmed as of 2026-10-01. OQ-01–OQ-12 now represent remaining configuration/evidence inputs or approved-default overrides; implementation/pilot gates remain unpassed.

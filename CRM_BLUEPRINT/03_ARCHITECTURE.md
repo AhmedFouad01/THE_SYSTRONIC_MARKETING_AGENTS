@@ -1,7 +1,7 @@
 # Architecture design
 
-## Proposed approach
-One deployable modular backend and separately runnable workers. One relational primary database, object storage for private attachments, durable outbox, background queue and replaceable provider adapters. This is a logical architecture, not a declaration that a particular framework has been selected.
+## Confirmed approach
+The product foundation is **Custom Build** (owner-confirmed 2026-10-01). One deployable modular backend and separately runnable workers. One relational primary database, object storage for private attachments, durable outbox, background queue and replaceable provider adapters. M0 selects the concrete libraries/versions and proves the operational invariants; it does not reopen Twenty/Frappe as foundation candidates.
 
 ```mermaid
 flowchart LR
@@ -69,10 +69,8 @@ sequenceDiagram
   Worker->>DB: Persist result, retry time or dead letter
 ```
 
-## Tenant isolation choices
-Preferred custom-build baseline: tenant_id on every business table, composite foreign keys, application authorization plus PostgreSQL row-level security. Runtime DB role must not own/bypass RLS; transaction-local tenant context must be reset safely with connection pooling. Jobs establish tenant context from trusted queue records, not browser input.
-
-If Frappe is chosen, use its site/database-per-tenant architecture and implement explicit agency access through scoped APIs. If Twenty is chosen, verify workspace isolation, enterprise feature boundaries and upgrade behavior. Do not retrofit the custom PostgreSQL model blindly into an upstream framework.
+## Tenant isolation baseline
+Custom Build requires `tenant_id` on every business table, tenant-equal composite references/foreign keys, application authorization plus PostgreSQL row-level security. Runtime DB role must not own/bypass RLS; transaction-local tenant context must be reset safely with connection pooling. Jobs establish tenant context from trusted queue records, not browser input.
 
 Agency dashboard requests only authorized tenant projections. Platform operations are a separate control plane; cross-tenant customer queries are not a default admin feature.
 
@@ -81,10 +79,17 @@ Identity/tenancy owns the fixed role/action catalogue, membership and scoped age
 
 Queued commands retain initiating user/membership/grant references and intended tenant/action/object scope, not an everlasting permission snapshot. Workers check current authority before each bounded batch and external side effect; denied work is blocked/cancelled with safe audit evidence. Scheduled system work uses a tenant service principal with explicit actions and current rule/connection/consent checks. Bulk output is rechecked before release/download; cache hits are also authorized before returning data.
 
-## Stack evaluation
-Custom candidate: TypeScript web/backend, PostgreSQL, Redis-backed queue with DB outbox recovery, S3-compatible private storage. Libraries and versions selected in M0 after dependency review. Frappe brings a different stack; framework choice is open, not a mandate to combine stacks.
+## Stack baseline and M0 freeze
+Confirmed direction: TypeScript web/backend, PostgreSQL, Redis-backed queue with DB outbox recovery, S3-compatible private storage. M0 must select and pin concrete libraries/versions after dependency/security/license review and record them in an ADR. The selected implementation should remain replaceable at adapter boundaries and avoid unnecessary infrastructure.
 
 Start with database indexes and scheduled aggregate tables. Add warehouse/search infrastructure only when measured query or event volume requires it. Scale ingestion and workers independently before splitting business services.
+
+## Standard scalable defaults
+- RBAC/action catalogue + scoped grants; deny by default.
+- API retry idempotency is separate from source/business deduplication and provider-delivery idempotency.
+- Tenant portability is a distinct authorized export workflow with a versioned manifest; never export secrets or foreign-tenant data.
+- Attribution baseline is deterministic First Touch + Last Non-Direct Touch with configurable 30-day default lookback.
+- Service/agency commercial truth uses `deal_won`; commerce keeps ordered/paid/delivered separate and defaults revenue truth to `payment_captured` unless an approved business profile changes mapping.
 
 ## Deployment topology
 Development with synthetic data; isolated staging with test destinations; production with managed database backups, secrets manager, TLS and private storage. Separate provider credentials per environment. Database migrations follow expand → backfill → validate → switch → later contract. Backward-compatible event readers cover rolling deployments.
