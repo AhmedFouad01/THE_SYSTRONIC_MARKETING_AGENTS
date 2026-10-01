@@ -1,6 +1,8 @@
 # Systronic CRM — Engineering Foundation
 
-Version: 0.1 | Date: 2026-10-01 | Status: DRAFT FOR REVIEW
+Version: v0.2 | Date: 2026-10-01 | Status: M0 READY FOR FOUNDATION SPIKE
+
+CRM Engineering Blueprint v0.2 — M0 READY. Pre-implementation documentation readiness only: M0 has not run, no foundation is selected, and no product or operational readiness is claimed. The unchanged engineering meeting output is preserved in v0.1 commit `bb89734f30522532e720111c90c76095db00405f`.
 
 ## الهدف
 منتج CRM يربط الحملات برحلة المشتري والليدز والمبيعات، تستخدمه سيسترونك وعملاؤها، وقابل للتقديم كـSaaS. أول تطبيقات: الوكالة، المكملات أونلاين، المطابخ والتشطيبات.
@@ -28,3 +30,9 @@ Version: 0.1 | Date: 2026-10-01 | Status: DRAFT FOR REVIEW
 
 ## القرار المقترح
 Modular monolith + relational database + durable background jobs + provider adapters، مع tenant isolation من أول migration. Framework أو CRM upstream لم يُحسم؛ Twenty وFrappe مرشحان للتجربة، والبناء المخصص خيار إذا لم يلبيا الشروط.
+
+## Delivery gates
+- **Foundation / Vertical Slice gate:** M0 is a bounded foundation spike; M1 proves manual lead → contact/deal → controlled stage outcome → task/audit/outbox with RBAC and tenant isolation. Only this slice's fixtures are required for M1.
+- **Pilot Completion gate:** M2–M4 complete every P0 requirement, including tracking, attribution, eligible providers, segmentation, domain profiles, subject privacy and tenant portability. These remain required but do not block starting M1. Provider blockers remain visible; they cannot silently waive pilot scope.
+
+See the SRS gate allocation and delivery traceability matrix. Status does not certify provider integrations, security isolation, load targets, licensing, backup/restore or external APIs. Open business decisions require owner approval; see OQ-01–OQ-12.

@@ -13,6 +13,11 @@ For each authorized business, answer: where did a lead come from, what happened 
 Tenant owner; sales manager; sales rep; marketing analyst; account manager; client approver; platform operator. Systronic staff access client tenants through explicit grants, not automatic global visibility.
 
 ## MVP / pilot boundary
+P0 denotes the complete pilot scope, not simultaneous delivery in the first slice. Two gates preserve this scope:
+
+- **Foundation / Vertical Slice (M0–M1):** M0 evaluates the foundation; M1 delivers authenticated manual lead intake, contacts/deals, stage transitions, follow-up tasks, minimal internal automation, audit/outbox and explicit RBAC/scoped grants. Synthetic data only until applicable privacy controls are available.
+- **Pilot Completion (M2–M4):** all P0 acceptance criteria, including the remaining intake channels, tracking/attribution, providers, segmentation, commerce/service profiles, privacy subject workflows and complete authorized tenant portability. External eligibility blockers require resolution or an explicit owner-approved scope change before claiming completion.
+
 1. Tenants, memberships, permissions, audit history and Arabic/English UI.
 2. Contacts, lead intake, deduplication review, configurable sales pipelines and follow-ups.
 3. First-party web events and explicit identity association; campaign taxonomy and UTMs.
@@ -20,6 +25,7 @@ Tenant owner; sales manager; sales rep; marketing analyst; account manager; clie
 5. Versioned first/last-touch attribution, campaign costs, sales outcome reports.
 6. Dynamic rule-based segments; controlled audience synchronization after provider eligibility is proven.
 7. Thin domain records: commerce orders/status updates and service opportunities/appointments. Existing stores remain order authorities.
+8. Separate subject privacy export/deletion and tenant-wide portability: authorized machine-readable tenant data, relationships and accessible attachments, with manifest and documented exclusions. Secrets and other tenants' data never enter an export.
 
 ## Next release
 Agency monthly plans, deliverables, immutable asset versions, approvals, client portal, workload views; service project milestones and change requests; commerce retention journeys. These are not silently included in MVP delivery estimates.
