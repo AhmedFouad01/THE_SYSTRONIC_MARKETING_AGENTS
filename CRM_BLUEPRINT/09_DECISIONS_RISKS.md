@@ -68,3 +68,6 @@ Change log:
 - v0.1 initial architecture package, 2026-10-01. No implementation or provider account mutation performed.
 - v0.2 audit remediation, 2026-10-01, commit `e09446c54ae202a7415006fd61b891242b0e7f7f`.
 - 2026-10-01 owner decision update: Custom Build confirmed; scalable baseline defaults accepted for RBAC, tenant isolation, idempotency/dedup separation, tenant portability, attribution and conversion truth. No M0 implementation evidence exists yet.
+
+## M0 implementation decision/evidence — 2026-10-01
+[ADR-001](../CRM_APP/ADR-001.md) freezes the minimal Node/TypeScript/PostgreSQL stack. The bounded worker uses the database outbox directly without Redis; external delivery remains excluded. [M0 evidence](../CRM_APP/M0_EVIDENCE.md) records 16 passing tests and synthetic physical restore proof, plus Drive/Docker environment limitations. No production RPO/RTO, full IAM or later-milestone acceptance is inferred.

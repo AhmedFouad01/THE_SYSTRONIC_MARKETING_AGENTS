@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+backups/
+test-results/
+playwright-report/
+local-fixture.json
+.local-tools/
+.local-postgres/
