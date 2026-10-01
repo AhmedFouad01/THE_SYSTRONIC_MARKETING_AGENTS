@@ -4,7 +4,7 @@ State: **READY FOR RE-AUDIT**. This is regression evidence, not independent acce
 
 Original implementation: `42f630db39cc91fa2520027585c7756b5f58ae78`. Original `INDEPENDENT_M0_AUDIT.md` verdict remains **FAIL** and its content is unchanged; the original `retry-key-observation.json` is also retained unchanged. Both previously untracked audit artifacts are included with this remediation to preserve the source of the findings.
 
-Remediation commit: **recorded after the implementation commit in the evidence-only follow-up**.
+Remediation commit: `7f3ce318eac24e8ec4f6bd47fcde44f07dae2560` (`fix(crm): close M0 audit findings`). This SHA was recorded after commit in an evidence-only follow-up; tested source is unchanged.
 
 | Finding | Bounded fix | Regression / observed result | Status |
 |---|---|---|---|
