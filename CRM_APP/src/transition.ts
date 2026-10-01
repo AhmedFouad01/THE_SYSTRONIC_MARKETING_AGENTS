@@ -53,6 +53,14 @@ export async function transition(
 		)
 			throw new Fault(409, "IDEMPOTENCY_CONFLICT");
 		if (receipt || cache) {
+			// The deal lock also serializes keys within this actor/operation scope.
+			// A durable replay must bind a new/expired retry key before it commits.
+			if (!cache) {
+				await db.query(
+					"INSERT INTO crm.api_retry(tenant_id,actor_id,operation,key,request_hash,transition_id) VALUES($1,crm.actor(),$2,$3,$4,$5) ON CONFLICT(tenant_id,actor_id,operation,key) DO UPDATE SET request_hash=excluded.request_hash,transition_id=excluded.transition_id,expires_at=now()+interval '7 days'",
+					[ctx.tenant, operation, key, hash, receipt.transition_id],
+				);
+			}
 			const {
 				rows: [old],
 			} = await db.query(

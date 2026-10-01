@@ -285,7 +285,7 @@ test("10 worker retry + crash rollback + separate process restart creates one ef
 			code === 0 ? resolve() : reject(new Error(`worker exit ${code}`)),
 		);
 	});
-	await Promise.all([workOne(worker()), workOne(worker())]);
+	assert.equal(await workOne(worker()), false);
 	assert.equal(
 		(
 			await admin.query("SELECT * FROM crm.worker_effect WHERE tenant_id=$1", [
@@ -372,4 +372,161 @@ test("12 HTTP validates fields, denies forged workspace and maps stale version t
 	} finally {
 		await new Promise<void>((r) => app.close(() => r()));
 	}
+});
+
+test("13 A/K1 then A/K2 replay binds K2 and B/K2 conflicts without extra outcomes", async () => {
+	await fresh();
+	const a = command();
+	const result = await transition(context(), f.ids.dealA, a, "K1");
+	assert.equal(
+		(await transition(context(), f.ids.dealA, a, "K2")).id,
+		result.id,
+	);
+	assert.equal(
+		(await transition(context(), f.ids.dealA, a, "K2")).id,
+		result.id,
+	);
+	await assert.rejects(
+		transition(
+			context(),
+			f.ids.dealA,
+			{
+				...a,
+				to_stage_id: f.ids.won,
+				expected_version: 1,
+				command_id: randomUUID(),
+			},
+			"K2",
+		),
+		(e: unknown) =>
+			e instanceof Fault &&
+			e.status === 409 &&
+			e.code === "IDEMPOTENCY_CONFLICT",
+	);
+	const cache = (
+		await admin.query(
+			"SELECT request_hash,transition_id FROM crm.api_retry WHERE tenant_id=$1 ORDER BY key",
+			[f.ids.a],
+		)
+	).rows;
+	assert.equal(cache.length, 2);
+	assert.deepEqual(cache[0], cache[1]);
+	// Expiring the retry cache cannot remove the durable command or its result.
+	await admin.query(
+		"UPDATE crm.api_retry SET expires_at=now()-interval '1 day' WHERE tenant_id=$1",
+		[f.ids.a],
+	);
+	assert.equal(
+		(await transition(context(), f.ids.dealA, a, "K2")).id,
+		result.id,
+	);
+	await workOne(worker());
+	for (const table of [
+		"stage_transition",
+		"business_event",
+		"outbox",
+		"audit_log",
+		"command_receipt",
+		"worker_effect",
+	]) {
+		assert.equal(
+			(
+				await admin.query(
+					`SELECT count(*)::int count FROM crm.${table} WHERE tenant_id=$1`,
+					[f.ids.a],
+				)
+			).rows[0].count,
+			1,
+		);
+	}
+	assert.equal(
+		(
+			await admin.query("SELECT version FROM crm.deal WHERE tenant_id=$1", [
+				f.ids.a,
+			])
+		).rows[0].version,
+		1,
+	);
+});
+
+test("14 concurrent workers overlap on pending work and SKIP LOCKED yields one effect", async () => {
+	await fresh();
+	await transition(context(), f.ids.dealA, command(), "race");
+	const key = Math.floor(Math.random() * 2_000_000_000) + 1;
+	const {
+		rows: [{ pid }],
+	} = await admin.query("SELECT pg_backend_pid() pid");
+	await admin.query(
+		`CREATE FUNCTION crm.m0_claim_barrier() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN IF NEW.tenant_id='${f.ids.a}'::uuid THEN PERFORM pg_advisory_xact_lock(${key}::bigint); END IF; RETURN NEW; END $$; CREATE TRIGGER m0_claim_barrier BEFORE INSERT ON crm.worker_effect FOR EACH ROW EXECUTE FUNCTION crm.m0_claim_barrier()`,
+	);
+	await admin.query("SELECT pg_advisory_lock($1::bigint)", [key]);
+	const first = workOne(worker());
+	// Capture rejection immediately while waiting for the observable DB lock barrier.
+	const settled = first.then(
+		(value) => ({ value, error: null }),
+		(error) => ({ value: false, error }),
+	);
+	try {
+		let blocked = false;
+		for (let i = 0; i < 200; i++) {
+			blocked = (
+				await admin.query(
+					"SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE $1=ANY(pg_blocking_pids(pid)) AND query LIKE 'INSERT INTO crm.worker_effect%') blocked",
+					[pid],
+				)
+			).rows[0].blocked;
+			if (blocked) break;
+			await new Promise((r) => setTimeout(r, 10));
+		}
+		assert.ok(
+			blocked,
+			"First worker must hold the outbox row lock at the effect barrier",
+		);
+		assert.equal(
+			(
+				await admin.query("SELECT status FROM crm.outbox WHERE tenant_id=$1", [
+					f.ids.a,
+				])
+			).rows[0].status,
+			"pending",
+		);
+		// First worker is still active and holds the claim; second must skip it.
+		assert.equal(await workOne(worker()), false);
+		assert.equal(
+			(
+				await admin.query(
+					"SELECT count(*)::int count FROM crm.worker_effect WHERE tenant_id=$1",
+					[f.ids.a],
+				)
+			).rows[0].count,
+			0,
+		);
+	} finally {
+		await admin.query("SELECT pg_advisory_unlock($1::bigint)", [key]);
+		await settled;
+		await admin.query(
+			"DROP TRIGGER m0_claim_barrier ON crm.worker_effect; DROP FUNCTION crm.m0_claim_barrier()",
+		);
+	}
+	const outcome = await settled;
+	if (outcome.error) throw outcome.error;
+	assert.equal(outcome.value, true);
+	assert.equal(
+		(
+			await admin.query(
+				"SELECT count(*)::int count FROM crm.worker_effect WHERE tenant_id=$1",
+				[f.ids.a],
+			)
+		).rows[0].count,
+		1,
+	);
+	assert.deepEqual(
+		(
+			await admin.query(
+				"SELECT status,attempts FROM crm.outbox WHERE tenant_id=$1",
+				[f.ids.a],
+			)
+		).rows[0],
+		{ status: "processed", attempts: 1 },
+	);
 });
