@@ -1,8 +1,8 @@
 # Architecture decisions and open risks
 
-Version: v0.2 | Status: M0 READY FOR CUSTOM-BUILD FOUNDATION SPIKE | Pre-implementation.
+Version: v0.2 | Status: M0 CLOSED / M1 READY | M0 closed 2026-10-02.
 
-Owner decisions confirmed on 2026-10-01 are marked ACCEPTED below. Operational evidence still has to be produced by M0/M1; acceptance of a design direction is not evidence that the implementation works.
+Owner decisions confirmed on 2026-10-01 are marked ACCEPTED below. M0 foundation evidence has now been produced and independently re-audited; M1 and later operational/product gates remain separate and unpassed.
 
 | ADR | Decision | Status | Rationale / trade-off | Revisit trigger |
 |---|---|---|---|---|
@@ -42,10 +42,10 @@ M0 no longer compares product foundations. It must select/pin concrete libraries
 | OQ-04 | Ad assets and app access | Mock/test-account adapters | Real provider acceptance |
 | OQ-05 | Per-business override of default conversion mapping, if any | ADR-015 defaults apply until explicitly overridden | Conversion mapping activation |
 | OQ-06 | Default stage definitions and qualification | Reference profiles in scope document | Pilot configuration |
-| OQ-07 | SaaS commercialization/license model | Custom Build selected; dependency licenses still reviewed in M0 | Commercial distribution decision |
+| OQ-07 | SaaS commercialization/license model | Custom Build selected; M0 stack frozen; commercialization/license policy remains a later product decision | Commercial distribution decision |
 | OQ-08 | Role/action/field catalogue fine-tuning | ADR-009 baseline accepted; exact role matrix may evolve from pilot evidence | M1 real-user configuration |
 | OQ-09 | Dedup/suppression tombstone retention versus privacy policy | Keep replay identity independent of API/raw-body expiry; minimize identifiers | Approved policy before real-data intake/deletion |
-| OQ-10 | Exact API retry-cache duration and provider retry/dedup windows | 7-day API retry cache remains an M0 validation target; provider-specific windows verified in M3 | M0/M3 contract freeze |
+| OQ-10 | Exact API retry-cache duration and provider retry/dedup windows | M0 validated separation/binding semantics; exact policy duration and provider-specific windows remain configurable/verified later | M3 provider contract freeze |
 | OQ-11 | Exact tenant-export dataset/field exclusions and artifact expiry | Complete authorized export with versioned manifest; never secrets or foreign tenant data | DAT-02 implementation design and M4 acceptance |
 | OQ-12 | Profile-specific attribution/qualification overrides | ADR-014 defaults apply; overrides require explicit approval | M2 reporting/pilot configuration |
 
@@ -67,7 +67,9 @@ The owner has approved the scalable default direction; the OQs above remain conc
 Change log:
 - v0.1 initial architecture package, 2026-10-01. No implementation or provider account mutation performed.
 - v0.2 audit remediation, 2026-10-01, commit `e09446c54ae202a7415006fd61b891242b0e7f7f`.
-- 2026-10-01 owner decision update: Custom Build confirmed; scalable baseline defaults accepted for RBAC, tenant isolation, idempotency/dedup separation, tenant portability, attribution and conversion truth. No M0 implementation evidence exists yet.
+- 2026-10-01 owner decision update: Custom Build confirmed; scalable baseline defaults accepted for RBAC, tenant isolation, idempotency/dedup separation, tenant portability, attribution and conversion truth.
 
-## M0 implementation decision/evidence — 2026-10-01
-[ADR-001](../CRM_APP/ADR-001.md) freezes the minimal Node/TypeScript/PostgreSQL stack. The bounded worker uses the database outbox directly without Redis; external delivery remains excluded. [M0 evidence](../CRM_APP/M0_EVIDENCE.md) records 16 passing tests and synthetic physical restore proof, plus Drive/Docker environment limitations. No production RPO/RTO, full IAM or later-milestone acceptance is inferred.
+## M0 closure decision/evidence — 2026-10-02
+[ADR-001](../CRM_APP/ADR-001.md) freezes the minimal Node/TypeScript/PostgreSQL stack. The bounded worker uses the database outbox directly without Redis; external delivery remains excluded. The implementation was remediated at `7f3ce318eac24e8ec4f6bd47fcde44f07dae2560` and independently re-audited with verdict **PASS WITH NON-BLOCKING FOLLOW-UPS**. All three prior findings are CLOSED; 22/22 tests, lint/typecheck/build, real PostgreSQL RLS/isolation, RBAC/revocation, retry-key binding, concurrent-worker SKIP LOCKED behavior and native restore evidence passed. No blocking M0 finding remains.
+
+**Decision:** M0 is CLOSED and the product may enter M1 CRM Vertical Slice. This does not certify production readiness or later-milestone acceptance. Non-blocking follow-ups: add bounded timeout/cancellation/cleanup to the worker-concurrency test; Docker-specific tooling remains unverified while the native/local-mirror M0 path is demonstrated.

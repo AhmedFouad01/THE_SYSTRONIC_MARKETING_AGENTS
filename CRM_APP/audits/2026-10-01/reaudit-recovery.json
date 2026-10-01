@@ -1,0 +1,7 @@
+{
+  "result": "PASS",
+  "tablesCompared": 18,
+  "elapsedMs": 3042,
+  "method": "Clean shutdown -> physical backup -> new cluster directory/port -> all CRM row digests/counts equal; runtime RLS fails closed",
+  "rpoRto": "Synthetic elapsed time only; no production RPO/RTO claim"
+}
