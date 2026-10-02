@@ -1,9 +1,10 @@
 import { followUp, escalateOne } from "./automation.js";
 import { authorize, type Context, transaction } from "./db.js";
+import { attributionWorkOne } from "./journey.js";
 // One bounded database effect. Holding a row lock avoids lease races; a process death
 // rolls back the transaction, so another worker can claim it immediately.
 export async function workOne(ctx: Context, fault?: "retry" | "crash") {
-	return transaction(ctx, async (db) => {
+	const worked = await transaction(ctx, async (db) => {
 		await authorize(db, "automation.execute", null);
 		const {
 			rows: [job],
@@ -44,4 +45,5 @@ export async function workOne(ctx: Context, fault?: "retry" | "crash") {
 		}
 		return true;
 	});
+	return worked || attributionWorkOne(ctx);
 }

@@ -1,0 +1,50 @@
+{
+  "recorded_date": "2026-10-03",
+  "timezone": "Africa/Cairo",
+  "implementation_sha": "PENDING_FEATURE_COMMIT",
+  "tests": {
+    "m0_m1_regression": 55,
+    "skipped": 0,
+    "chromium": 14,
+    "bootstrap": 4,
+    "cancelled": 0,
+    "failed": 0,
+    "passed": 82,
+    "postgresql_api": 64
+  },
+  "gates": {
+    "build": "PASS",
+    "typecheck": "PASS",
+    "clean_dependency_install_and_build": "PASS",
+    "lint": "PASS"
+  },
+  "clean_install": {
+    "result": "PASS",
+    "migrations": "001-006",
+    "tables": 47,
+    "syntheticTenants": 2,
+    "protectedConfiguration": "PASS"
+  },
+  "upgrade": {
+    "result": "PASS",
+    "oldTables": 30,
+    "preservedRows": 48,
+    "protectedKeyCiphertextAndDigest": "byte-identical",
+    "migrations": "001-005 -> 006"
+  },
+  "source_sha256": {
+    "migrations/006_journey_reporting.sql": "1ccdef26dd0d7908829ed302b8e4916a2e4bac8f9a1dc2e8e522e29a4e36b71c",
+    "src/journey.ts": "a9486a562bf949234f970f616e3362802e0f9dc9795af2380e9cf90e643dc2a4",
+    "src/api.ts": "b071bd167fa9470dcc6ae90da40e13933f2a4d5bbf1fa33fc8b6bed49c2dafe7",
+    "src/jobs.ts": "24a2b12f1b125027e563d4a683fa0948cca30a0189f7eabcd6787013a28ee2b6",
+    "scripts/migrate.ts": "e490a7d1b5069ef79ba44e625246c847b2e3f75cf9b675db0641d30ac7a8fc36",
+    "scripts/m2-clean-check.ts": "c7798d782bf846eb67a69a796725909c97ae358612541c28b00b5804e2bf2f38",
+    "scripts/m2-upgrade-check.ts": "1a75e430c05f225121204886596888863038aae43557f47498037034aee82c0e",
+    "tests/m2.test.ts": "ba541da1a0ede0a384951744fe42eed4d4c1bc04abb4ed87d204cb20599e0464",
+    "tests/m2-ui.spec.ts": "16b3bbd5692c586d5230a6b0a1906ffacfbc260c0c9c9af52a16be6bb5fc4e4f",
+    "web/reporting.html": "248969aee77a4b4caf120acbd48c88f7433d5ad0d04e79b629828e58191d308a",
+    "web/index.html": "0ad75b1ba77d506a0172be7f203aa9e85ea217581535b117cac1916f0b1af76a",
+    "package.json": "e00e081f43194a1d61d491e5799b00f0ad127cb350ba85c47cefe3c823c6a9d1",
+    "playwright.config.ts": "1977fb608cd876ede1751650af7808d07635b7fd8b5b955f457055cdf5ed9f24"
+  }
+}

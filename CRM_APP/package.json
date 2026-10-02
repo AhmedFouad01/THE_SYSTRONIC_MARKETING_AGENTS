@@ -14,7 +14,7 @@
 		"lint": "biome lint src scripts tests",
 		"typecheck": "tsc --noEmit",
 		"build": "tsc && tsx scripts/build-assets.ts",
-		"test:db": "tsx --env-file=.env --test --test-concurrency=1 tests/foundation.test.ts tests/m1.test.ts tests/m1-remediation.test.ts",
+		"test:db": "tsx --env-file=.env --test --test-concurrency=1 tests/foundation.test.ts tests/m1.test.ts tests/m1-remediation.test.ts tests/m2.test.ts",
 		"test:ui": "playwright test",
 		"test:bootstrap": "tsx --test tests/native-bootstrap.test.ts",
 		"test": "npm run test:db && npm run test:bootstrap && npm run test:ui"

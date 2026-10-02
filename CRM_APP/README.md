@@ -78,3 +78,9 @@ node --env-file=.env --import tsx scripts/native-recovery.ts
 ```
 
 See ignored `backups/recovery-evidence.json` and committed `M0_EVIDENCE.md`. The measured synthetic drill establishes no production RPO/RTO. Docker scripts are provided but their execution is blocked when Docker cannot run.
+
+## M2 Journey & Reporting
+
+Apply migration 006 after the existing 001–005 migrations using npm run migrate. Open /reporting from the CRM workspace for bilingual journey, conversion, commerce and campaign views. Run the existing worker for queued late-event recalculations. All imports are synthetic/internal; no provider connection is required.
+
+See [M2 contracts](M2_CONTRACTS.md) and [M2 validation evidence](M2_EVIDENCE.md) for routes, authority, source identities, attribution defaults and bounded install/upgrade results.

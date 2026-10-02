@@ -10,6 +10,12 @@ import {
 } from "./db.js";
 import { crmRequest, type Body } from "./crm.js";
 import { transition, type Command } from "./transition.js";
+import {
+	collect,
+	collectionOrigin,
+	isJourney,
+	journeyRequest,
+} from "./journey.js";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function context(req: IncomingMessage): Context {
 	const tenant = req.headers["x-tenant-id"],
@@ -67,15 +73,17 @@ export function server() {
 		try {
 			if (
 				req.method === "GET" &&
-				["/", "/foundation"].includes(req.url ?? "")
+				["/", "/foundation", "/reporting"].includes(req.url ?? "")
 			) {
 				res.setHeader("Content-Type", "text/html; charset=utf-8");
 				res.end(
 					await readFile(
 						new URL(
-							req.url === "/foundation"
-								? "../web/foundation.html"
-								: "../web/index.html",
+							req.url === "/reporting"
+								? "../web/reporting.html"
+								: req.url === "/foundation"
+									? "../web/foundation.html"
+									: "../web/index.html",
 							import.meta.url,
 						),
 						"utf8",
@@ -84,6 +92,53 @@ export function server() {
 				return;
 			}
 			const url = new URL(req.url ?? "/", "http://localhost");
+			if (
+				url.pathname === "/v1/collect/events" &&
+				["OPTIONS", "POST"].includes(req.method ?? "")
+			) {
+				if (!(await collectionOrigin(req.headers.origin)))
+					throw new Fault(403, "INVALID_SITE");
+				res.setHeader(
+					"Access-Control-Allow-Origin",
+					req.headers.origin as string,
+				);
+				res.setHeader("Vary", "Origin");
+				if (req.method === "OPTIONS") {
+					res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+					res.setHeader(
+						"Access-Control-Allow-Headers",
+						"Content-Type, X-Site-Key",
+					);
+					res.statusCode = 204;
+					res.end();
+					return;
+				}
+			}
+			if (req.method === "POST" && url.pathname === "/v1/collect/events") {
+				let raw = "";
+				for await (const chunk of req) {
+					raw += chunk;
+					if (Buffer.byteLength(raw) > 8192)
+						throw new Fault(413, "PAYLOAD_TOO_LARGE");
+				}
+				let body: Body;
+				try {
+					body = JSON.parse(raw);
+				} catch {
+					throw new Fault(422, "VALIDATION_FAILED");
+				}
+				if (!body || typeof body !== "object" || Array.isArray(body))
+					throw new Fault(422, "VALIDATION_FAILED");
+				const data = await collect(
+					req.headers["x-site-key"],
+					req.headers.origin,
+					body,
+				);
+				res.statusCode = 202;
+				res.setHeader("Content-Type", "application/json");
+				res.end(JSON.stringify({ data, request_id: requestId }));
+				return;
+			}
 			const ctx = context(req);
 			const match = /^\/v1\/deals\/([0-9a-f-]+)\/transitions$/i.exec(
 				url.pathname,
@@ -127,17 +182,27 @@ export function server() {
 					if (!body || typeof body !== "object" || Array.isArray(body))
 						throw new Fault(422, "VALIDATION_FAILED");
 				}
-				const response = await crmRequest(
-					ctx,
-					req.method ?? "GET",
-					url.pathname,
-					url.searchParams,
-					body,
-					key,
-					requestId,
-				);
+				const response = isJourney(url.pathname)
+					? await journeyRequest(
+							ctx,
+							req.method ?? "GET",
+							url.pathname,
+							url.searchParams,
+							body,
+							requestId,
+						)
+					: await crmRequest(
+							ctx,
+							req.method ?? "GET",
+							url.pathname,
+							url.searchParams,
+							body,
+							key,
+							requestId,
+						);
 				result = response.data;
-				res.statusCode = response.status ?? 200;
+				res.statusCode =
+					"status" in response ? Number(response.status ?? 200) : 200;
 				if ("next_cursor" in response)
 					extra = { next_cursor: response.next_cursor };
 			}
