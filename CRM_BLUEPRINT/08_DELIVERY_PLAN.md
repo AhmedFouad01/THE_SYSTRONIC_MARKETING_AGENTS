@@ -1,6 +1,8 @@
-# Delivery, validation and traceability
+﻿# Delivery, validation and traceability
+
 
 No calendar promise until foundation, staffing and volumes are known. Work packages below have exit gates rather than invented completion dates. Suggested roles are work ownership, not evidence that named agents participated or approved.
+
 
 | Milestone | Deliverable | Exit gate | Owner |
 |---|---|---|---|
@@ -12,12 +14,16 @@ No calendar promise until foundation, staffing and volumes are known. Work packa
 | M5 Agency operations | Plans, deliverables, versioned approvals, project milestones | Realistic monthly-plan rehearsal with client role | Operations + engineering |
 | M6 SaaS readiness | Provisioning, entitlements, billing, metering, support boundaries | Tenant lifecycle/payment failure; regression of pilot export/deletion/isolation gates | Product + engineering |
 
+
 M3 may proceed in parallel with M2 only after M1 event contracts are stable. No live customer data or ad activation required for documentation completion. Audience access blockers are surfaced as unsupported capabilities, not hidden behind a generic Connected status.
 
-**Foundation / Vertical Slice gate** spans the M0 demonstration and narrow M1 slice. Custom Build is owner-confirmed; **M0 closed on 2026-10-02 after independent re-audit with no blocking findings**. M1 is now the active product-delivery gate; M0 closure does not imply production readiness. **Pilot Completion gate** is M4 after all M2–M4 and remaining M1 requirement coverage is complete. P0 capabilities are retained even when later than M1. Unsupported providers remain blockers to their required pilot capability unless the owner explicitly changes scope.
+
+**Foundation / Vertical Slice gate** is now closed: M0 foundation and the narrow M1 CRM vertical slice have both passed their bounded implementation and independent re-audit gates. Custom Build is owner-confirmed; **M0 closed on 2026-10-02 after independent re-audit with no blocking findings**. M1 is now the active product-delivery gate; M0 closure does not imply production readiness. **Pilot Completion gate** is M4 after all M2–M4 and remaining M1 requirement coverage is complete. P0 capabilities are retained even when later than M1. Unsupported providers remain blockers to their required pilot capability unless the owner explicitly changes scope.
+
 
 ## Implementation order inside each milestone
 Write executable schemas/contracts → migration and indexes → domain service → permission checks → worker behavior → UI → meaningful tests → staging evidence → release note. Each ticket names requirement IDs, dependencies, acceptance fixture and rollback approach.
+
 
 ## Initial engineering backlog
 | Ticket | Scope | Depends on | Acceptance / SRS |
@@ -38,6 +44,7 @@ Write executable schemas/contracts → migration and indexes → domain service 
 | ENG-014 | Subject privacy lifecycle, active-store deletion, remote status and restore suppression (M2–M4) | 002,006 | DAT-01, NFR-04; T07/T13 |
 | ENG-015 | Tenant portability snapshot/manifest/attachments and revocable download (M4) | 002,008,010,014 | DAT-02; T17; future modules extend export inventory |
 | ENG-016 | Gate-specific benchmark, accessibility, audit/log and recovery evidence | 001; each affected module | NFR-01/02/03/04/05/06; T13/T14; full pilot evidence by M4 |
+
 
 ## Verification matrix
 | Test | Scenario | Requirements |
@@ -60,10 +67,13 @@ Write executable schemas/contracts → migration and indexes → domain service 
 | T16 | Retry API command inside/after proposed cache window; raw-body expiry then source replay; duplicate conversion normalization, remap and delivery timeout; disable rule/revoke actor between batches | CRM-01/06, TRK-03, INT-02, TEN-02, IAM-01, WF-01 |
 | T17 | Export complete tenant fixture and reconcile manifest counts/relationships/attachments; exclude secrets and other tenants; restricted-field denial; revoke while queued/generating and before download; expired artifact | DAT-02, TEN-01/02, IAM-01 |
 
+
 T06 includes fake browser payment rejection and proof that provider receipt/error/remapping cannot alter Conversion or attribution (TRK-01/03, ATR-02). T13 also covers subject export authority, visitor-only deletion, active-store redaction, explicit unresolved remote steps and replay after payload deletion (DAT-01). T15 includes duplicate usage-effect replay (SAS-01). These are planned tests, not executed evidence.
+
 
 ## Complete requirement-to-evidence traceability
 All model names below refer to 04; service contracts/actions are in 06/07. TEN-01/02 and IAM-01 apply to every tenant-data row, including service workers. An evidence bundle for every test must retain requirement/criterion, fixture and expected result, observed result, build/schema/policy versions, timestamp, reviewer and artifact path. No implementation bundle exists yet. The Evidence column specifies what must be produced, not what has passed.
+
 
 | Requirements | Logical model | API/event contract and permission | Milestone / tests | Acceptance evidence to retain |
 |---|---|---|---|---|
@@ -91,18 +101,46 @@ All model names below refer to 04; service contracts/actions are in 06/07. TEN-0
 | NFR-04 | All persisted stores, PrivacyStep suppression ledger | Backup/restore runbook, restricted operations authority | M0 feasibility, M4 recovery; T13 | Measured RPO/RTO and suppression reapplication; availability needs operational observation |
 | NFR-05, NFR-06 | Audited tenant records, AuditLog | Core flows and audit/log controls; current role/field permissions | M0 prototypes, M1 slice, M4 full; T14/T01 | RTL/LTR/keyboard/mobile/contrast review and privileged audit/secret scan results |
 
+
 M4 requires measured results and owner disposition of targets; a proposed availability percentage cannot be labelled demonstrated by a single restore drill. Operational availability remains unverified until a sufficient observation window exists. Any target/scope change is recorded explicitly, never silently treated as a pass.
+
 
 ## Definition of done
 Linked requirement passes acceptance test; permissions and tenant scope covered; migration/backfill reviewed; provider calls use fixtures plus authorized test-account evidence where relevant; UI error/stale/empty states present; monitoring and recovery notes exist; no secret or unnecessary PII in logs; remaining unverified behavior stated explicitly.
 
+
 ## Pilot acceptance dataset
 Three synthetic tenants. Include direct purchase with no lead, recurring buyer, unpaid delivered order, partial refund, survey reschedule, rejected quote, repeated form, anonymous visitor never identified, late-arriving event, revoked agency grant and consent withdrawal. Report expected counts/values per fixture before running product tests.
+
 
 ## Validation status of this package
 M0 foundation implementation evidence has now been executed against real native PostgreSQL and independently re-audited. This validates the bounded M0 foundation only; provider acceptance, later-milestone load/operations evidence, production availability and full pilot scope remain unverified. M1 and later milestones retain their own exit gates.
 
+
 v0.2 audit scope: requirement/model/contract/permission/milestone/test/evidence links and logical invariants. This does not promote TSST/DEV_AG readiness or validate skills. Custom Build and scalable baseline defaults are owner-confirmed as of 2026-10-01. OQ-01–OQ-12 now represent remaining configuration/evidence inputs or approved-default overrides; implementation/pilot gates remain unpassed.
+
 
 ## M0 closure evidence — 2026-10-02
 Custom-Build M0 is **CLOSED**. The original bounded implementation was remediated at `7f3ce318eac24e8ec4f6bd47fcde44f07dae2560`; evidence-only follow-up is `f1a1810246453594894645bf3ae50c6d54dbe5cc`. Independent re-audit passed with non-blocking follow-ups only: all three prior findings are CLOSED; 22/22 tests passed (14 real PostgreSQL/API, 4 bootstrap-state, 4 Chromium RTL/LTR); lint/typecheck/build and diff checks passed; RLS/isolation, RBAC/revocation, retry-key conflict behavior, actual concurrent-worker SKIP LOCKED behavior and backup/restore all passed. Native restore matched 18 table counts/digests. No production RPO/RTO or production-readiness claim is made. Non-blocking follow-ups are test timeout/cancellation hardening and an unverified Docker-specific path; the native/local-mirror path is the demonstrated M0 path. **M1 CRM Vertical Slice is the next gate.**
+
+
+
+
+## M1 closure evidence — 2026-10-02
+M1 core vertical slice is **CLOSED** after bounded implementation, independent FAIL audit, targeted remediation, and independent PASS re-audit.
+
+
+Evidence:
+- M0 closure commit: `f54fbf6a4ac5366f047ca49b5ee9db19e0d68ccc`.
+- M1 implementation: `1b395b81a9f0398bd0b9d333b7f7c8f22c1ed897`.
+- M1 blocker remediation: `e0a86d9876e29caad5009015074e04b322ad7601`.
+- Final independent verdict: **PASS — M1 may close**.
+- Fresh suite: **55 passed / 0 failed / 0 skipped**; M0 regression **22/22 PASS**.
+- Tenant/RBAC, lead idempotency, deal transition atomicity/dedup, task/automation retries and revocation, RTL/LTR, clean install and bounded upgrade evidence passed.
+- Original blockers closed: protected-field key handling now fails closed; Task PATCH validates target-deal authority before mutation.
+
+
+Non-blocking follow-ups remain Docker/direct-Drive execution validation plus production identity/MFA and external secret custody/KMS. These are not M1 blockers and do not constitute production-readiness evidence.
+
+
+**Next:** M2 Journey and Reporting. No M2 implementation has started.

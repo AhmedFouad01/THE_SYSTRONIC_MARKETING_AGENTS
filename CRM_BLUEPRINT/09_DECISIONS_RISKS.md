@@ -1,8 +1,11 @@
-# Architecture decisions and open risks
+﻿# Architecture decisions and open risks
 
-Version: v0.2 | Status: M0 CLOSED / M1 READY | M0 closed 2026-10-02.
 
-Owner decisions confirmed on 2026-10-01 are marked ACCEPTED below. M0 foundation evidence has now been produced and independently re-audited; M1 and later operational/product gates remain separate and unpassed.
+Version: v0.2 | Status: M1 CLOSED / M2 READY | M0 closed 2026-10-02; M1 closed 2026-10-02.
+
+
+Owner decisions confirmed on 2026-10-01 are marked ACCEPTED below. M0 foundation and M1 core vertical-slice evidence have now been produced and independently re-audited. M2 and later operational/product gates remain separate and unpassed.
+
 
 | ADR | Decision | Status | Rationale / trade-off | Revisit trigger |
 |---|---|---|---|---|
@@ -22,6 +25,7 @@ Owner decisions confirmed on 2026-10-01 are marked ACCEPTED below. M0 foundation
 | ADR-014 | Attribution defaults: First Touch + Last Non-Direct Touch; 30-day configurable lookback | ACCEPTED 2026-10-01 | Explainable baseline; internal attribution remains distinct from provider reports | Measurement owner approves a different default/model |
 | ADR-015 | Default conversion truth by business profile | ACCEPTED 2026-10-01 | Services/agency: `deal_won`; commerce: ordered/paid/delivered remain separate, with `payment_captured` as default revenue truth; no double counting | Explicit owner-approved profile mapping |
 
+
 ## M0 custom-build exit gate
 M0 no longer compares product foundations. It must select/pin concrete libraries and versions inside the accepted Custom Build direction and prove with synthetic evidence:
 - two isolated tenants with tenant-equal constraints + PostgreSQL RLS + application authorization;
@@ -32,6 +36,7 @@ M0 no longer compares product foundations. It must select/pin concrete libraries
 - Arabic RTL / English LTR proof;
 - migrations plus backup/restore feasibility;
 - dependency/license/security review for selected libraries.
+
 
 ## Open decisions / verification inputs
 | ID | Missing input | Current working position | Required before |
@@ -49,7 +54,9 @@ M0 no longer compares product foundations. It must select/pin concrete libraries
 | OQ-11 | Exact tenant-export dataset/field exclusions and artifact expiry | Complete authorized export with versioned manifest; never secrets or foreign tenant data | DAT-02 implementation design and M4 acceptance |
 | OQ-12 | Profile-specific attribution/qualification overrides | ADR-014 defaults apply; overrides require explicit approval | M2 reporting/pilot configuration |
 
+
 The owner has approved the scalable default direction; the OQs above remain concrete configuration/evidence inputs rather than reasons to reopen the foundation. Missing provider access or operational evidence stays open.
+
 
 ## Risk register
 | Risk | Mitigation / owner |
@@ -64,12 +71,37 @@ The owner has approved the scalable default direction; the OQs above remain conc
 | Dependency or license surprises | Pin libraries, dependency/license review in M0, upgrade rehearsals / Engineering |
 | Scope includes AI too early | Rule-based baseline, AI later only with evaluation and permissions / Product |
 
+
 Change log:
+- 2026-10-02 M1 closure: implementation `1b395b81a9f0398bd0b9d333b7f7c8f22c1ed897`, targeted remediation `e0a86d9876e29caad5009015074e04b322ad7601`, independent re-audit PASS; M2 not started.
 - v0.1 initial architecture package, 2026-10-01. No implementation or provider account mutation performed.
 - v0.2 audit remediation, 2026-10-01, commit `e09446c54ae202a7415006fd61b891242b0e7f7f`.
 - 2026-10-01 owner decision update: Custom Build confirmed; scalable baseline defaults accepted for RBAC, tenant isolation, idempotency/dedup separation, tenant portability, attribution and conversion truth.
 
+
 ## M0 closure decision/evidence — 2026-10-02
 [ADR-001](../CRM_APP/ADR-001.md) freezes the minimal Node/TypeScript/PostgreSQL stack. The bounded worker uses the database outbox directly without Redis; external delivery remains excluded. The implementation was remediated at `7f3ce318eac24e8ec4f6bd47fcde44f07dae2560` and independently re-audited with verdict **PASS WITH NON-BLOCKING FOLLOW-UPS**. All three prior findings are CLOSED; 22/22 tests, lint/typecheck/build, real PostgreSQL RLS/isolation, RBAC/revocation, retry-key binding, concurrent-worker SKIP LOCKED behavior and native restore evidence passed. No blocking M0 finding remains.
 
+
 **Decision:** M0 is CLOSED and the product may enter M1 CRM Vertical Slice. This does not certify production readiness or later-milestone acceptance. Non-blocking follow-ups: add bounded timeout/cancellation/cleanup to the worker-concurrency test; Docker-specific tooling remains unverified while the native/local-mirror M0 path is demonstrated.
+
+
+
+
+## M1 implementation decision/evidence — 2026-10-02
+The bounded M1 CRM core vertical slice is closed and the product is **M2 READY**.
+
+
+Final independent evidence:
+- audited remediation commit: `e0a86d9876e29caad5009015074e04b322ad7601`;
+- verdict: **PASS — M1 may close**;
+- **55/55** tests passed with **22/22 M0 regression**;
+- real PostgreSQL tenant/RBAC checks passed;
+- lead idempotency, deal/pipeline atomicity and commercial-outcome dedup passed;
+- task/automation retry and authority-revocation behavior passed;
+- protected-key missing/wrong-key behavior fails closed without runtime replacement;
+- Task PATCH target-deal authorization is enforced before mutation with no denied-operation side effects;
+- bounded clean-install and M0→M1 upgrade evidence preserved rows and protected-field state.
+
+
+Deployment follow-ups remain Docker/direct-Drive execution verification plus real production identity/MFA and external secret custody/KMS. No production readiness or M2 implementation is inferred.
