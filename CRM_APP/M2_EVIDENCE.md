@@ -5,7 +5,7 @@ Recorded 2026-10-03 (Africa/Cairo). Primary session only; synthetic data through
 - Branch: `feat/crm-m2-journey-reporting`.
 - M1 audited baseline: `e0a86d9876e29caad5009015074e04b322ad7601`.
 - M1 closure documentation: `93bd92a2a148d0f751a2f8735ae3896a25b3532e`.
-- M2 implementation SHA: `PENDING_FEATURE_COMMIT` (resolved by the evidence-only follow-up).
+- M2 implementation SHA: `ba841c90b64e8bc4bb49c47247bd724f36e3a3a6` (resolved by the evidence-only follow-up).
 - Verdict: **PASS for the bounded local M2 slice**, not independent audit or production acceptance.
 
 ## Coverage and implementation
