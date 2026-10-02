@@ -1,6 +1,6 @@
 {
-	"name": "systronic-crm-m0",
-	"version": "0.0.1",
+	"name": "systronic-crm",
+	"version": "0.1.0",
 	"private": true,
 	"type": "module",
 	"engines": {
@@ -14,7 +14,7 @@
 		"lint": "biome lint src scripts tests",
 		"typecheck": "tsc --noEmit",
 		"build": "tsc && tsx scripts/build-assets.ts",
-		"test:db": "tsx --env-file=.env --test tests/foundation.test.ts",
+		"test:db": "tsx --env-file=.env --test --test-concurrency=1 tests/foundation.test.ts tests/m1.test.ts",
 		"test:ui": "playwright test",
 		"test:bootstrap": "tsx --test tests/native-bootstrap.test.ts",
 		"test": "npm run test:db && npm run test:bootstrap && npm run test:ui"

@@ -3,7 +3,7 @@ for (const width of [360, 1280])
 	for (const language of ["en", "ar"])
 		test(`${language} rendering at ${width}px`, async ({ page }) => {
 			await page.setViewportSize({ width, height: 800 });
-			await page.goto("/");
+			await page.goto("/foundation");
 			if (language === "ar")
 				await page.getByRole("button", { name: "العربية" }).click();
 			await expect(page.locator("html")).toHaveAttribute("lang", language);

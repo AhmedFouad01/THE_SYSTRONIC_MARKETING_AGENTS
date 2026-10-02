@@ -38,7 +38,7 @@ export async function seed(db: pg.Client) {
 				`Synthetic ${role}`,
 			]);
 			await db.query(
-				"INSERT INTO crm.session VALUES($1,$2,now()+interval '1 day')",
+				"INSERT INTO crm.session(token_hash,principal_id,expires_at,mfa_verified) VALUES($1,$2,now()+interval '1 day',true)",
 				[createHash("sha256").update(tokens[role]).digest("hex"), ids[role]],
 			);
 		}

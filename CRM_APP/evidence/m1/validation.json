@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-02",
+  "verdict": "PASS",
+  "tests": {"passed":45,"failed":0,"skipped":0,"databaseApi":32,"bootstrap":4,"chromium":9},
+  "m0Regression": {"passed":22,"failed":0,"skipped":0},
+  "checks": {"lint":"PASS (19 files)","typecheck":"PASS","build":"PASS","nativePostgreSql":"17.10","runtimeRole":"non-owner, nonsuperuser, no BYPASSRLS"},
+  "ui": "Real manual contact/lead/deal/task journeys; ar/en at 360/1280; stale conflict, denied, empty/loading/error/retry and keyboard focus; no horizontal page overflow or browser errors",
+  "data": "Synthetic tenants and records only; no passwords, session tokens, raw database or private logs in artifacts",
+  "execution": "Source-verified local mirror; same Windows account required for native process and Playwright server teardown",
+  "scope": "M1 subset only; no M2+, no production hosting or RPO/RTO claim"
+}

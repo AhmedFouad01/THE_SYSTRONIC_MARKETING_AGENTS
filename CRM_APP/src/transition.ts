@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 import { authorize, type Context, Fault, transaction } from "./db.js";
+import { permit } from "./crm.js";
 export type Command = {
 	to_stage_id: string;
 	expected_version: number;
@@ -15,6 +16,7 @@ export async function transition(
 ) {
 	return transaction(ctx, async (db) => {
 		await authorize(db, "crm.write", dealId, ctx.grant);
+		await permit(db, ctx, "crm.write", "deal", dealId);
 		const {
 			rows: [deal],
 		} = await db.query(
@@ -76,6 +78,15 @@ export async function transition(
 			[ctx.tenant, deal.pipeline_id, deal.stage_id, cmd.to_stage_id],
 		);
 		if (!rowCount) throw new Fault(422, "INVALID_TRANSITION");
+		const {
+			rows: [target],
+		} = await db.query(
+			"SELECT outcome FROM crm.stage WHERE tenant_id=$1 AND id=$2 AND NOT archived",
+			[ctx.tenant, cmd.to_stage_id],
+		);
+		if (!target) throw new Fault(422, "INVALID_TRANSITION");
+		if (target.outcome === "lost" && !cmd.reason.trim())
+			throw new Fault(422, "LOSS_REASON_REQUIRED");
 		const id = randomUUID(),
 			event = randomUUID(),
 			outbox = randomUUID(),
@@ -103,6 +114,11 @@ export async function transition(
 			"INSERT INTO crm.business_event(tenant_id,id,transition_id) VALUES($1,$2,$3)",
 			[ctx.tenant, event, id],
 		);
+		if (target.outcome === "won")
+			await db.query(
+				"INSERT INTO crm.commercial_outcome(tenant_id,deal_id,event_id,outcome_key) VALUES($1,$2,$3,$4) ON CONFLICT(tenant_id,deal_id) DO NOTHING",
+				[ctx.tenant, dealId, event, `deal:${dealId}:won`],
+			);
 		await db.query(
 			"INSERT INTO crm.outbox(tenant_id,id,event_id,actor_id,grant_id,deal_id) VALUES($1,$2,$3,crm.actor(),$4,$5)",
 			[ctx.tenant, outbox, event, ctx.grant ?? null, dealId],

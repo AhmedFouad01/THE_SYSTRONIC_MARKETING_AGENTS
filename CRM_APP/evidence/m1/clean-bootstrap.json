@@ -1,0 +1,20 @@
+{
+  "verdict": "PASS",
+  "fresh": "Exact native-local.ps1 completed initdb/start/create database/migrate/seed",
+  "tenants": 2,
+  "tables": 30,
+  "partialRetry": "Missing .env with real data/password fails safely; original password hash unchanged",
+  "secretLogCheck": "No generated admin/runtime password in captured bootstrap/retry output",
+  "originalCluster": "Data preserved; original credential hash unchanged",
+  "migrationVersions": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "syntheticSeedSessionsMfaVerified": true,
+  "runtimeRole": {
+    "rolbypassrls": false,
+    "rolsuper": false
+  }
+}

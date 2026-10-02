@@ -2,7 +2,8 @@ import { createServer, type IncomingMessage } from "node:http";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
-import { authorize, type Context, Fault, pool, transaction } from "./db.js";
+import { type Context, Fault, pool } from "./db.js";
+import { crmRequest, type Body } from "./crm.js";
 import { transition, type Command } from "./transition.js";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function context(req: IncomingMessage): Context {
@@ -59,22 +60,34 @@ export function server() {
 		res.setHeader("Cache-Control", "no-store");
 		res.setHeader("X-Content-Type-Options", "nosniff");
 		try {
-			if (req.method === "GET" && req.url === "/") {
+			if (
+				req.method === "GET" &&
+				["/", "/foundation"].includes(req.url ?? "")
+			) {
 				res.setHeader("Content-Type", "text/html; charset=utf-8");
 				res.end(
-					await readFile(new URL("../web/index.html", import.meta.url), "utf8"),
+					await readFile(
+						new URL(
+							req.url === "/foundation"
+								? "../web/foundation.html"
+								: "../web/index.html",
+							import.meta.url,
+						),
+						"utf8",
+					),
 				);
 				return;
 			}
-			const match = /^\/v1\/deals\/([0-9a-f-]+)(\/transitions)?$/i.exec(
-				req.url ?? "",
-			);
-			if (!match || !uuid.test(match[1])) throw new Fault(404, "NOT_FOUND");
+			const url = new URL(req.url ?? "/", "http://localhost");
 			const ctx = context(req);
+			const match = /^\/v1\/deals\/([0-9a-f-]+)\/transitions$/i.exec(
+				url.pathname,
+			);
 			let result: unknown;
-			if (req.method === "POST" && match[2]) {
+			let extra = {};
+			if (req.method === "POST" && match && uuid.test(match[1])) {
 				const key = req.headers["idempotency-key"];
-				if (typeof key !== "string" || key.length < 1 || key.length > 128)
+				if (typeof key !== "string" || !key.length || key.length > 128)
 					throw new Fault(422, "VALIDATION_FAILED");
 				result = await transition(
 					ctx,
@@ -83,21 +96,50 @@ export function server() {
 					key,
 					requestId,
 				);
-			} else if (req.method === "GET" && !match[2])
-				result = await transaction(ctx, async (db) => {
-					await authorize(db, "crm.read", match[1], ctx.grant);
-					const {
-						rows: [deal],
-					} = await db.query(
-						"SELECT id,stage_id,version FROM crm.deal WHERE tenant_id=$1 AND id=$2",
-						[ctx.tenant, match[1]],
-					);
-					if (!deal) throw new Fault(404, "NOT_FOUND");
-					return deal;
-				});
-			else throw new Fault(404, "NOT_FOUND");
+			} else {
+				let body: Body = {};
+				let key = "";
+				if (req.method !== "GET") {
+					const header = req.headers["idempotency-key"];
+					if (
+						typeof header !== "string" ||
+						!header.length ||
+						header.length > 128
+					)
+						throw new Fault(422, "VALIDATION_FAILED");
+					key = header;
+					let raw = "";
+					for await (const chunk of req) {
+						raw += chunk;
+						if (Buffer.byteLength(raw) > 16384)
+							throw new Fault(413, "PAYLOAD_TOO_LARGE");
+					}
+					try {
+						body = JSON.parse(raw);
+					} catch {
+						throw new Fault(422, "VALIDATION_FAILED");
+					}
+					if (!body || typeof body !== "object" || Array.isArray(body))
+						throw new Fault(422, "VALIDATION_FAILED");
+				}
+				const response = await crmRequest(
+					ctx,
+					req.method ?? "GET",
+					url.pathname,
+					url.searchParams,
+					body,
+					key,
+					requestId,
+				);
+				result = response.data;
+				res.statusCode = response.status ?? 200;
+				if ("next_cursor" in response)
+					extra = { next_cursor: response.next_cursor };
+			}
 			res.setHeader("Content-Type", "application/json");
-			res.end(JSON.stringify({ data: result, request_id: requestId }));
+			res.end(
+				JSON.stringify({ data: result, ...extra, request_id: requestId }),
+			);
 		} catch (e) {
 			const error = e instanceof Fault ? e : new Fault(500, "INTERNAL_ERROR");
 			res.statusCode = error.status;

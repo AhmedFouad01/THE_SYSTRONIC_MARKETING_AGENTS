@@ -491,7 +491,28 @@ test("14 concurrent workers overlap on pending work and SKIP LOCKED yields one e
 			"pending",
 		);
 		// First worker is still active and holds the claim; second must skip it.
-		assert.equal(await workOne(worker()), false);
+		const reserved: pg.PoolClient[] = [];
+		try {
+			// Reserve every other connection so worker two must use the timed one.
+			for (let i = 1; i < pool.options.max; i++) {
+				reserved.push(await pool.connect());
+			}
+			const timed = reserved[reserved.length - 1];
+			await timed.query("SET statement_timeout = '2s'");
+			reserved.pop();
+			timed.release();
+			try {
+				// PostgreSQL cancels a blocked claim if SKIP LOCKED regresses;
+				// workOne then rolls back before the barrier is released below.
+				assert.equal(await workOne(worker()), false);
+			} finally {
+				// The timed connection is still the only available pool slot.
+				// Destroy it so its session timeout cannot leak into later tests.
+				(await pool.connect()).release(true);
+			}
+		} finally {
+			for (const connection of reserved) connection.release();
+		}
 		assert.equal(
 			(
 				await admin.query(

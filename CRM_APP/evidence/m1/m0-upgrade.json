@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS",
+  "versions": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "originalFixture": "Both original M0 deals retain fixture contact/pipeline/owner/name relationships and valid stages",
+  "durableReceipts": {
+    "total": 106,
+    "missing": 0
+  },
+  "transitionOutbox": {
+    "total": 106,
+    "missing": 0
+  },
+  "limit": "Read-only post-upgrade check against original ignored local-fixture IDs; not a full before/after database digest"
+}

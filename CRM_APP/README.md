@@ -1,4 +1,10 @@
-# CRM M0 foundation
+# CRM M1 core vertical slice
+
+Current bounded milestone: M1. See [M1 evidence](M1_EVIDENCE.md) and [API/access/use contracts](M1_CONTRACTS.md). Arabic RTL-first workspace at `/` supports contacts, explicit merge, manual leads, configured deals/stages, tasks, follow-up automation and internal audit/outbox visibility. English LTR and narrow screens are covered by real browser journeys.
+
+Use the demonstrated native Windows path below. On an existing M0 installation, run `npm run migrate`, then `npm run seed` for fresh synthetic MFA-marked sessions. Start API and worker separately, enter `tokens.manager` / `ids.a` from the private fixture, then create a synthetic reference pipeline in the workspace. Existing sessions are not silently promoted to MFA. The previous M0 transition-only demonstration is retained at `/foundation`.
+
+## Preserved M0 foundation setup
 
 Synthetic local proof only. API: loopback port 4317. PostgreSQL: loopback port 55432. Separate worker, durable database outbox, no provider integrations.
 
@@ -12,9 +18,9 @@ npm run api                    # terminal 1
 npm run worker                 # terminal 2
 ```
 
-Open `http://127.0.0.1:4317`. The ignored `local-fixture.json` contains synthetic session tokens and opaque IDs: use `tokens.manager`, `ids.a`, `ids.dealA`, `ids.qualified`, expected version 0. Load the deal, move once to Qualified, then use `ids.won` with the returned version. Language button switches Arabic RTL / English LTR. Tokens expire after 24 hours; `npm run seed` appends a fresh isolated synthetic fixture, never deletes existing data. Do not paste fixture tokens into shared evidence.
+For the retained M0 demonstration, open `http://127.0.0.1:4317/foundation`. The ignored `local-fixture.json` contains synthetic session tokens and opaque IDs: use `tokens.manager`, `ids.a`, `ids.dealA`, `ids.qualified`, expected version 0. Load the deal, move once to Qualified, then use `ids.won` with the returned version. Language button switches Arabic RTL / English LTR. Tokens expire after 24 hours; `npm run seed` appends a fresh isolated synthetic fixture, never deletes existing data. Do not paste fixture tokens into shared evidence.
 
-`npm run migrate` is transactional, serialized and versioned; rerunning verifies migration 001 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
+`npm run migrate` is transactional, serialized and versioned; rerunning verifies migrations 001–004 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
 
 ## Native Windows fallback
 
