@@ -2,7 +2,7 @@
 
 **Verdict: PASS for the bounded M1 manual CRM slice.** No blocking finding. This is not full P0/pilot or production acceptance; TSST/DEV readiness is unchanged.
 
-Branch: `feat/crm-m1-core`. M0 closure: `f54fbf6a4ac5366f047ca49b5ee9db19e0d68ccc`. Implementation commit: **PENDING_FEATURE_COMMIT** (recorded by the evidence-only follow-up after the feature commit).
+Branch: `feat/crm-m1-core`. M0 closure: `f54fbf6a4ac5366f047ca49b5ee9db19e0d68ccc`. Implementation commit: `1b395b81a9f0398bd0b9d333b7f7c8f22c1ed897`.
 
 ## Scope and evidence
 
