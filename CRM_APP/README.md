@@ -20,7 +20,19 @@ npm run worker                 # terminal 2
 
 For the retained M0 demonstration, open `http://127.0.0.1:4317/foundation`. The ignored `local-fixture.json` contains synthetic session tokens and opaque IDs: use `tokens.manager`, `ids.a`, `ids.dealA`, `ids.qualified`, expected version 0. Load the deal, move once to Qualified, then use `ids.won` with the returned version. Language button switches Arabic RTL / English LTR. Tokens expire after 24 hours; `npm run seed` appends a fresh isolated synthetic fixture, never deletes existing data. Do not paste fixture tokens into shared evidence.
 
-`npm run migrate` is transactional, serialized and versioned; rerunning verifies migrations 001–004 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
+`npm run migrate` is transactional, serialized and versioned; rerunning verifies migrations 001–005 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
+
+## Protected-key configuration
+
+Migration005 preserves existing keys and ciphertext and adds a validation fingerprint. API and worker validate all tenant key configurations before startup; missing, malformed, wrong or unreadable key state fails with `PROTECTED_KEY_UNAVAILABLE`. Protected operations return the same safe503 error after configuration loss. Runtime never generates or replaces keys.
+
+The admin-only seed explicitly provisions keys for its new synthetic tenants. For another tenant with no encrypted identifiers, explicitly provision once:
+
+```powershell
+node --env-file=.env --import tsx scripts/configure-identifier-key.ts <tenant-uuid>
+```
+
+This command preserves an existing valid key and refuses to replace a missing key when ciphertext exists. Restore the matching protected key record/configuration from private backup in that case; do not regenerate it. Existing tenants with no configured key must be explicitly provisioned before starting the shared API/worker. External KMS/rotation remains out of scope. Never print or commit key values.
 
 ## Native Windows fallback
 

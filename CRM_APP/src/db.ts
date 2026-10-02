@@ -12,6 +12,13 @@ export class Fault extends Error {
 	}
 }
 export type Context = { tenant: string; token: string; grant?: string };
+export async function assertIdentifierConfiguration() {
+	try {
+		await pool.query("SELECT crm.assert_identifier_configuration()");
+	} catch {
+		throw new Fault(503, "PROTECTED_KEY_UNAVAILABLE");
+	}
+}
 export async function transaction<T>(
 	ctx: Context,
 	fn: (db: pg.PoolClient) => Promise<T>,
@@ -36,6 +43,8 @@ export async function transaction<T>(
 		return result;
 	} catch (error) {
 		await db.query("ROLLBACK");
+		if ((error as { code?: string }).code === "PCK01")
+			throw new Fault(503, "PROTECTED_KEY_UNAVAILABLE");
 		throw error;
 	} finally {
 		db.release();

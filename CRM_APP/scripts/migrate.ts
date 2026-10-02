@@ -13,6 +13,7 @@ try {
 		[2, "002_crm_core.sql"],
 		[3, "003_object_integrity.sql"],
 		[4, "004_relationship_authority.sql"],
+		[5, "005_protected_key_configuration.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
 			"SELECT 1 FROM public.crm_migrations WHERE version=$1",
@@ -35,7 +36,7 @@ try {
 		throw new Error("Use generated alphanumeric runtime password");
 	await db.query(`ALTER ROLE crm_runtime PASSWORD '${password}'`);
 	await db.query("COMMIT");
-	console.log("Migrations 001–004 applied/verified");
+	console.log("Migrations 001–005 applied/verified");
 } catch (e) {
 	await db.query("ROLLBACK");
 	throw e;

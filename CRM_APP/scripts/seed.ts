@@ -30,8 +30,10 @@ export async function seed(db: pg.Client) {
 		for (const [id, name] of [
 			[ids.a, "Tenant A"],
 			[ids.b, "Tenant B"],
-		])
+		]) {
 			await db.query("INSERT INTO crm.tenant VALUES($1,$2)", [id, name]);
+			await db.query("SELECT crm.provision_identifier_key($1)", [id]);
+		}
 		for (const role of ["manager", "reader", "agency", "worker"] as const) {
 			await db.query("INSERT INTO crm.principal VALUES($1,$2)", [
 				ids[role],

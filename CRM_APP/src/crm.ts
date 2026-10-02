@@ -154,7 +154,7 @@ async function identifiers(
 		} else if (kind !== "email" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
 			throw new Fault(422, "VALIDATION_FAILED");
 		const provenance = text(raw.provenance ?? "manual", 300);
-		// Ensure the tenant key exists before calculating its keyed lookup digest.
+		// Use only the explicitly provisioned tenant key; never replace missing state.
 		const {
 			rows: [encrypted],
 		} = await db.query("SELECT crm.encrypt_identifier($1) value", [value]);
@@ -749,12 +749,30 @@ export async function crmRequest(
 					const old = await record(db, ctx, kind, object, "crm.write", true);
 					if (old.version !== integer(b.expected_version) || old.merged_into_id)
 						throw new Fault(409, "VERSION_CONFLICT");
+					if (kind === "task" && "deal_id" in b) {
+						if (b.deal_id === null) {
+							if (!old.contact_id) throw new Fault(422, "REFERENCE_REQUIRED");
+						} else {
+							const target = await record(
+								db,
+								ctx,
+								"deal",
+								id(b.deal_id),
+								"crm.write",
+								true,
+							);
+							if (old.contact_id && old.contact_id !== target.contact_id)
+								throw new Fault(422, "REFERENCE_MISMATCH");
+						}
+					}
 					const values: unknown[] = [ctx.tenant, object],
 						sets: string[] = [];
 					for (const field of allowed) {
 						if (!(field in b) || field === "identifiers") continue;
 						let value: unknown = b[field];
 						if (field === "owner_id") value = await assignment(db, ctx, value);
+						else if (field === "deal_id")
+							value = value === null ? null : id(value);
 						else if (field === "due_at") value = date(value);
 						else if (field === "amount_minor") value = integer(value);
 						else
@@ -916,6 +934,8 @@ export async function crmRequest(
 			},
 		);
 		// Re-authorize and field-filter durable replay under the current policy.
+		if (kind === "task" && object && "deal_id" in b && b.deal_id !== null)
+			await record(db, ctx, "deal", id(b.deal_id), "crm.write");
 		await record(db, ctx, kind, result.id, "crm.write");
 		return {
 			status: object ? 200 : 201,

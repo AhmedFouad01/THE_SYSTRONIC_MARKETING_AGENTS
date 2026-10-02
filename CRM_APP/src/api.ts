@@ -2,7 +2,12 @@ import { createServer, type IncomingMessage } from "node:http";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
-import { type Context, Fault, pool } from "./db.js";
+import {
+	type Context,
+	Fault,
+	pool,
+	assertIdentifierConfiguration,
+} from "./db.js";
 import { crmRequest, type Body } from "./crm.js";
 import { transition, type Command } from "./transition.js";
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -156,6 +161,13 @@ export function server() {
 	});
 }
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+	try {
+		await assertIdentifierConfiguration();
+	} catch {
+		console.error("PROTECTED_KEY_UNAVAILABLE");
+		await pool.end();
+		process.exit(1);
+	}
 	const app = server().listen(Number(process.env.PORT ?? 4317), "127.0.0.1");
 	process.on("SIGTERM", () =>
 		app.close(() => {
