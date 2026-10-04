@@ -872,3 +872,487 @@ test("M2-22 reporting filters raw identifiers; commerce queue references canonic
 		1,
 	);
 });
+// M2-F01: one UUID in any letter case is one event, one receipt, one touchpoint.
+const upper = (u: string) => u.toUpperCase();
+const lower = (u: string) => u.toLowerCase();
+const mixed = (u: string) =>
+	[...u].map((c, i) => (i % 2 ? c.toUpperCase() : c.toLowerCase())).join("");
+async function assertSingleEvent(eventId: string) {
+	assert.equal(await count("business_event"), 1);
+	assert.equal(await count("source_receipt"), 1);
+	assert.equal(await count("touchpoint"), 1);
+	assert.equal(await count("attribution_job"), 1);
+	assert.equal(await count("attribution_credit"), 0);
+	const stored = await admin.query(
+		"SELECT e.source_event_id,r.source_id FROM crm.business_event e JOIN crm.source_receipt r ON r.tenant_id=e.tenant_id AND r.event_id=e.id WHERE e.tenant_id=$1",
+		[ctx.tenant],
+	);
+	assert.equal(stored.rows[0].source_event_id, eventId.toLowerCase());
+	assert.equal(stored.rows[0].source_id, eventId.toLowerCase());
+}
+for (const [first, second] of [
+	[upper, lower],
+	[lower, upper],
+	[upper, upper],
+	[lower, lower],
+	[mixed, upper],
+] as const)
+	test(`M2-23 event_id ${first.name} then ${second.name} replays as one event`, async () => {
+		await fresh();
+		const id = randomUUID(),
+			b = telemetry({ event_id: first(id) }),
+			a = await send(b),
+			r = await send({ ...b, event_id: second(id) });
+		assert.equal(r.id, a.id);
+		await assertSingleEvent(id);
+		await assert.rejects(
+			send({ ...b, event_id: second(id), source: "changed" }),
+			fail("SOURCE_CONFLICT"),
+		);
+		await assertSingleEvent(id);
+	});
+test("M2-24 mixed-case concurrent replay of one event_id produces one event", async () => {
+	await fresh();
+	const id = randomUUID(),
+		b = telemetry(),
+		forms = [upper, lower, mixed],
+		results = await Promise.all(
+			Array.from({ length: 9 }, (_, i) =>
+				send({ ...b, event_id: forms[i % 3](id) }),
+			),
+		);
+	assert.equal(new Set(results.map((x) => x.id)).size, 1);
+	await assertSingleEvent(id);
+});
+test("M2-25 visitor/session/campaign id case does not change replay identity", async () => {
+	await fresh();
+	const b = telemetry(),
+		a = await send(b),
+		r = await send({
+			...b,
+			event_id: upper(String(b.event_id)),
+			visitor_id: upper(String(b.visitor_id)),
+			session_id: upper(String(b.session_id)),
+		});
+	assert.equal(r.id, a.id);
+	assert.equal(await count("business_event"), 1);
+	assert.equal(await count("visitor"), 1);
+	assert.equal(await count("journey_session"), 1);
+	assert.equal(await count("touchpoint"), 1);
+});
+test("M2-26 legacy non-canonical 006 receipt is found by canonical replay without rewriting rows", async () => {
+	await fresh();
+	const id = randomUUID(),
+		b = telemetry({ event_id: id }),
+		a = await send(b),
+		legacy = { ...b, event_id: upper(id) };
+	// Reproduce exactly what migration 006 stored: raw id text and a hash of the raw body.
+	await admin.query(
+		"UPDATE crm.business_event SET source_event_id=$2 WHERE tenant_id=$1 AND id=$3",
+		[ctx.tenant, upper(id), a.id],
+	);
+	await admin.query(
+		"UPDATE crm.source_receipt SET source_id=$2,request_hash=encode(public.digest($3::jsonb::text,'sha256'),'hex') WHERE tenant_id=$1 AND event_id=$4",
+		[ctx.tenant, upper(id), JSON.stringify(legacy), a.id],
+	);
+	for (const form of [lower, upper, mixed])
+		assert.equal((await send({ ...b, event_id: form(id) })).id, a.id);
+	assert.equal(await count("business_event"), 1);
+	assert.equal(await count("source_receipt"), 1);
+	assert.equal(await count("touchpoint"), 1);
+	assert.equal(
+		(
+			await admin.query(
+				"SELECT source_id FROM crm.source_receipt WHERE tenant_id=$1",
+				[ctx.tenant],
+			)
+		).rows[0].source_id,
+		upper(id),
+		"legacy rows are not rewritten",
+	);
+	await assert.rejects(
+		send({ ...b, event_id: lower(id), source: "changed" }),
+		fail("SOURCE_CONFLICT"),
+	);
+});
+test("M2-27 public HTTP replay with different event_id case returns 202 and the same event", async () => {
+	await fresh();
+	const app = server();
+	await new Promise<void>((resolve) => app.listen(0, "127.0.0.1", resolve));
+	try {
+		const address = app.address();
+		assert.ok(address && typeof address !== "string");
+		const url = `http://127.0.0.1:${address.port}/v1/collect/events`,
+			headers = {
+				"Content-Type": "application/json",
+				"X-Site-Key": site.public_key,
+				Origin: site.origin,
+			},
+			b = telemetry(),
+			post = (event_id: string) =>
+				fetch(url, {
+					method: "POST",
+					headers,
+					body: JSON.stringify({ ...b, event_id }),
+				});
+		const first = await post(upper(String(b.event_id))),
+			second = await post(lower(String(b.event_id))),
+			third = await post(upper(String(b.event_id)));
+		assert.deepEqual(
+			[first.status, second.status, third.status],
+			[202, 202, 202],
+		);
+		const ids = [first, second, third].map(
+			async (x) => (await x.json()).data.id,
+		);
+		assert.equal(new Set(await Promise.all(ids)).size, 1);
+		await assertSingleEvent(String(b.event_id));
+	} finally {
+		await new Promise<void>((resolve, reject) =>
+			app.close((e) => (e ? reject(e) : resolve())),
+		);
+	}
+});
+test("M2-28 tenant lock key is case independent (M2-F02)", async () => {
+	await fresh();
+	const keys = await Promise.all(
+		[ctx.tenant, upper(ctx.tenant)].map((t) =>
+			admin.query(
+				"SELECT hashtextextended($1::uuid::text,2)::text k, hashtextextended($2::uuid::text,2)::text sql",
+				[t, ctx.tenant],
+			),
+		),
+	);
+	assert.equal(keys[0].rows[0].k, keys[1].rows[0].k);
+	assert.equal(keys[1].rows[0].k, keys[0].rows[0].sql);
+	// Mixed-case X-Tenant-ID still reaches the shared lock path and succeeds.
+	await journeyRequest(
+		{ ...ctx, tenant: upper(ctx.tenant) },
+		"POST",
+		"/v1/journey/calculate",
+		new URLSearchParams(),
+		{},
+		randomUUID(),
+	);
+});
+// M2-29 (R-03): the canonical-id index/lookup casts source_id to uuid only behind an exact
+// PostgreSQL-uuid-grammar guard, because source_receipt also holds non-UUID ids in other namespaces.
+const UUID_RE =
+	"^(\\{[0-9A-Fa-f]{4}(-?[0-9A-Fa-f]{4}){7}\\}|[0-9A-Fa-f]{4}(-?[0-9A-Fa-f]{4}){7})$";
+const GUARDED = `CASE WHEN source_id ~ '${UUID_RE}' THEN (source_id::uuid)::text END`;
+const NON_UUID_IDS = [
+	"not-a-uuid",
+	"order-12345",
+	"gggggggg-gggg-gggg-gggg-gggggggggggg",
+	"0123456789abcdef0123456789abcde",
+	"0123456789abcdef0123456789abcdef0",
+];
+async function nonUuidReceipts() {
+	// Real path: commerce receipts live in namespace synthetic:fixture with arbitrary-code source ids.
+	for (const sid of NON_UUID_IDS)
+		await request("journey/commerce", "POST", {
+			source: "fixture",
+			source_event_id: sid,
+			external_order_id: randomUUID(),
+			kind: "order",
+			status: "placed",
+			occurred_at: at(1),
+			currency: "EGP",
+			amount_minor: 100,
+		});
+}
+// Fresh session per call so SET LOCAL planner settings apply to a newly planned lookup.
+async function collectOnFreshSession(b: Body, planner: "default" | "seqscan") {
+	const c = new pg.Client({ connectionString: process.env.DATABASE_URL });
+	await c.connect();
+	try {
+		await c.query("BEGIN");
+		if (planner === "seqscan")
+			await c.query(
+				"SET LOCAL enable_indexscan=off; SET LOCAL enable_bitmapscan=off",
+			);
+		const r = await c.query("SELECT crm.collect_event($1,$2,$3::jsonb) id", [
+			site.public_key,
+			site.origin,
+			JSON.stringify(b),
+		]);
+		await c.query("COMMIT");
+		return String(r.rows[0].id);
+	} catch (e) {
+		await c.query("ROLLBACK").catch(() => undefined);
+		throw e;
+	} finally {
+		await c.end();
+	}
+}
+function uuidForm(hex32: string, mask: number, braces: boolean) {
+	let s = "";
+	for (let g = 0; g < 8; g++) {
+		s += hex32.slice(g * 4, g * 4 + 4);
+		if (g < 7 && mask & (1 << g)) s += "-";
+	}
+	return braces ? `{${s}}` : s;
+}
+test("M2-29a non-UUID receipts in another namespace never reach the uuid cast (default and forced seq scan)", async () => {
+	await fresh();
+	await nonUuidReceipts();
+	assert.equal(await count("source_receipt"), NON_UUID_IDS.length);
+	for (const planner of ["default", "seqscan"] as const) {
+		const b = telemetry(),
+			first = await collectOnFreshSession(b, planner),
+			replay = await collectOnFreshSession(
+				{ ...b, event_id: upper(String(b.event_id)) },
+				planner,
+			);
+		assert.equal(replay, first, planner);
+	}
+	assert.equal(await count("source_receipt"), NON_UUID_IDS.length + 2);
+	assert.equal(await count("touchpoint"), 2);
+});
+test("M2-29b lower/upper replay still dedups to one event/receipt/touchpoint on every plan", async () => {
+	for (const planner of ["default", "seqscan"] as const) {
+		await fresh();
+		await nonUuidReceipts();
+		const id = randomUUID(),
+			b = telemetry({ event_id: upper(id) }),
+			a = await collectOnFreshSession(b, planner);
+		for (const form of [lower, upper, mixed])
+			assert.equal(
+				await collectOnFreshSession({ ...b, event_id: form(id) }, planner),
+				a,
+			);
+		assert.equal(await count("touchpoint"), 1);
+		assert.equal(
+			(
+				await admin.query(
+					"SELECT count(*)::int n FROM crm.source_receipt WHERE tenant_id=$1 AND namespace LIKE 'site:%'",
+					[ctx.tenant],
+				)
+			).rows[0].n,
+			1,
+		);
+	}
+});
+test("M2-29c legacy 006 receipts stored in any PostgreSQL-accepted uuid form are found by canonical replay", async () => {
+	for (const planner of ["default", "seqscan"] as const) {
+		await fresh();
+		await nonUuidReceipts();
+		const shapes: [number, boolean, boolean][] = [
+			[0, false, false],
+			[0, false, true],
+			[0b1111111, false, false],
+			[0b1111111, true, true],
+			[0, true, false],
+			[0b0101010, false, false],
+			[0b1010101, true, false],
+		];
+		for (const [mask, braces, up] of shapes) {
+			const raw = randomUUID().replaceAll("-", ""),
+				legacyForm = uuidForm(up ? raw.toUpperCase() : raw, mask, braces),
+				canonical = (await admin.query("SELECT $1::uuid::text c", [legacyForm]))
+					.rows[0].c as string,
+				b = telemetry({ event_id: canonical }),
+				a = await collectOnFreshSession(b, planner);
+			// Reproduce exactly what migration 006 stored: raw id text and a hash of the raw body.
+			await admin.query(
+				"UPDATE crm.business_event SET source_event_id=$2 WHERE tenant_id=$1 AND id=$3",
+				[ctx.tenant, legacyForm, a],
+			);
+			await admin.query(
+				"UPDATE crm.source_receipt SET source_id=$2,request_hash=encode(public.digest($3::jsonb::text,'sha256'),'hex') WHERE tenant_id=$1 AND event_id=$4",
+				[
+					ctx.tenant,
+					legacyForm,
+					JSON.stringify({ ...b, event_id: legacyForm }),
+					a,
+				],
+			);
+			for (const form of [canonical, legacyForm, canonical.toUpperCase()])
+				assert.equal(
+					await collectOnFreshSession({ ...b, event_id: form }, planner),
+					a,
+					`${legacyForm} replayed as ${form} (${planner})`,
+				);
+			assert.equal(
+				(
+					await admin.query(
+						"SELECT count(*)::int n FROM crm.source_receipt WHERE tenant_id=$1 AND event_id=$2",
+						[ctx.tenant, a],
+					)
+				).rows[0].n,
+				1,
+			);
+			assert.equal(
+				(
+					await admin.query(
+						"SELECT source_id FROM crm.source_receipt WHERE tenant_id=$1 AND event_id=$2",
+						[ctx.tenant, a],
+					)
+				).rows[0].source_id,
+				legacyForm,
+				"legacy rows are not rewritten",
+			);
+		}
+		assert.equal(await count("touchpoint"), shapes.length);
+		assert.equal(
+			await count("business_event"),
+			shapes.length + NON_UUID_IDS.length,
+		);
+	}
+});
+test("M2-29d guard regex accepts exactly what PostgreSQL uuid input accepts", async () => {
+	const hex = randomUUID().replaceAll("-", ""),
+		accepted: string[] = [],
+		rejected: string[] = [];
+	for (const braces of [false, true])
+		for (let mask = 0; mask < 128; mask++)
+			for (const h of [hex, hex.toUpperCase(), mixed(hex)])
+				accepted.push(uuidForm(h, mask, braces));
+	rejected.push(
+		`{${hex}`,
+		`${hex}}`,
+		`{{${hex}}}`,
+		hex.slice(1),
+		`${hex}0`,
+		`${hex.slice(0, 31)}g`,
+		` ${hex}`,
+		`${hex} `,
+		`${hex}\n`,
+		`-${hex}`,
+		`${hex}-`,
+		`${hex.slice(0, 2)}-${hex.slice(2)}`,
+		`${hex.slice(0, 4)}--${hex.slice(4)}`,
+		`${hex.slice(0, 4)}_${hex.slice(4)}`,
+		"",
+		"not-a-uuid",
+		"urn:uuid:00000000-0000-0000-0000-000000000000",
+	);
+	assert.equal(accepted.length, 768);
+	for (const s of [...accepted, ...rejected]) {
+		let pgAccepts = true;
+		try {
+			await admin.query("SELECT $1::uuid", [s]);
+		} catch (e) {
+			assert.equal((e as { code?: string }).code, "22P02");
+			pgAccepts = false;
+		}
+		const matches = (await admin.query("SELECT $1::text ~ $2 m", [s, UUID_RE]))
+			.rows[0].m;
+		assert.equal(matches, pgAccepts, JSON.stringify(s));
+	}
+});
+test("M2-29e index and lookup share the guarded expression; index is usable; guard is order-independent", async () => {
+	await fresh();
+	await nonUuidReceipts();
+	const fn = (
+		await admin.query(
+			"SELECT prosrc FROM pg_proc WHERE oid='crm.collect_event(uuid,text,jsonb)'::regprocedure",
+		)
+	).rows[0].prosrc as string;
+	assert.ok(fn.includes(`${GUARDED}=canon`), "lookup uses guarded expression");
+	const indexExpr = (
+		await admin.query(
+			"SELECT pg_get_expr(indexprs,indrelid) e FROM pg_index WHERE indexrelid='crm.source_receipt_site_canonical'::regclass",
+		)
+	).rows[0].e as string;
+	assert.match(
+		indexExpr,
+		/^\s*CASE\s+WHEN \(source_id ~ .*\)\s+THEN \(\(source_id\)::uuid\)::text\s+ELSE NULL::text\s+END$/s,
+		indexExpr,
+	);
+	assert.ok(indexExpr.includes(UUID_RE), "index uses the same guard regex");
+	const c = new pg.Client({ connectionString: process.env.ADMIN_DATABASE_URL });
+	await c.connect();
+	try {
+		// Realistic volume (rolled back): many canonical receipts in one site namespace, so the
+		// default planner prefers the expression index over the primary-key prefix scan.
+		await c.query("BEGIN");
+		await c.query(
+			"INSERT INTO crm.source_receipt SELECT $1,'site:'||$2,md5(i::text)::uuid::text,'h',(SELECT id FROM crm.business_event WHERE tenant_id=$1 LIMIT 1) FROM generate_series(1,20000) i",
+			[ctx.tenant, site.id],
+		);
+		await c.query("ANALYZE crm.source_receipt");
+		const plan = (
+			await c.query(
+				`EXPLAIN SELECT 1 FROM crm.source_receipt WHERE tenant_id='${ctx.tenant}' AND namespace='site:${site.id}' AND namespace LIKE 'site:%' AND ${GUARDED}='${randomUUID()}'`,
+			)
+		).rows
+			.map((r) => r["QUERY PLAN"])
+			.join("\n");
+		assert.match(plan, /source_receipt_site_canonical/, plan);
+		await c.query("ROLLBACK");
+		// Negative control: make the namespace filter the most expensive qual so the planner
+		// evaluates the cast first. The unguarded cast must hit the non-UUID rows; the guard must not.
+		await c.query(
+			"CREATE FUNCTION pg_temp.late(text) RETURNS text LANGUAGE plpgsql STABLE COST 100000 AS 'BEGIN RETURN $1; END'",
+		);
+		const probeSql = (expr: string) =>
+			`SELECT count(*)::int n FROM crm.source_receipt WHERE tenant_id=$1 AND ${expr}=$2 AND pg_temp.late(namespace) LIKE 'site:%'`;
+		await assert.rejects(
+			c.query(probeSql("(source_id::uuid)::text"), [ctx.tenant, randomUUID()]),
+			(e: unknown) => (e as { code?: string }).code === "22P02",
+		);
+		assert.equal(
+			(await c.query(probeSql(GUARDED), [ctx.tenant, randomUUID()])).rows[0].n,
+			0,
+		);
+	} finally {
+		await c.end();
+	}
+});
+test("M2-29f malformed public event_id values are rejected as 422 with no 500 and no rows written", async () => {
+	await fresh();
+	await nonUuidReceipts();
+	const tables = [
+			"business_event",
+			"source_receipt",
+			"touchpoint",
+			"visitor",
+			"journey_session",
+			"collection_rate",
+		],
+		before = new Map<string, number>();
+	for (const t of tables) before.set(t, await count(t));
+	const hex = randomUUID().replaceAll("-", ""),
+		bad: unknown[] = [
+			"not-a-uuid",
+			hex.slice(1),
+			`${hex}0`,
+			`${hex.slice(0, 31)}g`,
+			`{${randomUUID()}`,
+			"",
+			` ${randomUUID()}`,
+			12345,
+		];
+	const app = server();
+	await new Promise<void>((resolve) => app.listen(0, "127.0.0.1", resolve));
+	try {
+		const address = app.address();
+		assert.ok(address && typeof address !== "string");
+		for (const event_id of bad) {
+			await assert.rejects(
+				send(telemetry({ event_id })),
+				fail("VALIDATION_FAILED"),
+				JSON.stringify(event_id),
+			);
+			const res: Response = await fetch(
+				`http://127.0.0.1:${address.port}/v1/collect/events`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"X-Site-Key": site.public_key,
+						Origin: site.origin,
+					},
+					body: JSON.stringify(telemetry({ event_id })),
+				},
+			);
+			assert.equal(res.status, 422, JSON.stringify(event_id));
+		}
+	} finally {
+		await new Promise<void>((resolve, reject) =>
+			app.close((e) => (e ? reject(e) : resolve())),
+		);
+	}
+	for (const t of tables) assert.equal(await count(t), before.get(t), t);
+});

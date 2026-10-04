@@ -47,6 +47,8 @@ tokens. Advertising-denied click IDs are discarded. Analytics permission is
 required and its collection policy version is retained. No advertising or
 messaging delivery is implemented.
 
+Event, visitor, session and campaign UUIDs are canonicalized to lowercase text (migration 007), so a retry with the same UUID in any letter case is a replay of the same event.
+
 Browser CORS preflight supports only configured origins, POST and bounded headers.
 The DB definer intake has a finite schema and derives its own tenant; it exposes
 no general tenant access. It synchronously commits visitor/session, event,

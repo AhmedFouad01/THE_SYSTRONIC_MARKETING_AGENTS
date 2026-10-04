@@ -46,9 +46,11 @@ const hash = (v: unknown) =>
 	createHash("sha256").update(canonical(v)).digest("hex");
 async function lock(db: pg.PoolClient, tenant: string) {
 	// Serializes evidence changes and calculations for a consistent published snapshot.
-	await db.query("SELECT pg_advisory_xact_lock(hashtextextended($1,2))", [
-		tenant,
-	]);
+	// Canonical (lowercase) tenant text so it matches crm.collect_event (M2-F02).
+	await db.query(
+		"SELECT pg_advisory_xact_lock(hashtextextended($1::uuid::text,2))",
+		[tenant],
+	);
 }
 async function row(
 	db: pg.PoolClient,
