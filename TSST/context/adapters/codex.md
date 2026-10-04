@@ -28,5 +28,6 @@ and are never written to durable memory (packet TSST-SYNC-20261002-0129, propose
 - `.gdoc` → `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`: use the repo-native export if its
   `EXPORTS.yaml` row exists, else ask the lead for a `source-read` bus task.
 - No push, merge or deploy without user approval.
+- Write files with LF line endings (repo files are hashed byte-exact; CRLF rewrites whole files).
 
 Status: UNVALIDATED. Cold-start not yet executed in this runtime.
