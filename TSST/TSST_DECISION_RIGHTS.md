@@ -1,6 +1,6 @@
 # TSST Decision Rights
 
-Version 1.0 | Effective 2026-09-22
+Version 1.1 | Effective 2026-10-05 (v1.0: 2026-09-22)
 Owner / approver: المستخدم. Interface: TSST Lead.
 المصدر: موافقات المستخدم على A/B/C بتاريخ 2026-09-21، وعلى escalation وscope handling والتوثيق بتاريخ 2026-09-22. هذه صلاحيات مؤكدة؛ حدود الميزانية والوقت غير المحددة ليست تفويضًا مفتوحًا.
 
@@ -38,3 +38,15 @@ This mapping applies the existing A/B/C rights to Context OS tool routing; it gr
 
 A higher model tier cannot substitute for missing authority, access or evidence.
 <!-- TSST-CONTEXT-OS-V0.6-RC1-END -->
+
+## Runtime and tool rights — Operating Baseline v0.1 (2026-10-05)
+
+Approved by the user in chat 2026-10-05 (TSST-001A intake, `TSST/onboarding/INTAKE_TSST-001A.md`). Adds rows; Categories A/B/C above and the standing limits are unchanged.
+
+| Action | Lead alone (A) | Needs user approval (B) | Escalation |
+| --- | --- | --- | --- |
+| Git / GitHub | commit, push feature branches, open PRs | merge to `master` | CI red after one fix attempt |
+| Real Memory | checkpoints, status, pointers | decisions, brand facts, change sets (RM-CS-*) | conflicting sources |
+| Runtime bus / model spend | queue FAST/WORK/CODE tasks on their tier models (`TSST/bus/runtimes.yaml`) | top-cost models (gpt-6-astra, Opus in Antigravity), image/video generation | task `escalated` → reroute once to another runtime/tier, then user |
+| External tools (Drive, browser, GitHub, Shopify, Apps Script, …) | read, research, inspect | any write outside the repo (share, trash, product/account edit, form submit) | — |
+| Acceptance | accept after an independent review by a runtime other than the producer (code, creative, strategy) | final client-facing delivery | reviewer and producer disagree |
