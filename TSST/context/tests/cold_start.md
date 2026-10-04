@@ -1,7 +1,8 @@
 # Cold-start cases — any runtime
 
 Run `TSST/context/boot.md` from a fresh session for each request below, exactly as a user
-message. Do not open `validate_spine.py` (it holds the expected answers). Do not execute
+message. Do not open `validate_spine.py` (it holds the expected answers) or anything in
+`TSST/bus/out/` (other runtimes' results). Copied results are rejected. Do not execute
 the work: stop after boot step 13 (tier).
 
 | case | user request |

@@ -13,11 +13,11 @@ after: []
 done_when: out file per cold_start.md (<=12 lines), written via bus.py done
 issued_by: claude
 created: "2026-10-04T19:04Z"
-rounds: 0
+rounds: 1
 max_rounds: 1
 claimed_by:
 lease_until:
 progress:
 result:
 sha256:
-note:
+note: "rejected: out file is COLD-CODEX.md copied (identical lines, 1 min). Re-run A-D yourself; never read TSST/bus/out/"
