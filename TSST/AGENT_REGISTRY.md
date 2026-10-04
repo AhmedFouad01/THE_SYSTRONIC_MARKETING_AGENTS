@@ -1,4 +1,4 @@
-﻿# Agent Registry
+# Agent Registry
 
 
 ## TSST Lead — Executive lead and user interface

@@ -1,4 +1,4 @@
-﻿# CREATIVE_AG — Creative Direction & Production Agent
+# CREATIVE_AG — Creative Direction & Production Agent
 
 
 Status: `NOT_READY`  

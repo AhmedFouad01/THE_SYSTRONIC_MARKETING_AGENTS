@@ -1,4 +1,4 @@
-﻿# CREATIVE Production Training Status
+# CREATIVE Production Training Status
 
 
 Date: 2026-09-24
