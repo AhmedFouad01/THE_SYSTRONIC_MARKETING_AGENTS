@@ -2,9 +2,9 @@
 
 Project Key: `TSST`  
 Project Name: `The Systronic Smart Agents`  
-Last Updated: `2026-10-04`  
-State: `SETUP`  
-Confidence: `Baseline confirmed; operating details incomplete`
+Last Updated: `2026-10-05`  
+State: `BASELINE_FROZEN`  
+Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 
 ## Current Phase
 
@@ -12,7 +12,7 @@ Confidence: `Baseline confirmed; operating details incomplete`
 
 ## Active Gate
 
-`TSST-001A — Requirements & Governance Intake`
+`TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval). Next: `C7` live-project pilot on VILL Studio.
 
 ## Current Objective
 
@@ -30,34 +30,20 @@ Complete TSST onboarding and freeze the first operational baseline before treati
 
 ## Open / Not Yet Frozen
 
-- Exact TSST mission and success metrics.
-- Full service/workstream scope per agent.
-- Agent decision authority and approval thresholds.
-- Escalation rules to TSST Lead and to the user.
-- Quality-control and acceptance gates.
-- Tool/plugin/integration permissions.
-- Cross-agent handoff contract and shared context rules.
-- Client/project isolation rules at task level.
-- Output formats and documentation standards.
-- KPIs, review cadence, and failure handling.
-- Whether additional agents are required.
+All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPERATING_PROFILE.md` v1.1, `TSST/TSST_DECISION_RIGHTS.md` v1.1, intake record `TSST/onboarding/INTAKE_TSST-001A.md`. Still open by design: numeric KPI baselines (set at end of C7); user-deferred items (revenue model, client qualification, market priority).
 
 ## Pending Tasks
 
-1. Run onboarding intake with the user.
-2. Convert answers into a frozen `TSST Operating Baseline v0.1`.
-3. Update PROJECT_PROFILE, PROJECT_DECISIONS, PROJECT_BACKLOG, and PROJECT_MEMORY_MAP.
-4. Define agent contracts and orchestration flow.
-5. Define tool/integration permissions.
-6. Validate the Real Memory sync path inside the TSST Project.
+1. Plan and run C7 live-project pilot on VILL Studio (register the VILL project, brief, bus tasks, independent review).
+2. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
 
 ## Blockers
 
-- Production operation is intentionally blocked until the user completes/approves the initial requirements and governance intake.
+- None for C7. Production readiness stays `NOT_READY` until the C7 pilot is completed and reviewed.
 
 ## Next Recommended Action
 
-In the new TSST ChatGPT Project, run `TSST_SETUP_CONTINUE`. TSST Lead should load the Real Memory files and continue onboarding interactively from the first unresolved requirement.
+TSST Lead plans the C7 pilot with the user (VILL Studio): recover VILL status from its in-place exports, agree the brief, then route.
 
 ## State as of 2026-10-04
 
@@ -67,5 +53,5 @@ Applied via RM-CS-001 (CS-01), user approval in chat 2026-10-04. Sources: packet
 - Operating hierarchy: see TSD-012 (`APPROVED`; changes hierarchy only, not readiness or autonomous authority).
 - Operating spine: `TSST/context/boot.md` + `TSST/core/portfolio.yaml`.
 - CRM is a T.SAG project; milestones M0, M1, M2 are `CLOSED` (pointer: `TSST/brands/t-sag/projects/crm/project.md`). CRM status is a separate product-workstream pointer, not the global TSST next action. Recover latest CRM state from TSST/brands/t-sag/projects/crm/project.md; UI work is paused pending TSST Core acceptance; M3/provider/deployment work is not approved by these packets.
-- Gate `TSST-001A` remains `OPEN`. Operating Baseline v0.1 is NOT approved or closed by this update.
+- Gate `TSST-001A` `CLOSED` 2026-10-05; Operating Baseline v0.1 frozen (TSD-013).
 - Reviewed: nine Google-native packet exports in RM-CS-002 (9/9 registered hashes match). CS2-01..04 applied 2026-10-04 with user approval; all other packet claims rejected or deferred per `TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md`; packets stay in `incoming/`. Original Google Docs were not independently compared.

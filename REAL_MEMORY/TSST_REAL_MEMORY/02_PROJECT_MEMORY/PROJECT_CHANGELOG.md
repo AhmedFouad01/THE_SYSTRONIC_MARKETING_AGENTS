@@ -38,3 +38,10 @@
 - CREATIVE_AG product UI/UX ownership for the CRM MVP (`TSST/CREATIVE/AGENT.md`, extension 2026-10-03) re-confirmed by the user; closes the RM-CS-002 deferral on CREATIVE scope acceptance. Skills stay `UNVALIDATED`; no readiness change.
 - `07_SYNC_INBOX/chatgpt-gradual (1)/` (LEGACY_EMPTY_PENDING_FINAL_CLEANUP) deleted to Drive trash: all 5 checkpoint conditions PASS (empty but desktop.ini; 9 incoming + 4 processed/evidence in canonical folder; no functional references; no runtime dependency).
 - Gate `TSST-001A` remains OPEN (needs intake, Operating Baseline v0.1 freeze, contracts, permissions).
+
+## 2026-10-05 — Operating Baseline v0.1 frozen; TSST-001A closed (user approval in chat 2026-10-05)
+
+- `PROJECT_DECISIONS.md` — added TSD-013.
+- `CURRENT_STATUS.md` — state `BASELINE_FROZEN`; gate TSST-001A `CLOSED`; open list frozen; pending/next → C7 on VILL Studio.
+- Repo: `TSST/TSST_OPERATING_PROFILE.md` v1.1 (baseline section; DEV_AG fact corrected), `TSST/TSST_DECISION_RIGHTS.md` v1.1 (runtime/tool rights), intake record `TSST/onboarding/INTAKE_TSST-001A.md`.
+- Readiness unchanged (`NOT_READY`).

@@ -79,3 +79,10 @@
 - Source: RM-CS-001 CS-02.
 
 Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 here to match this file's convention.
+
+## TSD-013 — Operating Baseline v0.1 frozen; TSST-001A closed
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: Freeze Operating Baseline v0.1 from the TSST-001A intake (mission, success order quality → cost → speed, runtime/tool decision rights, independent cross-runtime review, single reroute on failure, end-of-phase reporting, no new agents before C7) and close gate TSST-001A. Does NOT change readiness (`NOT_READY`) or validate any skill; next gate is the C7 pilot on VILL Studio.
+- Source: `TSST/onboarding/INTAKE_TSST-001A.md`; `TSST/TSST_OPERATING_PROFILE.md` v1.1; `TSST/TSST_DECISION_RIGHTS.md` v1.1.

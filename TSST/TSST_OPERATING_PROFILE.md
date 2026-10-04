@@ -1,7 +1,7 @@
 # TSST Operating Profile
 
-Version: 1.0 | 2026-09-22
-Status: OPERATIONAL_BASELINE_CONFIRMED_WITH_OPEN_ITEMS
+Version: 1.1 | 2026-10-05 (v1.0: 2026-09-22)
+Status: OPERATING_BASELINE_V0.1_FROZEN (TSST-001A closed 2026-10-05); readiness still NOT_READY
 
 المستخدم أنهى جولة الاكتشاف الحالية وطلب البدء بالمعلومات المتاحة. هذا baseline تشغيلي؛ ليس ادعاء اكتمال كل مجالات Deep Onboarding أو جاهزية production. Readiness تبقى NOT_READY كما في READINESS_REPORT.md.
 
@@ -16,7 +16,7 @@ Status: OPERATIONAL_BASELINE_CONFIRMED_WITH_OPEN_ITEMS
 
 المستخدم هو الليدر وصاحب القرار. TSST Lead واجهته المباشرة، يفسّر الطلب ويخطط ويوزّع العمل ويراجع ويجمع النتيجة. CREATIVE_AG مسؤول الهوية والاتجاه الإبداعي والتصميم وVisual QA؛ LENS_AG مسؤول البحث والأدلة والتخطيط والاستراتيجية والسرد؛ SPARK_AG مسؤول تخطيط الإعلانات والقياس والتتبّع والأداء. توزيع التخصصات مستمد من TEAM_CONSTITUTION.md.
 
-وصف الفريق «خمسة» يعني المستخدم وأربعة AI specialists؛ الثلاثة الحاليون وSoftware Developer مستقبلي. وظيفة المطور مؤجلة بطلب المستخدم، ولم يُنشأ أو يُمنح صلاحيات. لا يعني هذا وجود خمسة موظفين بشريين أو إثبات القدرة على تنفيذ أي عمل رقمي.
+وصف الفريق «خمسة» يعني المستخدم وأربعة AI specialists: الثلاثة أعلاه وDEV_AG (Software Engineering، governance-APPROVED 2026-09-28، TSST-ADR-002؛ NOT_READY ومهاراته UNVALIDATED). القيمة السابقة: «المطور مؤجل» (2026-09-22). لا يعني هذا وجود خمسة موظفين بشريين أو إثبات القدرة على تنفيذ أي عمل رقمي.
 
 ## Workflow
 
@@ -37,9 +37,21 @@ Status: OPERATIONAL_BASELINE_CONFIRMED_WITH_OPEN_ITEMS
 
 ترفض المخرجات التي تتضمن كلامًا عامًا، معلومات واقعية بلا دليل، تصميمًا ضعيفًا أو خروجًا عن المطلوب. افصل FACT / ASSUMPTION / HYPOTHESIS / RECOMMENDATION. جميع مواد VILL وANVIL قيد التطوير والتأسيس، وهي حد أدنى مطلوب تجاوزه، وليست نماذج نهائية معتمدة. معايير QA التفصيلية ترتبط بالمهمة والتخصص.
 
+## Operating Baseline v0.1 — 2026-10-05
+
+Frozen with user approval (TSST-001A intake: `onboarding/INTAKE_TSST-001A.md`).
+- Mission (next 3 months): marketing for brands and building T.SAG products (CRM, TSST) in parallel.
+- Success: quality, cost, speed, commercial results; tie-break quality → cost → speed. KPIs reviewed at the end of each pilot/project; first numeric baselines at the end of C7 (VILL Studio).
+- Authority: runtime/tool rights in `TSST_DECISION_RIGHTS.md` v1.1.
+- Quality: important work gets an independent review by a runtime other than the producer, then Lead accepts.
+- Failure: escalated task → rerouted once to another runtime/tier; second failure → user with a short summary.
+- Reporting: end of each phase (unchanged).
+- Team: Lead, CREATIVE_AG, LENS_AG, SPARK_AG, DEV_AG; no new agents before C7.
+- Handoff contract `TSST/context/bus.md`; task isolation `TSST/context/boot.md`.
+
 ## Open / Deferred
 
-- DEFERRED BY USER: نموذج الدخل الحالي، تفاصيل تأهيل العميل وأولوية الأسواق، دور Software Developer.
+- DEFERRED BY USER: نموذج الدخل الحالي، تفاصيل تأهيل العميل وأولوية الأسواق. (دور المطور حُسم: DEV_AG 2026-09-28.)
 - OPEN / UNCONFIRMED: margins، unit economics، competitors، partnerships، acquisition channels، CRM sales stages، growth engine، 12-month targets، budget/risk thresholds، team capacity، numerical success baselines، client-facing language والسياسات التفصيلية للبراند.
 - لا تملأ هذه الفجوات بالافتراض. اسأل فقط عن المعلومة اللازمة للقرار الفعلي القادم؛ لا تعاود الاستبيان المؤجل تلقائيًا.
 - لا حملة أو تقييم agents أو نشر أو صرف مأذون به ضمن هذه البداية. الموافقة التشغيلية لا تغيّر validation boundaries.
