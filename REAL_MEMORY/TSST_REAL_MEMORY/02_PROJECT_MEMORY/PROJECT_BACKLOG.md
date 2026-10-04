@@ -22,6 +22,8 @@
 - Define agent capability registry.
 - Define client/project handoff packs.
 - Define versioning and change governance.
+- Verify recovery and source-access behavior separately in each runtime; retain evidence of actual routing and cost measurements before claiming parity.
+- Review a reusable isolated project starter/checkpoint schema and proposed universal command names; not approved or implemented by this packet.
 
 ## P2 — Expansion
 

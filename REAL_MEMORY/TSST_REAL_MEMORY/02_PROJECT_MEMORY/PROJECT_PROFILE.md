@@ -42,3 +42,7 @@ Software Engineering & Solutions specialist. Governance `APPROVED` per `TSST/dec
 ### Canonical pointers
 - `TSST/core/portfolio.yaml` — portfolio registry.
 - `TSST/brands/` — brand-first pointer registry.
+
+## Context OS capability
+
+- Human-facing name: العقل التاني وطريقة تشغيله (Second Brain & Operating Method). This is a TSST context/recovery capability, not a new top-level agent; canonical project files/checkpoints and thin runtime adapters are governed by TSD-010/011. Runtime parity remains unverified until separately evidenced.

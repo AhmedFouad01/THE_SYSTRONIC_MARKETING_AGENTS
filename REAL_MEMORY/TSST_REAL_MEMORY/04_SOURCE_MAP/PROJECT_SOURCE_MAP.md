@@ -33,3 +33,4 @@ No GitHub repository, Figma file, client folder, CRM, or other external source i
 - MagicPath project `457118534846255104` — CRM UI design source.
 - `TSST/context/` — portable operating context (boot).
 - `TSST/brands/` — brand-first pointer registry.
+- `TSST/brands/t-sag/projects/crm/project.md` — current CRM orchestration checkpoint, scoped to that product; MagicPath/UI claims require source-specific verification.

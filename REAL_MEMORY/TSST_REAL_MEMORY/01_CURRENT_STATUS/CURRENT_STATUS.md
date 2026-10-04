@@ -66,6 +66,6 @@ Applied via RM-CS-001 (CS-01), user approval in chat 2026-10-04. Sources: packet
 - Team: TSST Lead + `LENS_AG`, `CREATIVE_AG`, `SPARK_AG`, `DEV_AG`. `DEV_AG` is governance-`APPROVED` (ADR-002); all specialists remain `NOT_READY`.
 - Operating hierarchy: see TSD-012 (`APPROVED`; changes hierarchy only, not readiness or autonomous authority).
 - Operating spine: `TSST/context/boot.md` + `TSST/core/portfolio.yaml`.
-- CRM is a T.SAG project; milestones M0, M1, M2 are `CLOSED` (pointer: `TSST/brands/t-sag/projects/crm/project.md`).
+- CRM is a T.SAG project; milestones M0, M1, M2 are `CLOSED` (pointer: `TSST/brands/t-sag/projects/crm/project.md`). CRM status is a separate product-workstream pointer, not the global TSST next action. Recover latest CRM state from TSST/brands/t-sag/projects/crm/project.md; UI work is paused pending TSST Core acceptance; M3/provider/deployment work is not approved by these packets.
 - Gate `TSST-001A` remains `OPEN`. Operating Baseline v0.1 is NOT approved or closed by this update.
-- Unreviewed: 9 `.gdoc` packets unreadable in the Claude runtime (see RM-CS-001 F4 / CS-08, deferred).
+- Reviewed: nine Google-native packet exports in RM-CS-002 (9/9 registered hashes match). CS2-01..04 applied 2026-10-04 with user approval; all other packet claims rejected or deferred per `TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md`; packets stay in `incoming/`. Original Google Docs were not independently compared.

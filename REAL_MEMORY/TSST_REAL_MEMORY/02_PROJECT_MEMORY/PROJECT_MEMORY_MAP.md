@@ -30,6 +30,7 @@ Map Status: `BASELINE / INTAKE OPEN`
 | TSST project instructions | `06_HANDOFF/CHATGPT_PROJECT_INSTRUCTIONS.md` | Active | P0 | Project behavior |
 | Existing historical TSST chats | Not imported yet | Historical | P1 | Import only if user requests |
 | Other Real Memory projects | Outside TSST | External | N/A | Never merge by default |
+| Context OS capability (Second Brain & Operating Method) | `TSST/brands/t-sag/projects/tsst-ai/project.md` | Pointer | P1 | Human-facing name linked to Context OS and its checkpoints; no model configuration duplicated |
 
 ## 4. Chat Memory Inventory
 
@@ -75,3 +76,4 @@ Captured in `CURRENT_STATUS.md` and `PROJECT_BACKLOG.md`.
 - Roles now include `DEV_AG` (governance `APPROVED` per `TSST/decisions/TSST-ADR-002.md`; `NOT_READY`).
 - Pointers: `TSST/core/portfolio.yaml`, `TSST/brands/`.
 - Operating baseline v0.1 remains unapproved (checklist item above stays open).
+- CRM detail remains in its product sources; TSST stores orchestration pointers only. See TSST/brands/t-sag/projects/crm/project.md for current UI scope and next gate; older packet TODOs do not reopen completed work.

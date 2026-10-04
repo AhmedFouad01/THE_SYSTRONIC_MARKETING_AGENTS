@@ -20,3 +20,14 @@
 - CS-06: this entry.
 - CS-07: 4 readable packets moved to `processed/` with evidence records; 6 `.gdoc` packets moved to `incoming/` unreviewed.
 - Gate `TSST-001A` remains OPEN.
+
+## 2026-10-04 — RM-CS-002 applied (user approval in chat 2026-10-04; CS2-01..04 approved, CS2-05 bookkeeping)
+
+- CS2-01: `CURRENT_STATUS.md` — State as of 2026-10-04, Unreviewed bullet replaced with RM-CS-002 review note.
+- CS2-02: `CURRENT_STATUS.md` (CRM bullet), `PROJECT_MEMORY_MAP.md` (11. Update 2026-10-04), `PROJECT_SOURCE_MAP.md` (Sources added 2026-10-04) — CRM pointer boundary.
+- CS2-03: `PROJECT_PROFILE.md` (new Context OS capability section), `PROJECT_MEMORY_MAP.md` (3. Source Inventory pointer).
+- CS2-04: `PROJECT_BACKLOG.md` — two P1 operating-maturity items.
+- CS2-05: this entry.
+- Source packets (reviewed, all remain in `incoming/`; deferred claims outstanding): `TSST-RM-20260927-0521-001`, `TSST-RM-20261004-0456-001`, `TSST-SYNC-20260928-1220-DEV_AG-IMPLEMENTATION`, `TSST-SYNC-20261002-1644-CRM-M1-CLOSURE`, `TSST-SYNC-20261003-0102-CRM-M2-MVP-DIRECTION`, `TSST-SYNC-20261003-1356-CRM-MVP-UIUX-SPRINT`, `TSST-SYNC-20261003-2342-CRM-UI-SYSTEM-BASELINE`, `TSST-SYNC-20261004-0218-SECOND-BRAIN-RUNBOOK`, `TSST-SYNC-20261004-CRM-UI-MVP-FOUNDATION`.
+- Approver: user (chat 2026-10-04). Verification: `TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md`.
+- Gate `TSST-001A` remains OPEN.
