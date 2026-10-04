@@ -31,8 +31,8 @@ gemini:
   status: available
   until:
   verified:
-  tier_FAST: Gemini Flash · low
-  tier_WORK: Gemini Flash · high
+  tier_FAST: Gemini 3.8 Flash · low
+  tier_WORK: Gemini 3.8 Flash · high
   tier_CODE: Gemini Pro · high
   tier_DEEP: Gemini Pro · high (Claude Opus 5.5 · high also available; DEEP stays with lead)
 chatgpt:
