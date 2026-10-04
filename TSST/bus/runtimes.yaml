@@ -32,10 +32,10 @@ gemini:
   status: available
   until:
   verified:
-  tier_FAST: "Gemini Flash · low thinking"
-  tier_WORK: "Gemini Flash · default thinking"
-  tier_CODE: "Gemini Pro · default thinking"
-  tier_DEEP: "Gemini Pro · high thinking"
+  tier_FAST: "Gemini Flash · low"
+  tier_WORK: "Gemini Flash · high"
+  tier_CODE: "Gemini Pro · high"
+  tier_DEEP: "Gemini Pro · high (Claude Opus 5.5 · high also available; DEEP stays with lead)"
 chatgpt:
   caps: []
   unverified: [drive_docs_read]

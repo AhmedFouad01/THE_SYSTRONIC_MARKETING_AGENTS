@@ -9,9 +9,10 @@ Entry: root `GEMINI.md` → `TSST/context/boot.md`. Existing marketing/creative 
 operating order.
 
 ## Tier → model
-Antigravity picks the model in its UI per conversation; it cannot switch itself. Mapping
-(`TSST/bus/runtimes.yaml#gemini.tier_*`): FAST → fastest Flash-class, low thinking ·
-WORK → Flash-class · CODE → Pro-class · DEEP → Pro-class, high thinking. Claim with
+Antigravity picks the model in its UI per conversation (menu: Gemini Flash, Gemini Pro,
+Claude Opus 5.5 — each low/high); it cannot switch itself. Mapping
+(`TSST/bus/runtimes.yaml#gemini.tier_*`): FAST → Flash · low · WORK → Flash · high ·
+CODE → Pro · high · DEEP → Pro · high (Opus 5.5 · high available; DEEP stays with lead). Claim with
 `--model <current model>`; on a mismatch follow `TSST/context/bus.md#model-per-tier`. IMAGE / VIDEO → native Gemini image
 and video generation (e.g. Veo) where enabled; outputs still pass
 `TSST/CREATIVE/FINAL_ASSET_GATE.md`.
