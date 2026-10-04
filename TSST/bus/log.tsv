@@ -24,3 +24,7 @@
 2026-10-04T19:04Z	COLD-GEMINI	claude	new	
 2026-10-04T19:04Z	RM-CS-002	claude	new	
 2026-10-04T19:04Z	BRANDS-FOLD	claude	new	
+2026-10-04T19:18Z	COLD-CODEX	codex	claim	
+2026-10-04T19:22Z	COLD-CODEX	codex	done	A-D isolated FAST workers; routing/source gaps recorded; git read OK. Parent model unverified. No work executed.
+2026-10-04T19:24Z	COLD-CODEX	claude	close	boot OK on luna/low; 2 spine gaps fixed: continuation rule + budget scope (router.yaml)
+2026-10-04T19:24Z	-	claude	verify codex.git	COLD-CODEX

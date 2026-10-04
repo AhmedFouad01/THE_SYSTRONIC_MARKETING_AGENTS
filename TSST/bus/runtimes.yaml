@@ -1,7 +1,6 @@
 # TSST runtime capability registry — evidence, not assumption. Protocol: TSST/context/bus.md
 # caps = verified by a closed probe task; unverified = claimable only by kind: probe.
 # Edited only via bus.py limit/verify (lead) — never by a bus task.
-# tier_*: what to run that tier on in this runtime — cheapest option strong enough for it.
 lead_order: [claude]
 claude:
   caps: [fs_read, fs_write, shell, git]
@@ -10,21 +9,21 @@ claude:
   status: available
   until:
   verified: 2026-10-04
-  tier_FAST: "Haiku 4.5 (subagent tsst-fast-worker / Explore)"
-  tier_WORK: "Sonnet 5.5 (subagent tsst-execution-worker)"
-  tier_CODE: "Sonnet 5.5 · high effort (subagent tsst-code-worker)"
-  tier_DEEP: "Opus 5.5 (main conversation, never queued)"
+  tier_FAST: Haiku 4.5 (subagent tsst-fast-worker / Explore)
+  tier_WORK: Sonnet 5.5 (subagent tsst-execution-worker)
+  tier_CODE: Sonnet 5.5 · high effort (subagent tsst-code-worker)
+  tier_DEEP: Opus 5.5 (main conversation, never queued)
 codex:
-  caps: [fs_read, shell, fs_write]
-  unverified: [git]
+  caps: [fs_read, shell, fs_write, git]
+  unverified: []
   roles: []
   status: available
   until:
   verified: 2026-10-04
-  tier_FAST: "gpt-6-luna · low"
-  tier_WORK: "gpt-6.1-sol · medium"
-  tier_CODE: "gpt-6.1-sol · high"
-  tier_DEEP: "gpt-6-astra · high"
+  tier_FAST: gpt-6-luna · low
+  tier_WORK: gpt-6.1-sol · medium
+  tier_CODE: gpt-6.1-sol · high
+  tier_DEEP: gpt-6-astra · high
 gemini:
   caps: []
   unverified: [fs_read, fs_write, shell, drive_docs_read, image, video]
@@ -32,10 +31,10 @@ gemini:
   status: available
   until:
   verified:
-  tier_FAST: "Gemini Flash · low"
-  tier_WORK: "Gemini Flash · high"
-  tier_CODE: "Gemini Pro · high"
-  tier_DEEP: "Gemini Pro · high (Claude Opus 5.5 · high also available; DEEP stays with lead)"
+  tier_FAST: Gemini Flash · low
+  tier_WORK: Gemini Flash · high
+  tier_CODE: Gemini Pro · high
+  tier_DEEP: Gemini Pro · high (Claude Opus 5.5 · high also available; DEEP stays with lead)
 chatgpt:
   caps: []
   unverified: [drive_docs_read]

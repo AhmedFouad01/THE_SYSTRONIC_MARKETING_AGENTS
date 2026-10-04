@@ -33,7 +33,7 @@ conflict_rule: newest verified evidence wins; record the conflict in the checkpo
 # Step 10: context budget (pointer-first expansion ladder).
 context_budget:
   ladder: [pointer/index, status/checkpoint, exact required source, bounded expansion]
-  default_max_files_before_work: 6
+  default_max_files_before_work: 6   # task files only; the boot spine (boot, router, portfolio entry, status, checkpoint, rules, team) is not counted
   never_preload: [other brands, whole skill registries, all agent docs, closed milestone evidence, completed UI/UX discovery docs]
   expansion_requires: a named gap the current pack cannot answer
 
@@ -65,6 +65,11 @@ context_os_skills:
   tool: TSST-CTX-SK-011-tool-router
   reconcile: [TSST-CTX-SK-012-memory-reconciler, TSST-CTX-SK-013-stale-memory-detector]
   skill_select: TSST-CTX-SK-017-skill-selector
+
+# Bare continuation ("كمل X" / "continue X"): recovery (steps 5-6) runs at FAST; team + tier then
+# come from the checkpoint's next open item. No next item / no registered project → team lead,
+# tier WORK, ask the user one question. (Found by cold-start COLD-CODEX, 2026-10-04.)
+continuation_rule: recover at FAST → team/tier of checkpoint next item → else lead/WORK + one question
 
 # Step 13: logical tier defaults (see models.yaml). Escalate only on evidence.
 tier_defaults:

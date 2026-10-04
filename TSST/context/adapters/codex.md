@@ -17,6 +17,8 @@ Profiles in `~/.codex/config.toml` (default = `work`); source of truth for the m
 | CODE | `codex --profile code` | gpt-6.1-sol / high |
 | DEEP | `codex --profile deep` | gpt-6-astra / high |
 
+Codex can spawn agents on a chosen model: keep the main session on gpt-6.1-sol · medium as
+coordinator and run each bus task inside an agent on the task's `open on:` model.
 Claim with `--model <the model you run on>`; the bus prints the expected one and warns on
 mismatch (`TSST/context/bus.md#model-per-tier`). Temporary Codex task labels/workers are **not** TSST agents
 and are never written to durable memory (packet TSST-SYNC-20261002-0129, proposed).
