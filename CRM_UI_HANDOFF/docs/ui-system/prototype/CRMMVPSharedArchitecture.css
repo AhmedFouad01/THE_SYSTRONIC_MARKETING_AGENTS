@@ -1,0 +1,141 @@
+.sy-focusable:focus-visible {
+  outline: 2px solid var(--sy-focus);
+  outline-offset: 2px;
+}
+.sy-btn:hover:not(:disabled) {
+  background: var(--btn-hover) !important;
+}
+.sy-btn:active:not(:disabled) {
+  background: var(--btn-pressed) !important;
+}
+.sy-nav:not([aria-current="page"]):hover:not(:disabled) {
+  background: var(--sy-hover) !important;
+}
+.sy-input:focus-visible {
+  outline: 2px solid var(--sy-focus);
+  outline-offset: 1px;
+  border-color: var(--sy-focus) !important;
+}
+.sy-tab:focus-visible,
+.sy-icon-btn:focus-visible,
+.sy-menu-item:focus-visible {
+  outline: 2px solid var(--sy-focus);
+  outline-offset: 2px;
+}
+.sy-menu-item:hover {
+  background: var(--sy-hover) !important;
+}
+@keyframes sy-spin {
+  to { transform: rotate(360deg); }
+}
+.sy-spinner {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: sy-spin .7s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sy-spinner { animation: none; }
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+
+/* Session 04 — responsive + bidirectional layout */
+.sy-shell,.sy-sidebar,.sy-main,.sy-topbar,.sy-brand,.sy-brand-copy,.sy-primary-nav,.sy-nav-label,.sy-nav-section-label,.sy-route,.sy-placeholder,.sy-user-block,.sy-user-copy,.sy-tabs,.sy-page,.sy-page-head,.sy-page-actions,.sy-kpi-grid,.sy-data-toolbar,.sy-search-wrap,.sy-match-count,.sy-filter-panel,.sy-data-layout,.sy-table-scroll,.sy-pagination,.sy-detail-panel,.sy-detail-actions,.sy-pair-grid,.sy-record-head,.sy-record-meta,.sy-two-col,.sy-stage-grid { box-sizing: border-box; }
+.sy-shell[dir="rtl"] { text-align: right; }
+.sy-shell[dir="ltr"] { text-align: left; }
+.sy-detail-panel { min-width: 0; }
+.sy-table-scroll { max-width: 100%; }
+.sy-pagination { flex-wrap: wrap; }
+
+
+@media (max-width: 1180px) {
+  .sy-shell { grid-template-columns: 76px minmax(0,1fr) !important; }
+  .sy-sidebar { padding-inline: 10px !important; }
+  .sy-brand-copy,.sy-user-copy,.sy-nav-label,.sy-nav-section-label { display: none !important; }
+  .sy-brand,.sy-user-block { justify-content: center !important; }
+  .sy-primary-nav .sy-nav { justify-content: center !important; padding-inline: 0 !important; }
+  .sy-kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .sy-data-layout { grid-template-columns: minmax(0,1fr) 300px !important; }
+  .sy-record-meta { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+}
+
+
+@media (max-width: 920px) {
+  .sy-data-layout,.sy-two-col { grid-template-columns: 1fr !important; }
+  .sy-detail-panel { position: static !important; }
+  .sy-filter-panel { grid-template-columns: 1fr 1fr !important; }
+  .sy-record-head,.sy-page-head { align-items: flex-start !important; flex-wrap: wrap !important; }
+  .sy-page-actions { flex-wrap: wrap !important; }
+  .sy-record-meta { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+
+
+@media (max-width: 720px) {
+  .sy-shell { display: block !important; min-height: 100vh !important; }
+  .sy-main { padding-bottom: 82px !important; }
+  .sy-sidebar {
+    position: fixed !important;
+    inset-inline: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    z-index: 60 !important;
+    min-height: 0 !important;
+    height: 68px !important;
+    border-inline-end: 0 !important;
+    border-top: 1px solid rgba(128,128,128,.25) !important;
+    padding: 7px 8px !important;
+    flex-direction: row !important;
+  }
+  .sy-brand,.sy-user-block,.sy-nav-section-label,.sy-placeholder { display: none !important; }
+  .sy-primary-nav { display: flex !important; width: 100% !important; margin: 0 !important; gap: 4px !important; }
+  .sy-primary-nav .sy-route {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    height: 54px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    padding: 3px 5px !important;
+    font-size: 10px !important;
+  }
+  .sy-primary-nav .sy-nav-label { display: block !important; max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sy-topbar { position: sticky !important; top: 0 !important; z-index: 45 !important; height: 54px !important; padding-inline: 14px !important; }
+  .sy-page { padding: 14px !important; }
+  .sy-page-head { display: grid !important; gap: 12px !important; }
+  .sy-page-actions { width: 100% !important; }
+  .sy-page-actions > * { flex: 1 1 auto; }
+  .sy-kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+  .sy-data-toolbar { align-items: stretch !important; }
+  .sy-search-wrap { width: 100% !important; }
+  .sy-match-count { width: 100% !important; margin-inline-start: 0 !important; }
+  .sy-filter-panel { grid-template-columns: 1fr !important; }
+  .sy-data-layout { grid-template-columns: 1fr !important; }
+  .sy-detail-actions { grid-template-columns: 1fr !important; }
+  .sy-record-meta,.sy-pair-grid { grid-template-columns: 1fr 1fr !important; }
+  .sy-stage-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    padding-bottom: 4px !important;
+  }
+  .sy-stage-grid > * { flex: 0 0 145px !important; }
+  .sy-pagination { gap: 6px !important; }
+  .sy-tabs { overflow-x: auto !important; }
+  .sy-tabs > * { flex: 0 0 auto !important; }
+}
+
+
+@media (max-width: 480px) {
+  .sy-kpi-grid,.sy-record-meta,.sy-pair-grid { grid-template-columns: 1fr !important; }
+  .sy-page-actions { display: grid !important; grid-template-columns: 1fr 1fr !important; }
+}
+
+
+/* Session 04R — KPI hierarchy */
+.sy-kpi-card { min-width: 0; overflow: hidden; }
+.sy-kpi-card bdi { direction: ltr; unicode-bidi: isolate; }

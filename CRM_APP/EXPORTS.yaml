@@ -1,0 +1,82 @@
+# Bridge export manifest - see TSST/context/bridge.md
+# Registered by BR-003; exported_at uses export filesystem mtime (UTC).
+# Hashes verify registered bytes, not equality to unreadable Google Docs.
+exports:
+  - source: CRM_APP/CRM_MVP_SPRINT_PLAN_v0.1.md.gdoc
+    export: CRM_APP/CRM_MVP_SPRINT_PLAN_v0.1.md
+    exported_at: 2026-10-04T18:36:38.315Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 8c3e17b62ca423ae3b1506b7d048f0b5876016c31f1eae13b96b0a7e6addb594
+  - source: CRM_APP/CRM_UI_FOUNDATIONS_v0.1.md.gdoc
+    export: CRM_APP/CRM_UI_FOUNDATIONS_v0.1.md
+    exported_at: 2026-10-04T18:36:40.671Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: be2b05243eeed3552b7bf2455e9940206cb56d5b7641f1b951fd394766a8fda8
+  - source: CRM_APP/MVP_COMMAND_MAP.md.gdoc
+    export: CRM_APP/MVP_COMMAND_MAP.md
+    exported_at: 2026-10-04T18:36:43.475Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 7d36d58081eec05c4a9c57ff3cee7bf10ffb446f71a58cf54339738479de9ccf
+  - source: CRM_APP/MVP_CORE_TASK_FLOWS.md.gdoc
+    export: CRM_APP/MVP_CORE_TASK_FLOWS.md
+    exported_at: 2026-10-04T18:36:45.506Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 26317437fed5fa72c1be02ded877cc62f7e1d12d0f610242c7a4ca85eb8e9a99
+  - source: CRM_APP/MVP_INFORMATION_ARCHITECTURE.md.gdoc
+    export: CRM_APP/MVP_INFORMATION_ARCHITECTURE.md
+    exported_at: 2026-10-04T18:36:47.497Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 060dea732e3680db29e2425966924bd6471c507a6fe3fb685cbb4a59af61c5d5
+  - source: CRM_APP/MVP_INTERACTION_MODEL.md.gdoc
+    export: CRM_APP/MVP_INTERACTION_MODEL.md
+    exported_at: 2026-10-04T18:36:49.888Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: fa44b721102ba14002ea425c28b60d1c3086a4cde9649dcc2ce02871aeddc090
+  - source: CRM_APP/MVP_KEYBOARD_FOCUS_MAP.md.gdoc
+    export: CRM_APP/MVP_KEYBOARD_FOCUS_MAP.md
+    exported_at: 2026-10-04T18:36:51.962Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: d29dd768bdc3a0a6e202beed5ef5814cdd4cef43b0623604ad4a7130bd075ce0
+  - source: CRM_APP/MVP_LOFI_WORKSPACE_WIREFRAMES.md.gdoc
+    export: CRM_APP/MVP_LOFI_WORKSPACE_WIREFRAMES.md
+    exported_at: 2026-10-04T18:36:54.508Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 931690518cd48a0ee4902862186e0ea2ecdd86f2b3db9b7c6a79200b915c20f3
+  - source: CRM_APP/MVP_SCREEN_INVENTORY.md.gdoc
+    export: CRM_APP/MVP_SCREEN_INVENTORY.md
+    exported_at: 2026-10-04T18:36:56.554Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 0e4dd20b3be211c5951e6065f0e76a34e7462ce13f114ad6ba8e829d8dd72650
+  - source: CRM_APP/MVP_STATE_OVERLAY_MATRIX.md.gdoc
+    export: CRM_APP/MVP_STATE_OVERLAY_MATRIX.md
+    exported_at: 2026-10-04T18:36:58.582Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: ffc2b9f58dbb006bdbb05221ea1f5e73b4d28c3c6a24ac8dbad88b94cfac92cb
+  - source: CRM_APP/MVP_UI_DIRECTIONS_BRIEF_v0.1.md.gdoc
+    export: CRM_APP/MVP_UI_DIRECTIONS_BRIEF_v0.1.md
+    exported_at: 2026-10-04T18:37:00.665Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 8d469763af17c5de295c74efd6b89a5d45b9a371dbfd7b5d51cb87661611addc
+  - source: CRM_APP/MVP_UX_AUDIT.md.gdoc
+    export: CRM_APP/MVP_UX_AUDIT.md
+    exported_at: 2026-10-04T18:37:02.571Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 6ad988e2381c57a59586964b47c6196f0799708c7448eecf825b20be18d3ca44
+  - source: CRM_APP/MVP_VISUAL_FOUNDATIONS_LOCK_v0.1.md.gdoc
+    export: CRM_APP/MVP_VISUAL_FOUNDATIONS_LOCK_v0.1.md
+    exported_at: 2026-10-04T18:37:05.326Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 7e5bd37fc3da46aecc4054be18320ad7882dfd64a0fd073bae27713e996e8ee7

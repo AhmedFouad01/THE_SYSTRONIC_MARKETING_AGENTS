@@ -1,0 +1,58 @@
+# Bridge export manifest - see TSST/context/bridge.md
+# Registered by BR-003; exported_at uses export filesystem mtime (UTC).
+# Hashes verify registered bytes, not equality to unreadable Google Docs.
+exports:
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-RM-20260927-0521-001.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-RM-20260927-0521-001.md
+    exported_at: 2026-10-04T18:37:08.498Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 3b2fd68c395cb9bc00454748fda9033f67f74a21fc27fe41acffc316d0ea90c3
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-RM-20261004-0456-001.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-RM-20261004-0456-001.md
+    exported_at: 2026-10-04T18:37:11.500Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 5d2414855dd525aff4bbe243e77d1c291b58acdfdc3cfb83da0912bcb1ca1c04
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20260928-1220-DEV_AG-IMPLEMENTATION.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20260928-1220-DEV_AG-IMPLEMENTATION.md
+    exported_at: 2026-10-04T18:37:14.578Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: f0d3550b59a68eb02e226cdaa655fb0a040dd337deef0332c1694d4c261ee7cf
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261002-1644-CRM-M1-CLOSURE.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261002-1644-CRM-M1-CLOSURE.md
+    exported_at: 2026-10-04T18:37:17.971Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 9504d0c23a8bf2c07177a39ef8314a9503658e273084f9768c4606506554183d
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-0102-CRM-M2-MVP-DIRECTION.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-0102-CRM-M2-MVP-DIRECTION.md
+    exported_at: 2026-10-04T18:37:21.123Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: c5eac7f8e64a6877b67b5a0c981665b549bd3a10695e2464acf7aed61da3f14a
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-1356-CRM-MVP-UIUX-SPRINT.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-1356-CRM-MVP-UIUX-SPRINT.md
+    exported_at: 2026-10-04T18:37:24.272Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: caf47db1c88d15bdbff6ae865567e31f3851cbafb69db0398c04c6e30b10bd3b
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-2342-CRM-UI-SYSTEM-BASELINE.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261003-2342-CRM-UI-SYSTEM-BASELINE.md
+    exported_at: 2026-10-04T18:37:27.308Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 8e4ebf65b73f32a404b3e7e8b0b262a0f49c83144fc54409f09468d4377e87f8
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261004-0218-SECOND-BRAIN-RUNBOOK — العقل التاني وطريقة تشغيله.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261004-0218-SECOND-BRAIN-RUNBOOK — العقل التاني وطريقة تشغيله.md
+    exported_at: 2026-10-04T18:37:30.406Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: df5eedf05fc367ed289fe7de4a6bc6eb21a664497dd64d6f0da79483fb67fec3
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261004-CRM-UI-MVP-FOUNDATION.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/TSST-SYNC-20261004-CRM-UI-MVP-FOUNDATION.md
+    exported_at: 2026-10-04T18:37:33.623Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 0ccb8c67d25642cec3d2d3398e54dc2732e29fff431c980ebe7dc7fdfd8491d8
