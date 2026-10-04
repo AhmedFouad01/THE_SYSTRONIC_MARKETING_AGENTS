@@ -27,6 +27,8 @@ def drive_only(tok):
 
 
 def P(rel):
+    if os.path.isabs(rel):  # already absolute (files_under results); splitting "/" breaks it on POSIX
+        return rel
     return os.path.join(REPO, *rel.split("/"))
 
 
