@@ -71,6 +71,12 @@ context_os_skills:
 # tier WORK, ask the user one question. (Found by cold-start COLD-CODEX, 2026-10-04.)
 continuation_rule: recover at FAST → team/tier of checkpoint next item → else lead/WORK + one question
 
+# Brand named with no task ("TSST-Vill Studio", "VILL", "افتح ANVIL"): open the brand, don't interrogate.
+# Recover at FAST (status.md + canonical CURRENT_STATUS slice), then reply ≤10 lines:
+#   where it stands · open items / blockers · 3 suggested next actions as numbered options.
+# Ask the user to pick one; no work before the pick. Source unreadable → say which file, offer the bridge.
+brand_only_entry: recover at FAST → brief (state, open items, 3 numbered next actions) → user picks → route
+
 # Step 13: logical tier defaults (see models.yaml). Escalate only on evidence.
 tier_defaults:
   status lookup / "where are we": FAST

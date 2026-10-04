@@ -172,3 +172,52 @@ function seen(folders, name) {
   folders.forEach(f => { const it = f.getFilesByName(name); while (it.hasNext()) types.push(it.next().getMimeType()); });
   return types.length ? 'found types: ' + types.join(', ') : 'no file titled "' + name + '"';
 }
+
+// ---------------------------------------------------------------------------------------
+// Brand canonical memory roots (outside the repo). Exports are written IN PLACE, beside each
+// Doc in its own Drive folder — never copied into the repo (pointer-only rule). Run
+// `exportBrandRoots` from the account whose My Drive holds these paths (Drive for desktop).
+// depth: 0 = only that folder, -1 = whole subtree. Re-run after the Docs change (stale rule).
+const BRAND_ROOTS = [
+  ['Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO', -1],
+  ['Real Memory/real-memory-os/01_PROJECTS/AKYRO_STUDIO', -1],
+  ['Yakebda_MS_Newmap', 0],
+];
+const KNOWN_EXT = /\.(md|txt|tsx|ts|jsx|js|css|json|ya?ml|html)$/i;
+
+function exportBrandRoots() {
+  const report = {created: 0, updated: 0, missing: []};
+  BRAND_ROOTS.forEach(([path, depth]) => {
+    let folders = [DriveApp.getRootFolder()];
+    for (const p of path.split('/')) {
+      folders = [].concat(...folders.map(f => subfolders(f, p)));
+      if (!folders.length) { report.missing.push(path + ' (folder "' + p + '" not found)'); return; }
+    }
+    walk(folders[0], depth, report);
+  });
+  Logger.log(JSON.stringify(report, null, 1));
+}
+
+function walk(folder, depth, report) {
+  const it = folder.getFiles();
+  while (it.hasNext()) {
+    const f = it.next();
+    let doc = null;
+    if (f.getMimeType() === MimeType.GOOGLE_DOCS) doc = f;
+    else if (f.getMimeType() === MimeType.SHORTCUT && f.getTargetMimeType() === MimeType.GOOGLE_DOCS)
+      doc = DriveApp.getFileById(f.getTargetId());
+    if (!doc) continue;
+    const title = f.getName();
+    const outName = KNOWN_EXT.test(title) ? title : title + '.md';
+    const url = 'https://www.googleapis.com/drive/v3/files/' + doc.getId() + '/export?mimeType=text%2Fplain';
+    const res = UrlFetchApp.fetch(url, {headers: {Authorization: 'Bearer ' + ScriptApp.getOAuthToken()}, muteHttpExceptions: true});
+    if (res.getResponseCode() !== 200) { report.missing.push(folder.getName() + '/' + title + ' (HTTP ' + res.getResponseCode() + ')'); continue; }
+    const text = res.getContentText('UTF-8').replace(/^﻿/, '').replace(/\r\n/g, '\n');
+    const existing = findPlain(folder, outName);
+    if (existing) { existing.setContent(text); report.updated++; }
+    else { folder.createFile(outName, text, MimeType.PLAIN_TEXT); report.created++; }
+  }
+  if (depth === 0) return;
+  const subs = folder.getFolders();
+  while (subs.hasNext()) walk(subs.next(), depth - 1, report);
+}

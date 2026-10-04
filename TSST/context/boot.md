@@ -13,7 +13,7 @@ answers the current task. Large context is not better context.
 |---|------|------|----------------|
 | 0 | Bus check | `python TSST/bus/bus.py ls --me <runtime-id>` (`TSST/context/bus.md`) | user said continue → claim top `*` task; else continue with the user's task |
 | 1 | Resolve TSST | this file + `TSST/context/router.yaml` | — |
-| 2 | Resolve brand | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` | ambiguous brand → ask user (one question) |
+| 2 | Resolve brand | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` | ambiguous brand → ask user (one question); brand but no task → `router.yaml#brand_only_entry` |
 | 3 | Resolve project / workstream | `portfolio.yaml#brands.<id>.projects` → `TSST/brands/<id>/projects/<p>/project.md` | — |
 | 4 | Load portfolio pointer | the single brand + project entry only | never read other brand entries in depth |
 | 5 | Resolve canonical memory source | `TSST/brands/<id>/memory/source.md` | access state per runtime (see Memory resolution) |

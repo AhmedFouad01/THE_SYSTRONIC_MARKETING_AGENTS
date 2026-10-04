@@ -12,9 +12,8 @@
 ## Access by runtime
 | runtime | state |
 |---|---|
-| ChatGPT (Drive source) | `SOURCE_AVAILABLE` — read on demand (bridge) |
-| Gemini (Workspace) | `SOURCE_AVAILABLE` where enabled |
-| Claude / Codex (filesystem) | `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME` → request bridge read of `CURRENT_STATUS` only |
+| Claude / Codex / Gemini (filesystem) | read the `.md` export beside each Doc (same `drive:` folder, written in place by `exportBrandRoots` in `TSST/context/tools_export_gdocs.gs`) → `SOURCE_AVAILABLE`. No `.md` yet, or `.gdoc` newer than its `.md` → `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`: ask the user to run `exportBrandRoots`; do not guess |
+| ChatGPT | `off` on the bus (2026-10-04); no Drive bridge in use |
 
 Pointer-only: the VILL tree is not exported into the repo. Do not guess VILL state.
 
