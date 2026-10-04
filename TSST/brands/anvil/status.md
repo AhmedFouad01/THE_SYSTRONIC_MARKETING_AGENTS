@@ -10,3 +10,9 @@ User acceptance or feedback on REVEAL_01 v03. Nothing is published or spent with
 
 ## do_not_repeat
 Pilot stages 01–11 (brief → production v01); REVEAL_01 v01/v02 iterations.
+
+## Verified draft fold — 2026-10-04
+
+Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not supersede the repository pilot checkpoint or establish user acceptance/release authority.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md`.

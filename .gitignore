@@ -7,3 +7,4 @@ desktop.ini
 *.gdoc
 TSST/bus/.lock
 /.git.pre-externalize/
+__pycache__/

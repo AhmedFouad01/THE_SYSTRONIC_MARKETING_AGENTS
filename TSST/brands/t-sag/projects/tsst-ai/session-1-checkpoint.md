@@ -57,3 +57,4 @@ Then: Gemini + Codex cold-starts (cases A–D) → final DEEP review → commit 
 - Codex verified: fs_read, fs_write, shell (REVIEW-001: 3 bus defects found and fixed).
 - Queued: COLD-CODEX, COLD-GEMINI (cases `TSST/context/tests/cold_start.md`), RM-CS-002 (proposal), BRANDS-FOLD (after RM-CS-002).
 - Next: those tasks → final DEEP review → commit on dedicated branch → push to `origin` (GitHub) with user approval. Validator 28/28.
+- 2026-10-04 later: COLD-CODEX + COLD-GEMINI closed (gemini first copy rejected; rerun accepted) → router.yaml continuation rule + budget scope. RM-CS-002 applied (CS2-01..05, user-approved). BRANDS-FOLD closed (155 cited additions). Gemini verified fs_read/fs_write/shell. Remaining: final DEEP review → PR; `chatgpt-gradual (1)` cleanup check; TSD-009 decision; TSST-001A gate.

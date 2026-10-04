@@ -17,3 +17,11 @@
 | Claude / Codex (filesystem) | `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME` → request bridge read of `CURRENT_STATUS` only |
 
 Pointer-only: the VILL tree is not exported into the repo. Do not guess VILL state.
+
+## Verified draft fold — 2026-10-04
+
+Verified draft source pointer: https://drive.google.com/drive/folders/1EX3mDhbQwRpEuwjUhLJDI-UgGlMdXyxZ
+
+Source structure includes START_HERE, CURRENT_STATUS, PROJECT_MASTER, milestones, changelog, decisions, sync inbox, prompts, exports, assets and archive. Import mode: POINTER-FIRST / CONTROLLED HANDOFF. Physical migration requires conflict/duplicate review and an explicit migration step.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md`.

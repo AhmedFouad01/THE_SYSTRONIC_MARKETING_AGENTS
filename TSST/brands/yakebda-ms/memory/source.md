@@ -25,3 +25,14 @@ ChatGPT / Gemini with Drive access: `SOURCE_AVAILABLE`.
 
 Isolation: never mix with AKYRO_STUDIO (sibling under `01_PROJECTS`).
 Canonical-root consolidation is a separate future task (not approved now).
+
+## Verified draft fold — 2026-10-04
+
+Draft source locators (not a universal authority selection):
+- Primary known source: https://drive.google.com/drive/folders/1G0YuMANM3jpX7vMUyxex4w2WMT-toAe2
+- Historical/supporting: https://drive.google.com/drive/folders/1KC7m2L4Or-YcCA4qs5cGiVoeXeVC01Ww
+- Historical/supporting: https://drive.google.com/drive/folders/16LX1uCZjGlP8OCbByLXBOSguUAP9k831
+
+Import mode: POINTER-FIRST / CANONICAL RECONCILIATION REQUIRED. Resolve authority, duplicates, chronology and current repository state before physical migration. Existing per-task R1–R4 resolution above remains controlling.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/memory/source.md`.

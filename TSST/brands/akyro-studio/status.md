@@ -13,3 +13,9 @@ On the first task for this brand: resolve canonical source → record active pro
 
 ## do_not_repeat
 (none recorded yet)
+
+## Verified draft fold — 2026-10-04
+
+Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not establish an active TSST project or current workstream; recover that state from the canonical source.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/status.md`.

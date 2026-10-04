@@ -10,3 +10,11 @@
 Recovery: `TSST/brands/anvil/status.md` → pilot `CONTINUATION_STATUS_2026-09-28.md` →
 latest version folder QA (`REVEAL_01/v03/INTEGRATED_QA.md`) → product master only if the
 task needs product facts. Approved logo masters are composited, never regenerated.
+
+## Verified draft fold — 2026-10-04
+
+Verified draft source pointer: https://drive.google.com/drive/folders/1jecbVT2EUHgDA851bn6PyxyKkMHuKQ72
+
+Draft lists START_HERE, CURRENT_STATUS, PROJECT_MASTER, milestones, changelog, decisions, sync inbox, prompts, exports, assets and archive as structure. This does not prove status/decision contents: the repository inventory above found only assets. Import mode: POINTER-FIRST / CONTROLLED HANDOFF; do not duplicate the whole source tree.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md`.

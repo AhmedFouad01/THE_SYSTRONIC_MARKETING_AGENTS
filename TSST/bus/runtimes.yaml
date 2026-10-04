@@ -25,12 +25,12 @@ codex:
   tier_CODE: gpt-6.1-sol · high
   tier_DEEP: gpt-6-astra · high
 gemini:
-  caps: []
-  unverified: [fs_read, fs_write, shell, drive_docs_read, image, video]
+  caps: [fs_read, fs_write, shell]
+  unverified: [drive_docs_read, image, video]
   roles: []
   status: available
   until:
-  verified:
+  verified: 2026-10-04
   tier_FAST: Gemini 3.8 Flash · low
   tier_WORK: Gemini 3.8 Flash · high
   tier_CODE: Gemini Pro · high

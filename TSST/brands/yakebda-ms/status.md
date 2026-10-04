@@ -13,3 +13,9 @@ On the first task for this brand: resolve canonical source → record active pro
 
 ## do_not_repeat
 (none recorded yet)
+
+## Verified draft fold — 2026-10-04
+
+Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. Canonical memory reconciliation is REQUIRED: resolve authority before loading detailed state. Registration does not establish current project state.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/status.md`.
