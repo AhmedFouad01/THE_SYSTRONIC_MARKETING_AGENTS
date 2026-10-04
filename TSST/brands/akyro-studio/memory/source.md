@@ -20,3 +20,7 @@ Verified draft source pointer: https://drive.google.com/drive/folders/1gGcNZQFk4
 Source structure: 00_START_HERE, 01_CURRENT_STATUS, 02_MILESTONES, 03_CHANGELOG, 04_DECISIONS_ADR, 06_PROMPTS. Import mode: POINTER-FIRST / CONTROLLED HANDOFF. Physical migration requires conflict/duplicate review and an explicit migration step.
 
 Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/memory/source.md`.
+
+## Readable exports — 2026-10-05
+
+`.gdoc` files in this brand's Drive root now have a verbatim `.md` beside them (`exportBrandRoots`, tagged `tsst-export`). Filesystem runtimes read the `.md`; if the `.gdoc` is newer than its `.md`, it is stale → ask the user to re-run `exportBrandRoots`.

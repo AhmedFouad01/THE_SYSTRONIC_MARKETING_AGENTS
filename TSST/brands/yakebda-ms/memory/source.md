@@ -36,3 +36,7 @@ Draft source locators (not a universal authority selection):
 Import mode: POINTER-FIRST / CANONICAL RECONCILIATION REQUIRED. Resolve authority, duplicates, chronology and current repository state before physical migration. Existing per-task R1–R4 resolution above remains controlling.
 
 Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/memory/source.md`.
+
+## Readable exports — 2026-10-05
+
+`.gdoc` files in this brand's Drive root now have a verbatim `.md` beside them (`exportBrandRoots`, tagged `tsst-export`). Filesystem runtimes read the `.md`; if the `.gdoc` is newer than its `.md`, it is stale → ask the user to re-run `exportBrandRoots`.

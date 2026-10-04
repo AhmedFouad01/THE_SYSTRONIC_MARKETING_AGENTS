@@ -24,3 +24,7 @@ Verified draft source pointer: https://drive.google.com/drive/folders/1EX3mDhbQw
 Source structure includes START_HERE, CURRENT_STATUS, PROJECT_MASTER, milestones, changelog, decisions, sync inbox, prompts, exports, assets and archive. Import mode: POINTER-FIRST / CONTROLLED HANDOFF. Physical migration requires conflict/duplicate review and an explicit migration step.
 
 Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md`.
+
+## Readable exports — 2026-10-05
+
+`.gdoc` files in this brand's Drive root now have a verbatim `.md` beside them (`exportBrandRoots`, tagged `tsst-export`). Filesystem runtimes read the `.md`; if the `.gdoc` is newer than its `.md`, it is stale → ask the user to re-run `exportBrandRoots`.
