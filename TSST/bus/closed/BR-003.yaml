@@ -1,0 +1,23 @@
+id: BR-003
+title: Register 63 Apps Script exports in EXPORTS.yaml + verify
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: CODE
+brand: t-sag
+spec: TSST/context/bridge.md
+read: [CRM_APP/, CRM_UI_HANDOFF/, REAL_MEMORY/TSST_REAL_MEMORY/, TSST/context/bridge-request-001.md]
+write: [CRM_APP/EXPORTS.yaml, CRM_UI_HANDOFF/EXPORTS.yaml, REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/EXPORTS.yaml, REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/EXPORTS.yaml]
+after: []
+done_when: "one row per existing export from bridge-request-001 (bridge_runtime: drive-apps-script, method: verbatim-export, sha256 filled); flag exports with Markdown escapes (\\#, \\_), code fences in code files, or BOM; validate_spine passes; out/BR-003.md <=15 lines: counts + missing + flags. Never edit exports or originals"
+issued_by: claude
+created: "2026-10-04T18:34Z"
+rounds: 1
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+result: TSST/bus/out/BR-003.md
+sha256: 61ff5d859e7676ef82212c890bc1cd4e94febf08ca05aecbe9a7987a4b232080
+note: 63/63 manifest rows + sha256; no escapes/BOM/fences; spine 28/28

@@ -1,0 +1,88 @@
+# TSST context router — provider-neutral. Read by TSST/context/boot.md.
+version: 1
+
+# Step 2: brand resolution. Match case-insensitively on whole tokens (Arabic or Latin).
+brand_aliases:
+  t-sag:        [t.sag, tsag, systronic, the systronic, سيسترونك, crm, tsst-ai, tsst ai]
+  akyro-studio: [akyro, akyro_studio, akyro studio, اكيرو]
+  vill-studio:  [vill, vill_studio, vill studio, فيل]
+  yakebda-ms:   [yakebda, yakebda_ms, ya-kebda, ykms, ياكبدة, يا كبدة]
+  anvil:        [anvil, anvil_supps, anvil supps, shark x, انفيل]
+brand_resolution:
+  - exactly one brand matched → use it
+  - project alias matched (crm, tsst-ai) → its owning brand
+  - none matched and the task is about TSST itself → t-sag / tsst-ai
+  - several matched or none → ask one clarifying question; never pick by recency
+
+# Step 3: project aliases inside a brand.
+project_aliases:
+  t-sag/crm:      [crm, سي ار ام, crm_app, crm mvp]
+  t-sag/tsst-ai:  [tsst, tsst-ai, agents, context os, team, consolidation]
+  anvil/switch-pilot: [pilot, switch, reveal, campaign, حملة]
+
+# Step 7: source authority (highest first). Newer verified evidence beats older summaries.
+source_authority:
+  - explicit user instruction in the current chat
+  - repository evidence at verified HEAD (code, tests, evidence/closure docs)
+  - project.md / status.md checkpoint pointers (repo-native)
+  - canonical Real Memory CURRENT_STATUS + PROJECT_DECISIONS (durable)
+  - accepted-but-unapplied sync packets (proposal only; never durable truth)
+  - chat history / transcripts (supporting only)
+conflict_rule: newest verified evidence wins; record the conflict in the checkpoint; never silently overwrite durable memory
+
+# Step 10: context budget (pointer-first expansion ladder).
+context_budget:
+  ladder: [pointer/index, status/checkpoint, exact required source, bounded expansion]
+  default_max_files_before_work: 6   # task files only; the boot spine (boot, router, portfolio entry, status, checkpoint, rules, team) is not counted
+  never_preload: [other brands, whole skill registries, all agent docs, closed milestone evidence, completed UI/UX discovery docs]
+  expansion_requires: a named gap the current pack cannot answer
+
+# Step 11: team routing. Teams are TSST/teams/<team>/team.md.
+team_routing:
+  marketing: [research, strategy, positioning, messaging, content plan, campaign plan, performance, paid media, measurement, radar, market]
+  studio:    [design, visual, image, logo, video, motion, art direction, creative qa, asset, ui design]
+  build:     [code, crm implementation, database, api, automation, integration, agent engineering, security, test, release, bug]
+  lead:      [intake, priorities, conflict, acceptance, portfolio, onboarding, business decision]
+  multi_team_order: marketing → studio → marketing/performance (only the steps the task needs)
+
+# Step 12: skill routing — load only the matched skill packages listed in the team file.
+skill_routing:
+  rule: match task verbs to the team's skill map; load at most 3 skills unless the plan names more
+  core_skills: TSST/context_os/skills/   # TSST CORE pool (TSST-CTX-SK-001…022)
+
+# Mapping from boot steps to the existing Context OS skills (detailed procedures).
+context_os_skills:
+  route: TSST-CTX-SK-001-context-router
+  recover: [TSST-CTX-SK-002-current-state-loader, TSST-CTX-SK-016-progress-recovery]
+  authority: TSST-CTX-SK-003-source-authority-resolver
+  retrieve: TSST-CTX-SK-004-memory-retriever
+  memory_write: TSST-CTX-SK-005-memory-write-gate
+  isolation: TSST-CTX-SK-006-project-isolation-guard
+  budget: TSST-CTX-SK-007-context-budget-manager
+  handoff: TSST-CTX-SK-008-handoff-compressor
+  checkpoint: TSST-CTX-SK-009-session-checkpoint
+  model: TSST-CTX-SK-010-model-router
+  tool: TSST-CTX-SK-011-tool-router
+  reconcile: [TSST-CTX-SK-012-memory-reconciler, TSST-CTX-SK-013-stale-memory-detector]
+  skill_select: TSST-CTX-SK-017-skill-selector
+
+# Bare continuation ("كمل X" / "continue X"): recovery (steps 5-6) runs at FAST; team + tier then
+# come from the checkpoint's next open item. No next item / no registered project → team lead,
+# tier WORK, ask the user one question. (Found by cold-start COLD-CODEX, 2026-10-04.)
+continuation_rule: recover at FAST → team/tier of checkpoint next item → else lead/WORK + one question
+
+# Brand named with no task ("TSST-Vill Studio", "VILL", "افتح ANVIL"): open the brand, don't interrogate.
+# Recover at FAST (status.md + canonical CURRENT_STATUS slice), then reply ≤10 lines:
+#   where it stands · open items / blockers · 3 suggested next actions as numbered options.
+# Ask the user to pick one; no work before the pick. Source unreadable → say which file, offer the bridge.
+brand_only_entry: recover at FAST → brief (state, open items, 3 numbered next actions) → user picks → route
+
+# Step 13: logical tier defaults (see models.yaml). Escalate only on evidence.
+tier_defaults:
+  status lookup / "where are we": FAST
+  inventory / grep / classification: FAST
+  plan / synthesis / copy / strategy draft: WORK
+  code / tests / migration / audit: CODE
+  architecture / conflict / acceptance / irreversible: DEEP
+  image: IMAGE
+  video: VIDEO

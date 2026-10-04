@@ -1,0 +1,18 @@
+# ANVIL — status
+
+updated: 2026-10-04 (from repo evidence dated 2026-09-28)
+
+## Current
+- `switch-pilot` (TSST-PILOT-001): static campaign `REVEAL_01` v03 — status REVIEW, internally inspected, awaiting user acceptance. No release authorisation.
+
+## Next action
+User acceptance or feedback on REVEAL_01 v03. Nothing is published or spent without approval.
+
+## do_not_repeat
+Pilot stages 01–11 (brief → production v01); REVEAL_01 v01/v02 iterations.
+
+## Verified draft fold — 2026-10-04
+
+Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not supersede the repository pilot checkpoint or establish user acceptance/release authority.
+
+Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md`.

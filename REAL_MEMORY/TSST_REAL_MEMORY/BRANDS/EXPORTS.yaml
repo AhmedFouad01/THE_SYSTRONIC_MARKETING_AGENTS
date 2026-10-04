@@ -1,0 +1,160 @@
+# Bridge export manifest - see TSST/context/bridge.md
+# Registered by BR-003; exported_at uses export filesystem mtime (UTC).
+# Hashes verify registered bytes, not equality to unreadable Google Docs.
+exports:
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/registry.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/registry.md
+    exported_at: 2026-10-04T18:37:37.079Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 2a11f58f3924e2f98771581f7b1e45909c28cae502263bc3ada4152d0bd31e0b
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/brand.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/brand.md
+    exported_at: 2026-10-04T18:37:39.360Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 05fa5d341e1ef0d6e1fcb65de37178c3c3b8191d657b797e264a96f4da548bc0
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/rules.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/rules.md
+    exported_at: 2026-10-04T18:37:42.094Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 37db82bf06db3fb01a80d161ada46da469eb009970a3afc787d7ef10e4d3b4dc
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/scope.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/scope.md
+    exported_at: 2026-10-04T18:37:44.514Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: f62f7e9ed265b458d906a172641e7d57e735d846af3a8985c9ea4ecee1f958ff
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/status.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/status.md
+    exported_at: 2026-10-04T18:37:46.912Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 0a8bd9aeb40305016c3d06461f7326bd69333c848bb77c0c8667c40ebad88de0
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/memory/source.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/AKYRO_STUDIO/memory/source.md
+    exported_at: 2026-10-04T18:37:49.829Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: a5a82b680a93af253e4b6348b6a3bf1e7d5a306a270331af421b42f8ca424a21
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/brand.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/brand.md
+    exported_at: 2026-10-04T18:37:52.312Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: a337429af81ca7736753a4fe05aa050409506378f8da951594306499f420acc1
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/rules.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/rules.md
+    exported_at: 2026-10-04T18:37:54.966Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 4eb6c35db5ebe88318b59999673f3e9459cfc9db1b8b47b5a66f340863ccda74
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/scope.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/scope.md
+    exported_at: 2026-10-04T18:37:57.562Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 8d42f39ba0d842b7d07fcf5fd3bf7ff8b4e6224ccc8dc186a506d93829407e01
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/status.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/status.md
+    exported_at: 2026-10-04T18:38:00.013Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 47c83c48bb8415a0bf260ec719bd244a917282ed56fc5e171cd3f93a80786c11
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md
+    exported_at: 2026-10-04T18:38:02.840Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: d2159bce8b635e9c263cf7d44cdca55074766a1c34d308fe107fb46b6031ffb5
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/brand.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/brand.md
+    exported_at: 2026-10-04T18:38:05.391Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 771c5f11c49285a944ac423d98cca61f0660e4a3baab0ec173a5577ade76334b
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/rules.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/rules.md
+    exported_at: 2026-10-04T18:38:07.823Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: a209063133bd49434da7220911a4c99911337a222c805277f1e248056e45c5ef
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/scope.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/scope.md
+    exported_at: 2026-10-04T18:38:10.375Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 7e655a8fcf01d66b021f7efafb20e8a2d38bef51a0982ecc7d39a70b93d204c9
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/status.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/status.md
+    exported_at: 2026-10-04T18:38:14.579Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: aafc8b18e9721f619fa1029920be0ccc0725f0ddb98afecebe9126474618ccb5
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/memory/source.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/YAKEBDA_MS/memory/source.md
+    exported_at: 2026-10-04T18:38:17.311Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: cd8f02d5034efdc9b15fcff6888d1a7e7733aaa23d53afbfb9f36d024c9fbcd7
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/brand.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/brand.md
+    exported_at: 2026-10-04T18:38:19.895Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: b316ec911c803f104fc340a97f1bfcf1f7094210d4609348c7bdef5181dfd80d
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/rules.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/rules.md
+    exported_at: 2026-10-04T18:38:23.452Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: b22f36aa2c943a0125ed623922ebe10f54a14e33272a1c636a7a6c9cec9cffd8
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/scope.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/scope.md
+    exported_at: 2026-10-04T18:38:26.208Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 53faef6847267bbbdbdc8e5fdd94092732bc593cb61822112c3c10f5a224b8af
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/status.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/status.md
+    exported_at: 2026-10-04T18:38:28.709Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: aa805344855f4a40f128b9650d2265e36619c01108a3095e75e6acc3a6bf07c2
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/memory/source.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/T.SAG/memory/source.md
+    exported_at: 2026-10-04T18:38:31.374Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 53d4d8e9c95a1125b8377c2eb0c4be836a81b27ad37880b5d8b5a49703bbaa2f
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/brand.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/brand.md
+    exported_at: 2026-10-04T18:38:33.860Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 074af11b3b98f5094417a5fd2c14e4774dd52ce0968b6d800543c15088e09d17
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/rules.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/rules.md
+    exported_at: 2026-10-04T18:38:36.316Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: cd43bb992a190a19211280c5703f9dd0cad908086f9e78e93ddc125187721d29
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/scope.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/scope.md
+    exported_at: 2026-10-04T18:38:38.983Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 4cf000af11f36e92229ee0ed6a83b9edf8618aabf9196387913fed2d10ca9ec2
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md
+    exported_at: 2026-10-04T18:38:41.456Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 0b433eb005ff375b82379f2db415a23bcfce62b4784e84c7d0cd39d2dc282ddb
+  - source: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md.gdoc
+    export: REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md
+    exported_at: 2026-10-04T18:38:44.594Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 4030d0863892d15a12d69a92bc7aecd2fc8e03a2e7d2ce4325c8c0a79eac68f4

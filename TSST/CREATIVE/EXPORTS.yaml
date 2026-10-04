@@ -1,0 +1,82 @@
+# Bridge export manifest - see TSST/context/bridge.md
+# Registered by lead (BR-004, 2026-10-05); exported_at uses export filesystem mtime (UTC).
+# Hashes verify registered bytes, not equality to Google Docs.
+exports:
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-020-product-ux-architecture-information-architecture/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-020-product-ux-architecture-information-architecture/SKILL.md
+    exported_at: 2026-10-04T21:23:18Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: d9071c92fc482e3517f29ec5e45ae5095144142f803d92ce0f345e7925433e29
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-021-enterprise-workspace-navigation-context/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-021-enterprise-workspace-navigation-context/SKILL.md
+    exported_at: 2026-10-04T21:23:21Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 8afe4656b64cc01f585a988416d9097ef6a9bfbc31ba25ff39286ed42cc676d0
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-022-crm-data-grids-tables-views-bulk-actions/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-022-crm-data-grids-tables-views-bulk-actions/SKILL.md
+    exported_at: 2026-10-04T21:23:23Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: bd5ba5343d8969f5b6b357a68ef9675049253c7960bb51c30f59b313eb9bae3c
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-023-master-detail-records-drawers-contextual-actions/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-023-master-detail-records-drawers-contextual-actions/SKILL.md
+    exported_at: 2026-10-04T21:23:26Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 3a8a3393772132c1ebb1c4b3d07dfeebfe4b6d892e59ec36f9d7059fc80f7719
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-024-command-palette-keyboard-first-productivity/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-024-command-palette-keyboard-first-productivity/SKILL.md
+    exported_at: 2026-10-04T21:23:29Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 7c4bf677735811bd2b34bb7eeccaca76dae949cd37517193d1da8cfa024c110d
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-025-forms-validation-error-recovery/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-025-forms-validation-error-recovery/SKILL.md
+    exported_at: 2026-10-04T21:23:31Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 9fc19ac5c875b335ee0f44dbb73185fc895b9ce1606870de26b534d3d91388fd
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-026-arabic-first-rtl-bidi-product-ux/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-026-arabic-first-rtl-bidi-product-ux/SKILL.md
+    exported_at: 2026-10-04T21:23:34Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: f1a87e463ad7974de4f2205f962e0f6ca9375df11a64e13940ee728c0d5f3655
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-027-accessible-interaction-wcag22/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-027-accessible-interaction-wcag22/SKILL.md
+    exported_at: 2026-10-04T21:23:36Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 84a99aaae14344da37cd0d39e0f127eaa09dea3446819ffd02061904669bdeec
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-028-responsive-adaptive-saas-layouts/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-028-responsive-adaptive-saas-layouts/SKILL.md
+    exported_at: 2026-10-04T21:23:39Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: d1d19205960a84c2571cc3ea466b4755160f43e4cf3b3b2a375490e17db00825
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-029-dashboard-data-visualization-ux/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-029-dashboard-data-visualization-ux/SKILL.md
+    exported_at: 2026-10-04T21:23:42Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: abb4a9e810b589bdab4f35ee1877069d4b2e481328be32478298b59173cec9d8
+  - source: TSST/CREATIVE/skills/tsst-creative-sk-030-usability-testing-heuristic-evaluation-ux-qa/SKILL.md.gdoc
+    export: TSST/CREATIVE/skills/tsst-creative-sk-030-usability-testing-heuristic-evaluation-ux-qa/SKILL.md
+    exported_at: 2026-10-04T21:23:44Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: bd64bc74069aa334595b613a3b5555c4e5cb2f66c510d3628d181012bcf1311c
+  - source: TSST/CREATIVE/CRM_MVP_UIUX_EXECUTION_PLAN_v0.1.md.gdoc
+    export: TSST/CREATIVE/CRM_MVP_UIUX_EXECUTION_PLAN_v0.1.md
+    exported_at: 2026-10-04T21:23:46Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: dddf04ae7549282a13bf9caabcc3f85f80862d43f05a7966de69ea845303644d
+  - source: TSST/CREATIVE/CRM_MVP_COMPONENT_SYSTEM_BRIEF_v0.1.md.gdoc
+    export: TSST/CREATIVE/CRM_MVP_COMPONENT_SYSTEM_BRIEF_v0.1.md
+    exported_at: 2026-10-04T21:23:49Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: af1a4bb71a652680a332c98194cddd12ec9cac7a60c78e4ca591504fd84876f6

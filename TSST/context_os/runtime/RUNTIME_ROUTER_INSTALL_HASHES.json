@@ -1,0 +1,10 @@
+{
+  "TSST_CLAUDE_RUNTIME_MODEL_ROUTER_v0.1.md": "20b3f9d0d2bfbd0a0a93fd05686827315f5a1d89251f5f0b8d840bf0e0f525c2",
+  "AGENTS.merged.md": "65ae2179f13da1bb3dc40e095140fa60ad5bfe17b306594f6b75bbc04ccba895",
+  "backups/AGENTS.md": "a6927231d1f00c65962f8e24470d057e1883488405bc48ef9320b8824c66213d",
+  ".claude/settings.json": "d273d9aff7beb1a56bc447a325b5494e4f946b5e0a70609f4d7cf8e81a026a79",
+  ".claude/agents/Explore.md": "720f65a43da3af3d4836023358c4026ebba544411674487d9181d809c00f3cb4",
+  ".claude/agents/tsst-execution-worker.md": "0de90ad3ad188b04dd320ae3b532691bf3adb489bab42696aea7bcc53a1f8a0f",
+  ".claude/agents/tsst-code-worker.md": "6131a92d86400e1761c8cb75bcee2c23c2cdf9b0a0889039ec1233120b8d4b0e",
+  ".claude/agents/tsst-fast-worker.md": "16d2277e2348479154cf22dd6c8118f3d06506bb3b33fbd05c8f18cd39bf9311"
+}

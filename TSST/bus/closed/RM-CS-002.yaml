@@ -1,0 +1,23 @@
+id: RM-CS-002
+title: Review 9 sync packets -> RM-CS-002 proposal
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+brand: t-sag
+spec: REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/PROCESS_PROTOCOL.md
+read: [REAL_MEMORY/TSST_REAL_MEMORY/, TSST/brands/t-sag/]
+write: [TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md]
+after: []
+done_when: "proposal only, <=80 lines, format of RM-CS-001 in rm-reconciliation.md: per packet id | claim | conflict with current Real Memory (path) | apply/reject/defer + reason. No Real Memory or packet edits"
+issued_by: claude
+created: "2026-10-04T19:04Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+result: TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md
+sha256: 5b13e5fc9b0159472cc203a81d7e0de3f421f50d935731dfdcc4ebc06fcd5956
+note: proposal accepted as review; CS2-01..05 await exact user approval; nothing applied

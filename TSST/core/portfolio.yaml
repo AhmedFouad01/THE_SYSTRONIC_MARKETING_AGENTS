@@ -1,0 +1,53 @@
+# TSST portfolio index — SMALL. Pointers only, never memory content.
+# Paths starting with "drive:" are provider-neutral Google Drive addresses relative to
+# "My Drive/". Repo paths are relative to the repository root. Adapters map both.
+version: 1
+updated: 2026-10-04
+brands:
+  t-sag:
+    name: T.SAG (The Systronic)
+    kind: internal
+    active: true
+    services: [operating-system, software, marketing-internal]
+    memory: TSST/brands/t-sag/memory/source.md
+    projects:
+      crm:
+        state: M0/M1/M2 CLOSED; M2 post-close hardening COMPLETE; UI design gate PASSED (prototype, not production code); M3 NOT STARTED
+        checkpoint: TSST/brands/t-sag/projects/crm/project.md
+        next: PAUSED until TSST Core accepted; then CRM_UI_HANDOFF → implementation mapping → CRM_APP UI (no M3, no redesign)
+      tsst-ai:
+        state: consolidation session 2 in progress; RM-CS-001 applied (D-012 APPROVED); TSST-001A OPEN; TSST NOT_READY
+        checkpoint: TSST/brands/t-sag/projects/tsst-ai/project.md
+        next: receive ChatGPT bridge exports → CRM_UI_HANDOFF normalisation, RM-CS-002, cold-starts
+  akyro-studio:
+    name: AKYRO_STUDIO
+    kind: client
+    active: not_recorded  # state lives in canonical source; fetch on demand
+    memory: TSST/brands/akyro-studio/memory/source.md
+    projects: {}
+    next: resolve from canonical source on first task
+  vill-studio:
+    name: VILL_STUDIO
+    kind: client
+    active: not_recorded  # state lives in canonical source; fetch on demand
+    memory: TSST/brands/vill-studio/memory/source.md
+    projects: {}
+    next: resolve from canonical source on first task (Drive-native; filesystem runtimes use bridge)
+  yakebda-ms:
+    name: YAKEBDA_MS
+    kind: client
+    active: not_recorded  # state lives in canonical source; fetch on demand
+    memory: TSST/brands/yakebda-ms/memory/source.md
+    memory_roots: 3   # authority NOT reconciled; see source.md
+    projects: {}
+    next: canonical-root reconciliation before durable work
+  anvil:
+    name: ANVIL (ANVIL SUPPS)
+    kind: client
+    active: true
+    memory: TSST/brands/anvil/memory/source.md
+    projects:
+      switch-pilot:
+        state: TSST-PILOT-001 static campaign REVEAL_01 v03 in REVIEW, awaiting user acceptance; no release authorisation
+        checkpoint: TSST/brands/anvil/projects/switch-pilot/project.md
+        next: user acceptance/feedback on REVEAL_01 v03

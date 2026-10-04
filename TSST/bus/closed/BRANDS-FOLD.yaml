@@ -1,0 +1,23 @@
+id: BRANDS-FOLD
+title: Fold verified facts from 26 brand drafts into TSST/brands/*
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+brand: t-sag
+spec: TSST/brands/t-sag/projects/tsst-ai/session-1-checkpoint.md
+read: [REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/, TSST/brands/]
+write: [TSST/brands/akyro-studio/, TSST/brands/anvil/, TSST/brands/t-sag/brand.md, TSST/brands/t-sag/rules.md, TSST/brands/t-sag/scope.md, TSST/brands/t-sag/status.md, TSST/brands/vill-studio/, TSST/brands/yakebda-ms/]
+after: [RM-CS-002]
+done_when: "one brand at a time; only facts present in the exported drafts, each edit cites draft path; no new facts, no cross-brand text; validate_spine passes (TSST/brands < 60 KB); out/BRANDS-FOLD.md: files changed + conflicts"
+issued_by: claude
+created: "2026-10-04T19:04Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+result: TSST/bus/out/BRANDS-FOLD.md
+sha256: 0cd333a76df97e65bfb7e1e6043ef26bfb397b1bd54c8010fac704b1d6a5e526
+note: 155 pure additions, each cites same-brand draft; no cross-brand text; CRLF normalized to LF by lead

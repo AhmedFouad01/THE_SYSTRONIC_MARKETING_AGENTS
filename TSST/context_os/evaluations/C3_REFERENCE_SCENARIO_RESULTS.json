@@ -1,0 +1,88 @@
+{
+  "bulk_feedback": {
+    "tier": "FAST",
+    "reasons": [
+      "bounded_low_risk_transformation",
+      "bulk_input_requires_partition_and_compression"
+    ],
+    "context_budget": "L",
+    "tool_namespaces": [
+      "crm_read"
+    ],
+    "blocked_actions": [],
+    "limits": {
+      "max_calls": 8,
+      "max_executive_calls": 1,
+      "parallel": 3
+    }
+  },
+  "product_strength_decision": {
+    "tier": "EXECUTION",
+    "reasons": [
+      "standard_nontrivial_execution"
+    ],
+    "context_budget": "M",
+    "tool_namespaces": [
+      "crm_read",
+      "project_read"
+    ],
+    "blocked_actions": [],
+    "limits": {
+      "max_calls": 8,
+      "max_executive_calls": 1,
+      "parallel": 3
+    }
+  },
+  "crm_code_change": {
+    "tier": "CODE",
+    "reasons": [
+      "codebase_heavy_execution"
+    ],
+    "context_budget": "L",
+    "tool_namespaces": [
+      "internal_mutation",
+      "repo_read"
+    ],
+    "blocked_actions": [],
+    "limits": {
+      "max_calls": 8,
+      "max_executive_calls": 1,
+      "parallel": 3
+    }
+  },
+  "architecture_reset": {
+    "tier": "EXECUTIVE",
+    "reasons": [
+      "high_impact_ambiguous_decision"
+    ],
+    "context_budget": "L",
+    "tool_namespaces": [
+      "project_read",
+      "repo_read"
+    ],
+    "blocked_actions": [],
+    "limits": {
+      "max_calls": 14,
+      "max_executive_calls": 2,
+      "parallel": 4
+    }
+  },
+  "campaign_publish_without_authority": {
+    "tier": "EXECUTION",
+    "reasons": [
+      "standard_nontrivial_execution"
+    ],
+    "context_budget": "S",
+    "tool_namespaces": [
+      "ads_read"
+    ],
+    "blocked_actions": [
+      "external_action_without_explicit_authority"
+    ],
+    "limits": {
+      "max_calls": 8,
+      "max_executive_calls": 1,
+      "parallel": 3
+    }
+  }
+}

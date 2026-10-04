@@ -1,8 +1,11 @@
 # TSST Lead Marketing Team Readiness Report
 
+
 ## CREATIVE production training update — 2026-09-24
 
+
 The user authorized direct training of CREATIVE_AG after the ANVIL pilot exposed a production-quality gap: strong strategy/specification but placeholder-like, repetitive actual visuals. This update preserves every historical score/status and does not claim production readiness.
+
 
 - Internal workers added under CREATIVE_AG: `DESIGNER_AG` and `MOTION_AG`; top-level TSST remains four agents.
 - SK-009 and SK-010 moved from backlog to installed training packages.
@@ -14,20 +17,28 @@ The user authorized direct training of CREATIVE_AG after the ANVIL pilot exposed
 - ANVIL prior production is retained as a supervised failure/postmortem fixture, not proof of production mastery.
 - Integrated render evaluations are prepared in `CREATIVE/EVALUATION_BATCH.md`; ANVIL creative-only retest is prepared but not run.
 
+
 **CREATIVE readiness remains `NOT_READY`.** The next gate is actual rendered Social KV + Motion + QA evidence; written briefs alone cannot clear the gate.
+
+
 
 
 ## Current onboarding update — 2026-09-22
 
+
 The user closed the current discovery round and confirmed an operational baseline, plan-first workflow, A/B/C decision rights, documentation, quality and escalation preferences. See TSST_OPERATING_PROFILE.md and its linked synthesis documents. Business discovery has open/deferred areas; this is not full onboarding completion. Statements below that onboarding is NOT_STARTED or decision rights are uncaptured describe the historical migration state. All skill validation results and NOT_READY production status remain unchanged. No new evaluation or campaign was executed.
+
 
 As of: 2026-09-20  
 Overall readiness: `NOT_READY`  
 Campaign activity started: No
 
+
 Historical four-agent summary: see the TSST migration update below. Earlier tables retain the specialist foundation scope and historical test states.
 
+
 ## Specialist bootstrap result
+
 
 - Team constitution, agent registry, shared context, skill registry, evaluation scorecard, handoff contract, and three agent definitions are created.
 - All 32 workbook skills are imported. TSST-CREATIVE-SK-001 is `VALIDATED`; TSST-CREATIVE-SK-002 and TSST-CREATIVE-SK-008 are `LAB_VALIDATED`; the remaining 29 are `UNVALIDATED`.
@@ -37,7 +48,9 @@ Historical four-agent summary: see the TSST migration update below. Earlier tabl
 - Eighteen Phase-1 practical evaluations exist. TSST-CREATIVE-SK-001 and TSST-CREATIVE-SK-002 passed; the remaining 16 are queued. The separate TSST-CREATIVE-SK-008 later-phase remediation evaluation passed at 88/100 and is `LAB_VALIDATED`.
 - Four evaluation runs have been executed: TSST-CREATIVE-SK-001, 95/100, `PASS`; TSST-CREATIVE-SK-002, 94/100, `PASS`; TSST-CREATIVE-SK-008 run 01, 82/100, `FAIL`; and TSST-CREATIVE-SK-008 remediation run 02, 88/100, `PASS`.
 
+
 ## Agent readiness
+
 
 | Agent | Registry skills | Phase-1 packages | Phase-1 evaluations | Unvalidated skills | Backlog packages | Status | Blocking condition |
 | --- | ---: | ---: | ---: | ---: | ---: | --- | --- |
@@ -46,23 +59,33 @@ Historical four-agent summary: see the TSST migration update below. Earlier tabl
 | SPARK_AG | 12 | 6 | 6 queued | 12 | 6 | `NOT_READY` | All six Phase-1 evaluations are unrun; Critical TSST-SPARK-SK-008, TSST-SPARK-SK-009, TSST-SPARK-SK-011, and TSST-SPARK-SK-012 remain backlog. |
 | Team | 32 | 18 | 2 passed, 16 queued | 29 | 13 | `NOT_READY` | Sixteen Phase-1 evaluations remain unpassed. |
 
+
 `PILOT_READY` remains blocked until the remaining 16 Phase-1 evaluations pass. `PRODUCTION_READY` has additional blockers: later-phase Critical skill packaging and validation, cross-agent integration tests, current platform/policy checks, and TSST Lead acceptance for a defined production scope.
+
 
 ## Installed skills per agent
 
+
 ### CREATIVE_AG
+
 
 TSST-CREATIVE-SK-001 Brand System Architecture; TSST-CREATIVE-SK-002 Brand Guidelines Engineering; TSST-CREATIVE-SK-003 Design Tokens; TSST-CREATIVE-SK-004 Visual Hierarchy & Layout; TSST-CREATIVE-SK-005 Typography System; TSST-CREATIVE-SK-006 Color System & Accessibility. Later-phase TSST-CREATIVE-SK-008 Creative Art Direction is also installed.
 
+
 ### LENS_AG
+
 
 TSST-LENS-SK-001 Research Planning; TSST-LENS-SK-002 Source Validation & Evidence Grading; TSST-LENS-SK-003 Competitor Intelligence; TSST-LENS-SK-004 Customer / ICP / JTBD; TSST-LENS-SK-005 Positioning & Messaging; TSST-LENS-SK-006 Marketing Planning.
 
+
 ### SPARK_AG
+
 
 TSST-SPARK-SK-001 Paid Media Strategy; TSST-SPARK-SK-002 Measurement Architecture; TSST-SPARK-SK-003 Attribution Fundamentals; TSST-SPARK-SK-004 Meta Campaign & Creative Fundamentals; TSST-SPARK-SK-005 Google Search & Performance Fundamentals; TSST-SPARK-SK-006 TikTok Ads Fundamentals.
 
+
 ## Evaluation queue
+
 
 | Order | Evaluation | Owner | Dependency | Status |
 | ---: | --- | --- | --- | --- |
@@ -85,9 +108,12 @@ TSST-SPARK-SK-001 Paid Media Strategy; TSST-SPARK-SK-002 Measurement Architectur
 | 17 | TSST-SPARK-SK-005 Google Search & Performance Fundamentals | SPARK_AG | TSST-SPARK-SK-001/02 | `QUEUED` |
 | 18 | TSST-SPARK-SK-006 TikTok Ads Fundamentals | SPARK_AG | TSST-SPARK-SK-001/02 plus CREATIVE_AG handoff | `QUEUED` |
 
+
 This order tests shared research and measurement foundations before dependent planning and platform work. It does not start a campaign.
 
+
 ## Responsibility conflicts and resolutions
+
 
 | Overlap | Risk | Resolution |
 | --- | --- | --- |
@@ -97,7 +123,9 @@ This order tests shared research and measurement foundations before dependent pl
 | TSST-LENS-SK-008/TSST-LENS-SK-010 presentation design vs CREATIVE_AG visual system/QA | Narrative and visual authority can conflict. | LENS_AG owns storyline, evidence, chart choice, and decision clarity. CREATIVE_AG owns brand application, typography, layout, and visual compliance. |
 | TSST-LENS-SK-006 KPI planning vs TSST-SPARK-SK-001/TSST-SPARK-SK-002 KPI and measurement architecture | Same KPI name may hide different definitions or sources. | LENS_AG owns objective-to-KPI alignment. SPARK_AG owns formula, conversion source, attribution scope, latency, and measurement feasibility. |
 
+
 ## Source and registry risks
+
 
 1. NASA labels the LENS_AG research/presentation source as no longer actively maintained. Keep it as a structural reference only and add a current research-methods/evidence standard before production validation.
 2. BSD XR and source{d} are useful open examples, not authoritative standards for THE SYSTRONIC or a client brand. They must never supply copied identity choices or assets.
@@ -107,9 +135,12 @@ This order tests shared research and measurement foundations before dependent pl
 6. TikTok Academy is also broad. The TSST-SPARK-SK-006 evaluation must supplement it with current Help Center specifications and advertising-policy pages.
 7. The registry supplies source links but no source snapshots, version pins, or expiry policy. The skill packages therefore require freshness checks before volatile platform guidance is used.
 
+
 ## Recommended missing skills or sources
 
+
 These are recommendations only; they have not been added to the 32-skill registry.
+
 
 - Marketing privacy, consent, data minimization, retention, and jurisdictional escalation.
 - Advertising-policy review across Meta, Google, and TikTok, with a dated change log.
@@ -123,13 +154,18 @@ These are recommendations only; they have not been added to the 32-skill registr
 - First-party analytics governance and metric dictionary ownership.
 - Current research-methods and evidence-synthesis references to replace the archived NASA source as a primary method reference.
 
+
 ## Next authorized readiness action
+
 
 Execute the remaining 16 queued evaluations only when separately instructed, record scores and artifacts, remediate failures, and update statuses. No campaign work has started.
 
+
 ## TSST migration update — 2026-09-20
 
+
 The historical figures above describe the 32 specialist skills. Current team totals: 62 registered skills, 49 installed packages, 13 backlog packages; 1 `VALIDATED`, 2 `LAB_VALIDATED`, 59 `UNVALIDATED`. Specialist validation states and all four historical run scores are preserved.
+
 
 | Agent | Current readiness | Remaining gate |
 | --- | --- | --- |
@@ -138,15 +174,42 @@ The historical figures above describe the 32 specialist skills. Current team tot
 | LENS | `NOT_READY` | Six Phase-1 evaluations unrun and four backlog skills, including advanced presentations. |
 | SPARK | `NOT_READY` | Six Phase-1 evaluations unrun and six backlog skills. |
 
+
 Ready to begin progressive Deep Onboarding when the user requests it: **Yes, as a supervised information-gathering conversation**. Onboarding state: `NOT_STARTED`; profile shell contains no inferred business facts. Onboarding readiness is not pilot/production readiness. No campaign, onboarding or skill evaluation was executed during migration.
+
 
 See [audit](AUDIT_REPORT.md), [preserved evaluation index](EVALUATION_INDEX.md) and [Lead onboarding framework](LEAD/DEEP_ONBOARDING.md).
 
 
+
+
 ## DEV_AG approved registration — 2026-09-28
+
 
 DEV_AG governance status is APPROVED (registration only), readiness NOT_READY; see [TSST-ADR-002](decisions/TSST-ADR-002.md). Its [16 core packages](DEV/SKILL_REGISTRY.md) are all UNVALIDATED. Repository implementation does not constitute durable governance approval or production activation. No DEV_AG practical evaluation, bootstrap rerun or historical evaluation was executed.
 
+
 Current catalog including registered DEV_AG: 87 registered skills, 76 installed packages, 11 backlog; 1 VALIDATED, 2 LAB_VALIDATED and 84 UNVALIDATED. The pre-DEV current catalog is 71 / 60 / 11; earlier dated tables remain historical evidence. No existing skill validation or team readiness is promoted.
 
+
 Governance registration is approved; no readiness promotion follows. Remaining DEV gates: separately authorized scope-specific practical evaluation, fresh technical verification, applicable cross-domain review, operational/security/recovery evidence and TSST Lead acceptance within user authority. Structural package checks establish only repository integrity, not engineering capability. Overall team status remains NOT_READY. Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted.
+
+<!-- TSST-CONTEXT-OS-V0.6-RC1-BEGIN -->
+
+## Context OS controlled-evaluation lane — 2026-10-04
+
+User authorized installation of `TSST Context OS v0.6 RC1` and commencement of C7 controlled pilot evaluation.
+
+Current Context OS state:
+
+- 22 shared Context OS skill packages are installed/registered as a separate operating-infrastructure lane.
+- All 22 remain `UNVALIDATED`; package creation and reference tests are not practical skill validation.
+- C2 retrieval reference benchmark: PASS.
+- C3 model/tool/cost routing reference tests: 12/12 PASS.
+- C4 CRM/VOC/product-strength reference tests: 10/10 PASS.
+- C5 recovery/checkpoint reference tests: 10/10 PASS.
+- C6 synthetic/adversarial integrated stress: 12,503 exercised assertions, 0 hard failures in the reference harness.
+- C7: repository installation authorized; controlled live-project pilot and post-install verification required before any readiness conclusion.
+
+This lane does not alter the existing readiness status of TSST Lead, CREATIVE_AG, LENS_AG, SPARK_AG or DEV_AG. It does not authorize campaign launch, publication, spend, production CRM mutation or autonomous external execution.
+<!-- TSST-CONTEXT-OS-V0.6-RC1-END -->

@@ -2,3 +2,9 @@
 desktop.ini
 /TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-remediation-profile/
 /TSST/CREATIVE/evaluations/TSST-CREATIVE-EV-008-output/.edge-social-v2/
+
+# Google-native stubs (Drive for desktop); repo-native exports sit beside them
+*.gdoc
+TSST/bus/.lock
+/.git.pre-externalize/
+__pycache__/

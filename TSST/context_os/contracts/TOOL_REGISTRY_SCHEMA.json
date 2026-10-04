@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TSST Tool Registry Entry v0.3",
+  "type": "object",
+  "required": [
+    "tool_id",
+    "namespace",
+    "name",
+    "mode",
+    "authority",
+    "sensitivity",
+    "defer_by_default"
+  ],
+  "properties": {
+    "tool_id": {
+      "type": "string"
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "READ",
+        "DRAFT",
+        "MUTATE_INTERNAL",
+        "EXTERNAL_ACTION",
+        "SECRET_ACCESS"
+      ]
+    },
+    "authority": {
+      "enum": [
+        "PLAN_SCOPE",
+        "DELEGATED",
+        "EXPLICIT_USER",
+        "SECURE_CHANNEL_ONLY"
+      ]
+    },
+    "sensitivity": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ]
+    },
+    "defer_by_default": {
+      "type": "boolean"
+    },
+    "frequent": {
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_of_truth": {
+      "type": "boolean"
+    },
+    "provider_binding": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

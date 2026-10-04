@@ -83,3 +83,23 @@ The 2026-09-20 migration changes names and identifiers, not the historical speci
 ## DEV_AG governance registration — 2026-09-28
 
 The user approved [DEV_AG](DEV/AGENT.md) as a registered specialist under TSST Lead, with the implemented engineering scope, 16 UNVALIDATED core skills, 9 on-demand Dynamic Packs and NOT_READY readiness. [TSST-ADR-002](decisions/TSST-ADR-002.md) records the exact approval and transition from PROPOSED to APPROVED (registration only). Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted. The existing executive relationship and reserved user decisions remain authoritative. Any authorized DEV_AG work is subordinate to TSST Lead; internal engineering lanes are not top-level agents. Existing practical evaluation and scope-specific acceptance gates apply before any future readiness promotion.
+
+<!-- TSST-CONTEXT-OS-V0.6-RC1-BEGIN -->
+
+## Context and memory operating invariants — Context OS v0.6 RC1 (2026-10-04)
+
+Context OS is a shared operating layer under TSST Lead, not a new top-level agent. It does not transfer specialist domain ownership or change current readiness states.
+
+- Canonical sources remain human-auditable project/repository/CRM sources; vector, lexical, graph, clustering and generated summaries are derived retrieval aids only.
+- Project isolation is a hard boundary. Cross-project durable transfer requires an explicit controlled handoff.
+- State is multi-axis. `project_governance`, `workstream`, `product_milestone`, `agent_readiness`, `release`, `decision`, `runtime` and external-dependency state do not silently supersede one another.
+- Source authority and scope filters run before semantic relevance.
+- Skills and tools are progressively loaded; unrelated context must not be preloaded merely because it exists.
+- Model tier selection is task-based. Large input volume alone is not an executive-reasoning trigger.
+- All durable write candidates are classified and evidence-linked. `HYPOTHESIS` and derived material cannot be silently promoted to canonical fact.
+- Customer PII remains in the appropriate operational/domain system unless an authorized workflow requires otherwise; TSST memory should prefer pseudonymous locators and validated abstractions.
+- Checkpoints preserve verified continuity without storing private chain-of-thought.
+- Creation or successful synthetic/reference tests do not validate a skill or promote team readiness. Controlled pilot evidence remains required.
+
+Implementation path: `context_os/`.
+<!-- TSST-CONTEXT-OS-V0.6-RC1-END -->

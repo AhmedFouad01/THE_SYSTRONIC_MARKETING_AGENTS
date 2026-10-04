@@ -1,0 +1,33 @@
+name: TSST spine
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  spine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TSST_NO_DRIVE: "1"   # .gdoc stubs are Drive-only; exports + hashes are still checked
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Spine validator
+        run: python TSST/context/tests/validate_spine.py
+      - name: Bus regression tests
+        run: python TSST/context/tests/test_bus.py
+      - name: Bus queue check
+        run: python TSST/bus/bus.py check
+      - name: Context OS reference tests
+        run: |
+          for d in TSST/context_os/reference/*/; do
+            echo "== $d"
+            (cd "$d" && python -m unittest discover -s tests -q)
+          done

@@ -1,0 +1,7 @@
+HIGH | TSST/bus/bus.py:441 | Task IDs are not constrained: new ../out/ESCAPE succeeds and writes outside tasks/, bypassing queue tracking; longer traversal can escape the repo | Reject separators, dot segments and non-identifier characters; enforce resolved path containment before all task reads/writes.
+HIGH | TSST/bus/bus.py:416 | verify promotes capabilities with --evidence nonexistent-probe; no closed probe or matching runtime/capability/result hash is checked | Resolve a closed probe, validate claimant, needs and result hash before promotion.
+MEDIUM | TSST/bus/bus.py:356 | A lead runtime can claim, finish and close its own task; reproduced SELF lifecycle contradicts bus.md rule 3 | Require the accepting runtime to differ from claimed_by.
+INFO | TSST/bus/bus.py | Scratch bus.py check passed; all three findings above reproduced through CLI in an independent scratch fixture | Add negative regression tests for these cases.
+INFO | TSST/context/tests/validate_spine.py | Scratch validation passed 28/28 after correcting snapshot omissions; bridge manifests contained 0 rows | Structural success does not validate bridge contents or the missing protocol guards.
+INFO | scratch snapshot | 76 unreadable .gdoc entries represented only by existence placeholders; Google document content was not read or verified | Keep source-access and structural evidence distinct.
+INFO | scope | No implementation fixes; only REVIEW-001 result and normal bus lifecycle updates written in the live repo | Lead review required before acceptance/capability promotion.

@@ -1,0 +1,40 @@
+# Bridge export manifest - see TSST/context/bridge.md
+# Registered by lead (BR-004, 2026-10-05); exported_at uses export filesystem mtime (UTC).
+# Hashes verify registered bytes, not equality to Google Docs.
+exports:
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/00_START_HERE/PROJECT_WORK_INSTRUCTIONS.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/00_START_HERE/PROJECT_WORK_INSTRUCTIONS.md
+    exported_at: 2026-10-04T21:23:51Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 2fc715641c3a49e7e13df37c0a5860f7f0c1998db327ab919a0cd3a165b33d1f
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+    exported_at: 2026-10-04T21:23:54Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: ce25df6e45c221b6207baf1b4a2a8a110b326d1aa8799491f550989ef5e5371e
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_MASTER.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_MASTER.md
+    exported_at: 2026-10-04T21:23:57Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 9d4645f7f4a55cc976a0fb3f50fe4829cb378de922c4eb84ab62fd73b245e9c9
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/04_SOURCE_MAP/SOURCE_MAP.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/04_SOURCE_MAP/SOURCE_MAP.md
+    exported_at: 2026-10-04T21:23:59Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: 7d14c6de35d3018c4eaf27e534449f76b36a96547636ac6b735ad760984c22d8
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/SYNC_INBOX_CONTRACT.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/SYNC_INBOX_CONTRACT.md
+    exported_at: 2026-10-04T21:24:02Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: bbe6d27b520338bc3e57413c04cc844da6d21bec24913eaedbeb5988c61f4b31
+  - source: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/PROJECT_SETUP_MANIFEST.md.gdoc
+    export: REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/PROJECT_SETUP_MANIFEST.md
+    exported_at: 2026-10-04T21:24:05Z
+    bridge_runtime: drive-apps-script
+    method: verbatim-export
+    sha256: be2a637a44063e272aef0dacc2ccc7785d93b33f6ef2ce8fe734e373819dac48

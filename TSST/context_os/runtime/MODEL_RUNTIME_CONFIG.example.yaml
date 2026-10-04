@@ -1,0 +1,52 @@
+version: "0.3"
+status: EXAMPLE_ONLY
+
+# Provider/model IDs and prices are runtime-managed because they change.
+providers:
+  claude:
+    enabled: true
+    tiers:
+      FAST:
+        model_id: "${CLAUDE_FAST_MODEL}"
+      EXECUTION:
+        model_id: "${CLAUDE_EXECUTION_MODEL}"
+      EXECUTIVE:
+        model_id: "${CLAUDE_EXECUTIVE_MODEL}"
+  openai:
+    enabled: true
+    tiers:
+      FAST:
+        model_id: "${OPENAI_FAST_MODEL}"
+      EXECUTION:
+        model_id: "${OPENAI_EXECUTION_MODEL}"
+      CODE:
+        model_id: "${OPENAI_CODE_MODEL}"
+      EXECUTIVE:
+        model_id: "${OPENAI_EXECUTIVE_MODEL}"
+
+routing:
+  default_provider: claude
+  coding_provider: openai
+  allow_cross_provider_escalation: true
+
+cost_guard:
+  LOW:
+    max_model_calls: 4
+    max_executive_calls: 0
+    max_same_failure_retries: 1
+    max_parallel_subagents: 1
+  NORMAL:
+    max_model_calls: 8
+    max_executive_calls: 1
+    max_same_failure_retries: 2
+    max_parallel_subagents: 3
+  HIGH:
+    max_model_calls: 14
+    max_executive_calls: 2
+    max_same_failure_retries: 2
+    max_parallel_subagents: 4
+  CRITICAL:
+    max_model_calls: 20
+    max_executive_calls: 3
+    max_same_failure_retries: 2
+    max_parallel_subagents: 5

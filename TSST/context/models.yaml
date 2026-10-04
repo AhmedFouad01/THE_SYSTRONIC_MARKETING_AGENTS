@@ -1,0 +1,28 @@
+# TSST logical model tiers — provider-neutral.
+# Durable TSST logic routes to a TIER. Runtime adapters (TSST/context/adapters/*.md)
+# map tiers to the models that runtime actually has. Model names never appear here.
+version: 1
+tiers:
+  FAST:
+    use: extraction, classification, normalization, dedup, file discovery, short summaries, low-risk bulk first passes
+    must_not: make architecture or acceptance decisions; edit code
+  WORK:
+    use: normal reasoning, planning, synthesis, bounded analysis, documentation, normal implementation
+  CODE:
+    use: repo-heavy implementation, migrations, tests, technical audits, code review, validation scripts
+  DEEP:
+    use: architecture boundaries, high-impact ambiguity, cross-agent/cross-system conflict, irreversible decisions, final critical acceptance
+    must_not: be selected because the input is large (partition/compress instead)
+  IMAGE:
+    use: image generation and editing (final assets still pass CREATIVE FINAL_ASSET_GATE)
+  VIDEO:
+    use: video generation and editing (final assets still pass CREATIVE FINAL_ASSET_GATE)
+
+selection_rules:
+  - start at the lowest tier that can do the task; escalate only on evidence (ESCALATE_TO_WORK / ESCALATE_TO_DEEP)
+  - workers return compressed evidence packets upward, never the raw corpus
+  - a tier grants no tool or action authority; TSST_DECISION_RIGHTS.md stays controlling
+  - if a runtime cannot verify which model actually ran, do not claim the routing happened
+  - a runtime without a tier falls back to the next tier UP, and says so
+
+escalation_tokens: [ESCALATE_TO_WORK, ESCALATE_TO_CODE, ESCALATE_TO_DEEP]

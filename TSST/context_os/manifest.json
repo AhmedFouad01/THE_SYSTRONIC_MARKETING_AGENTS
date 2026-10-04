@@ -1,0 +1,158 @@
+{
+  "package": "TSST Context OS v0.6 RC1",
+  "status": "INSTALLABLE_EVALUATION_CANDIDATE_NOT_APPLIED",
+  "date": "2026-10-03",
+  "gate_progress": {
+    "C0_architecture_governance": "DRAFT_COMPLETE",
+    "C1_core_context_skills": "22_PACKAGES_CREATED_UNVALIDATED",
+    "C2_retrieval_indexing": "REFERENCE_ARCHITECTURE_PROTOTYPE_AND_REAL_CASE_BENCHMARK_PASS_UNVALIDATED",
+    "C3_model_tool_routing": "REFERENCE_ARCHITECTURE_AND_12_TESTS_PASS_UNVALIDATED",
+    "C4_crm_voc_memory": "REFERENCE_ARCHITECTURE_AND_10_TESTS_PASS_UNVALIDATED",
+    "C5_long_run_recovery": "REFERENCE_ARCHITECTURE_AND_10_TESTS_PASS_UNVALIDATED",
+    "C6_evaluation": "REFERENCE_STRESS_PASS",
+    "C7_pilot": "NOT_STARTED"
+  },
+  "core_docs": [
+    "BENCHMARK_HARNESS.md",
+    "CONFLICT_STALENESS_POLICY.md",
+    "CONTEXT_RECORD_SCHEMA.json",
+    "CONTEXT_ROUTER_POLICY.md",
+    "EVALUATION_PLAN.md",
+    "MEMORY_GOVERNANCE.md",
+    "MODEL_ROUTER_POLICY.md",
+    "RANKING_POLICY.md",
+    "README.md",
+    "RETRIEVAL_ARCHITECTURE.md",
+    "RETRIEVAL_CONTRACT.yaml",
+    "SKILL_REGISTRY_PROPOSED.md",
+    "STATE_SCOPE_MODEL.md",
+    "TSST_CONTEXT_OS_V0_1_ARCHITECTURE.md",
+    "manifest.json"
+  ],
+  "skill_package_count": 22,
+  "reference_implementation": [
+    "reference_implementation/context_os.py",
+    "reference_implementation/tests/test_context_os.py"
+  ],
+  "durable_changes": false,
+  "real_case_benchmark": {
+    "cases": 4,
+    "all_expected_top_sources_passed": true,
+    "wrong_project_selected": false,
+    "naive_full_document_bytes": 35263
+  },
+  "c3": {
+    "tests": {
+      "tests_run": 12,
+      "failures": 0,
+      "errors": 0,
+      "successful": true
+    },
+    "provider_neutral_model_tiers": [
+      "FAST",
+      "EXECUTION",
+      "CODE",
+      "EXECUTIVE"
+    ],
+    "runtime_price_binding": "EXTERNAL_CONFIG",
+    "tool_authority_modes": [
+      "READ",
+      "DRAFT",
+      "MUTATE_INTERNAL",
+      "EXTERNAL_ACTION",
+      "SECRET_ACCESS"
+    ],
+    "durable_model_ids": false
+  },
+  "c4": {
+    "tests": {
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "successful": true
+    },
+    "synthetic_only": true,
+    "pii_policy": "LOCATORS_AND_ABSTRACTIONS_ONLY"
+  },
+  "c5": {
+    "tests": {
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "successful": true
+    },
+    "provider_neutral_resume_pack": true,
+    "chain_of_thought_required": false
+  },
+  "c6": {
+    "retrieval": {
+      "cases": 500,
+      "wrong_project_selected": 0,
+      "secret_selected": 0,
+      "wrong_scope_selected": 0,
+      "superseded_selected": 0,
+      "avg_selected_records": 8,
+      "median_context_reduction": 0.996859,
+      "min_context_reduction": 0.995877
+    },
+    "routing": {
+      "cases": 3000,
+      "tier_counts": {
+        "EXECUTION": 1257,
+        "EXECUTIVE": 1386,
+        "CODE": 333,
+        "FAST": 24
+      },
+      "executive_due_volume_only": 0,
+      "low_budget_executive": 0,
+      "unauthorized_external_allowed": 0,
+      "unauthorized_internal_allowed": 0
+    },
+    "voc": {
+      "cases": 1000,
+      "single_account_false_verified": 0,
+      "pii_safe_failures": 0,
+      "duplicate_inflation_failures": 0,
+      "contradiction_claim_ready_failures": 0
+    },
+    "recovery": {
+      "cases": 1000,
+      "same_scope_stale_fail": 0,
+      "cross_scope_false_stale": 0,
+      "cross_project_false_stale": 0,
+      "missing_evidence_not_invalid": 0,
+      "do_not_repeat_fail": 0
+    },
+    "integration": [
+      {
+        "scenario": "fresh_session_resume_crm",
+        "checkpoint_status": "CURRENT",
+        "next_action": "Run independent M2 audit",
+        "tier": "CODE",
+        "do_not_repeat": [
+          "M0",
+          "M1"
+        ],
+        "pass": true
+      },
+      {
+        "scenario": "bulk_voc_first_pass",
+        "tier": "FAST",
+        "context_budget": "L",
+        "pass": true
+      },
+      {
+        "scenario": "architecture_change",
+        "tier": "EXECUTIVE",
+        "pass": true
+      }
+    ],
+    "overall": {
+      "synthetic_stress_assertions": 12503,
+      "hard_failures": 0,
+      "status": "PASS",
+      "note": "Synthetic/reference stress validation; not production certification."
+    }
+  },
+  "installable_candidate": true
+}
