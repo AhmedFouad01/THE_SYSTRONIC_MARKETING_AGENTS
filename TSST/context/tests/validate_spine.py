@@ -17,6 +17,13 @@ import unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 TSST = os.path.join(REPO, "TSST")
+# CI / git clone: Drive-native `.gdoc` stubs are not in git (.gitignore), and Drive folders
+# holding only stubs do not exist. Their existence is checked only where Drive is mounted.
+NO_DRIVE = bool(os.environ.get("TSST_NO_DRIVE") or os.environ.get("CI"))
+
+
+def drive_only(tok):
+    return NO_DRIVE and (tok.endswith(".gdoc") or (tok.startswith("REAL_MEMORY/") and tok.endswith("/")))
 
 
 def P(rel):
@@ -198,7 +205,7 @@ def structural(portfolio):
                         parent_dir = os.path.dirname(tok.rstrip("/"))
                         n_checked += 1
                         # Drive-native stubs: `X.md` may exist only as `X.md.gdoc` (documented)
-                        if not (os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc"))):
+                        if not (os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)):
                             broken.append(f"{rel(f)} -> {tok}")
                     elif parent_dir and re.fullmatch(r"[A-Za-z0-9_.\-]+", tok) and "/" not in tok \
                             and "." not in tok and tok.startswith(("tsst-",)):
@@ -499,7 +506,8 @@ def source_semantics():
 
 MANIFESTS = ["CRM_UI_HANDOFF/EXPORTS.yaml", "CRM_APP/EXPORTS.yaml",
              "REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/EXPORTS.yaml",
-             "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/EXPORTS.yaml"]
+             "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/EXPORTS.yaml", "TSST/CREATIVE/EXPORTS.yaml",
+             "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/EXPORTS.yaml"]
 
 
 def _rows(text):
@@ -516,7 +524,7 @@ def _rows(text):
 def bridge_manifests():
     import hashlib
     missing = [m for m in MANIFESTS if not os.path.exists(P(m))]
-    check("bridge", "export manifests prepared (4)", not missing, ", ".join(missing))
+    check("bridge", f"export manifests prepared ({len(MANIFESTS)})", not missing, ", ".join(missing))
     errs, n = [], 0
     for m in MANIFESTS:
         if not os.path.exists(P(m)):
@@ -524,7 +532,7 @@ def bridge_manifests():
         for r in _rows(read(m)):
             n += 1
             src, exp = r.get("source", ""), r.get("export", "")
-            if not os.path.exists(P(src)):
+            if not os.path.exists(P(src)) and not drive_only(src):
                 errs.append(f"{m}: source missing {src}")
             if not exp or not os.path.exists(P(exp)):
                 errs.append(f"{m}: export missing {exp}"); continue

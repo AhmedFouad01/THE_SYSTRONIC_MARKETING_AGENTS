@@ -66,7 +66,27 @@ const FILES = [
   ["REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/rules.md.gdoc", "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/rules.md"],
   ["REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/scope.md.gdoc", "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/scope.md"],
   ["REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md.gdoc", "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md"],
-  ["REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md.gdoc", "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md"]
+  ["REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md.gdoc", "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md"],
+  // BR-004 (2026-10-04): CREATIVE skills 020-030, CREATIVE CRM docs, legacy Real Memory
+  ["TSST/CREATIVE/skills/tsst-creative-sk-020-product-ux-architecture-information-architecture/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-020-product-ux-architecture-information-architecture/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-021-enterprise-workspace-navigation-context/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-021-enterprise-workspace-navigation-context/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-022-crm-data-grids-tables-views-bulk-actions/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-022-crm-data-grids-tables-views-bulk-actions/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-023-master-detail-records-drawers-contextual-actions/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-023-master-detail-records-drawers-contextual-actions/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-024-command-palette-keyboard-first-productivity/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-024-command-palette-keyboard-first-productivity/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-025-forms-validation-error-recovery/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-025-forms-validation-error-recovery/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-026-arabic-first-rtl-bidi-product-ux/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-026-arabic-first-rtl-bidi-product-ux/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-027-accessible-interaction-wcag22/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-027-accessible-interaction-wcag22/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-028-responsive-adaptive-saas-layouts/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-028-responsive-adaptive-saas-layouts/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-029-dashboard-data-visualization-ux/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-029-dashboard-data-visualization-ux/SKILL.md"],
+  ["TSST/CREATIVE/skills/tsst-creative-sk-030-usability-testing-heuristic-evaluation-ux-qa/SKILL.md.gdoc", "TSST/CREATIVE/skills/tsst-creative-sk-030-usability-testing-heuristic-evaluation-ux-qa/SKILL.md"],
+  ["TSST/CREATIVE/CRM_MVP_UIUX_EXECUTION_PLAN_v0.1.md.gdoc", "TSST/CREATIVE/CRM_MVP_UIUX_EXECUTION_PLAN_v0.1.md"],
+  ["TSST/CREATIVE/CRM_MVP_COMPONENT_SYSTEM_BRIEF_v0.1.md.gdoc", "TSST/CREATIVE/CRM_MVP_COMPONENT_SYSTEM_BRIEF_v0.1.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/00_START_HERE/PROJECT_WORK_INSTRUCTIONS.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/00_START_HERE/PROJECT_WORK_INSTRUCTIONS.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_MASTER.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_MASTER.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/04_SOURCE_MAP/SOURCE_MAP.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/04_SOURCE_MAP/SOURCE_MAP.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/SYNC_INBOX_CONTRACT.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/SYNC_INBOX_CONTRACT.md"],
+  ["REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/PROJECT_SETUP_MANIFEST.md.gdoc", "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/PROJECT_SETUP_MANIFEST.md"]
 ];
 
 // Repo folder (owned by another account, shared with edit rights). Pinned by id, not by name.

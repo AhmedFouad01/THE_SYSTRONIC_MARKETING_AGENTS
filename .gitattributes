@@ -18,3 +18,8 @@ CRM_APP/MVP_UX_AUDIT.md -text
 CRM_APP/MVP_VISUAL_FOUNDATIONS_LOCK_v0.1.md -text
 CRM_APP/EXPORTS.yaml -text
 TSST/brands/** -text
+TSST/CREATIVE/skills/tsst-creative-sk-02*/SKILL.md -text
+TSST/CREATIVE/skills/tsst-creative-sk-030*/SKILL.md -text
+TSST/CREATIVE/CRM_MVP_*.md -text
+TSST/CREATIVE/EXPORTS.yaml -text
+REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/** -text

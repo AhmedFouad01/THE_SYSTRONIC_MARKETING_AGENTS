@@ -194,6 +194,12 @@ def load(tid):
         return parse(f.read())
 
 
+def ensure_dirs():
+    # git keeps no empty folders: recreate the queue dirs in a fresh clone
+    for d in (TASKS, CLOSED, os.path.join(BUS, "out")):
+        os.makedirs(d, exist_ok=True)
+
+
 def all_tasks(include_closed=False):
     dirs = [TASKS] + ([CLOSED] if include_closed else [])
     out = []
@@ -489,6 +495,7 @@ def task_errors(t):
 
 
 def check_all():
+    ensure_dirs()
     errs, warns = [], []
     rts = runtimes()
     for name, r in rts.items():
@@ -538,6 +545,7 @@ def cmd_check(a):
 
 
 def main():
+    ensure_dirs()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     p = argparse.ArgumentParser(prog="bus.py", description="TSST task bus (TSST/context/bus.md)")
