@@ -177,23 +177,33 @@ function seen(folders, name) {
 // Brand canonical memory roots (outside the repo). Exports are written IN PLACE, beside each
 // Doc in its own Drive folder — never copied into the repo (pointer-only rule). Run
 // `exportBrandRoots` from the account whose My Drive holds these paths (Drive for desktop).
-// depth: 0 = only that folder, -1 = whole subtree. Re-run after the Docs change (stale rule).
+// Each root: [folder id OR My-Drive path, depth (0 = that folder only, -1 = subtree), expected folder name].
+// Prefer ids (Share → Copy link → the part after /folders/): they work from any account with edit access.
+// Re-run after the Docs change (stale rule).
 const BRAND_ROOTS = [
-  ['Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO', -1],
-  ['Real Memory/real-memory-os/01_PROJECTS/AKYRO_STUDIO', -1],
-  ['Yakebda_MS_Newmap', 0],
+  ['Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO', -1, 'VILL_STUDIO'],
+  ['Real Memory/real-memory-os/01_PROJECTS/AKYRO_STUDIO', -1, 'AKYRO_STUDIO'],
+  ['Yakebda_MS_Newmap', 0, 'Yakebda_MS_Newmap'],
 ];
 const KNOWN_EXT = /\.(md|txt|tsx|ts|jsx|js|css|json|ya?ml|html)$/i;
 
+function resolveRoot(ref) {
+  if (!ref.includes('/') && /^[A-Za-z0-9_-]{20,}$/.test(ref)) return DriveApp.getFolderById(ref);
+  let folders = [DriveApp.getRootFolder()];
+  for (const p of ref.split('/')) {
+    folders = [].concat(...folders.map(f => subfolders(f, p)));
+    if (!folders.length) throw new Error('folder "' + p + '" not found in this account My Drive');
+  }
+  return folders[0];
+}
+
 function exportBrandRoots() {
   const report = {created: 0, updated: 0, missing: []};
-  BRAND_ROOTS.forEach(([path, depth]) => {
-    let folders = [DriveApp.getRootFolder()];
-    for (const p of path.split('/')) {
-      folders = [].concat(...folders.map(f => subfolders(f, p)));
-      if (!folders.length) { report.missing.push(path + ' (folder "' + p + '" not found)'); return; }
-    }
-    walk(folders[0], depth, report);
+  BRAND_ROOTS.forEach(([ref, depth, expected]) => {
+    let root;
+    try { root = resolveRoot(ref); } catch (e) { report.missing.push(expected + ': ' + e.message); return; }
+    if (root.getName() !== expected) { report.missing.push(expected + ': id points to "' + root.getName() + '"'); return; }
+    walk(root, depth, report);
   });
   Logger.log(JSON.stringify(report, null, 1));
 }
