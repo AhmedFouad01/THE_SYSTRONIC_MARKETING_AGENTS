@@ -48,3 +48,7 @@
 2026-10-04T23:12Z	C7-VILL-03	claude	new	
 2026-10-04T23:12Z	C7-VILL-04	claude	new	
 2026-10-04T23:12Z	C7-VILL-05	claude	new	
+2026-10-04T23:15Z	C7-VILL-01	codex	claim	
+2026-10-04T23:16Z	C7-VILL-01	codex	progress	Six canonical exports fresh by pointer rule; brief refines kitchen to paid only. Draft economics will separate paid CAC from all-in CAC and retain VILL-001 data gate.
+2026-10-04T23:20Z	C7-VILL-01	codex	done	Draft + data requests delivered; scope/CAC caveats recorded; self-check passed. Actual model identity unavailable; routing unverified. Pending Lead close and independent review.
+2026-10-04T23:43Z	C7-VILL-01	claude	close	structural gate OK: 8 required sections, labels, kitchen=paid only, no other brand, LF; content QA = C7-VILL-02

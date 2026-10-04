@@ -1,7 +1,7 @@
 id: C7-VILL-01
 title: VILL Strategy Baseline draft (LENS)
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_read, fs_write]
 tier: WORK
@@ -15,9 +15,9 @@ issued_by: claude
 created: "2026-10-04T23:12Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-result:
-sha256:
-note:
+progress: Six canonical exports fresh by pointer rule; brief refines kitchen to paid only. Draft economics will separate paid CAC from all-in CAC and retain VILL-001 data gate.
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/STRATEGY_BASELINE_v0.1.md
+sha256: d5bf7f5331d02576c3dc7271dec9af905a9e56c3da338ffb21cece97ec18ffeb
+note: "structural gate OK: 8 required sections, labels, kitchen=paid only, no other brand, LF; content QA = C7-VILL-02"
