@@ -1,0 +1,32 @@
+version: "0.5"
+
+resume_pack:
+  required:
+    - project_key
+    - checkpoint_id
+    - current_case
+    - objective
+    - next_action
+    - acceptance_criteria
+    - evidence_locators
+    - do_not_repeat
+  fields:
+    project_key: string
+    workstream: string|null
+    checkpoint_id: string
+    checkpoint_status: CURRENT|STALE|SUPERSEDED|INVALID
+    current_case:
+      state_scopes: object
+      blockers: [string]
+      pending_decisions: [string]
+    objective: string
+    next_action: string
+    acceptance_criteria: [string]
+    evidence_locators: [string]
+    changed_artifacts: [object]
+    do_not_repeat: [string]
+    tool_authority: object
+    routing_state:
+      budget_class: LOW|NORMAL|HIGH|CRITICAL
+      last_tier: FAST|EXECUTION|CODE|EXECUTIVE|null
+      failure_fingerprints: [string]

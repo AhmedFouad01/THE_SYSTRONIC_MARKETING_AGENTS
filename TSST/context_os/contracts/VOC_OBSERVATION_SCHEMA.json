@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TSST VOC Observation v0.4",
+  "type": "object",
+  "required": [
+    "observation_id",
+    "tenant_id",
+    "customer_locator",
+    "source_locator",
+    "source_channel",
+    "observed_at",
+    "product_area",
+    "observation_type",
+    "normalized_theme",
+    "statement_summary",
+    "evidence_quality",
+    "privacy"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "customer_locator": {
+      "type": "string"
+    },
+    "source_locator": {
+      "type": "string"
+    },
+    "source_channel": {
+      "enum": [
+        "sales_call",
+        "support",
+        "feedback",
+        "deal_note",
+        "survey",
+        "usage",
+        "other"
+      ]
+    },
+    "observed_at": {
+      "type": "string"
+    },
+    "segment": {
+      "type": "object"
+    },
+    "jtbd": {
+      "type": "object"
+    },
+    "product_area": {
+      "type": "string"
+    },
+    "observation_type": {
+      "enum": [
+        "praise",
+        "pain",
+        "objection",
+        "request",
+        "outcome",
+        "churn_reason",
+        "win_reason"
+      ]
+    },
+    "normalized_theme": {
+      "type": "string"
+    },
+    "statement_summary": {
+      "type": "string"
+    },
+    "severity": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 5
+    },
+    "outcome_strength": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 5
+    },
+    "evidence_quality": {
+      "enum": [
+        "DIRECT",
+        "SECONDARY",
+        "INFERRED"
+      ]
+    },
+    "sentiment": {
+      "enum": [
+        "positive",
+        "negative",
+        "mixed",
+        "neutral"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "contains_pii",
+        "durable_copy_allowed"
+      ],
+      "properties": {
+        "contains_pii": {
+          "type": "boolean"
+        },
+        "durable_copy_allowed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

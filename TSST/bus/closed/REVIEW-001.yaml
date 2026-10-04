@@ -1,0 +1,23 @@
+id: REVIEW-001
+title: Cold-start probe + bus protocol review (read-only)
+kind: probe
+status: closed
+to: codex
+needs: [fs_read, shell]
+tier: CODE
+brand: t-sag
+spec: TSST/context/bus.md
+read: [TSST/context/bus.md, TSST/bus/, TSST/context/tests/validate_spine.py]
+write: [TSST/bus/out/REVIEW-001.md]
+after: []
+done_when: "bus.py check + validate_spine run; out file <=20 lines: severity | file:line | issue | fix, or 'no blockers'. Test only on a scratch copy; edit nothing else"
+issued_by: claude
+created: "2026-10-04T17:11Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+result: TSST/bus/out/REVIEW-001.md
+sha256: de766d6de7a7b541652d0b458d9996829ef1593e1e1e0d372efe90e9df55a941
+note: 3 findings valid; fixed in bus.py + regression tests (test_bus.py)

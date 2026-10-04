@@ -1,0 +1,27 @@
+# TSST global lessons
+
+Reusable lessons learned across brands. Generalised wording only — no client names,
+private facts, prices, or customer data.
+
+## promotion_gate
+
+A mistake is recorded first where it happened:
+- brand-specific → `TSST/brands/<brand>/rules.md` (`## Lessons`)
+
+It becomes a **global lesson candidate** only if all hold:
+1. wording is generalised and contains no confidential brand/customer information
+2. it applies beyond one brand
+3. there is evidence or repeated confirmation
+4. it does not conflict with `TSST/core/rules.md`
+
+Candidates are listed below with status `CANDIDATE`; the TSST Lead (DEEP tier) or the
+user promotes them to `ACCEPTED`. A stable, procedural lesson is then folded into the
+relevant reusable skill and the entry here keeps only a pointer.
+
+## Lessons
+
+| id | status | lesson | evidence | folded into |
+|----|--------|--------|----------|-------------|
+| L-001 | ACCEPTED | Preserve/composite exact approved logos instead of regenerating them when identity fidelity is required. | CREATIVE production standard (2026-09-24) | `TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md` |
+| L-002 | ACCEPTED | Different runtimes loading different entry files causes drift; all runtimes must boot from one portable core with thin adapters. | TSST core consolidation 2026-10-04 | `TSST/context/boot.md` |
+| L-003 | ACCEPTED | Google-native Docs (`.gdoc`) are unreadable in filesystem runtimes but readable via Drive-connected runtimes; treat as a runtime capability gap (bridge/export), not as missing state. | consolidation 2026-10-04 (Claude runtime read failure) | `TSST/context/bridge.md` |

@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TSST Context Record v0.2",
+  "type": "object",
+  "required": [
+    "record_id",
+    "project_key",
+    "memory_class",
+    "authority_class",
+    "source_locator",
+    "source_date",
+    "state_scope",
+    "status",
+    "sensitivity",
+    "content"
+  ],
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workstream": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "entity_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "entity_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "memory_class": {
+      "enum": [
+        "CANONICAL",
+        "OPERATIONAL",
+        "EVIDENCE",
+        "DERIVED",
+        "EPHEMERAL"
+      ]
+    },
+    "authority_class": {
+      "enum": [
+        "LIVE_STATUS",
+        "ACCEPTED_DECISION",
+        "VERIFIED_IMPLEMENTATION",
+        "APPROVED_SPEC",
+        "OPERATING_GOVERNANCE",
+        "REVIEWED_HANDOFF",
+        "HISTORICAL_EVIDENCE",
+        "CHAT_MEMORY",
+        "MODEL_INFERENCE"
+      ]
+    },
+    "state_scope": {
+      "enum": [
+        "project_governance",
+        "workstream",
+        "product_milestone",
+        "agent_readiness",
+        "release",
+        "decision",
+        "runtime",
+        "external_dependency",
+        null
+      ]
+    },
+    "state_key": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_date": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "valid_from": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "valid_to": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "SUPERSEDED",
+        "HISTORICAL",
+        "PROPOSED",
+        "REVOKED"
+      ]
+    },
+    "superseded_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "verification_state": {
+      "enum": [
+        "VERIFIED",
+        "REVIEWED",
+        "UNVERIFIED",
+        "HYPOTHESIS"
+      ]
+    },
+    "sensitivity": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED",
+        "SECRET_PROHIBITED"
+      ]
+    },
+    "retention_class": {
+      "enum": [
+        "SESSION",
+        "PROJECT",
+        "AUDIT",
+        "DOMAIN_SYSTEM",
+        "DO_NOT_PERSIST"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "content": {
+      "type": "string"
+    },
+    "content_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "time_sensitive": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "memory_class": {
+            "const": "DERIVED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source_refs": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "sensitivity": {
+            "const": "SECRET_PROHIBITED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "retention_class": {
+            "const": "DO_NOT_PERSIST"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

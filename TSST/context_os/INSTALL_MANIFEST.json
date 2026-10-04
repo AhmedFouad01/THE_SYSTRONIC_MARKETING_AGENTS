@@ -1,0 +1,28 @@
+{
+  "release": "TSST Context OS v0.6 RC1",
+  "status": "INSTALLABLE_EVALUATION_CANDIDATE_NOT_APPLIED",
+  "project_key": "TSST",
+  "target_subtree": "TSST/context_os/",
+  "skills": 22,
+  "tests": {
+    "c3_reference": 12,
+    "c4_reference": 10,
+    "c5_reference": 10,
+    "c6_hard_failures": 0
+  },
+  "durable_real_memory_write": false,
+  "existing_files_to_merge_not_overwrite": [
+    "TSST/LEAD/AGENT.md",
+    "TSST/SKILL_REGISTRY.md",
+    "TSST/TEAM_CONSTITUTION.md",
+    "TSST/TSST_DECISION_RIGHTS.md",
+    "TSST/READINESS_REPORT.md",
+    "TSST/handoffs/HANDOFF_TEMPLATE.md"
+  ],
+  "runtime_only": [
+    "provider model IDs",
+    "provider prices",
+    "API credentials/secrets",
+    "cache/provider runtime configuration"
+  ]
+}

@@ -1,0 +1,26 @@
+2026-10-04T17:11Z	PROBE-001	claude	new	
+2026-10-04T17:11Z	REVIEW-001	claude	new	
+2026-10-04T17:11Z	BR-001	claude	new	
+2026-10-04T17:50Z	PROBE-001	gemini	claim	
+2026-10-04T17:51Z	REVIEW-001	codex	claim	
+2026-10-04T17:53Z	REVIEW-001	codex	done	Scratch checks passed; 3 protocol defects reproduced. No fixes. Lead review required.
+2026-10-04T17:54Z	PROBE-001	gemini	block	Cannot read local .gdoc stubs: OS Errno 22 / Incorrect function without Drive API extension.
+2026-10-04T17:55Z	REVIEW-001	claude	close	3 findings valid; fixed in bus.py + regression tests (test_bus.py)
+2026-10-04T17:55Z	-	claude	verify codex.fs_read	REVIEW-001
+2026-10-04T17:55Z	-	claude	verify codex.shell	REVIEW-001
+2026-10-04T17:55Z	-	claude	verify codex.fs_write	REVIEW-001
+2026-10-04T18:00Z	PROBE-001	claude	cancel	gemini has no drive_docs_read without a Drive API extension (evidence: its block). Route: user-run Apps Script
+2026-10-04T18:00Z	BR-001	claude	cancel	replaced by user-run TSST/context/tools_export_gdocs.gs + BR-002 (manifest registration)
+2026-10-04T18:00Z	BR-002	claude	new	
+2026-10-04T18:34Z	BR-002	claude	cancel	superseded by BR-003: first run used text/markdown (escaped); re-export is text/plain
+2026-10-04T18:34Z	BR-003	claude	new	
+2026-10-04T18:41Z	BR-003	codex	claim	
+2026-10-04T18:42Z	BR-003	codex	block	63 rows valid; spine 27/28: basename-only source.md collision. Can lead fix isolation() and reopen? Counts/evidence: TSST/bus/out/BR-003.md
+2026-10-04T18:48Z	BR-003	claude	reopen	isolation() fixed (source.md: hash-only). Re-run validate_spine; if 28/28 mark done with the same report
+2026-10-04T18:50Z	BR-003	codex	claim	
+2026-10-04T18:51Z	BR-003	codex	done	Reopened validation passed 28/28; 63 manifest rows valid; bus OK. Prior isolation blocker resolved by lead.
+2026-10-04T18:54Z	BR-003	claude	close	63/63 manifest rows + sha256; no escapes/BOM/fences; spine 28/28
+2026-10-04T19:04Z	COLD-CODEX	claude	new	
+2026-10-04T19:04Z	COLD-GEMINI	claude	new	
+2026-10-04T19:04Z	RM-CS-002	claude	new	
+2026-10-04T19:04Z	BRANDS-FOLD	claude	new	

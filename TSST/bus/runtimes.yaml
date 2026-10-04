@@ -1,0 +1,45 @@
+# TSST runtime capability registry — evidence, not assumption. Protocol: TSST/context/bus.md
+# caps = verified by a closed probe task; unverified = claimable only by kind: probe.
+# Edited only via bus.py limit/verify (lead) — never by a bus task.
+# tier_*: what to run that tier on in this runtime — cheapest option strong enough for it.
+lead_order: [claude]
+claude:
+  caps: [fs_read, fs_write, shell, git]
+  unverified: []
+  roles: [lead]
+  status: available
+  until:
+  verified: 2026-10-04
+  tier_FAST: "subagent tsst-fast-worker / Explore (haiku)"
+  tier_WORK: "subagent tsst-execution-worker (sonnet)"
+  tier_CODE: "subagent tsst-code-worker (sonnet, high effort)"
+  tier_DEEP: "main conversation (opus) — never queued"
+codex:
+  caps: [fs_read, shell, fs_write]
+  unverified: [git]
+  roles: []
+  status: available
+  until:
+  verified: 2026-10-04
+  tier_FAST: "codex --profile fast (gpt-6-luna, low)"
+  tier_WORK: "codex --profile work (gpt-6.1-sol, medium)"
+  tier_CODE: "codex --profile code (gpt-6.1-sol, high)"
+  tier_DEEP: "codex --profile deep (gpt-6-astra, high)"
+gemini:
+  caps: []
+  unverified: [fs_read, fs_write, shell, drive_docs_read, image, video]
+  roles: []
+  status: available
+  until:
+  verified:
+  tier_FAST: "fastest Flash-class model, low thinking (pick in Antigravity model menu)"
+  tier_WORK: "Flash-class model, default thinking"
+  tier_CODE: "Pro-class model, default thinking"
+  tier_DEEP: "Pro-class model, high thinking"
+chatgpt:
+  caps: []
+  unverified: [drive_docs_read]
+  roles: []
+  status: off
+  until:
+  verified:

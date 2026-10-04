@@ -1,0 +1,34 @@
+version: "0.3"
+
+routing_request:
+  task_id: string
+  project_key: string
+  task_type: string
+  risk:
+    business_impact: "0..4"
+    security_privacy: "0..4"
+    irreversibility: "0..4"
+  complexity:
+    ambiguity: "0..4"
+    cross_domain: "0..4"
+    reasoning_depth: "0..4"
+    codebase_coupling: "0..4"
+  workload:
+    input_volume: "0..4"
+    expected_output: "0..4"
+  same_issue_failures: integer
+  budget_class: LOW|NORMAL|HIGH|CRITICAL
+  needs_code_harness: boolean
+  authority:
+    explicit_external_action: boolean
+    internal_mutation: boolean
+
+routing_decision:
+  model_tier: FAST|EXECUTION|CODE|EXECUTIVE
+  provider: runtime-selected
+  rationale: [string]
+  context_budget: S|M|L|XL
+  tool_namespaces: [string]
+  blocked_actions: [string]
+  escalation_allowed: boolean
+  escalation_trigger: string|null

@@ -1,0 +1,23 @@
+id: COLD-CODEX
+title: Cold-start cases A-D via boot.md
+kind: probe
+status: ready
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: FAST
+brand: t-sag
+spec: TSST/context/tests/cold_start.md
+read: [TSST/, AGENTS.md]
+write: [TSST/bus/out/COLD-CODEX.md]
+after: []
+done_when: out file per cold_start.md (<=12 lines); also run git status once (read-only) and say it worked
+issued_by: claude
+created: "2026-10-04T19:04Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

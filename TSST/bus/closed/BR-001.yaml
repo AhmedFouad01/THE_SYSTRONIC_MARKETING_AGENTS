@@ -1,0 +1,23 @@
+id: BR-001
+title: Export 63 Google Docs verbatim (bridge-request-001)
+kind: source-read
+status: cancelled
+to: any
+needs: [drive_docs_read, fs_write]
+tier: FAST
+brand: t-sag
+spec: TSST/context/bridge-request-001.md
+read: [CRM_APP/, CRM_UI_HANDOFF/, REAL_MEMORY/TSST_REAL_MEMORY/]
+write: [CRM_APP/*.md, CRM_APP/EXPORTS.yaml, CRM_UI_HANDOFF/, REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/, REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/]
+after: [PROBE-001]
+done_when: all rows exported + manifest rows; validate_spine passes; result = TSST/bus/out/BR-001.md (counts + skipped rows only)
+issued_by: claude
+created: "2026-10-04T17:11Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

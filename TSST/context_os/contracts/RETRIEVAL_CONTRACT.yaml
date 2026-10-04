@@ -1,0 +1,67 @@
+version: "0.2"
+status: PROPOSED_UNVALIDATED
+
+retrieval_request:
+  required:
+    - request_id
+    - project_key
+    - intent
+    - decision_needed
+  fields:
+    request_id: string
+    project_key: string
+    workstream: string|null
+    state_scope:
+      enum:
+        - project_governance
+        - workstream
+        - product_milestone
+        - agent_readiness
+        - release
+        - decision
+        - runtime
+        - external_dependency
+        - null
+    intent:
+      enum:
+        - current_state
+        - durable_decision
+        - implementation_truth
+        - approved_spec
+        - historical_evidence
+        - customer_evidence
+        - external_current_fact
+        - procedure
+    decision_needed: string
+    query_terms: [string]
+    entity_filters: [string]
+    exact_source_ids: [string]
+    allow_historical: boolean
+    allow_cross_project: false
+    max_results: integer
+    context_budget_tier:
+      enum: [S, M, L, XL]
+    sensitivity_ceiling:
+      enum: [PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED]
+
+retrieval_result:
+  required:
+    - request_id
+    - status
+    - selected
+    - excluded
+    - conflicts
+  fields:
+    status:
+      enum: [SUFFICIENT, PARTIAL, INSUFFICIENT]
+    selected: [ContextRecord]
+    excluded:
+      - record_id: string
+        reason: string
+    conflicts:
+      - conflict_id: string
+        records: [string]
+        reason: string
+        resolution_state:
+          enum: [RESOLVED, UNRESOLVED]
+    missing: [string]

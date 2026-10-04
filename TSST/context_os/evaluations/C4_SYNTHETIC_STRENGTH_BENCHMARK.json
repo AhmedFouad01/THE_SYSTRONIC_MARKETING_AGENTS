@@ -1,0 +1,27 @@
+{
+  "candidate": "Clear campaign-to-commercial-outcome reporting for agency users",
+  "confidence_internal": "VERIFIED_STRENGTH",
+  "confidence_claim_ready_attempt": "VERIFIED_STRENGTH",
+  "score": {
+    "score": 0.7725,
+    "distinct_accounts": 4,
+    "observations": 4,
+    "contradiction_rate": 0.25,
+    "avg_outcome_strength": 3.75
+  },
+  "routing_examples": {
+    "ux_usability": [
+      "CREATIVE_AG",
+      "DEV_AG"
+    ],
+    "measurement": [
+      "SPARK_AG",
+      "DEV_AG"
+    ],
+    "expectation_positioning": [
+      "LENS_AG",
+      "CREATIVE_AG"
+    ]
+  },
+  "note": "Synthetic evidence only. This does not assert a real Systronic product strength."
+}

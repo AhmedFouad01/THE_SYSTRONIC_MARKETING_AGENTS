@@ -1,0 +1,23 @@
+id: COLD-GEMINI
+title: Cold-start cases A-D via boot.md
+kind: probe
+status: ready
+to: gemini
+needs: [fs_read, fs_write, shell]
+tier: FAST
+brand: t-sag
+spec: TSST/context/tests/cold_start.md
+read: [TSST/, GEMINI.md]
+write: [TSST/bus/out/COLD-GEMINI.md]
+after: []
+done_when: out file per cold_start.md (<=12 lines), written via bus.py done
+issued_by: claude
+created: "2026-10-04T19:04Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

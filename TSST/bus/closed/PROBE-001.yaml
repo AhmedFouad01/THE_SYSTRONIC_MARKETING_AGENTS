@@ -1,0 +1,23 @@
+id: PROBE-001
+title: "Cold-start probe: read 1 Google Doc, export it verbatim"
+kind: probe
+status: cancelled
+to: gemini
+needs: [fs_read, fs_write, shell, drive_docs_read]
+tier: FAST
+brand: t-sag
+spec: TSST/context/bridge.md
+read: [CRM_APP/MVP_COMMAND_MAP.md.gdoc]
+write: [CRM_APP/MVP_COMMAND_MAP.md, CRM_APP/EXPORTS.yaml]
+after: []
+done_when: export beside original per bridge.md + 1 EXPORTS.yaml row; validate_spine passes; done --note says the read method. Cannot read the doc -> block with the reason
+issued_by: claude
+created: "2026-10-04T17:11Z"
+rounds: 0
+max_rounds: 1
+claimed_by: gemini
+lease_until:
+progress:
+result:
+sha256:
+note: "Cannot read local .gdoc stubs: OS Errno 22 / Incorrect function without Drive API extension."

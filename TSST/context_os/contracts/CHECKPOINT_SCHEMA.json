@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TSST Checkpoint v0.5",
+  "type": "object",
+  "required": [
+    "checkpoint_id",
+    "project_key",
+    "checkpoint_class",
+    "state_scope",
+    "created_at",
+    "last_verified_state",
+    "completed",
+    "evidence",
+    "open_items",
+    "blockers",
+    "next_action",
+    "do_not_repeat"
+  ],
+  "properties": {
+    "checkpoint_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "project_key": {
+      "type": "string"
+    },
+    "workstream": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "checkpoint_class": {
+      "enum": [
+        "SESSION",
+        "WORKSTREAM",
+        "MILESTONE",
+        "INCIDENT",
+        "RELEASE"
+      ]
+    },
+    "state_scope": {
+      "enum": [
+        "project_governance",
+        "workstream",
+        "product_milestone",
+        "agent_readiness",
+        "release",
+        "runtime"
+      ]
+    },
+    "parent_checkpoint": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "authority": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_verified_state": {
+      "type": "string"
+    },
+    "completed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "changed_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verification": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "open_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next_action": {
+      "type": "string"
+    },
+    "do_not_repeat": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pending_user_decisions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainty": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "CURRENT",
+        "STALE",
+        "SUPERSEDED",
+        "INVALID"
+      ]
+    },
+    "superseded_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
