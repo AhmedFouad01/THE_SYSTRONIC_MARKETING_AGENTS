@@ -53,7 +53,7 @@
 ## TSD-009 — Temporary Codex workers are not TSST agents
 
 - Date: `2026-10-04`
-- Status: `PROPOSED` (not accepted; requires explicit user approval)
+- Status: `ACCEPTED` (user approval in chat 2026-10-04, final Session 2 review)
 - Decision: Temporary Codex workers are execution tools and are not TSST agents.
 - Source: packet `TSST-SYNC-20261002-0129-CODEX-WORKER-GOVERNANCE` (self-labelled proposed); RM-CS-001 CS-02 / C3.
 

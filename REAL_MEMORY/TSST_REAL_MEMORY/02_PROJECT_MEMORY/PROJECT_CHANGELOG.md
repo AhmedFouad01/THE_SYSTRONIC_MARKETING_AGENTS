@@ -31,3 +31,10 @@
 - Source packets (reviewed, all remain in `incoming/`; deferred claims outstanding): `TSST-RM-20260927-0521-001`, `TSST-RM-20261004-0456-001`, `TSST-SYNC-20260928-1220-DEV_AG-IMPLEMENTATION`, `TSST-SYNC-20261002-1644-CRM-M1-CLOSURE`, `TSST-SYNC-20261003-0102-CRM-M2-MVP-DIRECTION`, `TSST-SYNC-20261003-1356-CRM-MVP-UIUX-SPRINT`, `TSST-SYNC-20261003-2342-CRM-UI-SYSTEM-BASELINE`, `TSST-SYNC-20261004-0218-SECOND-BRAIN-RUNBOOK`, `TSST-SYNC-20261004-CRM-UI-MVP-FOUNDATION`.
 - Approver: user (chat 2026-10-04). Verification: `TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md`.
 - Gate `TSST-001A` remains OPEN.
+
+## 2026-10-04 — Session 2 final review decisions (user approval in chat 2026-10-04)
+
+- `PROJECT_DECISIONS.md` — TSD-009 PROPOSED → ACCEPTED (temporary Codex workers are execution tools, not TSST agents).
+- CREATIVE_AG product UI/UX ownership for the CRM MVP (`TSST/CREATIVE/AGENT.md`, extension 2026-10-03) re-confirmed by the user; closes the RM-CS-002 deferral on CREATIVE scope acceptance. Skills stay `UNVALIDATED`; no readiness change.
+- `07_SYNC_INBOX/chatgpt-gradual (1)/` (LEGACY_EMPTY_PENDING_FINAL_CLEANUP) deleted to Drive trash: all 5 checkpoint conditions PASS (empty but desktop.ini; 9 incoming + 4 processed/evidence in canonical folder; no functional references; no runtime dependency).
+- Gate `TSST-001A` remains OPEN (needs intake, Operating Baseline v0.1 freeze, contracts, permissions).
