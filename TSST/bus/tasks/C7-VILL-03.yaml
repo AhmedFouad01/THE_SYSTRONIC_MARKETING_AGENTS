@@ -1,0 +1,23 @@
+id: C7-VILL-03
+title: Revise strategy to v0.2 on review
+kind: work
+status: ready
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF.md
+read: [drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/STRATEGY_BASELINE_v0.2.md]
+after: [C7-VILL-02]
+done_when: every review item fixed or answered (short table at end); same rules as v0.1
+issued_by: claude
+created: "2026-10-04T23:12Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

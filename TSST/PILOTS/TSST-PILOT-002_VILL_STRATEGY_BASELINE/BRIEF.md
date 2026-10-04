@@ -1,33 +1,36 @@
-# TSST-PILOT-002 — VILL Studio Strategy Baseline (C7 live-project pilot)
+# TSST-PILOT-002 — VILL Studio Strategy Baseline + Brand Look (C7 live-project pilot)
 
-Status: BRIEF + PLAN — awaiting user approval before any specialist runs · 2026-10-05
-Brand: `vill-studio` (isolated) · Gate: C7 · Baseline: Operating Baseline v0.1 (TSD-013)
+Status: PLAN APPROVED by user 2026-10-05 (with scope change below) · Brand: `vill-studio` (isolated) · Gate: C7 · Baseline v0.1 (TSD-013)
 
 ## Brief
-- **Goal:** close VILL-001 with ONE approved Strategy Baseline that consolidates the existing VILL strategy work.
-- **Sources (canonical, read-only):** `drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/` — read the `.md` export beside each Doc (`PROJECT_MASTER`, `CURRENT_STATUS`, `DECISIONS`, `MILESTONE_LOG`, `CHANGELOG`, `VILL_STUDIO_PROJECT_INSTRUCTIONS`).
+- **Goal:** close VILL-001 with ONE approved Strategy Baseline and a written Brand Look direction, consolidating existing VILL work (no new discovery).
+- **Sources (canonical, read-only):** `drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/` — read the `.md` export beside each Doc (`PROJECT_MASTER`, `CURRENT_STATUS`, `DECISIONS`, `MILESTONE_LOG`, `CHANGELOG`, `VILL_STUDIO_PROJECT_INSTRUCTIONS`). Existing VILL materials are a floor to exceed, not approved finals.
 - **User decisions (chat 2026-10-05):**
-  - VILL-ADR-003: Kitchen-first is the acquisition entry layer; company scope stays full interior design / fit-out. (Was a working interpretation; now user-approved.)
-  - Numbers: use the existing planning figures, each marked `ASSUMPTION`, plus a list of the actual numbers still needed.
+  - VILL-ADR-003 (refined): company scope = full interior design / fit-out. **Content strategy covers the whole scope.** Kitchen-first applies to **paid acquisition**: ads may run kitchen campaigns as the entry offer.
+  - Numbers: existing planning figures, each marked `ASSUMPTION`, plus a list of actual numbers still needed.
   - Language: Arabic + English mix (terms in English).
-- **In scope:** positioning, audience/segments, offer architecture (Kitchen-first → whole home), acquisition + conversion journey, content and paid-media structure, measurement plan, 8-week roadmap, unit-economics model as assumptions, open decisions.
-- **Out of scope:** new brand facts, Brand Look/visual identity, image/video generation, publishing, spend, client contact.
-- **Rules:** FACT / ASSUMPTION / HYPOTHESIS / RECOMMENDATION labelled; every FACT cites its source file; no generic copy; no other brand.
-- **Acceptance:** one document `STRATEGY_BASELINE_v0.1.md` (≤ ~6 pages) + `OPEN_DATA_REQUESTS.md`; independent review passed; Lead acceptance; user approval.
+  - Brand Look is in scope as a written visual direction; image/video generation is a separate step needing user approval.
+- **Out of scope:** new brand facts, image/video generation (until approved), publishing, spend, client contact.
+- **Rules:** FACT / ASSUMPTION / HYPOTHESIS / RECOMMENDATION labelled; every FACT cites its source file; no generic copy; no other brand; LF line endings.
 
-## Plan
-| # | step | owner (team) | runtime · model | output |
+## Steps (bus tasks)
+| task | step | team | runtime · model | output (this folder) |
 |---|---|---|---|---|
-| 1 | Draft the baseline from the sources | LENS (marketing) | codex · gpt-6.1-sol medium (WORK) | `STRATEGY_BASELINE_v0.1.md`, `OPEN_DATA_REQUESTS.md` |
-| 2 | Independent review: paid media + measurement (SPARK lens), positioning/brand coherence (CREATIVE lens) | SPARK + CREATIVE | gemini · Gemini 3.8 Flash high (WORK) | `REVIEW_v0.1.md` (≤ 40 lines) |
-| 3 | Revise once on the review | LENS | codex · same | v0.2 |
-| 4 | Acceptance (DEEP) | Lead | claude · main | accept / return with criteria |
-| 5 | User approval → VILL change set (ADR-003 accepted, VILL-001 closed) proposed for the canonical Docs | Lead → user | — | change set; user applies in the Docs |
+| C7-VILL-01 | Strategy Baseline draft | LENS (+SPARK capability) | codex · gpt-6.1-sol medium | `STRATEGY_BASELINE_v0.1.md`, `OPEN_DATA_REQUESTS.md` |
+| C7-VILL-02 | Independent review (SPARK: paid/measurement; CREATIVE: positioning coherence) | SPARK + CREATIVE | gemini · Gemini 3.8 Flash high | `REVIEW_STRATEGY_v0.1.md` |
+| C7-VILL-03 | One revision on the review | LENS | codex · gpt-6.1-sol medium | `STRATEGY_BASELINE_v0.2.md` |
+| C7-VILL-04 | Brand Look direction from the baseline | CREATIVE | gemini · Gemini 3.8 Flash high | `BRAND_LOOK_DIRECTION_v0.1.md` |
+| C7-VILL-05 | Independent review of the Brand Look | CREATIVE QA | codex · gpt-6.1-sol medium | `REVIEW_BRAND_LOOK_v0.1.md` |
+| — | Acceptance (DEEP) → user approval → VILL change set for the canonical Docs | Lead → user | claude | change set |
 
-No spend; all tasks FAST/WORK tier. Reviewer runtime ≠ producer runtime.
+Reviewer runtime ≠ producer runtime. No spend; all WORK tier.
+
+### Content requirements
+- **Strategy Baseline (≤ ~6 pages):** positioning; segments + areas; offer architecture (full fit-out, with kitchen as paid entry offer and upgrade path to whole home); content strategy pillars across the whole scope; paid-media structure (kitchen campaigns first); acquisition → conversion journey; measurement plan (events, CRM stages); 8-week roadmap; unit economics as ASSUMPTION; open decisions.
+- **Brand Look direction (≤ ~4 pages):** brand character and design principles; colour palette (hex + usage); typography (Arabic + Latin pairing); photography/render style; layout and grid principles for social and ads; dos/don'ts; a written moodboard (references described, no generated images); how kitchen-campaign visuals stay inside the whole-home brand.
 
 ## C7 measurements (first KPI review)
 - Quality: review findings by severity; rounds to Lead acceptance; user verdict.
-- Cost: models used per step (bus log) and runtime turns.
+- Cost: models per step (bus log).
 - Speed: elapsed time brief → user approval.
-- Commercial: n/a for a baseline document — recorded as not measurable in this pilot.
+- Commercial: n/a for documents — recorded as not measurable in this pilot.

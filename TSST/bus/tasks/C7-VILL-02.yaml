@@ -1,0 +1,23 @@
+id: C7-VILL-02
+title: Independent review of strategy v0.1 (SPARK+CREATIVE)
+kind: review
+status: ready
+to: gemini
+needs: [fs_read, fs_write]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF.md
+read: [drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/REVIEW_STRATEGY_v0.1.md]
+after: [C7-VILL-01]
+done_when: "<=40 lines: severity | section | issue | fix; check FACT citations against sources; no rewrite of the draft"
+issued_by: claude
+created: "2026-10-04T23:12Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

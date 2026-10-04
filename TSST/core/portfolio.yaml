@@ -33,9 +33,9 @@ brands:
     memory: TSST/brands/vill-studio/memory/source.md
     projects:
       strategy-baseline:
-        state: TSST-PILOT-002 (C7) brief + plan written, awaiting user approval
+        state: TSST-PILOT-002 (C7) plan approved; bus tasks C7-VILL-01..05 queued
         checkpoint: TSST/brands/vill-studio/projects/strategy-baseline/project.md
-        next: user approves plan → bus task C7-VILL-01 (LENS draft)
+        next: C7-VILL-01 LENS draft (codex)
     next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:
     name: YAKEBDA_MS

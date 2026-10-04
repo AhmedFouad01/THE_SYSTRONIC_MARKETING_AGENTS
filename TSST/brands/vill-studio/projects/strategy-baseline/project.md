@@ -7,10 +7,10 @@ memory: `TSST/brands/vill-studio/memory/source.md`
 teams: marketing (LENS lead, SPARK capability), studio (CREATIVE review only)
 
 ## State
-Brief + plan written 2026-10-05; awaiting user approval. No specialist run, spend or publication.
+Plan approved 2026-10-05 (scope: strategy baseline + written Brand Look; kitchen = paid entry only). Bus tasks C7-VILL-01..05 queued. No spend or publication.
 
 ## do_not_repeat
 VILL-001 strategy work already in canonical PROJECT_MASTER (consolidate, do not redo discovery).
 
 ## Next
-User approves plan → bus task C7-VILL-01 (LENS draft).
+C7-VILL-01 (LENS draft) → review → revise → Brand Look → review → Lead acceptance → user.
