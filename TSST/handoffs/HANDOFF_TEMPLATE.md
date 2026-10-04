@@ -77,3 +77,41 @@ Connect each recommendation to the facts, assumptions, constraints, and tradeoff
 - Applicable CREATIVE / LENS / SPARK review and Lead integration decision:
 
 Use proportionately. A technical handoff does not grant durable governance approval, skill validation or production activation.
+
+<!-- TSST-CONTEXT-OS-V0.6-RC1-BEGIN -->
+
+## Context OS fields — required for non-trivial Context OS routed handoffs
+
+Use proportionately; omit only fields that genuinely do not apply.
+
+### Context Pack
+- Project key / workstream:
+- State scope(s):
+- Decision / task:
+- Current checkpoint:
+- Selected authoritative sources and locators:
+- Relevant facts:
+- Assumptions / hypotheses:
+- Constraints:
+- Acceptance criteria:
+- Context budget tier:
+- Loaded skills:
+- Loaded/deferred tool namespaces:
+- Model tier and escalation reason, if any:
+
+### Evidence / conflict
+- Evidence locators:
+- Conflicts or superseded sources:
+- Remaining unknowns:
+- Verification result:
+
+### Continuity
+- Completed:
+- Changed artifacts:
+- Open items / blockers:
+- `do_not_repeat`:
+- Exact next action:
+- Proposed memory write class (if any):
+
+Do not include private chain-of-thought. A handoff summary is not a durable-memory write or a readiness promotion.
+<!-- TSST-CONTEXT-OS-V0.6-RC1-END -->

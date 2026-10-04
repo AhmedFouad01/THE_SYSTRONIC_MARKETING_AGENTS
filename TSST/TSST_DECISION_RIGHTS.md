@@ -21,3 +21,20 @@ Owner / approver: المستخدم. Interface: TSST Lead.
 - لا تفويض ذاتي من agent لآخر خارج صلاحيات المستخدم. الحقوق غير المغطاة OPEN / UNCONFIRMED.
 - حفظ الموافقة: نص/مرجع رسالة المستخدم، التاريخ، النسخة المعتمدة والنطاق في decision log. لا تعتبر الصمت أو تغيير رقم الملف موافقة.
 - تعديل هذه الحقوق يتطلب تعليمات المستخدم، مع تسجيل السابق والجديد والسبب والتاريخ. لا تعِد طلب موافقة منحها المستخدم بالفعل داخل نفس النطاق.
+
+<!-- TSST-CONTEXT-OS-V0.6-RC1-BEGIN -->
+
+## Context OS tool-action mapping — controlled evaluation (2026-10-04)
+
+This mapping applies the existing A/B/C rights to Context OS tool routing; it grants no new authority.
+
+| Context OS action class | Decision-right mapping |
+| --- | --- |
+| `READ` | Category A only within an approved work plan/scope and existing data-access rights. |
+| `DRAFT` | Category A for local/reviewable analysis and artifacts within an approved plan; it does not authorize publication or external communication. |
+| `MUTATE_INTERNAL` | Allowed only when the specific internal change is already inside the approved plan and does not cross an existing reserved boundary. Otherwise follow the existing B/C requirement. Customer/account mutation remains governed by the existing reserved rights. |
+| `EXTERNAL_ACTION` | Category C. Publication, spend, deployment/external account mutation, customer contact or comparable external effect requires explicit applicable user instruction. |
+| `SECRET_ACCESS` | No additional right is created. Use only an approved secure channel/capability and never write secret values to Real Memory, Context OS indexes, handoffs or checkpoints. |
+
+A higher model tier cannot substitute for missing authority, access or evidence.
+<!-- TSST-CONTEXT-OS-V0.6-RC1-END -->
