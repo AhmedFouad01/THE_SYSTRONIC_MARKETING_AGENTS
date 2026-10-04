@@ -256,3 +256,22 @@ function tagFirstRunExports() {
   BRAND_ROOTS.forEach(([ref, depth]) => visit(resolveRoot(ref), depth));
   Logger.log('tagged: ' + tagged);
 }
+
+// One-time (user decision 2026-10-05): AKYRO keeps the Doc-derived .md; tag them as exports
+// so later runs refresh them from the Docs.
+function acceptAkyroExports() {
+  let tagged = 0;
+  const visit = (folder) => {
+    const it = folder.getFiles();
+    while (it.hasNext()) {
+      const f = it.next();
+      if (f.getMimeType() !== MimeType.GOOGLE_DOCS) continue;
+      const out = findPlain(folder, KNOWN_EXT.test(f.getName()) ? f.getName() : f.getName() + '.md');
+      if (out && out.getDescription() !== EXPORT_TAG) { out.setDescription(EXPORT_TAG); tagged++; }
+    }
+    const subs = folder.getFolders();
+    while (subs.hasNext()) visit(subs.next());
+  };
+  visit(resolveRoot(BRAND_ROOTS.find(r => r[2] === 'AKYRO_STUDIO')[0]));
+  Logger.log('akyro tagged: ' + tagged);
+}
