@@ -108,7 +108,7 @@ def main():
         run(R, "new", "M-1", "--me", "claude", *NEW, "--tier", "FAST", "--write", "docs/m.md")
         out = run(R, "claim", "M-1", "--me", "claude", "--model", "opus")
         expect("claim prints tier model + warns on mismatch",
-               "" if "run on: subagent tsst-fast-worker" in out and "WARN running on opus" in out else "REFUSED", True)
+               "" if "run on: Haiku 4.5" in out and "WARN running on opus" in out else "REFUSED", True)
         out = run(R, "check")
         expect("check clean", "REFUSED" if "bus OK" not in out else "", True)
     finally:
