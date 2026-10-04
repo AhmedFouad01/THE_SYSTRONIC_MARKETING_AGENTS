@@ -185,6 +185,7 @@ const BRAND_ROOTS = [
   ['Real Memory/real-memory-os/01_PROJECTS/AKYRO_STUDIO', -1, 'AKYRO_STUDIO'],
   ['Yakebda_MS_Newmap', 0, 'Yakebda_MS_Newmap'],
 ];
+const EXPORT_TAG = 'tsst-export: verbatim text/plain of the Google Doc beside it';
 const KNOWN_EXT = /\.(md|txt|tsx|ts|jsx|js|css|json|ya?ml|html)$/i;
 
 function resolveRoot(ref) {
@@ -223,9 +224,12 @@ function walk(folder, depth, report) {
     const res = UrlFetchApp.fetch(url, {headers: {Authorization: 'Bearer ' + ScriptApp.getOAuthToken()}, muteHttpExceptions: true});
     if (res.getResponseCode() !== 200) { report.missing.push(folder.getName() + '/' + title + ' (HTTP ' + res.getResponseCode() + ')'); continue; }
     const text = res.getContentText('UTF-8').replace(/^﻿/, '').replace(/\r\n/g, '\n');
+    // Brand roots hold authored files: only overwrite exports this script created (tagged).
     const existing = findPlain(folder, outName);
-    if (existing) { existing.setContent(text); report.updated++; }
-    else { folder.createFile(outName, text, MimeType.PLAIN_TEXT); report.created++; }
+    if (existing && existing.getDescription() !== EXPORT_TAG) {
+      report.conflicts = (report.conflicts || []).concat(folder.getName() + '/' + outName + ' (authored file kept; Doc not exported)');
+    } else if (existing) { existing.setContent(text); report.updated++; }
+    else { folder.createFile(outName, text, MimeType.PLAIN_TEXT).setDescription(EXPORT_TAG); report.created++; }
   }
   if (depth === 0) return;
   const subs = folder.getFolders();
