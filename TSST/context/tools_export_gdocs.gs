@@ -235,3 +235,24 @@ function walk(folder, depth, report) {
   const subs = folder.getFolders();
   while (subs.hasNext()) walk(subs.next(), depth - 1, report);
 }
+
+// One-time: tag the exports created by the first exportBrandRoots run (2026-10-05, before
+// tagging existed) so later runs can refresh them. Files created earlier stay "authored".
+function tagFirstRunExports() {
+  const since = new Date('2026-10-04T21:00:00Z');
+  let tagged = 0;
+  const visit = (folder, depth) => {
+    const it = folder.getFiles();
+    while (it.hasNext()) {
+      const f = it.next();
+      if (f.getMimeType() !== MimeType.GOOGLE_DOCS) continue;
+      const out = findPlain(folder, KNOWN_EXT.test(f.getName()) ? f.getName() : f.getName() + '.md');
+      if (out && !out.getDescription() && out.getDateCreated() > since) { out.setDescription(EXPORT_TAG); tagged++; }
+    }
+    if (depth === 0) return;
+    const subs = folder.getFolders();
+    while (subs.hasNext()) visit(subs.next(), depth - 1);
+  };
+  BRAND_ROOTS.forEach(([ref, depth]) => visit(resolveRoot(ref), depth));
+  Logger.log('tagged: ' + tagged);
+}
