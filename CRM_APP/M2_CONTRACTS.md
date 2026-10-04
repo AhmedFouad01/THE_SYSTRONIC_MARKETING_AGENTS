@@ -129,7 +129,7 @@ and desktop, keyboard focus, loading/empty/error/permission states and explicit
 unknown/source/model labels are tested. Credentials stay in the page's memory.
 No production identity, operational capacity, RPO/RTO or Docker claims.
 
-Run migration 006 after 001–005. It adds 17 FORCE-RLS tables and additive event
+Run migrations 006 and 007 after 001–005 (current chain 001–007). Migration 006 adds 17 FORCE-RLS tables and additive event
 columns/indexes/permissions/functions; it does not replace keys or ciphertext.
 Use the existing explicitly provisioned protected keys. The disposable validation
 helpers `scripts/m2-clean-check.ts` and `scripts/m2-upgrade-check.ts` are destructive

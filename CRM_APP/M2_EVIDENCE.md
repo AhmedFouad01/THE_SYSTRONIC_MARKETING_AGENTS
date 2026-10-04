@@ -77,3 +77,32 @@ permissions exited successfully. The final counts above supersede those runs.
 - Native/local-mirror execution is demonstrated. Docker/direct-Drive dependency execution remains unverified, as do production identity/MFA integration and external secret custody/KMS.
 - Git auto-maintenance encountered the pre-existing invalid `refs/codex/desktop.ini` during M1 closure. Commits succeeded; later commits disable automatic maintenance for that invocation. The ref directory was not changed.
 - No Meta/Google/GA4/Shopify connector, OAuth, provider delivery, external spend credentials, audience sync, segments, agency operations, billing, AI/ML scoring, M3+, production infrastructure, production RPO/RTO claim, memory sync, push, merge or sub-agent creation/use.
+
+## Post-close hardening — R-01 / R-02 data-exposure disposition (2026-10-04)
+
+Recorded after M2 closure at `3bd3fcb`, in response to
+`audits/2026-10-04/INDEPENDENT_M2_REAUDIT.md` (R-01, R-02, R-04) and
+`audits/2026-10-04/INDEPENDENT_M2_R03_DELTA_REAUDIT.md` (D-01). Documentation only:
+no backfill, migration or runtime change.
+
+- No persistent or production traffic evidence exists for migration 006.
+- The only persistent cluster (local development, loopback `127.0.0.1:55432`, database
+  `crm_m0`) has migrations 001–004 only; 006 and 007 were never applied there and
+  `crm.source_receipt` does not exist. Its tenant data is synthetic fixtures. Verified
+  2026-10-04 by a direct read-only inspection (`default_transaction_read_only=on`,
+  `BEGIN READ ONLY … ROLLBACK`): `public.crm_migrations` = versions 1–4; no
+  `source_receipt`/`collection_site` relation; tenants named "Tenant A"/"Tenant B";
+  cluster stopped again afterwards. The independent delta re-auditor did not re-query it.
+- Every application of 006/007 was on a disposable scratch validation cluster with
+  synthetic data. No deploy or hosting configuration exists in the repository.
+- Therefore R-01 (legacy case-variant duplicate event pairs written under 006) and R-02
+  (legacy hash-fallback 409 conflicts on replay) have no affected data. Both are accepted
+  as documented limits.
+- Revisit only if a database that ran 006 with real traffic is ever found; at that point
+  inspect it for case-variant duplicate source ids before applying 007.
+
+Hardening test changes (same pass): M2-25 now sends mixed/upper-case `campaign_id` and
+asserts unchanged replay identity and a resolved campaign reference; M2-30 holds the
+canonical tenant advisory lock on a second connection and asserts upper/mixed-case-tenant
+requests block until release (R-04). `scripts/m2-clean-check.ts` and
+`scripts/m2-upgrade-check.ts` now create `../m2-runtime` before writing (D-01).

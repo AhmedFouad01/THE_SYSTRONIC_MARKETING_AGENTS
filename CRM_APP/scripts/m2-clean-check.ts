@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import pg from "pg";
 import { seed } from "./seed.js";
@@ -41,6 +41,7 @@ try {
 				).rows[0].count,
 			);
 			assert.equal(tables, 47);
+			await mkdir("../m2-runtime", { recursive: true });
 			await writeFile(
 				"../m2-runtime/clean-result.json",
 				JSON.stringify(

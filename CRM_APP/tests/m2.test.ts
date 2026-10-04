@@ -926,19 +926,38 @@ test("M2-24 mixed-case concurrent replay of one event_id produces one event", as
 });
 test("M2-25 visitor/session/campaign id case does not change replay identity", async () => {
 	await fresh();
-	const b = telemetry(),
-		a = await send(b),
-		r = await send({
+	const c = (
+			await request("journey/campaigns", "POST", {
+				source: "search",
+				account_id: "synthetic",
+				external_id: "campaign-25",
+				name: "Case replay",
+				currency: "EGP",
+				timezone: "Africa/Cairo",
+			})
+		).data,
+		b = telemetry({ source: "search", campaign_id: c.id }),
+		a = await send(b);
+	for (const form of [upper, mixed]) {
+		const r = await send({
 			...b,
-			event_id: upper(String(b.event_id)),
-			visitor_id: upper(String(b.visitor_id)),
-			session_id: upper(String(b.session_id)),
+			event_id: form(String(b.event_id)),
+			visitor_id: form(String(b.visitor_id)),
+			session_id: form(String(b.session_id)),
+			campaign_id: form(String(c.id)),
 		});
-	assert.equal(r.id, a.id);
+		assert.equal(r.id, a.id);
+	}
 	assert.equal(await count("business_event"), 1);
+	assert.equal(await count("source_receipt"), 1);
 	assert.equal(await count("visitor"), 1);
 	assert.equal(await count("journey_session"), 1);
 	assert.equal(await count("touchpoint"), 1);
+	const t = await admin.query(
+		"SELECT campaign_id FROM crm.touchpoint WHERE tenant_id=$1",
+		[ctx.tenant],
+	);
+	assert.equal(t.rows[0].campaign_id, c.id, "campaign_ref resolves");
 });
 test("M2-26 legacy non-canonical 006 receipt is found by canonical replay without rewriting rows", async () => {
 	await fresh();
@@ -1034,6 +1053,57 @@ test("M2-28 tenant lock key is case independent (M2-F02)", async () => {
 		{},
 		randomUUID(),
 	);
+});
+// M2-30 (R-04a): real lock contention. Session A holds the canonical tenant lock; a request
+// carrying the same tenant in another letter case must queue behind it, not take a different key.
+test("M2-30 upper/mixed-case tenant requests block on the canonical tenant advisory lock (M2-F02)", async () => {
+	await fresh();
+	const holder = new pg.Client({
+		connectionString: process.env.ADMIN_DATABASE_URL,
+	});
+	await holder.connect();
+	const mixedTenant = ctx.tenant
+		.split("")
+		.map((ch, i) => (i % 2 ? ch.toUpperCase() : ch))
+		.join("");
+	try {
+		for (const tenant of [upper(ctx.tenant), mixedTenant]) {
+			assert.notEqual(tenant, ctx.tenant);
+			await holder.query("BEGIN");
+			// Same key journey.ts lock() derives: hashtextextended(<tenant>::uuid::text,2).
+			await holder.query(
+				"SELECT pg_advisory_xact_lock(hashtextextended($1::uuid::text,2))",
+				[ctx.tenant],
+			);
+			let done = false;
+			const pending = journeyRequest(
+				{ ...ctx, tenant },
+				"POST",
+				"/v1/journey/calculate",
+				new URLSearchParams(),
+				{},
+				randomUUID(),
+			).then((x) => {
+				done = true;
+				return x;
+			});
+			pending.catch(() => undefined);
+			await new Promise((resolve) => setTimeout(resolve, 400));
+			assert.equal(done, false, `${tenant} request must block on the held lock`);
+			await holder.query("COMMIT");
+			const result = await Promise.race([
+				pending,
+				new Promise((_, reject) =>
+					setTimeout(() => reject(new Error("request did not resume")), 10000),
+				),
+			]);
+			assert.ok(result);
+			assert.equal(done, true);
+		}
+	} finally {
+		await holder.query("ROLLBACK").catch(() => undefined);
+		await holder.end();
+	}
 });
 // M2-29 (R-03): the canonical-id index/lookup casts source_id to uuid only behind an exact
 // PostgreSQL-uuid-grammar guard, because source_receipt also holds non-UUID ids in other namespaces.

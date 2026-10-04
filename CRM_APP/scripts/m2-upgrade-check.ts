@@ -1,5 +1,5 @@
 // Run ONLY against a disposable empty database; preserves the real M1 cluster.
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import pg from "pg";
 import { seed } from "./seed.js";
@@ -71,6 +71,7 @@ try {
 	}
 	const config = await db.query("SELECT crm.assert_identifier_configuration()");
 	assert.equal(config.rowCount, 1);
+	await mkdir("../m2-runtime", { recursive: true });
 	await writeFile(
 		"../m2-runtime/upgrade-result.json",
 		JSON.stringify(

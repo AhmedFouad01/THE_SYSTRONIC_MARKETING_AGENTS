@@ -20,7 +20,7 @@ npm run worker                 # terminal 2
 
 For the retained M0 demonstration, open `http://127.0.0.1:4317/foundation`. The ignored `local-fixture.json` contains synthetic session tokens and opaque IDs: use `tokens.manager`, `ids.a`, `ids.dealA`, `ids.qualified`, expected version 0. Load the deal, move once to Qualified, then use `ids.won` with the returned version. Language button switches Arabic RTL / English LTR. Tokens expire after 24 hours; `npm run seed` appends a fresh isolated synthetic fixture, never deletes existing data. Do not paste fixture tokens into shared evidence.
 
-`npm run migrate` is transactional, serialized and versioned; rerunning verifies migrations 001–005 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
+`npm run migrate` is transactional, serialized and versioned; rerunning verifies migrations 001–007 and refreshes the runtime password from `.env`. Admin URL is for migrations/seed/recovery/tests only. API/worker use `DATABASE_URL`, whose account must remain non-owner and non-bypass. No real customer data, production authentication, attachment product, or schema down-migration is supplied. Recover through a verified backup/new database; do not revert executable SQL blindly.
 
 ## Protected-key configuration
 
@@ -81,6 +81,6 @@ See ignored `backups/recovery-evidence.json` and committed `M0_EVIDENCE.md`. The
 
 ## M2 Journey & Reporting
 
-Apply migration 006 after the existing 001–005 migrations using npm run migrate. Open /reporting from the CRM workspace for bilingual journey, conversion, commerce and campaign views. Run the existing worker for queued late-event recalculations. All imports are synthetic/internal; no provider connection is required.
+Apply migrations 006 and 007 after the existing 001–005 migrations (the full current chain is 001–007) using npm run migrate. Open /reporting from the CRM workspace for bilingual journey, conversion, commerce and campaign views. Run the existing worker for queued late-event recalculations. All imports are synthetic/internal; no provider connection is required.
 
 See [M2 contracts](M2_CONTRACTS.md) and [M2 validation evidence](M2_EVIDENCE.md) for routes, authority, source identities, attribution defaults and bounded install/upgrade results.
