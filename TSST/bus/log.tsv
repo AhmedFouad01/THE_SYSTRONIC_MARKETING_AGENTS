@@ -70,3 +70,6 @@
 2026-10-05T00:47Z	C7-VILL-05	codex	done	23-line review: 4 MAJOR/6 MINOR; strategy, Arabic/RTL and contrast checked. REVISE before acceptance; render QA unverified. Actual model identity unavailable; exact routing unverified.
 2026-10-05T00:47Z	C7-VILL-05	claude	close	strong review: 4 MAJOR (Arabic tracking, bidi, size mapping, proof claims) + 6 MINOR; verdict REVISE accepted -> C7-VILL-06
 2026-10-05T00:47Z	C7-VILL-06	claude	new	
+2026-10-05T00:51Z	C7-VILL-06	gemini	claim on Claude Opus 5.5 · high	
+2026-10-05T00:59Z	C7-VILL-06	gemini	done	v0.2: R1-R10 dispositioned (table at end); R4 record-required proof rule; R10 Arabic summary; contrast recomputed; no images. Ran on Claude Opus 5.5 high
+2026-10-05T01:01Z	C7-VILL-06	claude	close	10/10 dispositions verified in body; v0.1 proof claims removed/CONCEPT-gated; Arabic summary present
