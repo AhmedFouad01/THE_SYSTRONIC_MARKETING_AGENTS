@@ -14,6 +14,7 @@ export default defineConfig({
 		"mvp-tasks.spec.ts",
 		"mvp-reporting.spec.ts",
 		"mvp-display-guard.spec.ts",
+		"mvp-ui-system.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

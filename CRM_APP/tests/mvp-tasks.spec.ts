@@ -7,6 +7,7 @@ import {
 } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
+import { pickLabel } from "./select-helper.js";
 
 process.loadEnvFile(".env");
 
@@ -324,7 +325,7 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 	await dialog.getByLabel("Due").fill(inputIn(4));
 	await page.getByTestId("new-task-submit").click();
 	await expect(dialog.getByText("This field is required.")).toHaveCount(1);
-	await dialog.getByLabel("Contact").selectOption({ label: "Contact Flow" });
+	await pickLabel(dialog.getByLabel("Contact"), "Contact Flow");
 	await page.getByTestId("new-task-submit").click();
 	await expect(dialog).toHaveCount(0);
 	await expect(rows(page)).toHaveCount(3);

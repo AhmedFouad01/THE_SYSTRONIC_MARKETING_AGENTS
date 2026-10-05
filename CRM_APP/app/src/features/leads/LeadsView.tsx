@@ -11,17 +11,18 @@ import {
 	Button,
 	createSavedViewsStore,
 	DataGrid,
+	DEFAULT_VIEW,
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
+	PageHeader,
 	safeLocalStorage,
+	sourceLabel,
 	Tabs,
-	type ViewState,
-	DEFAULT_VIEW,
 	useCursorList,
 	useI18n,
 	useToast,
-	sourceLabel,
+	type ViewState,
 } from "../../ui/index.ts";
 import {
 	fetchAssignees,
@@ -309,16 +310,9 @@ export function LeadsView() {
 
 	return (
 		<div className="sy-leads" data-testid="leads-view">
-			<header className="sy-leads__top">
-				<h1 className="sy-leads__h1">{t("nav.leads")}</h1>
-				<div className="sy-leads__actions">
-					<Button
-						icon="upload"
-						disabled
-						aria-label={t("leads.notInMvp", { label: t("common.import") })}
-					>
-						{t("common.import")}
-					</Button>
+			<PageHeader
+				title={t("nav.leads")}
+				actions={
 					<Button
 						variant="primary"
 						icon="plus"
@@ -327,8 +321,8 @@ export function LeadsView() {
 					>
 						{t("action.newLead")}
 					</Button>
-				</div>
-			</header>
+				}
+			/>
 			<Tabs
 				label={t("leads.views")}
 				value={view}

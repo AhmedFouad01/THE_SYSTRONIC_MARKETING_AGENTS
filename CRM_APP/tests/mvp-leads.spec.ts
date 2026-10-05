@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { type APIRequestContext, expect, type Page, test } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
+import { pickLabel, pickValue } from "./select-helper.js";
 
 process.loadEnvFile(".env");
 
@@ -185,7 +186,7 @@ test("leads en: grid keyboard (arrows, Enter opens detail, Space selects) and fi
 
 	// owner filter (by owner name), column visibility, density
 	await page.getByTestId("grid-filters").click();
-	await page.getByTestId("data-grid").getByRole("combobox", { name: "Owner" }).selectOption("Synthetic rep");
+	await pickLabel(page.getByTestId("data-grid").getByRole("combobox", { name: "Owner" }), "Synthetic rep");
 	await expect(rows(page)).toHaveCount(1);
 	await expect(rows(page).first()).toContainText("Alpha lead");
 	await page.getByRole("button", { name: "Clear filters" }).first().click();
@@ -233,7 +234,7 @@ test("leads en: new lead dialog - focus trap, validation, server error mapping, 
 	await expect(dialog.getByText("This field is required.")).toHaveCount(3);
 	await dialog.getByLabel("Title").fill("Website enquiry");
 	await dialog.getByLabel("Contact name").fill("Ada Lovelace");
-	await dialog.getByLabel("Source evidence").fill("Called the office");
+	await dialog.getByLabel("Where did this lead come from?").fill("Called the office");
 	await dialog.getByLabel("Phone").fill("0100");
 	await page.getByTestId("new-lead-submit").click();
 	await expect(dialog.getByText(/international format/)).toBeVisible();
@@ -285,7 +286,7 @@ test("leads en: detail edit, simulated version conflict then reload and retry", 
 
 	const form = page.getByTestId("lead-detail");
 	await form.getByLabel("Title").fill("Edited locally");
-	await form.getByLabel("Status").selectOption("qualified");
+	await pickValue(form.getByLabel("Status"), "qualified");
 	await page.getByTestId("lead-save").click();
 	await expect(page.getByTestId("lead-conflict")).toBeVisible();
 	await expect(page.getByTestId("lead-conflict")).toContainText("changed by someone else");

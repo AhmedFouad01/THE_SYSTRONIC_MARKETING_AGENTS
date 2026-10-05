@@ -118,6 +118,7 @@ function NewLeadForm({
 				error={err("contactName")}
 				onChange={(e) => set({ contactName: e.target.value })}
 			/>
+			<div className="sy-form-row">
 			<Input
 				label={t("leads.new.phone")}
 				name="phone"
@@ -136,6 +137,7 @@ function NewLeadForm({
 				error={err("email")}
 				onChange={(e) => set({ email: e.target.value })}
 			/>
+			</div>
 			<Textarea
 				label={t("leads.new.evidence")}
 				name="evidence"

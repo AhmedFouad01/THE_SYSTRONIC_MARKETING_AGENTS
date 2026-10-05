@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isApiError, isForbidden, sessionStore } from "../../api/index.ts";
 import {
+	Bdi,
 	Button,
 	Dialog,
 	ErrorState,
 	ForbiddenState,
-	Bdi,
 	Input,
 	LoadingState,
 	Ltr,
+	PageHeader,
 	Select,
 	Tabs,
 	useI18n,
@@ -167,12 +168,7 @@ export function ReportingView() {
 
 	return (
 		<div className="sy-rep" data-testid="reporting-view">
-			<header className="sy-rep__top">
-				<div>
-					<h1 className="sy-rep__h1">{t("nav.reporting")}</h1>
-					<p className="sy-rep__muted">{t("rep.intro")}</p>
-				</div>
-			</header>
+			<PageHeader title={t("nav.reporting")} subtitle={t("rep.intro")} />
 
 			<div className="sy-rep__controls">
 				<Select

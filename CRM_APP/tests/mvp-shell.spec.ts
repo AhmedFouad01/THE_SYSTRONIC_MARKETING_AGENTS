@@ -7,9 +7,10 @@ async function pick(page: Page, testId: string) {
 	await page.getByTestId(testId).click();
 }
 // Raw request: no client-side URL normalisation, so encoded traversal reaches the server intact.
-function rawStatus(path: string): Promise<number> {
+function rawStatus(path: string, base: string): Promise<number> {
+	const { hostname, port } = new URL(base);
 	return new Promise((ok, fail) => {
-		get({ host: "127.0.0.1", port: 4317, path }, (res) => {
+		get({ host: hostname, port: Number(port), path }, (res) => {
 			res.resume();
 			ok(res.statusCode ?? 0);
 		}).on("error", fail);
@@ -47,7 +48,9 @@ test("client routes fall back to the shell (connect gate when no session)", asyn
 test("asset route serves js and rejects traversal", async ({
 	page,
 	request,
+	baseURL,
 }) => {
+	const base = baseURL ?? "http://127.0.0.1:4317";
 	await page.goto("/app/");
 	const src = await page.locator("script[type=module]").getAttribute("src");
 	expect(src).toMatch(/^\/app\/assets\/.+\.js$/);
@@ -60,9 +63,9 @@ test("asset route serves js and rejects traversal", async ({
 		"/app/assets/a%00.js",
 		"/app/assets/missing.js",
 	])
-		expect(await rawStatus(bad)).toBe(404);
-	expect(await rawStatus("/app/assets/../../package.json")).toBe(404);
-	expect(await rawStatus("/app/assets//etc/passwd")).toBe(404);
+		expect(await rawStatus(bad, base)).toBe(404);
+	expect(await rawStatus("/app/assets/../../package.json", base)).toBe(404);
+	expect(await rawStatus("/app/assets//etc/passwd", base)).toBe(404);
 });
 
 test("legacy pages still load", async ({ page }) => {

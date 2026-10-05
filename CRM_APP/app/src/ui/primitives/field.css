@@ -13,7 +13,7 @@
 .sy-field__control {
 	width: 100%;
 	min-width: 0;
-	height: 38px;
+	height: 36px;
 	padding-inline: var(--sy-space-10);
 	border: 1px solid var(--sy-border-strong);
 	border-radius: var(--sy-radius-8);
@@ -54,4 +54,17 @@
 	font-size: var(--sy-type-data-size);
 	font-weight: 600;
 	color: var(--sy-danger-fg);
+}
+
+/* two fields side by side from 640px, stacked below */
+.sy-form-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--sy-space-10);
+}
+
+@media (min-width: 640px) {
+	.sy-form-row {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }

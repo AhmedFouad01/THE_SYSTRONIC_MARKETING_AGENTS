@@ -8,7 +8,10 @@ export {
 	IconButton,
 	type IconButtonProps,
 } from "./Button.tsx";
-export { Input, type InputProps, Select, type SelectProps, Textarea, type TextareaProps } from "./Field.tsx";
+export { DatePicker, type DatePickerProps } from "./DatePicker.tsx";
+export { Input, type InputProps, Textarea, type TextareaProps } from "./Field.tsx";
+export { Select, type SelectOption, type SelectProps } from "./Select.tsx";
+export { PageHeader, type PageHeaderProps } from "./PageHeader.tsx";
 export { Card, Panel, type PanelProps } from "./Panel.tsx";
 export { Spinner } from "./Spinner.tsx";
 export { EmptyState, ErrorState, ForbiddenState, LoadingState } from "./States.tsx";

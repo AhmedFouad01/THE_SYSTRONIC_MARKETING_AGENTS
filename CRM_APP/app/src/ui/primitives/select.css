@@ -1,0 +1,114 @@
+.sy-select {
+	position: relative;
+	min-width: 0;
+}
+
+.sy-select__trigger {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-8);
+	width: 100%;
+	min-width: 0;
+	height: 36px;
+	padding-inline: var(--sy-space-10);
+	border: 1px solid var(--sy-border-strong);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-surface);
+	color: var(--sy-text);
+	font-family: inherit;
+	font-size: var(--sy-type-data-size);
+	text-align: start;
+	cursor: pointer;
+}
+
+.sy-field--error .sy-select__trigger {
+	border-color: var(--sy-danger-icon);
+	background: var(--sy-danger-field-bg);
+}
+
+.sy-select[data-size="sm"] .sy-select__trigger {
+	height: 32px;
+}
+
+.sy-select__trigger:hover:not(:disabled) {
+	background: var(--sy-hover);
+}
+
+.sy-select__trigger:disabled {
+	background: var(--sy-disabled-bg);
+	color: var(--sy-text-disabled);
+	cursor: not-allowed;
+}
+
+.sy-select__trigger[aria-expanded="true"] {
+	border-color: var(--sy-focus);
+}
+
+.sy-select__value {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sy-select__chevron {
+	flex: none;
+	color: var(--sy-icon-muted);
+}
+
+.sy-select__list {
+	position: fixed;
+	z-index: 1200;
+	margin: 0;
+	padding: var(--sy-space-4);
+	overflow-y: auto;
+	list-style: none;
+	border: 1px solid var(--sy-border);
+	border-radius: var(--sy-radius-10);
+	background: var(--sy-surface);
+	box-shadow: var(--sy-shadow-menu);
+}
+
+.sy-select__option {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-8);
+	min-height: 32px;
+	padding-inline: var(--sy-space-10);
+	border-radius: var(--sy-radius-8);
+	color: var(--sy-text);
+	font-size: var(--sy-type-data-size);
+	cursor: pointer;
+}
+
+.sy-select__option-label {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.sy-select__option[data-active="true"] {
+	background: var(--sy-hover);
+}
+
+.sy-select__option[aria-selected="true"] {
+	background: var(--sy-selected);
+	font-weight: 600;
+}
+
+.sy-select__option[aria-disabled="true"] {
+	color: var(--sy-text-disabled);
+	cursor: not-allowed;
+}
+
+.sy-date {
+	text-align: start;
+	font-family: inherit;
+	font-size: var(--sy-type-data-size);
+}
+
+.sy-date::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	opacity: 0.7;
+}

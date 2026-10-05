@@ -11,6 +11,7 @@ import {
 	Ltr,
 	MenuButton,
 	minorToMajorUnits,
+	PageHeader,
 	Select,
 	useCursorList,
 	useI18n,
@@ -420,9 +421,10 @@ export function PipelineView() {
 
 	return (
 		<div className="sy-deals sy-pipe" data-testid="pipeline-view">
-			<header className="sy-deals__top">
-				<h1 className="sy-deals__h1">{t("nav.pipeline")}</h1>
-				{pipelines.items.length > 0 && pipeline ? (
+			<PageHeader
+				title={t("nav.pipeline")}
+				actions={
+					pipelines.items.length > 0 && pipeline ? (
 					<Select
 						label={t("pipeline.select")}
 						name="pipeline"
@@ -436,8 +438,9 @@ export function PipelineView() {
 							</option>
 						))}
 					</Select>
-				) : null}
-			</header>
+					) : null
+				}
+			/>
 			{notice !== null ? (
 				notice.kind === "conflict" ? (
 					<ConflictBanner

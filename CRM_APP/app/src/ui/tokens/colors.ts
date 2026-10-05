@@ -16,6 +16,7 @@ export const brand = {
 
 export const lightColors = {
 	canvas: "#F3F5F7",
+	overlay: "rgba(24,29,54,.45)",
 	surface: "#FFFFFF",
 	surface2: "#F7F9FB",
 	surface3: "#EEF2F6",
@@ -81,6 +82,7 @@ export type ColorTokens = { readonly [K in ColorTokenKey]: string };
 
 export const darkColors: ColorTokens = {
 	canvas: "#090D14",
+	overlay: "rgba(0,0,0,.6)",
 	surface: "#111722",
 	surface2: "#171E29",
 	surface3: "#202936",

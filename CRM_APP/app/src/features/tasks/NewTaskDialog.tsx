@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from "react";
 import {
+	DatePicker,
 	Button,
 	Dialog,
 	Input,
@@ -121,12 +122,10 @@ function NewTaskForm({
 				data-autofocus
 				onChange={(e) => set({ title: e.target.value })}
 			/>
-			<Input
+			<DatePicker
 				label={t("tasks.field.due")}
 				name="due"
-				type="datetime-local"
 				required
-				dir="ltr"
 				value={input.due}
 				error={err("due")}
 				onChange={(e) => set({ due: e.target.value })}

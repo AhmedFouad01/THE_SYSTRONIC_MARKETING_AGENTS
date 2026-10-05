@@ -3,7 +3,7 @@ import { sessionStore, useSession } from "./api/index.ts";
 import { fetchAssignees } from "./features/leads/api.ts";
 import { ContactsView, DealsView, LeadsView, PipelineView, ReportingView, TasksView } from "./features/index.ts";
 import { useRoute } from "./router.ts";
-import { EmptyState, I18nProvider, Panel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
+import { EmptyState, I18nProvider, PageHeader, Panel, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
 import { AppShell, ConnectGate, NAV } from "./ui/shell/index.ts";
 
 // Feature screens (leads, contacts, ...) land in S4+. Until then each route shows a labelled placeholder.
@@ -13,16 +13,20 @@ function RoutePlaceholder() {
 	if (route === null) return <EmptyState title={t("shell.notFound")} />;
 	const item = NAV.find((n) => n.route === route || (n.route !== null && n.also === route));
 	return (
-		<Panel title={item ? t(item.label) : t("app.name")}>
-			<p>{t("shell.comingSoon")}</p>
-			<p className="sy-ltr" data-testid="route">
-				{route}
-			</p>
-		</Panel>
+		<div className="sy-placeholder">
+			<PageHeader title={item ? t(item.label) : t("app.name")} />
+			<Panel>
+				<p>{t("shell.comingSoon")}</p>
+				<p className="sy-ltr" data-testid="route">
+					{route}
+				</p>
+			</Panel>
+		</div>
 	);
 }
 
 function Routed() {
+	const { t } = useI18n();
 	const route = useRoute();
 	const session = useSession();
 
@@ -47,6 +51,7 @@ function Routed() {
 			route={route}
 			actor={actorId}
 			actorName={actorName}
+			actorRole={connected ? roleLabel(session.info?.configure || session.info?.merge ? "manager" : null, t) : null}
 			onDisconnect={() => sessionStore.disconnect()}
 		>
 			{connected ? (

@@ -206,7 +206,7 @@ for (const language of ["ar", "en"] as const)
 		await expect(dialog.locator("input[name=title]")).toHaveValue(
 			"Context lead",
 		);
-		await expect(dialog.locator("select[name=contact]")).toBeDisabled();
+		await expect(dialog.locator("[role=combobox][data-name=contact]")).toBeDisabled();
 		await dialog.locator("input[name=amount]").fill("2500.50");
 		await page.getByTestId("new-deal-submit").click();
 		await expect(dialog).toHaveCount(0);

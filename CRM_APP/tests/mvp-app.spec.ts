@@ -35,9 +35,12 @@ const NAV_KEYS = [
 	"reporting",
 ];
 
+// Bottom bar tabs at <= 720px (the rest are in the More sheet).
+const MOBILE_TABS = ["leads", "contacts", "deals", "tasks"];
+
 for (const width of [360, 1280])
 	for (const language of ["ar", "en"] as const)
-		test(`app shell ${language} ${width}px: connect, actor, nav, disabled items, layout`, async ({
+		test(`app shell ${language} ${width}px: connect, actor, nav, no fake items, layout`, async ({
 			page,
 			request,
 		}) => {
@@ -78,17 +81,31 @@ for (const width of [360, 1280])
 			expect(where.local).toEqual([]);
 
 			// landmarks
-			await expect(page.getByRole("navigation")).toHaveCount(1);
+			// primary navigation (sidebar or bottom bar) + the breadcrumb
+			await expect(page.getByRole("navigation")).toHaveCount(2);
+			await expect(page.locator("nav.sy-crumbs")).toHaveCount(1);
 			await expect(page.getByRole("banner")).toHaveCount(1);
 			await expect(page.getByRole("main")).toHaveCount(1);
 
 			// nav works, aria-current follows
 			for (const key of NAV_KEYS.slice(1)) {
+				const overflow = width <= 720 && !MOBILE_TABS.includes(key);
+				if (overflow) await page.getByTestId("nav-more").click();
 				await page.getByTestId(`nav-${key}`).click();
-				await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute(
-					"aria-current",
-					"page",
-				);
+				if (overflow) {
+					// the More sheet closes after navigating and the More tab carries the current state
+					await expect(page.getByTestId("more-sheet")).toHaveCount(0);
+					await expect(page.getByTestId("nav-more")).toHaveAttribute(
+						"aria-current",
+						"page",
+					);
+				} else
+					await expect(page.getByTestId(`nav-${key}`)).toHaveAttribute(
+						"aria-current",
+						"page",
+					);
+				// breadcrumb: CRM > current screen, same label as the nav item
+				await expect(page.getByTestId("breadcrumb-current")).not.toBeEmpty();
 				// /leads (S4), /contacts (S5), /deals (S6) and /pipeline (S7) are real workspaces; the other routes are still placeholders
 				if (key === "leads")
 					await expect(page.getByTestId("leads-view")).toBeVisible();
@@ -106,28 +123,35 @@ for (const width of [360, 1280])
 					await expect(page.getByTestId("route")).toHaveText(`/${key}`);
 			}
 
-			// Email/Call/Import: disabled + explicit "not in MVP" label (hidden on the mobile bar by design)
-			for (const key of ["email", "call", "import"]) {
-				const item = page.getByTestId(`nav-${key}`);
-				await expect(item).toBeDisabled();
-				if (width > 720)
-					await expect(item).toContainText(
-						language === "ar" ? "خارج النسخة الأولى" : "Not in MVP",
-					);
-			}
+			// UX_RULES #8: no fake affordances. Email/Call/Import are not in the nav, nothing says "Not in MVP",
+			// and the dead top-bar search is gone.
+			for (const key of ["email", "call", "import"])
+				await expect(page.getByTestId(`nav-${key}`)).toHaveCount(0);
+			await expect(page.getByText(/Not in MVP|خارج النسخة الأولى/)).toHaveCount(0);
+			await expect(page.locator("header.sy-topbar").getByRole("searchbox")).toHaveCount(0);
+			await expect(page.locator("header.sy-topbar")).toBeVisible();
 
-			const overflow = await page.evaluate(
+			const noOverflow = await page.evaluate(
 				() => document.documentElement.scrollWidth <= innerWidth,
 			);
-			expect(overflow).toBe(true);
-			const navBox = await page.locator(".sy-sidebar").boundingBox();
+			expect(noOverflow).toBe(true);
 			if (width <= 720) {
-				// bottom nav pinned to the viewport bottom, spanning the width
+				// compact 56px header; bottom nav pinned to the viewport bottom, <= 5 tabs, labels never truncated
+				const header = await page.locator("header.sy-topbar").boundingBox();
+				expect(header?.height).toBe(56);
+				const navBox = await page.locator(".sy-bottomnav").boundingBox();
 				expect((navBox?.y ?? 0) + (navBox?.height ?? 0)).toBeGreaterThanOrEqual(
 					799,
 				);
 				expect((navBox?.width ?? 0) >= width - 1).toBe(true);
-				await expect(page.getByTestId("nav-email")).toBeHidden();
+				await expect(page.locator(".sy-bottomnav > *")).toHaveCount(5);
+				const clipped = await page
+					.locator(".sy-bottomnav .sy-nav__label")
+					.evaluateAll((els) =>
+						els.filter((e) => e.scrollWidth > e.clientWidth + 1).length,
+					);
+				expect(clipped).toBe(0);
+				await expect(page.locator(".sy-sidebar")).toHaveCount(0);
 			} else {
 				// condition-based: layout (fonts/scrollbar) may still be settling right after connect
 				await expect
@@ -136,7 +160,10 @@ for (const width of [360, 1280])
 						return b?.x === 0 || (b?.x ?? 0) + (b?.width ?? 0) >= width - 1;
 					})
 					.toBe(true);
-				await expect(page.getByTestId("nav-email")).toBeVisible();
+				await expect(page.locator(".sy-bottomnav")).toHaveCount(0);
+				// actor lives at the sidebar bottom: initials avatar + name + role
+				await expect(page.locator(".sy-sidebar .sy-actor__avatar")).toBeVisible();
+				await expect(page.locator(".sy-sidebar .sy-actor__role")).toBeVisible();
 			}
 
 			// disconnect returns to the gate and clears the session

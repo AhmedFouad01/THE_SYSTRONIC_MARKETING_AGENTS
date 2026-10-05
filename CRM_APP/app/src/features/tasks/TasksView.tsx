@@ -15,6 +15,7 @@ import {
 	type GridColumn,
 	type GridSample,
 	type MessageKey,
+	PageHeader,
 	safeLocalStorage,
 	StatusPill,
 	Tabs,
@@ -391,9 +392,9 @@ export function TasksView() {
 
 	return (
 		<div className="sy-tasks" data-testid="tasks-view">
-			<header className="sy-tasks__top">
-				<h1 className="sy-tasks__h1">{t("nav.tasks")}</h1>
-				<div className="sy-tasks__actions">
+			<PageHeader
+				title={t("nav.tasks")}
+				actions={
 					<Button
 						variant="primary"
 						icon="plus"
@@ -402,8 +403,8 @@ export function TasksView() {
 					>
 						{t("tasks.action.new")}
 					</Button>
-				</div>
-			</header>
+				}
+			/>
 			<Tabs
 				label={t("tasks.tabs")}
 				value={tab}

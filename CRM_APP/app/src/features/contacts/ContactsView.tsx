@@ -14,6 +14,7 @@ import {
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
+	PageHeader,
 	safeLocalStorage,
 	sourceLabel,
 	Tabs,
@@ -200,9 +201,7 @@ export function ContactsView() {
 
 	return (
 		<div className="sy-contacts" data-testid="contacts-view">
-			<header>
-				<h1 className="sy-contacts__h1">{t("nav.contacts")}</h1>
-			</header>
+			<PageHeader title={t("nav.contacts")} />
 			<Tabs
 				label={t("contacts.views")}
 				value={view}

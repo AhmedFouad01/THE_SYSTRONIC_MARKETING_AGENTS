@@ -1,7 +1,6 @@
 import {
 	type InputHTMLAttributes,
 	type ReactNode,
-	type SelectHTMLAttributes,
 	type TextareaHTMLAttributes,
 	useId,
 } from "react";
@@ -19,7 +18,9 @@ type ControlProps = {
 	"aria-describedby": string | undefined;
 };
 
-function FieldShell({
+export type FieldControlProps = ControlProps;
+
+export function FieldShell({
 	label,
 	hint,
 	error,
@@ -61,19 +62,6 @@ export function Input({ label, hint, error, className, required, ...rest }: Inpu
 	return (
 		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
 			{(p) => <input {...rest} {...p} required={required} className="sy-field__control" />}
-		</FieldShell>
-	);
-}
-
-export type SelectProps = Shared & SelectHTMLAttributes<HTMLSelectElement>;
-export function Select({ label, hint, error, className, required, children, ...rest }: SelectProps) {
-	return (
-		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
-			{(p) => (
-				<select {...rest} {...p} required={required} className="sy-field__control">
-					{children}
-				</select>
-			)}
 		</FieldShell>
 	);
 }

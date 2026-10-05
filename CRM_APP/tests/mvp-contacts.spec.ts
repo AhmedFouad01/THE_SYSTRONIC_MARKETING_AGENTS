@@ -2,6 +2,7 @@ import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { type APIRequestContext, expect, type Page, test } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
+import { pickValue } from "./select-helper.js";
 
 process.loadEnvFile(".env");
 
@@ -174,7 +175,7 @@ test("contacts en: detail edit, simulated version conflict, reload and retry, ad
 	await expect(page.getByTestId("contact-conflict")).toHaveCount(0);
 
 	// client validation, then a real save adding an email identifier
-	await detail.getByLabel("Add identifier").selectOption("email");
+	await pickValue(detail.getByLabel("Add identifier"), "email");
 	await detail.getByLabel("Identifier value").fill("nope");
 	await page.getByTestId("contact-save").click();
 	await expect(detail.getByText("Enter a valid email address.")).toBeVisible();

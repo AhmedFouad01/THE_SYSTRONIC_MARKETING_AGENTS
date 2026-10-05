@@ -15,6 +15,7 @@ import {
 	type GridColumn,
 	type GridSample,
 	Ltr,
+	PageHeader,
 	safeLocalStorage,
 	Tabs,
 	useCursorList,
@@ -394,9 +395,9 @@ export function DealsView() {
 
 	return (
 		<div className="sy-deals" data-testid="deals-view">
-			<header className="sy-deals__top">
-				<h1 className="sy-deals__h1">{t("nav.deals")}</h1>
-				<div className="sy-deals__actions">
+			<PageHeader
+				title={t("nav.deals")}
+				actions={
 					<Button
 						variant="primary"
 						icon="plus"
@@ -408,8 +409,8 @@ export function DealsView() {
 					>
 						{t("action.newDeal")}
 					</Button>
-				</div>
-			</header>
+				}
+			/>
 			{ctx !== null ? (
 				<ContextStrip
 					ctx={ctx}

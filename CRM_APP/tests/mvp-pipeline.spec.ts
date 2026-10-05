@@ -7,6 +7,7 @@ import {
 } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
+import { pickLabel } from "./select-helper.js";
 
 // Money follows the locale (Intl currency): Arabic shows the Egyptian pound symbol, not the ISO code.
 const egp = (language: "ar" | "en") => (language === "ar" ? "ج.م." : "EGP");
@@ -131,9 +132,7 @@ const open = async (
 	await connect(page, f.tokens.manager, f.ids.a);
 	if (pipelineName !== null) {
 		await expect(page.getByTestId("pipeline-board")).toBeVisible();
-		await page
-			.getByTestId("pipeline-select")
-			.selectOption({ label: pipelineName });
+		await pickLabel(page.getByTestId("pipeline-select"), pipelineName);
 	}
 };
 

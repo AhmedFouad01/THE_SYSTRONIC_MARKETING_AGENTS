@@ -26,6 +26,8 @@ export type DialogProps = {
 	returnFocusRef?: RefObject<HTMLElement | null>;
 	initialFocusRef?: RefObject<HTMLElement | null>;
 	testId?: string;
+	/** center = modal card (default); sheet = bottom sheet. */
+	placement?: "center" | "sheet";
 };
 
 /**
@@ -43,6 +45,7 @@ export function Dialog({
 	returnFocusRef,
 	initialFocusRef,
 	testId,
+	placement = "center",
 }: DialogProps) {
 	const { t } = useI18n();
 	const id = useId();
@@ -93,7 +96,7 @@ export function Dialog({
 	};
 
 	return (
-		<div className="sy-scrim" role="presentation">
+		<div className="sy-scrim" role="presentation" data-placement={placement}>
 			<div
 				ref={rootRef}
 				role="dialog"

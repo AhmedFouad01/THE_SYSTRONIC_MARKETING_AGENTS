@@ -241,6 +241,9 @@ const GLYPHS = {
 			<path d="m15 15 5 5" />
 		</>
 	),
+	chevronDown: <path d="m6 9 6 6 6-6" />,
+	chevronRight: <path d="m9 6 6 6-6 6" />,
+	menu: <path d="M4 7h16M4 12h16M4 17h16" />,
 } as const satisfies Record<string, ReactNode>;
 
 export type GlyphName = keyof typeof GLYPHS;
@@ -264,6 +267,7 @@ export type IconName = GlyphName | keyof typeof ICON_ALIASES;
 export const DIRECTIONAL_GLYPHS: ReadonlySet<GlyphName> = new Set<GlyphName>([
 	"advance",
 	"drill",
+	"chevronRight",
 ]);
 
 export const ICON_NAMES: readonly IconName[] = [

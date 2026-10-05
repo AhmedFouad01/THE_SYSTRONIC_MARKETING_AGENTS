@@ -7,6 +7,7 @@ import {
 } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
+import { pickValue } from "./select-helper.js";
 
 process.loadEnvFile(".env");
 
@@ -183,7 +184,7 @@ for (const width of [360, 1280])
 
 			// contact journey
 			await page.getByRole("tab", { name: t.tabs[3], exact: true }).click();
-			await page.getByTestId("journey-contact").selectOption(f.ids.contact);
+			await pickValue(page.getByTestId("journey-contact"), f.ids.contact);
 			await expect(
 				page.getByTestId("grid-row").filter({ hasText: t.payment }),
 			).toHaveCount(1);

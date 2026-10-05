@@ -15,7 +15,8 @@ import { Dialog } from "../overlays/Dialog.tsx";
 import { rovingIndex } from "../overlays/nav.ts";
 import { Popover } from "../overlays/Popover.tsx";
 import { Button } from "../primitives/Button.tsx";
-import { Input, Select } from "../primitives/Field.tsx";
+import { Input } from "../primitives/Field.tsx";
+import { Select } from "../primitives/Select.tsx";
 import { EmptyState, ErrorState, LoadingState } from "../primitives/States.tsx";
 import {
 	ariaSortOf,
@@ -421,6 +422,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						<Select
 							key={c.id}
 							label={c.header}
+							size="sm"
 							value={eqValue(c.id)}
 							onChange={(e) =>
 								dispatch({ type: "filters", filters: setEqFilter(state.filters, c.id, e.target.value === "" ? null : e.target.value) })
@@ -480,6 +482,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				<div className="sy-grid__footer">
 					<Select
 						label={t("common.rowsPerPage")}
+						size="sm"
 						value={String(state.pageSize)}
 						onChange={(e) => dispatch({ type: "pageSize", size: Number(e.target.value) })}
 						className="sy-grid__size"

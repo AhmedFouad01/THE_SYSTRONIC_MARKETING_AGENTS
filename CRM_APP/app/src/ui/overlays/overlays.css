@@ -56,15 +56,15 @@
 	grid-template-columns: minmax(0, 1fr); /* auto track would grow to the 420px dialog and overflow narrow viewports */
 	place-items: center;
 	padding: var(--sy-space-22);
-	background: color-mix(in srgb, var(--sy-navy) 55%, transparent);
+	background: var(--sy-overlay);
 }
 
 .sy-dialog {
-	width: 420px;
+	width: 480px;
 	max-width: 100%;
 	max-height: 100%;
 	overflow: auto;
-	padding: var(--sy-space-16);
+	padding: 24px;
 	border: 1px solid var(--sy-border);
 	border-radius: var(--sy-radius-12);
 	background: var(--sy-surface);
@@ -93,9 +93,10 @@
 
 .sy-dialog__footer {
 	display: flex;
-	justify-content: flex-end;
+	flex-wrap: wrap;
+	justify-content: flex-end; /* flow-relative: end edge in LTR and RTL; primary is last in DOM order */
 	gap: var(--sy-space-8);
-	margin-block-start: var(--sy-space-16);
+	margin-block-start: 24px;
 }
 
 .sy-toasts {
@@ -166,7 +167,25 @@
 	cursor: pointer;
 }
 
+/* Bottom sheet placement (mobile "More"). */
+.sy-scrim[data-placement="sheet"] {
+	place-items: end center;
+	padding: 0;
+}
+
+.sy-scrim[data-placement="sheet"] .sy-dialog {
+	width: 100%;
+	max-width: none;
+	border-end-start-radius: 0;
+	border-end-end-radius: 0;
+	padding-block-end: var(--sy-space-22);
+}
+
 @media (max-width: 720px) {
+	.sy-scrim:not([data-placement="sheet"]) {
+		padding: var(--sy-space-14);
+	}
+
 	.sy-toasts {
 		bottom: 82px; /* above the mobile bottom navigation */
 	}

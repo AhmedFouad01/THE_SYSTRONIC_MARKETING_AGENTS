@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
+	DatePicker,
 	Badge,
 	Button,
 	ForbiddenState,
@@ -184,11 +185,9 @@ function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
 						setDraft({ ...draft, title: e.target.value });
 					}}
 				/>
-				<Input
+				<DatePicker
 					label={t("tasks.field.due")}
 					name="due"
-					type="datetime-local"
-					dir="ltr"
 					value={draft.due}
 					error={issues.due ? t("tasks.issue.date") : undefined}
 					onChange={(e) => {
