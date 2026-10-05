@@ -154,9 +154,10 @@ describe("money", () => {
 	it("formats through the shared formatMoney (major units + ISO code)", () => {
 		const fm = (v: number, o?: { currency?: string; compact?: boolean }) =>
 			formatMoney(v, "en", o);
-		expect(dealValueText(deal, fm)).toBe("1,250.5 EGP");
-		expect(dealValueText({ amount_minor: 100, currency: "USD" }, fm)).toBe(
-			"1 USD",
+		const n = (s: string) => s.replace(/ /g, " ");
+		expect(n(dealValueText(deal, fm))).toBe("EGP 1,250.50");
+		expect(n(dealValueText({ amount_minor: 100, currency: "USD" }, fm))).toBe(
+			"$1",
 		);
 	});
 });

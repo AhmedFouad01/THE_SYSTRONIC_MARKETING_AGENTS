@@ -5,9 +5,10 @@ import {
 	Button,
 	ForbiddenState,
 	Input,
-	Ltr,
+	Bdi,
 	type MessageKey,
 	Panel,
+	RecordDetails,
 	Select,
 	StatusPill,
 	useI18n,
@@ -247,7 +248,7 @@ export function TaskDetail({
 	now: Date;
 	onUpdated: (task: Task) => void;
 }) {
-	const { t, formatDate } = useI18n();
+	const { t, formatDateTime } = useI18n();
 	if (task === null)
 		return (
 			<Panel
@@ -302,22 +303,17 @@ export function TaskDetail({
 					<>
 						<dt>{t("tasks.detail.completedAt")}</dt>
 						<dd>
-							{formatDate(task.completed_at, {
-								dateStyle: "medium",
-								timeStyle: "short",
-							})}
+							<Bdi>{formatDateTime(task.completed_at)}</Bdi>
 						</dd>
 					</>
 				) : null}
-				<dt>{t("tasks.detail.version")}</dt>
-				<dd data-testid="task-version">
-					<Ltr>{task.version}</Ltr>
-				</dd>
-				<dt>{t("tasks.detail.id")}</dt>
-				<dd>
-					<Ltr>{task.id}</Ltr>
-				</dd>
-			</dl>
+				</dl>
+			<RecordDetails
+				rows={[
+					{ label: t("tasks.detail.id"), value: task.id, copyable: true },
+					{ label: t("tasks.detail.version"), value: task.version, testId: "task-version" },
+				]}
+			/>
 		</Panel>
 	);
 }

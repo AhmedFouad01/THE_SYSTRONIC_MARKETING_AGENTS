@@ -179,10 +179,12 @@
 	border-block-end: 1px solid var(--sy-divider);
 	color: var(--sy-text);
 	vertical-align: middle;
+	height: 48px; /* comfortable row min-height (UX-13) */
 }
 
 .sy-grid__table[data-density="compact"] td {
 	padding-block: var(--sy-space-4);
+	height: auto;
 }
 
 .sy-grid__table[data-density="compact"] th {

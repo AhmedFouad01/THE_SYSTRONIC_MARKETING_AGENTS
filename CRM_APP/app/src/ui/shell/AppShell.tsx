@@ -1,6 +1,6 @@
 import type { MouseEvent, ReactNode } from "react";
 import { href, navigate, ROUTES, type RoutePath } from "../../router.ts";
-import { type MessageKey, useI18n } from "../i18n/index.ts";
+import { Bdi, type MessageKey, personLabel, useI18n } from "../i18n/index.ts";
 import { Icon, type IconName } from "../icons/index.ts";
 import { MenuButton } from "../overlays/index.ts";
 import { useTheme } from "../theme/index.ts";
@@ -33,6 +33,8 @@ export type AppShellProps = {
 	route: RoutePath | null;
 	/** null = not connected: no navigation, no actor. */
 	actor: string | null;
+	/** Display name of the actor (never the id); falls back to a neutral label. */
+	actorName?: string | null;
 	onDisconnect?: () => void;
 	children: ReactNode;
 };
@@ -41,7 +43,7 @@ function plainClick(e: MouseEvent): boolean {
 	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 }
 
-export function AppShell({ route, actor, onDisconnect, children }: AppShellProps) {
+export function AppShell({ route, actor, actorName, onDisconnect, children }: AppShellProps) {
 	const { t, toggleLocale, dir } = useI18n();
 	const { mode, toggleMode } = useTheme();
 	const connected = actor !== null;
@@ -125,11 +127,9 @@ export function AppShell({ route, actor, onDisconnect, children }: AppShellProps
 					</search>
 					<div className="sy-topbar__tools">
 						{actor ? (
-							<span className="sy-actor" data-testid="actor" title={actor}>
+							<span className="sy-actor" data-testid="actor">
 								<span className="sy-actor__label">{t("shell.actor")}</span>{" "}
-								<bdi dir="ltr" className="sy-ltr">
-									{actor.slice(0, 8)}
-								</bdi>
+								<Bdi>{personLabel(actorName, t)}</Bdi>
 							</span>
 						) : null}
 							<MenuButton

@@ -7,7 +7,7 @@ import {
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
-	Ltr,
+	Bdi,
 	Select,
 	useCursorList,
 	useI18n,
@@ -94,7 +94,7 @@ function ContactJourney({ contactId }: { contactId: string }) {
 				value: (e) => e.occurred_at,
 				searchable: false,
 				sortable: true,
-				cell: (e) => <Ltr>{f.utc(e.occurred_at)}</Ltr>,
+				cell: (e) => <Bdi>{f.utc(e.occurred_at)}</Bdi>,
 			},
 			{
 				id: "received",
@@ -102,7 +102,7 @@ function ContactJourney({ contactId }: { contactId: string }) {
 				value: (e) => e.received_at,
 				searchable: false,
 				sortable: true,
-				cell: (e) => <Ltr>{f.utc(e.received_at)}</Ltr>,
+				cell: (e) => <Bdi>{f.utc(e.received_at)}</Bdi>,
 			},
 			{
 				id: "source",

@@ -22,12 +22,13 @@ export const fonts = {
 	},
 } as const satisfies Record<Locale, Record<string, string>>;
 
-// px values. `lineAr` is the Arabic line height from the typography board.
+// px values. `sizeAr` = Latin size + 1px (Arabic glyphs read ~2px smaller at equal size: UX_AUDIT UX-13);
+// `lineAr` is the Arabic line height (1.6 for body/data text, tighter for titles).
 export const typeScale = {
-	pageTitle: { size: 28, line: 36, lineAr: 36, weight: 700 },
-	sectionTitle: { size: 20, line: 28, lineAr: 30, weight: 600 },
-	body: { size: 14, line: 22, lineAr: 24, weight: 400 },
-	data: { size: 13, line: 20, lineAr: 20, weight: 500 },
+	pageTitle: { size: 28, line: 36, sizeAr: 29, lineAr: 38, weight: 700 },
+	sectionTitle: { size: 20, line: 28, sizeAr: 21, lineAr: 32, weight: 600 },
+	body: { size: 14, line: 22, sizeAr: 15, lineAr: 24, weight: 400 },
+	data: { size: 13, line: 20, sizeAr: 14, lineAr: 22, weight: 500 },
 } as const;
 
 export const spacing = {

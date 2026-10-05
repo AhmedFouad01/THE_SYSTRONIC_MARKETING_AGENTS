@@ -8,6 +8,9 @@ import {
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
 
+// Money follows the locale (Intl currency): Arabic shows the Egyptian pound symbol, not the ISO code.
+const egp = (language: "ar" | "en") => (language === "ar" ? "ج.م." : "EGP");
+
 process.loadEnvFile(".env");
 
 // Seeds a synthetic fixture per test. Credentials stay in memory; never logged or asserted by value.
@@ -160,9 +163,7 @@ for (const width of [360, 1280])
 			);
 			// seeded fixture deal + 2 created deals
 			await expect(rows(page)).toHaveCount(3);
-			await expect(rows(page).filter({ hasText: "Alpha deal" })).toContainText(
-				"EGP",
-			);
+			await expect(rows(page).filter({ hasText: "Alpha deal" })).toContainText(egp(language));
 
 			await page.getByTestId("grid-search").fill("bravo");
 			await expect(rows(page)).toHaveCount(1);

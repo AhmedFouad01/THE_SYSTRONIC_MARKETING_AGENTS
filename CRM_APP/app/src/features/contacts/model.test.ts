@@ -37,9 +37,9 @@ describe("views and rows", () => {
 		expect(filterBuiltInView(rows, "mine", null)).toEqual([]);
 		expect(filterBuiltInView(rows, "all", null)).toHaveLength(3);
 	});
-	it("toRows resolves owner names, short id fallback, unassigned", () => {
-		const r = toRows(rows, new Map([[ME, "Me"]]), "None");
-		expect(r.map((x) => x.ownerName)).toEqual(["Me", OTHER.slice(0, 8), "None"]);
+	it("toRows resolves owner names, neutral fallback (never an id), unassigned", () => {
+		const r = toRows(rows, new Map([[ME, "Me"]]), "None", "Someone");
+		expect(r.map((x) => x.ownerName)).toEqual(["Me", "Someone", "None"]);
 	});
 	it("mergeLatest prefers newer versions and hides merged-away contacts", () => {
 		const items = [contact("a"), contact("b")];

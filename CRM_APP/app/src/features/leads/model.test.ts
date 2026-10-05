@@ -69,11 +69,11 @@ describe("toRows", () => {
 			[lead("a", ME), lead("b", OTHER), lead("c", null)],
 			new Map([["c1", "Ada"]]),
 			new Map([[ME, "Me"]]),
-			{ unassigned: "None", unknownContact: "?" },
+			{ unassigned: "None", unknownContact: "?", unknownOwner: "Someone" },
 		);
 		expect(out.map((r) => [r.contactName, r.ownerName])).toEqual([
 			["Ada", "Me"],
-			["Ada", OTHER.slice(0, 8)],
+			["Ada", "Someone"],
 			["Ada", "None"],
 		]);
 	});

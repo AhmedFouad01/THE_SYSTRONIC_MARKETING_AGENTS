@@ -5,6 +5,7 @@ import {
 	Dialog,
 	ErrorState,
 	ForbiddenState,
+	Bdi,
 	Input,
 	LoadingState,
 	Ltr,
@@ -285,9 +286,7 @@ export function ReportingView() {
 									{t("rep.meta.lookback")}: <Ltr>{report.lookback_days}</Ltr> ·{" "}
 									{t("rep.meta.basis")} · {t("rep.meta.run")}:{" "}
 									{report.run_id ? (
-										<Ltr>
-											{report.run_id} / {f.utc(report.as_of)}
-										</Ltr>
+										<Bdi>{f.utc(report.as_of)}</Bdi>
 									) : (
 										t("rep.meta.unpublished")
 									)}{" "}

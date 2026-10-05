@@ -43,7 +43,12 @@ export function filterBuiltInView<
 	return rows.filter((r) => !r.owner_id);
 }
 
-export type RowLabels = { unassigned: string; unknownContact: string };
+export type RowLabels = {
+	unassigned: string;
+	unknownContact: string;
+	/** Shown when the owner id has no display name (never the id). */
+	unknownOwner: string;
+};
 
 export function toRows(
 	leads: readonly Lead[],
@@ -55,7 +60,7 @@ export function toRows(
 		...l,
 		contactName: contacts.get(l.contact_id) ?? labels.unknownContact,
 		ownerName: l.owner_id
-			? (owners.get(l.owner_id) ?? l.owner_id.slice(0, 8))
+			? (owners.get(l.owner_id) ?? labels.unknownOwner)
 			: labels.unassigned,
 	}));
 }

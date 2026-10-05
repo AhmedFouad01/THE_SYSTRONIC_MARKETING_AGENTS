@@ -1,5 +1,6 @@
 import {
 	createContext,
+	Fragment,
 	type ReactNode,
 	useCallback,
 	useContext,
@@ -10,14 +11,19 @@ import {
 import { readPref, writePref } from "../storage.ts";
 import type { Locale } from "../tokens/scales.ts";
 import { ar } from "./ar.ts";
+import { Bdi } from "./Bdi.tsx";
 import { type MessageKey, en } from "./en.ts";
 import {
 	dirOf,
+	formatCount,
 	formatDate,
+	formatDateTime,
 	formatMoney,
 	formatNumber,
 	formatPercent,
+	formatRelative,
 	interpolate,
+	interpolateParts,
 } from "./format.ts";
 
 export const LOCALE_STORAGE_KEY = "sy.locale";
@@ -38,7 +44,10 @@ type I18nCtx = {
 	setLocale: (l: Locale) => void;
 	toggleLocale: () => void;
 	t: (key: MessageKey, vars?: Record<string, string | number>) => string;
+	/** Message with every placeholder value isolated in <bdi>: numbers/dates/names cannot reorder RTL text. */
+	tx: (key: MessageKey, vars?: Record<string, string | number>) => ReactNode;
 	formatNumber: (v: number, o?: Intl.NumberFormatOptions) => string;
+	formatCount: (v: number) => string;
 	formatPercent: (fraction: number, o?: Intl.NumberFormatOptions) => string;
 	formatMoney: (
 		v: number,
@@ -48,6 +57,9 @@ type I18nCtx = {
 		v: Date | number | string,
 		o?: Intl.DateTimeFormatOptions,
 	) => string;
+	formatDateTime: (v: Date | number | string) => string;
+	/** Relative for < 7 days, otherwise date-only. */
+	formatRelative: (v: Date | number | string, now?: Date | number) => string;
 };
 
 const Ctx = createContext<I18nCtx | null>(null);
@@ -80,10 +92,21 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 			setLocale,
 			toggleLocale,
 			t: (key, vars) => interpolate(dict[key], vars),
+			tx: (key, vars) => {
+				let offset = 0; // stable keys: position of each part in the message
+				return interpolateParts(dict[key], vars, (v, k) => <Bdi key={k}>{v}</Bdi>).map((p) => {
+					const at = offset;
+					if (typeof p === "string") offset += p.length;
+					return typeof p === "string" ? <Fragment key={`t${at}`}>{p}</Fragment> : p;
+				});
+			},
 			formatNumber: (v, o) => formatNumber(v, locale, o),
+			formatCount: (v) => formatCount(v, locale),
 			formatPercent: (f, o) => formatPercent(f, locale, o),
 			formatMoney: (v, o) => formatMoney(v, locale, o),
 			formatDate: (v, o) => formatDate(v, locale, o),
+			formatDateTime: (v) => formatDateTime(v, locale),
+			formatRelative: (v, now) => formatRelative(v, locale, now),
 		};
 	}, [locale, dir, setLocale, toggleLocale]);
 

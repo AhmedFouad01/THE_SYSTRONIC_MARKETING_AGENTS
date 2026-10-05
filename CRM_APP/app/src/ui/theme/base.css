@@ -71,6 +71,24 @@ a {
 .sy-ltr {
 	direction: ltr;
 	unicode-bidi: isolate;
+	text-align: start;
+}
+
+/* Arabic typography (UX-13): size +1px and line-height 1.6 come from the :lang(ar) token overrides in the root
+   custom properties; here the Arabic font stack is applied to any Arabic-language subtree. */
+:lang(ar) {
+	font-family: var(--sy-font-body);
+}
+
+/* Mixed Latin/Arabic text cells resolve direction per cell (UX-12); phone/email/ID use dir=ltr + start alignment. */
+td,
+th {
+	unicode-bidi: plaintext;
+}
+td[dir="ltr"],
+th[dir="ltr"],
+.sy-ltr {
+	unicode-bidi: isolate;
 }
 
 /* Reduced motion (UX_RULES 13): same rule as the prototype. !important is intentional: it must beat component transitions. */

@@ -148,7 +148,7 @@ export function TasksView() {
 				contactNames,
 				dealNames,
 				ownerNames,
-				{ unknown: t("tasks.unknownRecord") },
+				{ unknown: t("tasks.unknownRecord"), unknownOwner: t("common.unknownUser") },
 				now,
 			),
 		[tasks.items, overlay, contactNames, dealNames, ownerNames, t, now],

@@ -1,6 +1,7 @@
 // Pure deals view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (deals, transitions,
 // history, pipelines). Stage writes go ONLY through the transition command; PATCH never carries stage_id.
 import { isApiError } from "../../api/errors.ts";
+import { minorToMajorUnits } from "../../ui/i18n/format.ts";
 
 export type StageOutcome = "won" | "lost" | null;
 export type Stage = {
@@ -75,7 +76,7 @@ export function dealValueText(
 		o?: { currency?: string; compact?: boolean },
 	) => string,
 ): string {
-	return formatMoney(minorToMajor(deal.amount_minor), {
+	return formatMoney(minorToMajorUnits(deal.amount_minor, deal.currency), {
 		currency: deal.currency,
 	});
 }
@@ -120,7 +121,12 @@ export function toRows(
 	contacts: ReadonlyMap<string, string>,
 	owners: ReadonlyMap<string, string>,
 	pipelines: ReadonlyMap<string, Pipeline>,
-	labels: { unassigned: string; unknownContact: string; unknownStage: string },
+	labels: {
+		unassigned: string;
+		unknownContact: string;
+		unknownStage: string;
+		unknownOwner: string;
+	},
 ): DealRow[] {
 	return deals.map((d) => {
 		const p = pipelines.get(d.pipeline_id);
@@ -129,7 +135,7 @@ export function toRows(
 			...d,
 			contactName: contacts.get(d.contact_id) ?? labels.unknownContact,
 			ownerName: d.owner_id
-				? (owners.get(d.owner_id) ?? d.owner_id.slice(0, 8))
+				? (owners.get(d.owner_id) ?? labels.unknownOwner)
 				: labels.unassigned,
 			pipelineName: p?.name ?? "",
 			stageName: s?.name ?? labels.unknownStage,

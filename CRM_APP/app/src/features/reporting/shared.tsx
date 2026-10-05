@@ -35,7 +35,7 @@ export function useReportFmt() {
 		minor: (v: string | number | bigint, currency: string | null | undefined) =>
 			formatMinor(v, currency, locale),
 		utc: (iso: string | null | undefined) =>
-			iso ? `${formatDate(iso, UTC_DATETIME)} UTC` : "—",
+			iso ? t("rep.utcStamp", { date: formatDate(iso, UTC_DATETIME) }) : "—",
 		/** Known enum value -> translated label; unknown values are shown verbatim (never dropped). */
 		label: (value: string | null | undefined) => {
 			if (!value) return "—";

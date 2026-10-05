@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
+import { fetchAssignees } from "./features/leads/api.ts";
 import { ContactsView, DealsView, LeadsView, PipelineView, ReportingView, TasksView } from "./features/index.ts";
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, Panel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
@@ -30,10 +31,22 @@ function Routed() {
 	}, []);
 
 	const connected = session.status === "connected" && session.info !== null;
+	const actorId = connected ? (session.info?.actor ?? null) : null;
+	const [actorName, setActorName] = useState<string | null>(null);
+	useEffect(() => {
+		setActorName(null);
+		if (actorId === null) return;
+		const ctrl = new AbortController();
+		fetchAssignees(ctrl.signal)
+			.then((list) => setActorName(list.find((a) => a.id === actorId)?.name ?? null))
+			.catch(() => undefined); // name is cosmetic: the shell falls back to a neutral label
+		return () => ctrl.abort();
+	}, [actorId]);
 	return (
 		<AppShell
 			route={route}
-			actor={connected ? (session.info?.actor ?? null) : null}
+			actor={actorId}
+			actorName={actorName}
 			onDisconnect={() => sessionStore.disconnect()}
 		>
 			{connected ? (

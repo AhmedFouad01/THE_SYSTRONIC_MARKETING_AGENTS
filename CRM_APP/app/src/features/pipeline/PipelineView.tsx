@@ -10,6 +10,7 @@ import {
 	LoadingState,
 	Ltr,
 	MenuButton,
+	minorToMajorUnits,
 	Select,
 	useCursorList,
 	useI18n,
@@ -35,7 +36,6 @@ import {
 	type Deal,
 	dealValueText,
 	mergeLatest,
-	minorToMajor,
 	type Pipeline,
 	type Stage,
 	type TransitionErrorKind,
@@ -177,7 +177,7 @@ function Column({
 						col.totals.map((x) => (
 							<Ltr key={x.currency}>
 								<span className="sy-pipe__amount">
-									{formatMoney(minorToMajor(x.minor), { currency: x.currency })}
+									{formatMoney(minorToMajorUnits(x.minor, x.currency), { currency: x.currency })}
 								</span>
 							</Ltr>
 						))
@@ -200,7 +200,7 @@ function Column({
 							}
 							ownerName={
 								d.owner_id
-									? (ownerNames.get(d.owner_id) ?? d.owner_id.slice(0, 8))
+									? (ownerNames.get(d.owner_id) ?? t("common.unknownUser"))
 									: t("common.unassigned")
 							}
 							moving={moving.has(d.id)}

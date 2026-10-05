@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
+	Bdi,
+	RecordDetails,
 	type BadgeTone,
 	Button,
 	Dialog,
@@ -438,7 +440,7 @@ function HistoryList({
 	pipeline: Pipeline | undefined;
 	actors: ReadonlyMap<string, string>;
 }) {
-	const { t, formatDate } = useI18n();
+	const { t, tx, formatDateTime } = useI18n();
 	const [state, setState] = useState<HistState>({ s: "loading" });
 	// biome-ignore lint/correctness/useExhaustiveDependencies: history is re-read when the deal version changes
 	useEffect(() => {
@@ -451,7 +453,7 @@ function HistoryList({
 		return () => ctrl.abort();
 	}, [dealId, version]);
 	const name = (id: string) =>
-		pipeline?.stages.find((s) => s.id === id)?.name ?? id.slice(0, 8);
+		pipeline?.stages.find((s) => s.id === id)?.name ?? t("deals.unknownStage");
 	if (state.s === "loading")
 		return (
 			<p className="sy-deals__muted" role="status">
@@ -471,18 +473,15 @@ function HistoryList({
 			{[...state.items].reverse().map((h) => (
 				<li key={h.id} className="sy-deals__item" data-testid="history-item">
 					<b>
-						{t("deals.history.entry", {
+						{tx("deals.history.entry", {
 							from: name(h.from_stage),
 							to: name(h.to_stage),
 						})}
 					</b>
 					<span className="sy-deals__muted">
-						{formatDate(h.occurred_at, {
-							dateStyle: "medium",
-							timeStyle: "short",
-						})}
+						<Bdi>{formatDateTime(h.occurred_at)}</Bdi>
 						{" · "}
-						{actors.get(h.actor_id) ?? h.actor_id.slice(0, 8)}
+						<Bdi>{actors.get(h.actor_id) ?? t("common.unknownUser")}</Bdi>
 					</span>
 					{h.reason ? (
 						<span>{t("deals.history.reason", { reason: h.reason })}</span>
@@ -535,18 +534,20 @@ export function DealDetail({
 			/>
 			<dl className="sy-deals__facts">
 				<dt>{t("deals.detail.contact")}</dt>
-				<dd>{deal.contactName}</dd>
-				<dt>{t("deals.detail.pipeline")}</dt>
-				<dd>{deal.pipelineName}</dd>
-				<dt>{t("deals.detail.version")}</dt>
-				<dd data-testid="deal-version">
-					<Ltr>{deal.version}</Ltr>
-				</dd>
-				<dt>{t("deals.detail.id")}</dt>
 				<dd>
-					<Ltr>{deal.id}</Ltr>
+					<Bdi>{deal.contactName}</Bdi>
+				</dd>
+				<dt>{t("deals.detail.pipeline")}</dt>
+				<dd>
+					<Bdi>{deal.pipelineName}</Bdi>
 				</dd>
 			</dl>
+			<RecordDetails
+				rows={[
+					{ label: t("deals.detail.id"), value: deal.id, copyable: true },
+					{ label: t("deals.detail.version"), value: deal.version, testId: "deal-version" },
+				]}
+			/>
 		</div>
 	);
 	return (
@@ -560,7 +561,7 @@ export function DealDetail({
 			<div className="sy-deals__head">
 				<div>
 					<p className="sy-deals__name" data-testid="deal-detail-title">
-						{deal.title}
+						<Bdi>{deal.title}</Bdi>
 					</p>
 					<p className="sy-deals__muted" data-testid="deal-detail-value">
 						<Ltr>{dealValueText(deal, formatMoney)}</Ltr>

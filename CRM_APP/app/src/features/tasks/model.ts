@@ -85,7 +85,7 @@ export type TaskRow = Task & {
 	dueMs: number;
 };
 
-export type RowLabels = { unknown: string };
+export type RowLabels = { unknown: string; unknownOwner: string };
 
 export function toRows(
 	tasks: readonly Task[],
@@ -108,7 +108,7 @@ export function toRows(
 		return {
 			...t,
 			bucket: dueBucket(t, now),
-			ownerName: owners.get(t.owner_id) ?? t.owner_id.slice(0, 8),
+			ownerName: owners.get(t.owner_id) ?? labels.unknownOwner,
 			relatedKind,
 			relatedId,
 			relatedName,

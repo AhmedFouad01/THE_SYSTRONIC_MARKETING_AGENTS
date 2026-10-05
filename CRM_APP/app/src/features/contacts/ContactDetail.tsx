@@ -5,6 +5,7 @@ import { dealContextSearch } from "../deals/model.ts";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
+	Bdi,
 	Button,
 	EmptyState,
 	ErrorState,
@@ -14,7 +15,9 @@ import {
 	Ltr,
 	type MessageKey,
 	Panel,
+	RecordDetails,
 	Select,
+	sourceLabel,
 	Tabs,
 	useCursorList,
 	useI18n,
@@ -234,7 +237,7 @@ function ContactEditor({
 }
 
 function JourneyList({ contactId }: { contactId: string }) {
-	const { t, formatDate } = useI18n();
+	const { t, formatDateTime } = useI18n();
 	const list = useCursorList<JourneyEvent>(journeyFetcher(contactId), {
 		getId: (e) => e.id,
 		resetKey: contactId,
@@ -268,10 +271,7 @@ function JourneyList({ contactId }: { contactId: string }) {
 								)}
 							</span>
 							<span className="sy-contacts__when">
-								{formatDate(e.occurred_at, {
-									dateStyle: "medium",
-									timeStyle: "short",
-								})}
+								<Bdi>{formatDateTime(e.occurred_at)}</Bdi>
 							</span>
 						</li>
 					);
@@ -354,7 +354,9 @@ function DuplicatesList({
 						data-testid="duplicate-item"
 					>
 						<span>
-							<b>{d.display_name}</b> <Ltr>{d.id.slice(0, 8)}</Ltr>
+							<b>
+								<Bdi>{d.display_name}</Bdi>
+							</b>
 						</span>
 						<Button
 							size="sm"
@@ -446,16 +448,14 @@ function ContactBody({
 			</section>
 			<dl className="sy-contacts__facts">
 				<dt>{t("common.source")}</dt>
-				<dd>{contact.source}</dd>
-				<dt>{t("contacts.detail.version")}</dt>
-				<dd data-testid="contact-version">
-					<Ltr>{contact.version}</Ltr>
-				</dd>
-				<dt>{t("contacts.detail.id")}</dt>
-				<dd>
-					<Ltr>{contact.id}</Ltr>
-				</dd>
+				<dd>{sourceLabel(contact.source, t)}</dd>
 			</dl>
+			<RecordDetails
+				rows={[
+					{ label: t("contacts.detail.id"), value: contact.id, copyable: true },
+					{ label: t("contacts.detail.version"), value: contact.version, testId: "contact-version" },
+				]}
+			/>
 		</div>
 	);
 	return (

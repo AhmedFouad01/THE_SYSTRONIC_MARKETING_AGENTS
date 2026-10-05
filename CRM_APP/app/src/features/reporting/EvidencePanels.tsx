@@ -6,6 +6,7 @@ import {
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
+	Bdi,
 	Ltr,
 	Panel,
 	useCursorList,
@@ -74,7 +75,7 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 				value: (c) => c.occurred_at,
 				searchable: false,
 				sortable: true,
-				cell: (c) => <Ltr>{f.utc(c.occurred_at)}</Ltr>,
+				cell: (c) => <Bdi>{f.utc(c.occurred_at)}</Bdi>,
 			},
 			{
 				id: "contact",
@@ -82,12 +83,6 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 				value: () => "",
 				searchable: false,
 				cell: (c) => <ContactLink id={c.contact_id} />,
-			},
-			{
-				id: "id",
-				header: t("rep.col.id"),
-				value: (c) => c.id,
-				ltr: true,
 			},
 			{
 				id: "actions",
@@ -170,7 +165,7 @@ function ConversionDetailView({
 						<Ltr>{f.minor(c.value_minor, c.currency)}</Ltr>
 					</p>
 					<p className="sy-rep__muted">
-						<Ltr>{f.utc(c.occurred_at)}</Ltr>
+						<Bdi>{f.utc(c.occurred_at)}</Bdi>
 					</p>
 					{c.credits.length === 0 ? (
 						<p className="sy-rep__muted">{t("rep.meta.unpublished")}</p>
@@ -180,9 +175,8 @@ function ConversionDetailView({
 								<li key={`${cr.model}|${cr.as_of}`}>
 									{f.label(cr.model)} ·{" "}
 									{cr.source === "unknown" ? t("rep.unknown") : cr.source} ·{" "}
-									<Ltr>
-										{cr.model_version} · {cr.lookback_days} · {f.utc(cr.as_of)}
-									</Ltr>
+									<Ltr>{cr.model_version}</Ltr> · <Ltr>{cr.lookback_days}</Ltr> ·{" "}
+									<Bdi>{f.utc(cr.as_of)}</Bdi>
 								</li>
 							))}
 						</ul>
@@ -207,7 +201,7 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 			{
 				id: "id",
 				header: t("rep.col.id"),
-				value: (o) => o.id,
+				value: (o) => o.external_id,
 				ltr: true,
 				hideable: false,
 			},
@@ -244,7 +238,7 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 				value: (o) => o.placed_at,
 				searchable: false,
 				sortable: true,
-				cell: (o) => <Ltr>{f.utc(o.placed_at)}</Ltr>,
+				cell: (o) => <Bdi>{f.utc(o.placed_at)}</Bdi>,
 			},
 			{
 				id: "contact",
@@ -323,7 +317,7 @@ function MoneyList({ items }: { items: readonly Money[] }) {
 			{items.map((m) => (
 				<li key={m.id}>
 					<Ltr>{f.minor(m.amount_minor, m.currency)}</Ltr> ·{" "}
-					<Ltr>{f.utc(m.occurred_at)}</Ltr>
+					<Bdi>{f.utc(m.occurred_at)}</Bdi>
 				</li>
 			))}
 		</ul>
@@ -355,7 +349,7 @@ function OrderDetailView({
 						<ul className="sy-rep__list">
 							{o.fulfillment.map((x) => (
 								<li key={x.id}>
-									{f.label(x.status)} · <Ltr>{f.utc(x.occurred_at)}</Ltr>
+									{f.label(x.status)} · <Bdi>{f.utc(x.occurred_at)}</Bdi>
 								</li>
 							))}
 						</ul>

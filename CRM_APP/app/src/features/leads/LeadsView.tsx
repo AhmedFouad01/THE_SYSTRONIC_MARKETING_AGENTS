@@ -7,6 +7,7 @@ import {
 } from "../../api/index.ts";
 import {
 	Badge,
+	Bdi,
 	Button,
 	createSavedViewsStore,
 	DataGrid,
@@ -20,6 +21,7 @@ import {
 	useCursorList,
 	useI18n,
 	useToast,
+	sourceLabel,
 } from "../../ui/index.ts";
 import {
 	fetchAssignees,
@@ -64,7 +66,7 @@ const getLeadIdRaw = (l: Lead) => l.id;
 const getContactId = (c: Contact) => c.id;
 
 export function LeadsView() {
-	const { t, formatDate, formatNumber } = useI18n();
+	const { t, formatDateTime, formatRelative, formatNumber } = useI18n();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -120,6 +122,7 @@ export function LeadsView() {
 			toRows(mergeLatest(leads.items, overlay), contactNames, ownerNames, {
 				unassigned: t("common.unassigned"),
 				unknownContact: t("leads.unknownContact"),
+				unknownOwner: t("common.unknownUser"),
 			}),
 		[leads.items, overlay, contactNames, ownerNames, t],
 	);
@@ -163,13 +166,18 @@ export function LeadsView() {
 				value: (r) => r.title,
 				sortable: true,
 				hideable: false,
-				cell: (r) => <b>{r.title}</b>,
+				cell: (r) => (
+					<b>
+						<Bdi>{r.title}</Bdi>
+					</b>
+				),
 			},
 			{
 				id: "contact",
 				header: t("leads.col.contact"),
 				value: (r) => r.contactName,
 				sortable: true,
+				cell: (r) => <Bdi>{r.contactName}</Bdi>,
 			},
 			{
 				id: "status",
@@ -196,8 +204,9 @@ export function LeadsView() {
 			{
 				id: "source",
 				header: t("common.source"),
-				value: (r) => r.source,
+				value: (r) => sourceLabel(r.source, t),
 				sortable: true,
+				cell: (r) => sourceLabel(r.source, t),
 			},
 			{
 				id: "created",
@@ -205,14 +214,16 @@ export function LeadsView() {
 				value: (r) => Date.parse(r.received_at),
 				searchable: false,
 				sortable: true,
-				cell: (r) =>
-					formatDate(r.received_at, {
-						dateStyle: "medium",
-						timeStyle: "short",
-					}),
+				cell: (r) => (
+					<Bdi>
+						<span title={formatDateTime(r.received_at)}>
+							{formatRelative(r.received_at)}
+						</span>
+					</Bdi>
+				),
 			},
 		],
-		[t, ownerOptions, formatDate],
+		[t, ownerOptions, formatDateTime, formatRelative],
 	);
 
 	// ---- bulk assign to me ----

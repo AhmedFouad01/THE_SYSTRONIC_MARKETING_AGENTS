@@ -7,6 +7,7 @@ import {
 	useSession,
 } from "../../api/index.ts";
 import {
+	Bdi,
 	createSavedViewsStore,
 	DataGrid,
 	DEFAULT_VIEW,
@@ -14,6 +15,7 @@ import {
 	type GridColumn,
 	type GridSample,
 	safeLocalStorage,
+	sourceLabel,
 	Tabs,
 	useCursorList,
 	useI18n,
@@ -102,6 +104,7 @@ export function ContactsView() {
 				mergeLatest(contacts.items, overlay, merged),
 				ownerNames,
 				t("common.unassigned"),
+				t("common.unknownUser"),
 			),
 		[contacts.items, overlay, merged, ownerNames, t],
 	);
@@ -136,8 +139,8 @@ export function ContactsView() {
 		() =>
 			[...new Set(allRows.map((r) => r.source))]
 				.sort((a, b) => a.localeCompare(b))
-				.map((s) => ({ value: s, label: s })),
-		[allRows],
+				.map((s) => ({ value: s, label: sourceLabel(s, t) })),
+		[allRows, t],
 	);
 
 	const columns = useMemo<ReadonlyArray<GridColumn<ContactRow>>>(
@@ -148,7 +151,11 @@ export function ContactsView() {
 				value: (r) => r.display_name,
 				sortable: true,
 				hideable: false,
-				cell: (r) => <b>{r.display_name}</b>,
+				cell: (r) => (
+					<b>
+						<Bdi>{r.display_name}</Bdi>
+					</b>
+				),
 			},
 			{
 				id: "owner",
@@ -163,14 +170,7 @@ export function ContactsView() {
 				value: (r) => r.source,
 				sortable: true,
 				filter: { options: sourceOptions },
-			},
-			{
-				id: "id",
-				header: t("contacts.col.id"),
-				value: (r) => r.id,
-				sortable: true,
-				ltr: true,
-				cell: (r) => r.id.slice(0, 8),
+				cell: (r) => sourceLabel(r.source, t),
 			},
 		],
 		[t, ownerOptions, sourceOptions],
@@ -187,7 +187,7 @@ export function ContactsView() {
 
 	const ownerName = useCallback(
 		(id: string | null) =>
-			id ? (ownerNames.get(id) ?? id.slice(0, 8)) : t("common.unassigned"),
+			id ? (ownerNames.get(id) ?? t("common.unknownUser")) : t("common.unassigned"),
 		[ownerNames, t],
 	);
 

@@ -2,12 +2,14 @@ import { useState } from "react";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
+	Bdi,
 	Button,
 	ForbiddenState,
 	Input,
-	Ltr,
 	Panel,
+	RecordDetails,
 	Select,
+	sourceLabel,
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
@@ -210,7 +212,7 @@ export function LeadDetail({
 	assignees: readonly Assignee[];
 	onUpdated: (lead: Lead) => void;
 }) {
-	const { t, formatDate } = useI18n();
+	const { t, formatDateTime } = useI18n();
 	if (lead === null)
 		return (
 			<Panel
@@ -234,9 +236,11 @@ export function LeadDetail({
 			<div className="sy-leads__head">
 				<div>
 					<p className="sy-leads__name" data-testid="lead-detail-title">
-						{lead.title}
+						<Bdi>{lead.title}</Bdi>
 					</p>
-					<p className="sy-leads__muted">{lead.contactName}</p>
+					<p className="sy-leads__muted">
+						<Bdi>{lead.contactName}</Bdi>
+					</p>
 				</div>
 				<Badge tone={STATUS_TONE[lead.status]}>
 					{t(STATUS_KEY[lead.status])}
@@ -291,25 +295,20 @@ export function LeadDetail({
 			/>
 			<dl className="sy-leads__facts">
 				<dt>{t("common.source")}</dt>
-				<dd>{lead.source}</dd>
+				<dd>{sourceLabel(lead.source, t)}</dd>
 				<dt>{t("leads.detail.evidence")}</dt>
 				<dd>{lead.source_evidence}</dd>
 				<dt>{t("common.created")}</dt>
 				<dd>
-					{formatDate(lead.received_at, {
-						dateStyle: "medium",
-						timeStyle: "short",
-					})}
-				</dd>
-				<dt>{t("leads.detail.version")}</dt>
-				<dd data-testid="lead-version">
-					<Ltr>{lead.version}</Ltr>
-				</dd>
-				<dt>{t("leads.detail.id")}</dt>
-				<dd>
-					<Ltr>{lead.id}</Ltr>
+					<Bdi>{formatDateTime(lead.received_at)}</Bdi>
 				</dd>
 			</dl>
+			<RecordDetails
+				rows={[
+					{ label: t("leads.detail.id"), value: lead.id, copyable: true },
+					{ label: t("leads.detail.version"), value: lead.version, testId: "lead-version" },
+				]}
+			/>
 		</Panel>
 	);
 }

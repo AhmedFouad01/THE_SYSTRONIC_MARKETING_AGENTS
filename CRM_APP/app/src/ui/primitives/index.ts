@@ -1,4 +1,5 @@
-export { Badge, type BadgeTone, StatusPill } from "./Badge.tsx";
+export { Badge, Badge as Chip, type BadgeTone, StatusPill } from "./Badge.tsx";
+export { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
 export {
 	Button,
 	type ButtonProps,

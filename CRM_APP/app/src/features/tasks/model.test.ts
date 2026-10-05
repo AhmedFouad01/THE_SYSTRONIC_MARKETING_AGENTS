@@ -107,7 +107,7 @@ describe("rows, source, related", () => {
 			new Map([[ID, "Ada"]]),
 			new Map([["d1", "Big deal"]]),
 			new Map([[ID, "Owner"]]),
-			{ unknown: "?" },
+			{ unknown: "?", unknownOwner: "Someone" },
 			NOW,
 		);
 		expect(rows[0]).toMatchObject({

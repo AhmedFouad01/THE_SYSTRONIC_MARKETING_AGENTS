@@ -8,6 +8,9 @@ import {
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
 
+// Money follows the locale (Intl currency): Arabic shows the Egyptian pound symbol, not the ISO code.
+const egp = (language: "ar" | "en") => (language === "ar" ? "ج.م." : "EGP");
+
 process.loadEnvFile(".env");
 
 // Seeds a synthetic fixture per test. Credentials stay in memory; never logged or asserted by value.
@@ -170,14 +173,14 @@ for (const width of [360, 1280])
 			await expect(counts.nth(1)).toHaveText(/[0٠]/);
 			await expect(
 				column(page, "New").getByTestId("column-total"),
-			).toContainText("EGP");
+			).toContainText(egp(language));
 			await expect(cards(page, "New")).toHaveCount(2);
 			await expect(
 				column(page, "Qualified").getByTestId("column-empty"),
 			).toBeVisible();
 			await expect(column(page, "Won")).toHaveAttribute("data-kind", "won");
 			await expect(column(page, "Lost")).toHaveAttribute("data-kind", "lost");
-			await expect(cardOf(page, "Alpha deal")).toContainText("EGP");
+			await expect(cardOf(page, "Alpha deal")).toContainText(egp(language));
 			await expect(cardOf(page, "Alpha deal")).toContainText(
 				"Contact Alpha deal",
 			);

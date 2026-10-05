@@ -64,7 +64,8 @@ for (const width of [360, 1280])
 				},
 			});
 			const actor: string = (await session.json()).data.actor;
-			await expect(page.getByTestId("actor")).toContainText(actor.slice(0, 8));
+			await expect(page.getByTestId("actor")).toBeVisible();
+			await expect(page.getByTestId("actor")).not.toContainText(actor.slice(0, 8));
 
 			// credentials live in sessionStorage only
 			const where = await page.evaluate(() => ({
@@ -128,10 +129,13 @@ for (const width of [360, 1280])
 				expect((navBox?.width ?? 0) >= width - 1).toBe(true);
 				await expect(page.getByTestId("nav-email")).toBeHidden();
 			} else {
-				expect(
-					navBox?.x === 0 ||
-						(navBox?.x ?? 0) + (navBox?.width ?? 0) >= width - 1,
-				).toBe(true);
+				// condition-based: layout (fonts/scrollbar) may still be settling right after connect
+				await expect
+					.poll(async () => {
+						const b = await page.locator(".sy-sidebar").boundingBox();
+						return b?.x === 0 || (b?.x ?? 0) + (b?.width ?? 0) >= width - 1;
+					})
+					.toBe(true);
 				await expect(page.getByTestId("nav-email")).toBeVisible();
 			}
 

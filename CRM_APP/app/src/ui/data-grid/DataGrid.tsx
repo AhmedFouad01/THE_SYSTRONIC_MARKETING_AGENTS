@@ -85,7 +85,7 @@ const interactive = "input,button,a,select,label,textarea";
 
 export function DataGrid<T>(props: DataGridProps<T>) {
 	const { rows, columns, getRowId, selectable = false, views } = props;
-	const { t, locale, formatNumber } = useI18n();
+	const { t, tx, locale, formatNumber } = useI18n();
 	const [state, dispatch] = useReducer(gridReducer, props.initialView ?? DEFAULT_VIEW, initialGridState);
 	const getIdRef = useRef(getRowId);
 	const selectionCb = useRef(props.onSelectionChange);
@@ -377,13 +377,14 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							onClick={() => setFiltersOpen((v) => !v)}
 							data-testid="grid-filters"
 						>
-							{t("common.filters")}
-							{state.filters.length > 0 ? ` · ${formatNumber(state.filters.length)}` : ""}
+							{state.filters.length > 0
+								? tx("grid.filtersCount", { count: formatNumber(state.filters.length) })
+								: t("common.filters")}
 						</Button>
 					) : null}
 					<Popover
 						label={t("grid.chooseColumns")}
-						triggerLabel={`${t("common.columns")} · ${formatNumber(cols.length)}`}
+						triggerLabel={tx("grid.columnsCount", { count: formatNumber(cols.length) })}
 						testId="grid-columns"
 					>
 						<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
@@ -410,7 +411,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					{props.toolbarExtra}
 				</div>
 				<p className="sy-grid__count" role="status" data-testid="grid-count">
-					{t("format.matching", { count: formatNumber(matching.length) })}
+					{tx("format.matching", { count: formatNumber(matching.length) })}
 				</p>
 			</search>
 
@@ -465,7 +466,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 
 			{selectable && state.selection.size > 0 ? (
 				<section className="sy-grid__batch" aria-label={t("format.selectedCount", { count: formatNumber(state.selection.size) })} data-testid="grid-batch">
-					<span>{t("format.selectedCount", { count: formatNumber(state.selection.size) })}</span>
+					<span>{tx("format.selectedCount", { count: formatNumber(state.selection.size) })}</span>
 					{props.batchActions?.(selectedIds, clearSelection)}
 					<Button size="sm" variant="ghost" onClick={clearSelection}>
 						{t("common.clearSelection")}
@@ -490,7 +491,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						))}
 					</Select>
 					<span className="sy-grid__range" data-testid="grid-range">
-						{t("grid.range", {
+						{tx("grid.range", {
 							from: formatNumber(pageInfo.start + 1),
 							to: formatNumber(pageInfo.end),
 							total: formatNumber(pageInfo.total),
@@ -505,7 +506,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						>
 							{t("common.previousPage")}
 						</Button>
-						<span>{t("grid.page", { page: formatNumber(pageInfo.page), count: formatNumber(pageInfo.pageCount) })}</span>
+						<span>{tx("grid.page", { page: formatNumber(pageInfo.page), count: formatNumber(pageInfo.pageCount) })}</span>
 						<Button
 							size="sm"
 							disabled={pageInfo.page >= pageInfo.pageCount}
@@ -523,8 +524,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					<Icon name="info" size={16} />
 					<span>
 						{props.sample.atCap
-							? t("grid.sampleCap", { count: formatNumber(props.sample.loaded) })
-							: t("grid.sample", { count: formatNumber(props.sample.loaded) })}
+							? tx("grid.sampleCap", { count: formatNumber(props.sample.loaded) })
+							: tx("grid.sample", { count: formatNumber(props.sample.loaded) })}
 					</span>
 					{props.sample.failed ? <span role="alert">{t("grid.loadMoreFailed")}</span> : null}
 					{props.sample.atCap ? null : (

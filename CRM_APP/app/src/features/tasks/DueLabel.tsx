@@ -1,4 +1,4 @@
-import { INTL_LOCALE, StatusPill, useI18n } from "../../ui/index.ts";
+import { Bdi, INTL_LOCALE, StatusPill, useI18n } from "../../ui/index.ts";
 import { dayDiff, type DueBucket } from "./model.ts";
 
 /** Due instant (Intl, medium date + short time), a relative day hint, and an overdue badge. */
@@ -11,7 +11,7 @@ export function DueLabel({
 	bucket: DueBucket;
 	now: Date;
 }) {
-	const { t, locale, formatDate } = useI18n();
+	const { t, locale, formatDateTime } = useI18n();
 	if (dueAt === null || Number.isNaN(Date.parse(dueAt)))
 		return <span className="sy-tasks__muted">{t("tasks.noDue")}</span>;
 	const due = new Date(dueAt);
@@ -21,7 +21,7 @@ export function DueLabel({
 	return (
 		<span className="sy-tasks__due">
 			<span>
-				{formatDate(due, { dateStyle: "medium", timeStyle: "short" })}
+				<Bdi>{formatDateTime(due)}</Bdi>
 			</span>
 			<span className="sy-tasks__muted">{relative}</span>
 			{bucket === "overdue" ? (

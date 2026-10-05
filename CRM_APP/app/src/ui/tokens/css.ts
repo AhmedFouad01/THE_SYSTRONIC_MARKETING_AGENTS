@@ -72,12 +72,10 @@ function fontDecls(locale: "en" | "ar"): string {
 
 function arabicLineDecls(): string {
 	return decls(
-		Object.entries(typeScale).map(
-			([role, t]): Entry => [
-				varName(`type-${kebab(role)}-line`),
-				`${t.lineAr}px`,
-			],
-		),
+		Object.entries(typeScale).flatMap(([role, t]): Entry[] => [
+			[varName(`type-${kebab(role)}-size`), `${t.sizeAr}px`],
+			[varName(`type-${kebab(role)}-line`), `${t.lineAr}px`],
+		]),
 	);
 }
 

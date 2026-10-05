@@ -55,13 +55,13 @@ describe("locale + formatters", () => {
 		expect(formatNumber(1284500, "ar")).toMatch(/^[٠-٩٫٬]+$/);
 	});
 
-	it("formatMoney follows the prototype '<number> <code>' shape", () => {
-		expect(formatMoney(1284500, "en")).toBe("1,284,500 EGP");
-		expect(formatMoney(1284500, "en", { currency: "USD" })).toBe(
-			"1,284,500 USD",
-		);
-		expect(formatMoney(1284500, "en", { compact: true })).toBe("1.3M EGP");
-		expect(formatMoney(1284500, "ar")).toMatch(/^[٠-٩٫٬]+ EGP$/);
+	it("formatMoney is one Intl currency string per locale", () => {
+		const n = (s: string) => s.replace(/[ ‏]/g, " ").trim();
+		expect(n(formatMoney(1284500, "en"))).toBe("EGP 1,284,500");
+		expect(n(formatMoney(1284500, "en", { currency: "USD" }))).toBe("$1,284,500");
+		expect(n(formatMoney(1284500, "en", { compact: true }))).toBe("EGP 1.3M");
+		expect(formatMoney(1284500, "ar")).toMatch(/[٠-٩]/);
+		expect(formatMoney(1284500, "ar")).not.toMatch(/[0-9]/);
 	});
 
 	it("formatPercent", () => {

@@ -63,11 +63,12 @@ export function toRows(
 	contacts: readonly Contact[],
 	owners: ReadonlyMap<string, string>,
 	unassigned: string,
+	unknownOwner: string = unassigned,
 ): ContactRow[] {
 	return contacts.map((c) => ({
 		...c,
 		ownerName: c.owner_id
-			? (owners.get(c.owner_id) ?? c.owner_id.slice(0, 8))
+			? (owners.get(c.owner_id) ?? unknownOwner)
 			: unassigned,
 	}));
 }

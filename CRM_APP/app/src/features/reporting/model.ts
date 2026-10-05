@@ -281,8 +281,11 @@ export const contactSearch = (id: string): string =>
 	`?select=${encodeURIComponent(id)}`;
 
 export const UTC_DATETIME: Intl.DateTimeFormatOptions = {
-	dateStyle: "medium",
-	timeStyle: "short",
+	day: "numeric",
+	month: "short",
+	year: "numeric",
+	hour: "numeric",
+	minute: "2-digit",
 	timeZone: "UTC",
 };
 
