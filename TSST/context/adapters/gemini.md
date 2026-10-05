@@ -11,8 +11,9 @@ operating order.
 ## Tier → model
 Antigravity picks the model in its UI per conversation (menu: Gemini Flash, Gemini Pro,
 Claude Opus 5.5 — each low/high); it cannot switch itself. Mapping
-(`TSST/bus/runtimes.yaml#gemini.tier_*`): FAST → Flash · low · WORK → Flash · high ·
-CODE → Pro · high · DEEP → Pro · high (Opus 5.5 · high available; DEEP stays with lead). Claim with
+(`TSST/bus/runtimes.yaml#gemini.tier_*`): FAST → Gemini 3.8 Flash · low · WORK/CODE →
+Claude Opus 5.5 · high (user decision 2026-10-05: Flash under-performed on creative work in
+C7) · DEEP stays with lead. Claim with
 `--model <current model>`; on a mismatch follow `TSST/context/bus.md#model-per-tier`. IMAGE / VIDEO → native Gemini image
 and video generation (e.g. Veo) where enabled; outputs still pass
 `TSST/CREATIVE/FINAL_ASSET_GATE.md`.

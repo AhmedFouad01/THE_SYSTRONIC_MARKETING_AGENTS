@@ -32,9 +32,9 @@ gemini:
   until:
   verified: 2026-10-04
   tier_FAST: Gemini 3.8 Flash · low
-  tier_WORK: Gemini 3.8 Flash · high
-  tier_CODE: Gemini Pro · high
-  tier_DEEP: Gemini Pro · high (Claude Opus 5.5 · high also available; DEEP stays with lead)
+  tier_WORK: Claude Opus 5.5 · high
+  tier_CODE: Claude Opus 5.5 · high
+  tier_DEEP: Claude Opus 5.5 · high (DEEP stays with lead)
 chatgpt:
   caps: []
   unverified: [drive_docs_read]
