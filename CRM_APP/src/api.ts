@@ -1,7 +1,8 @@
 import { createServer, type IncomingMessage } from "node:http";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { pathToFileURL } from "node:url";
+import { resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import {
 	type Context,
 	Fault,
@@ -16,6 +17,28 @@ import {
 	isJourney,
 	journeyRequest,
 } from "./journey.js";
+import {
+	APP_ASSET_PREFIX,
+	contentType,
+	isAppRoute,
+	resolveAsset,
+} from "./static.js";
+// Built client (vite outDir dist/app): ../dist/app when run from src/ (tsx), ../app from dist/src/.
+const clientRoots = ["../dist/app", "../app"].map((p) =>
+	fileURLToPath(new URL(p, import.meta.url)),
+);
+async function readClient(rel: (root: string) => string | null) {
+	for (const root of clientRoots) {
+		const file = rel(root);
+		if (!file) return null;
+		try {
+			return { file, data: await readFile(file) };
+		} catch {
+			// try next candidate root
+		}
+	}
+	return null;
+}
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 function context(req: IncomingMessage): Context {
 	const tenant = req.headers["x-tenant-id"],
@@ -89,6 +112,26 @@ export function server() {
 						"utf8",
 					),
 				);
+				return;
+			}
+			const rawPath = (req.url ?? "/").split(/[?#]/, 1)[0];
+			if (
+				req.method === "GET" &&
+				(rawPath.startsWith(APP_ASSET_PREFIX) || isAppRoute(rawPath))
+			) {
+				const asset = rawPath.startsWith(APP_ASSET_PREFIX);
+				if (!asset && !(req.headers.accept ?? "").includes("text/html"))
+					throw new Fault(404, "NOT_FOUND");
+				const found = await readClient((root) =>
+					asset
+						? resolveAsset(resolve(root, "assets"), rawPath)
+						: resolve(root, "index.html"),
+				);
+				if (!found) throw new Fault(404, "NOT_FOUND");
+				res.setHeader("Content-Type", contentType(found.file));
+				if (asset)
+					res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+				res.end(found.data);
 				return;
 			}
 			const url = new URL(req.url ?? "/", "http://localhost");
