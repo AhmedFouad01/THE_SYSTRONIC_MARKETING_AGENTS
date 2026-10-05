@@ -1,0 +1,86 @@
+/* Global base. Colors, fonts, sizes, focus come from var(--sy-*) tokens only (see ui/tokens). */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+}
+
+body {
+	background: var(--sy-canvas);
+	color: var(--sy-text);
+	font-family: var(--sy-font-body);
+	font-size: var(--sy-type-body-size);
+	line-height: var(--sy-type-body-line);
+	font-weight: var(--sy-type-body-weight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--sy-font-heading);
+	margin: 0;
+}
+
+h1 {
+	font-size: var(--sy-type-page-title-size);
+	line-height: var(--sy-type-page-title-line);
+	font-weight: var(--sy-type-page-title-weight);
+}
+
+h2 {
+	font-size: var(--sy-type-section-title-size);
+	line-height: var(--sy-type-section-title-line);
+	font-weight: var(--sy-type-section-title-weight);
+}
+
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+}
+
+a {
+	color: var(--sy-interactive);
+}
+
+/* Keyboard focus only (UX_RULES 14); selected state is a separate treatment. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+.sy-focusable:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: var(--sy-focus-offset);
+}
+
+:where(input, select, textarea):focus-visible {
+	outline-offset: var(--sy-focus-offset-input);
+}
+
+/* Bidi-sensitive values (IDs, emails, phones, money, percentages) stay LTR inside RTL text. */
+.sy-ltr {
+	direction: ltr;
+	unicode-bidi: isolate;
+}
+
+/* Reduced motion (UX_RULES 13): same rule as the prototype. !important is intentional: it must beat component transitions. */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		/* biome-ignore lint/complexity/noImportantStyles: reduced-motion override must win over component styles */
+		scroll-behavior: auto !important;
+		/* biome-ignore lint/complexity/noImportantStyles: reduced-motion override must win over component styles */
+		transition: none !important;
+		/* biome-ignore lint/complexity/noImportantStyles: reduced-motion override must win over component styles */
+		animation: none !important;
+	}
+}

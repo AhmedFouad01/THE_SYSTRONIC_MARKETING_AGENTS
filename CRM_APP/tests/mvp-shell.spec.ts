@@ -72,3 +72,60 @@ test("legacy pages still load", async ({ page }) => {
 	const reporting = await page.request.get("/reporting");
 	expect(reporting.status()).toBe(200);
 });
+
+test("locale toggle flips html lang/dir and persists", async ({ page }) => {
+	await page.goto("/app/");
+	const html = page.locator("html");
+	await expect(html).toHaveAttribute("dir", "rtl");
+	await page.getByTestId("locale-toggle").click();
+	await expect(html).toHaveAttribute("lang", "en");
+	await expect(html).toHaveAttribute("dir", "ltr");
+	await page.reload();
+	await expect(html).toHaveAttribute("dir", "ltr");
+	await page.getByTestId("locale-toggle").click();
+	await expect(html).toHaveAttribute("lang", "ar");
+	await expect(html).toHaveAttribute("dir", "rtl");
+});
+
+test("theme toggle flips data-theme, tokens follow, and persists", async ({
+	page,
+}) => {
+	await page.goto("/app/");
+	const html = page.locator("html");
+	await expect(html).toHaveAttribute("data-theme", "light");
+	const canvas = () =>
+		page.evaluate(() =>
+			getComputedStyle(document.documentElement)
+				.getPropertyValue("--sy-canvas")
+				.trim(),
+		);
+	expect(await canvas()).toBe("#F3F5F7");
+	await page.getByTestId("theme-toggle").click();
+	await expect(html).toHaveAttribute("data-theme", "dark");
+	expect(await canvas()).toBe("#090D14");
+	await page.reload();
+	await expect(html).toHaveAttribute("data-theme", "dark");
+	await page.getByTestId("theme-toggle").click();
+	await expect(html).toHaveAttribute("data-theme", "light");
+});
+
+test("toggle buttons show a visible focus ring on keyboard focus", async ({
+	page,
+}) => {
+	await page.goto("/app/");
+	await page.keyboard.press("Tab");
+	const toggle = page.getByTestId("locale-toggle");
+	await expect(toggle).toBeFocused();
+	const ring = await toggle.evaluate((el) => {
+		const s = getComputedStyle(el);
+		return {
+			style: s.outlineStyle,
+			width: s.outlineWidth,
+			color: s.outlineColor,
+		};
+	});
+	expect(ring.style).toBe("solid");
+	expect(ring.width).toBe("2px");
+	// ring color is the light-theme focus token (#009FD4)
+	expect(ring.color).toBe("rgb(0, 159, 212)");
+});

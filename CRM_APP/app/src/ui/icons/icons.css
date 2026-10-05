@@ -1,0 +1,7 @@
+.sy-icon {
+	flex: none;
+}
+
+:root[dir="rtl"] .sy-icon[data-mirror-rtl="true"] {
+	transform: scaleX(-1);
+}
