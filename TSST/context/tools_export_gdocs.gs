@@ -275,3 +275,33 @@ function acceptAkyroExports() {
   visit(resolveRoot(BRAND_ROOTS.find(r => r[2] === 'AKYRO_STUDIO')[0]));
   Logger.log('akyro tagged: ' + tagged);
 }
+
+// ---------------------------------------------------------------------------------------
+// VILL-CS-001 (user-approved 2026-10-05): append dated entries to 4 VILL canonical Docs,
+// then refresh their .md exports. Idempotent: a Doc already containing the marker is skipped.
+// Source: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/VILL_CHANGE_SET.md
+const VILL_CS_001 = [
+  ['05_DECISIONS_ADR', 'DECISIONS', 'VILL-ADR-003 update (VILL-CS-001, 2026-10-05): Status ACCEPTED by user. Refined: company scope = full interior design / fit-out; content strategy covers the whole scope; Kitchen-first applies to paid acquisition only (kitchen ads → dedicated kitchen page → Project Assessment).'],
+  ['01_CURRENT_STATUS', 'CURRENT_STATUS', 'Update 2026-10-05 (VILL-CS-001): Strategy Baseline v0.2 and Brand Look Direction v0.2 approved by user (TSST-PILOT-002, repo TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/). VILL-001 stays open until actual economics and capacity are supplied (OPEN_DATA_REQUESTS.md). Next: W1 Foundation after an implementation mandate.'],
+  ['03_MILESTONES', 'MILESTONE_LOG', 'VILL-001 — 2026-10-05 (VILL-CS-001): strategy baseline + written brand look approved; remaining exit items: actual unit economics, capacity, numeral system, font licence, logo master.'],
+  ['04_CHANGELOG', 'CHANGELOG', '2026-10-05 — VILL-CS-001 applied: VILL-ADR-003 accepted (refined); strategy baseline v0.2 + brand look direction v0.2 approved via TSST C7 pilot.'],
+];
+
+function applyVillCS001() {
+  const marker = 'VILL-CS-001';
+  const root = resolveRoot(BRAND_ROOTS.find(r => r[2] === 'VILL_STUDIO')[0]);
+  const report = {appended: [], skipped: [], missing: []};
+  VILL_CS_001.forEach(([sub, title, text]) => {
+    const it = root.getFoldersByName(sub);
+    const doc = it.hasNext() ? findDoc(it.next(), title) : null;
+    if (!doc) { report.missing.push(sub + '/' + title); return; }
+    const body = DocumentApp.openById(doc.getId()).getBody();
+    if (body.getText().indexOf(marker) >= 0) { report.skipped.push(title); return; }
+    body.appendParagraph('');
+    body.appendParagraph(text);
+    report.appended.push(title);
+  });
+  const ex = {created: 0, updated: 0, missing: []};
+  walk(root, -1, ex);
+  Logger.log(JSON.stringify({changeSet: report, exportRefresh: ex}, null, 1));
+}
