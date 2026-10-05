@@ -161,7 +161,6 @@ export const ar: Record<MessageKey, string> = {
 	"leads.conflict.reload": "إعادة تحميل العميل المحتمل",
 	"leads.forbidden.title": "لا يمكنك تعديل هذا العميل المحتمل",
 	"leads.forbidden.body": "دورك لا يسمح بإجراء تغييرات على هذا العميل المحتمل.",
-	"leads.notInMvp": "{label} (خارج النسخة الأولى)",
 	"leads.bulk.progress": "جارٍ التعيين {done} من {total}…",
 	"leads.bulk.ok": "تم تعيين {count} لك.",
 	"leads.bulk.partial": "تم تعيين {ok} لك وفشل {failed}. الصفوف الفاشلة تحتفظ بمسؤولها الحالي.",
@@ -575,4 +574,9 @@ export const ar: Record<MessageKey, string> = {
 	"nav.more": "المزيد",
 	"nav.moreTitle": "شاشات أخرى",
 	"nav.mobile": "التنقل الرئيسي",
+	"record.back": "رجوع",
+	"record.edit": "تعديل",
+	"record.cancelEdit": "إلغاء",
+	"grid.pager": "ترقيم الصفحات",
+	"grid.goToPage": "الصفحة {page}",
 };

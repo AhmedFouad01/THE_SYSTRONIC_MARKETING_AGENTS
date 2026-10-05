@@ -220,6 +220,11 @@ test("tasks en: list, due tabs, overdue badge, no-date tab empty, owner filter a
 		.filter({ hasText: "Today task" })
 		.click({ position: { x: 10, y: 10 } });
 	await expect(page.getByTestId("task-detail-title")).toHaveText("Today task");
+	// UX-17: the Source column is hidden by default; the record shows it in its fact grid and Columns restores it.
+	await expect(page.getByRole("columnheader", { name: "Source" })).toHaveCount(0);
+	await expect(page.getByTestId("record-facts")).toContainText("Source");
+	await page.getByTestId("grid-columns").click();
+	await page.getByRole("checkbox", { name: "Source" }).check();
 	await expect(page.getByTestId("task-source").first()).toHaveAttribute(
 		"data-source",
 		"unknown",
@@ -359,6 +364,7 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 		.filter({ hasText: "Detail task" })
 		.click({ position: { x: 10, y: 10 } });
 	const detail = page.getByTestId("task-detail");
+	await page.getByTestId("record-edit").click();
 	await detail.getByLabel("Title").fill("Detail task renamed");
 	await page.getByTestId("task-save").click();
 	await expect(page.getByTestId("task-detail-title")).toHaveText(
@@ -366,6 +372,7 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 	);
 
 	// forced stale write: 409 -> banner, reload recovers
+	await page.getByTestId("record-edit").click();
 	await detail.getByLabel("Title").fill("Stale rename");
 	let forced = true;
 	await page.route("**/v1/tasks/*", (route) => {
@@ -389,6 +396,7 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 	await page.getByTestId("task-reload").click();
 	await expect(page.getByTestId("task-conflict")).toHaveCount(0);
 	await page.unroute("**/v1/tasks/*");
+	await page.getByTestId("record-edit-cancel").click();
 	await page.getByTestId("task-complete").click();
 	await expect(page.getByTestId("task-detail-status")).toContainText("Done");
 	await expect(page.getByTestId("task-complete")).toHaveCount(0);
@@ -486,6 +494,10 @@ for (const width of [360, 1280])
 			);
 			await expect(page.getByTestId("overdue-badge").first()).toBeVisible();
 			expect(await noPageOverflow(page)).toBe(true);
+			if (width < 1024) {
+				await page.getByTestId("sheet-back").click();
+				await expect(page.getByTestId("task-detail")).toHaveCount(0);
+			}
 			const opener = page.getByTestId("new-task");
 			await opener.click();
 			await expect(page.getByRole("dialog")).toBeVisible();

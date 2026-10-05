@@ -166,6 +166,7 @@ test("contacts en: detail edit, simulated version conflict, reload and retry, ad
 	expect(other.status()).toBe(200);
 
 	const detail = page.getByTestId("contact-detail");
+	await page.getByTestId("record-edit").click();
 	await detail.getByLabel("Name").fill("Edited locally");
 	await page.getByTestId("contact-save").click();
 	await expect(page.getByTestId("contact-conflict")).toContainText("changed by someone else");
@@ -298,9 +299,11 @@ test("contacts en: reader sees redacted identifiers, restricted duplicates and a
 	await connect(page, f.tokens.reader, f.ids.a);
 	await openRow(page, "Readable Person");
 	await expect(page.getByTestId("identifiers-hidden")).toBeVisible();
+	await page.getByTestId("record-edit").click();
 	await page.getByTestId("contact-detail").getByLabel("Name").fill("Reader edit");
 	await page.getByTestId("contact-save").click();
 	await expect(page.getByTestId("contact-forbidden")).toContainText("You cannot edit this contact");
+	await page.getByTestId("record-edit-cancel").click();
 	await page.getByRole("tab", { name: "Duplicates" }).click();
 	await expect(page.getByTestId("state-forbidden")).toContainText("Duplicates are restricted");
 	await expect(page.getByTestId("duplicate-merge")).toHaveCount(0);

@@ -83,7 +83,7 @@
 	margin: 0;
 	overflow-wrap: anywhere;
 }
-@media (max-width: 1100px) {
+@media (max-width: 1023px) {
 	.sy-leads__body {
 		grid-template-columns: minmax(0, 1fr);
 	}

@@ -11,6 +11,7 @@ import {
 	type ModelColumn,
 	normalizeText,
 	paginate,
+	pagerItems,
 	pageSelectionState,
 	pruneSelection,
 	searchRows,
@@ -219,5 +220,19 @@ describe("grid reducer", () => {
 		s = gridReducer(s, { type: "applyView", view: { ...DEFAULT_VIEW, query: "q", density: "compact" } });
 		expect(s).toMatchObject({ query: "q", density: "compact", activeId: "2" });
 		expect(s.selection.has("1")).toBe(true);
+	});
+});
+
+describe("pagerItems (numbered pager)", () => {
+	it("lists every page up to seven", () => {
+		expect(pagerItems(1, 1)).toEqual([1]);
+		expect(pagerItems(2, 3)).toEqual([1, 2, 3]);
+		expect(pagerItems(4, 7)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+	});
+	it("collapses long ranges around the current page", () => {
+		expect(pagerItems(1, 20)).toEqual([1, 2, "gap", 20]);
+		expect(pagerItems(10, 20)).toEqual([1, "gap", 9, 10, 11, "gap", 20]);
+		expect(pagerItems(20, 20)).toEqual([1, "gap", 19, 20]);
+		expect(pagerItems(3, 20)).toEqual([1, 2, 3, 4, "gap", 20]);
 	});
 });

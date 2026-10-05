@@ -3,7 +3,9 @@ import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
 	Bdi,
-	RecordDetails,
+	RecordEditFooter,
+	RecordEmpty,
+	RecordPanel,
 	type BadgeTone,
 	Button,
 	Dialog,
@@ -12,7 +14,6 @@ import {
 	Ltr,
 	MenuButton,
 	type MessageKey,
-	Panel,
 	Select,
 	Tabs,
 	Textarea,
@@ -105,10 +106,12 @@ function DealEditor({
 	deal,
 	assignees,
 	onUpdated,
+	onDone,
 }: {
 	deal: DealRow;
 	assignees: readonly Assignee[];
 	onUpdated: (d: Deal) => void;
+	onDone: () => void;
 }) {
 	const { t } = useI18n();
 	const toast = useToast();
@@ -134,6 +137,7 @@ function DealEditor({
 		try {
 			onUpdated(await patchDeal(deal.id, body));
 			toast.notify(t("deals.edit.saved"), "success");
+			onDone();
 		} catch (e) {
 			setError(
 				isVersionConflict(e)
@@ -241,30 +245,18 @@ function DealEditor({
 					</option>
 				))}
 			</Select>
-			<div className="sy-deals__actions">
-				<Button
-					type="submit"
-					variant="primary"
-					size="sm"
-					loading={saving}
-					disabled={!dirty}
-					data-testid="deal-save"
-				>
-					{t("deals.edit.save")}
-				</Button>
-				<Button
-					size="sm"
-					variant="ghost"
-					disabled={!dirty || saving}
-					onClick={() => {
-						setDraft(draftOf(deal));
-						setError(null);
-						setTouched(false);
-					}}
-				>
-					{t("deals.edit.revert")}
-				</Button>
-			</div>
+			<RecordEditFooter
+				dirty={dirty}
+				saving={saving}
+				onDiscard={() => {
+					setDraft(draftOf(deal));
+					setError(null);
+					setTouched(false);
+				}}
+				saveLabel={t("deals.edit.save")}
+				discardLabel={t("deals.edit.revert")}
+				saveTestId="deal-save"
+			/>
 		</form>
 	);
 }
@@ -498,89 +490,91 @@ export function DealDetail({
 	assignees,
 	actors,
 	onUpdated,
+	onClose,
 }: {
 	deal: DealRow | null;
 	pipeline: Pipeline | undefined;
 	assignees: readonly Assignee[];
 	actors: ReadonlyMap<string, string>;
 	onUpdated: (deal: Deal) => void;
+	onClose: () => void;
 }) {
 	const { t, formatMoney } = useI18n();
 	const [tab, setTab] = useState<"overview" | "history">("overview");
 	if (deal === null)
 		return (
-			<Panel
-				as="aside"
-				title={t("deals.detail.title")}
-				className="sy-deals__detail"
-				data-testid="deal-detail-empty"
-			>
-				<p className="sy-deals__muted">{t("deals.detail.empty")}</p>
-			</Panel>
+			<RecordEmpty
+				label={t("deals.detail.title")}
+				hint={t("deals.detail.empty")}
+				testId="deal-detail-empty"
+			/>
 		);
-	const overview = (
-		<div>
-			<StageControl
-				key={deal.id}
-				deal={deal}
-				pipeline={pipeline}
-				onUpdated={onUpdated}
-			/>
-			<DealEditor
-				key={`${deal.id}:${deal.version}`}
-				deal={deal}
-				assignees={assignees}
-				onUpdated={onUpdated}
-			/>
-			<dl className="sy-deals__facts">
-				<dt>{t("deals.detail.contact")}</dt>
-				<dd>
-					<Bdi>{deal.contactName}</Bdi>
-				</dd>
-				<dt>{t("deals.detail.pipeline")}</dt>
-				<dd>
-					<Bdi>{deal.pipelineName}</Bdi>
-				</dd>
-			</dl>
-			<RecordDetails
-				rows={[
-					{ label: t("deals.detail.id"), value: deal.id, copyable: true },
-					{ label: t("deals.detail.version"), value: deal.version, testId: "deal-version" },
-				]}
-			/>
-		</div>
-	);
 	return (
-		<Panel
-			as="aside"
-			title={t("deals.detail.title")}
-			className="sy-deals__detail"
-			data-testid="deal-detail"
-			aria-label={t("deals.detail.title")}
-		>
-			<div className="sy-deals__head">
-				<div>
-					<p className="sy-deals__name" data-testid="deal-detail-title">
-						<Bdi>{deal.title}</Bdi>
-					</p>
-					<p className="sy-deals__muted" data-testid="deal-detail-value">
-						<Ltr>{dealValueText(deal, formatMoney)}</Ltr>
-					</p>
-				</div>
-			</div>
-			<div className="sy-deals__actions">
+		<RecordPanel
+			label={t("deals.detail.title")}
+			testId="deal-detail"
+			recordKey={deal.id}
+			title={<Bdi>{deal.title}</Bdi>}
+			titleTestId="deal-detail-title"
+			subtitle={
+				<span data-testid="deal-detail-value">
+					<Ltr>{dealValueText(deal, formatMoney)}</Ltr>
+				</span>
+			}
+			onClose={onClose}
+			actions={
 				<AddTaskButton
 					contactId={deal.contact_id}
 					dealId={deal.id}
 					label={deal.title}
 				/>
-			</div>
+			}
+			facts={[
+				{
+					label: t("deals.detail.contact"),
+					value: <Bdi>{deal.contactName}</Bdi>,
+				},
+				{
+					label: t("deals.detail.pipeline"),
+					value: <Bdi>{deal.pipelineName}</Bdi>,
+				},
+				{ label: t("common.owner"), value: <Bdi>{deal.ownerName}</Bdi> },
+			]}
+			editor={(done) => (
+				<DealEditor
+					key={`${deal.id}:${deal.version}`}
+					deal={deal}
+					assignees={assignees}
+					onUpdated={onUpdated}
+					onDone={done}
+				/>
+			)}
+			details={[
+				{ label: t("deals.detail.id"), value: deal.id, copyable: true },
+				{
+					label: t("deals.detail.version"),
+					value: deal.version,
+					testId: "deal-version",
+				},
+			]}
+		>
 			<Tabs
 				label={t("deals.tabs")}
 				value={tab}
 				onChange={(id) => setTab(id as "overview" | "history")}
 				tabs={[
-					{ id: "overview", label: t("deals.tab.overview"), panel: overview },
+					{
+						id: "overview",
+						label: t("deals.tab.overview"),
+						panel: (
+							<StageControl
+								key={deal.id}
+								deal={deal}
+								pipeline={pipeline}
+								onUpdated={onUpdated}
+							/>
+						),
+					},
 					{
 						id: "history",
 						label: t("deals.tab.history"),
@@ -595,6 +589,6 @@ export function DealDetail({
 					},
 				]}
 			/>
-		</Panel>
+		</RecordPanel>
 	);
 }

@@ -1,5 +1,6 @@
 import { type KeyboardEvent, type ReactNode, type RefObject, useEffect, useId, useRef } from "react";
 import { useI18n } from "../i18n/index.ts";
+import { Icon } from "../icons/index.ts";
 import { Button } from "../primitives/Button.tsx";
 import { focusablesIn, lockScroll, trapIndex } from "./nav.ts";
 import "./overlays.css";
@@ -26,8 +27,8 @@ export type DialogProps = {
 	returnFocusRef?: RefObject<HTMLElement | null>;
 	initialFocusRef?: RefObject<HTMLElement | null>;
 	testId?: string;
-	/** center = modal card (default); sheet = bottom sheet. */
-	placement?: "center" | "sheet";
+	/** center = modal card (default); sheet = bottom sheet; side = full-screen record sheet sliding from inline-end, with a back button. */
+	placement?: "center" | "sheet" | "side";
 };
 
 /**
@@ -84,7 +85,8 @@ export function Dialog({
 			onCloseRef.current();
 			return;
 		}
-		if (e.key !== "Tab" || !rootRef.current) return;
+		// A nested dialog (e.g. add-task inside a record sheet) already handled this Tab: do not move focus twice.
+		if (e.key !== "Tab" || !rootRef.current || e.defaultPrevented) return;
 		const items = focusablesIn(rootRef.current);
 		const next = trapIndex(e.shiftKey, items.indexOf(document.activeElement as HTMLElement), items.length);
 		if (next === null) {
@@ -109,9 +111,21 @@ export function Dialog({
 				data-testid={testId}
 				onKeyDown={onKeyDown}
 			>
-				<h2 id={`${id}-title`} className="sy-dialog__title">
-					{title}
-				</h2>
+				{placement === "side" ? (
+					<div className="sy-dialog__sidehead">
+						<button type="button" className="sy-dialog__back" onClick={onClose} data-testid="sheet-back">
+							<Icon name="chevronRight" size={18} mirrorInRtl={false} className="sy-back-icon" />
+							{t("record.back")}
+						</button>
+						<h2 id={`${id}-title`} className="sy-dialog__sidetitle">
+							{title}
+						</h2>
+					</div>
+				) : (
+					<h2 id={`${id}-title`} className="sy-dialog__title">
+						{title}
+					</h2>
+				)}
 				{description ? (
 					<p id={`${id}-desc`} className="sy-dialog__desc">
 						{description}

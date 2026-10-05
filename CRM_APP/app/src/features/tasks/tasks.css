@@ -83,7 +83,7 @@
 	margin: 0;
 	overflow-wrap: anywhere;
 }
-@media (max-width: 1100px) {
+@media (max-width: 1023px) {
 	.sy-tasks__body {
 		grid-template-columns: minmax(0, 1fr);
 	}
@@ -100,4 +100,11 @@
 .sy-tasks__related {
 	margin: 0;
 	overflow-wrap: anywhere;
+}
+.sy-tasks__due--compact {
+	display: inline-flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: var(--sy-space-6);
+	white-space: nowrap;
 }

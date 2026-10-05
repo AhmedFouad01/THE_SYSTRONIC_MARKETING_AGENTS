@@ -297,3 +297,22 @@ export function computeView<T>(
 	const pageInfo = paginate(matching.length, s.page, s.pageSize);
 	return { matching, pageRows: matching.slice(pageInfo.start, pageInfo.end), pageInfo };
 }
+
+// ---- numbered pager ----------------------------------------------------------------------------------------
+
+export type PagerItem = number | "gap";
+
+/** Numbered pager entries: all pages up to 7, else first, last and the current page with its neighbours. */
+export function pagerItems(page: number, count: number): PagerItem[] {
+	if (count <= 7) return Array.from({ length: count }, (_, i) => i + 1);
+	const keep = new Set([1, count, page - 1, page, page + 1]);
+	const nums = [...keep].filter((n) => n >= 1 && n <= count).sort((a, b) => a - b);
+	const out: PagerItem[] = [];
+	nums.forEach((n, i) => {
+		const prev = nums[i - 1];
+		if (prev !== undefined && n - prev === 2) out.push(prev + 1);
+		else if (prev !== undefined && n - prev > 2) out.push("gap");
+		out.push(n);
+	});
+	return out;
+}

@@ -11,6 +11,8 @@ import {
 	Button,
 	createSavedViewsStore,
 	DataGrid,
+	IdentityCell,
+	useWideLayout,
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
@@ -128,6 +130,7 @@ function ContextStrip({
 
 export function DealsView() {
 	const { t, formatMoney } = useI18n();
+	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -307,25 +310,32 @@ export function DealsView() {
 				value: (r) => r.title,
 				sortable: true,
 				hideable: false,
-				cell: (r) => <b>{r.title}</b>,
+				mobile: "title",
+				cell: (r) => <IdentityCell name={r.title} caption={r.contactName} />,
 			},
 			{
 				id: "contact",
 				header: t("deals.col.contact"),
 				value: (r) => r.contactName,
 				sortable: true,
+				width: "170px",
+				mobile: "hide",
 			},
 			{
 				id: "pipeline",
 				header: t("deals.col.pipeline"),
 				value: (r) => r.pipelineName,
 				sortable: true,
+				width: "150px",
+				mobile: "hide",
 			},
 			{
 				id: "stage",
 				header: t("common.stage"),
 				value: (r) => r.stageName,
 				sortable: true,
+				width: "140px",
+				mobile: "chip",
 				filter: { options: stageOptions },
 				cell: (r) => <Badge tone={toneOf(r.stageOutcome)}>{r.stageName}</Badge>,
 			},
@@ -335,6 +345,7 @@ export function DealsView() {
 				value: (r) => r.value,
 				searchable: false,
 				sortable: true,
+				width: "130px",
 				cell: (r) => <Ltr>{dealValueText(r, formatMoney)}</Ltr>,
 			},
 			{
@@ -342,6 +353,7 @@ export function DealsView() {
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
 				sortable: true,
+				width: "150px",
 				filter: { options: ownerOptions },
 			},
 		],
@@ -460,6 +472,7 @@ export function DealsView() {
 							requestId={isApiError(deals.error) ? deals.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={setActiveId}
+							autoSelectFirst={wide}
 							{...(views ? { views } : {})}
 							sample={sample}
 							emptyTitle={t("deals.emptyTitle")}
@@ -473,6 +486,7 @@ export function DealsView() {
 					assignees={assignees}
 					actors={ownerNames}
 					onUpdated={remember}
+					onClose={() => setActiveId(null)}
 				/>
 			</div>
 			<NewDealDialog

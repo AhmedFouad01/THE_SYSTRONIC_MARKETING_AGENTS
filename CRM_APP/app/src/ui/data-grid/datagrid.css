@@ -2,6 +2,15 @@
 	display: grid;
 	gap: var(--sy-space-10);
 	min-width: 0;
+	/* Row density tokens (UX_AUDIT cross-cutting 2). */
+	--sy-row-h-comfortable: 48px;
+	--sy-row-h-compact: 36px;
+	--sy-control-h: 36px;
+}
+
+/* Toolbar slot: the bulk bar overlays it at the same height instead of pushing the table down (UX-20). */
+.sy-grid__toolwrap {
+	position: relative;
 }
 
 .sy-grid__toolbar {
@@ -9,6 +18,13 @@
 	flex-wrap: wrap;
 	align-items: center;
 	gap: var(--sy-space-8);
+	min-height: var(--sy-control-h);
+}
+
+/* All toolbar controls share one 36px height. */
+.sy-grid__toolbar .sy-btn,
+.sy-grid__toolbar .sy-btn--sm {
+	height: var(--sy-control-h);
 }
 
 .sy-grid__searchbox {
@@ -17,7 +33,7 @@
 	gap: var(--sy-space-8);
 	flex: 1 1 220px;
 	max-width: 340px;
-	height: 32px;
+	height: var(--sy-control-h);
 	padding-inline: var(--sy-space-10);
 	border: 1px solid var(--sy-border-strong);
 	border-radius: var(--sy-radius-8);
@@ -51,11 +67,49 @@
 	gap: var(--sy-space-6);
 }
 
+/* fieldset reset: the UA border was the stuck-looking grey rectangle (UX-07). */
+.sy-grid__views {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
 .sy-grid__count {
 	margin: 0;
 	margin-inline-start: auto;
 	font-size: var(--sy-type-data-size);
 	color: var(--sy-text-3);
+}
+
+/* Saved views: borderless segmented tabs; the selected view is a pill fill, outline only on :focus-visible. */
+.sy-grid__view {
+	display: inline-flex;
+	align-items: center;
+	height: var(--sy-control-h);
+	padding-inline: var(--sy-space-12);
+	border: 0;
+	border-radius: var(--sy-radius-pill);
+	background: transparent;
+	color: var(--sy-text-2);
+	font: inherit;
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.sy-grid__view:hover {
+	background: var(--sy-hover);
+}
+
+.sy-grid__view[aria-pressed="true"] {
+	background: var(--sy-selected);
+	color: var(--sy-text);
+}
+
+.sy-grid__view:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 1px;
 }
 
 .sy-grid__chip {
@@ -70,12 +124,6 @@
 	color: var(--sy-text-2);
 	font-size: var(--sy-type-data-size);
 	cursor: pointer;
-}
-
-.sy-grid__chip[aria-pressed="true"] {
-	background: var(--sy-selected);
-	color: var(--sy-text);
-	border-color: var(--sy-focus);
 }
 
 .sy-grid__chip--static {
@@ -115,17 +163,27 @@
 	background: var(--sy-surface-2);
 }
 
+/* Bulk bar: fixed-height overlay of the toolbar slot. */
 .sy-grid__batch {
+	position: absolute;
+	inset: 0;
+	z-index: 5;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	align-content: center;
 	gap: var(--sy-space-8);
-	padding: var(--sy-space-8) var(--sy-space-12);
+	min-height: var(--sy-control-h);
+	padding-inline: var(--sy-space-12);
 	border: 1px solid var(--sy-border);
 	border-radius: var(--sy-radius-10);
 	background: var(--sy-selected);
 	font-size: var(--sy-type-data-size);
-	font-weight: 600;
+}
+
+.sy-grid__batch .sy-btn,
+.sy-grid__batch .sy-btn--sm {
+	height: 28px;
 }
 
 .sy-grid__poptitle {
@@ -152,13 +210,17 @@
 	background: var(--sy-surface);
 }
 
-/* Mobile (<=720): the table keeps its column semantics and scrolls horizontally (RTL_RESPONSIVE.md). */
 .sy-grid__table {
 	inline-size: 100%;
-	min-inline-size: 720px;
+	min-inline-size: 560px;
 	border-collapse: separate;
 	border-spacing: 0;
 	font-size: var(--sy-type-data-size);
+	--sy-row-h: var(--sy-row-h-comfortable);
+}
+
+.sy-grid__table[data-density="compact"] {
+	--sy-row-h: var(--sy-row-h-compact);
 }
 
 .sy-grid__table th {
@@ -168,27 +230,34 @@
 	padding: var(--sy-space-8) var(--sy-space-10);
 	border-block-end: 1px solid var(--sy-border);
 	background: var(--sy-surface-2);
-	color: var(--sy-text-2);
-	font-weight: 700;
+	color: var(--sy-text-3);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
 	text-align: start;
+	text-transform: uppercase;
 	white-space: nowrap;
 }
 
 .sy-grid__table td {
-	padding: var(--sy-space-10);
+	padding: var(--sy-space-6) var(--sy-space-10);
 	border-block-end: 1px solid var(--sy-divider);
 	color: var(--sy-text);
 	vertical-align: middle;
-	height: 48px; /* comfortable row min-height (UX-13) */
+	height: var(--sy-row-h); /* comfortable = 48px (UX-13) */
 }
 
-.sy-grid__table[data-density="compact"] td {
-	padding-block: var(--sy-space-4);
-	height: auto;
+/* Single-line cells: ellipsis with a title (UX-17). The flexible column absorbs the remaining width. */
+.sy-grid__cell {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-.sy-grid__table[data-density="compact"] th {
-	padding-block: var(--sy-space-4);
+.sy-grid__cell--flex {
+	max-width: 0;
+	width: auto;
+	min-width: 140px;
 }
 
 .sy-grid__table tbody tr {
@@ -199,17 +268,26 @@
 	background: var(--sy-hover);
 }
 
+/* Bulk selection = fill; detail (active) row = inline-start bar; keyboard focus = separate 2px ring (UX-26). */
 .sy-grid__table tbody tr[data-selected] {
 	background: var(--sy-selected);
 }
 
-/* Active (detail) row is a separate treatment from bulk selection: inline-start accent, not a fill. */
+.sy-grid__table tbody tr[aria-selected="true"] {
+	background: var(--sy-selected);
+}
+
 .sy-grid__table tbody tr[aria-current="true"] td:first-child {
 	box-shadow: inset 3px 0 0 var(--sy-focus);
 }
 
 :root[dir="rtl"] .sy-grid__table tbody tr[aria-current="true"] td:first-child {
 	box-shadow: inset -3px 0 0 var(--sy-focus);
+}
+
+.sy-grid__table tbody tr:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: -2px;
 }
 
 .sy-grid__check {
@@ -226,10 +304,25 @@
 	background: transparent;
 	color: inherit;
 	font: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
 	cursor: pointer;
 }
 
+.sy-grid__sort:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 2px;
+}
+
+/* Arrow only on the active sort column; other sortable headers reveal a ghost arrow on hover (UX-06). */
 .sy-grid__sortmark {
+	font-size: 10px;
+	color: var(--sy-text);
+}
+
+.sy-grid__sort:not([data-active]):hover::after,
+.sy-grid__sort:not([data-active]):focus-visible::after {
+	content: "↕";
 	font-size: 10px;
 	color: var(--sy-icon-muted);
 }
@@ -243,26 +336,105 @@
 	white-space: nowrap;
 }
 
+/* ---- cells ---- */
+.sy-cell-id {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	line-height: 1.25;
+}
+
+.sy-cell-id__name {
+	overflow: hidden;
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sy-cell-id__caption {
+	overflow: hidden;
+	font-size: 11px;
+	color: var(--sy-text-3);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* ---- footer: range (start) - rows - numbered pager (end), one row ---- */
 .sy-grid__footer {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: flex-end;
+	align-items: center;
 	gap: var(--sy-space-12);
 	font-size: var(--sy-type-data-size);
 }
 
-.sy-grid__size {
-	inline-size: 110px;
-}
-
 .sy-grid__range {
 	color: var(--sy-text-3);
-	align-self: center;
+}
+
+.sy-grid__rows {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sy-space-8);
+	color: var(--sy-text-3);
+}
+
+.sy-grid__rows .sy-field__label {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.sy-grid__size {
+	inline-size: 76px;
 }
 
 .sy-grid__pager {
 	margin-inline-start: auto;
-	align-self: center;
+	gap: var(--sy-space-4);
+}
+
+.sy-grid__pg {
+	display: inline-grid;
+	place-items: center;
+	min-width: 32px;
+	height: 32px;
+	padding-inline: var(--sy-space-6);
+	border: 1px solid var(--sy-border);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-surface);
+	color: var(--sy-text-2);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.sy-grid__pg:hover:not(:disabled) {
+	background: var(--sy-hover);
+}
+
+.sy-grid__pg[aria-current="page"] {
+	border-color: var(--sy-focus);
+	background: var(--sy-selected);
+	color: var(--sy-text);
+}
+
+.sy-grid__pg:disabled {
+	color: var(--sy-text-disabled);
+	cursor: not-allowed;
+}
+
+.sy-grid__pg:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 1px;
+}
+
+.sy-grid__pg-gap {
+	padding-inline: var(--sy-space-4);
+	color: var(--sy-text-3);
 }
 
 .sy-grid__sample {
@@ -276,4 +448,149 @@
 	background: var(--sy-info-bg);
 	color: var(--sy-info-fg);
 	font-size: var(--sy-type-data-size);
+}
+
+/* ---- mobile (<=768px): rows become cards, no clipped columns, no horizontal page scroll (UX-02) ---- */
+@media (max-width: 768px) {
+	.sy-grid__searchbox {
+		flex-basis: 100%;
+		max-width: none;
+	}
+
+	.sy-grid__views {
+		max-width: 100%;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+	}
+
+	.sy-grid__view {
+		flex: none;
+	}
+
+	.sy-grid__scroll {
+		max-block-size: none;
+		overflow: visible;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	.sy-grid__table,
+	.sy-grid__table tbody {
+		display: block;
+		min-inline-size: 0;
+	}
+
+	/* Header row keeps only the select-all checkbox; sort/column headers are not shown on cards. */
+	.sy-grid__table thead,
+	.sy-grid__table thead tr {
+		display: block;
+	}
+
+	.sy-grid__table th {
+		position: static;
+		display: none;
+	}
+
+	.sy-grid__table th.sy-grid__check {
+		display: block;
+		inline-size: auto;
+		padding: var(--sy-space-4) var(--sy-space-12);
+		border: 0;
+		background: transparent;
+		text-align: start;
+	}
+
+	.sy-grid__table tbody tr {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--sy-space-4) var(--sy-space-8);
+		margin-block-end: var(--sy-space-8);
+		padding: var(--sy-space-10) var(--sy-space-12);
+		border: 1px solid var(--sy-border);
+		border-radius: var(--sy-radius-12);
+		background: var(--sy-surface);
+	}
+
+	.sy-grid__table tbody tr[aria-current="true"] td:first-child {
+		box-shadow: none;
+	}
+
+	.sy-grid__table tbody tr[aria-current="true"] {
+		border-color: var(--sy-focus);
+	}
+
+	.sy-grid__table td {
+		display: block;
+		height: auto;
+		min-width: 0;
+		padding: 0;
+		border: 0;
+		text-align: start;
+	}
+
+	.sy-grid__table td.sy-grid__check {
+		order: 0;
+		flex: none;
+		inline-size: 28px;
+	}
+
+	.sy-grid__table td[data-mobile="title"] {
+		order: 1;
+		flex: 1 1 0;
+		min-width: 0;
+		max-width: none;
+		inline-size: auto;
+		font-size: 14px;
+	}
+
+	.sy-grid__table td[data-mobile="chip"] {
+		order: 1;
+		flex: none;
+		max-width: none;
+	}
+
+	/* Row break between the title line and the meta line (orders: 1 = title row, 2 = meta row). */
+	.sy-grid__table tbody tr::after {
+		content: "";
+		order: 1;
+		flex: 0 0 100%;
+		height: 0;
+	}
+
+	.sy-grid__table td[data-mobile="meta"] {
+		order: 2;
+		flex: 0 1 auto;
+		max-width: 100%;
+		inline-size: auto;
+		font-size: 12px;
+		color: var(--sy-text-3);
+	}
+
+	.sy-grid__table td[data-mobile="meta"] + td[data-mobile="meta"]::before {
+		content: "·";
+		margin-inline-end: var(--sy-space-8);
+	}
+
+	.sy-grid__table td[data-mobile="hide"] {
+		display: none;
+	}
+
+	.sy-grid__table--sel tbody tr::before {
+		content: "";
+		order: 2;
+		flex: 0 0 28px;
+	}
+
+	.sy-grid__footer {
+		justify-content: space-between;
+	}
+
+	.sy-grid__pager {
+		margin-inline-start: 0;
+		flex-basis: 100%;
+		justify-content: center;
+	}
 }

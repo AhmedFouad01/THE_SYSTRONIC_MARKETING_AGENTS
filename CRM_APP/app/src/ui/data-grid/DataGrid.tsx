@@ -28,6 +28,7 @@ import {
 	type ModelColumn,
 	PAGE_SIZES,
 	pageSelectionState,
+	pagerItems,
 	setEqFilter,
 	type ViewState,
 	visibleColumns,
@@ -43,6 +44,15 @@ export type GridColumn<T> = ModelColumn<T> & {
 	ltr?: boolean;
 	/** Adds an equality filter control for this column. */
 	filter?: { options: ReadonlyArray<{ value: string; label: string }> };
+	/** CSS width of the column (e.g. "140px"). Omit for the flexible column that takes the remaining space. */
+	width?: string;
+	/**
+	 * Role of the cell in the mobile card layout (<=768px): `title` = card heading (default: first column),
+	 * `chip` = status chip beside the title, `meta` = inline meta line (default), `hide` = not shown on cards.
+	 */
+	mobile?: "title" | "chip" | "meta" | "hide";
+	/** Hover title for plain-text cells that have no custom `cell` (default: the value when it is a string). */
+	titleText?: (row: T) => string | undefined;
 };
 
 export type GridSample = {
@@ -80,6 +90,8 @@ export type DataGridProps<T> = {
 	emptyTitle?: string;
 	emptyHint?: string;
 	toolbarExtra?: ReactNode;
+	/** Master-detail on wide layouts: open the first row when nothing is active (prototype behaviour). */
+	autoSelectFirst?: boolean;
 };
 
 const interactive = "input,button,a,select,label,textarea";
@@ -117,6 +129,13 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		dispatch({ type: "open", id });
 		activeCb.current?.(id);
 	};
+
+	const autoSelect = props.autoSelectFirst === true;
+	const firstId = pageIds[0];
+	// biome-ignore lint/correctness/useExhaustiveDependencies: open() only dispatches and calls refs
+	useEffect(() => {
+		if (autoSelect && activeId === null && firstId !== undefined) open(firstId);
+	}, [autoSelect, activeId, firstId]);
 
 	// ---- keyboard: roving row focus ----
 	const rowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
@@ -199,6 +218,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	const toggleSort = useCallback((id: string, additive: boolean) => dispatch({ type: "sort", key: id, additive }), []);
 	const selectedIds = [...state.selection];
 	const clearSelection = () => dispatch({ type: "clearSelection" });
+	const batchOpen = selectable && state.selection.size > 0;
 
 	const body = (() => {
 		if (props.status === "loading" && rows.length === 0) return <LoadingState />;
@@ -220,7 +240,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		return (
 			// biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable region must be keyboard reachable
 			<section className="sy-grid__scroll" aria-label={props.label} tabIndex={0}>
-				<table className="sy-grid__table" data-density={state.density} data-testid="grid-table">
+				<table className={`sy-grid__table${selectable ? " sy-grid__table--sel" : ""}`} data-density={state.density} data-testid="grid-table">
 					<caption className="sy-grid__sr">{props.label}</caption>
 					<thead>
 						<tr>
@@ -239,7 +259,13 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							{cols.map((c) => {
 								const dir = ariaSortOf(state.sorts, c.id);
 								return (
-									<th key={c.id} scope="col" aria-sort={c.sortable ? dir : undefined}>
+									<th
+										key={c.id}
+										scope="col"
+										aria-sort={c.sortable ? dir : undefined}
+										style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
+										data-mobile={c.mobile}
+									>
 										{c.sortable ? (
 											<button
 												type="button"
@@ -247,11 +273,14 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 												aria-label={t("grid.sortBy", { column: c.header })}
 												onClick={(e) => toggleSort(c.id, e.shiftKey)}
 												data-testid={`sort-${c.id}`}
+												data-active={dir !== "none" || undefined}
 											>
 												<span>{c.header}</span>
-												<span aria-hidden="true" className="sy-grid__sortmark">
-													{dir === "ascending" ? "▲" : dir === "descending" ? "▼" : "↕"}
-												</span>
+												{dir !== "none" ? (
+													<span aria-hidden="true" className="sy-grid__sortmark" data-testid="sort-mark">
+														{dir === "ascending" ? "▲" : "▼"}
+													</span>
+												) : null}
 											</button>
 										) : (
 											c.header
@@ -273,6 +302,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 									}}
 									tabIndex={i === tabIdx ? 0 : -1}
 									aria-current={id === activeId ? "true" : undefined}
+									aria-selected={id === activeId}
 									data-selected={checked || undefined}
 									data-testid="grid-row"
 									data-row-id={id}
@@ -292,11 +322,21 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 											/>
 										</td>
 									) : null}
-									{cols.map((c) => (
-										<td key={c.id} className={c.ltr ? "sy-ltr" : undefined}>
-											{c.cell ? c.cell(row) : (c.value(row) ?? "")}
-										</td>
-									))}
+									{cols.map((c, ci) => {
+										const plain = c.cell ? undefined : c.value(row);
+										const tip = c.titleText ? c.titleText(row) : typeof plain === "string" ? plain : undefined;
+										return (
+											<td
+												key={c.id}
+												className={`sy-grid__cell${c.ltr ? " sy-ltr" : ""}${c.width ? "" : " sy-grid__cell--flex"}`}
+												style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
+												data-mobile={c.mobile ?? (ci === 0 ? "title" : "meta")}
+												title={tip}
+											>
+												{c.cell ? c.cell(row) : (plain ?? "")}
+											</td>
+										);
+									})}
 								</tr>
 							);
 						})}
@@ -308,7 +348,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 
 	return (
 		<div className="sy-grid" data-testid="data-grid">
-			<search className="sy-grid__toolbar">
+			<div className="sy-grid__toolwrap">
+			<search className="sy-grid__toolbar" inert={batchOpen}>
 				<div className="sy-grid__searchbox">
 					<Icon name="search" size={16} />
 					<input
@@ -326,7 +367,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 <legend className="sy-grid__sr">{t("grid.views")}</legend>
 						<button
 							type="button"
-							className="sy-grid__chip"
+							className="sy-grid__view"
 							aria-pressed={viewId === null}
 							onClick={() => {
 								setViewId(null);
@@ -339,7 +380,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							<button
 								key={v.id}
 								type="button"
-								className="sy-grid__chip"
+								className="sy-grid__view"
 								aria-pressed={v.id === viewId}
 								onClick={() => {
 									setViewId(v.id);
@@ -415,6 +456,16 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					{tx("format.matching", { count: formatNumber(matching.length) })}
 				</p>
 			</search>
+			{batchOpen ? (
+				<section className="sy-grid__batch" aria-label={t("format.selectedCount", { count: formatNumber(state.selection.size) })} data-testid="grid-batch">
+					<b>{tx("format.selectedCount", { count: formatNumber(state.selection.size) })}</b>
+					{props.batchActions?.(selectedIds, clearSelection)}
+					<Button size="sm" variant="ghost" onClick={clearSelection} data-testid="grid-batch-clear">
+						{t("common.clearSelection")}
+					</Button>
+				</section>
+			) : null}
+			</div>
 
 			{filtersOpen && filterCols.length > 0 ? (
 				<div className="sy-grid__filters">
@@ -466,33 +517,10 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				</ul>
 			) : null}
 
-			{selectable && state.selection.size > 0 ? (
-				<section className="sy-grid__batch" aria-label={t("format.selectedCount", { count: formatNumber(state.selection.size) })} data-testid="grid-batch">
-					<span>{tx("format.selectedCount", { count: formatNumber(state.selection.size) })}</span>
-					{props.batchActions?.(selectedIds, clearSelection)}
-					<Button size="sm" variant="ghost" onClick={clearSelection}>
-						{t("common.clearSelection")}
-					</Button>
-				</section>
-			) : null}
-
 			{body}
 
 			{props.status === "ready" && matching.length > 0 ? (
-				<div className="sy-grid__footer">
-					<Select
-						label={t("common.rowsPerPage")}
-						size="sm"
-						value={String(state.pageSize)}
-						onChange={(e) => dispatch({ type: "pageSize", size: Number(e.target.value) })}
-						className="sy-grid__size"
-					>
-						{PAGE_SIZES.map((n) => (
-							<option key={n} value={n}>
-								{formatNumber(n)}
-							</option>
-						))}
-					</Select>
+				<div className="sy-grid__footer" data-testid="grid-footer">
 					<span className="sy-grid__range" data-testid="grid-range">
 						{tx("grid.range", {
 							from: formatNumber(pageInfo.start + 1),
@@ -500,25 +528,64 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							total: formatNumber(pageInfo.total),
 						})}
 					</span>
-					<div className="sy-grid__pager">
-						<Button
+					<div className="sy-grid__rows">
+						<span aria-hidden="true">{t("common.rows")}</span>
+						<Select
+							label={t("common.rowsPerPage")}
 							size="sm"
+							value={String(state.pageSize)}
+							onChange={(e) => dispatch({ type: "pageSize", size: Number(e.target.value) })}
+							className="sy-grid__size"
+						>
+							{PAGE_SIZES.map((n) => (
+								<option key={n} value={n}>
+									{formatNumber(n)}
+								</option>
+							))}
+						</Select>
+					</div>
+					<nav className="sy-grid__pager" aria-label={t("grid.pager")} data-testid="grid-pager">
+						<button
+							type="button"
+							className="sy-grid__pg sy-grid__pg--prev"
+							aria-label={t("common.previousPage")}
 							disabled={pageInfo.page <= 1}
 							onClick={() => dispatch({ type: "page", page: pageInfo.page - 1 })}
 							data-testid="grid-prev"
 						>
-							{t("common.previousPage")}
-						</Button>
-						<span>{tx("grid.page", { page: formatNumber(pageInfo.page), count: formatNumber(pageInfo.pageCount) })}</span>
-						<Button
-							size="sm"
+							<Icon name="chevronRight" size={16} mirrorInRtl={false} className="sy-back-icon" />
+						</button>
+						{pagerItems(pageInfo.page, pageInfo.pageCount).map((it, i) =>
+							it === "gap" ? (
+								// biome-ignore lint/suspicious/noArrayIndexKey: gaps are positional separators
+								<span key={`gap-${i}`} className="sy-grid__pg-gap" aria-hidden="true">
+									…
+								</span>
+							) : (
+								<button
+									key={it}
+									type="button"
+									className="sy-grid__pg"
+									aria-label={t("grid.goToPage", { page: formatNumber(it) })}
+									aria-current={it === pageInfo.page ? "page" : undefined}
+									onClick={() => dispatch({ type: "page", page: it })}
+									data-testid={`grid-page-${it}`}
+								>
+									{formatNumber(it)}
+								</button>
+							),
+						)}
+						<button
+							type="button"
+							className="sy-grid__pg sy-grid__pg--next"
+							aria-label={t("common.nextPage")}
 							disabled={pageInfo.page >= pageInfo.pageCount}
 							onClick={() => dispatch({ type: "page", page: pageInfo.page + 1 })}
 							data-testid="grid-next"
 						>
-							{t("common.nextPage")}
-						</Button>
-					</div>
+							<Icon name="chevronRight" size={16} />
+						</button>
+					</nav>
 				</div>
 			) : null}
 

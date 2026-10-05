@@ -161,7 +161,6 @@ export const en = {
 	"leads.conflict.reload": "Reload lead",
 	"leads.forbidden.title": "You cannot edit this lead",
 	"leads.forbidden.body": "Your role does not allow changes to this lead.",
-	"leads.notInMvp": "{label} (not in MVP)",
 	"leads.bulk.progress": "Assigning {done} of {total}…",
 	"leads.bulk.ok": "{count} assigned to you.",
 	"leads.bulk.partial": "{ok} assigned to you, {failed} failed. Failed rows keep their current owner.",
@@ -576,6 +575,11 @@ export const en = {
 	"nav.more": "More",
 	"nav.moreTitle": "More screens",
 	"nav.mobile": "Main navigation",
+	"record.back": "Back",
+	"record.edit": "Edit",
+	"record.cancelEdit": "Cancel",
+	"grid.pager": "Pagination",
+	"grid.goToPage": "Page {page}",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

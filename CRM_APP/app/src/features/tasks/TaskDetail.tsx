@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	DatePicker,
@@ -8,8 +8,9 @@ import {
 	Input,
 	Bdi,
 	type MessageKey,
-	Panel,
-	RecordDetails,
+	RecordEditFooter,
+	RecordEmpty,
+	RecordPanel,
 	Select,
 	StatusPill,
 	useI18n,
@@ -49,10 +50,13 @@ type EditorProps = {
 	task: TaskRow;
 	assignees: readonly Assignee[];
 	onUpdated: (task: Task) => void;
+	/** Edit mode: the form is shown; otherwise only banners and the Complete action. */
+	editing: boolean;
+	onDone: () => void;
 };
 
 /** Keyed by task id + version by the parent: a reload (new version) remounts it with a fresh draft. */
-function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
+function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps) {
 	const { t } = useI18n();
 	const toast = useToast();
 	const [draft, setDraft] = useState(() => draftOf(task));
@@ -88,6 +92,7 @@ function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
 		try {
 			onUpdated(await patchTask(task.id, body));
 			toast.notify(t("tasks.edit.saved"), "success");
+			onDone();
 		} catch (e) {
 			fail(e);
 		} finally {
@@ -151,7 +156,7 @@ function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
 					/>
 				</div>
 			) : null}
-			{task.status === "open" ? (
+			{task.status === "open" && !editing ? (
 				<div className="sy-tasks__actions">
 					<Button
 						size="sm"
@@ -166,6 +171,7 @@ function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
 					</Button>
 				</div>
 			) : null}
+			{editing ? (
 			<form
 				className="sy-tasks__form"
 				onSubmit={(e) => {
@@ -207,31 +213,21 @@ function TaskEditor({ task, assignees, onUpdated }: EditorProps) {
 						</option>
 					))}
 				</Select>
-				<div className="sy-tasks__actions">
-					<Button
-						type="submit"
-						variant="primary"
-						size="sm"
-						loading={saving}
-						disabled={!dirty || completing}
-						data-testid="task-save"
-					>
-						{t("tasks.edit.save")}
-					</Button>
-					<Button
-						size="sm"
-						variant="ghost"
-						disabled={!dirty || saving}
-						onClick={() => {
-							setDraft(draftOf(task));
-							setIssues({});
-							setError(null);
-						}}
-					>
-						{t("tasks.edit.revert")}
-					</Button>
-				</div>
+				<RecordEditFooter
+					dirty={dirty}
+					saving={saving}
+					disabled={completing}
+					onDiscard={() => {
+						setDraft(draftOf(task));
+						setIssues({});
+						setError(null);
+					}}
+					saveLabel={t("tasks.edit.save")}
+					discardLabel={t("tasks.edit.revert")}
+					saveTestId="task-save"
+				/>
 			</form>
+			) : null}
 		</>
 	);
 }
@@ -241,78 +237,81 @@ export function TaskDetail({
 	assignees,
 	now,
 	onUpdated,
+	onClose,
 }: {
 	task: TaskRow | null;
 	assignees: readonly Assignee[];
 	now: Date;
 	onUpdated: (task: Task) => void;
+	onClose: () => void;
 }) {
 	const { t, formatDateTime } = useI18n();
+	const [editing, setEditing] = useState(false);
+	const taskId = task?.id ?? null;
+	// biome-ignore lint/correctness/useExhaustiveDependencies: leaving edit mode when another task is opened
+	useEffect(() => setEditing(false), [taskId]);
 	if (task === null)
 		return (
-			<Panel
-				as="aside"
-				title={t("tasks.detail.title")}
-				className="sy-tasks__detail"
-				data-testid="task-detail-empty"
-			>
-				<p className="sy-tasks__muted">{t("tasks.detail.empty")}</p>
-			</Panel>
+			<RecordEmpty
+				label={t("tasks.detail.title")}
+				hint={t("tasks.detail.empty")}
+				testId="task-detail-empty"
+			/>
 		);
 	return (
-		<Panel
-			as="aside"
-			title={t("tasks.detail.title")}
-			className="sy-tasks__detail"
-			data-testid="task-detail"
-			aria-label={t("tasks.detail.title")}
-		>
-			<div className="sy-tasks__head">
-				<div>
-					<p className="sy-tasks__name" data-testid="task-detail-title">
-						{task.title}
-					</p>
-					<p className="sy-tasks__muted">
-						<RelatedLink row={task} />
-					</p>
-				</div>
-				<span data-testid="task-detail-status">
-					{task.status === "completed" ? (
-						<StatusPill tone="success">
-							{t("tasks.status.completed")}
-						</StatusPill>
-					) : (
-						<Badge tone="info">{t("tasks.status.open")}</Badge>
-					)}
-				</span>
-			</div>
-			<p className="sy-tasks__due-line">
-				<DueLabel dueAt={task.due_at} bucket={task.bucket} now={now} />
-			</p>
-			<TaskEditor
-				key={`${task.id}:${task.version}`}
-				task={task}
-				assignees={assignees}
-				onUpdated={onUpdated}
-			/>
-			<dl className="sy-tasks__facts">
-				<dt>{t("common.source")}</dt>
-				<dd>{t(SOURCE_KEY[task.sourceKind])}</dd>
-				{task.completed_at ? (
-					<>
-						<dt>{t("tasks.detail.completedAt")}</dt>
-						<dd>
-							<Bdi>{formatDateTime(task.completed_at)}</Bdi>
-						</dd>
-					</>
-				) : null}
-				</dl>
-			<RecordDetails
-				rows={[
-					{ label: t("tasks.detail.id"), value: task.id, copyable: true },
-					{ label: t("tasks.detail.version"), value: task.version, testId: "task-version" },
-				]}
-			/>
-		</Panel>
+		<RecordPanel
+			label={t("tasks.detail.title")}
+			testId="task-detail"
+			recordKey={task.id}
+			title={<Bdi>{task.title}</Bdi>}
+			titleTestId="task-detail-title"
+			subtitle={<RelatedLink row={task} />}
+			chip={
+				task.status === "completed" ? (
+					<StatusPill tone="success">{t("tasks.status.completed")}</StatusPill>
+				) : (
+					<Badge tone="info">{t("tasks.status.open")}</Badge>
+				)
+			}
+			chipTestId="task-detail-status"
+			onClose={onClose}
+			editable
+			editing={editing}
+			onEditingChange={setEditing}
+			facts={[
+				{
+					label: t("tasks.field.due"),
+					value: <DueLabel dueAt={task.due_at} bucket={task.bucket} now={now} />,
+				},
+				{ label: t("tasks.field.owner"), value: <Bdi>{task.ownerName}</Bdi> },
+				{ label: t("common.source"), value: t(SOURCE_KEY[task.sourceKind]) },
+				...(task.completed_at
+					? [
+							{
+								label: t("tasks.detail.completedAt"),
+								value: <Bdi>{formatDateTime(task.completed_at)}</Bdi>,
+							},
+						]
+					: []),
+			]}
+			persistent={(isEditing) => (
+				<TaskEditor
+					key={`${task.id}:${task.version}`}
+					task={task}
+					assignees={assignees}
+					onUpdated={onUpdated}
+					editing={isEditing}
+					onDone={() => setEditing(false)}
+				/>
+			)}
+			details={[
+				{ label: t("tasks.detail.id"), value: task.id, copyable: true },
+				{
+					label: t("tasks.detail.version"),
+					value: task.version,
+					testId: "task-version",
+				},
+			]}
+		/>
 	);
 }

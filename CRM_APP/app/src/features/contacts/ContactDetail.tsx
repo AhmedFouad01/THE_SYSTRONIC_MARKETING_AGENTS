@@ -14,8 +14,9 @@ import {
 	LoadingState,
 	Ltr,
 	type MessageKey,
-	Panel,
-	RecordDetails,
+	RecordEditFooter,
+	RecordEmpty,
+	RecordPanel,
 	Select,
 	sourceLabel,
 	Tabs,
@@ -51,10 +52,12 @@ function ContactEditor({
 	contact,
 	assignees,
 	onUpdated,
+	onDone,
 }: {
 	contact: ContactRow;
 	assignees: readonly Assignee[];
 	onUpdated: (c: Contact) => void;
+	onDone: () => void;
 }) {
 	const { t } = useI18n();
 	const toast = useToast();
@@ -81,6 +84,7 @@ function ContactEditor({
 		try {
 			onUpdated(await patchContact(contact.id, body));
 			toast.notify(t("contacts.edit.saved"), "success");
+			onDone();
 		} catch (e) {
 			setError(
 				isVersionConflict(e)
@@ -208,30 +212,18 @@ function ContactEditor({
 					setDraft({ ...draft, idValue: e.target.value });
 				}}
 			/>
-			<div className="sy-contacts__actions">
-				<Button
-					type="submit"
-					variant="primary"
-					size="sm"
-					loading={saving}
-					disabled={!dirty}
-					data-testid="contact-save"
-				>
-					{t("contacts.edit.save")}
-				</Button>
-				<Button
-					size="sm"
-					variant="ghost"
-					disabled={!dirty || saving}
-					onClick={() => {
-						setDraft(draftOf(contact));
-						setError(null);
-						setTouched(false);
-					}}
-				>
-					{t("contacts.edit.revert")}
-				</Button>
-			</div>
+			<RecordEditFooter
+				dirty={dirty}
+				saving={saving}
+				onDiscard={() => {
+					setDraft(draftOf(contact));
+					setError(null);
+					setTouched(false);
+				}}
+				saveLabel={t("contacts.edit.save")}
+				discardLabel={t("contacts.edit.revert")}
+				saveTestId="contact-save"
+			/>
 		</form>
 	);
 }
@@ -378,15 +370,11 @@ function DuplicatesList({
 /** Keyed by contact id by the parent: tab and fetched identifiers reset when another contact is selected. */
 function ContactBody({
 	contact,
-	assignees,
 	canMerge,
-	onUpdated,
 	onMerge,
 }: {
 	contact: ContactRow;
-	assignees: readonly Assignee[];
 	canMerge: boolean;
-	onUpdated: (c: Contact) => void;
 	onMerge: (d: Duplicate) => void;
 }) {
 	const { t } = useI18n();
@@ -414,12 +402,6 @@ function ContactBody({
 	const ids = identifierView(full ?? contact);
 	const overview = (
 		<div>
-			<ContactEditor
-				key={`${contact.id}:${contact.version}`}
-				contact={contact}
-				assignees={assignees}
-				onUpdated={onUpdated}
-			/>
 			<section aria-label={t("contacts.identifiers.title")}>
 				<h3 className="sy-contacts__muted">
 					{t("contacts.identifiers.title")}
@@ -446,16 +428,6 @@ function ContactBody({
 					</div>
 				)}
 			</section>
-			<dl className="sy-contacts__facts">
-				<dt>{t("common.source")}</dt>
-				<dd>{sourceLabel(contact.source, t)}</dd>
-			</dl>
-			<RecordDetails
-				rows={[
-					{ label: t("contacts.detail.id"), value: contact.id, copyable: true },
-					{ label: t("contacts.detail.version"), value: contact.version, testId: "contact-version" },
-				]}
-			/>
 		</div>
 	);
 	return (
@@ -492,74 +464,88 @@ export function ContactDetail({
 	canMerge,
 	onUpdated,
 	onMerge,
+	onClose,
 }: {
 	contact: ContactRow | null;
 	assignees: readonly Assignee[];
 	canMerge: boolean;
 	onUpdated: (c: Contact) => void;
 	onMerge: (d: Duplicate) => void;
+	onClose: () => void;
 }) {
 	const { t } = useI18n();
 	if (contact === null)
 		return (
-			<Panel
-				as="aside"
-				title={t("contacts.detail.title")}
-				className="sy-contacts__detail"
-				data-testid="contact-detail-empty"
-			>
-				<p className="sy-contacts__muted">{t("contacts.detail.empty")}</p>
-			</Panel>
+			<RecordEmpty
+				label={t("contacts.detail.title")}
+				hint={t("contacts.detail.empty")}
+				testId="contact-detail-empty"
+			/>
 		);
 	return (
-		<Panel
-			as="aside"
-			title={t("contacts.detail.title")}
-			className="sy-contacts__detail"
-			data-testid="contact-detail"
-			aria-label={t("contacts.detail.title")}
-		>
-			<div className="sy-contacts__head">
-				<div>
-					<p className="sy-contacts__name" data-testid="contact-detail-title">
-						{contact.display_name}
-					</p>
-					<p className="sy-contacts__muted">{contact.ownerName}</p>
-				</div>
-			</div>
-			<div className="sy-contacts__actions">
-				<Button
-					size="sm"
-					variant="primary"
-					icon="deals"
-					data-testid="contact-create-deal"
-					onClick={() =>
-						navigate(
-							"/deals",
-							dealContextSearch({
-								contactId: contact.id,
-								leadId: null,
-								dealId: null,
-							}),
-						)
-					}
-				>
-					{t("deals.action.create")}
-				</Button>
-				<AddTaskButton
-					contactId={contact.id}
-					dealId={null}
-					label={contact.display_name}
+		<RecordPanel
+			label={t("contacts.detail.title")}
+			testId="contact-detail"
+			recordKey={contact.id}
+			title={<Bdi>{contact.display_name}</Bdi>}
+			titleTestId="contact-detail-title"
+			subtitle={<Bdi>{contact.ownerName}</Bdi>}
+			onClose={onClose}
+			actions={
+				<>
+					<Button
+						size="sm"
+						variant="primary"
+						icon="deals"
+						data-testid="contact-create-deal"
+						onClick={() =>
+							navigate(
+								"/deals",
+								dealContextSearch({
+									contactId: contact.id,
+									leadId: null,
+									dealId: null,
+								}),
+							)
+						}
+					>
+						{t("deals.action.create")}
+					</Button>
+					<AddTaskButton
+						contactId={contact.id}
+						dealId={null}
+						label={contact.display_name}
+					/>
+				</>
+			}
+			facts={[
+				{ label: t("common.owner"), value: <Bdi>{contact.ownerName}</Bdi> },
+				{ label: t("common.source"), value: sourceLabel(contact.source, t) },
+			]}
+			editor={(done) => (
+				<ContactEditor
+					key={`${contact.id}:${contact.version}`}
+					contact={contact}
+					assignees={assignees}
+					onUpdated={onUpdated}
+					onDone={done}
 				/>
-			</div>
+			)}
+			details={[
+				{ label: t("contacts.detail.id"), value: contact.id, copyable: true },
+				{
+					label: t("contacts.detail.version"),
+					value: contact.version,
+					testId: "contact-version",
+				},
+			]}
+		>
 			<ContactBody
 				key={contact.id}
 				contact={contact}
-				assignees={assignees}
 				canMerge={canMerge}
-				onUpdated={onUpdated}
 				onMerge={onMerge}
 			/>
-		</Panel>
+		</RecordPanel>
 	);
 }

@@ -7,10 +7,11 @@ import {
 	useSession,
 } from "../../api/index.ts";
 import {
-	Bdi,
 	createSavedViewsStore,
 	DataGrid,
 	DEFAULT_VIEW,
+	IdentityCell,
+	useWideLayout,
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
@@ -54,6 +55,7 @@ const getRawId = (c: Contact) => c.id;
 
 export function ContactsView() {
 	const { t } = useI18n();
+	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -152,17 +154,16 @@ export function ContactsView() {
 				value: (r) => r.display_name,
 				sortable: true,
 				hideable: false,
-				cell: (r) => (
-					<b>
-						<Bdi>{r.display_name}</Bdi>
-					</b>
-				),
+				mobile: "title",
+				cell: (r) => <IdentityCell name={r.display_name} caption={r.ownerName} />,
 			},
 			{
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
 				sortable: true,
+				width: "180px",
+				mobile: "hide",
 				filter: { options: ownerOptions },
 			},
 			{
@@ -170,6 +171,7 @@ export function ContactsView() {
 				header: t("common.source"),
 				value: (r) => r.source,
 				sortable: true,
+				width: "160px",
 				filter: { options: sourceOptions },
 				cell: (r) => sourceLabel(r.source, t),
 			},
@@ -231,6 +233,7 @@ export function ContactsView() {
 							}
 							activeId={activeId}
 							onActiveChange={setActiveId}
+							autoSelectFirst={wide}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
 							sample={sample}
@@ -245,6 +248,7 @@ export function ContactsView() {
 					canMerge={canMerge}
 					onUpdated={remember}
 					onMerge={setMergeWith}
+					onClose={() => setActiveId(null)}
 				/>
 			</div>
 			{mergeWith && active ? (

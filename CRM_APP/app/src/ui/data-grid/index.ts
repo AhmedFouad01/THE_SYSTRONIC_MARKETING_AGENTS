@@ -14,3 +14,4 @@ export {
 	type Page,
 	useCursorList,
 } from "./useCursorList.ts";
+export { ChipCell, IdentityCell, RelativeTimeCell } from "./cells.tsx";

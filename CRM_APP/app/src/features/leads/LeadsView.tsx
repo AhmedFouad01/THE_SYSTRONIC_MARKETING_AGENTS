@@ -6,9 +6,12 @@ import {
 	useSession,
 } from "../../api/index.ts";
 import {
-	Badge,
 	Bdi,
 	Button,
+	ChipCell,
+	IdentityCell,
+	RelativeTimeCell,
+	useWideLayout,
 	createSavedViewsStore,
 	DataGrid,
 	DEFAULT_VIEW,
@@ -67,7 +70,8 @@ const getLeadIdRaw = (l: Lead) => l.id;
 const getContactId = (c: Contact) => c.id;
 
 export function LeadsView() {
-	const { t, formatDateTime, formatRelative, formatNumber } = useI18n();
+	const { t, formatNumber } = useI18n();
+	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -167,17 +171,16 @@ export function LeadsView() {
 				value: (r) => r.title,
 				sortable: true,
 				hideable: false,
-				cell: (r) => (
-					<b>
-						<Bdi>{r.title}</Bdi>
-					</b>
-				),
+				mobile: "title",
+				cell: (r) => <IdentityCell name={r.title} caption={r.contactName} />,
 			},
 			{
 				id: "contact",
 				header: t("leads.col.contact"),
 				value: (r) => r.contactName,
 				sortable: true,
+				width: "180px",
+				mobile: "hide",
 				cell: (r) => <Bdi>{r.contactName}</Bdi>,
 			},
 			{
@@ -185,6 +188,8 @@ export function LeadsView() {
 				header: t("leads.col.status"),
 				value: (r) => r.status,
 				sortable: true,
+				width: "120px",
+				mobile: "chip",
 				filter: {
 					options: LEAD_STATUSES.map((s) => ({
 						value: s,
@@ -192,7 +197,7 @@ export function LeadsView() {
 					})),
 				},
 				cell: (r) => (
-					<Badge tone={STATUS_TONE[r.status]}>{t(STATUS_KEY[r.status])}</Badge>
+					<ChipCell tone={STATUS_TONE[r.status]}>{t(STATUS_KEY[r.status])}</ChipCell>
 				),
 			},
 			{
@@ -200,6 +205,7 @@ export function LeadsView() {
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
 				sortable: true,
+				width: "150px",
 				filter: { options: ownerOptions },
 			},
 			{
@@ -207,7 +213,10 @@ export function LeadsView() {
 				header: t("common.source"),
 				value: (r) => sourceLabel(r.source, t),
 				sortable: true,
+				width: "130px",
+				mobile: "hide",
 				cell: (r) => sourceLabel(r.source, t),
+				titleText: (r) => sourceLabel(r.source, t),
 			},
 			{
 				id: "created",
@@ -215,16 +224,11 @@ export function LeadsView() {
 				value: (r) => Date.parse(r.received_at),
 				searchable: false,
 				sortable: true,
-				cell: (r) => (
-					<Bdi>
-						<span title={formatDateTime(r.received_at)}>
-							{formatRelative(r.received_at)}
-						</span>
-					</Bdi>
-				),
+				width: "130px",
+				cell: (r) => <RelativeTimeCell iso={r.received_at} />,
 			},
 		],
-		[t, ownerOptions, formatDateTime, formatRelative],
+		[t, ownerOptions],
 	);
 
 	// ---- bulk assign to me ----
@@ -362,6 +366,7 @@ export function LeadsView() {
 							requestId={isApiError(leads.error) ? leads.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={setActiveId}
+							autoSelectFirst={wide}
 							selectable
 							batchActions={(ids, clear) => (
 								<Button
@@ -382,7 +387,12 @@ export function LeadsView() {
 						/>
 					)}
 				</div>
-				<LeadDetail lead={active} assignees={assignees} onUpdated={remember} />
+				<LeadDetail
+					lead={active}
+					assignees={assignees}
+					onUpdated={remember}
+					onClose={() => setActiveId(null)}
+				/>
 			</div>
 			<NewLeadDialog
 				open={newOpen}

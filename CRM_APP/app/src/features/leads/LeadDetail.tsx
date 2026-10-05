@@ -6,8 +6,9 @@ import {
 	Button,
 	ForbiddenState,
 	Input,
-	Panel,
-	RecordDetails,
+	RecordEditFooter,
+	RecordEmpty,
+	RecordPanel,
 	Select,
 	sourceLabel,
 	useI18n,
@@ -34,10 +35,11 @@ type EditorProps = {
 	lead: LeadRow;
 	assignees: readonly Assignee[];
 	onUpdated: (lead: Lead) => void;
+	onDone: () => void;
 };
 
 /** Keyed by lead id + version by the parent: a reload (new version) remounts it with a fresh draft. */
-function LeadEditor({ lead, assignees, onUpdated }: EditorProps) {
+function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 	const { t } = useI18n();
 	const toast = useToast();
 	const [draft, setDraft] = useState(() => draftOf(lead));
@@ -65,6 +67,7 @@ function LeadEditor({ lead, assignees, onUpdated }: EditorProps) {
 			const updated = await patchLead(lead.id, body);
 			onUpdated(updated);
 			toast.notify(t("leads.edit.saved"), "success");
+			onDone();
 		} catch (e) {
 			setError(
 				isVersionConflict(e)
@@ -176,29 +179,17 @@ function LeadEditor({ lead, assignees, onUpdated }: EditorProps) {
 					</option>
 				))}
 			</Select>
-			<div className="sy-leads__actions">
-				<Button
-					type="submit"
-					variant="primary"
-					size="sm"
-					loading={saving}
-					disabled={!dirty}
-					data-testid="lead-save"
-				>
-					{t("leads.edit.save")}
-				</Button>
-				<Button
-					size="sm"
-					variant="ghost"
-					disabled={!dirty || saving}
-					onClick={() => {
-						setDraft(draftOf(lead));
-						setError(null);
-					}}
-				>
-					{t("leads.edit.revert")}
-				</Button>
-			</div>
+			<RecordEditFooter
+				dirty={dirty}
+				saving={saving}
+				onDiscard={() => {
+					setDraft(draftOf(lead));
+					setError(null);
+				}}
+				saveLabel={t("leads.edit.save")}
+				discardLabel={t("leads.edit.revert")}
+				saveTestId="lead-save"
+			/>
 		</form>
 	);
 }
@@ -207,108 +198,89 @@ export function LeadDetail({
 	lead,
 	assignees,
 	onUpdated,
+	onClose,
 }: {
 	lead: LeadRow | null;
 	assignees: readonly Assignee[];
 	onUpdated: (lead: Lead) => void;
+	onClose: () => void;
 }) {
 	const { t, formatDateTime } = useI18n();
 	if (lead === null)
 		return (
-			<Panel
-				as="aside"
-				title={t("leads.detail.title")}
-				className="sy-leads__detail"
-				data-testid="lead-detail-empty"
-			>
-				<p className="sy-leads__muted">{t("leads.detail.empty")}</p>
-			</Panel>
+			<RecordEmpty
+				label={t("leads.detail.title")}
+				hint={t("leads.detail.empty")}
+				testId="lead-detail-empty"
+			/>
 		);
-	const notInMvp = (label: string) => t("leads.notInMvp", { label });
 	return (
-		<Panel
-			as="aside"
-			title={t("leads.detail.title")}
-			className="sy-leads__detail"
-			data-testid="lead-detail"
-			aria-label={t("leads.detail.title")}
-		>
-			<div className="sy-leads__head">
-				<div>
-					<p className="sy-leads__name" data-testid="lead-detail-title">
-						<Bdi>{lead.title}</Bdi>
-					</p>
-					<p className="sy-leads__muted">
-						<Bdi>{lead.contactName}</Bdi>
-					</p>
-				</div>
+		<RecordPanel
+			label={t("leads.detail.title")}
+			testId="lead-detail"
+			recordKey={lead.id}
+			title={<Bdi>{lead.title}</Bdi>}
+			titleTestId="lead-detail-title"
+			subtitle={<Bdi>{lead.contactName}</Bdi>}
+			chip={
 				<Badge tone={STATUS_TONE[lead.status]}>
 					{t(STATUS_KEY[lead.status])}
 				</Badge>
-			</div>
-			<div className="sy-leads__actions">
-				<Button
-					size="sm"
-					variant="primary"
-					icon="deals"
-					data-testid="lead-create-deal"
-					onClick={() =>
-						navigate(
-							"/deals",
-							dealContextSearch({
-								contactId: lead.contact_id,
-								leadId: lead.id,
-								dealId: null,
-							}),
-						)
-					}
-				>
-					{t("deals.action.create")}
-				</Button>
-				<AddTaskButton
-					contactId={lead.contact_id}
-					dealId={null}
-					label={lead.contactName}
+			}
+			onClose={onClose}
+			actions={
+				<>
+					<Button
+						size="sm"
+						variant="primary"
+						icon="deals"
+						data-testid="lead-create-deal"
+						onClick={() =>
+							navigate(
+								"/deals",
+								dealContextSearch({
+									contactId: lead.contact_id,
+									leadId: lead.id,
+									dealId: null,
+								}),
+							)
+						}
+					>
+						{t("deals.action.create")}
+					</Button>
+					<AddTaskButton
+						contactId={lead.contact_id}
+						dealId={null}
+						label={lead.contactName}
+					/>
+				</>
+			}
+			facts={[
+				{ label: t("leads.field.owner"), value: <Bdi>{lead.ownerName}</Bdi> },
+				{ label: t("common.source"), value: sourceLabel(lead.source, t) },
+				{
+					label: t("common.created"),
+					value: <Bdi>{formatDateTime(lead.received_at)}</Bdi>,
+				},
+				{ label: t("leads.detail.evidence"), value: lead.source_evidence },
+			]}
+			editor={(done) => (
+				<LeadEditor
+					key={`${lead.id}:${lead.version}`}
+					lead={lead}
+					assignees={assignees}
+					onUpdated={onUpdated}
+					onDone={done}
 				/>
-				<Button
-					size="sm"
-					icon="mail"
-					disabled
-					aria-label={notInMvp(t("common.email"))}
-				>
-					{t("common.email")}
-				</Button>
-				<Button
-					size="sm"
-					icon="phone"
-					disabled
-					aria-label={notInMvp(t("common.call"))}
-				>
-					{t("common.call")}
-				</Button>
-			</div>
-			<LeadEditor
-				key={`${lead.id}:${lead.version}`}
-				lead={lead}
-				assignees={assignees}
-				onUpdated={onUpdated}
-			/>
-			<dl className="sy-leads__facts">
-				<dt>{t("common.source")}</dt>
-				<dd>{sourceLabel(lead.source, t)}</dd>
-				<dt>{t("leads.detail.evidence")}</dt>
-				<dd>{lead.source_evidence}</dd>
-				<dt>{t("common.created")}</dt>
-				<dd>
-					<Bdi>{formatDateTime(lead.received_at)}</Bdi>
-				</dd>
-			</dl>
-			<RecordDetails
-				rows={[
-					{ label: t("leads.detail.id"), value: lead.id, copyable: true },
-					{ label: t("leads.detail.version"), value: lead.version, testId: "lead-version" },
-				]}
-			/>
-		</Panel>
+			)}
+			details={[
+				{ label: t("leads.detail.id"), value: lead.id, copyable: true },
+				{
+					label: t("leads.detail.version"),
+					value: lead.version,
+					testId: "lead-version",
+				},
+			]}
+		/>
 	);
 }

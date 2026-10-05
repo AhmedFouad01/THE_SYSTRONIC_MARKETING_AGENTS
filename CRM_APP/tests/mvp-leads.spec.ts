@@ -83,6 +83,11 @@ for (const width of [360, 1280])
 			await rows(page).filter({ hasText: "Alpha lead" }).click({ position: { x: 10, y: 10 } });
 			await expect(page.getByTestId("lead-detail-title")).toHaveText("Alpha lead");
 			expect(await noPageOverflow(page)).toBe(true);
+			// Below 1024px the record is a modal sheet: go back to the list before using the page behind it.
+			if (width < 1024) {
+				await page.getByTestId("sheet-back").click();
+				await expect(page.getByTestId("lead-detail")).toHaveCount(0);
+			}
 
 			// Dialog: focus enters the first field and returns to the opener on Esc.
 			const opener = page.getByTestId("new-lead");
@@ -183,6 +188,9 @@ test("leads en: grid keyboard (arrows, Enter opens detail, Space selects) and fi
 	await expect(page.getByTestId("grid-batch")).toContainText("1 selected");
 	// detail selection and bulk selection stay independent
 	await expect(rows(page).first()).not.toHaveAttribute("data-selected", "true");
+	// the bulk bar overlays the toolbar; clear it before using the toolbar controls
+	await page.getByTestId("grid-batch-clear").click();
+	await expect(page.getByTestId("grid-batch")).toHaveCount(0);
 
 	// owner filter (by owner name), column visibility, density
 	await page.getByTestId("grid-filters").click();
@@ -285,6 +293,7 @@ test("leads en: detail edit, simulated version conflict then reload and retry", 
 	expect(other.status()).toBe(200);
 
 	const form = page.getByTestId("lead-detail");
+	await page.getByTestId("record-edit").click();
 	await form.getByLabel("Title").fill("Edited locally");
 	await pickValue(form.getByLabel("Status"), "qualified");
 	await page.getByTestId("lead-save").click();
@@ -312,6 +321,7 @@ test("leads en: reader gets the Forbidden state when saving an edit (403)", asyn
 	await connect(page, f.tokens.reader, f.ids.a);
 	await expect(rows(page)).toHaveCount(1);
 	await rows(page).first().click({ position: { x: 10, y: 10 } });
+	await page.getByTestId("record-edit").click();
 	await page.getByTestId("lead-detail").getByLabel("Title").fill("Reader edit");
 	await page.getByTestId("lead-save").click();
 	await expect(page.getByTestId("lead-forbidden")).toBeVisible();

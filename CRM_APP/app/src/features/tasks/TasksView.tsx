@@ -10,6 +10,8 @@ import {
 	Button,
 	createSavedViewsStore,
 	DataGrid,
+	IdentityCell,
+	useWideLayout,
 	DEFAULT_VIEW,
 	ForbiddenState,
 	type GridColumn,
@@ -64,6 +66,8 @@ const TAB_LABEL: Record<TaskTab, MessageKey> = {
 
 const INITIAL_VIEW: ViewState = {
 	...DEFAULT_VIEW,
+	// Source is rarely informative ("Not recorded"): hidden by default, available in Columns (UX-17).
+	hidden: ["source"],
 	sorts: [{ key: "due", dir: "asc" }],
 };
 
@@ -83,6 +87,7 @@ function useNow(): Date {
 
 export function TasksView() {
 	const { t, formatNumber } = useI18n();
+	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -226,13 +231,16 @@ export function TasksView() {
 				value: (r) => r.title,
 				sortable: true,
 				hideable: false,
-				cell: (r) => <b>{r.title}</b>,
+				mobile: "title",
+				cell: (r) => <IdentityCell name={r.title} />,
 			},
 			{
 				id: "related",
 				header: t("tasks.col.related"),
 				value: (r) => r.relatedName,
 				sortable: true,
+				width: "160px",
+				titleText: (r) => r.relatedName,
 				cell: (r) => <RelatedLink row={r} />,
 			},
 			{
@@ -241,13 +249,17 @@ export function TasksView() {
 				value: (r) => r.dueMs,
 				searchable: false,
 				sortable: true,
-				cell: (r) => <DueLabel dueAt={r.due_at} bucket={r.bucket} now={now} />,
+				width: "140px",
+				cell: (r) => (
+					<DueLabel dueAt={r.due_at} bucket={r.bucket} now={now} compact />
+				),
 			},
 			{
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
 				sortable: true,
+				width: "120px",
 				filter: { options: ownerOptions },
 			},
 			{
@@ -255,6 +267,8 @@ export function TasksView() {
 				header: t("tasks.col.status"),
 				value: (r) => r.status,
 				sortable: true,
+				width: "130px",
+				mobile: "chip",
 				filter: {
 					options: [
 						{ value: "open", label: t("tasks.status.open") },
@@ -276,6 +290,8 @@ export function TasksView() {
 				header: t("common.source"),
 				value: (r) => t(SOURCE_KEY[r.sourceKind]),
 				sortable: true,
+				width: "120px",
+				mobile: "hide",
 				cell: (r) => (
 					<span data-testid="task-source" data-source={r.sourceKind}>
 						{r.sourceKind === "automation" ? (
@@ -294,6 +310,8 @@ export function TasksView() {
 				value: () => "",
 				searchable: false,
 				hideable: false,
+				width: "110px",
+				mobile: "meta",
 				cell: (r) =>
 					r.status === "open" ? (
 						<Button
@@ -444,6 +462,7 @@ export function TasksView() {
 							requestId={isApiError(tasks.error) ? tasks.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={setActiveId}
+							autoSelectFirst={wide}
 							selectable
 							batchActions={(ids, clear) => (
 								<Button
@@ -469,6 +488,7 @@ export function TasksView() {
 					assignees={assignees}
 					now={now}
 					onUpdated={remember}
+					onClose={() => setActiveId(null)}
 				/>
 			</div>
 			<NewTaskDialog
