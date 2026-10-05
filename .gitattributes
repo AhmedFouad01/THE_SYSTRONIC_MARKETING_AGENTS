@@ -24,3 +24,9 @@ TSST/CREATIVE/CRM_MVP_*.md -text
 TSST/CREATIVE/EXPORTS.yaml -text
 REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/** -text
 TSST/PILOTS/TSST-PILOT-002_*/** -text
+
+# Generated/hashed text: LF in repo AND working tree (generators write LF; core.autocrlf must not flip bytes).
+# Regenerate via TSST/skills/build_index.py and TSST/context/gen_runtime_agents.py
+TSST/skills/index.yaml text eol=lf
+.claude/agents/*.md text eol=lf
+.codex/agents/*.toml text eol=lf

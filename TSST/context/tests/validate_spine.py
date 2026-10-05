@@ -26,6 +26,24 @@ def drive_only(tok):
     return NO_DRIVE and (tok.endswith(".gdoc") or (tok.startswith("REAL_MEMORY/") and tok.endswith("/")))
 
 
+NOTES = []  # informational lines (expected-absent Drive stubs); printed, never failures
+
+
+def gdoc_expected_absent(tok, export=None):
+    """True when `tok` is a Drive-native `*.gdoc` stub that is absent here but whose repo-native
+    export exists (boot.md: absent .gdoc outside Drive = SOURCE_UNREADABLE_IN_CURRENT_RUNTIME, not
+    a broken pointer). `export` = the manifest's export path; otherwise the sibling `X` / `X.md`
+    of `X.gdoc`. Stays False (so the caller fails) when the paired export is also missing."""
+    if not tok.endswith(".gdoc") or os.path.exists(P(tok)):
+        return False
+    base = tok[:-5]
+    cands = [export] if export else [base, base + ".md"]
+    if any(c and os.path.isfile(P(c)) for c in cands):
+        NOTES.append(f"{tok} (export present, stub absent: SOURCE_UNREADABLE_IN_CURRENT_RUNTIME)")
+        return True
+    return False
+
+
 def P(rel):
     if os.path.isabs(rel):  # already absolute (files_under results); splitting "/" breaks it on POSIX
         return rel
@@ -208,7 +226,8 @@ def structural(portfolio):
                         parent_dir = os.path.dirname(tok.rstrip("/"))
                         n_checked += 1
                         # Drive-native stubs: `X.md` may exist only as `X.md.gdoc` (documented)
-                        if not (os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)):
+                        if not (os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)
+                                or gdoc_expected_absent(tok)):
                             broken.append(f"{rel(f)} -> {tok}")
                     elif parent_dir and re.fullmatch(r"[A-Za-z0-9_.\-]+", tok) and "/" not in tok \
                             and "." not in tok and tok.startswith(("tsst-",)):
@@ -537,7 +556,7 @@ def bridge_manifests():
         for r in _rows(read(m)):
             n += 1
             src, exp = r.get("source", ""), r.get("export", "")
-            if not os.path.exists(P(src)) and not drive_only(src):
+            if not os.path.exists(P(src)) and not drive_only(src) and not gdoc_expected_absent(src, exp):
                 errs.append(f"{m}: source missing {src}")
             if not exp or not os.path.exists(P(exp)):
                 errs.append(f"{m}: export missing {exp}"); continue
@@ -591,6 +610,12 @@ def main():
             print(f"{r['label']:4} {r['brand']:13} {str(r['project']):14} {str(r['team']):10} "
                   f"{r['tier']:5} {r['n']:5} {r['bytes']:6} {r['ratio']:.0f}x")
     print(f"naive baseline: {base_n} files, {base_b} bytes")
+    if NOTES:
+        print(f"\nNOTE:{len(NOTES)} Drive-native .gdoc stub(s) absent in this runtime; repo-native export present")
+        for n in sorted(set(NOTES))[:5]:
+            print(f"  note: {n}")
+        if len(set(NOTES)) > 5:
+            print(f"  note: ... +{len(set(NOTES)) - 5} more")
 
     failed = [r for r in RESULTS if not r[2]]
     print(f"\n{len(RESULTS) - len(failed)}/{len(RESULTS)} checks passed")

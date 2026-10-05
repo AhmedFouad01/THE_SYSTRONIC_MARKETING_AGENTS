@@ -37,5 +37,6 @@ generated custom agents in `.codex/agents/` — each file already pins its model
   `EXPORTS.yaml` row exists, else ask the lead for a `source-read` bus task.
 - No push, merge or deploy without user approval.
 - Write files with LF line endings (repo files are hashed byte-exact; CRLF rewrites whole files).
+- Fresh clones on Windows: `git clone -c core.longpaths=true …`
 
 Status: UNVALIDATED. Cold-start not yet executed in this runtime.

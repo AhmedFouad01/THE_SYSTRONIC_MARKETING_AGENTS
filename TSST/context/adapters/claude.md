@@ -44,3 +44,4 @@ Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated fr
 ## Git
 Working tree in Drive; gitdir external `C:\GitMetadata\THE_SYSTRONIC_MARKETING_AGENTS.git`.
 Never recreate `.git` in Drive; `desktop.ini` stays ignored.
+Fresh clones on Windows: `git clone -c core.longpaths=true …`
