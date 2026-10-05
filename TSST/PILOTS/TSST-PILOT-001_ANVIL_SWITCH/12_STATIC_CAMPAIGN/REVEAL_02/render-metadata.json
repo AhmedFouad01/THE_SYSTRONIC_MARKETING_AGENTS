@@ -1,0 +1,21 @@
+{
+  "status": "REVIEW",
+  "width": 1080,
+  "height": 1350,
+  "format": "png",
+  "phonePreview": "360x450",
+  "logo": {
+    "source": "references/anvil-official-reverse.png",
+    "width": 260,
+    "left": 650,
+    "top": 604,
+    "transform": "uniform scale only",
+    "sha256": "5ced3ce3a2e98ce0528782f310a6c7e60fc6b4df6d53e515c402b2a5bc008a15"
+  },
+  "fonts": [
+    "Cairo Bold",
+    "Inter SemiBold"
+  ],
+  "backgroundSha256": "d231d2781ebe69de3e26b368f9782419285fcfc779854be94060be7876007395",
+  "outputSha256": "86be05c77f4380dc02ae206bc04554dbdf6b9c353d2c531c42f82777658f11e2"
+}

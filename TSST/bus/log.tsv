@@ -84,3 +84,14 @@
 2026-10-05T01:51Z	C7-VILL-09	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
 2026-10-05T01:51Z	C7-VILL-10	claude	new	
 2026-10-05T01:51Z	ANVIL-R02	claude	new	
+2026-10-05T01:55Z	C7-VILL-10	codex	claim on unavailable	
+2026-10-05T01:59Z	C7-VILL-10	codex	progress	Step 1 done: Logo-only Brand Look v1.0, derived tokens, computed contrast, bundled OFL font pair; next render seven editable masters and inspect.
+2026-10-05T02:00Z	C7-VILL-10	codex	progress	Step 2 done: seven editable HTML masters and actual 1080 PNG renders, bundled fonts and source crop manifest; next visual phone/RTL/contrast QA and handoff.
+2026-10-05T02:04Z	C7-VILL-10	codex	done	
+2026-10-05T02:05Z	ANVIL-R02	codex	claim on gpt-6.1-sol	
+2026-10-05T02:06Z	ANVIL-R02	codex	progress	Read continuation, ANVIL pointers, gates and v03 source; preparing distinct reassurance concept and exact logo composite
+2026-10-05T02:09Z	ANVIL-R02	codex	progress	Generated text-free open-book chapter metaphor; copied exact logo; rendered editable 1080x1350 source and 360x450 preview; inspecting QA next
+2026-10-05T02:11Z	ANVIL-R02	codex	progress	Full and phone rasters inspected: legible shaped type, exact logo, distinct chapter metaphor; producer QA passed REVIEW; provenance and source records saved
+2026-10-05T02:12Z	ANVIL-R02	codex	done	
+2026-10-05T09:09Z	C7-VILL-10	claude	cancel	team review: fails FINAL_ASSET_GATE (PREVIS); 4 DISCARD, 3 REWORK; produced without team/skills; redo after direction + user inputs
+2026-10-05T09:09Z	ANVIL-R02	claude	cancel	team review: REWORK medium (names twice, cliche book, LTR order); needs old Shark X Store logo from user

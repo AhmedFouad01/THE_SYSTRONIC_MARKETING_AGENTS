@@ -190,8 +190,9 @@ def structural(portfolio):
     prefixes = ("TSST/", "CRM_", "REAL_MEMORY/", ".agents/", ".claude/")
     broken, n_checked = [], 0
     for f in files:
-        if os.path.basename(f).startswith("bridge-request-"):
-            continue  # lists future export targets by design; checked via EXPORTS.yaml rows
+        if os.path.basename(f).startswith(("bridge-request-", "MORNING_QUESTIONS")):
+            # bridge requests list future targets; MORNING_QUESTIONS cite unmerged feature-branch paths
+            continue
         txt = open(f, encoding="utf-8").read()
         for line in txt.splitlines():
             parent_dir = None

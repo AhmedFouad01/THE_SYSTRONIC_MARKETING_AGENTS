@@ -24,6 +24,14 @@ def setup():
     os.makedirs(os.path.join(root, "docs"))
     os.makedirs(os.path.join(root, "out"))
     write(root, "docs/spec.md", "spec")
+    # team + skills fixtures (bus.py checks they exist in the repo root)
+    for team in ("marketing", "studio", "build"):
+        os.makedirs(os.path.join(root, "TSST", "teams", team))
+        write(root, f"TSST/teams/{team}/team.md", team)
+    os.makedirs(os.path.join(root, SKILL))
+    write(root, SKILL + "/SKILL.md", "skill")
+    os.makedirs(os.path.join(root, SKILL2))
+    write(root, SKILL2 + "/SKILL.md", "skill2")
     return root
 
 
@@ -45,7 +53,12 @@ def expect(name, out, ok):
     print(f"{'PASS' if good else 'FAIL'} {name}")
 
 
+SKILL = "TSST/CREATIVE/skills/tsst-creative-sk-010-visual-qa-brand-compliance"
+SKILL2 = "TSST/CREATIVE/skills/tsst-creative-sk-004-visual-hierarchy-layout"
 NEW = ["--spec", "docs/spec.md", "--done-when", "d", "--title", "t"]
+TS = ["--team", "studio", "--skills", SKILL]      # team + skills for work/review tasks
+NL = chr(10)
+USED = ["--skills-used", "tsst-creative-sk-010"]
 
 
 def main():
@@ -64,7 +77,7 @@ def main():
         expect("issue probe", run(R, "new", "P-1", "--me", "claude", *NEW, "--kind", "probe", "--to", "gemini",
                                   "--needs", "fs_read,drive_docs_read", "--write", "out/a.md"), True)
         expect("issue dependent", run(R, "new", "W-1", "--me", "claude", *NEW, "--needs", "drive_docs_read",
-                                      "--write", "out/*.md", "--after", "P-1"), True)
+                                      "--write", "out/*.md", "--after", "P-1", *TS), True)
         expect("wrong addressee", run(R, "claim", "P-1", "--me", "codex"), False)
         expect("unverified cap + after", run(R, "claim", "W-1", "--me", "gemini"), False)
         expect("probe may use unverified", run(R, "claim", "P-1", "--me", "gemini"), True)
@@ -98,17 +111,44 @@ def main():
         run(R, "verify", "gemini", "fs_write", "--me", "claude", "--evidence", "P-1")
 
         expect("dependent now claimable", run(R, "claim", "W-1", "--me", "gemini"), True)
-        run(R, "new", "W-2", "--me", "claude", *NEW, "--write", "out/b.md")
+        run(R, "new", "W-2", "--me", "claude", *NEW, *TS, "--write", "out/b.md")
         expect("overlapping write scope locked", run(R, "claim", "W-2", "--me", "claude"), False)
-        run(R, "new", "S-1", "--me", "claude", *NEW, "--write", "docs/s.md")
+        run(R, "new", "S-1", "--me", "claude", *NEW, *TS, "--write", "docs/s.md")
         run(R, "claim", "S-1", "--me", "claude")
         write(R, "docs/s.md", "self")
-        run(R, "done", "S-1", "--me", "claude", "--result", "docs/s.md")
+        run(R, "done", "S-1", "--me", "claude", "--result", "docs/s.md", *USED)
         expect("no self-acceptance", run(R, "close", "S-1", "--me", "claude"), False)
-        run(R, "new", "M-1", "--me", "claude", *NEW, "--tier", "FAST", "--write", "docs/m.md")
+        run(R, "new", "M-1", "--me", "claude", *NEW, *TS, "--tier", "FAST", "--write", "docs/m.md")
         out = run(R, "claim", "M-1", "--me", "claude", "--model", "opus")
         expect("claim prints tier model + warns on mismatch",
                "" if "run on: Haiku 4.5" in out and "WARN running on opus" in out else "REFUSED", True)
+        # --- team + skills rule (bus.md rule 9)
+        expect("work without team refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--skills", SKILL), False)
+        expect("work without skills refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--team", "studio"), False)
+        expect("nonexistent skill refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--team", "studio",
+                                                "--skills", "TSST/CREATIVE/skills/nope"), False)
+        expect("unknown team refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--team", "wizards", "--skills", SKILL), False)
+        expect("review without team refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--kind", "review"), False)
+        expect("probe needs no team", run(R, "new", "T-2", "--me", "claude", *NEW, "--kind", "probe", "--write", "out/p.md"), True)
+        run(R, "new", "T-3", "--me", "claude", *NEW, "--team", "studio", "--skills", f"{SKILL},{SKILL2}", "--write", "docs/t3.md")
+        out = run(R, "claim", "T-3", "--me", "gemini")
+        expect("claim prints LOAD BEFORE WORK", "" if "LOAD BEFORE WORK" in out and "TSST/teams/studio/team.md" in out
+               and SKILL in out and "FINAL_ASSET_GATE.md" in out else "REFUSED", True)
+        write(R, "docs/t3.md", "work")
+        expect("done without --skills-used refused", run(R, "done", "T-3", "--me", "gemini", "--result", "docs/t3.md"), False)
+        expect("done with a listed skill missing refused",
+               run(R, "done", "T-3", "--me", "gemini", "--result", "docs/t3.md", *USED), False)
+        expect("done citing path + id ok", run(R, "done", "T-3", "--me", "gemini", "--result", "docs/t3.md",
+                                               "--skills-used", f"{SKILL}, tsst-creative-sk-004"), True)
+        # a done task whose skills_used was stripped must not be closable
+        tp = os.path.join(R, "TSST/bus/tasks/T-3.yaml")
+        with open(tp, encoding="utf-8") as f:
+            txt = f.read()
+        write(R, "TSST/bus/tasks/T-3.yaml", NL.join(l for l in txt.splitlines() if not l.startswith("skills_used")) + NL)
+        expect("close without skills_used refused", run(R, "close", "T-3", "--me", "claude"), False)
+        expect("check flags missing skills_used", "" if "needs skills_used" in run(R, "check") else "REFUSED", True)
+        write(R, "TSST/bus/tasks/T-3.yaml", txt)
+        expect("close with skills_used", run(R, "close", "T-3", "--me", "claude"), True)
         out = run(R, "check")
         expect("check clean", "REFUSED" if "bus OK" not in out else "", True)
     finally:

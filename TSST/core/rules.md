@@ -14,6 +14,11 @@ may never relax these. Historical governance remains in `TSST/TEAM_CONSTITUTION.
 6. End meaningful work with an evidence-backed checkpoint/handoff.
 7. Route work to the lowest sufficient logical tier (`TSST/context/models.yaml`).
 8. Keep provider model names out of durable logic; they belong in adapters only.
+9. **Team + skills, never ad hoc** (user rule 2026-10-05). Every piece of TSST work is done by
+   the routed team (`TSST/teams/<team>/team.md` → its agent file) applying its matched skills
+   (boot steps 11–12). A model never works from its own general judgement alone. Deliverables
+   state which agent files and skills were applied; the Lead rejects work that shows none.
+   On the bus this is enforced by `team`/`skills` fields and `done --skills-used`.
 
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy

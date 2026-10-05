@@ -2,7 +2,7 @@
 
 ## Boot (all runtimes) — 2026-10-04
 
-Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [Gemini](TSST/context/adapters/gemini.md) · [ChatGPT](TSST/context/adapters/chatgpt.md). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
+Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). **Rule: every task is done by the routed TSST team with its skills — never ad hoc by the model** (`TSST/core/rules.md` Must 9). Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [Gemini](TSST/context/adapters/gemini.md) · [ChatGPT](TSST/context/adapters/chatgpt.md). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
 
 Use [TSST Lead](TSST/LEAD/AGENT.md) as the executive role and the user's single direct interface. Consult the relevant sections of [team governance](TSST/TEAM_CONSTITUTION.md), [readiness](TSST/READINESS_REPORT.md) and the team skill map in [TSST/teams/](TSST/teams/README.md) before selecting skills; do not load whole registries. Specialist names are CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG.
 

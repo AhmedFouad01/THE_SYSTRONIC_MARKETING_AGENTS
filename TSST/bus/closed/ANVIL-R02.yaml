@@ -1,10 +1,12 @@
 id: ANVIL-R02
 title: ANVIL Reveal 02 still (fallback work)
 kind: probe
-status: ready
+status: cancelled
 to: codex
 needs: [fs_read, fs_write, shell, image]
 tier: WORK
+team:
+skills: []
 brand: anvil
 spec: TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/CONTINUATION_STATUS_2026-09-28.md
 read: [TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/, TSST/brands/anvil/, TSST/CREATIVE/]
@@ -15,9 +17,10 @@ issued_by: claude
 created: "2026-10-05T01:51Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-result:
-sha256:
+progress: "Full and phone rasters inspected: legible shaped type, exact logo, distinct chapter metaphor; producer QA passed REVIEW; provenance and source records saved"
+skills_used: []
+result: TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/12_STATIC_CAMPAIGN/REVEAL_02/PRODUCTION_RECORD.md
+sha256: f7724a0e2e5366d158f18602c7b452cd96683db48d92bdfcb1a5fe796c4a42db
 note:
