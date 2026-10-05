@@ -1,0 +1,23 @@
+id: C7-VILL-06
+title: Revise Brand Look to v0.2 on review
+kind: work
+status: ready
+to: gemini
+needs: [fs_read, fs_write]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/REVIEW_BRAND_LOOK_v0.1.md
+read: [drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_LOOK_DIRECTION_v0.2.md]
+after: []
+done_when: "all 10 review items fixed or answered (table at end); R4: no proof claim without a real record; R10: Arabic explanation added; no generated images"
+issued_by: claude
+created: "2026-10-05T00:47Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

@@ -21,6 +21,7 @@ Status: PLAN APPROVED by user 2026-10-05 (with scope change below) · Brand: `vi
 | C7-VILL-03 | One revision on the review | LENS | codex · gpt-6.1-sol medium | `STRATEGY_BASELINE_v0.2.md` |
 | C7-VILL-04 | Brand Look direction from the baseline | CREATIVE | gemini · Gemini 3.8 Flash high | `BRAND_LOOK_DIRECTION_v0.1.md` |
 | C7-VILL-05 | Independent review of the Brand Look | CREATIVE QA | codex · gpt-6.1-sol medium | `REVIEW_BRAND_LOOK_v0.1.md` |
+| C7-VILL-06 | Revise Brand Look on review (added 2026-10-05: review verdict REVISE, 4 MAJOR) | CREATIVE | gemini · Gemini 3.8 Flash high | `BRAND_LOOK_DIRECTION_v0.2.md` |
 | — | Acceptance (DEEP) → user approval → VILL change set for the canonical Docs | Lead → user | claude | change set |
 
 Reviewer runtime ≠ producer runtime. No spend; all WORK tier.

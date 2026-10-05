@@ -65,3 +65,8 @@
 2026-10-05T00:41Z	C7-VILL-04	gemini	claim on Gemini 3.8 Flash · high	
 2026-10-05T00:42Z	C7-VILL-04	gemini	done	Brand Look direction v0.1 written per BRIEF and STRATEGY_BASELINE_v0.2; written moodboard, no generated images
 2026-10-05T00:42Z	C7-VILL-04	claude	close	structural gate OK: 8 required sections, 5-colour palette, AR/LT pairing, containment, written moodboard; contrast recomputed (14.75 / 7.57 / 4.59 AA); content QA = C7-VILL-05
+2026-10-05T00:44Z	C7-VILL-05	codex	claim	
+2026-10-05T00:45Z	C7-VILL-05	codex	progress	Strategy/direction hashes verified. Review flags shared Arabic tracking, missing bidi rules, unspecified output-size type and proof labels; contrast recomputed 14.75/7.57/4.59.
+2026-10-05T00:47Z	C7-VILL-05	codex	done	23-line review: 4 MAJOR/6 MINOR; strategy, Arabic/RTL and contrast checked. REVISE before acceptance; render QA unverified. Actual model identity unavailable; exact routing unverified.
+2026-10-05T00:47Z	C7-VILL-05	claude	close	strong review: 4 MAJOR (Arabic tracking, bidi, size mapping, proof claims) + 6 MINOR; verdict REVISE accepted -> C7-VILL-06
+2026-10-05T00:47Z	C7-VILL-06	claude	new	
