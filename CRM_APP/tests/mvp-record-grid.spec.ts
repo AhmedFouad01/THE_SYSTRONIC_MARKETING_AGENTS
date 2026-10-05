@@ -99,8 +99,15 @@ test("grid + record panel en 1440: active-only sort icon, numbered pager, row cl
 	await expect(page.getByTestId("record-footer")).toHaveCount(0);
 	await detail.getByLabel("Title").fill("Edited title");
 	await expect(page.getByTestId("record-footer")).toBeVisible();
-	await page.getByTestId("record-discard").click();
+	// Footer = Save + Cancel only (no separate Discard); Cancel drops the draft and leaves edit mode.
+	await expect(page.getByTestId("record-discard")).toHaveCount(0);
+	await expect(page.getByTestId("record-footer").getByRole("button")).toHaveCount(2);
+	await page.getByTestId("record-edit-cancel").click();
 	await expect(page.getByTestId("record-footer")).toHaveCount(0);
+	await expect(page.getByTestId("record-editor")).toHaveCount(0);
+	await expect(page.getByTestId("lead-detail-title")).not.toHaveText("Edited title");
+	await page.getByTestId("record-edit").click();
+	await expect(detail.getByLabel("Title")).not.toHaveValue("Edited title");
 	await detail.getByLabel("Title").fill("Edited title");
 	await page.getByTestId("lead-save").click();
 	await expect(page.getByTestId("toast").filter({ hasText: "Lead updated." })).toBeVisible();

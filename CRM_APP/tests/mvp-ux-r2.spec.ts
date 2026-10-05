@@ -349,15 +349,22 @@ test("R2-08 lead edit en: Cancel lives in the sticky footer, Esc leaves edit mod
 	await expect(
 		panel.locator(".sy-record__footer").getByTestId("record-edit-cancel"),
 	).toHaveCount(1);
-	// A dirty draft swaps the Cancel bar for the Save/Discard footer, which still offers exactly one Cancel.
+	// A dirty draft swaps the Cancel bar for the Save/Cancel footer, which still offers exactly one Cancel.
 	await page.getByLabel("Title").fill("Edited title");
 	await expect(page.getByTestId("record-footer")).toBeVisible();
 	await expect(page.getByTestId("record-edit-cancel")).toHaveCount(1);
 	await expect(
 		panel.locator(".sy-record__footer").getByTestId("record-edit-cancel"),
 	).toBeVisible();
-	await page.getByTestId("record-discard").click();
-	await expect(cancel).toBeVisible();
+	// Save + Cancel only: Cancel discards the draft and exits edit mode.
+	await expect(page.getByTestId("record-discard")).toHaveCount(0);
+	await expect(page.getByTestId("record-footer").getByRole("button")).toHaveCount(2);
+	await page.getByTestId("record-edit-cancel").click();
+	await expect(page.getByTestId("record-editor")).toHaveCount(0);
+	await expect(page.getByTestId("record-footer")).toHaveCount(0);
+	await expect(page.getByTestId("lead-detail-title")).not.toHaveText("Edited title");
+	await page.getByTestId("record-edit").click();
+	await expect(page.getByLabel("Title")).not.toHaveValue("Edited title");
 	// Escape from inside a field leaves edit mode.
 	await page.getByLabel("Title").focus();
 	await page.keyboard.press("Escape");

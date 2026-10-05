@@ -2,42 +2,37 @@ import { useEffect, useState } from "react";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
-	Bdi,
-	RecordEditFooter,
-	RecordEmpty,
-	RecordPanel,
 	type BadgeTone,
+	Bdi,
 	Button,
-	Dialog,
 	ForbiddenState,
 	Input,
-	Money,
 	MenuButton,
 	type MessageKey,
+	RecordEditFooter,
 	Select,
-	Tabs,
-	Textarea,
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
-import { AddTaskButton } from "../tasks/index.ts";
 import { fetchDeal, fetchHistory, patchDeal, transitionDeal } from "./api.ts";
 import {
 	type Assignee,
-	allowedTargets,
 	applyTransition,
 	buildPatchBody,
 	buildTransitionBody,
 	classifyTransitionError,
+	currencyChoices,
 	type Deal,
 	type DealIssue,
 	type DealRow,
-	dealValueText,
 	draftOf,
+	groupAmount,
 	type HistoryEntry,
 	isDirty,
 	type Pipeline,
+	sanitizeAmountInput,
 	type Stage,
+	type StageMoves,
 	type StageOutcome,
 	type TransitionErrorKind,
 	validateEdit,
@@ -101,16 +96,99 @@ export function ConflictBanner({
 	);
 }
 
+/**
+ * Money input: shows the amount with thousands separators while the draft keeps plain decimal text ("296900.5").
+ * Typed separators, Arabic digits and stray characters are normalised; the caret stays after the same digit.
+ */
+export function AmountField({
+	label,
+	value,
+	onChange,
+	error,
+	name = "amount",
+}: {
+	label: string;
+	value: string;
+	onChange: (plain: string) => void;
+	error?: string | undefined;
+	name?: string;
+}) {
+	return (
+		<Input
+			label={label}
+			name={name}
+			inputMode="decimal"
+			dir="ltr"
+			autoComplete="off"
+			value={groupAmount(value)}
+			error={error}
+			onChange={(e) => {
+				const el = e.target;
+				const plain = sanitizeAmountInput(el.value);
+				const caret = el.selectionStart ?? el.value.length;
+				const before = sanitizeAmountInput(el.value.slice(0, caret)).length;
+				onChange(plain);
+				if (caret >= el.value.length) return;
+				requestAnimationFrame(() => {
+					const shown = groupAmount(plain);
+					let seen = 0;
+					let pos = 0;
+					while (pos < shown.length && seen < before) {
+						if (shown[pos] !== ",") seen++;
+						pos++;
+					}
+					el.setSelectionRange(pos, pos);
+				});
+			}}
+		/>
+	);
+}
+
+/** Currency select: the ISO codes used in the data (EGP default), never free text. */
+export function CurrencySelect({
+	label,
+	value,
+	onChange,
+	choices,
+	error,
+}: {
+	label: string;
+	value: string;
+	onChange: (code: string) => void;
+	choices: readonly string[];
+	error?: string | undefined;
+}) {
+	const options = currencyChoices(choices, value);
+	return (
+		<Select
+			label={label}
+			name="currency"
+			value={value}
+			error={error}
+			onChange={(e) => onChange(e.target.value)}
+		>
+			{options.map((c) => (
+				<option key={c} value={c}>
+					{c}
+				</option>
+			))}
+		</Select>
+	);
+}
+
 /** Keyed by deal id + version by the parent: a reload (new version) remounts it with a fresh draft. */
-function DealEditor({
+export function DealEditor({
 	deal,
 	assignees,
+	currencies,
 	onUpdated,
 	onDone,
 }: {
 	deal: DealRow;
 	assignees: readonly Assignee[];
+	currencies: readonly string[];
 	onUpdated: (d: Deal) => void;
+	/** Leaves edit mode (after a save, or on Cancel - which drops the draft with the form). */
 	onDone: () => void;
 }) {
 	const { t } = useI18n();
@@ -206,30 +284,27 @@ function DealEditor({
 					setDraft({ ...draft, title: e.target.value });
 				}}
 			/>
-			<Input
-				label={t("deals.field.amount")}
-				name="amount"
-				inputMode="decimal"
-				dir="ltr"
-				value={draft.amount}
-				error={issue("amount")}
-				onChange={(e) => {
-					setTouched(false);
-					setDraft({ ...draft, amount: e.target.value });
-				}}
-			/>
-			<Input
-				label={t("deals.field.currency")}
-				name="currency"
-				dir="ltr"
-				maxLength={3}
-				value={draft.currency}
-				error={issue("currency")}
-				onChange={(e) => {
-					setTouched(false);
-					setDraft({ ...draft, currency: e.target.value.toUpperCase() });
-				}}
-			/>
+			<div className="sy-deals__pair">
+				<AmountField
+					label={t("deals.field.amount")}
+					value={draft.amount}
+					error={issue("amount")}
+					onChange={(amount) => {
+						setTouched(false);
+						setDraft({ ...draft, amount });
+					}}
+				/>
+				<CurrencySelect
+					label={t("deals.field.currency")}
+					value={draft.currency}
+					choices={currencies}
+					error={issue("currency")}
+					onChange={(currency) => {
+						setTouched(false);
+						setDraft({ ...draft, currency });
+					}}
+				/>
+			</div>
 			<Select
 				label={t("deals.field.owner")}
 				name="owner"
@@ -248,75 +323,53 @@ function DealEditor({
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
-				onDiscard={() => {
-					setDraft(draftOf(deal));
-					setError(null);
-					setTouched(false);
-				}}
+				onCancel={onDone}
 				saveLabel={t("deals.edit.save")}
-				discardLabel={t("deals.edit.revert")}
 				saveTestId="deal-save"
 			/>
 		</form>
 	);
 }
 
-type RunResult = "ok" | "invalid" | "failed";
+// ---- stage moves ------------------------------------------------------------------------------------------
 
-/** Stage control: keyboard-operable menu limited to the pipeline's allowed edges; Lost asks for a reason first. */
-function StageControl({
-	deal,
-	pipeline,
-	onUpdated,
-}: {
-	deal: DealRow;
-	pipeline: Pipeline | undefined;
-	onUpdated: (d: Deal) => void;
-}) {
+export type StageMove = {
+	busy: boolean;
+	error: TransitionErrorKind | null;
+	reloading: boolean;
+	/** Runs the transition; resolves true when the server accepted it. */
+	run: (target: Stage, reason: string) => Promise<boolean>;
+	reload: () => Promise<void>;
+};
+
+/** Transition command state for one deal: busy flag, classified error, reload after a 409. */
+export function useStageMove(
+	deal: DealRow,
+	onUpdated: (d: Deal) => void,
+): StageMove {
 	const { t } = useI18n();
 	const toast = useToast();
-	const targets = allowedTargets(pipeline, deal.stage_id);
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState<TransitionErrorKind | null>(null);
 	const [reloading, setReloading] = useState(false);
-	const [lost, setLost] = useState<Stage | null>(null);
-	const [reason, setReason] = useState("");
-	const [reasonIssue, setReasonIssue] = useState<string | null>(null);
-
-	const run = async (target: Stage, why: string): Promise<RunResult> => {
-		const issue = validateReason(target, why);
-		if (issue !== null) {
-			setReasonIssue(
-				t(
-					issue === "reasonRequired"
-						? "deals.lost.reasonRequired"
-						: "deals.lost.reasonTooLong",
-				),
-			);
-			return "invalid";
-		}
+	const run = async (target: Stage, reason: string) => {
+		if (validateReason(target, reason) !== null) return false;
 		setBusy(true);
 		setError(null);
 		try {
 			const res = await transitionDeal(
 				deal.id,
-				buildTransitionBody(deal, target, why, crypto.randomUUID()),
+				buildTransitionBody(deal, target, reason, crypto.randomUUID()),
 			);
 			onUpdated(applyTransition(deal, res));
 			toast.notify(t("deals.stage.moved", { stage: target.name }), "success");
-			return "ok";
+			return true;
 		} catch (e) {
 			setError(classifyTransitionError(e));
-			return "failed";
+			return false;
 		} finally {
 			setBusy(false);
 		}
-	};
-	const closeLost = () => {
-		if (busy) return;
-		setLost(null);
-		setReason("");
-		setReasonIssue(null);
 	};
 	const reload = async () => {
 		setReloading(true);
@@ -329,99 +382,114 @@ function StageControl({
 			setReloading(false);
 		}
 	};
-	const confirmLost = async () => {
-		if (lost === null) return;
-		const r = await run(lost, reason);
-		if (r !== "invalid") {
-			// ok: done. failed: the error is shown in the panel, not inside the dialog.
-			setLost(null);
-			setReason("");
-		}
-	};
+	return { busy, error, reloading, run, reload };
+}
 
+/** Banners for a failed move: 409 offers a reload, everything else a plain message. */
+export function StageFeedback({ move }: { move: StageMove }) {
+	const { t } = useI18n();
+	if (move.error === null) return null;
+	if (move.error === "conflict")
+		return (
+			<ConflictBanner
+				onReload={() => void move.reload()}
+				reloading={move.reloading}
+				testId="stage-conflict"
+				reloadTestId="stage-reload"
+				body="deals.err.stale"
+			/>
+		);
 	return (
-		<section className="sy-deals__stage" aria-label={t("deals.stage.current")}>
-			<div className="sy-deals__stagerow">
-				<Badge tone={toneOf(deal.stageOutcome)}>
-					<span data-testid="deal-stage">{deal.stageName}</span>
-				</Badge>
-				{targets.length > 0 ? (
-					<MenuButton
-						label={t("deals.stage.change")}
-						icon="dots"
-						testId="stage-menu"
-						items={targets.map((s) => ({
-							id: s.id,
-							label: s.name,
-							testId: `stage-option-${s.id}`,
-							onSelect: () => {
-								if (s.outcome === "lost") {
-									setReason("");
-									setReasonIssue(null);
-									setLost(s);
-								} else void run(s, "");
-							},
-						}))}
-					/>
-				) : (
-					<span className="sy-deals__muted" data-testid="stage-none">
-						{t("deals.stage.none")}
-					</span>
-				)}
-				{busy ? (
-					<span className="sy-deals__muted">{t("common.working")}</span>
-				) : null}
-			</div>
-			{error === "conflict" ? (
-				<ConflictBanner
-					onReload={() => void reload()}
-					reloading={reloading}
-					testId="stage-conflict"
-					reloadTestId="stage-reload"
-					body="deals.err.stale"
-				/>
-			) : null}
-			{error !== null && error !== "conflict" ? (
-				<p className="sy-deals__banner" role="alert" data-testid="stage-error">
-					{t(TRANSITION_ERR[error])}
-				</p>
-			) : null}
-			<Dialog
-				open={lost !== null}
-				onClose={closeLost}
-				title={t("deals.lost.title")}
-				description={t("deals.lost.body")}
-				testId="lost-dialog"
-				confirm={{
-					label: t("deals.lost.confirm"),
-					tone: "danger",
-					loading: busy,
-					onConfirm: () => void confirmLost(),
-				}}
-			>
-				<Textarea
-					label={t("deals.lost.reason")}
-					name="reason"
-					required
-					value={reason}
-					maxLength={500}
-					error={reasonIssue ?? undefined}
-					onChange={(e) => {
-						setReasonIssue(null);
-						setReason(e.target.value);
-					}}
-				/>
-			</Dialog>
-		</section>
+		<p className="sy-deals__banner" role="alert" data-testid="stage-error">
+			{t(TRANSITION_ERR[move.error])}
+		</p>
 	);
 }
+
+/**
+ * Header actions of the deal record: Mark lost (danger) / Mark won (success) only when the pipeline has such an edge
+ * from the current stage; every other allowed edge sits in the stage menu. No edges = terminal note.
+ */
+export function StageActions({
+	moves,
+	busy,
+	onLost,
+	onWon,
+	onMove,
+}: {
+	moves: StageMoves;
+	busy: boolean;
+	onLost: (s: Stage) => void;
+	onWon: (s: Stage) => void;
+	onMove: (s: Stage) => void;
+}) {
+	const { t } = useI18n();
+	const none =
+		moves.won === null && moves.lost === null && moves.others.length === 0;
+	if (none)
+		return (
+			<span className="sy-deals__muted" data-testid="stage-none">
+				{t("deals.stage.none")}
+			</span>
+		);
+	return (
+		<>
+			{moves.others.length > 0 ? (
+				<MenuButton
+					label={t("deals.stage.change")}
+					icon="dots"
+					testId="stage-menu"
+					items={moves.others.map((s) => ({
+						id: s.id,
+						label: s.name,
+						testId: `stage-option-${s.id}`,
+						disabled: busy,
+						onSelect: () => onMove(s),
+					}))}
+				/>
+			) : null}
+			{moves.lost ? (
+				<Button
+					variant="danger"
+					icon="critical"
+					disabled={busy}
+					onClick={() => onLost(moves.lost as Stage)}
+					data-testid="deal-mark-lost"
+				>
+					{t("action.markLost")}
+				</Button>
+			) : null}
+			{moves.won ? (
+				<Button
+					variant="success"
+					icon="success"
+					loading={busy}
+					onClick={() => onWon(moves.won as Stage)}
+					data-testid="deal-mark-won"
+				>
+					{t("action.markWon")}
+				</Button>
+			) : null}
+		</>
+	);
+}
+
+export function StageBadge({ deal }: { deal: DealRow }) {
+	return (
+		<Badge tone={toneOf(deal.stageOutcome)}>
+			<span data-testid="deal-stage">{deal.stageName}</span>
+		</Badge>
+	);
+}
+
+// ---- activity ---------------------------------------------------------------------------------------------
 
 type HistState =
 	| { s: "loading" }
 	| { s: "error" }
 	| { s: "ready"; items: HistoryEntry[] };
 
-function HistoryList({
+export function HistoryList({
 	dealId,
 	version,
 	pipeline,
@@ -481,114 +549,5 @@ function HistoryList({
 				</li>
 			))}
 		</ol>
-	);
-}
-
-export function DealDetail({
-	deal,
-	pipeline,
-	assignees,
-	actors,
-	onUpdated,
-	onClose,
-}: {
-	deal: DealRow | null;
-	pipeline: Pipeline | undefined;
-	assignees: readonly Assignee[];
-	actors: ReadonlyMap<string, string>;
-	onUpdated: (deal: Deal) => void;
-	onClose: () => void;
-}) {
-	const { t, formatMoney } = useI18n();
-	const [tab, setTab] = useState<"overview" | "history">("overview");
-	if (deal === null)
-		return (
-			<RecordEmpty
-				label={t("deals.detail.title")}
-				hint={t("deals.detail.empty")}
-				testId="deal-detail-empty"
-			/>
-		);
-	return (
-		<RecordPanel
-			label={t("deals.detail.title")}
-			testId="deal-detail"
-			recordKey={deal.id}
-			title={<Bdi>{deal.title}</Bdi>}
-			titleTestId="deal-detail-title"
-			subtitle={
-				<span data-testid="deal-detail-value">
-					<Money>{dealValueText(deal, formatMoney)}</Money>
-				</span>
-			}
-			onClose={onClose}
-			actions={
-				<AddTaskButton
-					contactId={deal.contact_id}
-					dealId={deal.id}
-					label={deal.title}
-				/>
-			}
-			facts={[
-				{
-					label: t("deals.detail.contact"),
-					value: <Bdi>{deal.contactName}</Bdi>,
-				},
-				{
-					label: t("deals.detail.pipeline"),
-					value: <Bdi>{deal.pipelineName}</Bdi>,
-				},
-				{ label: t("common.owner"), value: <Bdi>{deal.ownerName}</Bdi> },
-			]}
-			editor={(done) => (
-				<DealEditor
-					key={`${deal.id}:${deal.version}`}
-					deal={deal}
-					assignees={assignees}
-					onUpdated={onUpdated}
-					onDone={done}
-				/>
-			)}
-			details={[
-				{ label: t("deals.detail.id"), value: deal.id, copyable: true },
-				{
-					label: t("deals.detail.version"),
-					value: deal.version,
-					testId: "deal-version",
-				},
-			]}
-		>
-			<Tabs
-				label={t("deals.tabs")}
-				value={tab}
-				onChange={(id) => setTab(id as "overview" | "history")}
-				tabs={[
-					{
-						id: "overview",
-						label: t("deals.tab.overview"),
-						panel: (
-							<StageControl
-								key={deal.id}
-								deal={deal}
-								pipeline={pipeline}
-								onUpdated={onUpdated}
-							/>
-						),
-					},
-					{
-						id: "history",
-						label: t("deals.tab.history"),
-						panel: (
-							<HistoryList
-								dealId={deal.id}
-								version={deal.version}
-								pipeline={pipeline}
-								actors={actors}
-							/>
-						),
-					},
-				]}
-			/>
-		</RecordPanel>
 	);
 }

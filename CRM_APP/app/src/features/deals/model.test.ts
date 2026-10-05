@@ -7,6 +7,12 @@ import {
 	buildCreateBody,
 	buildPatchBody,
 	buildTransitionBody,
+	currencyChoices,
+	groupAmount,
+	sanitizeAmountInput,
+	splitMoves,
+	stagePosition,
+	stepperSteps,
 	classifyTransitionError,
 	type Deal,
 	dealContextSearch,
@@ -259,5 +265,77 @@ describe("Lead -> Contact -> Deal context", () => {
 		expect(parseDealContext(`?contact=${C}&lead=zzz`)?.leadId).toBeNull();
 		expect(parseSelect(`?select=${L}`)).toBe(L);
 		expect(parseSelect("?select=zzz")).toBeNull();
+	});
+});
+
+describe("stage stepper", () => {
+	const states = (id: string) =>
+		stepperSteps(pipeline, id).map((s) => `${s.stage.id}:${s.state}`);
+	it("marks done / current / upcoming along the forward path (lost and archived are off the path)", () => {
+		expect(states("new")).toEqual(["new:current", "qual:upcoming", "won:upcoming"]);
+		expect(states("qual")).toEqual(["new:done", "qual:current", "won:upcoming"]);
+	});
+	it("a won deal shows every earlier step done and the terminal as won", () => {
+		expect(states("won")).toEqual(["new:done", "qual:done", "won:won"]);
+	});
+	it("a lost deal keeps the path upcoming and appends the lost step", () => {
+		expect(states("lost")).toEqual([
+			"new:upcoming",
+			"qual:upcoming",
+			"won:upcoming",
+			"lost:lost",
+		]);
+	});
+	it("keeps a current archived stage on the path; unknown stage or pipeline gives nothing", () => {
+		expect(states("old")).toEqual([
+			"new:done",
+			"qual:done",
+			"won:done",
+			"old:current",
+		]);
+		expect(stepperSteps(pipeline, "nope")).toEqual([]);
+		expect(stepperSteps(undefined, "new")).toEqual([]);
+	});
+	it("position counts the forward path only", () => {
+		expect(stagePosition(pipeline, "qual")).toEqual({ index: 2, total: 3 });
+		expect(stagePosition(pipeline, "lost")).toBeNull();
+		expect(stagePosition(undefined, "qual")).toBeNull();
+	});
+	it("splits allowed edges into Mark won, Mark lost and the stage menu", () => {
+		const m = splitMoves(allowedTargets(pipeline, "qual"));
+		expect(m.won?.id).toBe("won");
+		expect(m.lost?.id).toBe("lost");
+		expect(m.others.map((s) => s.id)).toEqual([]);
+		const n = splitMoves(allowedTargets(pipeline, "new"));
+		expect(n.won).toBeNull();
+		expect(n.lost?.id).toBe("lost");
+		expect(n.others.map((s) => s.id)).toEqual(["qual"]);
+	});
+});
+
+describe("amount input and currencies", () => {
+	it("sanitizes typed text (separators, Arabic digits, junk) to plain decimal text", () => {
+		expect(sanitizeAmountInput("1,250.5")).toBe("1250.5");
+		expect(sanitizeAmountInput("٢٩٦٬٩٠٠٫٥٠")).toBe("296900.50");
+		expect(sanitizeAmountInput("12ab.3.4")).toBe("12.34");
+		expect(sanitizeAmountInput("1.234")).toBe("1.23");
+		expect(sanitizeAmountInput("1234567890123")).toBe("123456789012");
+		expect(sanitizeAmountInput("")).toBe("");
+	});
+	it("groups thousands and keeps a trailing dot while typing", () => {
+		expect(groupAmount("296900")).toBe("296,900");
+		expect(groupAmount("1234567.5")).toBe("1,234,567.5");
+		expect(groupAmount("12.")).toBe("12.");
+		expect(groupAmount("")).toBe("");
+		expect(parseMajorToMinor(sanitizeAmountInput(groupAmount("2500.50")))).toBe(250050);
+	});
+	it("offers EGP first plus the codes in the data and the record's own", () => {
+		expect(currencyChoices(["USD", "EGP", "bad", "AED"], "SAR")).toEqual([
+			"EGP",
+			"AED",
+			"SAR",
+			"USD",
+		]);
+		expect(currencyChoices([])).toEqual(["EGP"]);
 	});
 });

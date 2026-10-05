@@ -215,13 +215,7 @@ function ContactEditor({
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
-				onDiscard={() => {
-					setDraft(draftOf(contact));
-					setError(null);
-					setTouched(false);
-				}}
 				saveLabel={t("contacts.edit.save")}
-				discardLabel={t("contacts.edit.revert")}
 				saveTestId="contact-save"
 			/>
 		</form>

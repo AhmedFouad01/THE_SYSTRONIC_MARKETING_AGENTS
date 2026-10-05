@@ -161,7 +161,7 @@ function RecordBody(p: RecordPanelProps) {
 				)}
 				{p.details ? <RecordDetails rows={p.details} /> : null}
 				{editing && canEdit && !footerShown ? (
-					// Cancel lives in the sticky footer (UX-R2-08); the dirty Save/Discard footer carries its own Cancel and replaces this bar.
+					// Cancel lives in the sticky footer (UX-R2-08); the dirty Save/Cancel footer carries its own Cancel and replaces this bar.
 					<div className="sy-record__footer sy-record__cancelbar">
 						<Button
 							size="sm"
@@ -202,21 +202,23 @@ export function RecordEmpty({
 	);
 }
 
-/** Sticky Save / Discard footer of an edit form. Rendered only while the draft differs from the record. */
+/**
+ * Sticky Save / Cancel footer of an edit form. Rendered only while the draft differs from the record. Cancel discards
+ * the draft and leaves edit mode (the editor unmounts, so its draft state is dropped); there is no separate Discard.
+ */
 export function RecordEditFooter({
 	dirty,
 	saving,
-	onDiscard,
+	onCancel,
 	saveLabel,
-	discardLabel,
 	saveTestId,
 	disabled,
 }: {
 	dirty: boolean;
 	saving: boolean;
-	onDiscard: () => void;
+	/** Leaves edit mode; defaults to the surrounding RecordPanel's cancel. */
+	onCancel?: () => void;
 	saveLabel: string;
-	discardLabel: string;
 	saveTestId: string;
 	disabled?: boolean;
 }) {
@@ -229,6 +231,7 @@ export function RecordEditFooter({
 		return () => setFooterShown(false);
 	}, [dirty, setFooterShown]);
 	if (!dirty) return null;
+	const cancel = onCancel ?? ctx?.cancel;
 	return (
 		<div className="sy-record__footer" data-testid="record-footer">
 			<Button
@@ -241,21 +244,12 @@ export function RecordEditFooter({
 			>
 				{saveLabel}
 			</Button>
-			<Button
-				size="sm"
-				variant="ghost"
-				disabled={saving}
-				onClick={onDiscard}
-				data-testid="record-discard"
-			>
-				{discardLabel}
-			</Button>
-			{ctx ? (
+			{cancel ? (
 				<Button
 					size="sm"
 					variant="ghost"
 					disabled={saving}
-					onClick={ctx.cancel}
+					onClick={cancel}
 					data-testid="record-edit-cancel"
 				>
 					{t("record.cancelEdit")}

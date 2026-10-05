@@ -12,7 +12,8 @@ import {
 	createSavedViewsStore,
 	DataGrid,
 	IdentityCell,
-	useWideLayout,
+	Dialog,
+	useRecordSheet,
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
@@ -33,7 +34,8 @@ import {
 	fetchLeadRef,
 	fetchPipelines,
 } from "./api.ts";
-import { DealDetail, toneOf } from "./DealDetail.tsx";
+import { toneOf } from "./DealDetail.tsx";
+import { DealRecord } from "./DealRecord.tsx";
 import {
 	type Assignee,
 	BUILT_IN_VIEWS,
@@ -42,6 +44,7 @@ import {
 	type Deal,
 	type DealContext,
 	type DealRow,
+	currencyChoices,
 	dealContextSearch,
 	dealValueText,
 	filterBuiltInView,
@@ -130,7 +133,7 @@ function ContextStrip({
 
 export function DealsView() {
 	const { t, formatMoney } = useI18n();
-	const wide = useWideLayout();
+	const sheet = useRecordSheet();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -402,6 +405,25 @@ export function DealsView() {
 		}
 	};
 
+	const currencies = useMemo(
+		() => currencyChoices(allRows.map((r) => r.currency)),
+		[allRows],
+	);
+	const closeRecord = () => setActiveId(null);
+	const page = !sheet;
+	const record = (deal: DealRow, onBack?: () => void) => (
+		<DealRecord
+			key={deal.id}
+			deal={deal}
+			pipeline={pipelineById.get(deal.pipeline_id)}
+			assignees={assignees}
+			actors={ownerNames}
+			currencies={currencies}
+			onUpdated={remember}
+			{...(onBack ? { onBack } : {})}
+		/>
+	);
+
 	const activeTitle =
 		ctx?.dealId != null
 			? (allRows.find((r) => r.id === ctx.dealId)?.title ?? null)
@@ -409,6 +431,21 @@ export function DealsView() {
 
 	return (
 		<div className="sy-deals" data-testid="deals-view">
+			{page && active ? (
+				<>
+					{ctx !== null ? (
+						<ContextStrip
+							ctx={ctx}
+							leadTitle={ctxLead?.title ?? null}
+							contactName={ctxContact?.display_name ?? null}
+							dealTitle={activeTitle}
+						/>
+					) : null}
+					{record(active, closeRecord)}
+				</>
+			) : null}
+			{/* The list stays mounted (hidden) behind the record page so filters, sort and paging survive Back. */}
+			<div className="sy-deals__list" hidden={page && active !== null}>
 			<PageHeader
 				title={t("nav.deals")}
 				actions={
@@ -425,7 +462,7 @@ export function DealsView() {
 					</Button>
 				}
 			/>
-			{ctx !== null ? (
+			{ctx !== null && !(page && active) ? (
 				<ContextStrip
 					ctx={ctx}
 					leadTitle={ctxLead?.title ?? null}
@@ -474,7 +511,6 @@ export function DealsView() {
 							requestId={isApiError(deals.error) ? deals.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={setActiveId}
-							autoSelectFirst={wide}
 							{...(views ? { views } : {})}
 							sample={sample}
 							emptyTitle={t("deals.emptyTitle")}
@@ -482,14 +518,7 @@ export function DealsView() {
 						/>
 					)}
 				</div>
-				<DealDetail
-					deal={active}
-					pipeline={active ? pipelineById.get(active.pipeline_id) : undefined}
-					assignees={assignees}
-					actors={ownerNames}
-					onUpdated={remember}
-					onClose={() => setActiveId(null)}
-				/>
+			</div>
 			</div>
 			<NewDealDialog
 				open={newOpen}
@@ -497,9 +526,21 @@ export function DealsView() {
 				contacts={contactOptions}
 				pipelines={pipelines.items}
 				assignees={assignees}
+				currencies={currencies}
 				prefill={prefill}
 				onCreated={onCreated}
 			/>
+			{sheet && active ? (
+				<Dialog
+					open
+					onClose={closeRecord}
+					title={t("deals.detail.title")}
+					placement="side"
+					testId="deal-sheet"
+				>
+					{record(active)}
+				</Dialog>
+			) : null}
 		</div>
 	);
 }

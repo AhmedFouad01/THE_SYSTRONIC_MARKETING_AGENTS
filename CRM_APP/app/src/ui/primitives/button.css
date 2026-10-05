@@ -90,6 +90,17 @@
 	background: var(--sy-danger-pressed);
 }
 
+.sy-btn--success {
+	background: var(--sy-success-bg);
+	color: var(--sy-success-fg);
+	border-color: var(--sy-success-icon);
+}
+
+.sy-btn--success:hover:not(:disabled) {
+	filter: brightness(0.96);
+	box-shadow: inset 0 0 0 1px var(--sy-success-icon);
+}
+
 .sy-btn:disabled {
 	background: var(--sy-disabled-bg);
 	color: var(--sy-text-disabled);

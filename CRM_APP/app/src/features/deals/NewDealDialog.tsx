@@ -8,6 +8,7 @@ import {
 	useI18n,
 } from "../../ui/index.ts";
 import { createDeal } from "./api.ts";
+import { AmountField, CurrencySelect } from "./DealDetail.tsx";
 import {
 	type Assignee,
 	buildCreateBody,
@@ -53,6 +54,7 @@ function NewDealForm({
 	contacts,
 	pipelines,
 	assignees,
+	currencies,
 	prefill,
 	formId,
 	onCreated,
@@ -61,6 +63,7 @@ function NewDealForm({
 	contacts: readonly Contact[];
 	pipelines: readonly Pipeline[];
 	assignees: readonly Assignee[];
+	currencies: readonly string[];
 	prefill: NewDealPrefill | null;
 	formId: string;
 	onCreated: (deal: Deal) => void;
@@ -195,24 +198,21 @@ function NewDealForm({
 					</option>
 				))}
 			</Select>
-			<Input
-				label={t("deals.field.amount")}
-				name="amount"
-				inputMode="decimal"
-				dir="ltr"
-				value={input.amount}
-				error={err("amount")}
-				onChange={(e) => set({ amount: e.target.value })}
-			/>
-			<Input
-				label={t("deals.field.currency")}
-				name="currency"
-				dir="ltr"
-				maxLength={3}
-				value={input.currency}
-				error={err("currency")}
-				onChange={(e) => set({ currency: e.target.value.toUpperCase() })}
-			/>
+			<div className="sy-deals__pair">
+				<AmountField
+					label={t("deals.field.amount")}
+					value={input.amount}
+					error={err("amount")}
+					onChange={(amount) => set({ amount })}
+				/>
+				<CurrencySelect
+					label={t("deals.field.currency")}
+					value={input.currency}
+					choices={currencies}
+					error={err("currency")}
+					onChange={(currency) => set({ currency })}
+				/>
+			</div>
 			<Select
 				label={t("deals.new.owner")}
 				name="owner"
@@ -236,6 +236,7 @@ export function NewDealDialog({
 	contacts,
 	pipelines,
 	assignees,
+	currencies,
 	prefill,
 	onCreated,
 }: {
@@ -244,6 +245,7 @@ export function NewDealDialog({
 	contacts: readonly Contact[];
 	pipelines: readonly Pipeline[];
 	assignees: readonly Assignee[];
+	currencies: readonly string[];
 	prefill: NewDealPrefill | null;
 	onCreated: (deal: Deal) => void;
 }) {
@@ -279,6 +281,7 @@ export function NewDealDialog({
 				contacts={contacts}
 				pipelines={pipelines}
 				assignees={assignees}
+				currencies={currencies}
 				prefill={prefill}
 				formId={formId}
 				onBusy={setBusy}

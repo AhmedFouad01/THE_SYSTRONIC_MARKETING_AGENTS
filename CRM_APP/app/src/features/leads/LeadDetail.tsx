@@ -183,12 +183,7 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
-				onDiscard={() => {
-					setDraft(draftOf(lead));
-					setError(null);
-				}}
 				saveLabel={t("leads.edit.save")}
-				discardLabel={t("leads.edit.revert")}
 				saveTestId="lead-save"
 			/>
 		</form>

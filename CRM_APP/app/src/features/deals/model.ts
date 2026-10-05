@@ -424,3 +424,133 @@ export function applyTransition(
 ): Deal {
 	return { ...deal, stage_id: result.stage_id, version: result.version };
 }
+
+// ---- record page: stage stepper, amount input, currencies -------------------------------------------------
+
+export type StepState = "done" | "current" | "upcoming" | "won" | "lost";
+export type StepperStep = { stage: Stage; state: StepState };
+
+/** The pipeline's forward path: non-archived, non-lost stages in order (a current archived stage is kept). */
+function pathStages(p: Pipeline, currentId: string): Stage[] {
+	return orderedStages(p).filter(
+		(s) => s.outcome !== "lost" && (!s.archived || s.id === currentId),
+	);
+}
+
+/**
+ * Stage stepper model. Earlier stages of the path are "done", the deal's stage is "current" (or "won" for a won
+ * terminal), later ones "upcoming". A lost deal cannot tell where it fell out, so the path stays "upcoming" and the
+ * lost stage is appended as the "lost" step. Unknown stage or pipeline gives no steps.
+ */
+export function stepperSteps(
+	p: Pipeline | undefined,
+	currentId: string,
+): StepperStep[] {
+	const cur = stageOf(p, currentId);
+	if (p === undefined || cur === undefined) return [];
+	const path = pathStages(p, currentId);
+	if (cur.outcome === "lost")
+		return [
+			...path.map((stage) => ({ stage, state: "upcoming" as const })),
+			{ stage: cur, state: "lost" as const },
+		];
+	const at = path.findIndex((s) => s.id === currentId);
+	return path.map((stage, i) => ({
+		stage,
+		state:
+			i < at
+				? ("done" as const)
+				: i === at
+					? cur.outcome === "won"
+						? ("won" as const)
+						: ("current" as const)
+					: ("upcoming" as const),
+	}));
+}
+
+/** 1-based position of the deal's stage on the forward path ("2 of 5"); null for lost/unknown stages. */
+export function stagePosition(
+	p: Pipeline | undefined,
+	currentId: string,
+): { index: number; total: number } | null {
+	const cur = stageOf(p, currentId);
+	if (p === undefined || cur === undefined || cur.outcome === "lost")
+		return null;
+	const path = pathStages(p, currentId);
+	const at = path.findIndex((s) => s.id === currentId);
+	return at < 0 ? null : { index: at + 1, total: path.length };
+}
+
+export type StageMoves = {
+	won: Stage | null;
+	lost: Stage | null;
+	others: Stage[];
+};
+
+/** Splits the allowed edges: the first won/lost target feed the Mark won / Mark lost buttons, the rest the stage menu. */
+export function splitMoves(targets: readonly Stage[]): StageMoves {
+	const won = targets.find((s) => s.outcome === "won") ?? null;
+	const lost = targets.find((s) => s.outcome === "lost") ?? null;
+	return {
+		won,
+		lost,
+		others: targets.filter((s) => s !== won && s !== lost),
+	};
+}
+
+const ARABIC_INDIC = "٠١٢٣٤٥٦٧٨٩";
+const EASTERN_INDIC = "۰۱۲۳۴۵۶۷۸۹";
+
+/**
+ * What the user typed in the money field -> plain decimal text ("1,250.5" -> "1250.5"). Arabic-Indic digits and the
+ * Arabic decimal separator are accepted; anything else is dropped, only the first dot is kept, at most 12 integer
+ * digits and 2 decimals survive.
+ */
+export function sanitizeAmountInput(typed: string): string {
+	let out = "";
+	let dot = false;
+	let ints = 0;
+	let decs = 0;
+	for (const ch of typed) {
+		let c = ch;
+		const a = ARABIC_INDIC.indexOf(ch);
+		const e = EASTERN_INDIC.indexOf(ch);
+		if (a >= 0) c = String(a);
+		else if (e >= 0) c = String(e);
+		else if (ch === "٫") c = ".";
+		if (c >= "0" && c <= "9") {
+			if (dot) {
+				if (decs >= 2) continue;
+				decs++;
+			} else {
+				if (ints >= 12) continue;
+				ints++;
+			}
+			out += c;
+		} else if (c === "." && !dot) {
+			dot = true;
+			out += c;
+		}
+	}
+	return out;
+}
+
+/** Plain decimal text -> display text with thousands grouping ("1250.5" -> "1,250.5"; keeps a trailing dot). */
+export function groupAmount(plain: string): string {
+	const [int = "", frac] = plain.split(".");
+	const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return frac === undefined ? grouped : `${grouped}.${frac}`;
+}
+
+/** ISO codes offered by the currency select: those present in the data, the default, and the record's own. */
+export function currencyChoices(
+	used: Iterable<string>,
+	current?: string,
+): string[] {
+	const set = new Set<string>(["EGP"]);
+	for (const c of used) if (/^[A-Z]{3}$/.test(c)) set.add(c);
+	if (current && /^[A-Z]{3}$/.test(current)) set.add(current);
+	return [...set].sort((a, b) =>
+		a === "EGP" ? -1 : b === "EGP" ? 1 : a.localeCompare(b),
+	);
+}

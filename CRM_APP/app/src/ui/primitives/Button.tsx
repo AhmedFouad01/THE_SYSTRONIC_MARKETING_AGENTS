@@ -3,7 +3,7 @@ import { Icon, type IconName } from "../icons/index.ts";
 import { Spinner } from "./Spinner.tsx";
 import "./button.css";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "success";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {

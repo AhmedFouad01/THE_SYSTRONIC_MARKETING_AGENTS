@@ -11,11 +11,14 @@ export function AddTaskButton({
 	contactId,
 	dealId,
 	label,
+	onCreated,
 }: {
 	contactId: string | null;
 	dealId: string | null;
 	/** Human name of the record the task is attached to. */
 	label: string;
+	/** Called after the task was created (e.g. to refresh a task list). */
+	onCreated?: () => void;
 }) {
 	const { t } = useI18n();
 	const toast = useToast();
@@ -46,6 +49,7 @@ export function AddTaskButton({
 				onCreated={() => {
 					setOpen(false);
 					toast.notify(t("tasks.new.created"), "success");
+					onCreated?.();
 				}}
 			/>
 		</>

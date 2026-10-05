@@ -247,6 +247,8 @@ test("tasks en: Add task from deal detail keeps the relation; related link retur
 	await rows(page)
 		.filter({ hasText: "Relation deal" })
 		.click({ position: { x: 10, y: 10 } });
+	// The deal record page offers Add task in its Tasks tab.
+	await page.getByRole("tab", { name: "Tasks" }).click();
 	await page.getByTestId("add-task").click();
 	const dialog = page.getByTestId("new-task-dialog");
 	await expect(dialog).toBeVisible();
@@ -262,6 +264,7 @@ test("tasks en: Add task from deal detail keeps the relation; related link retur
 	await expect(
 		page.getByTestId("toast").filter({ hasText: "Task created." }),
 	).toBeVisible();
+	await expect(page.getByTestId("deal-task")).toContainText("Send proposal");
 
 	const list = (
 		await (await request.get("/v1/tasks", { headers: headers(f) })).json()

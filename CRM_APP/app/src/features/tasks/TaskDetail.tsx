@@ -217,13 +217,7 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 					dirty={dirty}
 					saving={saving}
 					disabled={completing}
-					onDiscard={() => {
-						setDraft(draftOf(task));
-						setIssues({});
-						setError(null);
-					}}
 					saveLabel={t("tasks.edit.save")}
-					discardLabel={t("tasks.edit.revert")}
 					saveTestId="task-save"
 				/>
 			</form>
