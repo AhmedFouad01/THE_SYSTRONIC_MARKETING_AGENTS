@@ -1,7 +1,7 @@
 id: C7-VILL-03
 title: Revise strategy to v0.2 on review
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_read, fs_write]
 tier: WORK
@@ -15,9 +15,9 @@ issued_by: claude
 created: "2026-10-04T23:12Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-result:
-sha256:
-note:
+progress: "v0.2 prepared: all 8 findings mapped; split/cost basis, masterbrand, payment buffer, formats, intent events, citations and tone addressed. Source freshness unchanged; self-check passed."
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/STRATEGY_BASELINE_v0.2.md
+sha256: 49b094585c5e4939426565eb40816faac617fedfafc360991824c6297a297e82
+note: 8/8 dispositions present and spot-checked in body (split, masterbrand, deposit, formats, events, tone)

@@ -58,3 +58,7 @@
 2026-10-04T23:53Z	C7-VILL-02	gemini	claim on Gemini 3.8 Flash · high	
 2026-10-05T00:25Z	C7-VILL-02	gemini	done	review updated: 8 findings + 6-row FACT verification table citing canonical sources
 2026-10-05T00:26Z	C7-VILL-02	claude	close	8 findings (3 MAJOR) + 6/6 FACT citations verified; spot-checked 2 quotes in source
+2026-10-05T00:27Z	C7-VILL-03	codex	claim	
+2026-10-05T00:32Z	C7-VILL-03	codex	progress	v0.2 prepared: all 8 findings mapped; split/cost basis, masterbrand, payment buffer, formats, intent events, citations and tone addressed. Source freshness unchanged; self-check passed.
+2026-10-05T00:33Z	C7-VILL-03	codex	done	8 review items addressed with disposition table; citation/economics/LF checks passed. Model identity unavailable; routing unverified. Awaiting Lead close; next C7-VILL-04.
+2026-10-05T00:35Z	C7-VILL-03	claude	close	8/8 dispositions present and spot-checked in body (split, masterbrand, deposit, formats, events, tone)
