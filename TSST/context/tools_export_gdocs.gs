@@ -295,10 +295,12 @@ function applyVillCS001() {
     const it = root.getFoldersByName(sub);
     const doc = it.hasNext() ? findDoc(it.next(), title) : null;
     if (!doc) { report.missing.push(sub + '/' + title); return; }
-    const body = DocumentApp.openById(doc.getId()).getBody();
+    const d = DocumentApp.openById(doc.getId());
+    const body = d.getBody();
     if (body.getText().indexOf(marker) >= 0) { report.skipped.push(title); return; }
     body.appendParagraph('');
     body.appendParagraph(text);
+    d.saveAndClose();  // flush before the export below, or it exports the old text
     report.appended.push(title);
   });
   const ex = {created: 0, updated: 0, missing: []};
