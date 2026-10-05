@@ -43,3 +43,33 @@
 2026-10-04T20:15Z	-	claude	verify gemini.fs_write	COLD-GEMINI
 2026-10-04T20:15Z	-	claude	verify gemini.shell	COLD-GEMINI
 2026-10-04T20:15Z	BRANDS-FOLD	claude	close	155 pure additions, each cites same-brand draft; no cross-brand text; CRLF normalized to LF by lead
+2026-10-04T23:12Z	C7-VILL-01	claude	new	
+2026-10-04T23:12Z	C7-VILL-02	claude	new	
+2026-10-04T23:12Z	C7-VILL-03	claude	new	
+2026-10-04T23:12Z	C7-VILL-04	claude	new	
+2026-10-04T23:12Z	C7-VILL-05	claude	new	
+2026-10-04T23:15Z	C7-VILL-01	codex	claim	
+2026-10-04T23:16Z	C7-VILL-01	codex	progress	Six canonical exports fresh by pointer rule; brief refines kitchen to paid only. Draft economics will separate paid CAC from all-in CAC and retain VILL-001 data gate.
+2026-10-04T23:20Z	C7-VILL-01	codex	done	Draft + data requests delivered; scope/CAC caveats recorded; self-check passed. Actual model identity unavailable; routing unverified. Pending Lead close and independent review.
+2026-10-04T23:43Z	C7-VILL-01	claude	close	structural gate OK: 8 required sections, labels, kitchen=paid only, no other brand, LF; content QA = C7-VILL-02
+2026-10-04T23:51Z	C7-VILL-02	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-04T23:52Z	C7-VILL-02	gemini	done	independent review of strategy v0.1 completed (SPARK+CREATIVE), <=40 lines
+2026-10-04T23:53Z	C7-VILL-02	claude	reopen	keep the 8 findings; ADD a 6-row table: each FACT in v0.1 | cited source | verified / not found / differs (quote <=15 words). Open the source .md files.
+2026-10-04T23:53Z	C7-VILL-02	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-05T00:25Z	C7-VILL-02	gemini	done	review updated: 8 findings + 6-row FACT verification table citing canonical sources
+2026-10-05T00:26Z	C7-VILL-02	claude	close	8 findings (3 MAJOR) + 6/6 FACT citations verified; spot-checked 2 quotes in source
+2026-10-05T00:27Z	C7-VILL-03	codex	claim	
+2026-10-05T00:32Z	C7-VILL-03	codex	progress	v0.2 prepared: all 8 findings mapped; split/cost basis, masterbrand, payment buffer, formats, intent events, citations and tone addressed. Source freshness unchanged; self-check passed.
+2026-10-05T00:33Z	C7-VILL-03	codex	done	8 review items addressed with disposition table; citation/economics/LF checks passed. Model identity unavailable; routing unverified. Awaiting Lead close; next C7-VILL-04.
+2026-10-05T00:35Z	C7-VILL-03	claude	close	8/8 dispositions present and spot-checked in body (split, masterbrand, deposit, formats, events, tone)
+2026-10-05T00:41Z	C7-VILL-04	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-05T00:42Z	C7-VILL-04	gemini	done	Brand Look direction v0.1 written per BRIEF and STRATEGY_BASELINE_v0.2; written moodboard, no generated images
+2026-10-05T00:42Z	C7-VILL-04	claude	close	structural gate OK: 8 required sections, 5-colour palette, AR/LT pairing, containment, written moodboard; contrast recomputed (14.75 / 7.57 / 4.59 AA); content QA = C7-VILL-05
+2026-10-05T00:44Z	C7-VILL-05	codex	claim	
+2026-10-05T00:45Z	C7-VILL-05	codex	progress	Strategy/direction hashes verified. Review flags shared Arabic tracking, missing bidi rules, unspecified output-size type and proof labels; contrast recomputed 14.75/7.57/4.59.
+2026-10-05T00:47Z	C7-VILL-05	codex	done	23-line review: 4 MAJOR/6 MINOR; strategy, Arabic/RTL and contrast checked. REVISE before acceptance; render QA unverified. Actual model identity unavailable; exact routing unverified.
+2026-10-05T00:47Z	C7-VILL-05	claude	close	strong review: 4 MAJOR (Arabic tracking, bidi, size mapping, proof claims) + 6 MINOR; verdict REVISE accepted -> C7-VILL-06
+2026-10-05T00:47Z	C7-VILL-06	claude	new	
+2026-10-05T00:51Z	C7-VILL-06	gemini	claim on Claude Opus 5.5 · high	
+2026-10-05T00:59Z	C7-VILL-06	gemini	done	v0.2: R1-R10 dispositioned (table at end); R4 record-required proof rule; R10 Arabic summary; contrast recomputed; no images. Ran on Claude Opus 5.5 high
+2026-10-05T01:01Z	C7-VILL-06	claude	close	10/10 dispositions verified in body; v0.1 proof claims removed/CONCEPT-gated; Arabic summary present

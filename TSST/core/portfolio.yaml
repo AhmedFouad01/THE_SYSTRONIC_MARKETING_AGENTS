@@ -31,8 +31,12 @@ brands:
     kind: client
     active: not_recorded  # state lives in canonical source; fetch on demand
     memory: TSST/brands/vill-studio/memory/source.md
-    projects: {}
-    next: resolve from canonical source on first task (Drive-native; filesystem runtimes use bridge)
+    projects:
+      strategy-baseline:
+        state: TSST-PILOT-002 (C7) delivered — strategy v0.2 + brand look v0.2 user-approved 2026-10-05
+        checkpoint: TSST/brands/vill-studio/projects/strategy-baseline/project.md
+        next: user supplies OPEN_DATA_REQUESTS → close VILL-001 → W1 Foundation
+    next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:
     name: YAKEBDA_MS
     kind: client

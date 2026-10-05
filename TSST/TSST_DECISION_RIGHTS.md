@@ -47,6 +47,6 @@ Approved by the user in chat 2026-10-05 (TSST-001A intake, `TSST/onboarding/INTA
 | --- | --- | --- | --- |
 | Git / GitHub | commit, push feature branches, open PRs | merge to `master` | CI red after one fix attempt |
 | Real Memory | checkpoints, status, pointers | decisions, brand facts, change sets (RM-CS-*) | conflicting sources |
-| Runtime bus / model spend | queue FAST/WORK/CODE tasks on their tier models (`TSST/bus/runtimes.yaml`) | top-cost models (gpt-6-astra, Opus in Antigravity), image/video generation | task `escalated` → reroute once to another runtime/tier, then user |
+| Runtime bus / model spend | queue FAST/WORK/CODE tasks on their tier models (`TSST/bus/runtimes.yaml`) | top-cost models (gpt-6-astra), image/video generation. Opus 5.5 in Antigravity for WORK/CODE: standing approval 2026-10-05 (user, after Gemini Flash under-performed in C7) | task `escalated` → reroute once to another runtime/tier, then user |
 | External tools (Drive, browser, GitHub, Shopify, Apps Script, …) | read, research, inspect | any write outside the repo (share, trash, product/account edit, form submit) | — |
 | Acceptance | accept after an independent review by a runtime other than the producer (code, creative, strategy) | final client-facing delivery | reviewer and producer disagree |

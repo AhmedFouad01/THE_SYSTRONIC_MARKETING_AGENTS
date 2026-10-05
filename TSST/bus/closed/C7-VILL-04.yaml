@@ -1,0 +1,23 @@
+id: C7-VILL-04
+title: Brand Look direction (CREATIVE)
+kind: work
+status: closed
+to: gemini
+needs: [fs_read, fs_write]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF.md
+read: [drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_LOOK_DIRECTION_v0.1.md]
+after: [C7-VILL-03]
+done_when: per BRIEF Brand Look requirements; derived from STRATEGY_BASELINE_v0.2; no generated images
+issued_by: claude
+created: "2026-10-04T23:12Z"
+rounds: 0
+max_rounds: 1
+claimed_by: gemini
+lease_until:
+progress:
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_LOOK_DIRECTION_v0.1.md
+sha256: d1cdf9511b21614ca6610a02e4bd64856f1706d22639f1db4ecc92fe3aea0ab5
+note: "structural gate OK: 8 required sections, 5-colour palette, AR/LT pairing, containment, written moodboard; contrast recomputed (14.75 / 7.57 / 4.59 AA); content QA = C7-VILL-05"
