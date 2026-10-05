@@ -88,9 +88,11 @@ for (const width of [360, 1280])
 					"aria-current",
 					"page",
 				);
-				// /leads is the real S4 workspace; the other routes are still placeholders
+				// /leads (S4) and /contacts (S5) are real workspaces; the other routes are still placeholders
 				if (key === "leads")
 					await expect(page.getByTestId("leads-view")).toBeVisible();
+				else if (key === "contacts")
+					await expect(page.getByTestId("contacts-view")).toBeVisible();
 				else
 					await expect(page.getByTestId("route")).toHaveText(
 						key === "reporting" ? "/reporting-v2" : `/${key}`,

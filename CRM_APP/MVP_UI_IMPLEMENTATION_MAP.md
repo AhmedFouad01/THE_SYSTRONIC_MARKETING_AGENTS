@@ -80,3 +80,5 @@ Note: prior ui specs (tests/ui.spec.ts, m1-ui.spec.ts, m2-ui.spec.ts) target old
 - G4 owner filter keyed on display name (duplicate names collapse).
 - G5 prototype Leads KPI strip + score/value/activity columns have no API fields → omitted.
 - G6 no server search/filter/sort (D3) · no dashboard aggregate (D4) · no Import endpoint.
+- G7 GET /contacts lacks identifiers/created date → no email/phone grid columns; /session has no sensitive-data flag (UI infers from redaction/403).
+- G8 journey returns M2 business events (not M1 audit rows); /duplicates returns id/display_name/version only; merge-preview `conflicts` is free text → client computes field results (target wins).

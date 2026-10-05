@@ -8,6 +8,7 @@ export default defineConfig({
 		"mvp-shell.spec.ts",
 		"mvp-app.spec.ts",
 		"mvp-leads.spec.ts",
+		"mvp-contacts.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },
