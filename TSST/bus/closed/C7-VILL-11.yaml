@@ -1,7 +1,7 @@
 id: C7-VILL-11
 title: "VILL: review all Studio work + final brand identity from logo navy/orange (v1.1) + re-render templates"
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_read, fs_write, shell]
 tier: WORK
@@ -17,10 +17,10 @@ issued_by: claude
 created: "2026-10-05T16:47Z"
 rounds: 0
 max_rounds: 2
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-skills_used: []
-result:
-sha256:
-note:
+progress: v1.1 identity written; all seven renders/phone/RTL reviewed. 40 text elements AA pass; integrated cover logo survives crops. Final handoff underway.
+skills_used: [TSST-CREATIVE-SK-006, TSST-CREATIVE-SK-001, TSST-CREATIVE-SK-010]
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/assets/README.md
+sha256: 8a338b2f8ccfde6722a61513b1593e65a12a2b75eb8d914523ad46f4a33d3cde
+note: Lead ACCEPT identity v1.1 (colours/contrast/renders verified). User acceptance pending. Open items in LEAD_REVIEW_C7-VILL-11.md

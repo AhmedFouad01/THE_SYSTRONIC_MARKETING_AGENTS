@@ -8,8 +8,8 @@ teams: marketing (LENS lead, SPARK capability), studio (CREATIVE — identity pr
 
 ## State
 Phase 1 DELIVERED 2026-10-05: Strategy Baseline v0.2 + Brand Look Direction v0.2 approved by user (`ACCEPTANCE.md`).
-Phase 2 (C7-VILL-07..10, brand look v0.3/v1.0) cancelled/superseded. Phase 2c ACTIVE: `C7-VILL-11` — final identity
-from approved `assets/final/Logo.png` (brief `BRIEF_C7-VILL-11.md`). VILL-CS-001 APPLIED to the canonical Docs (exports verified). VILL-001 open until actual economics/capacity. No spend or publication.
+Phase 2 (C7-VILL-07..10, brand look v0.3/v1.0) cancelled/superseded. Phase 2c: `C7-VILL-11` final identity from approved `assets/final/Logo.png` — delivered by codex, Lead-accepted
+2026-10-05 (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`); user acceptance pending. VILL-CS-001 APPLIED to the canonical Docs (exports verified). VILL-001 open until actual economics/capacity. No spend or publication.
 
 ## do_not_repeat
 C7-VILL-01..06 (strategy v0.1/v0.2, reviews, brand look v0.1/v0.2); C7-VILL-07..10 (superseded brand-look rounds).

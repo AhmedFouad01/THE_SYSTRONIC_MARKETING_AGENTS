@@ -96,3 +96,8 @@
 2026-10-05T09:09Z	C7-VILL-10	claude	cancel	team review: fails FINAL_ASSET_GATE (PREVIS); 4 DISCARD, 3 REWORK; produced without team/skills; redo after direction + user inputs
 2026-10-05T09:09Z	ANVIL-R02	claude	cancel	team review: REWORK medium (names twice, cliche book, LTR order); needs old Shark X Store logo from user
 2026-10-05T16:47Z	C7-VILL-11	claude	new	
+2026-10-05T17:39Z	C7-VILL-11	codex	claim on gpt-6.1-sol	
+2026-10-05T17:41Z	C7-VILL-11	codex	progress	Studio history reviewed; authority hash matched. v1.0/history preserved; semantic palette and cover crop correction in progress.
+2026-10-05T17:48Z	C7-VILL-11	codex	progress	v1.1 identity written; all seven renders/phone/RTL reviewed. 40 text elements AA pass; integrated cover logo survives crops. Final handoff underway.
+2026-10-05T17:51Z	C7-VILL-11	codex	done	Identity v1.1 + scoped review + seven semantic renders/QA delivered. PREVIS concept gate/rights limits retained; independent Lead acceptance next.
+2026-10-05T18:03Z	C7-VILL-11	claude	close	Lead ACCEPT identity v1.1 (colours/contrast/renders verified). User acceptance pending. Open items in LEAD_REVIEW_C7-VILL-11.md

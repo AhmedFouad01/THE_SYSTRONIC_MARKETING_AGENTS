@@ -7,7 +7,8 @@ Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strateg
 - Phase 1 (C7-VILL-01..06): **DELIVERED 2026-10-05** — Strategy Baseline v0.2 + Brand Look Direction v0.2
   approved by user (`ACCEPTANCE.md`).
 - Phase 2 brand look v0.3/v1.0 (C7-VILL-07..10): **cancelled / superseded** by the logo-only direction.
-- Phase 2c final identity from the approved logo: **ACTIVE** — `C7-VILL-11` (below).
+- Phase 2c final identity from the approved logo: `C7-VILL-11` **done by codex, Lead-accepted 2026-10-05**
+  (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`) — **user acceptance pending**. Templates stay PREVIS.
 Durable detail stays in the canonical memory source (`memory/source.md`).
 
 ## Active (2026-10-05)
