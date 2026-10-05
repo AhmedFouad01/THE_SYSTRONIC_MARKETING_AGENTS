@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
-import { Bdi } from "../i18n/Bdi.tsx";
+import { Bdi, BidiText } from "../i18n/Bdi.tsx";
 import { useI18n } from "../i18n/index.ts";
 import { Badge, type BadgeTone } from "../primitives/Badge.tsx";
 
-/** Two-line identity cell: name (600) over a 11px text-3 caption. Both are bidi-isolated and ellipsised. */
+/** Two-line identity cell: name (600) over a 11px text-3 caption. Both are bidi-correct truncating text (see BidiText). */
 export function IdentityCell({ name, caption }: { name: string; caption?: string | undefined }) {
 	return (
 		<span className="sy-cell-id">
 			<b className="sy-cell-id__name" title={name}>
-				<Bdi>{name}</Bdi>
+				<BidiText>{name}</BidiText>
 			</b>
 			{caption ? (
 				<span className="sy-cell-id__caption" title={caption}>
-					<Bdi>{caption}</Bdi>
+					<BidiText>{caption}</BidiText>
 				</span>
 			) : null}
 		</span>

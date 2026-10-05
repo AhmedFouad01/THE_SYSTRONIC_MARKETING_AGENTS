@@ -232,7 +232,7 @@ export function TasksView() {
 				sortable: true,
 				hideable: false,
 				mobile: "title",
-				cell: (r) => <IdentityCell name={r.title} />,
+				cell: (r) => <IdentityCell name={r.title} caption={r.relatedName} />,
 			},
 			{
 				id: "related",
@@ -240,6 +240,8 @@ export function TasksView() {
 				value: (r) => r.relatedName,
 				sortable: true,
 				width: "160px",
+				mobile: "hide",
+				collapse: 1,
 				titleText: (r) => r.relatedName,
 				cell: (r) => <RelatedLink row={r} />,
 			},
@@ -249,7 +251,7 @@ export function TasksView() {
 				value: (r) => r.dueMs,
 				searchable: false,
 				sortable: true,
-				width: "140px",
+				width: "170px",
 				cell: (r) => (
 					<DueLabel dueAt={r.due_at} bucket={r.bucket} now={now} compact />
 				),
@@ -259,7 +261,7 @@ export function TasksView() {
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
 				sortable: true,
-				width: "120px",
+				width: "130px",
 				filter: { options: ownerOptions },
 			},
 			{
@@ -267,8 +269,9 @@ export function TasksView() {
 				header: t("tasks.col.status"),
 				value: (r) => r.status,
 				sortable: true,
-				width: "130px",
+				width: "110px",
 				mobile: "chip",
+				collapse: 1,
 				filter: {
 					options: [
 						{ value: "open", label: t("tasks.status.open") },
@@ -310,13 +313,16 @@ export function TasksView() {
 				value: () => "",
 				searchable: false,
 				hideable: false,
-				width: "110px",
-				mobile: "meta",
+				width: "56px",
+				headerHidden: true,
+				mobile: "action",
 				cell: (r) =>
 					r.status === "open" ? (
 						<Button
 							size="sm"
+							className="sy-tasks__complete"
 							icon="success"
+							title={t("tasks.action.complete")}
 							loading={completingId === r.id}
 							disabled={completingId !== null}
 							aria-label={t("tasks.action.completeTask", { title: r.title })}

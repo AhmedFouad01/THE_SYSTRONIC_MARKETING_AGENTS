@@ -1,4 +1,10 @@
-import { type ReactNode, useState } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useContext,
+	useLayoutEffect,
+	useState,
+} from "react";
 import { useI18n } from "../i18n/index.ts";
 import { Dialog } from "../overlays/Dialog.tsx";
 import { Button } from "./Button.tsx";
@@ -6,6 +12,12 @@ import { Panel } from "./Panel.tsx";
 import { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
 import { useRecordSheet } from "./useMediaQuery.ts";
 import "./record-panel.css";
+
+/** Lets the sticky edit footer offer Cancel (leave edit mode) while the draft is dirty. */
+const RecordCancelContext = createContext<{
+	cancel: () => void;
+	setFooterShown: (v: boolean) => void;
+} | null>(null);
 
 export type RecordFact = { label: string; value: ReactNode; testId?: string };
 
@@ -52,12 +64,24 @@ export function RecordPanel(props: RecordPanelProps) {
 	const body = <RecordBody key={props.recordKey} {...props} />;
 	if (sheet)
 		return (
-			<Dialog open onClose={props.onClose} title={props.label} placement="side" testId={props.testId}>
+			<Dialog
+				open
+				onClose={props.onClose}
+				title={props.label}
+				placement="side"
+				testId={props.testId}
+			>
 				{body}
 			</Dialog>
 		);
 	return (
-		<Panel as="aside" title={props.label} className="sy-record-panel" data-testid={props.testId} aria-label={props.label}>
+		<Panel
+			as="aside"
+			title={props.label}
+			className="sy-record-panel"
+			data-testid={props.testId}
+			aria-label={props.label}
+		>
 			{body}
 		</Panel>
 	);
@@ -68,68 +92,111 @@ function RecordBody(p: RecordPanelProps) {
 	const [innerEditing, setInnerEditing] = useState(false);
 	const editing = p.editing ?? innerEditing;
 	const canEdit = p.editable ?? Boolean(p.editor);
+	const [footerShown, setFooterShown] = useState(false);
 	const setEditing = (v: boolean) => {
 		setInnerEditing(v);
 		p.onEditingChange?.(v);
 	};
 	return (
-		<div className="sy-record" data-editing={editing || undefined}>
-			<div className="sy-record__head">
-				<div className="sy-record__titles">
-					<p className="sy-record__title" data-testid={p.titleTestId}>
-						{p.title}
-					</p>
-					{p.subtitle ? <p className="sy-record__subtitle">{p.subtitle}</p> : null}
+		<RecordCancelContext.Provider
+			value={{ cancel: () => setEditing(false), setFooterShown }}
+		>
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: Escape leaves edit mode; popovers (Select) consume their own Escape first */}
+			<div
+				className="sy-record"
+				data-editing={editing || undefined}
+				onKeyDown={(e) => {
+					if (e.key !== "Escape" || !editing || !canEdit || e.defaultPrevented)
+						return;
+					e.preventDefault();
+					e.stopPropagation();
+					setEditing(false);
+				}}
+			>
+				<div className="sy-record__head">
+					<div className="sy-record__titles">
+						<p className="sy-record__title" data-testid={p.titleTestId}>
+							{p.title}
+						</p>
+						{p.subtitle ? (
+							<p className="sy-record__subtitle">{p.subtitle}</p>
+						) : null}
+					</div>
+					{p.chip ? <span data-testid={p.chipTestId}>{p.chip}</span> : null}
 				</div>
-				{p.chip ? <span data-testid={p.chipTestId}>{p.chip}</span> : null}
-			</div>
-			<div className="sy-record__actions">
-				{p.actions}
-				{canEdit ? (
-					editing ? (
-						<Button size="sm" variant="ghost" onClick={() => setEditing(false)} data-testid="record-edit-cancel">
-							{t("record.cancelEdit")}
-						</Button>
-					) : (
-						<Button size="sm" icon="edit" onClick={() => setEditing(true)} data-testid="record-edit">
+				<div className="sy-record__actions">
+					{p.actions}
+					{canEdit && !editing ? (
+						<Button
+							size="sm"
+							icon="edit"
+							onClick={() => setEditing(true)}
+							data-testid="record-edit"
+						>
 							{t("record.edit")}
 						</Button>
-					)
+					) : null}
+				</div>
+				{p.persistent?.(editing)}
+				{editing && canEdit ? (
+					p.editor ? (
+						<div className="sy-record__edit" data-testid="record-editor">
+							{p.editor(() => setEditing(false))}
+						</div>
+					) : null
+				) : (
+					<>
+						{p.facts && p.facts.length > 0 ? (
+							<dl className="sy-record__facts" data-testid="record-facts">
+								{p.facts.map((f) => (
+									<div key={f.label} className="sy-record__fact">
+										<dt>{f.label}</dt>
+										<dd data-testid={f.testId}>{f.value}</dd>
+									</div>
+								))}
+							</dl>
+						) : null}
+						{p.children}
+					</>
+				)}
+				{p.details ? <RecordDetails rows={p.details} /> : null}
+				{editing && canEdit && !footerShown ? (
+					// Cancel lives in the sticky footer (UX-R2-08); the dirty Save/Discard footer carries its own Cancel and replaces this bar.
+					<div className="sy-record__footer sy-record__cancelbar">
+						<Button
+							size="sm"
+							variant="ghost"
+							onClick={() => setEditing(false)}
+							data-testid="record-edit-cancel"
+						>
+							{t("record.cancelEdit")}
+						</Button>
+					</div>
 				) : null}
 			</div>
-			{p.persistent?.(editing)}
-			{editing && canEdit ? (
-				p.editor ? (
-					<div className="sy-record__edit" data-testid="record-editor">
-						{p.editor(() => setEditing(false))}
-					</div>
-				) : null
-			) : (
-				<>
-					{p.facts && p.facts.length > 0 ? (
-						<dl className="sy-record__facts" data-testid="record-facts">
-							{p.facts.map((f) => (
-								<div key={f.label} className="sy-record__fact">
-									<dt>{f.label}</dt>
-									<dd data-testid={f.testId}>{f.value}</dd>
-								</div>
-							))}
-						</dl>
-					) : null}
-					{p.children}
-				</>
-			)}
-			{p.details ? <RecordDetails rows={p.details} /> : null}
-		</div>
+		</RecordCancelContext.Provider>
 	);
 }
 
 /** Desktop-only placeholder when no record is selected (the sheet has nothing to show). */
-export function RecordEmpty({ label, hint, testId }: { label: string; hint: string; testId: string }) {
+export function RecordEmpty({
+	label,
+	hint,
+	testId,
+}: {
+	label: string;
+	hint: string;
+	testId: string;
+}) {
 	const sheet = useRecordSheet();
 	if (sheet) return null;
 	return (
-		<Panel as="aside" title={label} className="sy-record-panel" data-testid={testId}>
+		<Panel
+			as="aside"
+			title={label}
+			className="sy-record-panel"
+			data-testid={testId}
+		>
 			<p className="sy-record__muted">{hint}</p>
 		</Panel>
 	);
@@ -153,15 +220,47 @@ export function RecordEditFooter({
 	saveTestId: string;
 	disabled?: boolean;
 }) {
+	const { t } = useI18n();
+	const ctx = useContext(RecordCancelContext);
+	const setFooterShown = ctx?.setFooterShown;
+	useLayoutEffect(() => {
+		if (!dirty || !setFooterShown) return;
+		setFooterShown(true);
+		return () => setFooterShown(false);
+	}, [dirty, setFooterShown]);
 	if (!dirty) return null;
 	return (
 		<div className="sy-record__footer" data-testid="record-footer">
-			<Button type="submit" variant="primary" size="sm" loading={saving} disabled={disabled ?? false} data-testid={saveTestId}>
+			<Button
+				type="submit"
+				variant="primary"
+				size="sm"
+				loading={saving}
+				disabled={disabled ?? false}
+				data-testid={saveTestId}
+			>
 				{saveLabel}
 			</Button>
-			<Button size="sm" variant="ghost" disabled={saving} onClick={onDiscard} data-testid="record-discard">
+			<Button
+				size="sm"
+				variant="ghost"
+				disabled={saving}
+				onClick={onDiscard}
+				data-testid="record-discard"
+			>
 				{discardLabel}
 			</Button>
+			{ctx ? (
+				<Button
+					size="sm"
+					variant="ghost"
+					disabled={saving}
+					onClick={ctx.cancel}
+					data-testid="record-edit-cancel"
+				>
+					{t("record.cancelEdit")}
+				</Button>
+			) : null}
 		</div>
 	);
 }

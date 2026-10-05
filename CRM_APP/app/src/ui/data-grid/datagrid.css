@@ -1,4 +1,5 @@
 .sy-grid {
+	container: sygrid / inline-size;
 	display: grid;
 	gap: var(--sy-space-10);
 	min-width: 0;
@@ -254,10 +255,25 @@
 	white-space: nowrap;
 }
 
+/* The primary column never collapses below 240px (UX-R2-01); secondary columns with data-collapse drop out first. */
 .sy-grid__cell--flex {
 	max-width: 0;
 	width: auto;
-	min-width: 140px;
+	min-width: 240px;
+}
+
+@media (min-width: 769px) {
+	@container sygrid (max-width: 1039px) {
+		.sy-grid__table [data-collapse="1"] {
+			display: none;
+		}
+	}
+
+	@container sygrid (max-width: 879px) {
+		.sy-grid__table [data-collapse="2"] {
+			display: none;
+		}
+	}
 }
 
 .sy-grid__table tbody tr {
@@ -522,6 +538,7 @@
 		border-color: var(--sy-focus);
 	}
 
+	/* Card cells size to their content: the desktop column widths (inline style) must not squeeze them (UX-R2-06). */
 	.sy-grid__table td {
 		display: block;
 		height: auto;
@@ -529,6 +546,20 @@
 		padding: 0;
 		border: 0;
 		text-align: start;
+	}
+
+	.sy-grid__table td.sy-grid__cell {
+		/* biome-ignore lint/complexity/noImportantStyles: beats the desktop inline column width */
+		width: auto !important;
+		/* biome-ignore lint/complexity/noImportantStyles: beats the desktop inline column width */
+		max-width: 100% !important;
+	}
+
+	.sy-grid__table td[data-mobile="meta"],
+	.sy-grid__table td[data-mobile="action"] {
+		overflow: visible;
+		text-overflow: clip;
+		white-space: normal;
 	}
 
 	.sy-grid__table td.sy-grid__check {
@@ -569,9 +600,16 @@
 		color: var(--sy-text-3);
 	}
 
-	.sy-grid__table td[data-mobile="meta"] + td[data-mobile="meta"]::before {
+	/* Separator between any two visible meta cells (hidden cells in between do not break the run). */
+	.sy-grid__table td[data-mobile="meta"] ~ td[data-mobile="meta"]::before {
 		content: "·";
 		margin-inline-end: var(--sy-space-8);
+	}
+
+	.sy-grid__table td[data-mobile="action"] {
+		order: 2;
+		flex: none;
+		margin-inline-start: auto;
 	}
 
 	.sy-grid__table td[data-mobile="hide"] {

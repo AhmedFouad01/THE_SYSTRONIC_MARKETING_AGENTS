@@ -6,7 +6,7 @@ import {
 	useSession,
 } from "../../api/index.ts";
 import {
-	Bdi,
+	BidiText,
 	Button,
 	ChipCell,
 	IdentityCell,
@@ -181,7 +181,8 @@ export function LeadsView() {
 				sortable: true,
 				width: "180px",
 				mobile: "hide",
-				cell: (r) => <Bdi>{r.contactName}</Bdi>,
+				collapse: 2,
+				cell: (r) => <BidiText>{r.contactName}</BidiText>,
 			},
 			{
 				id: "status",
@@ -215,6 +216,7 @@ export function LeadsView() {
 				sortable: true,
 				width: "130px",
 				mobile: "hide",
+				collapse: 1,
 				cell: (r) => sourceLabel(r.source, t),
 				titleText: (r) => sourceLabel(r.source, t),
 			},

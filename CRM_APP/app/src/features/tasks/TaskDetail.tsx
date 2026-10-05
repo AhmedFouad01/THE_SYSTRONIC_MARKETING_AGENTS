@@ -284,7 +284,10 @@ export function TaskDetail({
 					value: <DueLabel dueAt={task.due_at} bucket={task.bucket} now={now} />,
 				},
 				{ label: t("tasks.field.owner"), value: <Bdi>{task.ownerName}</Bdi> },
-				{ label: t("common.source"), value: t(SOURCE_KEY[task.sourceKind]) },
+				// "Not recorded" carries no information: the Source row appears only when the origin is known.
+				...(task.sourceKind !== "unknown"
+					? [{ label: t("common.source"), value: t(SOURCE_KEY[task.sourceKind]) }]
+					: []),
 				...(task.completed_at
 					? [
 							{

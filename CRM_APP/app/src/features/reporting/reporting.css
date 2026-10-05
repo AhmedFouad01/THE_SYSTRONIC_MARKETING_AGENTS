@@ -89,6 +89,9 @@
 	color: var(--sy-kpi-magenta-sub);
 }
 .sy-rep__meta {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-4);
 	margin: 0;
 	color: var(--sy-text-2);
 	font-size: 0.875rem;
@@ -139,4 +142,7 @@
 	.sy-rep__body {
 		grid-template-columns: minmax(0, 1fr);
 	}
+}
+.sy-rep__meta-line {
+	margin: 0;
 }

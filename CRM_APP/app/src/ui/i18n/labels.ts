@@ -36,6 +36,16 @@ export function sourceLabel(raw: string | null | undefined, t: Translate): strin
 	return t(SOURCE_KEY[norm(raw)] ?? "source.other");
 }
 
+/**
+ * Free-text "source evidence" note: a note that is exactly a known source token ("referral", "web_form") shows its
+ * translated label; any other note is the user's own text and is shown as written. Empty = null (omit the row).
+ */
+export function sourceEvidenceLabel(raw: string | null | undefined, t: Translate): string | null {
+	if (!raw || raw.trim() === "") return null;
+	const key = SOURCE_KEY[norm(raw)];
+	return key ? t(key) : raw.trim();
+}
+
 export function roleLabel(raw: string | null | undefined, t: Translate): string {
 	return t((raw ? ROLE_KEY[norm(raw)] : undefined) ?? "role.unknown");
 }

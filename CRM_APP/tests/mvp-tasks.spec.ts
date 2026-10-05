@@ -7,7 +7,7 @@ import {
 } from "@playwright/test";
 import pg from "pg";
 import { seed } from "../scripts/seed.js";
-import { pickLabel } from "./select-helper.js";
+import { pickDay, pickLabel } from "./select-helper.js";
 
 process.loadEnvFile(".env");
 
@@ -220,9 +220,15 @@ test("tasks en: list, due tabs, overdue badge, no-date tab empty, owner filter a
 		.filter({ hasText: "Today task" })
 		.click({ position: { x: 10, y: 10 } });
 	await expect(page.getByTestId("task-detail-title")).toHaveText("Today task");
-	// UX-17: the Source column is hidden by default; the record shows it in its fact grid and Columns restores it.
-	await expect(page.getByRole("columnheader", { name: "Source" })).toHaveCount(0);
-	await expect(page.getByTestId("record-facts")).toContainText("Source");
+	// UX-17: the Source column is hidden by default and Columns restores it. An unknown origin ("Not recorded") adds no
+	// information, so the record's fact grid omits the Source row instead of showing it.
+	await expect(page.getByRole("columnheader", { name: "Source" })).toHaveCount(
+		0,
+	);
+	await expect(page.getByTestId("record-facts")).not.toContainText("Source");
+	await expect(page.getByTestId("record-facts")).not.toContainText(
+		"Not recorded",
+	);
 	await page.getByTestId("grid-columns").click();
 	await page.getByRole("checkbox", { name: "Source" }).check();
 	await expect(page.getByTestId("task-source").first()).toHaveAttribute(
@@ -250,7 +256,7 @@ test("tasks en: Add task from deal detail keeps the relation; related link retur
 	await page.getByTestId("new-task-submit").click();
 	await expect(dialog.getByText("This field is required.")).toHaveCount(2);
 	await dialog.getByLabel("Title").fill("Send proposal");
-	await dialog.getByLabel("Due").fill(inputIn(2));
+	await pickDay(dialog.getByLabel("Due"), inputIn(2));
 	await page.getByTestId("new-task-submit").click();
 	await expect(dialog).toHaveCount(0);
 	await expect(
@@ -275,7 +281,8 @@ test("tasks en: Add task from deal detail keeps the relation; related link retur
 
 	await page.goto("/app/tasks");
 	await expect(rows(page)).toHaveCount(1);
-	await rows(page).first().getByTestId("task-related").click();
+	// UX-R2-01: the grid's Related column drops out beside the open record, whose subtitle carries the same link.
+	await page.locator('[data-testid="task-related"]:visible').first().click();
 	await expect(page.getByTestId("deal-detail-title")).toHaveText(
 		"Relation deal",
 	);
@@ -327,7 +334,7 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 	await page.getByTestId("new-task").click();
 	const dialog = page.getByTestId("new-task-dialog");
 	await dialog.getByLabel("Title").fill("Fresh task");
-	await dialog.getByLabel("Due").fill(inputIn(4));
+	await pickDay(dialog.getByLabel("Due"), inputIn(4));
 	await page.getByTestId("new-task-submit").click();
 	await expect(dialog.getByText("This field is required.")).toHaveCount(1);
 	await pickLabel(dialog.getByLabel("Contact"), "Contact Flow");

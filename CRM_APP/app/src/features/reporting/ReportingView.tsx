@@ -26,6 +26,7 @@ import {
 	type CampaignReport,
 	DEFAULT_MODEL,
 	deriveKpis,
+	formatMinor,
 	formatRoas,
 	formatShare,
 	LOOKBACK_DEFAULT,
@@ -72,7 +73,7 @@ function useCampaignReport(
 }
 
 export function ReportingView() {
-	const { t, locale, formatNumber } = useI18n();
+	const { t, formatNumber } = useI18n();
 	const toast = useToast();
 	const f = useReportFmt();
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
@@ -236,7 +237,7 @@ export function ReportingView() {
 										testId="kpi-roas"
 										tone="navy"
 										label={t("rep.kpi.roas")}
-										value={formatRoas(kpis.roas, locale)}
+										value={formatRoas(kpis.roas, "en")}
 										sub={
 											kpis.spend > 0n
 												? (kpis.currency ?? undefined)
@@ -246,19 +247,19 @@ export function ReportingView() {
 									<KpiCard
 										testId="kpi-revenue"
 										label={t("rep.kpi.revenue")}
-										value={f.minor(kpis.revenue, kpis.currency)}
+										value={formatMinor(kpis.revenue, kpis.currency, "en")}
 										sub={t("rep.kpi.minor")}
 									/>
 									<KpiCard
 										testId="kpi-spend"
 										label={t("rep.kpi.spend")}
-										value={f.minor(kpis.spend, kpis.currency)}
+										value={formatMinor(kpis.spend, kpis.currency, "en")}
 										sub={t("rep.kpi.minor")}
 									/>
 									<KpiCard
 										testId="kpi-conversions"
 										label={t("rep.kpi.conversions")}
-										value={formatNumber(kpis.conversions)}
+										value={formatNumber(kpis.conversions, { numberingSystem: "latn" })}
 										sub={t("rep.kpi.refunds", {
 											count: formatNumber(kpis.refunds),
 										})}
@@ -267,7 +268,7 @@ export function ReportingView() {
 										testId="kpi-unattributed"
 										tone={unattributedAlert(kpis) ? "magenta" : "neutral"}
 										label={t("rep.kpi.unattributed")}
-										value={formatShare(kpis.unattributedShare, locale)}
+										value={formatShare(kpis.unattributedShare, "en")}
 										sub={t("rep.kpi.unattributedHint")}
 									/>
 								</div>
@@ -276,18 +277,27 @@ export function ReportingView() {
 										{t("rep.kpi.mixed", { currency: kpis.currency })}
 									</p>
 								) : null}
-								<p className="sy-rep__meta" data-testid="report-meta">
-									{t("rep.meta.internal")} · {f.label(report.model)} ·{" "}
-									{t("rep.meta.version")}: <Ltr>{report.version}</Ltr> ·{" "}
-									{t("rep.meta.lookback")}: <Ltr>{report.lookback_days}</Ltr> ·{" "}
-									{t("rep.meta.basis")} · {t("rep.meta.run")}:{" "}
-									{report.run_id ? (
-										<Bdi>{f.utc(report.as_of)}</Bdi>
-									) : (
-										t("rep.meta.unpublished")
-									)}{" "}
-									· {t("rep.meta.provider")}
-								</p>
+								<div className="sy-rep__meta" data-testid="report-meta">
+									<p className="sy-rep__meta-line">
+										<Bdi>{t("rep.meta.internal")}</Bdi> · <Bdi>{f.label(report.model)}</Bdi> ·{" "}
+										<Bdi>
+											{t("rep.meta.version")}: <Ltr>{report.version}</Ltr>
+										</Bdi>
+									</p>
+									<p className="sy-rep__meta-line">
+										<Bdi>
+											{t("rep.meta.lookback")}: <Ltr>{report.lookback_days}</Ltr>
+										</Bdi>{" "}
+										· <Bdi>{t("rep.meta.basis")}</Bdi>
+									</p>
+									<p className="sy-rep__meta-line">
+										<Bdi>
+											{t("rep.meta.run")}:{" "}
+											{report.run_id ? f.utc(report.as_of) : t("rep.meta.unpublished")}
+										</Bdi>{" "}
+										· <Bdi>{t("rep.meta.provider")}</Bdi>
+									</p>
+								</div>
 								<p className="sy-rep__muted">{t("rep.meta.stale")}</p>
 							</>
 						) : null}

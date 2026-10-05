@@ -9,6 +9,7 @@ import {
 	ForbiddenState,
 	LoadingState,
 	Ltr,
+	Money,
 	MenuButton,
 	minorToMajorUnits,
 	PageHeader,
@@ -92,7 +93,7 @@ function DealCard({
 				<b className="sy-pipe__title">{deal.title}</b>
 				<span className="sy-pipe__meta">{contactName}</span>
 				<span className="sy-pipe__value">
-					<Ltr>{dealValueText(deal, formatMoney)}</Ltr>
+					<Money>{dealValueText(deal, formatMoney)}</Money>
 				</span>
 				<span className="sy-pipe__meta">{ownerName}</span>
 			</button>
@@ -173,14 +174,14 @@ function Column({
 				<p className="sy-pipe__total" data-testid="column-total">
 					<span className="sy-pipe__meta">{t("pipeline.total")}</span>{" "}
 					{col.totals.length === 0 ? (
-						<Ltr>{formatMoney(0)}</Ltr>
+						<Money>{formatMoney(0)}</Money>
 					) : (
 						col.totals.map((x) => (
-							<Ltr key={x.currency}>
+							<Money key={x.currency}>
 								<span className="sy-pipe__amount">
 									{formatMoney(minorToMajorUnits(x.minor, x.currency), { currency: x.currency })}
 								</span>
-							</Ltr>
+							</Money>
 						))
 					)}
 				</p>

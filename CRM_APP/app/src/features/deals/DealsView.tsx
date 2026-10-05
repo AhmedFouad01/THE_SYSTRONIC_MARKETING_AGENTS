@@ -16,7 +16,7 @@ import {
 	ForbiddenState,
 	type GridColumn,
 	type GridSample,
-	Ltr,
+	Money,
 	PageHeader,
 	safeLocalStorage,
 	Tabs,
@@ -320,6 +320,7 @@ export function DealsView() {
 				sortable: true,
 				width: "170px",
 				mobile: "hide",
+				collapse: 1,
 			},
 			{
 				id: "pipeline",
@@ -328,6 +329,7 @@ export function DealsView() {
 				sortable: true,
 				width: "150px",
 				mobile: "hide",
+				collapse: 2,
 			},
 			{
 				id: "stage",
@@ -346,7 +348,7 @@ export function DealsView() {
 				searchable: false,
 				sortable: true,
 				width: "130px",
-				cell: (r) => <Ltr>{dealValueText(r, formatMoney)}</Ltr>,
+				cell: (r) => <Money>{dealValueText(r, formatMoney)}</Money>,
 			},
 			{
 				id: "owner",

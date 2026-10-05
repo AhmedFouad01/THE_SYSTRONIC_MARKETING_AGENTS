@@ -10,6 +10,7 @@ import {
 	RecordEmpty,
 	RecordPanel,
 	Select,
+	sourceEvidenceLabel,
 	sourceLabel,
 	useI18n,
 	useToast,
@@ -214,6 +215,7 @@ export function LeadDetail({
 				testId="lead-detail-empty"
 			/>
 		);
+	const evidence = sourceEvidenceLabel(lead.source_evidence, t);
 	return (
 		<RecordPanel
 			label={t("leads.detail.title")}
@@ -262,7 +264,9 @@ export function LeadDetail({
 					label: t("common.created"),
 					value: <Bdi>{formatDateTime(lead.received_at)}</Bdi>,
 				},
-				{ label: t("leads.detail.evidence"), value: lead.source_evidence },
+				...(evidence !== null
+					? [{ label: t("leads.detail.evidence"), value: <Bdi>{evidence}</Bdi> }]
+					: []),
 			]}
 			editor={(done) => (
 				<LeadEditor

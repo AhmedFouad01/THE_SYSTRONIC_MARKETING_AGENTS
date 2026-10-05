@@ -108,3 +108,30 @@
 	gap: var(--sy-space-6);
 	white-space: nowrap;
 }
+
+/* Row Complete: icon-only in the grid (UX-R2-03: the labelled button overflowed the container), labelled on cards. */
+.sy-tasks__complete {
+	inline-size: 32px;
+	padding-inline: 0;
+}
+.sy-tasks__complete .sy-btn__label {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+@media (max-width: 768px) {
+	.sy-tasks__complete {
+		inline-size: auto;
+		padding-inline: var(--sy-space-10);
+	}
+	.sy-tasks__complete .sy-btn__label {
+		position: static;
+		inline-size: auto;
+		block-size: auto;
+		overflow: visible;
+		clip-path: none;
+	}
+}

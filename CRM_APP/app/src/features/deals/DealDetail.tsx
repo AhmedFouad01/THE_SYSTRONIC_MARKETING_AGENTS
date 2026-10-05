@@ -11,7 +11,7 @@ import {
 	Dialog,
 	ForbiddenState,
 	Input,
-	Ltr,
+	Money,
 	MenuButton,
 	type MessageKey,
 	Select,
@@ -518,7 +518,7 @@ export function DealDetail({
 			titleTestId="deal-detail-title"
 			subtitle={
 				<span data-testid="deal-detail-value">
-					<Ltr>{dealValueText(deal, formatMoney)}</Ltr>
+					<Money>{dealValueText(deal, formatMoney)}</Money>
 				</span>
 			}
 			onClose={onClose}

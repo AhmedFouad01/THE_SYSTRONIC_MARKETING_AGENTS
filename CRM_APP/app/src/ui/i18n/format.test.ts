@@ -11,7 +11,7 @@ import {
 	interpolateParts,
 	minorToMajorUnits,
 } from "./format.ts";
-import { personLabel, roleLabel, sourceLabel } from "./labels.ts";
+import { personLabel, roleLabel, sourceEvidenceLabel, sourceLabel } from "./labels.ts";
 
 // Fixed clock: 2026-10-05 14:15:00 UTC; all date output pinned to UTC.
 const NOW = Date.UTC(2026, 9, 5, 14, 15, 0);
@@ -27,6 +27,26 @@ describe("locale layer: dates", () => {
 		expect(a).toMatch(/٢٠٢٦/);
 		expect(a).not.toMatch(/[0-9]/);
 		expect(a).not.toMatch(/\//);
+	});
+
+	it("AR dates never contain the Latin comma (UX-01)", () => {
+		const d = "2026-10-05T14:03:00Z";
+		expect(formatDateTime(d, "ar", UTC)).not.toContain(",");
+		expect(formatDateTime(d, "ar", UTC)).toContain("،");
+	});
+
+	it("AR money is a single Intl string whose symbol keeps its trailing period (UX-R2-05)", () => {
+		const m = formatMoney(296900, "ar").replace(/[‎‏ \s]/g, "");
+		expect(m).toMatch(/^[٠-٩٬٫]+ج\.م\.$/);
+	});
+
+	it("sourceEvidenceLabel maps known source tokens, keeps free text, omits empty (UX-11)", () => {
+		const t = (k: Parameters<typeof sourceLabel>[1] extends (k: infer K) => string ? K : never) => en[k];
+		expect(sourceEvidenceLabel("referral", t)).toBe("Referral");
+		expect(sourceEvidenceLabel(" Web Form ", t)).toBe("Website form");
+		expect(sourceEvidenceLabel("Met at the Cairo expo", t)).toBe("Met at the Cairo expo");
+		expect(sourceEvidenceLabel("  ", t)).toBeNull();
+		expect(sourceEvidenceLabel(null, t)).toBeNull();
 	});
 
 	it("formatRelative: relative under 7 days (AR + EN), date-only from 7 days", () => {

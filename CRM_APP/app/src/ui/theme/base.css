@@ -74,6 +74,27 @@ a {
 	text-align: start;
 }
 
+/* Truncating mixed-script text (UX-R2-02): the element takes the direction of its own first strong character
+   (dir="auto" set by <BidiText>), so the ellipsis lands on the logical END of the string. Alignment follows the UI
+   direction so a column does not zig-zag; an overflowing line is start-aligned by the browser. */
+.sy-bidi-text {
+	display: block;
+	min-width: 0;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+:root[dir="rtl"] .sy-bidi-text {
+	text-align: right;
+}
+
+/* Money (UX-R2-05): one isolate in the locale's own direction so the currency symbol's period stays at its end. */
+.sy-money {
+	unicode-bidi: isolate;
+	white-space: nowrap;
+}
+
 /* Arabic typography (UX-13): size +1px and line-height 1.6 come from the :lang(ar) token overrides in the root
    custom properties; here the Arabic font stack is applied to any Arabic-language subtree. */
 :lang(ar) {

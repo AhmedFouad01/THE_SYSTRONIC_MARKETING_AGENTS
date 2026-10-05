@@ -1,0 +1,133 @@
+/* DatePicker (UX-15): trigger reuses .sy-select__trigger; the panel is a fixed month grid. */
+.sy-date {
+	position: relative;
+	min-width: 0;
+}
+
+.sy-date__placeholder {
+	color: var(--sy-text-3);
+}
+
+.sy-date__panel {
+	position: fixed;
+	z-index: 1200;
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-8);
+	inline-size: 288px;
+	max-inline-size: calc(100vw - 16px);
+	padding: var(--sy-space-10);
+	border: 1px solid var(--sy-border);
+	border-radius: var(--sy-radius-10);
+	background: var(--sy-surface);
+	box-shadow: var(--sy-shadow-menu);
+}
+
+.sy-date__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-8);
+}
+
+.sy-date__title {
+	font-weight: 600;
+	font-size: var(--sy-type-data-size);
+	color: var(--sy-text);
+}
+
+.sy-date__nav {
+	display: grid;
+	place-items: center;
+	inline-size: 32px;
+	block-size: 32px;
+	border: 0;
+	border-radius: var(--sy-radius-8);
+	background: transparent;
+	color: var(--sy-text-2);
+	cursor: pointer;
+}
+
+.sy-date__nav:hover {
+	background: var(--sy-hover);
+}
+
+/* The glyph is "next" (mirrored by the icon layer in RTL); previous flips it. */
+.sy-date__nav--prev svg {
+	transform: scaleX(-1);
+}
+
+.sy-date__nav:focus-visible,
+.sy-date__day:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 1px;
+}
+
+.sy-date__grid,
+.sy-date__grid thead,
+.sy-date__grid tbody {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	border-collapse: collapse;
+}
+
+.sy-date__cell {
+	display: block;
+	padding: 0;
+}
+
+.sy-date__row {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 2px;
+}
+
+.sy-date__dow {
+	display: grid;
+	place-items: center;
+	block-size: 28px;
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--sy-text-3);
+}
+
+.sy-date__day {
+	display: grid;
+	place-items: center;
+	block-size: 34px;
+	border: 1px solid transparent;
+	border-radius: var(--sy-radius-8);
+	background: transparent;
+	color: var(--sy-text);
+	font: inherit;
+	font-size: var(--sy-type-data-size);
+	cursor: pointer;
+}
+
+.sy-date__day:hover {
+	background: var(--sy-hover);
+}
+
+.sy-date__day[data-outside] {
+	color: var(--sy-text-disabled);
+}
+
+.sy-date__day[data-today] {
+	border-color: var(--sy-border-strong);
+}
+
+.sy-date__day[aria-pressed="true"] {
+	background: var(--sy-primary);
+	color: var(--sy-primary-fg);
+	font-weight: 600;
+}
+
+.sy-date__time {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	align-items: end;
+	gap: var(--sy-space-8);
+	padding-block-start: var(--sy-space-8);
+	border-block-start: 1px solid var(--sy-divider);
+}

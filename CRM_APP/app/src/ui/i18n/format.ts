@@ -106,7 +106,9 @@ export function formatDate(
 ): string {
 	const d = value instanceof Date ? value : new Date(value);
 	if (Number.isNaN(d.getTime())) return "";
-	return new Intl.DateTimeFormat(INTL_LOCALE[locale], opts).format(d);
+	const out = new Intl.DateTimeFormat(INTL_LOCALE[locale], opts).format(d);
+	// Arabic text never carries the Latin comma (UX-01): date/time separators use U+060C.
+	return locale === "ar" ? out.replace(/,/g, "،") : out;
 }
 
 /** Date + time as ONE string. Explicit fields, not dateStyle: Arabic dateStyle emits reversed slash dates. */

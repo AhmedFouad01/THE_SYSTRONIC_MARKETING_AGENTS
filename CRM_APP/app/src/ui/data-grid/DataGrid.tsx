@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useI18n } from "../i18n/index.ts";
+import { BidiText, useI18n } from "../i18n/index.ts";
 import { Icon } from "../icons/index.ts";
 import { Dialog } from "../overlays/Dialog.tsx";
 import { rovingIndex } from "../overlays/nav.ts";
@@ -47,10 +47,19 @@ export type GridColumn<T> = ModelColumn<T> & {
 	/** CSS width of the column (e.g. "140px"). Omit for the flexible column that takes the remaining space. */
 	width?: string;
 	/**
-	 * Role of the cell in the mobile card layout (<=768px): `title` = card heading (default: first column),
-	 * `chip` = status chip beside the title, `meta` = inline meta line (default), `hide` = not shown on cards.
+	 * Secondary column that drops out (>768px only) when the grid is narrower than the tier's width, so the primary
+	 * column keeps a readable width (UX-R2-01): 1 = hidden below 1040px (first to go), 2 = hidden below 880px.
+	 * Still reachable through the record panel / Columns chooser.
 	 */
-	mobile?: "title" | "chip" | "meta" | "hide";
+	collapse?: 1 | 2;
+	/** Icon-only column: the header text stays for assistive tech but takes no width. */
+	headerHidden?: boolean;
+	/**
+	 * Role of the cell in the mobile card layout (<=768px): `title` = card heading (default: first column),
+	 * `chip` = status chip beside the title, `meta` = inline meta line (default), `action` = row action pushed to the
+	 * inline-end of the meta line (no separator), `hide` = not shown on cards.
+	 */
+	mobile?: "title" | "chip" | "meta" | "action" | "hide";
 	/** Hover title for plain-text cells that have no custom `cell` (default: the value when it is a string). */
 	titleText?: (row: T) => string | undefined;
 };
@@ -265,6 +274,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										aria-sort={c.sortable ? dir : undefined}
 										style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
 										data-mobile={c.mobile}
+										data-collapse={c.collapse}
 									>
 										{c.sortable ? (
 											<button
@@ -282,6 +292,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 													</span>
 												) : null}
 											</button>
+										) : c.headerHidden ? (
+											<span className="sy-grid__sr">{c.header}</span>
 										) : (
 											c.header
 										)}
@@ -331,9 +343,16 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 												className={`sy-grid__cell${c.ltr ? " sy-ltr" : ""}${c.width ? "" : " sy-grid__cell--flex"}`}
 												style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
 												data-mobile={c.mobile ?? (ci === 0 ? "title" : "meta")}
+												data-collapse={c.collapse}
 												title={tip}
 											>
-												{c.cell ? c.cell(row) : (plain ?? "")}
+												{c.cell ? (
+													c.cell(row)
+												) : typeof plain === "string" && !c.ltr ? (
+													<BidiText>{plain}</BidiText>
+												) : (
+													(plain ?? "")
+												)}
 											</td>
 										);
 									})}

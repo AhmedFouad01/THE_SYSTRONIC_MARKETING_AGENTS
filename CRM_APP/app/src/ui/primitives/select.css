@@ -101,14 +101,3 @@
 	color: var(--sy-text-disabled);
 	cursor: not-allowed;
 }
-
-.sy-date {
-	text-align: start;
-	font-family: inherit;
-	font-size: var(--sy-type-data-size);
-}
-
-.sy-date::-webkit-calendar-picker-indicator {
-	cursor: pointer;
-	opacity: 0.7;
-}
