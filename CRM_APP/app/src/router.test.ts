@@ -6,12 +6,13 @@ describe("client router", () => {
 		expect(toRoute("/app")).toBe("/");
 		expect(toRoute("/app/")).toBe("/");
 		expect(toRoute("/app/leads")).toBe("/leads");
+		expect(toRoute("/app/reporting")).toBe("/reporting");
+		expect(toRoute("/app/reporting/")).toBe("/reporting");
 		expect(toRoute("/app/reporting-v2/")).toBe("/reporting-v2");
 	});
 	it("rejects unknown and legacy paths", () => {
 		expect(toRoute("/leads")).toBeNull();
 		expect(toRoute("/application")).toBeNull();
-		expect(toRoute("/app/reporting")).toBeNull();
 		expect(toRoute("/app/foundation")).toBeNull();
 	});
 	it("builds hrefs", () => {

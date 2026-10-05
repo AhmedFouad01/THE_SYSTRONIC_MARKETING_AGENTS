@@ -19,7 +19,7 @@ export const NAV: readonly NavItem[] = [
 	{ key: "deals", label: "nav.deals", icon: "deals", route: "/deals" },
 	{ key: "pipeline", label: "nav.pipeline", icon: "route", route: "/pipeline" },
 	{ key: "tasks", label: "nav.tasks", icon: "tasks", route: "/tasks" },
-	{ key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting-v2" },
+	{ key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting", also: "/reporting-v2" },
 	{ key: "email", label: "common.email", icon: "mail", route: null },
 	{ key: "call", label: "common.call", icon: "phone", route: null },
 	{ key: "import", label: "common.import", icon: "upload", route: null },

@@ -12,6 +12,7 @@ export default defineConfig({
 		"mvp-deals.spec.ts",
 		"mvp-pipeline.spec.ts",
 		"mvp-tasks.spec.ts",
+		"mvp-reporting.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

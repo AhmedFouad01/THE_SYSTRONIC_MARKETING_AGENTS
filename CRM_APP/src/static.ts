@@ -11,6 +11,7 @@ const appRoutes = [
 	"/pipeline",
 	"/tasks",
 	"/dashboard",
+	"/reporting",
 	"/reporting-v2",
 ];
 

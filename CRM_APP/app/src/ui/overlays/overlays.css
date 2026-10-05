@@ -53,6 +53,7 @@
 	inset: 0;
 	z-index: 1000;
 	display: grid;
+	grid-template-columns: minmax(0, 1fr); /* auto track would grow to the 420px dialog and overflow narrow viewports */
 	place-items: center;
 	padding: var(--sy-space-22);
 	background: color-mix(in srgb, var(--sy-navy) 55%, transparent);

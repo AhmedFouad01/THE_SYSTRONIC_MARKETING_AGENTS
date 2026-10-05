@@ -66,6 +66,7 @@ describe("isAppRoute", () => {
 			"/app/pipeline",
 			"/app/tasks",
 			"/app/dashboard",
+			"/app/reporting",
 			"/app/reporting-v2",
 		])
 			expect(isAppRoute(r)).toBe(true);
@@ -76,7 +77,6 @@ describe("isAppRoute", () => {
 			"/foundation",
 			"/reporting",
 			"/leads",
-			"/app/reporting",
 			"/app/foundation",
 			"/application",
 			"/app/leads/x",

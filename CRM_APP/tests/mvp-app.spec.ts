@@ -99,10 +99,10 @@ for (const width of [360, 1280])
 					await expect(page.getByTestId("deals-view")).toBeVisible();
 				else if (key === "tasks")
 					await expect(page.getByTestId("tasks-view")).toBeVisible();
+				else if (key === "reporting")
+					await expect(page.getByTestId("reporting-view")).toBeVisible();
 				else
-					await expect(page.getByTestId("route")).toHaveText(
-						key === "reporting" ? "/reporting-v2" : `/${key}`,
-					);
+					await expect(page.getByTestId("route")).toHaveText(`/${key}`);
 			}
 
 			// Email/Call/Import: disabled + explicit "not in MVP" label (hidden on the mobile bar by design)
