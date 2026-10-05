@@ -7,10 +7,12 @@ import {
 	dayDiff,
 	draftOf,
 	dueBucket,
+	dueFilterFor,
 	fromLocalInput,
 	inTab,
 	keyFor,
 	mergeLatest,
+	overdueDays,
 	relatedTarget,
 	runBulkComplete,
 	type Task,
@@ -235,5 +237,20 @@ describe("runBulkComplete", () => {
 		});
 		expect(summary.notAttempted).toEqual(["b", "c", "d"]);
 		expect(summary.tone).toBe("error");
+	});
+});
+
+describe("server due filter and overdue chip (UX-17, F-06)", () => {
+	it("only the Overdue and Today tabs ask the server", () => {
+		expect(dueFilterFor("overdue")).toBe("overdue");
+		expect(dueFilterFor("today")).toBe("today");
+		for (const tab of ["open", "upcoming", "none", "done"] as const)
+			expect(dueFilterFor(tab)).toBeNull();
+	});
+	it("counts whole local days late; earlier today is 0, never negative", () => {
+		expect(overdueDays(new Date(2026, 8, 23, 9), NOW)).toBe(12);
+		expect(overdueDays(new Date(2026, 9, 4, 23, 59), NOW)).toBe(1);
+		expect(overdueDays(new Date(2026, 9, 5, 9), NOW)).toBe(0);
+		expect(overdueDays(new Date(2026, 9, 9, 9), NOW)).toBe(0);
 	});
 });

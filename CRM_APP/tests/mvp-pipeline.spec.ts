@@ -39,13 +39,14 @@ type Pipe = { id: string; stages: Stage[] };
 async function makePipeline(
 	request: APIRequestContext,
 	f: Fixture,
+	name = "Sales flow",
 ): Promise<Pipe> {
 	const command_id = randomUUID();
 	const res = await request.post("/v1/pipelines", {
 		headers: headers(f, command_id),
 		data: {
 			command_id,
-			name: "Sales flow",
+			name,
 			stages: [
 				{ name: "New" },
 				{ name: "Qualified" },
@@ -352,3 +353,162 @@ for (const language of ["ar", "en"] as const)
 		await expect(page).toHaveURL(new RegExp(`/app/deals\\?select=${deal.id}`));
 		await expect(page.getByTestId("deal-detail-title")).toHaveText("Open me");
 	});
+
+test("pipeline en: header holds the selector inline with New deal; default is the busiest pipeline and the last choice is remembered", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture();
+	const p = await makePipeline(request, f); // "Sales flow"
+	await makeDeal(request, f, p, "Alpha deal", 100000);
+	await makeDeal(request, f, p, "Bravo deal", 250000);
+	const command_id = randomUUID();
+	const other = await request.post("/v1/pipelines", {
+		headers: headers(f, command_id),
+		data: { command_id, name: "Aaa quiet flow", stages: [{ name: "Start" }, { name: "End", outcome: "won" }], transitions: [[0, 1]] },
+	});
+	expect(other.status()).toBe(201);
+	await page.addInitScript(() => localStorage.setItem("sy.locale", "en"));
+	await page.goto("/app/pipeline");
+	await connect(page, f.tokens.manager, f.ids.a);
+	await expect(page.getByTestId("pipeline-board")).toBeVisible();
+
+	// default = most open deals among the loaded ones, even though another pipeline sorts first by name
+	const select = page.getByTestId("pipeline-select");
+	await expect(select).toContainText("Sales flow");
+	await expect(cards(page, "New")).toHaveCount(2);
+
+	// selector and New deal live in the page header, on one row
+	const header = page.locator("header.sy-page-header");
+	const sel = await header.getByTestId("pipeline-select").boundingBox();
+	const newDeal = await header.getByTestId("new-deal").boundingBox();
+	expect(sel).not.toBeNull();
+	expect(newDeal).not.toBeNull();
+	expect(Math.abs((sel?.y ?? 0) + (sel?.height ?? 0) / 2 - ((newDeal?.y ?? 0) + (newDeal?.height ?? 0) / 2))).toBeLessThan(6);
+
+	// choosing another pipeline is remembered across a reload (per tenant, best effort)
+	await pickLabel(select, "Aaa quiet flow");
+	await expect(page.getByTestId("pipeline-column").getByRole("heading")).toHaveText(["Start", "End"]);
+	await page.reload();
+	await expect(page.getByTestId("pipeline-board")).toBeVisible();
+	await expect(page.getByTestId("pipeline-select")).toContainText("Aaa quiet flow");
+});
+
+test("pipeline en 1600px: columns fill the width, cards show title/contact/owner avatar/value, New deal opens the dialog", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture();
+	const p = await makePipeline(request, f);
+	await makeDeal(request, f, p, "Alpha deal", 100000);
+	const errors: string[] = [];
+	page.on("pageerror", (e) => errors.push(e.message));
+	await page.setViewportSize({ width: 1600, height: 900 });
+	await open(page, f, "en");
+	const board = page.getByTestId("pipeline-board");
+	await expect(page.getByTestId("pipeline-column")).toHaveCount(4);
+	const widths = await page
+		.getByTestId("pipeline-column")
+		.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+	for (const w of widths) expect(w).toBeGreaterThan(272); // grew past the old fixed 272px
+	expect(Math.max(...widths) - Math.min(...widths)).toBeLessThan(2); // equal share
+	expect(await board.evaluate((el) => el.scrollWidth <= el.clientWidth + 1)).toBe(true); // 4 columns: no sideways scroll
+
+	const card = cardOf(page, "Alpha deal");
+	await expect(card.locator(".sy-pipe__title")).toHaveCSS("font-weight", "600");
+	await expect(card).toContainText("Contact Alpha deal");
+	await expect(card.getByTestId("pipeline-owner")).toHaveAttribute("aria-label", /.+/);
+	await expect(card.getByTestId("pipeline-owner")).toHaveText(/^[A-Z]{0,2}$/);
+	// the column total reads as secondary text (text-2), not body text
+	const text2 = await page.evaluate(() => {
+		const probe = document.createElement("span");
+		probe.style.color = "var(--sy-text-2)";
+		document.body.appendChild(probe);
+		const c = getComputedStyle(probe).color;
+		probe.remove();
+		return c;
+	});
+	await expect(column(page, "New").getByTestId("column-total")).toHaveCSS("color", text2);
+	const value = card.locator(".sy-pipe__value");
+	await expect(value).toHaveCSS("font-weight", "700");
+	const vb = await value.boundingBox();
+	const ab = await card.getByTestId("pipeline-owner").boundingBox();
+	expect((vb?.x ?? 0) > (ab?.x ?? 1e9)).toBe(true); // value sits at the end, avatar at the start
+	// no per-card "Final stage" text in the way (kept for assistive tech only)
+	await expect(column(page, "Won").locator(".sy-pipe__meta", { hasText: "Final stage" })).toHaveCount(0);
+
+	await page.getByTestId("new-deal").click();
+	await expect(page.getByTestId("new-deal-dialog")).toBeVisible();
+	expect(errors).toEqual([]);
+});
+
+test("pipeline en 1280px: more than five stages keep a 260px minimum and scroll sideways", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture();
+	const command_id = randomUUID();
+	const res = await request.post("/v1/pipelines", {
+		headers: headers(f, command_id),
+		data: {
+			command_id,
+			name: "Long flow",
+			stages: [
+				{ name: "S1" },
+				{ name: "S2" },
+				{ name: "S3" },
+				{ name: "S4" },
+				{ name: "S5" },
+				{ name: "S6" },
+				{ name: "Won", outcome: "won" },
+			],
+			transitions: [[0, 1]],
+		},
+	});
+	expect(res.status()).toBe(201);
+	const id = (await res.json()).data.id as string;
+	const list = (
+		await (await request.get("/v1/pipelines", { headers: headers(f) })).json()
+	).data as Pipe[];
+	const p = list.find((x) => x.id === id);
+	if (!p) throw new Error("pipeline not listed");
+	const order = ["S1", "S2", "S3", "S4", "S5", "S6", "Won"];
+	p.stages.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
+	await makeDeal(request, f, p, "Long one");
+	await makeDeal(request, f, p, "Long two");
+	await page.setViewportSize({ width: 1280, height: 800 });
+	await open(page, f, "en", "Long flow");
+	await expect(page.getByTestId("pipeline-column")).toHaveCount(7);
+	const widths = await page
+		.getByTestId("pipeline-column")
+		.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width));
+	for (const w of widths) expect(w).toBeGreaterThanOrEqual(259);
+	const board = page.getByTestId("pipeline-board");
+	expect(await board.evaluate((el) => el.scrollWidth > el.clientWidth + 1)).toBe(true);
+	expect(await board.evaluate((el) => getComputedStyle(el).overflowX)).toBe("auto");
+});
+
+test("pipeline en: the busiest default stays put when its open deals are all moved to Won", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture();
+	const p = await makePipeline(request, f);
+	const other = await makePipeline(request, f, "Other flow");
+	const a = await makeDeal(request, f, p, "Busy A");
+	const b = await makeDeal(request, f, p, "Busy B");
+	await makeDeal(request, f, other, "Elsewhere");
+	await open(page, f, "en", null);
+	await expect(page.getByTestId("pipeline-board")).toBeVisible();
+	await expect(page.getByTestId("pipeline-select")).toContainText("Sales flow");
+	for (const d of [a, b]) {
+		await page.getByTestId(`move-menu-${d.id}`).click();
+		await page.getByRole("menuitem", { name: "Qualified" }).click();
+		await expect(page.getByTestId(`move-menu-${d.id}`)).toBeVisible();
+		await page.getByTestId(`move-menu-${d.id}`).click();
+		await page.getByRole("menuitem", { name: "Won" }).click();
+		await expect(page.getByTestId(`pipeline-card`).filter({ hasText: "Busy" }).first()).toBeVisible();
+	}
+	await expect(cards(page, "Won")).toHaveCount(2);
+	await expect(page.getByTestId("pipeline-select")).toContainText("Sales flow");
+});

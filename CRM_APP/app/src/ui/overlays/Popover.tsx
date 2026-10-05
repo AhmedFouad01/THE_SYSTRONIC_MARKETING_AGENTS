@@ -11,7 +11,8 @@ export type PopoverProps = {
 	/** Accessible name of the trigger and of the panel. */
 	label: string;
 	icon?: IconName;
-	children: ReactNode;
+	/** Panel content; a function receives `close` so a form can dismiss the panel after success. */
+	children: ReactNode | ((close: () => void) => ReactNode);
 	testId?: string;
 };
 
@@ -67,7 +68,7 @@ export function Popover({ triggerLabel, label, icon, children, testId }: Popover
 					onKeyDown={onKeyDown}
 					onBlur={onBlur}
 				>
-					{children}
+					{typeof children === "function" ? children(dismiss) : children}
 				</div>
 			) : null}
 		</div>

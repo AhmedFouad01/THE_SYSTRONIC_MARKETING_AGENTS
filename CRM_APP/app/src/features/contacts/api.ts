@@ -39,6 +39,14 @@ export async function patchContact(
 	return (await apiClient.patch<Contact>(`contacts/${id}`, body)).data;
 }
 
+/** POST /v1/contacts; command_id doubles as the Idempotency-Key. */
+export async function createContact(
+	body: Record<string, unknown>,
+	idempotencyKey: string,
+): Promise<Contact> {
+	return (await apiClient.post<Contact>("contacts", body, { idempotencyKey })).data;
+}
+
 export const journeyFetcher =
 	(contactId: string): FetchPage<JourneyEvent> =>
 	async ({ cursor, signal }) => {

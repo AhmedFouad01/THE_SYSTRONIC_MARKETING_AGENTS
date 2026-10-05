@@ -1,18 +1,23 @@
 import { apiClient } from "../../api/index.ts";
 import type { FetchPage } from "../../ui/data-grid/index.ts";
-import type { Task } from "./model.ts";
+import type { DueFilter, Task } from "./model.ts";
 
 export type DealRef = { id: string; title: string };
 export type ContactRef = { id: string; display_name: string };
 export type Assignee = { id: string; name: string };
 
-export const fetchTasksPage: FetchPage<Task> = async ({ cursor, signal }) => {
-	const r = await apiClient.get<Task[]>("tasks", {
-		query: { cursor: cursor ?? undefined },
-		signal,
-	});
-	return { items: r.data, nextCursor: r.nextCursor };
-};
+/** GET /v1/tasks, optionally narrowed server-side by `?due=overdue|today` (M1_CONTRACTS). */
+export const fetchTasksPageFor =
+	(due: DueFilter | null): FetchPage<Task> =>
+	async ({ cursor, signal }) => {
+		const r = await apiClient.get<Task[]>("tasks", {
+			query: { cursor: cursor ?? undefined, due: due ?? undefined },
+			signal,
+		});
+		return { items: r.data, nextCursor: r.nextCursor };
+	};
+
+export const fetchTasksPage: FetchPage<Task> = fetchTasksPageFor(null);
 
 export const fetchDealRefsPage: FetchPage<DealRef> = async ({
 	cursor,

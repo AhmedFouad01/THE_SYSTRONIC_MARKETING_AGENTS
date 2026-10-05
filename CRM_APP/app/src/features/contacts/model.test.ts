@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ApiError } from "../../api/errors.ts";
 import {
+	buildAddIdentifierBody,
+	buildCreateContactBody,
 	buildMergeBody,
 	buildPatchBody,
 	type Contact,
@@ -14,6 +16,7 @@ import {
 	sortJourney,
 	toRows,
 	validateIdentifier,
+	validateNewContact,
 } from "./model.ts";
 
 const ME = "11111111-1111-4111-8111-111111111111";
@@ -129,5 +132,50 @@ describe("merge", () => {
 		expect(classifyMergeError(err(0, "NETWORK"))).toBe("network");
 		expect(classifyMergeError(new Error("x"))).toBe("other");
 		expect(classifyMergeError(err(500, "X"))).toBe("other");
+	});
+});
+
+describe("new contact (UX-19)", () => {
+	const blank = { name: "", phone: "", email: "", ownerId: "" };
+	it("requires a name; phone and email are optional but must be valid when given", () => {
+		expect(validateNewContact(blank)).toEqual({ name: "required" });
+		expect(validateNewContact({ ...blank, name: "A" })).toEqual({});
+		expect(validateNewContact({ ...blank, name: "A", phone: "0100", email: "x" })).toEqual({
+			phone: "phone",
+			email: "email",
+		});
+		expect(validateNewContact({ ...blank, name: "A", phone: "+201001234567", email: "a@b.co" })).toEqual({});
+	});
+	it("builds a POST body with trimmed values, optional owner and manual provenance", () => {
+		expect(buildCreateContactBody({ ...blank, name: " Ann " }, "k1")).toEqual({
+			command_id: "k1",
+			display_name: "Ann",
+		});
+		expect(
+			buildCreateContactBody(
+				{ name: "Ann", phone: " +201001234567 ", email: "a@b.co", ownerId: OTHER },
+				"k2",
+			),
+		).toEqual({
+			command_id: "k2",
+			display_name: "Ann",
+			owner_id: OTHER,
+			identifiers: [
+				{ kind: "phone", value: "+201001234567", provenance: "manual_entry" },
+				{ kind: "email", value: "a@b.co", provenance: "manual_entry" },
+			],
+		});
+	});
+});
+
+describe("add identifier popover body", () => {
+	it("carries expected_version and one identifier; blank or invalid gives null", () => {
+		expect(buildAddIdentifierBody({ version: 3 }, "email", " a@b.co ", "k")).toEqual({
+			command_id: "k",
+			expected_version: 3,
+			identifiers: [{ kind: "email", value: "a@b.co", provenance: "manual_entry" }],
+		});
+		expect(buildAddIdentifierBody({ version: 3 }, "email", "  ", "k")).toBeNull();
+		expect(buildAddIdentifierBody({ version: 3 }, "phone", "0100", "k")).toBeNull();
 	});
 });

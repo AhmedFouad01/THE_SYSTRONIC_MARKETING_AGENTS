@@ -1,5 +1,15 @@
-.sy-pipe .sy-field {
-	min-width: min(100%, 240px);
+/* Header pipeline selector sits inline with "New deal": the visible label is dropped, the control keeps its name. */
+.sy-pipe__select {
+	min-width: 200px;
+}
+.sy-pipe__select .sy-field__label,
+.sy-sr-only {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 .sy-pipe__board {
 	display: flex;
@@ -12,9 +22,10 @@
 	overscroll-behavior-x: contain;
 	scroll-snap-type: x proximity;
 }
+/* Columns share the width equally (min 260, grow to fill); the board scrolls sideways when they do not fit (UX-16). */
 .sy-pipe__col {
-	flex: 0 0 272px;
-	min-width: 0;
+	flex: 1 0 260px;
+	min-width: 260px;
 	display: flex;
 	flex-direction: column;
 	gap: var(--sy-space-8);
@@ -55,9 +66,13 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--sy-space-4) var(--sy-space-8);
+	color: var(--sy-text-2);
+}
+.sy-pipe__total-label {
+	color: inherit;
 }
 .sy-pipe__amount {
-	font-weight: 700;
+	font-weight: 600;
 }
 .sy-pipe__list {
 	list-style: none;
@@ -96,14 +111,50 @@
 	background: var(--sy-hover);
 }
 .sy-pipe__title {
-	overflow-wrap: anywhere;
+	font-weight: 600;
+	max-inline-size: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+/* Owner avatar at the start, value bold and end-aligned. */
+.sy-pipe__foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-8);
+	inline-size: 100%;
+	margin-block-start: var(--sy-space-4);
+}
+.sy-pipe__avatar {
+	display: inline-grid;
+	place-items: center;
+	inline-size: 24px;
+	block-size: 24px;
+	border-radius: 50%;
+	background: var(--sy-selected);
+	color: var(--sy-text-2);
+	font-size: 11px;
+	font-weight: 600;
+	flex: none;
+}
+.sy-pipe__avatar--none {
+	background: transparent;
+	border: 1px dashed var(--sy-border-strong);
 }
 .sy-pipe__value {
-	font-weight: 600;
+	font-weight: 700;
+	margin-inline-start: auto;
 }
 .sy-pipe__meta {
 	color: var(--sy-text-3);
 	overflow-wrap: anywhere;
+}
+.sy-pipe__open .sy-pipe__meta {
+	max-inline-size: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .sy-pipe__col--won .sy-pipe__total .sy-pipe__meta,
 .sy-pipe__col--lost .sy-pipe__total .sy-pipe__meta {

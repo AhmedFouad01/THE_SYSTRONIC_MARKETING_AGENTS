@@ -4,7 +4,10 @@ import {
 	boardStages,
 	columnKind,
 	groupByStage,
+	initialsOf,
+	openDealCount,
 	orphanCount,
+	pickPipeline,
 	resolvePipeline,
 	totalsOf,
 } from "./model.ts";
@@ -116,5 +119,42 @@ describe("columnKind / resolvePipeline", () => {
 		expect(resolvePipeline([P, q], "p2")?.id).toBe("p2");
 		expect(resolvePipeline([P, q], "zzz")?.id).toBe("p1");
 		expect(resolvePipeline([], null)).toBeNull();
+	});
+});
+
+describe("pickPipeline (UX-16: default to the busiest, remember last-used)", () => {
+	const Q: Pipeline = { ...P, id: "p2", name: "Other" };
+	const deals = [
+		deal("a", "new", 1, "EGP", "p2"),
+		deal("b", "qual", 1, "EGP", "p2"),
+		deal("c", "won", 1, "EGP", "p2"), // won: not open
+		deal("d", "new", 1, "EGP", "p1"),
+	];
+	it("counts only deals in open stages of that pipeline", () => {
+		expect(openDealCount(P, deals)).toBe(1);
+		expect(openDealCount(Q, deals)).toBe(2);
+	});
+	it("defaults to the pipeline with the most open deals, not the first", () => {
+		expect(pickPipeline([P, Q], deals, null, null)?.id).toBe("p2");
+	});
+	it("keeps pipeline order on a tie or when nothing is loaded", () => {
+		expect(pickPipeline([P, Q], [], null, null)?.id).toBe("p1");
+		expect(pickPipeline([P, Q], [deal("x", "new", 1, "EGP", "p1"), deal("y", "new", 1, "EGP", "p2")], null, null)?.id).toBe("p1");
+	});
+	it("prefers the explicit choice, then the remembered one, ignoring stale ids", () => {
+		expect(pickPipeline([P, Q], deals, "p1", "p2")?.id).toBe("p1");
+		expect(pickPipeline([P, Q], deals, null, "p1")?.id).toBe("p1");
+		expect(pickPipeline([P, Q], deals, "gone", "gone-too")?.id).toBe("p2");
+		expect(pickPipeline([], deals, null, null)).toBeNull();
+	});
+});
+
+describe("initialsOf", () => {
+	it("takes up to two leading letters", () => {
+		expect(initialsOf("Alex Carter")).toBe("AC");
+		expect(initialsOf("  maya  lee  jones ")).toBe("ML");
+		expect(initialsOf("Single")).toBe("S");
+		expect(initialsOf("")).toBe("");
+		expect(initialsOf("أحمد فؤاد")).toBe("أف");
 	});
 });

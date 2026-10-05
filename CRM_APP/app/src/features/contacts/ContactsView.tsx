@@ -9,6 +9,7 @@ import {
 import {
 	createSavedViewsStore,
 	DataGrid,
+	Button,
 	DEFAULT_VIEW,
 	IdentityCell,
 	useWideLayout,
@@ -27,6 +28,7 @@ import {
 import { fetchAssignees, fetchContactsPage } from "./api.ts";
 import { ContactDetail } from "./ContactDetail.tsx";
 import { MergeDialogs } from "./MergeDialogs.tsx";
+import { NewContactDialog } from "./NewContactDialog.tsx";
 import {
 	type Assignee,
 	BUILT_IN_VIEWS,
@@ -96,20 +98,27 @@ export function ContactsView() {
 		parseSelect(location.search),
 	);
 	const [mergeWith, setMergeWith] = useState<Duplicate | null>(null);
+	const [newOpen, setNewOpen] = useState(false);
+	// Contacts created this session stay visible even when the id-ordered sample does not reach them.
+	const [added, setAdded] = useState<readonly Contact[]>([]);
 
 	const ownerNames = useMemo(
 		() => new Map(assignees.map((a) => [a.id, a.name])),
 		[assignees],
 	);
+	const loaded = useMemo(() => {
+		const seen = new Set(contacts.items.map(getRawId));
+		return [...contacts.items, ...added.filter((a) => !seen.has(a.id))];
+	}, [contacts.items, added]);
 	const allRows = useMemo(
 		() =>
 			toRows(
-				mergeLatest(contacts.items, overlay, merged),
+				mergeLatest(loaded, overlay, merged),
 				ownerNames,
 				t("common.unassigned"),
 				t("common.unknownUser"),
 			),
-		[contacts.items, overlay, merged, ownerNames, t],
+		[loaded, overlay, merged, ownerNames, t],
 	);
 	const rows = useMemo(
 		() => filterBuiltInView(allRows, view, actor),
@@ -201,9 +210,31 @@ export function ContactsView() {
 		toast.notify(t("contacts.merge.done"), "success");
 	};
 
+	const onCreated = (c: Contact) => {
+		setAdded((a) => [...a, c]);
+		remember(c);
+		contacts.reload();
+		setView("all");
+		setActiveId(c.id);
+		setNewOpen(false);
+		toast.notify(t("contacts.new.created"), "success");
+	};
+
 	return (
 		<div className="sy-contacts" data-testid="contacts-view">
-			<PageHeader title={t("nav.contacts")} />
+			<PageHeader
+				title={t("nav.contacts")}
+				actions={
+					<Button
+						variant="primary"
+						icon="plus"
+						onClick={() => setNewOpen(true)}
+						data-testid="new-contact"
+					>
+						{t("contacts.new.title")}
+					</Button>
+				}
+			/>
 			<Tabs
 				label={t("contacts.views")}
 				value={view}
@@ -260,6 +291,12 @@ export function ContactsView() {
 					onMerged={onMerged}
 				/>
 			) : null}
+			<NewContactDialog
+				open={newOpen}
+				onClose={() => setNewOpen(false)}
+				assignees={assignees}
+				onCreated={onCreated}
+			/>
 		</div>
 	);
 }

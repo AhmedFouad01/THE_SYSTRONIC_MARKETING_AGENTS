@@ -113,6 +113,76 @@ export function validateIdentifier(
 	return EMAIL.test(v) ? null : "email";
 }
 
+// ---- create -------------------------------------------------------------------------------------------------
+
+export type NewContactInput = {
+	name: string;
+	phone: string;
+	email: string;
+	ownerId: string;
+};
+export const EMPTY_NEW_CONTACT: NewContactInput = {
+	name: "",
+	phone: "",
+	email: "",
+	ownerId: "",
+};
+export type NewContactErrors = {
+	name?: "required";
+	phone?: "phone";
+	email?: "email";
+};
+
+export function validateNewContact(i: NewContactInput): NewContactErrors {
+	const e: NewContactErrors = {};
+	if (i.name.trim() === "") e.name = "required";
+	if (validateIdentifier("phone", i.phone) !== null) e.phone = "phone";
+	if (validateIdentifier("email", i.email) !== null) e.email = "email";
+	return e;
+}
+
+/** POST /v1/contacts body; command_id doubles as the Idempotency-Key. Source is left to the server default. */
+export function buildCreateContactBody(
+	i: NewContactInput,
+	commandId: string,
+): Record<string, unknown> {
+	const identifiers: Array<{ kind: IdentifierKind; value: string; provenance: string }> = [];
+	if (i.phone.trim() !== "")
+		identifiers.push({ kind: "phone", value: i.phone.trim(), provenance: "manual_entry" });
+	if (i.email.trim() !== "")
+		identifiers.push({ kind: "email", value: i.email.trim(), provenance: "manual_entry" });
+	return {
+		command_id: commandId,
+		display_name: i.name.trim(),
+		...(i.ownerId ? { owner_id: i.ownerId } : {}),
+		...(identifiers.length > 0 ? { identifiers } : {}),
+	};
+}
+
+export type CreateContactError = "validation" | "assignment" | "forbidden" | "network" | "other";
+export function classifyCreateContactError(e: unknown): CreateContactError {
+	if (!isApiError(e)) return "other";
+	if (e.kind === "forbidden") return e.code === "ASSIGNMENT_DENIED" ? "assignment" : "forbidden";
+	if (e.kind === "network") return "network";
+	if (e.status === 422) return "validation";
+	return "other";
+}
+
+/** PATCH body adding one identifier (the "+ Add" popover); null when the value is blank or invalid. */
+export function buildAddIdentifierBody(
+	c: Pick<Contact, "version">,
+	kind: IdentifierKind,
+	value: string,
+	commandId: string,
+): Record<string, unknown> | null {
+	if (value.trim() === "" || validateIdentifier(kind, value) !== null) return null;
+	return {
+		command_id: commandId,
+		expected_version: c.version,
+		identifiers: [{ kind, value: value.trim(), provenance: "manual_entry" }],
+	};
+}
+
 // ---- detail edit ------------------------------------------------------------------------------------------
 
 export type EditDraft = {

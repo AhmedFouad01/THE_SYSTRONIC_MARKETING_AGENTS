@@ -34,13 +34,14 @@ import {
 	fetchAssignees,
 	fetchContactRefsPage,
 	fetchDealRefsPage,
-	fetchTasksPage,
+	fetchTasksPageFor,
 	patchTask,
 } from "./api.ts";
 import { DueLabel } from "./DueLabel.tsx";
 import {
 	type BulkCompleteItem,
 	completeBody,
+	dueFilterFor,
 	inTab,
 	mergeLatest,
 	runBulkComplete,
@@ -94,10 +95,15 @@ export function TasksView() {
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 	const now = useNow();
 
-	const tasks = useCursorList<Task>(fetchTasksPage, {
+	const [tab, setTab] = useState<TaskTab>("open");
+	// Overdue/Today tabs ask the server (`?due=`): exact membership, not a bucket over the loaded sample (F-06).
+	const dueFilter = dueFilterFor(tab);
+	const fetchTasks = useMemo(() => fetchTasksPageFor(dueFilter), [dueFilter]);
+	const tasks = useCursorList<Task>(fetchTasks, {
 		getId: getTaskId,
-		resetKey: tenantId,
+		resetKey: `${tenantId}:${dueFilter ?? ""}`,
 	});
+
 	const contacts = useCursorList<ContactRef>(fetchContactRefsPage, {
 		getId: getRefId,
 		resetKey: tenantId,
@@ -129,7 +135,6 @@ export function TasksView() {
 		[],
 	);
 
-	const [tab, setTab] = useState<TaskTab>("open");
 	const [activeId, setActiveId] = useState<string | null>(() =>
 		parseSelect(location.search),
 	);

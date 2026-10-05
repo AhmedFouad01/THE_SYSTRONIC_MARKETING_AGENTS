@@ -175,19 +175,30 @@ test("contacts en: detail edit, simulated version conflict, reload and retry, ad
 	await expect(page.getByTestId("contact-version")).toHaveText("1");
 	await expect(page.getByTestId("contact-conflict")).toHaveCount(0);
 
-	// client validation, then a real save adding an email identifier
-	await pickValue(detail.getByLabel("Add identifier"), "email");
-	await detail.getByLabel("Identifier value").fill("nope");
-	await page.getByTestId("contact-save").click();
-	await expect(detail.getByText("Enter a valid email address.")).toBeVisible();
+	// the editor no longer carries the identifier form: it lives behind the "+ Add" popover (UX-19)
+	await expect(detail.getByLabel("Identifier value")).toHaveCount(0);
+	// (the panel is still in edit mode after the reload)
+	await expect(detail.getByLabel("Name")).toBeVisible();
 	await detail.getByLabel("Name").fill("Edited twice");
-	await detail.getByLabel("Identifier value").fill("edited@example.test");
 	await page.getByTestId("contact-save").click();
 	await expect(page.getByTestId("toast").filter({ hasText: "Contact updated." })).toBeVisible();
 	await expect(page.getByTestId("contact-detail-title")).toHaveText("Edited twice");
 	await expect(page.getByTestId("contact-version")).toHaveText("2");
-	await expect(page.getByTestId("identifiers")).toContainText("edited@example.test");
 	await expect(rowOf(page, "Edited twice")).toHaveCount(1);
+
+	// "+ Add" popover: client validation, then a real save adding an email identifier and closing
+	await page.getByTestId("identifier-add").click();
+	await pickValue(page.getByRole("dialog", { name: "Add a phone or email" }).getByLabel("Add identifier"), "email");
+	const popover = page.getByRole("dialog", { name: "Add a phone or email" });
+	await popover.getByLabel("Identifier value").fill("nope");
+	await popover.getByTestId("identifier-add-submit").click();
+	await expect(popover.getByText("Enter a valid email address.")).toBeVisible();
+	await popover.getByLabel("Identifier value").fill("edited@example.test");
+	await popover.getByTestId("identifier-add-submit").click();
+	await expect(page.getByTestId("toast").filter({ hasText: "Added." })).toBeVisible();
+	await expect(popover).toHaveCount(0);
+	await expect(page.getByTestId("contact-version")).toHaveText("3");
+	await expect(page.getByTestId("identifiers")).toContainText("edited@example.test");
 });
 
 test("contacts en: journey tab renders the contact timeline", async ({ page, request }) => {
@@ -307,4 +318,47 @@ test("contacts en: reader sees redacted identifiers, restricted duplicates and a
 	await page.getByRole("tab", { name: "Duplicates" }).click();
 	await expect(page.getByTestId("state-forbidden")).toContainText("Duplicates are restricted");
 	await expect(page.getByTestId("duplicate-merge")).toHaveCount(0);
+});
+
+test("contacts en: header matches Leads (same h1 position) and offers New contact", async ({ page }) => {
+	const f = await fixture();
+	await en(page);
+	await page.goto("/app/leads");
+	await connect(page, f.tokens.manager, f.ids.a);
+	await expect(page.getByTestId("leads-view")).toBeVisible();
+	const leadsTop = (await page.locator("h1").first().boundingBox())?.y;
+	await page.getByTestId("nav-contacts").first().click();
+	await expect(page.getByTestId("contacts-view")).toBeVisible();
+	await expect(page.getByTestId("new-contact")).toBeVisible();
+	const contactsTop = (await page.locator("h1").first().boundingBox())?.y;
+	expect(contactsTop).toBe(leadsTop);
+	// no hash ID column; only useful columns
+	await expect(page.getByRole("columnheader", { name: /^ID$/i })).toHaveCount(0);
+});
+
+test("contacts en: New contact validates, creates through the API and opens the record", async ({ page, request }) => {
+	const f = await fixture();
+	await en(page);
+	await page.goto("/app/contacts");
+	await connect(page, f.tokens.manager, f.ids.a);
+	await page.getByTestId("new-contact").click();
+	const dialog = page.getByTestId("new-contact-dialog");
+	await expect(dialog).toBeVisible();
+	await dialog.getByTestId("new-contact-submit").click();
+	await expect(dialog.getByText("Enter a name.")).toBeVisible();
+	await dialog.getByLabel("Full name").fill("Created Person");
+	await dialog.getByLabel(/^Phone/).fill("0100");
+	await dialog.getByTestId("new-contact-submit").click();
+	await expect(dialog.getByText("Use international format")).toBeVisible();
+	await dialog.getByLabel(/^Phone/).fill("+201001234567");
+	await dialog.getByLabel("Email").fill("created@example.test");
+	await dialog.getByTestId("new-contact-submit").click();
+	await expect(page.getByTestId("toast").filter({ hasText: "Contact created." })).toBeVisible();
+	await expect(dialog).toHaveCount(0);
+	await expect(page.getByTestId("contact-detail-title")).toHaveText("Created Person");
+	await expect(rowOf(page, "Created Person")).toHaveCount(1);
+	await expect(page.getByTestId("identifiers")).toContainText("created@example.test");
+	await expect(page.getByTestId("identifiers")).toContainText("+201001234567");
+	const list = await request.get("/v1/contacts", { headers: headers(f) });
+	expect((await list.json()).data.some((c: { display_name: string }) => c.display_name === "Created Person")).toBe(true);
 });

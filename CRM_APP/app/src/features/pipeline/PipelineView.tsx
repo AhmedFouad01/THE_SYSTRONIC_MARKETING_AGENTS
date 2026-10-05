@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { isApiError, isForbidden, sessionStore } from "../../api/index.ts";
 import { navigate } from "../../router.ts";
+import { readPref, writePref } from "../../ui/storage.ts";
 import {
 	Badge,
 	Button,
@@ -18,6 +19,7 @@ import {
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
+import { NewDealDialog } from "../deals/NewDealDialog.tsx";
 import {
 	fetchAssignees,
 	fetchContactsPage,
@@ -35,6 +37,7 @@ import {
 	buildTransitionBody,
 	classifyTransitionError,
 	type Contact,
+	currencyChoices,
 	type Deal,
 	dealValueText,
 	mergeLatest,
@@ -45,12 +48,14 @@ import {
 import {
 	columnKind,
 	groupByStage,
-	resolvePipeline,
+	initialsOf,
+	pickPipeline,
 	type StageColumn,
 } from "./model.ts";
 import "../deals/deals.css";
 import "./pipeline.css";
 
+const lastPipelineKey = (tenantId: string) => `sy.pipeline.last.${tenantId}`;
 const getDealId = (d: Deal) => d.id;
 const getContactId = (c: Contact) => c.id;
 
@@ -65,6 +70,7 @@ function DealCard({
 	pipeline,
 	contactName,
 	ownerName,
+	assigned,
 	moving,
 	onMove,
 }: {
@@ -72,6 +78,7 @@ function DealCard({
 	pipeline: Pipeline;
 	contactName: string;
 	ownerName: string;
+	assigned: boolean;
 	moving: boolean;
 	onMove: (deal: Deal, target: Stage) => void;
 }) {
@@ -90,12 +97,26 @@ function DealCard({
 				data-testid="pipeline-card-open"
 				onClick={() => navigate("/deals", `?select=${deal.id}`)}
 			>
-				<b className="sy-pipe__title">{deal.title}</b>
-				<span className="sy-pipe__meta">{contactName}</span>
-				<span className="sy-pipe__value">
-					<Money>{dealValueText(deal, formatMoney)}</Money>
+				<b className="sy-pipe__title" title={deal.title}>
+					{deal.title}
+				</b>
+				<span className="sy-pipe__meta" title={contactName}>
+					{contactName}
 				</span>
-				<span className="sy-pipe__meta">{ownerName}</span>
+				<span className="sy-pipe__foot">
+					<span
+						className={`sy-pipe__avatar${assigned ? "" : " sy-pipe__avatar--none"}`}
+						role="img"
+						aria-label={ownerName}
+						title={ownerName}
+						data-testid="pipeline-owner"
+					>
+						{assigned ? initialsOf(ownerName) : ""}
+					</span>
+					<span className="sy-pipe__value">
+						<Money>{dealValueText(deal, formatMoney)}</Money>
+					</span>
+				</span>
 			</button>
 			<div className="sy-pipe__move">
 				{moving ? (
@@ -115,7 +136,7 @@ function DealCard({
 						}))}
 					/>
 				) : (
-					<span className="sy-pipe__meta" data-testid="pipeline-final">
+					<span className="sy-sr-only" data-testid="pipeline-final">
 						{t("pipeline.noMoves")}
 					</span>
 				)}
@@ -172,7 +193,7 @@ function Column({
 					</span>
 				) : null}
 				<p className="sy-pipe__total" data-testid="column-total">
-					<span className="sy-pipe__meta">{t("pipeline.total")}</span>{" "}
+					<span className="sy-pipe__total-label">{t("pipeline.total")}</span>{" "}
 					{col.totals.length === 0 ? (
 						<Money>{formatMoney(0)}</Money>
 					) : (
@@ -205,6 +226,7 @@ function Column({
 									? (ownerNames.get(d.owner_id) ?? t("common.unknownUser"))
 									: t("common.unassigned")
 							}
+							assigned={d.owner_id !== null}
 							moving={moving.has(d.id)}
 							onMove={onMove}
 						/>
@@ -234,6 +256,8 @@ export function PipelineView() {
 		items: [],
 	});
 	const [selectedId, setSelectedId] = useState<string | null>(null);
+	const [remembered] = useState<string | null>(() => readPref(lastPipelineKey(tenantId)));
+	const [newOpen, setNewOpen] = useState(false);
 
 	const loadPipelines = useCallback((signal?: AbortSignal) => {
 		setPipelines({ status: "loading", items: [] });
@@ -273,7 +297,41 @@ export function PipelineView() {
 		() => mergeLatest(deals.items, overlay),
 		[deals.items, overlay],
 	);
-	const pipeline = resolvePipeline(pipelines.items, selectedId);
+	// The "most open deals" default is latched once the first deals page is in, so moving the last open deal to
+	// Won/Lost (or paging in more deals) never flips the board to another pipeline under the user.
+	const [autoId, setAutoId] = useState<string | null>(null);
+	const initialLoaded = pipelines.status === "ready" && deals.status === "ready";
+	const pipeline = pickPipeline(
+		pipelines.items,
+		allDeals,
+		selectedId,
+		autoId ?? remembered,
+	);
+	const pipelineId = pipeline?.id ?? null;
+	useEffect(() => {
+		if (initialLoaded && autoId === null && pipelineId !== null) setAutoId(pipelineId);
+	}, [initialLoaded, autoId, pipelineId]);
+	const currencies = useMemo(
+		() => currencyChoices(allDeals.map((d) => d.currency)),
+		[allDeals],
+	);
+	// The create dialog starts on the pipeline being viewed.
+	const dialogPipelines = useMemo(
+		() =>
+			pipeline
+				? [pipeline, ...pipelines.items.filter((p) => p.id !== pipeline.id)]
+				: pipelines.items,
+		[pipeline, pipelines.items],
+	);
+	const choosePipeline = (id: string) => {
+		setSelectedId(id);
+		writePref(lastPipelineKey(tenantId), id);
+	};
+	const onDealCreated = (deal: Deal) => {
+		remember(deal);
+		setNewOpen(false);
+		toast.notify(t("deals.new.created"), "success");
+	};
 	const columns = useMemo(
 		() => (pipeline ? groupByStage(pipeline, allDeals, pending) : []),
 		[pipeline, allDeals, pending],
@@ -426,19 +484,30 @@ export function PipelineView() {
 				title={t("nav.pipeline")}
 				actions={
 					pipelines.items.length > 0 && pipeline ? (
-					<Select
-						label={t("pipeline.select")}
-						name="pipeline"
-						value={pipeline.id}
-						onChange={(e) => setSelectedId(e.target.value)}
-						data-testid="pipeline-select"
-					>
-						{pipelines.items.map((p) => (
-							<option key={p.id} value={p.id}>
-								{p.name}
-							</option>
-						))}
-					</Select>
+						<>
+							<Select
+								label={t("pipeline.select")}
+								name="pipeline"
+								className="sy-pipe__select"
+								value={pipeline.id}
+								onChange={(e) => choosePipeline(e.target.value)}
+								data-testid="pipeline-select"
+							>
+								{pipelines.items.map((p) => (
+									<option key={p.id} value={p.id}>
+										{p.name}
+									</option>
+								))}
+							</Select>
+							<Button
+								variant="primary"
+								icon="plus"
+								onClick={() => setNewOpen(true)}
+								data-testid="new-deal"
+							>
+								{t("action.newDeal")}
+							</Button>
+						</>
 					) : null
 				}
 			/>
@@ -466,6 +535,16 @@ export function PipelineView() {
 				)
 			) : null}
 			{body}
+			<NewDealDialog
+				open={newOpen}
+				onClose={() => setNewOpen(false)}
+				contacts={contacts.items}
+				pipelines={dialogPipelines}
+				assignees={assignees}
+				currencies={currencies}
+				prefill={null}
+				onCreated={onDealCreated}
+			/>
 			<LostReasonDialog
 				key={lostFor?.stage.id ?? "none"}
 				stage={lostFor?.stage ?? null}

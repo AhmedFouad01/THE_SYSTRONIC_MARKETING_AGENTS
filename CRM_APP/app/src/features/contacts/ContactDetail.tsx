@@ -14,6 +14,7 @@ import {
 	LoadingState,
 	Ltr,
 	type MessageKey,
+	Popover,
 	RecordEditFooter,
 	RecordEmpty,
 	RecordPanel,
@@ -37,6 +38,7 @@ import {
 	type ContactRow,
 	draftOf,
 	type Duplicate,
+	buildAddIdentifierBody,
 	type IdentifierKind,
 	identifierView,
 	type JourneyEvent,
@@ -68,7 +70,6 @@ function ContactEditor({
 	const [touched, setTouched] = useState(false);
 
 	const dirty = buildPatchBody(contact, draft, "x") !== null;
-	const idIssue = validateIdentifier(draft.idKind, draft.idValue);
 	const ownerOptions =
 		assignees.some((a) => a.id === contact.owner_id) || !contact.owner_id
 			? assignees
@@ -76,7 +77,7 @@ function ContactEditor({
 
 	const save = async () => {
 		setTouched(true);
-		if (draft.name.trim() === "" || idIssue !== null) return;
+		if (draft.name.trim() === "") return;
 		const body = buildPatchBody(contact, draft, crypto.randomUUID());
 		if (body === null) return;
 		setSaving(true);
@@ -182,36 +183,6 @@ function ContactEditor({
 					</option>
 				))}
 			</Select>
-			<Select
-				label={t("contacts.field.idKind")}
-				value={draft.idKind}
-				onChange={(e) =>
-					setDraft({ ...draft, idKind: e.target.value as IdentifierKind })
-				}
-				name="idKind"
-			>
-				<option value="phone">{t("common.phone")}</option>
-				<option value="email">{t("common.email")}</option>
-			</Select>
-			<Input
-				label={t("contacts.field.idValue")}
-				value={draft.idValue}
-				dir="ltr"
-				name="idValue"
-				error={
-					touched && idIssue
-						? t(
-								idIssue === "phone"
-									? "contacts.issue.phone"
-									: "contacts.issue.email",
-							)
-						: undefined
-				}
-				onChange={(e) => {
-					setTouched(false);
-					setDraft({ ...draft, idValue: e.target.value });
-				}}
-			/>
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
@@ -361,15 +332,121 @@ function DuplicatesList({
 	);
 }
 
+/** "+ Add" popover: one phone/email per submit, saved immediately (PATCH) instead of an always-open form (UX-19). */
+function AddIdentifier({
+	contact,
+	onUpdated,
+}: {
+	contact: ContactRow;
+	onUpdated: (c: Contact) => void;
+}) {
+	const { t } = useI18n();
+	const toast = useToast();
+	return (
+		<Popover
+			icon="plus"
+			triggerLabel={t("contacts.id.add")}
+			label={t("contacts.id.addLabel")}
+			testId="identifier-add"
+		>
+			{(close) => (
+				<AddIdentifierForm
+					contact={contact}
+					onSaved={(c) => {
+						onUpdated(c);
+						toast.notify(t("contacts.id.added"), "success");
+						close();
+					}}
+				/>
+			)}
+		</Popover>
+	);
+}
+
+function AddIdentifierForm({
+	contact,
+	onSaved,
+}: {
+	contact: ContactRow;
+	onSaved: (c: Contact) => void;
+}) {
+	const { t } = useI18n();
+	const [kind, setKind] = useState<IdentifierKind>("phone");
+	const [value, setValue] = useState("");
+	const [touched, setTouched] = useState(false);
+	const [saving, setSaving] = useState(false);
+	const [failed, setFailed] = useState<null | "conflict" | "other">(null);
+	const issue = validateIdentifier(kind, value);
+	const submit = async () => {
+		setTouched(true);
+		const body = buildAddIdentifierBody(contact, kind, value, crypto.randomUUID());
+		if (body === null) return;
+		setSaving(true);
+		setFailed(null);
+		try {
+			onSaved(await patchContact(contact.id, body));
+		} catch (e) {
+			setFailed(isVersionConflict(e) ? "conflict" : "other");
+		} finally {
+			setSaving(false);
+		}
+	};
+	return (
+		<form
+			className="sy-contacts__form"
+			noValidate
+			onSubmit={(e) => {
+				e.preventDefault();
+				void submit();
+			}}
+		>
+			<Select
+				label={t("contacts.field.idKind")}
+				value={kind}
+				onChange={(e) => setKind(e.target.value as IdentifierKind)}
+				name="idKind"
+			>
+				<option value="phone">{t("common.phone")}</option>
+				<option value="email">{t("common.email")}</option>
+			</Select>
+			<Input
+				label={t("contacts.field.idValue")}
+				value={value}
+				dir="ltr"
+				name="idValue"
+				error={
+					touched && (issue || value.trim() === "")
+						? t(kind === "phone" ? "contacts.issue.phone" : "contacts.issue.email")
+						: failed === "other"
+							? t("contacts.id.failed")
+							: failed === "conflict"
+								? t("contacts.conflict.title")
+								: undefined
+				}
+				onChange={(e) => {
+					setTouched(false);
+					setFailed(null);
+					setValue(e.target.value);
+				}}
+			/>
+			<Button type="submit" variant="primary" size="sm" loading={saving} data-testid="identifier-add-submit">
+				{t("contacts.id.submit")}
+			</Button>
+		</form>
+	);
+}
+
 /** Keyed by contact id by the parent: tab and fetched identifiers reset when another contact is selected. */
 function ContactBody({
 	contact,
 	canMerge,
 	onMerge,
+	onUpdated,
 }: {
 	contact: ContactRow;
 	canMerge: boolean;
 	onMerge: (d: Duplicate) => void;
+	onUpdated: (c: Contact) => void;
 }) {
 	const { t } = useI18n();
 	const [tab, setTab] = useState<TabId>("overview");
@@ -397,9 +474,12 @@ function ContactBody({
 	const overview = (
 		<div>
 			<section aria-label={t("contacts.identifiers.title")}>
-				<h3 className="sy-contacts__muted">
-					{t("contacts.identifiers.title")}
-				</h3>
+				<div className="sy-contacts__section-head">
+					<h3 className="sy-contacts__muted">
+						{t("contacts.identifiers.title")}
+					</h3>
+					<AddIdentifier contact={contact} onUpdated={onUpdated} />
+				</div>
 				{failed ? (
 					<p role="status">{t("contacts.detail.failed")}</p>
 				) : full === null ? null : ids.state === "visible" ? (
@@ -539,6 +619,7 @@ export function ContactDetail({
 				contact={contact}
 				canMerge={canMerge}
 				onMerge={onMerge}
+				onUpdated={onUpdated}
 			/>
 		</RecordPanel>
 	);

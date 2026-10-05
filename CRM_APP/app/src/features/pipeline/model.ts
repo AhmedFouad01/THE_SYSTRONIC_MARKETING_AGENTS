@@ -75,3 +75,47 @@ export function resolvePipeline(
 ): Pipeline | null {
 	return pipelines.find((p) => p.id === selectedId) ?? pipelines[0] ?? null;
 }
+
+/** Deals in pipeline `p` that still sit in an open (non won/lost) stage. */
+export function openDealCount(p: Pipeline, deals: readonly Deal[]): number {
+	const open = new Set(p.stages.filter((s) => !s.outcome).map((s) => s.id));
+	return deals.filter((d) => d.pipeline_id === p.id && open.has(d.stage_id)).length;
+}
+
+/**
+ * Pipeline to show: the user's explicit choice, else the remembered last-used one, else the pipeline with the most
+ * open deals among the loaded ones (ties and "none loaded" keep pipeline order), else the first.
+ */
+export function pickPipeline(
+	pipelines: readonly Pipeline[],
+	deals: readonly Deal[],
+	selectedId: string | null,
+	rememberedId: string | null,
+): Pipeline | null {
+	for (const id of [selectedId, rememberedId]) {
+		const hit = id === null ? undefined : pipelines.find((p) => p.id === id);
+		if (hit) return hit;
+	}
+	let best: Pipeline | null = null;
+	let bestN = -1;
+	for (const p of pipelines) {
+		const n = openDealCount(p, deals);
+		if (n > bestN) {
+			best = p;
+			bestN = n;
+		}
+	}
+	return best;
+}
+
+/** Up to two leading initials of a name (card owner avatar); "" for a blank name. */
+export function initialsOf(name: string): string {
+	return name
+		.trim()
+		.split(/\s+/)
+		.filter((w) => w !== "")
+		.slice(0, 2)
+		.map((w) => Array.from(w)[0] ?? "")
+		.join("")
+		.toUpperCase();
+}

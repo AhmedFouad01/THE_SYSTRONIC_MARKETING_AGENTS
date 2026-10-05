@@ -135,3 +135,13 @@
 		clip-path: none;
 	}
 }
+
+/* Related links read as text; the primary colour appears on hover/focus only (UX-17). */
+.sy-tasks__link {
+	color: var(--sy-text);
+	text-decoration: none;
+}
+.sy-tasks__link:hover,
+.sy-tasks__link:focus-visible {
+	color: var(--sy-interactive);
+}

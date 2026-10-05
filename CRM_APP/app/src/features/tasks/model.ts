@@ -69,6 +69,17 @@ export function dueBucket(
 	return dayDiff(due, now) <= 0 ? "today" : "upcoming";
 }
 
+/** Server `?due=` filter for the tab (F-06): exact over everything the server holds, not just the loaded sample. */
+export type DueFilter = "overdue" | "today";
+export function dueFilterFor(tab: TaskTab): DueFilter | null {
+	return tab === "overdue" || tab === "today" ? tab : null;
+}
+
+/** Whole local days a past-due task is late (0 = overdue earlier today). */
+export function overdueDays(due: Date, now: Date): number {
+	return Math.max(0, -dayDiff(due, now));
+}
+
 export function inTab(bucket: DueBucket, tab: TaskTab): boolean {
 	return tab === "open" ? bucket !== "done" : bucket === tab;
 }

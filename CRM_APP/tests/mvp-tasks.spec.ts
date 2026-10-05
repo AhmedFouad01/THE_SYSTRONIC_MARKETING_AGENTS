@@ -521,3 +521,47 @@ for (const width of [360, 1280])
 // DEFERRED: automation-generated task badge. The API exposes no source/automation marker on tasks, and
 // automation runs are not readable via /v1; the model honours `source`/`automation_run_id` once the API adds them
 // (covered by the taskSource unit test).
+
+test("tasks en: Overdue/Today tabs use the server ?due= filter; due cell, links and rows follow UX-17", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture();
+	const lead = await makeLead(request, f, "Due");
+	await makeTask(request, f, lead.contact_id, "Late task", Date.now() - 3 * DAY);
+	await makeTask(request, f, lead.contact_id, "Today task", laterToday());
+	await makeTask(request, f, lead.contact_id, "Later task", Date.now() + 3 * DAY);
+	const taskUrls: string[] = [];
+	page.on("request", (r) => {
+		const u = new URL(r.url());
+		if (u.pathname === "/v1/tasks") taskUrls.push(u.search);
+	});
+	await page.setViewportSize({ width: 1920, height: 1000 }); // wide enough that the Related column is not collapsed
+	await open(page, f, "en");
+	await expect(rows(page)).toHaveCount(3);
+	expect(taskUrls.some((q) => q.includes("due="))).toBe(false); // Open = plain list
+
+	// Overdue: the chip carries the whole-day count, the date is short (no clock time), rows are 48px
+	const late = rows(page).filter({ hasText: "Late task" });
+	await expect(late.getByTestId("overdue-badge")).toHaveText(/Overdue [23]d/);
+	await expect(late).not.toContainText(/\d{1,2}:\d{2}/);
+	const box = await late.boundingBox();
+	expect(Math.round(box?.height ?? 0)).toBe(48);
+
+	// related link: plain text at rest (no underline), primary colour on hover
+	const link = late.getByTestId("task-related");
+	await expect(link).toHaveCSS("text-decoration-line", "none");
+	const rest = await link.evaluate((el) => getComputedStyle(el).color);
+	await link.hover();
+	await expect.poll(() => link.evaluate((el) => getComputedStyle(el).color)).not.toBe(rest);
+
+	await page.getByRole("tab", { name: "Overdue", exact: true }).click();
+	await expect(rows(page)).toHaveCount(1);
+	await expect(rows(page).first()).toContainText("Late task");
+	await expect.poll(() => taskUrls.some((q) => q.includes("due=overdue"))).toBe(true);
+	await page.getByRole("tab", { name: "Today", exact: true }).click();
+	await expect(rows(page)).toHaveCount(1);
+	await expect(rows(page).first()).toContainText("Today task"); // the server's today set also holds overdue; the tab filters it
+	await expect.poll(() => taskUrls.some((q) => q.includes("due=today"))).toBe(true);
+	expect(await noPageOverflow(page)).toBe(true);
+});
