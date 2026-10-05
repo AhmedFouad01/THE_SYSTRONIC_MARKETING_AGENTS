@@ -1,0 +1,14 @@
+.sy-spinner {
+	display: inline-block;
+	flex: none;
+	border: 2px solid var(--sy-border-strong);
+	border-top-color: var(--sy-focus);
+	border-radius: var(--sy-radius-pill);
+	animation: sy-spin var(--sy-motion-spinner) linear infinite;
+}
+
+@keyframes sy-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

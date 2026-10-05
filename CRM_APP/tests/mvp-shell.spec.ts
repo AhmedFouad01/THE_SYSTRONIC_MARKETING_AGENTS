@@ -16,13 +16,15 @@ test("new client shell loads RTL at /app/", async ({ page }) => {
 	await expect(page).toHaveTitle("Systronic CRM");
 	await expect(page.locator("html")).toHaveAttribute("lang", "ar");
 	await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-	await expect(
-		page.getByRole("heading", { name: "Systronic CRM" }),
-	).toBeVisible();
-	await expect(page.getByTestId("route")).toHaveText("/");
+	// Not connected: the connect gate renders inside the shell (feature routes need a session: see mvp-app.spec.ts).
+	await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+	await expect(page.locator("input[name=token]")).toBeVisible();
+	await expect(page.getByRole("navigation")).toHaveCount(0);
 });
 
-test("client routes fall back to the shell and navigate", async ({ page }) => {
+test("client routes fall back to the shell (connect gate when no session)", async ({
+	page,
+}) => {
 	for (const route of [
 		"leads",
 		"contacts",
@@ -33,12 +35,8 @@ test("client routes fall back to the shell and navigate", async ({ page }) => {
 		"reporting-v2",
 	]) {
 		await page.goto(`/app/${route}`);
-		await expect(page.getByTestId("route")).toHaveText(`/${route}`);
+		await expect(page.locator("input[name=token]")).toBeVisible();
 	}
-	await page.goto("/app/leads");
-	await page.getByRole("link", { name: "/deals" }).click();
-	await expect(page).toHaveURL(/\/app\/deals$/);
-	await expect(page.getByTestId("route")).toHaveText("/deals");
 });
 
 test("asset route serves js and rejects traversal", async ({
@@ -113,7 +111,9 @@ test("toggle buttons show a visible focus ring on keyboard focus", async ({
 	page,
 }) => {
 	await page.goto("/app/");
-	await page.keyboard.press("Tab");
+	await page.keyboard.press("Tab"); // skip-link is first
+	await expect(page.locator(".sy-skip")).toBeFocused();
+	await page.keyboard.press("Tab"); // search is disabled -> locale toggle
 	const toggle = page.getByTestId("locale-toggle");
 	await expect(toggle).toBeFocused();
 	const ring = await toggle.evaluate((el) => {

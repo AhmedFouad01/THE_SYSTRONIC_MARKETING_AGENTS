@@ -1,0 +1,21 @@
+.sy-state {
+	display: grid;
+	justify-items: center;
+	gap: var(--sy-space-8);
+	padding: var(--sy-space-22);
+	text-align: center;
+	color: var(--sy-text-2);
+}
+
+.sy-state__title {
+	margin: 0;
+	font-weight: 600;
+	color: var(--sy-text);
+}
+
+.sy-state__hint,
+.sy-state__ref {
+	margin: 0;
+	font-size: var(--sy-type-data-size);
+	color: var(--sy-text-3);
+}

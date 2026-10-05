@@ -1,0 +1,28 @@
+.sy-connect {
+	width: 100%;
+	max-width: 440px;
+	margin-inline: auto;
+}
+
+.sy-connect__title {
+	margin-block-end: var(--sy-space-6);
+}
+
+.sy-connect__intro {
+	margin: 0 0 var(--sy-space-16);
+	color: var(--sy-text-2);
+}
+
+.sy-connect__form {
+	display: grid;
+	gap: var(--sy-space-14);
+}
+
+.sy-connect__error {
+	margin: 0;
+	padding: var(--sy-space-8) var(--sy-space-10);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-danger-bg);
+	color: var(--sy-danger-fg);
+	font-weight: 600;
+}

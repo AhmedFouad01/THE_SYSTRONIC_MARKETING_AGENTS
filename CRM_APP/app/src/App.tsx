@@ -1,54 +1,46 @@
-import "./App.css";
-import { href, navigate, ROUTES, useRoute } from "./router.ts";
-import { I18nProvider, ThemeProvider, useI18n, useTheme } from "./ui/index.ts";
+import { useEffect } from "react";
+import { sessionStore, useSession } from "./api/index.ts";
+import { useRoute } from "./router.ts";
+import { EmptyState, I18nProvider, Panel, ThemeProvider, useI18n } from "./ui/index.ts";
+import { AppShell, ConnectGate, NAV } from "./ui/shell/index.ts";
 
-// Placeholder shell: proves providers + toggles. The real AppShell (nav, bottom nav, connect gate) is S2.
-function Shell() {
+// Feature screens (leads, contacts, ...) land in S4+. Until then each route shows a labelled placeholder.
+function RoutePlaceholder() {
+	const { t } = useI18n();
 	const route = useRoute();
-	const { t, toggleLocale } = useI18n();
-	const { mode, toggleMode } = useTheme();
+	if (route === null) return <EmptyState title={t("shell.notFound")} />;
+	const item = NAV.find((n) => n.route === route || (n.route !== null && n.also === route));
 	return (
-		<main className="app-shell">
-			<header className="app-bar">
-				<h1>{t("app.name")}</h1>
-				<div className="app-toggles">
-					<button
-						type="button"
-						className="app-toggle"
-						data-testid="locale-toggle"
-						onClick={toggleLocale}
-					>
-						{t("locale.switchTo")}
-					</button>
-					<button
-						type="button"
-						className="app-toggle"
-						data-testid="theme-toggle"
-						onClick={toggleMode}
-					>
-						{mode === "dark"
-							? t("theme.switchToLight")
-							: t("theme.switchToDark")}
-					</button>
-				</div>
-			</header>
-			<nav aria-label={t("nav.primary")} className="app-nav">
-				{ROUTES.map((r) => (
-					<a
-						key={r}
-						href={href(r)}
-						aria-current={r === route ? "page" : undefined}
-						onClick={(e) => {
-							e.preventDefault();
-							navigate(r);
-						}}
-					>
-						{r}
-					</a>
-				))}
-			</nav>
-			<p data-testid="route">{route ?? "not-found"}</p>
-		</main>
+		<Panel title={item ? t(item.label) : t("app.name")}>
+			<p>{t("shell.comingSoon")}</p>
+			<p className="sy-ltr" data-testid="route">
+				{route}
+			</p>
+		</Panel>
+	);
+}
+
+function Routed() {
+	const route = useRoute();
+	const session = useSession();
+
+	useEffect(() => {
+		void sessionStore.restore();
+	}, []);
+
+	const connected = session.status === "connected" && session.info !== null;
+	return (
+		<AppShell
+			route={route}
+			actor={connected ? (session.info?.actor ?? null) : null}
+			onDisconnect={() => sessionStore.disconnect()}
+		>
+			{connected ? (
+				<RoutePlaceholder />
+			) : (
+				<ConnectGate error={session.error} checking={session.status === "checking"} />
+			)}
+		</AppShell>
 	);
 }
 
@@ -56,7 +48,7 @@ export function App() {
 	return (
 		<ThemeProvider>
 			<I18nProvider>
-				<Shell />
+				<Routed />
 			</I18nProvider>
 		</ThemeProvider>
 	);

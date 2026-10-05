@@ -1,0 +1,26 @@
+.sy-panel {
+	min-width: 0;
+	padding: var(--sy-space-16);
+	border: 1px solid var(--sy-border);
+	border-radius: var(--sy-radius-12);
+	background: var(--sy-surface);
+	box-shadow: var(--sy-shadow-subtle);
+}
+
+.sy-panel__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-12);
+	margin-block-end: var(--sy-space-12);
+}
+
+.sy-panel__title {
+	margin: 0;
+}
+
+.sy-panel__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-8);
+}
