@@ -34,6 +34,9 @@ import {
 	patchLead,
 } from "./api.ts";
 import { parseSelect } from "../deals/model.ts";
+import { formatCapped } from "../capped.ts";
+import { KpiCard } from "../reporting/KpiCard.tsx";
+import "../reporting/reporting.css";
 import { LeadDetail } from "./LeadDetail.tsx";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
@@ -45,6 +48,8 @@ import {
 	filterBuiltInView,
 	LEAD_STATUSES,
 	type Lead,
+	leadStatusCounts,
+	leadStripTone,
 	type LeadRow,
 	mergeLatest,
 	runBulkAssign,
@@ -52,6 +57,12 @@ import {
 } from "./model.ts";
 import { NewLeadDialog } from "./NewLeadDialog.tsx";
 import "./leads.css";
+
+const KPI_LABEL = {
+	open: "leads.kpi.open",
+	qualified: "leads.kpi.qualified",
+	closed: "leads.kpi.closed",
+} as const;
 
 const VIEW_LABEL = {
 	all: "leads.view.all",
@@ -305,6 +316,18 @@ export function LeadsView() {
 		onLoadMore: leads.loadMore,
 	};
 
+	// UX-09: counts from the rows the grid has loaded (no extra request); "N+" while pages remain.
+	const strip = useMemo(
+		() => leadStatusCounts(rows, !leads.sample),
+		[rows, leads.sample],
+	);
+	const stripSub =
+		view !== "all"
+			? t("leads.kpi.view")
+			: leads.sample
+				? t("leads.kpi.loaded")
+				: undefined;
+
 	const onCreated = (lead: Lead) => {
 		remember(lead);
 		contacts.reload();
@@ -318,6 +341,28 @@ export function LeadsView() {
 		<div className="sy-leads" data-testid="leads-view">
 			<PageHeader
 				title={t("nav.leads")}
+				subtitle={t("leads.subtitle")}
+				kpis={
+					leads.status === "error" ? undefined : (
+						<section
+							className="sy-leads__kpis"
+							aria-label={t("leads.kpis")}
+							data-testid="leads-kpis"
+						>
+							{LEAD_STATUSES.map((st) => (
+								<KpiCard
+									key={st}
+									testId={`leads-kpi-${st}`}
+									label={t(KPI_LABEL[st])}
+									loading={leads.status === "loading"}
+									value={formatCapped(strip[st], formatNumber)}
+									sub={stripSub}
+									tone={leadStripTone(st, strip[st])}
+								/>
+							))}
+						</section>
+					)
+				}
 				actions={
 					<Button
 						variant="primary"

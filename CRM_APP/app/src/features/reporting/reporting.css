@@ -72,6 +72,24 @@
 	line-height: 1.2;
 	overflow-wrap: anywhere;
 }
+.sy-kpi__skeleton {
+	display: block;
+	width: 60%;
+	max-width: 96px;
+	height: 1em;
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-divider);
+}
+@media (prefers-reduced-motion: no-preference) {
+	.sy-kpi--loading .sy-kpi__skeleton {
+		animation: sy-kpi-pulse 1.2s ease-in-out infinite;
+	}
+}
+@keyframes sy-kpi-pulse {
+	50% {
+		opacity: 0.45;
+	}
+}
 .sy-kpi--navy {
 	background: var(--sy-kpi-navy-bg);
 	border-color: var(--sy-kpi-navy-bg);

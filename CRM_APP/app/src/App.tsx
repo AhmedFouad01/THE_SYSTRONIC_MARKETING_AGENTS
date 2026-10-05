@@ -1,28 +1,15 @@
 import { useEffect, useState } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
 import { fetchAssignees } from "./features/leads/api.ts";
-import { ContactsView, DealsView, LeadsView, PipelineView, ReportingView, TasksView } from "./features/index.ts";
+import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, ReportingView, TasksView } from "./features/index.ts";
 import { useRoute } from "./router.ts";
-import { EmptyState, I18nProvider, PageHeader, Panel, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
-import { AppShell, ConnectGate, NAV } from "./ui/shell/index.ts";
+import { EmptyState, I18nProvider, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
+import { AppShell, ConnectGate } from "./ui/shell/index.ts";
 
-// Feature screens (leads, contacts, ...) land in S4+. Until then each route shows a labelled placeholder.
-function RoutePlaceholder() {
+// Every route has a screen; only an unknown path under /app falls through to not-found.
+function NotFound() {
 	const { t } = useI18n();
-	const route = useRoute();
-	if (route === null) return <EmptyState title={t("shell.notFound")} />;
-	const item = NAV.find((n) => n.route === route || (n.route !== null && n.also === route));
-	return (
-		<div className="sy-placeholder">
-			<PageHeader title={item ? t(item.label) : t("app.name")} />
-			<Panel>
-				<p>{t("shell.comingSoon")}</p>
-				<p className="sy-ltr" data-testid="route">
-					{route}
-				</p>
-			</Panel>
-		</div>
-	);
+	return <EmptyState title={t("shell.notFound")} />;
 }
 
 function Routed() {
@@ -67,8 +54,10 @@ function Routed() {
 					<ReportingView />
 				) : route === "/tasks" ? (
 					<TasksView />
+				) : route === "/dashboard" || route === "/" ? (
+					<DashboardView />
 				) : (
-					<RoutePlaceholder />
+					<NotFound />
 				)
 			) : (
 				<ConnectGate error={session.error} checking={session.status === "checking"} />

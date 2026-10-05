@@ -10,13 +10,30 @@ export function KpiCard({
 	sub,
 	tone = "neutral",
 	testId,
+	loading = false,
 }: {
 	label: string;
 	value: ReactNode;
 	sub?: ReactNode;
 	tone?: KpiTone;
 	testId?: string;
+	/** Skeleton: the card keeps its size and announces aria-busy. */
+	loading?: boolean;
 }) {
+	if (loading)
+		return (
+			<div
+				className="sy-kpi sy-kpi--neutral sy-kpi--loading"
+				data-testid={testId}
+				data-tone="neutral"
+				aria-busy="true"
+			>
+				<p className="sy-kpi__label">{label}</p>
+				<p className="sy-kpi__value" aria-hidden="true">
+					<span className="sy-kpi__skeleton" />
+				</p>
+			</div>
+		);
 	return (
 		<div
 			className={`sy-kpi sy-kpi--${tone}`}

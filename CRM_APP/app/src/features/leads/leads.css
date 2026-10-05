@@ -88,3 +88,27 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 }
+.sy-leads__kpis {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--sy-space-12);
+	min-width: 0;
+}
+@media (max-width: 720px) {
+	.sy-leads__kpis {
+		gap: var(--sy-space-8);
+	}
+	.sy-leads__kpis .sy-kpi {
+		min-height: 76px;
+		padding: var(--sy-space-8);
+	}
+	.sy-leads__kpis .sy-kpi__label {
+		font-size: 11px;
+	}
+	.sy-leads__kpis .sy-kpi__sub {
+		font-size: 11px;
+	}
+	.sy-leads__kpis .sy-kpi__value {
+		font-size: 20px;
+	}
+}

@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ApiError } from "../../api/errors.ts";
 import {
+	leadStatusCounts,
+	leadStripTone,
 	type BulkItem,
 	buildCreateBody,
 	buildPatchBody,
@@ -254,5 +256,32 @@ describe("mergeLatest", () => {
 		expect(out.map((l) => l.id)).toEqual(["n2", "n1", "a", "b"]);
 		expect(out.find((l) => l.id === "a")?.owner_id).toBe(OTHER);
 		expect(out.find((l) => l.id === "b")?.owner_id).toBe(ME);
+	});
+});
+
+describe("leads KPI strip", () => {
+	const rows = [
+		{ status: "open" as const },
+		{ status: "open" as const },
+		{ status: "qualified" as const },
+		{ status: "closed" as const },
+	];
+	it("counts by status exactly when every page is loaded", () => {
+		const s = leadStatusCounts(rows, true);
+		expect(s.open).toEqual({ count: 2, capped: false });
+		expect(s.qualified).toEqual({ count: 1, capped: false });
+		expect(s.closed).toEqual({ count: 1, capped: false });
+	});
+	it("is a lower bound (N+) while pages remain, and zeros are exact when complete", () => {
+		const s = leadStatusCounts(rows, false);
+		expect(Object.values(s).every((c) => c.capped)).toBe(true);
+		expect(leadStatusCounts([], true).open).toEqual({ count: 0, capped: false });
+	});
+	it("only qualified > 0 is emphasised", () => {
+		const s = leadStatusCounts(rows, true);
+		expect(leadStripTone("qualified", s.qualified)).toBe("navy");
+		expect(leadStripTone("open", s.open)).toBe("neutral");
+		expect(leadStripTone("closed", s.closed)).toBe("neutral");
+		expect(leadStripTone("qualified", leadStatusCounts([], true).qualified)).toBe("neutral");
 	});
 });

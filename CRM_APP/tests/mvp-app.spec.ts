@@ -106,7 +106,7 @@ for (const width of [360, 1280])
 					);
 				// breadcrumb: CRM > current screen, same label as the nav item
 				await expect(page.getByTestId("breadcrumb-current")).not.toBeEmpty();
-				// /leads (S4), /contacts (S5), /deals (S6) and /pipeline (S7) are real workspaces; the other routes are still placeholders
+				// /leads (S4), /contacts (S5), /deals (S6) and /pipeline (S7) are real workspaces (and the dashboard)
 				if (key === "leads")
 					await expect(page.getByTestId("leads-view")).toBeVisible();
 				else if (key === "contacts")
@@ -120,7 +120,7 @@ for (const width of [360, 1280])
 				else if (key === "reporting")
 					await expect(page.getByTestId("reporting-view")).toBeVisible();
 				else
-					await expect(page.getByTestId("route")).toHaveText(`/${key}`);
+					await expect(page.getByTestId("dashboard-view")).toBeVisible();
 			}
 
 			// UX_RULES #8: no fake affordances. Email/Call/Import are not in the nav, nothing says "Not in MVP",
@@ -205,7 +205,7 @@ test("session survives reload within the tab and 401 on restore returns to the g
 	await connect(page, f);
 	await page.reload();
 	await expect(page.getByTestId("actor")).toBeVisible();
-	await expect(page.getByTestId("route")).toHaveText("/dashboard");
+	await expect(page.getByTestId("dashboard-view")).toBeVisible();
 	await page.evaluate(() =>
 		sessionStorage.setItem(
 			"sy.session",

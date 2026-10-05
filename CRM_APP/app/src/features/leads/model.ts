@@ -1,5 +1,6 @@
 // Pure leads view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (leads + assignees).
 import { type ApiErrorKind, isApiError } from "../../api/errors.ts";
+import { type CappedCount, cappedCount } from "../capped.ts";
 
 export type LeadStatus = "open" | "qualified" | "closed";
 export const LEAD_STATUSES: readonly LeadStatus[] = [
@@ -309,4 +310,33 @@ export function mergeLatest(
 		.filter((o) => !seen.has(o.id))
 		.reverse();
 	return [...created, ...merged];
+}
+
+// ---- KPI strip (UX-09) -----------------------------------------------------------------------------------
+
+export type LeadStrip = Record<LeadStatus, CappedCount>;
+
+/**
+ * Counts by status over the rows the grid has loaded. Exact only when every page is loaded (`complete`);
+ * otherwise each count is a lower bound ("N+"). No extra request, nothing extrapolated.
+ */
+export function leadStatusCounts(
+	rows: readonly Pick<Lead, "status">[],
+	complete: boolean,
+): LeadStrip {
+	const n: Record<LeadStatus, number> = { open: 0, qualified: 0, closed: 0 };
+	for (const r of rows) if (r.status in n) n[r.status] += 1;
+	return {
+		open: cappedCount(n.open, !complete),
+		qualified: cappedCount(n.qualified, !complete),
+		closed: cappedCount(n.closed, !complete),
+	};
+}
+
+/** Qualified is the one emphasised card, and only when there is something qualified. Others stay neutral. */
+export function leadStripTone(
+	status: LeadStatus,
+	c: CappedCount,
+): "navy" | "neutral" {
+	return status === "qualified" && c.count > 0 ? "navy" : "neutral";
 }
