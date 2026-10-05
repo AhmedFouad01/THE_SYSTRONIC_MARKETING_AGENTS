@@ -99,6 +99,34 @@ export const en = {
 	"error.network": "Cannot reach the server.",
 	"error.generic": "Request failed.",
 	"error.requestId": "Reference {id}",
+	"common.close": "Close", // new (S3)
+	"common.save": "Save", // new (S3)
+	"toast.region": "Notifications", // new (S3)
+	"grid.search": "Search in this list", // new (S3: grid.* have no prototype string unless noted)
+	"grid.searchPlaceholder": "Search",
+	"grid.views": "Saved views",
+	"grid.saveView": "Save view",
+	"grid.saveViewTitle": "Save current view",
+	"grid.viewName": "View name",
+	"grid.viewNameRequired": "Enter a name.",
+	"grid.viewSaveFailed": "Could not save the view in this browser.",
+	"grid.deleteView": "Delete view",
+	"grid.deleteViewTitle": "Delete this view?",
+	"grid.deleteViewBody": "The view \"{name}\" is removed from this browser. Records are not affected.",
+	"grid.visibleColumns": "Visible columns", // prototype
+	"grid.chooseColumns": "Choose visible columns", // prototype
+	"grid.densityCompact": "Compact density", // prototype
+	"grid.densityComfortable": "Comfortable density", // prototype
+	"grid.selectAll": "Select all rows on this page",
+	"grid.selectRow": "Select row {name}",
+	"grid.sortBy": "Sort by {column}",
+	"grid.removeFilter": "Remove filter {name}",
+	"grid.range": "{from}-{to} of {total}",
+	"grid.page": "Page {page} of {count}",
+	"grid.sample": "Showing {count} loaded records. More exist on the server.",
+	"grid.sampleCap": "Load limit reached ({count} records loaded). More exist on the server.",
+	"grid.loadMore": "Load more",
+	"grid.loadMoreFailed": "Could not load more.",
 	"state.forbidden": "No access",
 	"state.forbiddenHint": "Ask an administrator for permission to view this.",
 } as const satisfies Record<string, string>;

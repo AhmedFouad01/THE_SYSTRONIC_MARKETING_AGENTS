@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
 import { useRoute } from "./router.ts";
-import { EmptyState, I18nProvider, Panel, ThemeProvider, useI18n } from "./ui/index.ts";
+import { EmptyState, I18nProvider, Panel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
 import { AppShell, ConnectGate, NAV } from "./ui/shell/index.ts";
 
 // Feature screens (leads, contacts, ...) land in S4+. Until then each route shows a labelled placeholder.
@@ -48,7 +48,9 @@ export function App() {
 	return (
 		<ThemeProvider>
 			<I18nProvider>
-				<Routed />
+				<ToastProvider>
+					<Routed />
+				</ToastProvider>
 			</I18nProvider>
 		</ThemeProvider>
 	);

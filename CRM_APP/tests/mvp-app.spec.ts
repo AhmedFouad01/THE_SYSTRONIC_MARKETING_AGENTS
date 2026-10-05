@@ -88,6 +88,7 @@ for (const width of [360, 1280])
 			}
 
 			// disconnect returns to the gate and clears the session
+			await page.getByTestId("workspace-actions").click();
 			await page.getByTestId("disconnect").click();
 			await expect(page.locator("input[name=token]")).toBeVisible();
 			expect(await page.evaluate(() => sessionStorage.getItem("sy.session"))).toBeNull();

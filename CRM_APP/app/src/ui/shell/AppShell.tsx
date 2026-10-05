@@ -2,7 +2,7 @@ import type { MouseEvent, ReactNode } from "react";
 import { href, navigate, ROUTES, type RoutePath } from "../../router.ts";
 import { type MessageKey, useI18n } from "../i18n/index.ts";
 import { Icon, type IconName } from "../icons/index.ts";
-import { Button } from "../primitives/index.ts";
+import { MenuButton } from "../overlays/index.ts";
 import { useTheme } from "../theme/index.ts";
 import "./shell.css";
 
@@ -132,17 +132,36 @@ export function AppShell({ route, actor, onDisconnect, children }: AppShellProps
 								</bdi>
 							</span>
 						) : null}
-						<Button size="sm" data-testid="locale-toggle" onClick={toggleLocale} lang={dir === "rtl" ? "en" : "ar"}>
-							{t("locale.switchTo")}
-						</Button>
-						<Button size="sm" data-testid="theme-toggle" onClick={toggleMode}>
-							{mode === "dark" ? t("theme.switchToLight") : t("theme.switchToDark")}
-						</Button>
-						{connected && onDisconnect ? (
-							<Button size="sm" variant="ghost" icon="lock" data-testid="disconnect" onClick={onDisconnect}>
-								{t("shell.disconnect")}
-							</Button>
-						) : null}
+							<MenuButton
+								label={t("action.workspaceActions")}
+								testId="workspace-actions"
+								items={[
+									{
+										id: "locale",
+										label: t("locale.switchTo"),
+										lang: dir === "rtl" ? "en" : "ar",
+										testId: "locale-toggle",
+										onSelect: toggleLocale,
+									},
+									{
+										id: "theme",
+										label: mode === "dark" ? t("theme.switchToLight") : t("theme.switchToDark"),
+										testId: "theme-toggle",
+										onSelect: toggleMode,
+									},
+									...(connected && onDisconnect
+										? [
+												{
+													id: "disconnect",
+													label: t("shell.disconnect"),
+													icon: "lock" as const,
+													testId: "disconnect",
+													onSelect: onDisconnect,
+												},
+											]
+										: []),
+								]}
+							/>
 					</div>
 				</header>
 				<main id="sy-main" className="sy-main" tabIndex={-1}>
