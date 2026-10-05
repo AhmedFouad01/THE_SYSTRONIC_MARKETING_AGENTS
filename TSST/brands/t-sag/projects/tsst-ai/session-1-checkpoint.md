@@ -63,3 +63,4 @@ Then: Gemini + Codex cold-starts (cases A–D) → final DEEP review → commit 
 - 2026-10-05 user decisions: AKYRO keeps Doc-derived .md (prior versions remain in Drive history; tag via `acceptAkyroExports`); Drive "Convert uploads" OFF; `brand_only_entry` verified by user in a fresh session (VILL). CI green on PR #1.
 - 2026-10-05: TSST-001A intake done (4 stages) → Operating Baseline v0.1 frozen, gate CLOSED (TSD-013). Next: C7 pilot on VILL Studio.
 - 2026-10-05: C7 pilot (TSST-PILOT-002, VILL) delivered and user-approved; first KPI review in its ACCEPTANCE.md. Next: readiness reassessment (READINESS_REPORT) + proposed lessons → user.
+- 2026-10-05: PR #3 merged. User: actual VILL numbers deferred (not now); readiness reassessment deferred until Brand Look is actually produced (rendered assets, not only written direction).
