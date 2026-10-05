@@ -1,0 +1,23 @@
+id: C7-VILL-09
+title: Independent CREATIVE QA of assets
+kind: review
+status: ready
+to: gemini
+needs: [fs_read, fs_write]
+tier: WORK
+brand: vill-studio
+spec: TSST/CREATIVE/FINAL_ASSET_GATE.md
+read: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/, TSST/CREATIVE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/REVIEW_ASSETS_v0.1.md]
+after: [C7-VILL-08]
+done_when: "<=40 lines: per asset PASS/FIX with severity; check palette/logo rules vs v0.3, Arabic/RTL, proof labels, legibility at phone size; open each PNG"
+issued_by: claude
+created: "2026-10-05T01:19Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

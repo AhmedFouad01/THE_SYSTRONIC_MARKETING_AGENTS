@@ -1,0 +1,23 @@
+id: C7-VILL-08
+title: Templates + mockups (CREATIVE production, image gen)
+kind: probe
+status: ready
+to: codex
+needs: [fs_read, fs_write, shell, image]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF.md
+read: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/assets/]
+after: [C7-VILL-07]
+done_when: "per BRIEF Phase 2 scope using v0.3 tokens: carousel 4:5, Reel cover 9:16, single 4:5/1:1, kitchen ad mockup, whole-home post; editable SVG/HTML + PNG each; real VILL photos preferred, generated imagery labelled CONCEPT; assets/README.md lists files + sources; result = assets/README.md"
+issued_by: claude
+created: "2026-10-05T01:19Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:
