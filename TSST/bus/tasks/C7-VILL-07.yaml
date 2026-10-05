@@ -13,11 +13,11 @@ after: []
 done_when: "per BRIEF Phase 2: sample exact logo hex from inputs/Logo.png; palette tokens = logo navy+orange + VI neutrals (no new colours) with roles/%; contrast table computed; type from VI deck + Arabic pair; logo usage incl. clear space; keep v0.2 RTL/proof/kitchen rules; Arabic summary"
 issued_by: claude
 created: "2026-10-05T01:19Z"
-rounds: 0
+rounds: 1
 max_rounds: 1
 claimed_by:
 lease_until:
 progress:
 result:
 sha256:
-note:
+note: hex+contrast correct; fix 5 items in LEAD_NOTES_v0.3.md (VI p05 Raleway/grid, colour roles, logo white, mapping, broken markdown); read all VI pages
