@@ -72,3 +72,11 @@ Note: prior ui specs (tests/ui.spec.ts, m1-ui.spec.ts, m2-ui.spec.ts) target old
 - D5 ACCEPT: path routes + SPA fallback; keep `/foundation`, `/reporting` until S9 parity. Default Arabic RTL, light theme.
 - D6 ACCEPT: token/tenant paste gate stays; no auth product work.
 - Boundaries: no deploy, no push/merge without user, no M3, no redesign; local loopback dev DB only with script-generated synthetic credentials.
+
+## 7. API gaps found during build (no server change in MVP; future bounded API work)
+- G1 leads payload lacks contact name → UI resolves via bounded GET /contacts.
+- G2 leads.owner_id NOT NULL → "Unassigned" view is always empty.
+- G3 VALIDATION_FAILED has no per-field detail → form-level error only.
+- G4 owner filter keyed on display name (duplicate names collapse).
+- G5 prototype Leads KPI strip + score/value/activity columns have no API fields → omitted.
+- G6 no server search/filter/sort (D3) · no dashboard aggregate (D4) · no Import endpoint.
