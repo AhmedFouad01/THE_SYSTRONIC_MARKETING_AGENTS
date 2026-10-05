@@ -62,3 +62,6 @@
 2026-10-05T00:32Z	C7-VILL-03	codex	progress	v0.2 prepared: all 8 findings mapped; split/cost basis, masterbrand, payment buffer, formats, intent events, citations and tone addressed. Source freshness unchanged; self-check passed.
 2026-10-05T00:33Z	C7-VILL-03	codex	done	8 review items addressed with disposition table; citation/economics/LF checks passed. Model identity unavailable; routing unverified. Awaiting Lead close; next C7-VILL-04.
 2026-10-05T00:35Z	C7-VILL-03	claude	close	8/8 dispositions present and spot-checked in body (split, masterbrand, deposit, formats, events, tone)
+2026-10-05T00:41Z	C7-VILL-04	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-05T00:42Z	C7-VILL-04	gemini	done	Brand Look direction v0.1 written per BRIEF and STRATEGY_BASELINE_v0.2; written moodboard, no generated images
+2026-10-05T00:42Z	C7-VILL-04	claude	close	structural gate OK: 8 required sections, 5-colour palette, AR/LT pairing, containment, written moodboard; contrast recomputed (14.75 / 7.57 / 4.59 AA); content QA = C7-VILL-05
