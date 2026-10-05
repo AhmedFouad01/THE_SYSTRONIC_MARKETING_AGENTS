@@ -83,3 +83,4 @@ Note: prior ui specs (tests/ui.spec.ts, m1-ui.spec.ts, m2-ui.spec.ts) target old
 - G7 GET /contacts lacks identifiers/created date → no email/phone grid columns; /session has no sensitive-data flag (UI infers from redaction/403).
 - G8 journey returns M2 business events (not M1 audit rows); /duplicates returns id/display_name/version only; merge-preview `conflicts` is free text → client computes field results (target wins).
 - G9 deals have no created_at/updated_at and list is id-ordered → no "updated" column/newest-first; deal payload lacks contact/owner/stage names (client-resolved); contact picker limited to loaded pages.
+- G10 tasks: no source/automation marker; due_at NOT NULL; no lead_id (lead tasks attach to contact); `?due=` unused (client buckets).

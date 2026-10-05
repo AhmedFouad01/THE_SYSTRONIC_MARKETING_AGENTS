@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { navigate } from "../../router.ts";
+import { AddTaskButton } from "../tasks/index.ts";
 import { dealContextSearch } from "../deals/model.ts";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
@@ -545,6 +546,11 @@ export function ContactDetail({
 				>
 					{t("deals.action.create")}
 				</Button>
+				<AddTaskButton
+					contactId={contact.id}
+					dealId={null}
+					label={contact.display_name}
+				/>
 			</div>
 			<ContactBody
 				key={contact.id}

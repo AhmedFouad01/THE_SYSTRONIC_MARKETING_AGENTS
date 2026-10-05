@@ -97,6 +97,8 @@ for (const width of [360, 1280])
 					await expect(page.getByTestId("pipeline-view")).toBeVisible();
 				else if (key === "deals")
 					await expect(page.getByTestId("deals-view")).toBeVisible();
+				else if (key === "tasks")
+					await expect(page.getByTestId("tasks-view")).toBeVisible();
 				else
 					await expect(page.getByTestId("route")).toHaveText(
 						key === "reporting" ? "/reporting-v2" : `/${key}`,
@@ -168,11 +170,11 @@ test("session survives reload within the tab and 401 on restore returns to the g
 	page,
 }) => {
 	const f = await fixture();
-	await page.goto("/app/tasks");
+	await page.goto("/app/dashboard");
 	await connect(page, f);
 	await page.reload();
 	await expect(page.getByTestId("actor")).toBeVisible();
-	await expect(page.getByTestId("route")).toHaveText("/tasks");
+	await expect(page.getByTestId("route")).toHaveText("/dashboard");
 	await page.evaluate(() =>
 		sessionStorage.setItem(
 			"sy.session",

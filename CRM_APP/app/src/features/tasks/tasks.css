@@ -1,0 +1,103 @@
+.sy-tasks {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-12);
+	min-width: 0;
+}
+.sy-tasks__top {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--sy-space-10);
+}
+.sy-tasks__h1 {
+	margin: 0;
+	font-size: 1.5rem;
+	color: var(--sy-text);
+}
+.sy-tasks__body {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+	gap: var(--sy-space-14);
+	align-items: start;
+	min-width: 0;
+}
+.sy-tasks__main {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-8);
+}
+.sy-tasks__detail {
+	min-width: 0;
+}
+.sy-tasks__head {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--sy-space-8);
+	align-items: flex-start;
+}
+.sy-tasks__name {
+	margin: 0;
+	font-weight: 700;
+	color: var(--sy-text);
+	overflow-wrap: anywhere;
+}
+.sy-tasks__muted {
+	margin: var(--sy-space-4) 0 0;
+	color: var(--sy-text-3);
+}
+.sy-tasks__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-8);
+	margin-block: var(--sy-space-10);
+}
+.sy-tasks__form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-10);
+}
+.sy-tasks__banner {
+	margin: 0;
+	padding: var(--sy-space-10);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-info-bg);
+	color: var(--sy-info-fg);
+}
+.sy-tasks__banner p {
+	margin: var(--sy-space-4) 0 var(--sy-space-8);
+}
+.sy-tasks__facts {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: var(--sy-space-6) var(--sy-space-10);
+	margin: var(--sy-space-12) 0 0;
+	color: var(--sy-text-2);
+}
+.sy-tasks__facts dt {
+	color: var(--sy-text-3);
+}
+.sy-tasks__facts dd {
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+	.sy-tasks__body {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+.sy-tasks__due {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--sy-space-6);
+}
+.sy-tasks__due-line {
+	margin: var(--sy-space-8) 0 0;
+}
+.sy-tasks__related {
+	margin: 0;
+	overflow-wrap: anywhere;
+}

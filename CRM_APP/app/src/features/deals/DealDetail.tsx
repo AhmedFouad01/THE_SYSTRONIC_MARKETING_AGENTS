@@ -17,6 +17,7 @@ import {
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
+import { AddTaskButton } from "../tasks/index.ts";
 import { fetchDeal, fetchHistory, patchDeal, transitionDeal } from "./api.ts";
 import {
 	type Assignee,
@@ -565,6 +566,13 @@ export function DealDetail({
 						<Ltr>{dealValueText(deal, formatMoney)}</Ltr>
 					</p>
 				</div>
+			</div>
+			<div className="sy-deals__actions">
+				<AddTaskButton
+					contactId={deal.contact_id}
+					dealId={deal.id}
+					label={deal.title}
+				/>
 			</div>
 			<Tabs
 				label={t("deals.tabs")}

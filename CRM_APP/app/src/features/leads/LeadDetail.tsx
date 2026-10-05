@@ -13,6 +13,7 @@ import {
 } from "../../ui/index.ts";
 import { navigate } from "../../router.ts";
 import { dealContextSearch } from "../deals/model.ts";
+import { AddTaskButton } from "../tasks/index.ts";
 import { fetchLead, patchLead } from "./api.ts";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
@@ -260,6 +261,11 @@ export function LeadDetail({
 				>
 					{t("deals.action.create")}
 				</Button>
+				<AddTaskButton
+					contactId={lead.contact_id}
+					dealId={null}
+					label={lead.contactName}
+				/>
 				<Button
 					size="sm"
 					icon="mail"

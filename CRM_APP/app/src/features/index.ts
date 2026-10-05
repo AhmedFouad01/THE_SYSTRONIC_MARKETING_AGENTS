@@ -3,3 +3,4 @@ export { LeadsView } from "./leads/index.ts";
 export { DealsView } from "./deals/index.ts";
 export { ContactsView } from "./contacts/index.ts";
 export { PipelineView } from "./pipeline/index.ts";
+export { TasksView } from "./tasks/index.ts";
