@@ -28,3 +28,6 @@ Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md`.
 ## Readable exports — 2026-10-05
 
 `.gdoc` files in this brand's Drive root now have a verbatim `.md` beside them (`exportBrandRoots`, tagged `tsst-export`). Filesystem runtimes read the `.md`; if the `.gdoc` is newer than its `.md`, it is stale → ask the user to re-run `exportBrandRoots`.
+
+## Brand assets — 2026-10-05
+Local folder (user's disk, not Drive): `D:\Work v2\VILL STUDIO\` — `Logo.png` / `Logo.psd` (primary logo, user decision 2026-10-05), `VI/` (identity deck "Dark Luxury DNA"), `Company profile/`, `SM_Camp/`, strategy PDFs. Working copies for the C7 pilot: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/inputs/`. The folder also holds an ANVIL file — never load it for VILL.

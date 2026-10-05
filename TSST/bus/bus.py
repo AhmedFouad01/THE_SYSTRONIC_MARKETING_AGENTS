@@ -22,10 +22,21 @@ LOG = os.path.join(BUS, "log.tsv")
 RUNTIMES = os.path.join(BUS, "runtimes.yaml")
 LOCK = os.path.join(BUS, ".lock")
 
-FIELDS = ["id", "title", "kind", "status", "to", "needs", "tier", "brand", "spec", "read",
+FIELDS = ["id", "title", "kind", "status", "to", "needs", "tier", "team", "skills", "brand", "spec", "read",
           "write", "after", "done_when", "issued_by", "created", "rounds", "max_rounds",
-          "claimed_by", "lease_until", "progress", "result", "sha256", "note"]
-LISTS = {"needs", "read", "write", "after"}
+          "claimed_by", "lease_until", "progress", "skills_used", "result", "sha256", "note"]
+LISTS = {"needs", "read", "write", "after", "skills", "skills_used"}
+TEAMS = {"marketing", "studio", "build", "lead"}
+NEED_SKILLS = {"work", "review"}          # kinds that must name a team + skills (TSST rule 9)
+SKILLS_FROM = "2026-10-05T09:00Z"         # tasks created from here on are bound by rule 9
+# What a worker loads before touching a task (team file first, then the team's agent files).
+TEAM_LOAD = {
+    "marketing": ["TSST/teams/marketing/team.md", "TSST/LENS/AGENT.md"],
+    "studio": ["TSST/teams/studio/team.md", "TSST/CREATIVE/AGENT.md",
+               "TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md", "TSST/CREATIVE/FINAL_ASSET_GATE.md"],
+    "build": ["TSST/teams/build/team.md", "TSST/DEV/AGENT.md"],
+    "lead": ["TSST/LEAD/AGENT.md"],      # the lead has no teams/ folder; its agent file is the team file
+}
 KINDS = {"work", "source-read", "review", "probe"}
 TIERS = {"FAST", "WORK", "CODE", "DEEP"}
 STATUSES = {"ready", "claimed", "done", "blocked", "escalated", "closed", "cancelled"}
@@ -125,6 +136,25 @@ def same(rel, recorded):
     with open(os.path.join(ROOT, rel), "rb") as f:
         raw = f.read()
     return recorded in (sha(rel), hashlib.sha256(raw).hexdigest())
+
+
+def norm_skill(p):
+    return p.strip().replace("\\", "/").rstrip("/")
+
+
+def skill_aliases(p):
+    """Ways a worker may cite a skill: full path, folder/file basename, or id (…-sk-010)."""
+    base = norm_skill(p).rsplit("/", 1)[-1]
+    out = {norm_skill(p).lower(), base.lower()}
+    m = re.match(r"(.+?-sk-\d+)", base, re.I)
+    if m:
+        out.add(m.group(1).lower())
+    return out
+
+
+def skills_unused(skills, used):
+    cited = {norm_skill(u).lower() for u in used}
+    return [s for s in skills if not (skill_aliases(s) & cited)]
 
 
 def prefix(pattern):
@@ -306,7 +336,8 @@ def cmd_new(a):
         die(f"{a.id} exists")
     lst = lambda s: [x.strip() for x in (s or "").split(",") if x.strip()]
     t = {"id": a.id, "title": a.title, "kind": a.kind, "status": "ready", "to": a.to,
-         "needs": lst(a.needs), "tier": a.tier, "brand": a.brand, "spec": a.spec,
+         "needs": lst(a.needs), "tier": a.tier, "team": a.team or "", "skills": lst(a.skills),
+         "brand": a.brand, "spec": a.spec,
          "read": lst(a.read), "write": lst(a.write), "after": lst(a.after),
          "done_when": a.done_when, "issued_by": a.me, "created": now(), "rounds": 0,
          "max_rounds": a.max_rounds}
@@ -332,6 +363,10 @@ def cmd_claim(a):
              + (f" (lease from {prev} expired)" if prev and prev != a.me else ""))
     print(f"tier: {t['tier']} -> run on: {run_on}\nspec: {t['spec']}\nresume: {t.get('progress') or '-'}\n"
           f"done_when: {t['done_when']}")
+    if t.get("team") or t.get("skills"):
+        print("LOAD BEFORE WORK (TSST rule: team + skills, no ad-hoc work):")
+        for x in TEAM_LOAD.get(t.get("team"), []) + list(t.get("skills") or []):
+            print(f"  {x}")
 
 
 def lease(hours):
@@ -359,6 +394,14 @@ def cmd_done(a):
     with Lock():
         t = load(a.id)
         need_claimer(t, a.me)
+        if t.get("kind") in NEED_SKILLS:
+            used = [x.strip() for x in (a.skills_used or "").split(",") if x.strip()]
+            if not used:
+                die("--skills-used required for work/review tasks (list the skills you applied)")
+            missing = skills_unused(t.get("skills") or [], used)
+            if missing:
+                die(f"--skills-used must cite every task skill; missing: {', '.join(missing)}")
+            t["skills_used"] = used
         res = a.result.replace("\\", "/")
         if not os.path.isfile(os.path.join(ROOT, res)):
             die(f"result file missing: {res}")
@@ -384,6 +427,8 @@ def cmd_close(a):
         t = load(a.id)
         if t["status"] != "done":
             die(f"{a.id} is {t['status']}, not done")
+        if t.get("kind") in NEED_SKILLS and not t.get("skills_used") and (t.get("created") or "") >= SKILLS_FROM:
+            die(f"{a.id} has no skills_used — reopen: work must show use of its team skills")
         if t.get("claimed_by") == a.me:
             die("no self-acceptance: the runtime that did the work cannot close it")
         if not same(t["result"], t["sha256"]):
@@ -497,8 +542,28 @@ def task_errors(t):
         e.append(f"{tid}: spec not found {spec}")
     e += [f"{tid}: {x}" for x in scope_errors(t.get("read") or [], False)]
     e += [f"{tid}: {x}" for x in scope_errors(t.get("write") or [], True)]
+    if t.get("kind") in NEED_SKILLS and (t.get("created") or "") >= SKILLS_FROM and t.get("status") != "cancelled":
+        e += team_skill_errors(t)
+        if t.get("status") in ("done", "closed") and not t.get("skills_used"):
+            e.append(f"{tid}: done/closed work needs skills_used")
     if t.get("to") != "any" and not isinstance(runtimes().get(t.get("to")), dict):
         e.append(f"{tid}: unknown runtime {t.get('to')}")
+    return e
+
+
+def team_skill_errors(t):
+    tid, e = t.get("id", "?"), []
+    team = t.get("team")
+    if team not in TEAMS:
+        e.append(f"{tid}: team must be one of {sorted(TEAMS)} (TSST rule: team + skills)")
+    elif not os.path.isfile(os.path.join(ROOT, TEAM_LOAD[team][0])):
+        e.append(f"{tid}: team file not found {TEAM_LOAD[team][0]}")
+    if not t.get("skills"):
+        e.append(f"{tid}: skills required for {t.get('kind')} tasks (TSST rule: team + skills)")
+    e += [f"{tid}: {x}" for x in scope_errors(t.get("skills") or [], False)]
+    for sk in t.get("skills") or []:
+        if not os.path.exists(os.path.join(ROOT, norm_skill(sk))):
+            e.append(f"{tid}: skill not found {sk}")
     return e
 
 
@@ -575,13 +640,16 @@ def main():
     c("check", cmd_check)
     c("new", cmd_new, tid, me, (["--title"], dict(required=True)), (["--kind"], dict(default="work")),
       (["--to"], dict(default="any")), (["--needs"], {}), (["--tier"], dict(default="WORK")),
+      (["--team"], dict(default="", help="marketing|studio|build|lead (required for work/review)")),
+      (["--skills"], dict(default="", help="comma list of skill paths (required for work/review)")),
       (["--brand"], dict(default="t-sag")), (["--spec"], dict(required=True)), (["--read"], {}),
       (["--write"], {}), (["--after"], {}), (["--done-when"], dict(required=True)),
       (["--max-rounds"], dict(type=int, default=1)))
     c("claim", cmd_claim, tid, me, hours, (["--model"], dict(default="", help="model you are actually running on")))
     c("progress", cmd_progress, tid, me, note, hours)
     c("release", cmd_release, tid, me, note)
-    c("done", cmd_done, tid, me, (["--result"], dict(required=True)), (["--note"], dict(default="")))
+    c("done", cmd_done, tid, me, (["--result"], dict(required=True)), (["--note"], dict(default="")),
+      (["--skills-used"], dict(default="", help="comma list: every task skill you applied (work/review)")))
     c("block", cmd_block, tid, me, note)
     c("close", cmd_close, tid, me, (["--note"], dict(default="")))
     c("reopen", cmd_reopen, tid, me, note, (["--user-approved"], dict(action="store_true")))

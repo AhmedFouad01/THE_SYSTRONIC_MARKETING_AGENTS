@@ -15,7 +15,7 @@ claude:
   tier_DEEP: Opus 5.5 (main conversation, never queued)
 codex:
   caps: [fs_read, shell, fs_write, git]
-  unverified: []
+  unverified: [image]
   roles: []
   status: available
   until:

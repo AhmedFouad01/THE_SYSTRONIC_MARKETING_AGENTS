@@ -73,3 +73,25 @@
 2026-10-05T00:51Z	C7-VILL-06	gemini	claim on Claude Opus 5.5 · high	
 2026-10-05T00:59Z	C7-VILL-06	gemini	done	v0.2: R1-R10 dispositioned (table at end); R4 record-required proof rule; R10 Arabic summary; contrast recomputed; no images. Ran on Claude Opus 5.5 high
 2026-10-05T01:01Z	C7-VILL-06	claude	close	10/10 dispositions verified in body; v0.1 proof claims removed/CONCEPT-gated; Arabic summary present
+2026-10-05T01:19Z	C7-VILL-07	claude	new	
+2026-10-05T01:19Z	C7-VILL-08	claude	new	
+2026-10-05T01:19Z	C7-VILL-09	claude	new	
+2026-10-05T01:32Z	C7-VILL-07	gemini	claim on Gemini 3.1 Pro · high	
+2026-10-05T01:47Z	C7-VILL-07	gemini	done	Extracted exact hex codes (#040136 navy, #EE8C01 orange) from Logo.png, matched with VI deck neutral colors, generated updated contrast tables, and established logo usage guidelines for v0.3
+2026-10-05T01:48Z	C7-VILL-07	claude	reopen	hex+contrast correct; fix 5 items in LEAD_NOTES_v0.3.md (VI p05 Raleway/grid, colour roles, logo white, mapping, broken markdown); read all VI pages
+2026-10-05T01:51Z	C7-VILL-07	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-08	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-09	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-10	claude	new	
+2026-10-05T01:51Z	ANVIL-R02	claude	new	
+2026-10-05T01:55Z	C7-VILL-10	codex	claim on unavailable	
+2026-10-05T01:59Z	C7-VILL-10	codex	progress	Step 1 done: Logo-only Brand Look v1.0, derived tokens, computed contrast, bundled OFL font pair; next render seven editable masters and inspect.
+2026-10-05T02:00Z	C7-VILL-10	codex	progress	Step 2 done: seven editable HTML masters and actual 1080 PNG renders, bundled fonts and source crop manifest; next visual phone/RTL/contrast QA and handoff.
+2026-10-05T02:04Z	C7-VILL-10	codex	done	
+2026-10-05T02:05Z	ANVIL-R02	codex	claim on gpt-6.1-sol	
+2026-10-05T02:06Z	ANVIL-R02	codex	progress	Read continuation, ANVIL pointers, gates and v03 source; preparing distinct reassurance concept and exact logo composite
+2026-10-05T02:09Z	ANVIL-R02	codex	progress	Generated text-free open-book chapter metaphor; copied exact logo; rendered editable 1080x1350 source and 360x450 preview; inspecting QA next
+2026-10-05T02:11Z	ANVIL-R02	codex	progress	Full and phone rasters inspected: legible shaped type, exact logo, distinct chapter metaphor; producer QA passed REVIEW; provenance and source records saved
+2026-10-05T02:12Z	ANVIL-R02	codex	done	
+2026-10-05T09:09Z	C7-VILL-10	claude	cancel	team review: fails FINAL_ASSET_GATE (PREVIS); 4 DISCARD, 3 REWORK; produced without team/skills; redo after direction + user inputs
+2026-10-05T09:09Z	ANVIL-R02	claude	cancel	team review: REWORK medium (names twice, cliche book, LTR order); needs old Shark X Store logo from user

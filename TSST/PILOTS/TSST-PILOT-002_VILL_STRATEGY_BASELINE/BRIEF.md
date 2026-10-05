@@ -35,3 +35,31 @@ Reviewer runtime ≠ producer runtime. No spend; all WORK tier.
 - Cost: models per step (bus log).
 - Speed: elapsed time brief → user approval.
 - Commercial: n/a for documents — recorded as not measurable in this pilot.
+
+## Phase 2 — Brand Look production (approved 2026-10-05)
+
+**Why:** readiness cannot be judged on documents; CREATIVE must produce real assets through `TSST/CREATIVE/FINAL_ASSET_GATE.md`.
+
+**New source of truth (user, 2026-10-05):** VILL has an existing identity. Inputs copied from the user's folder `D:\Work v2\VILL STUDIO\` into `inputs/`:
+`Logo.png` (+ `Logo.psd`) = **primary logo**; `inputs/VI/` = VI deck "Dark Luxury DNA" (palette Obsidian #0E0E0F, Ink Blue #0F1E34, Warm Ivory #F2EFE6, Aged Bronze #B07A3C, Smoked Oak #2A2119, Soft Stone #B8B6B0; distribution 60/20/10/5/3/2); `inputs/company-profile/` = profile/portfolio pages (real project photography where present).
+- **Decision:** `Logo.png` is primary; the palette is harmonised **around the logo's navy and orange** (exact values sampled from the file), keeping the VI neutrals aligned to them. Same colours, tuned — no new colours.
+- `BRAND_LOOK_DIRECTION_v0.2.md` §2 palette and §3 type pair are **superseded** (they were written without these assets); its RTL, proof-claim and kitchen-containment rules stay valid.
+- Out of the folder on purpose: the ANVIL financial plan file (other brand), WhatsApp archive.
+
+**Scope:** social templates (carousel 4:5, Reel cover 9:16, single post 4:5 / 1:1) and mockups (kitchen paid-entry ad + whole-home post). Editable source + rendered PNG for each. Image generation on Codex approved by user; prefer real VILL photography from `inputs/`; any generated imagery is labelled CONCEPT (proof rule).
+
+| task | step | team | runtime · model | output |
+|---|---|---|---|---|
+| C7-VILL-07 | Brand Look v0.3: palette tokens around Logo.png navy+orange (sampled hex) + VI neutrals, contrast table, typography from VI deck + Arabic pair, logo usage | CREATIVE | gemini · Claude Opus 5.5 high | `BRAND_LOOK_DIRECTION_v0.3.md` |
+| C7-VILL-08 | Templates + mockups (editable SVG/HTML + PNG renders) | CREATIVE production | codex · gpt-6.1-sol medium (image generation) | `assets/` |
+| C7-VILL-09 | Independent CREATIVE QA against FINAL_ASSET_GATE + v0.3 | CREATIVE QA | gemini · Claude Opus 5.5 high | `REVIEW_ASSETS_v0.1.md` |
+
+## Phase 2b — Brand Look from the logo only (user, 2026-10-05, overnight run)
+
+**Source of truth = `inputs/Logo.png` only:** navy background `#040136`, orange `#EE8C01`, logo white `#F3F4F6` (Lead-sampled). The VI deck (`inputs/VI/`), its palette (Obsidian, Ink Blue, Ivory, Bronze, Oak, Stone) and Raleway are an **outdated look** — reference for what to move away from, not authority. `BRAND_LOOK_DIRECTION_v0.3.md` is superseded. Still valid from v0.2: RTL/bidi rules, proof-claim rule, kitchen containment, CONCEPT labelling.
+
+**C7-VILL-10 (Codex, overnight, no user available):**
+1. `BRAND_LOOK_v1.0.md`: brand character read from the logo (angular, italic, cut V); palette built on navy + orange + white, plus only tints/shades derived from those three (state formulas and hex); contrast table; Latin + Arabic type pair that matches the logo's angular heavy geometry (prefer open licence, state licence); grid and spacing; logo usage (clear space = V height, min size, on navy / on white, never recolour); Arabic summary.
+2. `assets/`: carousel 4:5 (3 slides), Reel cover 9:16, single post 4:5, kitchen paid-entry ad 4:5, whole-home post 4:5 — each an editable source (SVG or HTML) + PNG render. Use the real logo file, never a retyped logo. Prefer real VILL photography found in `inputs/company-profile/`; any generated image is labelled CONCEPT on the asset and in the README.
+3. Self-QA against `TSST/CREATIVE/FINAL_ASSET_GATE.md`: phone-size preview PNG per asset, Arabic shaping/RTL check, contrast. `assets/README.md` lists every file, its source images and QA result.
+Independent review happens after the run (Antigravity/Lead).

@@ -23,7 +23,7 @@ answers the current task. Large context is not better context.
 | 9 | Apply rules | `TSST/core/rules.md`, then `TSST/brands/<id>/rules.md` | brand rule never overrides a core safety rule |
 | 10 | Build minimum context pack | only files named by steps 3–9 for this task | budget: `router.yaml#context_budget` |
 | 11 | Route team | `router.yaml#team_routing` → `TSST/teams/<team>/team.md` (team `lead` → `TSST/LEAD/AGENT.md`) | — |
-| 12 | Route skills | the team's `skills` map; load only the matched skill(s) | never load a whole registry |
+| 12 | Route skills | the team's `skills` map; load only the matched skill(s) | never load a whole registry; **mandatory — no ad-hoc work without team + skills** (`TSST/core/rules.md` 9) |
 | 13 | Route logical model tier | `TSST/context/models.yaml` (FAST/WORK/CODE/DEEP/IMAGE/VIDEO) | adapter maps tier → actual model |
 | 14 | Verify authority | `TSST/TSST_DECISION_RIGHTS.md` (relevant row only) | not authorised → ask user |
 | 15 | Execute | — | — |

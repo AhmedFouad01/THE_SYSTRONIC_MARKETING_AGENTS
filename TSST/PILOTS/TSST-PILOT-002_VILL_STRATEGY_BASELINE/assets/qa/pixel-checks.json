@@ -1,0 +1,58 @@
+[
+  {
+    "name": "carousel-01",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 7091
+  },
+  {
+    "name": "carousel-02",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 6492
+  },
+  {
+    "name": "carousel-03",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 6492
+  },
+  {
+    "name": "kitchen-ad",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 6492
+  },
+  {
+    "name": "reel-cover",
+    "size": [
+      1080,
+      1920
+    ],
+    "logo_light_pixels": 6492
+  },
+  {
+    "name": "single-post",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 6492
+  },
+  {
+    "name": "whole-home",
+    "size": [
+      1080,
+      1350
+    ],
+    "logo_light_pixels": 6492
+  }
+]

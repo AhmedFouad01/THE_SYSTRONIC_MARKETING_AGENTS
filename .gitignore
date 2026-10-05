@@ -8,3 +8,18 @@ desktop.ini
 TSST/bus/.lock
 /.git.pre-externalize/
 __pycache__/
+
+# Brand material binaries live on Drive, not in git (TSST/core/brand-assets.md)
+TSST/brands/*/assets/**/*.png
+TSST/brands/*/assets/**/*.jpg
+TSST/brands/*/assets/**/*.jpeg
+TSST/brands/*/assets/**/*.webp
+TSST/brands/*/assets/**/*.heic
+TSST/brands/*/assets/**/*.tif
+TSST/brands/*/assets/**/*.tiff
+TSST/brands/*/assets/**/*.psd
+TSST/brands/*/assets/**/*.ai
+TSST/brands/*/assets/**/*.pdf
+TSST/brands/*/assets/**/*.mp4
+TSST/brands/*/assets/**/*.mov
+TSST/brands/*/assets/**/*.zip
