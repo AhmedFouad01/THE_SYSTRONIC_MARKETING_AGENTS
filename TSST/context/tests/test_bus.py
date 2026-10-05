@@ -20,6 +20,15 @@ def setup():
         os.makedirs(os.path.join(bus, d))
     for f in ("bus.py", "runtimes.yaml"):
         shutil.copy(os.path.join(REPO, "TSST", "bus", f), bus)
+    # gemini is retired in the live registry (ADR-004); these protocol tests use it as a generic second runtime
+    rp = os.path.join(bus, "runtimes.yaml")
+    with open(rp, encoding="utf-8") as fh:
+        txt = fh.read()
+    assert "status: retired" in txt
+    with open(rp, "w", encoding="utf-8", newline=NL) as fh:
+        fh.write(txt.replace("status: retired", "status: available"))
+    os.makedirs(os.path.join(root, "TSST", "context"))
+    shutil.copy(os.path.join(REPO, "TSST", "context", "roster.yaml"), os.path.join(root, "TSST", "context"))
     open(os.path.join(bus, "log.tsv"), "w").close()
     os.makedirs(os.path.join(root, "docs"))
     os.makedirs(os.path.join(root, "out"))
@@ -28,6 +37,8 @@ def setup():
     for team in ("marketing", "studio", "build"):
         os.makedirs(os.path.join(root, "TSST", "teams", team))
         write(root, f"TSST/teams/{team}/team.md", team)
+    os.makedirs(os.path.join(root, "TSST", "skills"))   # central skill index (bus validates skills against it)
+    shutil.copy(os.path.join(REPO, "TSST", "skills", "index.yaml"), os.path.join(root, "TSST", "skills"))
     os.makedirs(os.path.join(root, SKILL))
     write(root, SKILL + "/SKILL.md", "skill")
     os.makedirs(os.path.join(root, SKILL2))
@@ -121,7 +132,9 @@ def main():
         run(R, "new", "M-1", "--me", "claude", *NEW, *TS, "--tier", "FAST", "--write", "docs/m.md")
         out = run(R, "claim", "M-1", "--me", "claude", "--model", "opus")
         expect("claim prints tier model + warns on mismatch",
-               "" if "run on: Haiku 4.5" in out and "WARN running on opus" in out else "REFUSED", True)
+               "" if "run on: haiku · low" in out and "WARN running on opus" in out else "REFUSED", True)
+        expect("claim prints AGENT + RUN ON (studio -> tsst-creative)",
+               "" if "AGENT: tsst-creative" in out and "RUN ON: haiku · low" in out else "REFUSED", True)
         # --- team + skills rule (bus.md rule 9)
         expect("work without team refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--skills", SKILL), False)
         expect("work without skills refused", run(R, "new", "T-1", "--me", "claude", *NEW, "--team", "studio"), False)
@@ -134,6 +147,7 @@ def main():
         out = run(R, "claim", "T-3", "--me", "gemini")
         expect("claim prints LOAD BEFORE WORK", "" if "LOAD BEFORE WORK" in out and "TSST/teams/studio/team.md" in out
                and SKILL in out and "FINAL_ASSET_GATE.md" in out else "REFUSED", True)
+        expect("claim prints AGENT for studio task on other runtime", "" if "AGENT: tsst-creative" in out else "REFUSED", True)
         write(R, "docs/t3.md", "work")
         expect("done without --skills-used refused", run(R, "done", "T-3", "--me", "gemini", "--result", "docs/t3.md"), False)
         expect("done with a listed skill missing refused",

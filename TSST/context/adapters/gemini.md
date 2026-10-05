@@ -1,3 +1,5 @@
+> **RETIRED 2026-10-05 (TSST-ADR-004).** Antigravity/Gemini is no longer a TSST runtime (bus status `retired`). Kept as history only — do not route work here.
+
 # Runtime adapter — Gemini / Antigravity
 
 Bus runtime id: `gemini`. First bus task is its cold-start probe (`PROBE-001`); until it is

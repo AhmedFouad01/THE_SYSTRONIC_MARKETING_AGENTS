@@ -5,7 +5,7 @@ customer/market intelligence · performance reasoning · measurement coordinatio
 
 Agents: `TSST/LENS/AGENT.md` (manager) · `TSST/SPARK/AGENT.md` (performance capability)
 
-## Skill map (existing packages, no moves)
+## Skill map (index: `TSST/skills/index.yaml`; SK-011–015 added 2026-10-05, ADR-003, UNVALIDATED)
 | need | skill |
 |---|---|
 | research plan | `TSST/LENS/skills/tsst-lens-sk-001-research-planning` |
@@ -14,13 +14,18 @@ Agents: `TSST/LENS/AGENT.md` (manager) · `TSST/SPARK/AGENT.md` (performance cap
 | customer / ICP / JTBD | `TSST/LENS/skills/tsst-lens-sk-004-customer-icp-jtbd` |
 | positioning / messaging | `TSST/LENS/skills/tsst-lens-sk-005-positioning-messaging` |
 | marketing / content / campaign plan | `TSST/LENS/skills/tsst-lens-sk-006-marketing-planning` |
+| copywriting (ads, posts, CTAs, landing sections) | `TSST/skills/marketing/tsst-lens-sk-011-copywriting` |
+| Arabic / Egyptian copy, transcreation | `TSST/skills/marketing/tsst-lens-sk-012-arabic-egyptian-copy-transcreation` |
+| organic social system, content calendar | `TSST/skills/marketing/tsst-lens-sk-013-organic-social-content-system` |
+| landing page, CRO audit, A/B brief | `TSST/skills/marketing/tsst-lens-sk-014-landing-page-cro` |
+| WhatsApp / email lifecycle | `TSST/skills/marketing/tsst-lens-sk-015-whatsapp-email-lifecycle` |
 | paid media strategy | `TSST/SPARK/skills/tsst-spark-sk-001-paid-media-strategy` |
 | measurement | `TSST/SPARK/skills/tsst-spark-sk-002-measurement-architecture` |
 | attribution | `TSST/SPARK/skills/tsst-spark-sk-003-attribution-fundamentals` |
 | Meta | `TSST/SPARK/skills/tsst-spark-sk-004-meta-campaign-creative-fundamentals` |
 | Google Search | `TSST/SPARK/skills/tsst-spark-sk-005-google-search-performance-fundamentals` |
 | TikTok | `TSST/SPARK/skills/tsst-spark-sk-006-tiktok-ads-fundamentals` |
-| runtime orchestration (Gemini) | `.agents/skills/tsst-marketing-orchestrator`, `tsst-lens-strategy`, `tsst-spark-performance` |
+| runtime orchestration (Codex) | `.agents/skills/tsst-router` |
 
 ## Radar (capability, not an agent) — status UNVALIDATED
 Watches signals that could improve TSST: new models/capability changes, tools, pricing,

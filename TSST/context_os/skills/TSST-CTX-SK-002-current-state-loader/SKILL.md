@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-002-current-state-loader
+description: "Use when starting or resuming substantial project or workstream work, to load the current state before acting."
+id: TSST-CTX-SK-002
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Current State Loader
 ID: TSST-CTX-SK-002
 Status: UNVALIDATED

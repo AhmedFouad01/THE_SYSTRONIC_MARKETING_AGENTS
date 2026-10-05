@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-008-handoff-compressor
+description: "Use when a subagent or specialist hands work to the Lead or another specialist, to compress the handoff."
+id: TSST-CTX-SK-008
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Handoff Compressor
 ID: TSST-CTX-SK-008
 Status: UNVALIDATED

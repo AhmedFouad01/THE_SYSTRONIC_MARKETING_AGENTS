@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-007-context-budget-manager
+description: "Use when a task involves multiple sources, skills or tools or runs long, to keep the context budget under control."
+id: TSST-CTX-SK-007
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Context Budget Manager
 ID: TSST-CTX-SK-007
 Status: UNVALIDATED

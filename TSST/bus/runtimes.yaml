@@ -1,25 +1,30 @@
 # TSST runtime capability registry — evidence, not assumption. Protocol: TSST/context/bus.md
 # caps = verified by a closed probe task; unverified = claimable only by kind: probe.
 # Edited only via bus.py limit/verify (lead) — never by a bus task.
+# tier_<TIER> = "<model> · <effort>" per runtime + plan (TSST-ADR-004); runtime agent files are generated from it
+# by TSST/context/gen_runtime_agents.py. A missing model falls back to the next tier UP and is recorded.
 lead_order: [claude]
 claude:
+  plan: claude-pro
   caps: [fs_read, fs_write, shell, git]
   unverified: []
   roles: [lead]
   status: available
   until:
   verified: 2026-10-04
-  tier_FAST: Haiku 4.5 (subagent tsst-fast-worker / Explore)
-  tier_WORK: Sonnet 5.5 (subagent tsst-execution-worker)
-  tier_CODE: Sonnet 5.5 · high effort (subagent tsst-code-worker)
-  tier_DEEP: Opus 5.5 (main conversation, never queued)
+  tier_FAST: haiku · low
+  tier_WORK: sonnet · medium
+  tier_CODE: sonnet · high
+  tier_DEEP: opus · high    # main session, never spawned
 codex:
+  plan: chatgpt-plus
   caps: [fs_read, shell, fs_write, git]
   unverified: [image]
   roles: []
   status: available
   until:
   verified: 2026-10-04
+  models_source: ~/.codex/models_cache.json (2026-10-05)
   tier_FAST: gpt-6-luna · low
   tier_WORK: gpt-6.1-sol · medium
   tier_CODE: gpt-6.1-sol · high
@@ -28,7 +33,7 @@ gemini:
   caps: [fs_read, fs_write, shell]
   unverified: [drive_docs_read, image, video]
   roles: []
-  status: available
+  status: retired    # Antigravity retired (TSST-ADR-004); kept as history, never claimable
   until:
   verified: 2026-10-04
   tier_FAST: Gemini 3.8 Flash · low

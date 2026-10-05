@@ -1,0 +1,87 @@
+# TSST roster — provider-neutral SINGLE SOURCE for every runtime (TSST-ADR-003/004).
+# No model names here. Tier → model lives in TSST/bus/runtimes.yaml (per runtime + plan).
+# Runtime agent files are GENERATED: python TSST/context/gen_runtime_agents.py  (--check for drift)
+#   Claude Code → .claude/agents/tsst-<id>.md     Codex → .codex/agents/tsst-<id>.toml
+# Contract shared by all team agents: TSST/context/agent-contract.md
+version: 1
+active_runtimes: [claude, codex]        # gemini/Antigravity retired 2026-10-05 (ADR-004); chatgpt = manual bridge only
+
+agents:
+  lead:
+    tsst_id: TSST_LEAD
+    team: lead
+    identity: TSST/LEAD/AGENT.md
+    tier: DEEP
+    runtime_agent: false                # the runtime's MAIN session is the Lead; never spawned
+    does: intake, boot, Skill Plan, routing, conflict, review, acceptance, user interface
+  lens:
+    tsst_id: LENS_AG
+    team: marketing
+    identity: TSST/LENS/AGENT.md
+    team_file: TSST/teams/marketing/team.md
+    tier: WORK
+    write: true
+    web: true
+    skills: [TSST-LENS-*]
+    does: research, evidence grading, competitor/customer/ICP, positioning, messaging, marketing/content/campaign planning, copywriting, Arabic/Egyptian copy, organic social, landing pages/CRO, WhatsApp/email lifecycle
+    role_rules:
+      - Paid media, tracking, attribution, bidding → SPARK_AG; final visual approval → CREATIVE_AG. Hand back, don't do it.
+      - Arabic/Egyptian audiences are first-class; keep observed evidence separate from interpretation.
+  spark:
+    tsst_id: SPARK_AG
+    team: marketing
+    identity: TSST/SPARK/AGENT.md
+    team_file: TSST/teams/marketing/team.md
+    tier: WORK
+    write: true
+    web: true
+    skills: [TSST-SPARK-*]
+    does: paid-media strategy, measurement/KPI trees, attribution limits, Meta/Google/TikTok structure, creative testing, diagnostic reporting
+    role_rules:
+      - Plans and configurations only; never launch, edit live campaigns or spend. State attribution limits explicitly.
+  creative:
+    tsst_id: CREATIVE_AG
+    team: studio
+    identity: TSST/CREATIVE/AGENT.md
+    team_file: TSST/teams/studio/team.md
+    tier: WORK
+    write: true
+    web: false
+    skills: [TSST-CREATIVE-*]
+    does: brand systems, design systems, art direction, social/performance creative, compositing, motion/video, export QA, product UX (internal roles DESIGNER_AG, MOTION_AG)
+    role_rules:
+      - Actual creative/video work also loads TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md and TSST/CREATIVE/FINAL_ASSET_GATE.md. HTML layouts, prompts, briefs, storyboards are PREVIS; final assets need render QA.
+      - Approved logos/marks are composited, never regenerated. Image/video generation only where the runtime has a verified IMAGE/VIDEO capability (runtimes.yaml); otherwise ESCALATE_TO_DEEP naming the tier need.
+  dev:
+    tsst_id: DEV_AG
+    team: build
+    identity: TSST/DEV/AGENT.md
+    team_file: TSST/teams/build/team.md
+    tier: CODE
+    write: true
+    web: false
+    skills: [TSST-DEV-*]
+    does: architecture options, implementation, APIs/integrations, data/SQL, identity/secrets, security, debugging, tests, code review, CI/CD, observability, verification
+    role_rules:
+      - Smallest reversible change; run the relevant verification and report its real output.
+      - Working tree is on Google Drive with an external gitdir; never recreate .git.
+  reader:
+    tsst_id: READER
+    team: any
+    tier: FAST
+    write: false
+    web: false
+    skills: []
+    does: utility reads only (R2) — extraction, inventory, classification, dedup, short summaries for a named TEAM; output is input, never a deliverable
+    role_rules:
+      - Never modify files or external systems. Keep FACT / ASSUMPTION separate with source locators.
+      - Bounded task; if it grows or a decision becomes consequential, return ESCALATE_TO_WORK to the Lead.
+
+# Lead's routing table: which agent gets which work (team_routing in router.yaml decides the team).
+route:
+  marketing: lens              # paid media / measurement / platform → spark
+  marketing_performance: spark
+  studio: creative
+  build: dev
+  read_only: reader
+  decide_accept: lead

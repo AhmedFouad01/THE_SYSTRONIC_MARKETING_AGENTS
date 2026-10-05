@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-014-evidence-provenance
+description: "Use when a claim, decision, memory write or handoff must remain auditable, to attach evidence provenance."
+id: TSST-CTX-SK-014
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Evidence Provenance
 ID: TSST-CTX-SK-014
 Status: UNVALIDATED

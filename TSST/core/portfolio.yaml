@@ -29,7 +29,7 @@ brands:
   vill-studio:
     name: VILL_STUDIO
     kind: client
-    active: not_recorded  # state lives in canonical source; fetch on demand
+    active: strategy-baseline  # phase 2c C7-VILL-11 active (2026-10-05); detail in canonical source
     memory: TSST/brands/vill-studio/memory/source.md
     projects:
       strategy-baseline:

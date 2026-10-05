@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-015-knowledge-indexer
+description: "Use when a source corpus needs derived search or index support, to build and maintain the knowledge index."
+id: TSST-CTX-SK-015
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Knowledge Indexer
 ID: TSST-CTX-SK-015
 Status: UNVALIDATED

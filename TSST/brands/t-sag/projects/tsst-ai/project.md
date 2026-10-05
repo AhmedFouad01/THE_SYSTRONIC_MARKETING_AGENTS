@@ -16,10 +16,19 @@ runs brand work — this project changes it; brand tasks only use it.
 
 ## State
 Core consolidation session 1 complete (2026-10-04). TSST overall NOT_READY.
+2026-10-05 — TSST-ADR-003 applied: fixed roster `tsst-lens|spark|creative|dev` (+ fast/Explore
+readers), central index `TSST/skills/index.yaml` (115 skills), rules R1–R10, dispatch hook live,
+intake CTX-SK-023, P1 marketing skills LENS-SK-011…015 (UNVALIDATED). Report:
+`TSST/audits/TSST_CORE_ROSTER_SKILLS_2026-10-05.md`. Uncommitted.
+2026-10-05 — TSST-ADR-004: one roster for Claude Pro + Codex/ChatGPT Plus (`TSST/context/roster.yaml` →
+`gen_runtime_agents.py` → `.claude/agents` + `.codex/agents`), plan-aware tiers in `TSST/bus/runtimes.yaml`,
+Gemini/Antigravity retired. Pending: user trusts the G: repo in Codex; first Codex `/agents` check.
 
 ## do_not_repeat
 Context OS C0–C6 evaluations; runtime router install (C7 record); consolidation
-inventory of 2026-10-04 (see checkpoint).
+inventory of 2026-10-04 (see checkpoint); 2026-10-05 skill inventory (use the index).
 
 ## Next
-See `session-1-checkpoint.md#session-2`.
+1. Native review of LENS-SK-012 Arabic examples (user). 2. CTX-SK-018 fixtures for LENS-SK-011…015.
+3. P2 backlog skills (SPARK-007/008/011, LENS-007) via CTX-SK-023. 4. Commit/PR on user request.
+Older items: `session-1-checkpoint.md#session-2`.

@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-010-model-router
+description: "Use before assigning a model or runtime to a task, to route it to the right model tier."
+id: TSST-CTX-SK-010
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Model Router
 ID: TSST-CTX-SK-010
 Status: UNVALIDATED

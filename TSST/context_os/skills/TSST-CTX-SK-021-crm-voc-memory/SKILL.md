@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-021-crm-voc-memory
+description: "Use when customer feedback, calls, tickets, sales notes or CRM events are analyzed, to keep voice-of-customer memory."
+id: TSST-CTX-SK-021
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — CRM Voice-of-Customer Memory
 ID: TSST-CTX-SK-021
 Status: UNVALIDATED

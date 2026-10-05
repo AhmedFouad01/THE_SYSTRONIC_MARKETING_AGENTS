@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-012-memory-reconciler
+description: "Use when two or more durable or operational records appear inconsistent, to reconcile them."
+id: TSST-CTX-SK-012
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Memory Reconciler
 ID: TSST-CTX-SK-012
 Status: UNVALIDATED

@@ -20,6 +20,7 @@ CLOSED = os.path.join(BUS, "closed")
 OUT_REL = "TSST/bus/out/"
 LOG = os.path.join(BUS, "log.tsv")
 RUNTIMES = os.path.join(BUS, "runtimes.yaml")
+ROSTER = os.path.join(ROOT, "TSST", "context", "roster.yaml")
 LOCK = os.path.join(BUS, ".lock")
 
 FIELDS = ["id", "title", "kind", "status", "to", "needs", "tier", "team", "skills", "brand", "spec", "read",
@@ -41,7 +42,7 @@ KINDS = {"work", "source-read", "review", "probe"}
 TIERS = {"FAST", "WORK", "CODE", "DEEP"}
 STATUSES = {"ready", "claimed", "done", "blocked", "escalated", "closed", "cancelled"}
 # Never delegable through the bus: the operating system itself, governance, runtime config.
-PROTECTED = ["TSST/context/", "TSST/core/", "TSST/bus/bus.py", "TSST/bus/runtimes.yaml",
+PROTECTED = ["TSST/context/", ".codex/", "TSST/skills/index.yaml", "TSST/core/", "TSST/bus/bus.py", "TSST/bus/runtimes.yaml",
              "TSST/bus/log.tsv", "TSST/bus/tasks/", "TSST/bus/closed/", "TSST/TSST_DECISION_RIGHTS.md", "AGENTS.md", "CLAUDE.md",
              "GEMINI.md", ".claude/", ".agents/", ".git"]
 ID_RE = re.compile(r"[A-Z][A-Z0-9-]{1,31}")   # no separators or dots: ids are never paths
@@ -210,6 +211,39 @@ def rt(me):
     return r
 
 
+def route_table():
+    """The `route:` block of roster.yaml (team -> agent id). {} if the roster is missing."""
+    try:
+        with open(ROSTER, encoding="utf-8") as f:
+            lines = f.read().splitlines()
+    except OSError:
+        return {}
+    out, inside = {}, False
+    for ln in lines:
+        if not inside:
+            inside = ln.strip() == "route:"
+        elif ln.strip() and not ln.lstrip().startswith("#"):
+            if not ln.startswith((" ", "\t")):
+                break
+            k, _, v = ln.split(" #", 1)[0].partition(":")
+            out[k.strip()] = v.strip()
+    return out
+
+
+def agent_for(team, skills):
+    """Team agent for a task (roster.yaml route): marketing with only SPARK skills -> spark, else lens."""
+    if team == "lead":
+        return "lead-main"
+    route = route_table()
+    if team == "marketing":
+        groups = {m.group(1) for sk in skills or []
+                  for m in [re.search(r"tsst-([a-z]+)-sk-", norm_skill(sk).lower())] if m} & {"lens", "spark"}
+        key = "marketing_performance" if groups == {"spark"} else "marketing"
+    else:
+        key = team
+    return "tsst-" + route[key] if route.get(key) else None
+
+
 def is_lead(me):
     return "lead" in (rt(me).get("roles") or [])
 
@@ -311,6 +345,8 @@ def claim_errors(t, me):
         errs.append(f"addressed to {t['to']}")
     if r.get("status") == "off":
         errs.append(f"{me} is off")
+    if r.get("status") == "retired":
+        errs.append(f"{me} is retired (TSST-ADR-004)")
     if r.get("status") == "limited" and r.get("until") and ts(r["until"]) > dt.datetime.now(dt.timezone.utc):
         errs.append(f"{me} limited until {r['until']}")
     have = set(r.get("caps") or [])
@@ -342,6 +378,8 @@ def cmd_new(a):
          "done_when": a.done_when, "issued_by": a.me, "created": now(), "rounds": 0,
          "max_rounds": a.max_rounds}
     errs = task_errors(t)
+    if (runtimes().get(a.to) or {}).get("status") == "retired":
+        errs.append(f"{a.to} is retired (TSST-ADR-004)")
     if errs:
         die("; ".join(errs))
     with Lock():
@@ -363,6 +401,8 @@ def cmd_claim(a):
              + (f" (lease from {prev} expired)" if prev and prev != a.me else ""))
     print(f"tier: {t['tier']} -> run on: {run_on}\nspec: {t['spec']}\nresume: {t.get('progress') or '-'}\n"
           f"done_when: {t['done_when']}")
+    if t.get("team"):
+        print(f"AGENT: {agent_for(t['team'], t.get('skills')) or '-'}\nRUN ON: {run_on}")
     if t.get("team") or t.get("skills"):
         print("LOAD BEFORE WORK (TSST rule: team + skills, no ad-hoc work):")
         for x in TEAM_LOAD.get(t.get("team"), []) + list(t.get("skills") or []):
@@ -472,6 +512,8 @@ def cmd_limit(a):
         r = data.get(a.runtime)
         if not isinstance(r, dict):
             die(f"unknown runtime {a.runtime}")
+        if r.get("status") == "retired":
+            die(f"{a.runtime} is retired (TSST-ADR-004) — edit runtimes.yaml with a new ADR to revive it")
         if not a.clear:
             try:
                 ts(a.until)
@@ -561,10 +603,55 @@ def team_skill_errors(t):
     if not t.get("skills"):
         e.append(f"{tid}: skills required for {t.get('kind')} tasks (TSST rule: team + skills)")
     e += [f"{tid}: {x}" for x in scope_errors(t.get("skills") or [], False)]
+    index = skill_index() if t.get("skills") else []
     for sk in t.get("skills") or []:
-        if not os.path.exists(os.path.join(ROOT, norm_skill(sk))):
-            e.append(f"{tid}: skill not found {sk}")
+        if index is None:
+            e.append(f"{tid}: skill index missing ({SKILL_INDEX_REL}); run python TSST/skills/build_index.py")
+            break
+        hit = lookup_skill(index, sk)
+        if not hit:
+            e.append(f"{tid}: skill not in {SKILL_INDEX_REL}: {sk}")
+        elif not os.path.isdir(os.path.join(ROOT, hit["path"])):
+            e.append(f"{tid}: skill {hit['id']} package missing on disk: {hit['path']}")
+        elif hit["status"] == "DEPRECATED":
+            e.append(f"{tid}: skill {hit['id']} is DEPRECATED")
+        elif team in TEAMS and team != "lead" and hit["team"] not in (team, "core"):
+            e.append(f"{tid}: skill {hit['id']} belongs to team {hit['team']}, task team is {team}")
     return e
+
+
+SKILL_INDEX_REL = "TSST/skills/index.yaml"
+_INDEX_LINE = re.compile(r'^\s*- \{id: (?P<id>[^,]+), team: (?P<team>[^,]+), owner: (?P<owner>[^,]+), '
+                         r'status: (?P<status>[^,]+), version: "[^"]*", trigger: ".*", path: (?P<path>"[^"]*")\}\s*$')
+
+
+def skill_index():
+    """Parse the generated flow-style index (no PyYAML). Returns list of dicts, or None if missing/unreadable."""
+    try:
+        with open(os.path.join(ROOT, SKILL_INDEX_REL), encoding="utf-8-sig") as f:
+            lines = f.read().splitlines()
+    except OSError:
+        return None
+    out = []
+    for ln in lines:
+        m = _INDEX_LINE.match(ln)
+        if m:
+            d = m.groupdict()
+            d["path"] = json.loads(d["path"])
+            out.append({k: v.strip() for k, v in d.items()})
+    return out or None
+
+
+def lookup_skill(index, ref):
+    """Find an index entry by id, full path (optionally /SKILL.md), or folder basename."""
+    r = norm_skill(ref)
+    if r.lower().endswith("/skill.md"):
+        r = r[: -len("/SKILL.md")]
+    rl = r.lower()
+    for s in index:
+        if rl in (s["id"].lower(), s["path"].lower(), s["path"].rsplit("/", 1)[-1].lower()):
+            return s
+    return None
 
 
 def check_all():

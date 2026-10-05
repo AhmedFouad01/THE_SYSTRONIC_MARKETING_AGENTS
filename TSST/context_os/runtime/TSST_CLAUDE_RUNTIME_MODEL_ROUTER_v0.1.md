@@ -1,3 +1,5 @@
+> **SUPERSEDED 2026-10-05 by TSST-ADR-003/004** — generic tier workers retired; live routing: `AGENTS.md#universal-task-routing`, `TSST/context/roster.yaml`. Kept as C7 history.
+
 # TSST Claude Runtime Model Router v0.1
 
 Status: C7 controlled runtime integration.
