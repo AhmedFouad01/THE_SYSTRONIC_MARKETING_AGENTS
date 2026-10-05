@@ -11,6 +11,8 @@ import {
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
+import { navigate } from "../../router.ts";
+import { dealContextSearch } from "../deals/model.ts";
 import { fetchLead, patchLead } from "./api.ts";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
@@ -240,6 +242,24 @@ export function LeadDetail({
 				</Badge>
 			</div>
 			<div className="sy-leads__actions">
+				<Button
+					size="sm"
+					variant="primary"
+					icon="deals"
+					data-testid="lead-create-deal"
+					onClick={() =>
+						navigate(
+							"/deals",
+							dealContextSearch({
+								contactId: lead.contact_id,
+								leadId: lead.id,
+								dealId: null,
+							}),
+						)
+					}
+				>
+					{t("deals.action.create")}
+				</Button>
 				<Button
 					size="sm"
 					icon="mail"

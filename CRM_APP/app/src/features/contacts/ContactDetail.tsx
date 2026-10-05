@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { navigate } from "../../router.ts";
+import { dealContextSearch } from "../deals/model.ts";
 import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
 import {
 	Badge,
@@ -523,6 +525,26 @@ export function ContactDetail({
 					</p>
 					<p className="sy-contacts__muted">{contact.ownerName}</p>
 				</div>
+			</div>
+			<div className="sy-contacts__actions">
+				<Button
+					size="sm"
+					variant="primary"
+					icon="deals"
+					data-testid="contact-create-deal"
+					onClick={() =>
+						navigate(
+							"/deals",
+							dealContextSearch({
+								contactId: contact.id,
+								leadId: null,
+								dealId: null,
+							}),
+						)
+					}
+				>
+					{t("deals.action.create")}
+				</Button>
 			</div>
 			<ContactBody
 				key={contact.id}

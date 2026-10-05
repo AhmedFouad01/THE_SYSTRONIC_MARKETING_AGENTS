@@ -88,11 +88,13 @@ for (const width of [360, 1280])
 					"aria-current",
 					"page",
 				);
-				// /leads (S4) and /contacts (S5) are real workspaces; the other routes are still placeholders
+				// /leads (S4), /contacts (S5) and /deals (S6) are real workspaces; the other routes are still placeholders
 				if (key === "leads")
 					await expect(page.getByTestId("leads-view")).toBeVisible();
 				else if (key === "contacts")
 					await expect(page.getByTestId("contacts-view")).toBeVisible();
+				else if (key === "deals")
+					await expect(page.getByTestId("deals-view")).toBeVisible();
 				else
 					await expect(page.getByTestId("route")).toHaveText(
 						key === "reporting" ? "/reporting-v2" : `/${key}`,
@@ -164,11 +166,11 @@ test("session survives reload within the tab and 401 on restore returns to the g
 	page,
 }) => {
 	const f = await fixture();
-	await page.goto("/app/deals");
+	await page.goto("/app/pipeline");
 	await connect(page, f);
 	await page.reload();
 	await expect(page.getByTestId("actor")).toBeVisible();
-	await expect(page.getByTestId("route")).toHaveText("/deals");
+	await expect(page.getByTestId("route")).toHaveText("/pipeline");
 	await page.evaluate(() =>
 		sessionStorage.setItem(
 			"sy.session",

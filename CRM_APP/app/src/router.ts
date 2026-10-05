@@ -27,8 +27,9 @@ export function href(route: RoutePath): string {
 	return route === "/" ? `${BASE}/` : `${BASE}${route}`;
 }
 
-export function navigate(route: RoutePath): void {
-	history.pushState(null, "", href(route));
+/** `search` is an optional query string including the leading `?` (context hand-off between screens). */
+export function navigate(route: RoutePath, search = ""): void {
+	history.pushState(null, "", href(route) + search);
 	window.dispatchEvent(new PopStateEvent("popstate"));
 }
 

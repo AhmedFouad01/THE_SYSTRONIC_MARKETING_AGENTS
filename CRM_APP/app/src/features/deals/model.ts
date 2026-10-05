@@ -1,0 +1,420 @@
+// Pure deals view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (deals, transitions,
+// history, pipelines). Stage writes go ONLY through the transition command; PATCH never carries stage_id.
+import { isApiError } from "../../api/errors.ts";
+
+export type StageOutcome = "won" | "lost" | null;
+export type Stage = {
+	id: string;
+	name: string;
+	outcome: StageOutcome;
+	position: number;
+	archived: boolean;
+};
+export type Edge = { from_stage: string; to_stage: string };
+export type Pipeline = {
+	id: string;
+	name: string;
+	stages: Stage[];
+	transitions: Edge[];
+};
+
+export type Deal = {
+	id: string;
+	contact_id: string;
+	lead_id: string | null;
+	pipeline_id: string;
+	stage_id: string;
+	owner_id: string | null;
+	title: string;
+	amount_minor: number;
+	currency: string;
+	version: number;
+};
+export type Assignee = { id: string; name: string };
+export type Contact = { id: string; display_name: string };
+export type LeadRef = { id: string; title: string; contact_id: string };
+
+export type HistoryEntry = {
+	id: string;
+	from_stage: string;
+	to_stage: string;
+	deal_version: number;
+	reason: string;
+	occurred_at: string;
+	actor_id: string;
+};
+
+export type DealRow = Deal & {
+	contactName: string;
+	ownerName: string;
+	pipelineName: string;
+	stageName: string;
+	stageOutcome: StageOutcome;
+	/** Major units (amount_minor / 100) for formatMoney. */
+	value: number;
+};
+
+// ---- money ------------------------------------------------------------------------------------------------
+
+export const MINOR_PER_MAJOR = 100;
+export const minorToMajor = (minor: number): number => minor / MINOR_PER_MAJOR;
+
+/** Decimal text ("1250", "1250.5", "1,250.50" not accepted) -> integer minor units, or null if invalid. */
+export function parseMajorToMinor(text: string): number | null {
+	const s = text.trim();
+	if (s === "") return 0;
+	if (!/^\d{1,12}(\.\d{1,2})?$/.test(s)) return null;
+	return Math.round(Number(s) * MINOR_PER_MAJOR);
+}
+
+/** formatMoney is passed in (useI18n().formatMoney) so the pure model stays locale-agnostic. */
+export function dealValueText(
+	deal: Pick<Deal, "amount_minor" | "currency">,
+	formatMoney: (
+		v: number,
+		o?: { currency?: string; compact?: boolean },
+	) => string,
+): string {
+	return formatMoney(minorToMajor(deal.amount_minor), {
+		currency: deal.currency,
+	});
+}
+
+// ---- pipeline ---------------------------------------------------------------------------------------------
+
+export const orderedStages = (p: Pipeline): Stage[] =>
+	[...p.stages].sort(
+		(a, b) => a.position - b.position || a.name.localeCompare(b.name),
+	);
+
+/** Stages a new deal may start in: non-archived, non-terminal (contract: initial stage must be nonterminal). */
+export const initialStages = (p: Pipeline): Stage[] =>
+	orderedStages(p).filter((s) => !s.archived && s.outcome === null);
+
+/**
+ * Allowed targets from a stage = the pipeline's configured edges only (server returns 422 INVALID_TRANSITION
+ * otherwise), excluding archived stages. Never offers the current stage.
+ */
+export function allowedTargets(
+	p: Pipeline | undefined,
+	fromStageId: string,
+): Stage[] {
+	if (p === undefined) return [];
+	const to = new Set(
+		p.transitions
+			.filter((e) => e.from_stage === fromStageId)
+			.map((e) => e.to_stage),
+	);
+	return orderedStages(p).filter(
+		(s) => to.has(s.id) && !s.archived && s.id !== fromStageId,
+	);
+}
+
+export const stageOf = (
+	p: Pipeline | undefined,
+	stageId: string,
+): Stage | undefined => p?.stages.find((s) => s.id === stageId);
+
+export function toRows(
+	deals: readonly Deal[],
+	contacts: ReadonlyMap<string, string>,
+	owners: ReadonlyMap<string, string>,
+	pipelines: ReadonlyMap<string, Pipeline>,
+	labels: { unassigned: string; unknownContact: string; unknownStage: string },
+): DealRow[] {
+	return deals.map((d) => {
+		const p = pipelines.get(d.pipeline_id);
+		const s = stageOf(p, d.stage_id);
+		return {
+			...d,
+			contactName: contacts.get(d.contact_id) ?? labels.unknownContact,
+			ownerName: d.owner_id
+				? (owners.get(d.owner_id) ?? d.owner_id.slice(0, 8))
+				: labels.unassigned,
+			pipelineName: p?.name ?? "",
+			stageName: s?.name ?? labels.unknownStage,
+			stageOutcome: s?.outcome ?? null,
+			value: minorToMajor(d.amount_minor),
+		};
+	});
+}
+
+export type BuiltInView = "all" | "mine" | "open";
+export const BUILT_IN_VIEWS: readonly BuiltInView[] = ["all", "mine", "open"];
+
+export function filterBuiltInView(
+	rows: readonly DealRow[],
+	view: BuiltInView,
+	actor: string | null,
+): DealRow[] {
+	if (view === "all") return [...rows];
+	if (view === "mine")
+		return actor === null ? [] : rows.filter((r) => r.owner_id === actor);
+	return rows.filter((r) => r.stageOutcome === null);
+}
+
+/** Loaded pages + locally confirmed writes: newer version wins; overlay-only entries (new deals) come first. */
+export function mergeLatest(
+	items: readonly Deal[],
+	overlay: ReadonlyMap<string, Deal>,
+): Deal[] {
+	const seen = new Set<string>();
+	const merged = items.map((i) => {
+		seen.add(i.id);
+		const o = overlay.get(i.id);
+		return o !== undefined && o.version > i.version ? o : i;
+	});
+	const created = [...overlay.values()]
+		.filter((o) => !seen.has(o.id))
+		.reverse();
+	return [...created, ...merged];
+}
+
+// ---- Lead -> Contact -> Deal context ----------------------------------------------------------------------
+
+export type DealContext = {
+	contactId: string;
+	leadId: string | null;
+	/** Set once a deal was created from this context (suppresses re-opening the dialog on refresh). */
+	dealId: string | null;
+};
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const uuidOrNull = (v: string | null): string | null =>
+	v !== null && UUID.test(v) ? v : null;
+
+/** Parse `?contact=&lead=&deal=` (ids validated as UUIDs). No valid contact id = no context. */
+export function parseDealContext(search: string): DealContext | null {
+	const q = new URLSearchParams(search);
+	const contactId = uuidOrNull(q.get("contact"));
+	const dealId = uuidOrNull(q.get("deal"));
+	if (contactId === null) return null;
+	return { contactId, leadId: uuidOrNull(q.get("lead")), dealId };
+}
+
+/** Inverse of parseDealContext: a query string starting with `?`, or "" when there is no context. */
+export function dealContextSearch(c: DealContext | null): string {
+	if (c === null) return "";
+	const q = new URLSearchParams({ contact: c.contactId });
+	if (c.leadId) q.set("lead", c.leadId);
+	if (c.dealId) q.set("deal", c.dealId);
+	return `?${q.toString()}`;
+}
+
+/** Initial selection id from `?select=` (used by Leads/Contacts when linked back from the context strip). */
+export function parseSelect(search: string): string | null {
+	return uuidOrNull(new URLSearchParams(search).get("select"));
+}
+
+// ---- create -----------------------------------------------------------------------------------------------
+
+export type NewDealInput = {
+	title: string;
+	contactId: string;
+	pipelineId: string;
+	stageId: string;
+	amount: string;
+	currency: string;
+	ownerId: string;
+};
+export type NewDealField =
+	| "title"
+	| "contactId"
+	| "pipelineId"
+	| "stageId"
+	| "amount"
+	| "currency";
+export type DealIssue = "required" | "tooLong" | "amount" | "currency";
+export type NewDealErrors = Partial<Record<NewDealField, DealIssue>>;
+
+export const EMPTY_NEW_DEAL: NewDealInput = {
+	title: "",
+	contactId: "",
+	pipelineId: "",
+	stageId: "",
+	amount: "",
+	currency: "EGP",
+	ownerId: "",
+};
+const MAX_TITLE = 160;
+
+export function validateNewDeal(i: NewDealInput): NewDealErrors {
+	const e: NewDealErrors = {};
+	if (i.title.trim() === "") e.title = "required";
+	else if (i.title.trim().length > MAX_TITLE) e.title = "tooLong";
+	if (i.contactId === "") e.contactId = "required";
+	if (i.pipelineId === "") e.pipelineId = "required";
+	if (i.stageId === "") e.stageId = "required";
+	if (parseMajorToMinor(i.amount) === null) e.amount = "amount";
+	if (!/^[A-Z]{3}$/.test(i.currency.trim().toUpperCase()))
+		e.currency = "currency";
+	return e;
+}
+
+/** POST /v1/deals body. command_id doubles as the Idempotency-Key. */
+export function buildCreateBody(
+	i: NewDealInput,
+	leadId: string | null,
+	commandId: string,
+): Record<string, unknown> {
+	return {
+		command_id: commandId,
+		contact_id: i.contactId,
+		...(leadId ? { lead_id: leadId } : {}),
+		pipeline_id: i.pipelineId,
+		stage_id: i.stageId,
+		title: i.title.trim(),
+		amount_minor: parseMajorToMinor(i.amount) ?? 0,
+		currency: i.currency.trim().toUpperCase(),
+		...(i.ownerId ? { owner_id: i.ownerId } : {}),
+	};
+}
+
+export type KeyMemo = { fingerprint: string; key: string };
+
+/** Same payload retried reuses its key (server replays); a changed payload needs a new key. */
+export function keyFor(
+	prev: KeyMemo | null,
+	input: NewDealInput,
+	leadId: string | null,
+	newKey: () => string,
+): KeyMemo {
+	const fingerprint = JSON.stringify(buildCreateBody(input, leadId, ""));
+	return prev !== null && prev.fingerprint === fingerprint
+		? prev
+		: { fingerprint, key: newKey() };
+}
+
+export type CreateErrorKind =
+	| "validation"
+	| "stage"
+	| "assignment"
+	| "conflict"
+	| "forbidden"
+	| "network"
+	| "other";
+
+export function classifyCreateError(e: unknown): CreateErrorKind {
+	if (!isApiError(e)) return "other";
+	if (e.kind === "forbidden")
+		return e.code === "ASSIGNMENT_DENIED" ? "assignment" : "forbidden";
+	if (e.kind === "network") return "network";
+	if (e.kind === "conflict" || e.kind === "version_conflict") return "conflict";
+	if (e.status === 422)
+		return e.code === "INVALID_STAGE" ? "stage" : "validation";
+	return "other";
+}
+
+// ---- detail edit ------------------------------------------------------------------------------------------
+
+export type EditDraft = {
+	title: string;
+	amount: string;
+	currency: string;
+	ownerId: string;
+};
+
+const majorText = (minor: number) =>
+	Number.isInteger(minor / MINOR_PER_MAJOR)
+		? String(minor / MINOR_PER_MAJOR)
+		: (minor / MINOR_PER_MAJOR).toFixed(2);
+
+export const draftOf = (d: Deal): EditDraft => ({
+	title: d.title,
+	amount: majorText(d.amount_minor),
+	currency: d.currency,
+	ownerId: d.owner_id ?? "",
+});
+
+export function validateEdit(d: EditDraft): NewDealErrors {
+	const e: NewDealErrors = {};
+	if (d.title.trim() === "") e.title = "required";
+	else if (d.title.trim().length > MAX_TITLE) e.title = "tooLong";
+	if (parseMajorToMinor(d.amount) === null) e.amount = "amount";
+	if (!/^[A-Z]{3}$/.test(d.currency.trim().toUpperCase()))
+		e.currency = "currency";
+	return e;
+}
+
+/** PATCH body with only changed allowed fields (title/owner_id/amount_minor/currency) + expected_version. */
+export function buildPatchBody(
+	deal: Deal,
+	d: EditDraft,
+	commandId: string,
+): Record<string, unknown> | null {
+	if (Object.keys(validateEdit(d)).length > 0) return null;
+	const changes: Record<string, unknown> = {};
+	if (d.title.trim() !== deal.title) changes.title = d.title.trim();
+	const minor = parseMajorToMinor(d.amount);
+	if (minor !== null && minor !== deal.amount_minor)
+		changes.amount_minor = minor;
+	const cur = d.currency.trim().toUpperCase();
+	if (cur !== deal.currency) changes.currency = cur;
+	if (d.ownerId !== "" && d.ownerId !== deal.owner_id)
+		changes.owner_id = d.ownerId;
+	if (Object.keys(changes).length === 0) return null;
+	return { command_id: commandId, expected_version: deal.version, ...changes };
+}
+
+export const isDirty = (deal: Deal, d: EditDraft): boolean =>
+	d.title.trim() !== deal.title ||
+	parseMajorToMinor(d.amount) !== deal.amount_minor ||
+	d.currency.trim().toUpperCase() !== deal.currency ||
+	(d.ownerId !== "" && d.ownerId !== deal.owner_id);
+
+// ---- transitions ------------------------------------------------------------------------------------------
+
+export const MAX_REASON = 500;
+
+export type TransitionIssue = "reasonRequired" | "reasonTooLong";
+
+/** Lost needs a non-empty reason (client mirrors server LOSS_REASON_REQUIRED); others send an empty reason. */
+export function validateReason(
+	target: Stage,
+	reason: string,
+): TransitionIssue | null {
+	if (target.outcome === "lost" && reason.trim() === "")
+		return "reasonRequired";
+	if (reason.trim().length > MAX_REASON) return "reasonTooLong";
+	return null;
+}
+
+export function buildTransitionBody(
+	deal: Deal,
+	target: Stage,
+	reason: string,
+	commandId: string,
+): Record<string, unknown> {
+	return {
+		command_id: commandId,
+		to_stage_id: target.id,
+		expected_version: deal.version,
+		reason: reason.trim(),
+	};
+}
+
+export type TransitionErrorKind =
+	| "conflict"
+	| "forbidden"
+	| "invalid"
+	| "reason"
+	| "network"
+	| "other";
+
+export function classifyTransitionError(e: unknown): TransitionErrorKind {
+	if (!isApiError(e)) return "other";
+	if (e.kind === "version_conflict") return "conflict";
+	if (e.kind === "forbidden") return "forbidden";
+	if (e.kind === "network") return "network";
+	if (e.code === "LOSS_REASON_REQUIRED") return "reason";
+	if (e.code === "INVALID_TRANSITION") return "invalid";
+	return "other";
+}
+
+/** POST /transitions returns {id, version, stage_id}; fold it into the local deal copy. */
+export function applyTransition(
+	deal: Deal,
+	result: { version: number; stage_id: string },
+): Deal {
+	return { ...deal, stage_id: result.stage_id, version: result.version };
+}

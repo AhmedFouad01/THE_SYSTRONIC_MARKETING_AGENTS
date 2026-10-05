@@ -27,6 +27,7 @@ import {
 	fetchLeadsPage,
 	patchLead,
 } from "./api.ts";
+import { parseSelect } from "../deals/model.ts";
 import { LeadDetail } from "./LeadDetail.tsx";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
@@ -101,7 +102,9 @@ export function LeadsView() {
 	);
 
 	const [view, setView] = useState<BuiltInView>("all");
-	const [activeId, setActiveId] = useState<string | null>(null);
+	const [activeId, setActiveId] = useState<string | null>(() =>
+		parseSelect(location.search),
+	);
 	const [newOpen, setNewOpen] = useState(false);
 
 	const contactNames = useMemo(

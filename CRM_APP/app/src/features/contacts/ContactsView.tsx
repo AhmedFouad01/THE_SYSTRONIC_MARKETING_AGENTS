@@ -1,3 +1,4 @@
+import { parseSelect } from "../deals/model.ts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
 	isApiError,
@@ -86,7 +87,9 @@ export function ContactsView() {
 	);
 
 	const [view, setView] = useState<BuiltInView>("all");
-	const [activeId, setActiveId] = useState<string | null>(null);
+	const [activeId, setActiveId] = useState<string | null>(() =>
+		parseSelect(location.search),
+	);
 	const [mergeWith, setMergeWith] = useState<Duplicate | null>(null);
 
 	const ownerNames = useMemo(
