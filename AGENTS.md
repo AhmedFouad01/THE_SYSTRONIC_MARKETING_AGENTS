@@ -2,7 +2,7 @@
 
 ## Boot (all runtimes) — 2026-10-04
 
-Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). **Rule: every task is done by the routed TSST team with its skills — never ad hoc by the model** (`TSST/core/rules.md` Must 9). Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [Gemini](TSST/context/adapters/gemini.md) · [ChatGPT](TSST/context/adapters/chatgpt.md). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
+Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). **Rule: every task is done by the routed TSST team with its skills — never ad hoc by the model** (`TSST/core/rules.md` Must 9). Every runtime routes tasks by the **Universal task routing** section below. Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [ChatGPT](TSST/context/adapters/chatgpt.md) (manual bridge) · Gemini/Antigravity retired (ADR-004). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
 
 Use [TSST Lead](TSST/LEAD/AGENT.md) as the executive role and the user's single direct interface. Consult the relevant sections of [team governance](TSST/TEAM_CONSTITUTION.md), [readiness](TSST/READINESS_REPORT.md) and the team skill map in [TSST/teams/](TSST/teams/README.md) before selecting skills; do not load whole registries. Specialist names are CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG.
 
@@ -20,29 +20,32 @@ When a task requests actual social creative or video, load `TSST/CREATIVE/AGENT.
 
 [DEV_AG](TSST/DEV/AGENT.md) is a governance-`APPROVED` Software Engineering & Solutions specialist under TSST Lead with 16 `UNVALIDATED` core skills. Use its [lightweight registry](TSST/DEV/SKILL_REGISTRY.md) only for relevant routed technical scope. User approval is recorded in [TSST-ADR-002](TSST/decisions/TSST-ADR-002.md). Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted. DEV_AG remains NOT_READY; existing specialist authority and readiness gates remain unchanged.
 
-<!-- TSST-RUNTIME-MODEL-ROUTER-V0.1-BEGIN -->
-## TSST runtime model routing — Claude Code
+<!-- TSST-UNIVERSAL-ROUTING-BEGIN (ADR-003/004) -->
+## Universal task routing — every runtime (Claude Code, Codex)
 
-> Runtime-specific (Claude Code). Logical tiers: `TSST/context/models.yaml`; this section is the Claude mapping, mirrored in `TSST/context/adapters/claude.md`. Codex/Gemini/ChatGPT ignore this section and use their own adapter.
+The runtime's **main session is the TSST Lead**. For every task, before any work:
 
-When this repository is opened in Claude Code, treat the main conversation as the TSST Lead / EXECUTIVE context. Keep it small. For non-trivial tasks, route work before doing broad reads or long execution in the main conversation.
+1. **Boot** — `TSST/context/boot.md` (brand, project, checkpoint, rules).
+2. **TEAM** — `TSST/context/router.yaml#team_routing`.
+3. **AGENT** — `TSST/context/roster.yaml#route`: marketing → `tsst-lens` (paid media/measurement → `tsst-spark`) · studio → `tsst-creative` · build → `tsst-dev` · reads/inventory only → `tsst-reader` · decisions/acceptance → stay in the Lead.
+4. **SKILLS** — `python TSST/skills/build_index.py --team <team>` → pick ≤3 ids (`--id <ID>` for a path). No fit → `SKILL_GAP` → `TSST-CTX-SK-023`.
+5. **TIER** — the agent's default tier in `roster.yaml` (FAST/WORK/CODE/DEEP); raise only on evidence.
+6. **MODEL** — `TSST/bus/runtimes.yaml#<your runtime>.tier_<TIER>`: only models **your plan actually has**. Never name a model your runtime does not list; if one is missing use the next tier up and say so.
+7. **DISPATCH** — spawn your runtime's generated agent `tsst-<id>` (it already carries the right model) with the Skill Plan block: `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER / ACCEPTANCE / SKILL_GAP`.
+8. **ACCEPT** — reject any return without `Skills used:`; record `skill_friction`. Rules R1–R10: `TSST/core/rules.md`.
 
-Runtime routes:
-- `FAST` → `tsst-fast-worker` (Haiku) for extraction, classification, normalization, deduplication, short summaries, and low-risk bulk first passes.
-- codebase exploration → `Explore` (Haiku) for read-only file/symbol discovery and repository mapping.
-- `EXECUTION` → `tsst-execution-worker` (Sonnet) for normal analysis, CRM/product investigation, research synthesis, planning, debugging, tests, and bounded implementation.
-- `CODE` → `tsst-code-worker` (Sonnet, higher effort) for repo-heavy implementation, remediation, technical audits, migrations, test work, and code review.
-- `EXECUTIVE` → remain in the main TSST Lead conversation. Architecture boundaries, high-impact ambiguity, cross-agent conflict, irreversible decisions, and final critical acceptance are not delegated to a cheaper worker merely to save tokens.
+| | Claude Code (Claude Pro) | Codex (ChatGPT Plus) |
+|---|---|---|
+| team agents (generated) | `.claude/agents/tsst-*.md` | `.codex/agents/tsst-*.toml` |
+| tier → model for your plan | `TSST/context/adapters/claude.md` | `TSST/context/adapters/codex.md` |
+| DEEP (Lead) | main session | main session; DEEP-only decisions per the Codex adapter |
+| enforcement | dispatch hook + bus | bus + generated agent instructions |
+| TSST skill auto-load | none (index only) | `.agents/skills/tsst-router` |
 
-Delegation rules:
-1. Do not perform broad repository reading in the main EXECUTIVE context when `Explore`, FAST, EXECUTION, or CODE can do it in an isolated context.
-2. Do not pass an ad-hoc model override when invoking the TSST workers; rely on their project agent definition so the intended runtime model is actually used.
-3. A large input is a reason to partition/compress, not a reason to use Opus.
-4. If a worker returns `ESCALATE_TO_EXECUTION` or `ESCALATE_TO_EXECUTIVE`, send only the compressed evidence packet upward; do not replay the raw corpus.
-5. The project setting `CLAUDE_CODE_SUBAGENT_MODEL=sonnet` is only the fallback for subagents without an explicit model. It must not override the Haiku workers or create executive authority.
-6. Model routing never grants tool/action authority. Existing TSST decision rights remain controlling.
-7. End meaningful work with an evidence-backed checkpoint/handoff.
-
-Runtime verification: while a subagent is running, `/tasks` must show its actual model. If a TSST worker runs on an unexpected model, stop relying on the routing claim and diagnose the Claude Code configuration before continuing cost-sensitive work.
-<!-- TSST-RUNTIME-MODEL-ROUTER-V0.1-END -->
+Model names live only in `TSST/bus/runtimes.yaml` and the adapters (core rule 8); generated agents
+already carry the right model. Regenerate agents with `python TSST/context/gen_runtime_agents.py`. Runtime mechanics:
+`TSST/context/adapters/<runtime>.md`. Antigravity/Gemini is **retired** (ADR-004).
+A large input is a reason to partition (reader), not to use a bigger model. Model routing never
+grants action authority; `TSST/TSST_DECISION_RIGHTS.md` stays controlling.
+<!-- TSST-UNIVERSAL-ROUTING-END -->
 

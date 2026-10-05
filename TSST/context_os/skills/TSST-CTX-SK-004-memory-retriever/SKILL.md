@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-004-memory-retriever
+description: "Use when a task needs facts, history or state that is not already in the bounded context, to retrieve the right memory."
+id: TSST-CTX-SK-004
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Memory Retriever
 ID: TSST-CTX-SK-004
 Status: UNVALIDATED

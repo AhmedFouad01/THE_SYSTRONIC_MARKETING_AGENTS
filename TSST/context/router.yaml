@@ -47,8 +47,10 @@ team_routing:
 
 # Step 12: skill routing — load only the matched skill packages listed in the team file.
 skill_routing:
-  rule: match task verbs to the team's skill map; load at most 3 skills unless the plan names more
-  core_skills: TSST/context_os/skills/   # TSST CORE pool (TSST-CTX-SK-001…022)
+  index: TSST/skills/index.yaml          # ONE entry point (generated; TSST-ADR-003). Never read whole: `python TSST/skills/build_index.py --team <team>` / `--id <ID>`
+  rule: write a Skill Plan (TEAM/AGENT/SKILLS/NOT_SELECTED/TIER/ACCEPTANCE/SKILL_GAP); ≤3 skills unless justified
+  gap: SKILL_GAP → TSST/skills/core/tsst-ctx-sk-023-skill-intake (never improvise)
+  core_skills: TSST/context_os/skills/   # TSST CORE pool (TSST-CTX-SK-001…022); SK-023+ under TSST/skills/core/
 
 # Mapping from boot steps to the existing Context OS skills (detailed procedures).
 context_os_skills:

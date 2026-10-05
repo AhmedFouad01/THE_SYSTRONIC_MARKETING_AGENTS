@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-006-project-isolation-guard
+description: "Use when any retrieval or handoff can touch more than one Real Memory project, to keep projects isolated."
+id: TSST-CTX-SK-006
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Project Isolation Guard
 ID: TSST-CTX-SK-006
 Status: UNVALIDATED

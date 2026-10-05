@@ -20,6 +20,28 @@ may never relax these. Historical governance remains in `TSST/TEAM_CONSTITUTION.
    state which agent files and skills were applied; the Lead rejects work that shows none.
    On the bus this is enforced by `team`/`skills` fields and `done --skills-used`.
 
+## Team roster & skills (TSST-ADR-003, 2026-10-05)
+- **R1 Fixed roster, every runtime.** Deliverables come only from LENS_AG, SPARK_AG, CREATIVE_AG, DEV_AG
+  (runtime agents `tsst-lens|spark|creative|dev`) under the Lead. No temporary or generic
+  agent delivers TSST work. Roster changes need an ADR.
+- **R2 Utility readers.** `tsst-reader` (Claude: also `Explore`) only read, inventory, classify;
+  their output is input, never a deliverable.
+- **R3 Skill Plan first.** No dispatch without `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER /
+  ACCEPTANCE / SKILL_GAP` (template: `TSST/skills/README.md`). Enforced by the dispatch hook
+  and the bus.
+- **R4 ≤3 skills** per dispatch unless the plan names and justifies more.
+- **R5 Index only.** Find skills through `TSST/skills/index.yaml` (team slice). Never load a
+  whole registry or every agent file.
+- **R6 Lead judges, team executes.** Lead skills (TSST-LEAD-*) are for decision and review;
+  execution uses the specialist's method skills.
+- **R7 Gap → intake.** No matching skill = `SKILL_GAP` → `TSST-CTX-SK-023`. Never fill a gap
+  with the model's general judgement.
+- **R8 External skills** = security review → user approval → `UNVALIDATED`. File existence is
+  never validation.
+- **R9 Evolution.** Skills change by version + changelog line; agents report `skill_friction`;
+  promotion only with CTX-SK-018 evidence.
+- **R10 Evidence.** Every deliverable lists `Skills used:`; the Lead rejects work without it.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes

@@ -16,5 +16,5 @@ Compatibility: SPARK_AG keeps its ID and skills; in routing it is the MARKETING
 performance/paid-media capability rather than a separate top-level manager. Any formal
 roster change requires a TSST ADR approved by the user (not done here).
 
-Skill loading: pick from the team's map below; load ≤3 packages unless the plan names
+Skill loading (TSST-ADR-003): one entry point `TSST/skills/index.yaml`; write a Skill Plan; load ≤3 packages unless the plan names
 more. Never load a whole registry.

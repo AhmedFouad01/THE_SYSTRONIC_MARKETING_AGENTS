@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-003-source-authority-resolver
+description: "Use when two or more sources can answer the same project-state or decision question, to resolve which source is authoritative."
+id: TSST-CTX-SK-003
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Source Authority Resolver
 ID: TSST-CTX-SK-003
 Status: UNVALIDATED

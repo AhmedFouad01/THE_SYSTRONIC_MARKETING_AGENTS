@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-019-memory-hygiene
+description: "Use when duplicate, stale, superseded or low-value durable records accumulate, to clean up memory."
+id: TSST-CTX-SK-019
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Memory Hygiene
 ID: TSST-CTX-SK-019
 Status: UNVALIDATED

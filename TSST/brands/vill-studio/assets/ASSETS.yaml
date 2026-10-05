@@ -1,2 +1,13 @@
 # vill-studio — approved identity in final/ (see TSST/core/brand-assets.md)
-final: []
+final:
+  - file: final/Logo.png
+    what: primary logo master, 1080x1080 PNG (navy background, white mark, orange accent)
+    colours_sampled: {navy: "#040136", white: "#F3F4F6", orange: "#EE8C01"}   # Lead pixel count 2026-10-05
+    approved_by: user (uploaded to final/ in chat, 2026-10-05)
+    date: 2026-10-05
+  - file: final/Logo.psd
+    what: layered source of the primary logo
+    approved_by: user (uploaded to final/ in chat, 2026-10-05)
+    date: 2026-10-05
+# proposals/ (history only, never authority): 12 ChatGPT images (2026-09-20), MarketResearch (1).pdf,
+# VILL_STUDIO_Growth_Marketing_Plan_2026_V2.pdf — uploaded 2026-10-05.

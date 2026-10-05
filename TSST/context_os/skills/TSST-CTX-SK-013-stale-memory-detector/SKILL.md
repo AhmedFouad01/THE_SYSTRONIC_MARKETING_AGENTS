@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-013-stale-memory-detector
+description: "Use when a task depends on mutable, time-sensitive, provider, policy, runtime or versioned information, to detect stale memory."
+id: TSST-CTX-SK-013
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Stale Memory Detector
 ID: TSST-CTX-SK-013
 Status: UNVALIDATED

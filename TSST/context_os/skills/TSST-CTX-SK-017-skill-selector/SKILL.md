@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-017-skill-selector
+description: "Use when a task can match multiple registered skills, to select the smallest set that covers the acceptance criteria."
+id: TSST-CTX-SK-017
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Skill Selector
 ID: TSST-CTX-SK-017
 Status: UNVALIDATED

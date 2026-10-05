@@ -1,11 +1,19 @@
 # vill-studio — status
 
-updated: 2026-10-04
+updated: 2026-10-05
 
 ## Current
-Not recorded in repo (by design — pointer-only). Current state lives in the canonical
-memory source (`memory/source.md`) and is fetched on demand via the runtime's access
-path. No TSST project registered yet.
+Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
+- Phase 1 (C7-VILL-01..06): **DELIVERED 2026-10-05** — Strategy Baseline v0.2 + Brand Look Direction v0.2
+  approved by user (`ACCEPTANCE.md`).
+- Phase 2 brand look v0.3/v1.0 (C7-VILL-07..10): **cancelled / superseded** by the logo-only direction.
+- Phase 2c final identity from the approved logo: **ACTIVE** — `C7-VILL-11` (below).
+Durable detail stays in the canonical memory source (`memory/source.md`).
+
+## Active (2026-10-05)
+Brand identity finalisation from the approved logo (`assets/final/Logo.png`: navy #040136,
+orange #EE8C01, white #F3F4F6) — bus task `C7-VILL-11` → codex / studio / tsst-creative.
+Brief: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF_C7-VILL-11.md`.
 
 ## Next action
 On the first task for this brand: resolve canonical source → record active project in

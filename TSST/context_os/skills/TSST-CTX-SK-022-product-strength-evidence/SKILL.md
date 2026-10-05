@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-022-product-strength-evidence
+description: "Use when the Lead must identify, rank or communicate product strengths or differentiators, to ground them in evidence."
+id: TSST-CTX-SK-022
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Product Strength Evidence
 ID: TSST-CTX-SK-022
 Status: UNVALIDATED

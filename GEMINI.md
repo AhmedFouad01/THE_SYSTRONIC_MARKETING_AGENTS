@@ -1,3 +1,5 @@
+> **RETIRED 2026-10-05 (TSST-ADR-004).** Antigravity/Gemini is no longer a TSST runtime. Kept as history; do not route work here.
+
 # TSST — Gemini Runtime Adapter v0.1
 
 > **Boot first (2026-10-04):** follow `TSST/context/boot.md` (portable core) and `TSST/context/adapters/gemini.md` (this runtime's mapping). Brand/project state: `TSST/core/portfolio.yaml` → `TSST/brands/<brand>/`. Team names below map to `TSST/teams/` (MARKETING=LENS+SPARK performance capability, STUDIO=CREATIVE, BUILD=DEV). Where this file conflicts with boot.md on load order, boot.md wins. **Rule: every task is done by the routed TSST team with its skills, never ad hoc (`TSST/core/rules.md` Must 9); brand material status by folder (`TSST/core/brand-assets.md`); bus id `gemini` (`TSST/context/bus.md`).**

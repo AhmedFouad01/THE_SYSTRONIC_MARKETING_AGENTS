@@ -1,0 +1,26 @@
+id: C7-VILL-11
+title: "VILL: review all Studio work + final brand identity from logo navy/orange (v1.1) + re-render templates"
+kind: work
+status: ready
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: WORK
+team: studio
+skills: [TSST-CREATIVE-SK-006, TSST-CREATIVE-SK-001, TSST-CREATIVE-SK-010]
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF_C7-VILL-11.md
+read: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/, TSST/brands/vill-studio/assets/, TSST/CREATIVE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/REVIEW_STUDIO_C7-VILL-11.md, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_LOOK_v1.1.md, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/assets/]
+after: []
+done_when: REVIEW_STUDIO_C7-VILL-11.md + BRAND_LOOK_v1.1.md exist; all masters re-rendered with v1.1 palette and QA'd; assets/README.md updated; skills-used lists the 3 skills
+issued_by: claude
+created: "2026-10-05T16:47Z"
+rounds: 0
+max_rounds: 2
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

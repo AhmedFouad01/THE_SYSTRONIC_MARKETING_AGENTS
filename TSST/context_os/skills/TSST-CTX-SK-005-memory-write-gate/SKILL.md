@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-005-memory-write-gate
+description: "Use when execution produces information that may deserve durable memory, to gate what is written to memory."
+id: TSST-CTX-SK-005
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Memory Write Gate
 ID: TSST-CTX-SK-005
 Status: UNVALIDATED

@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-016-progress-recovery
+description: "Use when a fresh session, model switch, interrupted run or handoff must resume work, to recover progress."
+id: TSST-CTX-SK-016
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Progress Recovery
 ID: TSST-CTX-SK-016
 Status: UNVALIDATED

@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-011-tool-router
+description: "Use when more than one tool, MCP or source connector could satisfy a task, to pick the right tool."
+id: TSST-CTX-SK-011
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Tool Router
 ID: TSST-CTX-SK-011
 Status: UNVALIDATED

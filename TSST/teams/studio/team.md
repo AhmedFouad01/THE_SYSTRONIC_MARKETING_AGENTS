@@ -22,7 +22,7 @@ Mandatory for final assets: `TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md`,
 | video edit / sound / grading | 016, 017, 018 |
 | export pipeline & asset QA | 019 |
 | product UX (IA, nav, grids, drawers, command palette, forms, RTL, WCAG 2.2, responsive, dashboards, usability QA) | 020–030 |
-| runtime production (Gemini) | `.agents/skills/tsst-creative-production`, `tsst-image-production`, `tsst-video-production`, `tsst-final-asset-qa` |
+| runtime production (Codex) | `.agents/skills/tsst-router` (Antigravity-era wrappers archived: `TSST/migration/retired-agents-skills-2026-10-05`) |
 
 Tiers: IMAGE / VIDEO for generation; WORK for direction/QA writing; DEEP only for
 brand-critical acceptance conflicts.

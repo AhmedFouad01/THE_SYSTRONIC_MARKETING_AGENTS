@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-009-session-checkpoint
+description: "Use when closing a non-trivial execution block, nearing compaction or planning a handoff to a fresh session, to write a checkpoint."
+id: TSST-CTX-SK-009
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Session Checkpoint
 ID: TSST-CTX-SK-009
 Status: UNVALIDATED

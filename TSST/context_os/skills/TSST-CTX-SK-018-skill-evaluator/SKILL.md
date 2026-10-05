@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-018-skill-evaluator
+description: "Use when a new or materially changed skill needs evidence before promotion, to evaluate the skill."
+id: TSST-CTX-SK-018
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Skill Evaluator
 ID: TSST-CTX-SK-018
 Status: UNVALIDATED

@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-020-large-project-planner
+description: "Use when work spans multiple milestones, teams, gates or sessions, to plan a large project."
+id: TSST-CTX-SK-020
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Large Project Planner
 ID: TSST-CTX-SK-020
 Status: UNVALIDATED

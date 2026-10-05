@@ -6,19 +6,29 @@ runtime mechanics; the operating method lives in boot.md.
 Bus runtime id: `claude` (lead). Near a usage limit: `release` open claims with a resume
 note and `limit claude --until <UTC>` (`TSST/context/bus.md`).
 
-## Tier → model (runtime configuration, not TSST truth)
-| tier | Claude Code mechanism |
-|---|---|
-| FAST | `tsst-fast-worker` / `Explore` subagents (Haiku) — `.claude/agents/` |
-| WORK | `tsst-execution-worker` (Sonnet) |
-| CODE | `tsst-code-worker` (Sonnet, higher effort) |
-| DEEP | main conversation (current Opus) — architecture, conflict, acceptance only |
-| IMAGE / VIDEO | not native — route to a runtime/tool that has them; never fake |
+## Plan: Claude Pro — roster → runtime agent (ADR-003/004)
+Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated from
+`TSST/context/roster.yaml` (`gen_runtime_agents.py`); never hand-edit them.
 
+| TSST agent | Claude subagent | default tier |
+|---|---|---|
+| LENS_AG (MARKETING manager) | `tsst-lens` | WORK (Sonnet · medium) |
+| SPARK_AG (MARKETING performance) | `tsst-spark` | WORK (Sonnet) |
+| CREATIVE_AG (+DESIGNER/MOTION) | `tsst-creative` | WORK (Sonnet) |
+| DEV_AG (BUILD manager) | `tsst-dev` | CODE (Sonnet, high effort) |
+| utility reader (R2) | `tsst-reader` / `Explore` | FAST (Haiku) |
+| TSST Lead | main conversation (current Opus) | DEEP — Skill Plan, architecture, conflict, acceptance |
+| IMAGE / VIDEO | not native — route to a runtime/tool that has them; never fake | — |
+
+- Dispatch guard: `.claude/settings.json` PreToolUse hook on `Agent` →
+  `TSST/context/hooks/agent_dispatch_guard.py` (team agents need `TEAM:` + indexed `SKILLS:`;
+  generic/retired agents refused; fails open on internal error).
+- New/edited `.claude/agents/*` files are picked up by the running session after a short delay
+  (observed 2026-10-05); if a dispatch says "agent type not found", wait or start a new session.
 - `.claude/settings.json` `CLAUDE_CODE_SUBAGENT_MODEL=sonnet` is a fallback only.
-- Do not pass ad-hoc model overrides to TSST workers. Verify with `/tasks`.
-- Workers return compressed evidence packets; subagent turn limits are short, so give
-  bounded tasks and ask for the report before the limit.
+- Do not pass ad-hoc model overrides to TSST agents. Verify with `/tasks`.
+- Agents return compressed packets with `Skills used:` and `skill_friction:`; subagent turn
+  limits are short, so give bounded tasks.
 
 ## Memory access
 - `drive:<path>` → local Google Drive for desktop: `G:\My Drive\<path>`.

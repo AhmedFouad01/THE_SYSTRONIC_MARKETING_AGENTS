@@ -1,3 +1,10 @@
+---
+name: tsst-ctx-sk-001-context-router
+description: "Use when a non-trivial TSST task needs project context, multiple sources, agents, tools or a resumable state, to build the smallest sufficient Context Pack."
+id: TSST-CTX-SK-001
+status: UNVALIDATED
+version: 0.1
+---
 # SKILL — Context Router
 ID: TSST-CTX-SK-001
 Status: UNVALIDATED
