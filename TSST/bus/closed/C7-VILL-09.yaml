@@ -1,7 +1,7 @@
 id: C7-VILL-09
 title: Independent CREATIVE QA of assets
 kind: review
-status: ready
+status: cancelled
 to: gemini
 needs: [fs_read, fs_write]
 tier: WORK

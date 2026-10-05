@@ -1,7 +1,7 @@
 id: C7-VILL-07
 title: Brand Look v0.3 around Logo.png + VI (CREATIVE)
 kind: work
-status: ready
+status: cancelled
 to: gemini
 needs: [fs_read, fs_write, shell]
 tier: WORK

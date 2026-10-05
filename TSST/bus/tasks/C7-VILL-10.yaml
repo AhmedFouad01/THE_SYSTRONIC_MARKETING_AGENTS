@@ -1,0 +1,23 @@
+id: C7-VILL-10
+title: Brand Look v1.0 from Logo.png + templates + mockups (overnight)
+kind: probe
+status: ready
+to: codex
+needs: [fs_read, fs_write, shell, image]
+tier: WORK
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF.md
+read: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/, TSST/CREATIVE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_LOOK_v1.0.md, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/assets/]
+after: []
+done_when: BRIEF Phase 2b steps 1-3 complete; result = assets/README.md listing files, sources, CONCEPT labels and self-QA; no publication or spend
+issued_by: claude
+created: "2026-10-05T01:51Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:

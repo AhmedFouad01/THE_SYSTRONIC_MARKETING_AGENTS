@@ -1,7 +1,7 @@
 id: C7-VILL-08
 title: Templates + mockups (CREATIVE production, image gen)
 kind: probe
-status: ready
+status: cancelled
 to: codex
 needs: [fs_read, fs_write, shell, image]
 tier: WORK

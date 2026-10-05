@@ -79,3 +79,8 @@
 2026-10-05T01:32Z	C7-VILL-07	gemini	claim on Gemini 3.1 Pro · high	
 2026-10-05T01:47Z	C7-VILL-07	gemini	done	Extracted exact hex codes (#040136 navy, #EE8C01 orange) from Logo.png, matched with VI deck neutral colors, generated updated contrast tables, and established logo usage guidelines for v0.3
 2026-10-05T01:48Z	C7-VILL-07	claude	reopen	hex+contrast correct; fix 5 items in LEAD_NOTES_v0.3.md (VI p05 Raleway/grid, colour roles, logo white, mapping, broken markdown); read all VI pages
+2026-10-05T01:51Z	C7-VILL-07	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-08	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-09	claude	cancel	superseded 2026-10-05: user says only Logo.png (orange on navy) is reliable; VI deck look is outdated -> C7-VILL-10
+2026-10-05T01:51Z	C7-VILL-10	claude	new	
+2026-10-05T01:51Z	ANVIL-R02	claude	new	

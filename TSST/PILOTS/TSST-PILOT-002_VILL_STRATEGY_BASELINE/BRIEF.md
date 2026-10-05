@@ -53,3 +53,13 @@ Reviewer runtime ≠ producer runtime. No spend; all WORK tier.
 | C7-VILL-07 | Brand Look v0.3: palette tokens around Logo.png navy+orange (sampled hex) + VI neutrals, contrast table, typography from VI deck + Arabic pair, logo usage | CREATIVE | gemini · Claude Opus 5.5 high | `BRAND_LOOK_DIRECTION_v0.3.md` |
 | C7-VILL-08 | Templates + mockups (editable SVG/HTML + PNG renders) | CREATIVE production | codex · gpt-6.1-sol medium (image generation) | `assets/` |
 | C7-VILL-09 | Independent CREATIVE QA against FINAL_ASSET_GATE + v0.3 | CREATIVE QA | gemini · Claude Opus 5.5 high | `REVIEW_ASSETS_v0.1.md` |
+
+## Phase 2b — Brand Look from the logo only (user, 2026-10-05, overnight run)
+
+**Source of truth = `inputs/Logo.png` only:** navy background `#040136`, orange `#EE8C01`, logo white `#F3F4F6` (Lead-sampled). The VI deck (`inputs/VI/`), its palette (Obsidian, Ink Blue, Ivory, Bronze, Oak, Stone) and Raleway are an **outdated look** — reference for what to move away from, not authority. `BRAND_LOOK_DIRECTION_v0.3.md` is superseded. Still valid from v0.2: RTL/bidi rules, proof-claim rule, kitchen containment, CONCEPT labelling.
+
+**C7-VILL-10 (Codex, overnight, no user available):**
+1. `BRAND_LOOK_v1.0.md`: brand character read from the logo (angular, italic, cut V); palette built on navy + orange + white, plus only tints/shades derived from those three (state formulas and hex); contrast table; Latin + Arabic type pair that matches the logo's angular heavy geometry (prefer open licence, state licence); grid and spacing; logo usage (clear space = V height, min size, on navy / on white, never recolour); Arabic summary.
+2. `assets/`: carousel 4:5 (3 slides), Reel cover 9:16, single post 4:5, kitchen paid-entry ad 4:5, whole-home post 4:5 — each an editable source (SVG or HTML) + PNG render. Use the real logo file, never a retyped logo. Prefer real VILL photography found in `inputs/company-profile/`; any generated image is labelled CONCEPT on the asset and in the README.
+3. Self-QA against `TSST/CREATIVE/FINAL_ASSET_GATE.md`: phone-size preview PNG per asset, Arabic shaping/RTL check, contrast. `assets/README.md` lists every file, its source images and QA result.
+Independent review happens after the run (Antigravity/Lead).

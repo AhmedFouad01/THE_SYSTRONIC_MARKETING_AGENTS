@@ -1,0 +1,23 @@
+id: ANVIL-R02
+title: ANVIL Reveal 02 still (fallback work)
+kind: probe
+status: ready
+to: codex
+needs: [fs_read, fs_write, shell, image]
+tier: WORK
+brand: anvil
+spec: TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/CONTINUATION_STATUS_2026-09-28.md
+read: [TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/, TSST/brands/anvil/, TSST/CREATIVE/]
+write: [TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/12_STATIC_CAMPAIGN/REVEAL_02/]
+after: []
+done_when: "Reveal 02 4:5 still per continuation queue (reassurance, distinct composition), same method/records as REVEAL_01/v03 (PRODUCTION_RECORD, prompt, phone QA, editable source); status REVIEW only; no publication or spend"
+issued_by: claude
+created: "2026-10-05T01:51Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+result:
+sha256:
+note:
