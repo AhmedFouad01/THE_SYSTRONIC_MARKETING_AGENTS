@@ -115,8 +115,16 @@ def die(msg):
 
 
 def sha(rel):
+    # Line endings are normalised so a git checkout (CRLF on Windows) never looks like an edit.
     with open(os.path.join(ROOT, rel), "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+        return hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def same(rel, recorded):
+    """Result unchanged since done? Accepts hashes recorded before EOL normalisation."""
+    with open(os.path.join(ROOT, rel), "rb") as f:
+        raw = f.read()
+    return recorded in (sha(rel), hashlib.sha256(raw).hexdigest())
 
 
 def prefix(pattern):
@@ -378,7 +386,7 @@ def cmd_close(a):
             die(f"{a.id} is {t['status']}, not done")
         if t.get("claimed_by") == a.me:
             die("no self-acceptance: the runtime that did the work cannot close it")
-        if sha(t["result"]) != t["sha256"]:
+        if not same(t["result"], t["sha256"]):
             die("result changed after done (sha256 mismatch) — reopen instead")
         t.update(status="closed", note=a.note or t.get("note", ""))
         save(t, a.me, "close", a.note or "")
@@ -452,7 +460,7 @@ def cmd_verify(a):
             die(f"{a.evidence} is not a probe done by {a.runtime}")
         if a.cap not in proven:
             die(f"{a.evidence} did not exercise {a.cap}")
-        if sha(ev["result"]) != ev.get("sha256"):
+        if not same(ev["result"], ev.get("sha256")):
             die(f"{a.evidence} result changed since close")
         r["unverified"] = [c for c in unv if c != a.cap]
         r["caps"] = (r.get("caps") or []) + [a.cap]
@@ -514,7 +522,7 @@ def check_all():
         if t["status"] in ("done", "closed") and t.get("result"):
             if not os.path.isfile(os.path.join(ROOT, t["result"])):
                 errs.append(f"{t['id']}: result missing")
-            elif sha(t["result"]) != t.get("sha256"):
+            elif not same(t["result"], t.get("sha256")):
                 errs.append(f"{t['id']}: result sha256 mismatch (edited after done)")
         if t["status"] == "claimed":
             if expired(t):
