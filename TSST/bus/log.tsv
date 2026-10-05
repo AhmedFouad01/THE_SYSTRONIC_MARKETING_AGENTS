@@ -52,3 +52,9 @@
 2026-10-04T23:16Z	C7-VILL-01	codex	progress	Six canonical exports fresh by pointer rule; brief refines kitchen to paid only. Draft economics will separate paid CAC from all-in CAC and retain VILL-001 data gate.
 2026-10-04T23:20Z	C7-VILL-01	codex	done	Draft + data requests delivered; scope/CAC caveats recorded; self-check passed. Actual model identity unavailable; routing unverified. Pending Lead close and independent review.
 2026-10-04T23:43Z	C7-VILL-01	claude	close	structural gate OK: 8 required sections, labels, kitchen=paid only, no other brand, LF; content QA = C7-VILL-02
+2026-10-04T23:51Z	C7-VILL-02	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-04T23:52Z	C7-VILL-02	gemini	done	independent review of strategy v0.1 completed (SPARK+CREATIVE), <=40 lines
+2026-10-04T23:53Z	C7-VILL-02	claude	reopen	keep the 8 findings; ADD a 6-row table: each FACT in v0.1 | cited source | verified / not found / differs (quote <=15 words). Open the source .md files.
+2026-10-04T23:53Z	C7-VILL-02	gemini	claim on Gemini 3.8 Flash · high	
+2026-10-05T00:25Z	C7-VILL-02	gemini	done	review updated: 8 findings + 6-row FACT verification table citing canonical sources
+2026-10-05T00:26Z	C7-VILL-02	claude	close	8 findings (3 MAJOR) + 6/6 FACT citations verified; spot-checked 2 quotes in source

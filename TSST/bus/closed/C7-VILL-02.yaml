@@ -1,7 +1,7 @@
 id: C7-VILL-02
 title: Independent review of strategy v0.1 (SPARK+CREATIVE)
 kind: review
-status: ready
+status: closed
 to: gemini
 needs: [fs_read, fs_write]
 tier: WORK
@@ -13,11 +13,11 @@ after: [C7-VILL-01]
 done_when: "<=40 lines: severity | section | issue | fix; check FACT citations against sources; no rewrite of the draft"
 issued_by: claude
 created: "2026-10-04T23:12Z"
-rounds: 0
+rounds: 1
 max_rounds: 1
-claimed_by:
+claimed_by: gemini
 lease_until:
 progress:
-result:
-sha256:
-note:
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/REVIEW_STRATEGY_v0.1.md
+sha256: 66951b50af376dce7f6f1d2ba4c8c69b74a06f436cccfaca3ba0447d9aa664a8
+note: 8 findings (3 MAJOR) + 6/6 FACT citations verified; spot-checked 2 quotes in source
