@@ -294,7 +294,9 @@ def isolation():
             dup.append(rel(f) + " (same filename as RM file)")
     check("isolation", "t-sag/memory has no copied Real Memory files", not dup, ", ".join(dup))
 
-    total = sum(os.path.getsize(f) for f in files_under("TSST/brands"))
+    # brand material (assets/) is media on Drive, not spine text
+    total = sum(os.path.getsize(f) for f in files_under("TSST/brands")
+                if "/assets/" not in f.replace(os.sep, "/"))
     check("isolation", f"TSST/brands < 60 KB ({total} bytes)", total < 60 * 1024)
 
 
