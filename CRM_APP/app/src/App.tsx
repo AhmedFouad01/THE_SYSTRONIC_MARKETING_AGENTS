@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
-import { ContactsView, DealsView, LeadsView } from "./features/index.ts";
+import { ContactsView, DealsView, LeadsView, PipelineView } from "./features/index.ts";
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, Panel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
 import { AppShell, ConnectGate, NAV } from "./ui/shell/index.ts";
@@ -43,6 +43,8 @@ function Routed() {
 					<ContactsView />
 				) : route === "/deals" ? (
 					<DealsView />
+				) : route === "/pipeline" ? (
+					<PipelineView />
 				) : (
 					<RoutePlaceholder />
 				)

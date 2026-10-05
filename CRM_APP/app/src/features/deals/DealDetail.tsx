@@ -53,7 +53,7 @@ const ISSUE_KEY: Record<DealIssue, MessageKey> = {
 	amount: "deals.issue.amount",
 	currency: "deals.issue.currency",
 };
-const TRANSITION_ERR: Record<
+export const TRANSITION_ERR: Record<
 	Exclude<TransitionErrorKind, "conflict">,
 	MessageKey
 > = {
@@ -66,7 +66,7 @@ const TRANSITION_ERR: Record<
 
 type EditError = null | "conflict" | "forbidden" | "other";
 
-function ConflictBanner({
+export function ConflictBanner({
 	onReload,
 	reloading,
 	testId,

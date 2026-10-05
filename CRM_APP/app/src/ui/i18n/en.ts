@@ -359,6 +359,23 @@ export const en = {
 	"deals.context.dealNew": "New deal",
 	"deals.context.unknown": "Unavailable",
 	"deals.action.create": "Create deal",
+	"pipeline.select": "Pipeline",
+	"pipeline.board": "Pipeline board",
+	"pipeline.noPipelines.title": "No pipeline is configured",
+	"pipeline.noPipelines.hint": "Pipelines are set up by an administrator. Deals appear here once one exists.",
+	"pipeline.noPipelines.admin": "Configure pipelines",
+	"pipeline.failed": "Pipelines could not be loaded.",
+	"pipeline.empty.title": "No deals in this pipeline yet",
+	"pipeline.empty.hint": "Create a deal from a lead or a contact. It will appear in its stage.",
+	"pipeline.emptyColumn": "No deals in this stage",
+	"pipeline.count": "{count} deals",
+	"pipeline.total": "Total value",
+	"pipeline.move": "Move {title}",
+	"pipeline.kind.won": "Won stage",
+	"pipeline.kind.lost": "Lost stage",
+	"pipeline.noMoves": "Final stage",
+	"pipeline.dismiss": "Dismiss",
+	"pipeline.moveFailed": "{title} was not moved.",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

@@ -46,6 +46,7 @@ import {
 	mergeLatest,
 	type Pipeline,
 	parseDealContext,
+	parseSelect,
 	toRows,
 } from "./model.ts";
 import { NewDealDialog, type NewDealPrefill } from "./NewDealDialog.tsx";
@@ -200,7 +201,7 @@ export function DealsView() {
 
 	const [view, setView] = useState<BuiltInView>("all");
 	const [activeId, setActiveId] = useState<string | null>(
-		() => ctx?.dealId ?? null,
+		() => ctx?.dealId ?? parseSelect(location.search),
 	);
 	const [newOpen, setNewOpen] = useState(false);
 
