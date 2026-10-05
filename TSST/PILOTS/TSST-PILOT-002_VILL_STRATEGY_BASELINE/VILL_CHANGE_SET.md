@@ -1,6 +1,6 @@
 # VILL-CS-001 — proposed updates to VILL canonical Docs
 
-Status: APPROVED by user 2026-10-05 — pending user paste into the Docs + `exportBrandRoots`. Canonical files are Google Docs in
+Status: APPLIED 2026-10-05 via `applyVillCS001` (user-run Apps Script): V1–V4 appended to the 4 Docs; `.md` exports refreshed and verified (marker present, none stale). Canonical files are Google Docs in
 `drive:Real Memory/real-memory-os/USERS/AHMED_FOUAD/PROJECTS/VILL_STUDIO/`; the user pastes
 the text below into each Doc, then re-runs `exportBrandRoots` so the `.md` exports refresh.
 
