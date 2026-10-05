@@ -1,6 +1,6 @@
 # TSST-PILOT-002 — Lead acceptance + first KPI review (C7)
 
-2026-10-05 · Lead (DEEP) · status: **ACCEPTED by Lead — awaiting user approval**
+2026-10-05 · Lead (DEEP) · status: **ACCEPTED by Lead · APPROVED by user 2026-10-05** (strategy v0.2 + brand look v0.2)
 
 ## Verdict
 | deliverable | verdict | basis |

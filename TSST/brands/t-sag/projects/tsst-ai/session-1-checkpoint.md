@@ -62,3 +62,4 @@ Then: Gemini + Codex cold-starts (cases A–D) → final DEEP review → commit 
 - 2026-10-05: CI workflow `.github/workflows/tsst-spine.yml`; 19 more repo exports (82 rows); brand roots exported in place (VILL 8, YAKEBDA R1 57, AKYRO 6 overwrote authored .md from 07-09: user decision pending, prior versions in Drive history); `brand_only_entry` routing rule.
 - 2026-10-05 user decisions: AKYRO keeps Doc-derived .md (prior versions remain in Drive history; tag via `acceptAkyroExports`); Drive "Convert uploads" OFF; `brand_only_entry` verified by user in a fresh session (VILL). CI green on PR #1.
 - 2026-10-05: TSST-001A intake done (4 stages) → Operating Baseline v0.1 frozen, gate CLOSED (TSD-013). Next: C7 pilot on VILL Studio.
+- 2026-10-05: C7 pilot (TSST-PILOT-002, VILL) delivered and user-approved; first KPI review in its ACCEPTANCE.md. Next: readiness reassessment (READINESS_REPORT) + proposed lessons → user.

@@ -1,6 +1,6 @@
 # TSST-PILOT-002 — VILL Studio Strategy Baseline + Brand Look (C7 live-project pilot)
 
-Status: PLAN APPROVED by user 2026-10-05 (with scope change below) · Brand: `vill-studio` (isolated) · Gate: C7 · Baseline v0.1 (TSD-013)
+Status: DELIVERED · user-approved 2026-10-05 (see ACCEPTANCE.md) · plan approved with scope change below · Brand: `vill-studio` (isolated) · Gate: C7 · Baseline v0.1 (TSD-013)
 
 ## Brief
 - **Goal:** close VILL-001 with ONE approved Strategy Baseline and a written Brand Look direction, consolidating existing VILL work (no new discovery).

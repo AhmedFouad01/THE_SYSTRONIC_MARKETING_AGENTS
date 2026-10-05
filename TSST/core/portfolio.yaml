@@ -33,9 +33,9 @@ brands:
     memory: TSST/brands/vill-studio/memory/source.md
     projects:
       strategy-baseline:
-        state: TSST-PILOT-002 (C7) plan approved; bus tasks C7-VILL-01..05 queued
+        state: TSST-PILOT-002 (C7) delivered — strategy v0.2 + brand look v0.2 user-approved 2026-10-05
         checkpoint: TSST/brands/vill-studio/projects/strategy-baseline/project.md
-        next: C7-VILL-01 LENS draft (codex)
+        next: user applies VILL-CS-001 + supplies OPEN_DATA_REQUESTS → W1 Foundation
     next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:
     name: YAKEBDA_MS
