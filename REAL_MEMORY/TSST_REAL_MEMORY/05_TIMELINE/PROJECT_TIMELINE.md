@@ -11,3 +11,6 @@
 | 2026-10-03 | CRM M2 delivered; CRM UI/UX sprint | Done | Close M2 |
 | 2026-10-04 | CRM M2 closed (`a926b9d`, `3bd3fcb`) + hardening (`4ff20bd`) | Done | Next milestone per user |
 | 2026-10-04 | TSST core consolidation session 1 | Done | `TSST-001A` still OPEN; baseline v0.1 awaits user approval |
+| 2026-10-05 | C7 phase 1 delivered (VILL Strategy Baseline v0.2 + Brand Look Direction v0.2) | Done | Phase 2c |
+| 2026-10-05 | TSST Core v0.2 merged (ADR-003/004, PR #6 `eac4446`) | Done | C7-VILL-11 |
+| 2026-10-05 | C7-VILL-11 issued to codex / studio (final VILL identity from logo) | Open | Lead review |

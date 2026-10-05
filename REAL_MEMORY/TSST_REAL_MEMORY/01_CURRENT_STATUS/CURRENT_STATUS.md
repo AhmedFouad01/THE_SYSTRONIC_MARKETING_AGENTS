@@ -12,7 +12,9 @@ Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 
 ## Active Gate
 
-`TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval). Next: `C7` live-project pilot on VILL Studio.
+`TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval).
+
+`C7` live-project pilot on VILL Studio — phase 1 (C7-VILL-01..06) `DELIVERED` 2026-10-05; phase 2c `C7-VILL-11` (final VILL identity from the approved logo) `OPEN`, assigned to codex / studio / tsst-creative. TSST Core v0.2 (ADR-003/004) merged to master `eac4446` (PR #6) 2026-10-05.
 
 ## Current Objective
 
@@ -27,6 +29,7 @@ Complete TSST onboarding and freeze the first operational baseline before treati
 - Seed specialist agents: `CREATIVE_AG`, `LENS_AG`, `SPARK_AG`.
 - The first operational interaction must continue requirements/onboarding before broad autonomous execution.
 - Real Memory gradual-sync rules apply.
+- Fixed team roster = runtime agents in Claude Code and Codex (`tsst-lens/spark/creative/dev` + `tsst-reader`), generated from `TSST/context/roster.yaml`; skills via `TSST/skills/index.yaml`; rules R1–R10 (TSD-014, TSD-015). Gemini/Antigravity retired.
 
 ## Open / Not Yet Frozen
 
@@ -34,16 +37,17 @@ All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPER
 
 ## Pending Tasks
 
-1. Plan and run C7 live-project pilot on VILL Studio (register the VILL project, brief, bus tasks, independent review).
+1. C7 phase 2c: codex executes `C7-VILL-11` → Lead review against `BRIEF_C7-VILL-11.md` → user acceptance (phase 1 delivered 2026-10-05).
 2. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
 
 ## Blockers
 
-- None for C7. Production readiness stays `NOT_READY` until the C7 pilot is completed and reviewed.
+- Codex must trust `G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS` (and be opened there) to load `.codex/agents` and claim `C7-VILL-11`.
+- Production readiness stays `NOT_READY` until the C7 pilot is completed and reviewed.
 
 ## Next Recommended Action
 
-TSST Lead plans the C7 pilot with the user (VILL Studio): recover VILL status from its in-place exports, agree the brief, then route.
+User opens Codex on the G: repo (trust) → codex claims `C7-VILL-11` (studio / tsst-creative, skills CREATIVE-SK-006/001/010) → TSST Lead reviews → user accepts. Then commit the PILOTS assets and run the C7 KPI review.
 
 ## State as of 2026-10-04
 

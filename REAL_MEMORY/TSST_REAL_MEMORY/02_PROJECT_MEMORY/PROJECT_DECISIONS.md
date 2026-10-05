@@ -86,3 +86,17 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Status: `APPROVED` (user approval in chat 2026-10-05)
 - Decision: Freeze Operating Baseline v0.1 from the TSST-001A intake (mission, success order quality → cost → speed, runtime/tool decision rights, independent cross-runtime review, single reroute on failure, end-of-phase reporting, no new agents before C7) and close gate TSST-001A. Does NOT change readiness (`NOT_READY`) or validate any skill; next gate is the C7 pilot on VILL Studio.
 - Source: `TSST/onboarding/INTAKE_TSST-001A.md`; `TSST/TSST_OPERATING_PROFILE.md` v1.1; `TSST/TSST_DECISION_RIGHTS.md` v1.1.
+
+## TSD-014 — Fixed team roster, central skill index, enforced Skill Plan
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: The TSST team agents are the runtime agents; generic tier workers retired. One skill entry point `TSST/skills/index.yaml`; ≤3 skills per dispatch via a Skill Plan; skill gaps go through intake `TSST-CTX-SK-023`; rules R1–R10. Agents are fixed, skills evolve. No readiness change.
+- Source: `TSST/decisions/TSST-ADR-003.md`; `TSST/core/rules.md`.
+
+## TSD-015 — Runtime-neutral roster for Claude + Codex; Antigravity retired
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: One neutral roster (`TSST/context/roster.yaml` + `agent-contract.md`) generates Claude and Codex agents; logical tier → model per runtime and plan (Claude Pro / ChatGPT Plus) only in `TSST/bus/runtimes.yaml` and adapters; Gemini/Antigravity retired.
+- Source: `TSST/decisions/TSST-ADR-004.md`; PR #6 → master `eac4446`.

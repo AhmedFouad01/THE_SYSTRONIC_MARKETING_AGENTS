@@ -45,3 +45,9 @@
 - `CURRENT_STATUS.md` — state `BASELINE_FROZEN`; gate TSST-001A `CLOSED`; open list frozen; pending/next → C7 on VILL Studio.
 - Repo: `TSST/TSST_OPERATING_PROFILE.md` v1.1 (baseline section; DEV_AG fact corrected), `TSST/TSST_DECISION_RIGHTS.md` v1.1 (runtime/tool rights), intake record `TSST/onboarding/INTAKE_TSST-001A.md`.
 - Readiness unchanged (`NOT_READY`).
+
+## 2026-10-05 — TSST Core v0.2
+
+- Fixed team roster as runtime agents (Claude + Codex), central skill index (115 skills), rules R1–R10, dispatch hook, skill intake, LENS-SK-011..015 (TSD-014/015).
+- External audit release steps executed; fresh-clone parity verified; PR #6 merged → master `eac4446`.
+- VILL: approved logo registered in `assets/final/`; C7 phase 1 delivered; `C7-VILL-11` issued.
