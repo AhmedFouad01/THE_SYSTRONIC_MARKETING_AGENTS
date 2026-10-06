@@ -4,6 +4,8 @@ TSD-018 (2026-10-06). Gemini Desktop is an **external tool**, not a TSST runtime
 It is not Antigravity (retired, ADR-004) and there is no GEMINI_AG. No roster, routing or
 governance change.
 
+Setup (Gem + Real Memory link): `REAL_MEMORY/TSST_REAL_MEMORY/06_HANDOFF/GEMINI_GEM_INSTRUCTIONS.md`.
+
 ## When
 Any TSST agent may recommend it when it is the best tool for the task — typically
 IMAGE/VIDEO generation (no native path in Claude/Codex), very long inputs (large docs,
