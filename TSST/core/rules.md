@@ -42,6 +42,20 @@ may never relax these. Historical governance remains in `TSST/TEAM_CONSTITUTION.
   promotion only with CTX-SK-018 evidence.
 - **R10 Evidence.** Every deliverable lists `Skills used:`; the Lead rejects work without it.
 
+## Usage discipline (TSD-016, 2026-10-06)
+Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (cache reads up to
+~17M tokens per agent with a few k output), "verify + finish" re-dispatches and a 2-day Lead session.
+- **R11 One-pass batches.** Size each dispatch so the agent finishes and verifies in one run
+  (one slice, explicit file list, explicit test command). A batch that needed a "finish" agent
+  is split smaller next time, not re-dispatched whole.
+- **R12 Resume, don't restart.** An unfinished agent is continued (SendMessage / same agent
+  id) with only the missing step, never re-dispatched from zero to re-read everything.
+- **R13 Phase-bounded sessions.** Close the Lead session at each phase end with a short
+  handoff/checkpoint (Must 6) and start a new one; no multi-day Lead sessions.
+- **R14 Cheapest reader first.** Exploration, inventory and evidence gathering go to
+  `tsst-reader` (FAST) before any WORK/CODE agent or the Lead reads widely. Retired or generic
+  agents (`general-purpose`, `tsst-*-worker`) are never dispatched.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes

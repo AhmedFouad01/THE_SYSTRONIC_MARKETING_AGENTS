@@ -51,3 +51,9 @@
 - Fixed team roster as runtime agents (Claude + Codex), central skill index (115 skills), rules R1–R10, dispatch hook, skill intake, LENS-SK-011..015 (TSD-014/015).
 - External audit release steps executed; fresh-clone parity verified; PR #6 merged → master `eac4446`.
 - VILL: approved logo registered in `assets/final/`; C7 phase 1 delivered; `C7-VILL-11` issued.
+
+## 2026-10-06 — Usage discipline rules (user approval in chat 2026-10-06)
+
+- `PROJECT_DECISIONS.md` — added TSD-016.
+- Repo: `TSST/core/rules.md` — new section R11–R14 (one-pass batches, resume not restart, phase-bounded sessions, cheapest reader first).
+- Readiness unchanged (`NOT_READY`).

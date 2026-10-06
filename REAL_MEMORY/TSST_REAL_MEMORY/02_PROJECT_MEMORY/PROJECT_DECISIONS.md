@@ -100,3 +100,10 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Status: `APPROVED` (user approval in chat 2026-10-05)
 - Decision: One neutral roster (`TSST/context/roster.yaml` + `agent-contract.md`) generates Claude and Codex agents; logical tier → model per runtime and plan (Claude Pro / ChatGPT Plus) only in `TSST/bus/runtimes.yaml` and adapters; Gemini/Antigravity retired.
 - Source: `TSST/decisions/TSST-ADR-004.md`; PR #6 → master `eac4446`.
+
+## TSD-016 — Usage discipline rules R11–R14
+
+- Date: `2026-10-06`
+- Status: `APPROVED` (user approval in chat 2026-10-06)
+- Decision: Add usage-discipline rules to `TSST/core/rules.md`: one-pass batches (R11), resume an unfinished agent instead of re-dispatching (R12), phase-bounded Lead sessions with handoff (R13), cheapest reader first and no generic/retired agents (R14). Based on the CRM MVP session audit (46 dispatches; ~10 "verify + finish" re-dispatches; per-agent cache reads up to ~17M tokens). No roster, readiness or authority change.
+- Source: `TSST/core/rules.md` § Usage discipline.
