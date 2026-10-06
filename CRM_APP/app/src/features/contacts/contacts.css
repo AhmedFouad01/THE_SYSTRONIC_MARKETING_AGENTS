@@ -4,11 +4,6 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
-.sy-contacts__h1 {
-	margin: 0;
-	font-size: 1.5rem;
-	color: var(--sy-text);
-}
 .sy-contacts__body {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);

@@ -4,18 +4,6 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
-.sy-rep__top {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: flex-start;
-	justify-content: space-between;
-	gap: var(--sy-space-10);
-}
-.sy-rep__h1 {
-	margin: 0;
-	font-size: 1.5rem;
-	color: var(--sy-text);
-}
 .sy-rep__muted {
 	margin: var(--sy-space-4) 0 0;
 	color: var(--sy-text-3);
@@ -28,9 +16,18 @@
 	gap: var(--sy-space-10);
 	min-width: 0;
 }
+/* UX-18: constrained controls (select 240, number 96) instead of full-width stretching. */
 .sy-rep__controls .sy-field {
-	min-width: min(100%, 200px);
-	flex: 1 1 200px;
+	flex: 0 0 auto;
+}
+.sy-rep__controls .sy-rep__model {
+	width: min(100%, 240px);
+}
+.sy-rep__controls .sy-rep__days {
+	width: min(100%, 240px);
+}
+.sy-rep__controls .sy-rep__days .sy-field__control {
+	width: 96px;
 }
 .sy-rep__controls .sy-rep__btns {
 	display: flex;
@@ -41,11 +38,13 @@
 .sy-rep__kpis {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+	grid-auto-rows: 1fr;
 	gap: var(--sy-space-10);
 	min-width: 0;
 }
 .sy-kpi {
 	min-width: 0;
+	min-height: 96px;
 	padding: var(--sy-space-14);
 	border: 1px solid var(--sy-border);
 	border-radius: var(--sy-radius-12);
@@ -55,7 +54,7 @@
 .sy-kpi__label,
 .sy-kpi__sub {
 	margin: 0;
-	font-size: 0.875rem;
+	font-size: 0.75rem;
 	overflow-wrap: anywhere;
 }
 .sy-kpi__label {
@@ -106,13 +105,28 @@
 .sy-kpi--magenta .sy-kpi__sub {
 	color: var(--sy-kpi-magenta-sub);
 }
+/* Provenance: collapsed "About this calculation", 12px text-3, 16px margin. */
+.sy-rep__about {
+	margin-block-start: var(--sy-space-16);
+	color: var(--sy-text-3);
+	font-size: 0.75rem;
+}
+.sy-rep__about > summary {
+	cursor: pointer;
+	font-weight: 600;
+	width: fit-content;
+}
+.sy-rep__about > summary:focus-visible {
+	outline: 2px solid var(--sy-focus);
+	outline-offset: 2px;
+}
 .sy-rep__meta {
 	display: flex;
 	flex-direction: column;
 	gap: var(--sy-space-4);
-	margin: 0;
-	color: var(--sy-text-2);
-	font-size: 0.875rem;
+	margin: var(--sy-space-8) 0;
+	color: var(--sy-text-3);
+	font-size: 0.75rem;
 	overflow-wrap: anywhere;
 }
 .sy-rep__body {
@@ -155,6 +169,9 @@
 .sy-rep__tablewrap {
 	overflow-x: auto;
 	max-width: 100%;
+}
+.sy-rep__body--solo {
+	grid-template-columns: minmax(0, 1fr);
 }
 @media (max-width: 900px) {
 	.sy-rep__body {

@@ -4,18 +4,6 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
-.sy-deals__top {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--sy-space-10);
-}
-.sy-deals__h1 {
-	margin: 0;
-	font-size: 1.5rem;
-	color: var(--sy-text);
-}
 .sy-deals__body {
 	min-width: 0;
 }

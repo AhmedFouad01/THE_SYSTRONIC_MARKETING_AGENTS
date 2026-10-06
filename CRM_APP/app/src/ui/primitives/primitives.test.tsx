@@ -21,7 +21,9 @@ describe("Tabs keyboard model", () => {
 		}
 	});
 	it("skips disabled tabs and ignores other keys", () => {
-		expect(nextTabIndex("ArrowRight", 0, 3, "ltr", [false, true, false])).toBe(2);
+		expect(nextTabIndex("ArrowRight", 0, 3, "ltr", [false, true, false])).toBe(
+			2,
+		);
 		expect(nextTabIndex("Home", 1, 3, "ltr", [true, false, false])).toBe(1);
 		expect(nextTabIndex("End", 0, 3, "ltr", [false, false, true])).toBe(1);
 		expect(nextTabIndex("a", 0, 3, "ltr")).toBeNull();
@@ -62,7 +64,9 @@ describe("primitive accessibility attributes", () => {
 		expect(html).toContain('aria-invalid="true"');
 		expect(html).toMatch(/aria-describedby="[^"]+-hint [^"]+-err"/);
 		expect(html).toMatch(/<label[^>]*for="/);
-		expect(renderToString(<Input label="Name" />)).not.toContain("aria-invalid");
+		expect(renderToString(<Input label="Name" />)).not.toContain(
+			"aria-invalid",
+		);
 	});
 	it("StatusPill carries an icon plus text (not color only)", () => {
 		const html = renderToString(<StatusPill tone="danger">Lost</StatusPill>);

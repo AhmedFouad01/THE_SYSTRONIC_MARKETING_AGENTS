@@ -373,8 +373,3 @@
 		display: block;
 	}
 }
-
-.sy-placeholder {
-	display: grid;
-	gap: var(--sy-space-14);
-}

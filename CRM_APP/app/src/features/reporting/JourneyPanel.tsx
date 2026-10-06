@@ -63,7 +63,10 @@ export function JourneyPanel({ resetKey }: { resetKey: string }) {
 				</div>
 			) : null}
 			{contactId ? (
-				<ContactJourney key={`${contactId}|${resetKey}`} contactId={contactId} />
+				<ContactJourney
+					key={`${contactId}|${resetKey}`}
+					contactId={contactId}
+				/>
 			) : (
 				<EmptyState title={t("rep.journey.none")} />
 			)}

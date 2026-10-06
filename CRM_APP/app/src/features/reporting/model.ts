@@ -257,7 +257,9 @@ export function deriveKpis(report: CampaignReport): Kpis {
 /** Magenta marks "needs attention": most outcomes carry no campaign. Neutral otherwise (max 1-2 emphasized cards). */
 export const UNATTRIBUTED_ALERT = 0.5;
 export function unattributedAlert(k: Kpis): boolean {
-	return k.unattributedShare !== null && k.unattributedShare >= UNATTRIBUTED_ALERT;
+	return (
+		k.unattributedShare !== null && k.unattributedShare >= UNATTRIBUTED_ALERT
+	);
 }
 
 // ---- lookback validation (POST /v1/journey/calculate: integer 1..365) ---------------------------------------------
@@ -291,8 +293,7 @@ export const UTC_DATETIME: Intl.DateTimeFormatOptions = {
 
 export const sortChronological = <T extends { occurred_at: string }>(
 	items: readonly T[],
-): T[] =>
-	[...items].sort((a, b) => a.occurred_at.localeCompare(b.occurred_at));
+): T[] => [...items].sort((a, b) => a.occurred_at.localeCompare(b.occurred_at));
 
 // ---- formatting (pure; locale-aware through ui/i18n/format) -----------------------------------------------------
 

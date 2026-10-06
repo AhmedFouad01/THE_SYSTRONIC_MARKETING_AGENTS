@@ -320,12 +320,19 @@ test("R2-07 reporting ar: meta is three short lines and KPI values use Western d
 	await makeLead(request, f, "Reporting seed");
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await open(page, f, "ar", "/app/reporting");
+	// UX-18: provenance now sits in a collapsed "About this calculation" block
+	await page.getByTestId("report-about").locator("summary").click();
 	const meta = page.getByTestId("report-meta");
 	await expect(meta).toBeVisible();
 	await expect(meta.locator(".sy-rep__meta-line")).toHaveCount(3);
 	const kpis = page.getByTestId("report-kpis");
-	const values = await kpis.locator(".sy-kpi__value").allTextContents();
-	expect(values.length).toBe(5);
+	// Money KPIs now share the Dashboard's locale money display; ratio/count KPIs keep Western digits.
+	const values = await kpis
+		.locator(
+			'[data-testid="kpi-roas"] .sy-kpi__value, [data-testid="kpi-conversions"] .sy-kpi__value, [data-testid="kpi-unattributed"] .sy-kpi__value',
+		)
+		.allTextContents();
+	expect(values.length).toBe(3);
 	for (const v of values) expect(v).not.toMatch(/[٠-٩]/);
 });
 

@@ -8,7 +8,14 @@ export type PanelProps = HTMLAttributes<HTMLElement> & {
 	children?: ReactNode;
 };
 
-export function Panel({ as: Tag = "section", title, actions, children, className, ...rest }: PanelProps) {
+export function Panel({
+	as: Tag = "section",
+	title,
+	actions,
+	children,
+	className,
+	...rest
+}: PanelProps) {
 	return (
 		<Tag {...rest} className={`sy-panel${className ? ` ${className}` : ""}`}>
 			{title || actions ? (

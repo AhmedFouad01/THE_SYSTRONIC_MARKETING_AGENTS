@@ -7,10 +7,10 @@ import {
 	ErrorState,
 	ForbiddenState,
 	Input,
-	LoadingState,
 	Ltr,
 	PageHeader,
 	Select,
+	SkeletonRows,
 	Tabs,
 	useI18n,
 	useToast,
@@ -26,7 +26,6 @@ import {
 	type CampaignReport,
 	DEFAULT_MODEL,
 	deriveKpis,
-	formatMinor,
 	formatRoas,
 	formatShare,
 	LOOKBACK_DEFAULT,
@@ -140,13 +139,16 @@ export function ReportingView() {
 	};
 
 	const report = state.status === "ready" ? state.data : null;
-	const aggs = useMemo(() => (report ? aggregateCampaigns(report) : []), [report]);
+	const aggs = useMemo(
+		() => (report ? aggregateCampaigns(report) : []),
+		[report],
+	);
 	const kpis = useMemo(() => (report ? deriveKpis(report) : null), [report]);
 
 	const panels: Record<ReportTab, React.ReactNode> = {
 		campaigns:
 			state.status === "loading" ? (
-				<LoadingState />
+				<SkeletonRows count={6} />
 			) : state.status === "error" ? (
 				<ErrorState
 					title={t("rep.loadFailed")}
@@ -154,7 +156,20 @@ export function ReportingView() {
 					onRetry={reload}
 				/>
 			) : (
-				<CampaignsPanel aggs={aggs} />
+				<CampaignsPanel
+					aggs={aggs}
+					emptyAction={
+						<Button
+							variant="primary"
+							icon="report"
+							disabled={blocked || lookback === null}
+							onClick={() => setConfirmOpen(true)}
+							data-testid="report-empty-publish"
+						>
+							{t("rep.publish")}
+						</Button>
+					}
+				/>
 			),
 		conversions: <ConversionsPanel resetKey={resetKey} />,
 		orders: <OrdersPanel resetKey={resetKey} />,
@@ -176,6 +191,7 @@ export function ReportingView() {
 					label={t("rep.model")}
 					value={model}
 					onChange={(e) => setModel(e.target.value as AttributionModel)}
+					className="sy-rep__model"
 					data-testid="report-model"
 				>
 					{MODELS.map((m) => (
@@ -194,6 +210,7 @@ export function ReportingView() {
 					onChange={(e) => setDays(e.target.value)}
 					hint={t("rep.lookbackHint")}
 					error={lookbackError}
+					className="sy-rep__days"
 					data-testid="report-days"
 				/>
 				<div className="sy-rep__btns">
@@ -208,7 +225,9 @@ export function ReportingView() {
 						ref={openRef}
 						variant="primary"
 						icon="report"
-						disabled={blocked || lookback === null || state.status === "loading"}
+						disabled={
+							blocked || lookback === null || state.status === "loading"
+						}
 						aria-describedby={blocked ? "rep-denied" : undefined}
 						onClick={() => setConfirmOpen(true)}
 						data-testid="report-calculate"
@@ -229,7 +248,29 @@ export function ReportingView() {
 				<>
 					<section aria-label={t("rep.kpis")}>
 						{state.status === "loading" ? (
-							<LoadingState />
+							<div
+								className="sy-rep__kpis"
+								aria-busy="true"
+								data-testid="report-kpis-loading"
+							>
+								{(
+									[
+										"roas",
+										"revenue",
+										"spend",
+										"conversions",
+										"unattributed",
+									] as const
+								).map((id) => (
+									<KpiCard
+										key={id}
+										testId={`kpi-${id}`}
+										label={t(`rep.kpi.${id}`)}
+										value=""
+										loading
+									/>
+								))}
+							</div>
 						) : kpis && report ? (
 							<>
 								<div className="sy-rep__kpis" data-testid="report-kpis">
@@ -247,19 +288,19 @@ export function ReportingView() {
 									<KpiCard
 										testId="kpi-revenue"
 										label={t("rep.kpi.revenue")}
-										value={formatMinor(kpis.revenue, kpis.currency, "en")}
-										sub={t("rep.kpi.minor")}
+										value={f.money(kpis.revenue, kpis.currency)}
 									/>
 									<KpiCard
 										testId="kpi-spend"
 										label={t("rep.kpi.spend")}
-										value={formatMinor(kpis.spend, kpis.currency, "en")}
-										sub={t("rep.kpi.minor")}
+										value={f.money(kpis.spend, kpis.currency)}
 									/>
 									<KpiCard
 										testId="kpi-conversions"
 										label={t("rep.kpi.conversions")}
-										value={formatNumber(kpis.conversions, { numberingSystem: "latn" })}
+										value={formatNumber(kpis.conversions, {
+											numberingSystem: "latn",
+										})}
 										sub={t("rep.kpi.refunds", {
 											count: formatNumber(kpis.refunds),
 										})}
@@ -277,28 +318,35 @@ export function ReportingView() {
 										{t("rep.kpi.mixed", { currency: kpis.currency })}
 									</p>
 								) : null}
-								<div className="sy-rep__meta" data-testid="report-meta">
-									<p className="sy-rep__meta-line">
-										<Bdi>{t("rep.meta.internal")}</Bdi> · <Bdi>{f.label(report.model)}</Bdi> ·{" "}
-										<Bdi>
-											{t("rep.meta.version")}: <Ltr>{report.version}</Ltr>
-										</Bdi>
-									</p>
-									<p className="sy-rep__meta-line">
-										<Bdi>
-											{t("rep.meta.lookback")}: <Ltr>{report.lookback_days}</Ltr>
-										</Bdi>{" "}
-										· <Bdi>{t("rep.meta.basis")}</Bdi>
-									</p>
-									<p className="sy-rep__meta-line">
-										<Bdi>
-											{t("rep.meta.run")}:{" "}
-											{report.run_id ? f.utc(report.as_of) : t("rep.meta.unpublished")}
-										</Bdi>{" "}
-										· <Bdi>{t("rep.meta.provider")}</Bdi>
-									</p>
-								</div>
-								<p className="sy-rep__muted">{t("rep.meta.stale")}</p>
+								<details className="sy-rep__about" data-testid="report-about">
+									<summary>{t("rep.about")}</summary>
+									<div className="sy-rep__meta" data-testid="report-meta">
+										<p className="sy-rep__meta-line">
+											<Bdi>{t("rep.meta.internal")}</Bdi> ·{" "}
+											<Bdi>{f.label(report.model)}</Bdi> ·{" "}
+											<Bdi>
+												{t("rep.meta.version")}: <Ltr>{report.version}</Ltr>
+											</Bdi>
+										</p>
+										<p className="sy-rep__meta-line">
+											<Bdi>
+												{t("rep.meta.lookback")}:{" "}
+												<Ltr>{report.lookback_days}</Ltr>
+											</Bdi>{" "}
+											· <Bdi>{t("rep.meta.basis")}</Bdi>
+										</p>
+										<p className="sy-rep__meta-line">
+											<Bdi>
+												{t("rep.meta.run")}:{" "}
+												{report.run_id
+													? f.utc(report.as_of)
+													: t("rep.meta.unpublished")}
+											</Bdi>{" "}
+											· <Bdi>{t("rep.meta.provider")}</Bdi>
+										</p>
+									</div>
+									<p className="sy-rep__meta-line">{t("rep.meta.stale")}</p>
+								</details>
 							</>
 						) : null}
 					</section>

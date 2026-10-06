@@ -37,12 +37,18 @@ export function FieldShell({
 	const errId = error ? `${id}-err` : undefined;
 	const describedBy = [hintId, errId].filter(Boolean).join(" ") || undefined;
 	return (
-		<div className={`sy-field${error ? " sy-field--error" : ""}${className ? ` ${className}` : ""}`}>
+		<div
+			className={`sy-field${error ? " sy-field--error" : ""}${className ? ` ${className}` : ""}`}
+		>
 			<label className="sy-field__label" htmlFor={id}>
 				{label}
 				{required ? <span aria-hidden="true"> *</span> : null}
 			</label>
-			{children({ id, "aria-invalid": error ? true : undefined, "aria-describedby": describedBy })}
+			{children({
+				id,
+				"aria-invalid": error ? true : undefined,
+				"aria-describedby": describedBy,
+			})}
 			{hint ? (
 				<p className="sy-field__hint" id={hintId}>
 					{hint}
@@ -58,19 +64,60 @@ export function FieldShell({
 }
 
 export type InputProps = Shared & InputHTMLAttributes<HTMLInputElement>;
-export function Input({ label, hint, error, className, required, ...rest }: InputProps) {
+export function Input({
+	label,
+	hint,
+	error,
+	className,
+	required,
+	...rest
+}: InputProps) {
 	return (
-		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
-			{(p) => <input {...rest} {...p} required={required} className="sy-field__control" />}
+		<FieldShell
+			label={label}
+			hint={hint ?? ""}
+			error={error}
+			required={required}
+			className={className}
+		>
+			{(p) => (
+				<input
+					{...rest}
+					{...p}
+					required={required}
+					className="sy-field__control"
+				/>
+			)}
 		</FieldShell>
 	);
 }
 
-export type TextareaProps = Shared & TextareaHTMLAttributes<HTMLTextAreaElement>;
-export function Textarea({ label, hint, error, className, required, ...rest }: TextareaProps) {
+export type TextareaProps = Shared &
+	TextareaHTMLAttributes<HTMLTextAreaElement>;
+export function Textarea({
+	label,
+	hint,
+	error,
+	className,
+	required,
+	...rest
+}: TextareaProps) {
 	return (
-		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
-			{(p) => <textarea {...rest} {...p} required={required} className="sy-field__control sy-field__control--area" />}
+		<FieldShell
+			label={label}
+			hint={hint ?? ""}
+			error={error}
+			required={required}
+			className={className}
+		>
+			{(p) => (
+				<textarea
+					{...rest}
+					{...p}
+					required={required}
+					className="sy-field__control sy-field__control--area"
+				/>
+			)}
 		</FieldShell>
 	);
 }

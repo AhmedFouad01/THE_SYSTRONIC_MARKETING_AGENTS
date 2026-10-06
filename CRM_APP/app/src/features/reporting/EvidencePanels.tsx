@@ -19,7 +19,12 @@ import {
 	fetchOrdersPage,
 } from "./api.ts";
 import type { Conversion, Money, Order } from "./model.ts";
-import { ContactLink, DetailState, useDetail, useReportFmt } from "./shared.tsx";
+import {
+	ContactLink,
+	DetailState,
+	useDetail,
+	useReportFmt,
+} from "./shared.tsx";
 
 const convId = (c: Conversion) => c.id;
 const orderId = (o: Order) => o.id;
@@ -60,7 +65,7 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 				value: (c) => Number(c.value_minor),
 				searchable: false,
 				sortable: true,
-				cell: (c) => <Ltr>{f.minor(c.value_minor, null)}</Ltr>,
+				cell: (c) => f.money(c.value_minor, c.currency),
 			},
 			{
 				id: "currency",
@@ -108,7 +113,9 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 	);
 
 	return (
-		<div className="sy-rep__body">
+		<div
+			className={`sy-rep__body${list.items.length === 0 ? " sy-rep__body--solo" : ""}`}
+		>
 			<div className="sy-rep__main">
 				{list.status === "error" && isForbidden(list.error) ? (
 					<ForbiddenState />
@@ -130,18 +137,20 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 					/>
 				)}
 			</div>
-			<Panel
-				as="aside"
-				className="sy-rep__detail"
-				title={t("rep.detail.credits")}
-				data-testid="report-detail"
-			>
-				{activeId ? (
-					<ConversionDetailView id={activeId} resetKey={resetKey} />
-				) : (
-					<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-				)}
-			</Panel>
+			{list.items.length > 0 ? (
+				<Panel
+					as="aside"
+					className="sy-rep__detail"
+					title={t("rep.detail.credits")}
+					data-testid="report-detail"
+				>
+					{activeId ? (
+						<ConversionDetailView id={activeId} resetKey={resetKey} />
+					) : (
+						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
+					)}
+				</Panel>
+			) : null}
 		</div>
 	);
 }
@@ -162,7 +171,7 @@ function ConversionDetailView({
 				<div className="details" data-testid="detail-body">
 					<p>
 						<b>{f.label(c.conversion_type)}</b> ·{" "}
-						<Ltr>{f.minor(c.value_minor, c.currency)}</Ltr>
+						{f.money(c.value_minor, c.currency)}
 					</p>
 					<p className="sy-rep__muted">
 						<Bdi>{f.utc(c.occurred_at)}</Bdi>
@@ -175,8 +184,8 @@ function ConversionDetailView({
 								<li key={`${cr.model}|${cr.as_of}`}>
 									{f.label(cr.model)} ·{" "}
 									{cr.source === "unknown" ? t("rep.unknown") : cr.source} ·{" "}
-									<Ltr>{cr.model_version}</Ltr> · <Ltr>{cr.lookback_days}</Ltr> ·{" "}
-									<Bdi>{f.utc(cr.as_of)}</Bdi>
+									<Ltr>{cr.model_version}</Ltr> · <Ltr>{cr.lookback_days}</Ltr>{" "}
+									· <Bdi>{f.utc(cr.as_of)}</Bdi>
 								</li>
 							))}
 						</ul>
@@ -223,7 +232,7 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 				value: (o) => Number(o.net_minor),
 				searchable: false,
 				sortable: true,
-				cell: (o) => <Ltr>{f.minor(o.net_minor, null)}</Ltr>,
+				cell: (o) => f.money(o.net_minor, o.currency),
 			},
 			{
 				id: "currency",
@@ -269,7 +278,9 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 	);
 
 	return (
-		<div className="sy-rep__body">
+		<div
+			className={`sy-rep__body${list.items.length === 0 ? " sy-rep__body--solo" : ""}`}
+		>
 			<div className="sy-rep__main">
 				{list.status === "error" && isForbidden(list.error) ? (
 					<ForbiddenState />
@@ -291,18 +302,20 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 					/>
 				)}
 			</div>
-			<Panel
-				as="aside"
-				className="sy-rep__detail"
-				title={t("rep.tab.orders")}
-				data-testid="report-detail"
-			>
-				{activeId ? (
-					<OrderDetailView id={activeId} resetKey={resetKey} />
-				) : (
-					<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-				)}
-			</Panel>
+			{list.items.length > 0 ? (
+				<Panel
+					as="aside"
+					className="sy-rep__detail"
+					title={t("rep.tab.orders")}
+					data-testid="report-detail"
+				>
+					{activeId ? (
+						<OrderDetailView id={activeId} resetKey={resetKey} />
+					) : (
+						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
+					)}
+				</Panel>
+			) : null}
 		</div>
 	);
 }
@@ -316,7 +329,7 @@ function MoneyList({ items }: { items: readonly Money[] }) {
 		<ul className="sy-rep__list">
 			{items.map((m) => (
 				<li key={m.id}>
-					<Ltr>{f.minor(m.amount_minor, m.currency)}</Ltr> ·{" "}
+					{f.money(m.amount_minor, m.currency)} ·{" "}
 					<Bdi>{f.utc(m.occurred_at)}</Bdi>
 				</li>
 			))}
@@ -324,13 +337,7 @@ function MoneyList({ items }: { items: readonly Money[] }) {
 	);
 }
 
-function OrderDetailView({
-	id,
-	resetKey,
-}: {
-	id: string;
-	resetKey: string;
-}) {
+function OrderDetailView({ id, resetKey }: { id: string; resetKey: string }) {
 	const { t } = useI18n();
 	const f = useReportFmt();
 	const state = useDetail(fetchOrder, id, resetKey);

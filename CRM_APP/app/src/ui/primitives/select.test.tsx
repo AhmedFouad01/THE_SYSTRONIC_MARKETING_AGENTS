@@ -13,8 +13,8 @@ describe("Select option parsing", () => {
 					</option>
 				))}
 				<option value="x" disabled>
-						Locked
-					</option>
+					Locked
+				</option>
 			</>,
 		);
 		expect(opts).toEqual([
@@ -25,6 +25,8 @@ describe("Select option parsing", () => {
 		]);
 	});
 	it("falls back to the label when value is omitted", () => {
-		expect(parseOptions(<option>Plain</option>)).toEqual([{ value: "Plain", label: "Plain", disabled: false }]);
+		expect(parseOptions(<option>Plain</option>)).toEqual([
+			{ value: "Plain", label: "Plain", disabled: false },
+		]);
 	});
 });

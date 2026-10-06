@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import {
 	Button,
 	DataGrid,
@@ -7,16 +7,19 @@ import {
 	Panel,
 	useI18n,
 } from "../../ui/index.ts";
-import {
-	type CampaignAgg,
-	formatRoas,
-	isUnknownCampaign,
-} from "./model.ts";
+import { type CampaignAgg, formatRoas, isUnknownCampaign } from "./model.ts";
 import { useReportFmt } from "./shared.tsx";
 
 const getRowId = (a: CampaignAgg) => a.key;
 
-export function CampaignsPanel({ aggs }: { aggs: readonly CampaignAgg[] }) {
+export function CampaignsPanel({
+	aggs,
+	emptyAction,
+}: {
+	aggs: readonly CampaignAgg[];
+	/** Primary next step shown in the empty state (UX-23), e.g. "Publish calculation". */
+	emptyAction?: ReactNode;
+}) {
 	const { t, locale } = useI18n();
 	const f = useReportFmt();
 	const [activeId, setActiveId] = useState<string | null>(null);
@@ -62,7 +65,7 @@ export function CampaignsPanel({ aggs }: { aggs: readonly CampaignAgg[] }) {
 				value: (a) => Number(a.revenue),
 				searchable: false,
 				sortable: true,
-				cell: (a) => <Ltr>{f.minor(a.revenue, null)}</Ltr>,
+				cell: (a) => f.money(a.revenue, a.currency),
 			},
 			{
 				id: "spend",
@@ -70,7 +73,7 @@ export function CampaignsPanel({ aggs }: { aggs: readonly CampaignAgg[] }) {
 				value: (a) => Number(a.spend),
 				searchable: false,
 				sortable: true,
-				cell: (a) => (a.hasSpend ? <Ltr>{f.minor(a.spend, null)}</Ltr> : "—"),
+				cell: (a) => (a.hasSpend ? f.money(a.spend, a.currency) : "—"),
 			},
 			{
 				id: "roas",
@@ -101,7 +104,9 @@ export function CampaignsPanel({ aggs }: { aggs: readonly CampaignAgg[] }) {
 	}, [t, f, locale]);
 
 	return (
-		<div className="sy-rep__body">
+		<div
+			className={`sy-rep__body${aggs.length === 0 ? " sy-rep__body--solo" : ""}`}
+		>
 			<div className="sy-rep__main">
 				<DataGrid<CampaignAgg>
 					gridId="report-campaigns"
@@ -114,20 +119,23 @@ export function CampaignsPanel({ aggs }: { aggs: readonly CampaignAgg[] }) {
 					onActiveChange={setActiveId}
 					emptyTitle={t("rep.empty")}
 					emptyHint={t("rep.emptyHint")}
+					{...(emptyAction ? { emptyAction } : {})}
 				/>
 			</div>
-			<Panel
-				as="aside"
-				className="sy-rep__detail"
-				title={t("rep.detail.campaign")}
-				data-testid="report-detail"
-			>
-				{active ? (
-					<CampaignDetail agg={active} />
-				) : (
-					<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-				)}
-			</Panel>
+			{aggs.length > 0 ? (
+				<Panel
+					as="aside"
+					className="sy-rep__detail"
+					title={t("rep.detail.campaign")}
+					data-testid="report-detail"
+				>
+					{active ? (
+						<CampaignDetail agg={active} />
+					) : (
+						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
+					)}
+				</Panel>
+			) : null}
 		</div>
 	);
 }
@@ -164,11 +172,9 @@ function CampaignDetail({ agg }: { agg: CampaignAgg }) {
 							<tr key={`${r.source}|${r.conversion_type}`}>
 								<td>{f.label(r.conversion_type)}</td>
 								<td>{r.source === "unknown" ? t("rep.unknown") : r.source}</td>
+								<td>{f.money(r.value_minor, agg.currency)}</td>
 								<td>
-									<Ltr>{f.minor(r.value_minor, null)}</Ltr>
-								</td>
-								<td>
-									<Ltr>{f.minor(r.outcomes, null)}</Ltr>
+									<Ltr>{f.count(r.outcomes)}</Ltr>
 								</td>
 							</tr>
 						))}
@@ -188,7 +194,7 @@ function CampaignDetail({ agg }: { agg: CampaignAgg }) {
 									{s.reporting_date} / {s.timezone}
 								</Ltr>
 								{" · "}
-								<Ltr>{f.minor(s.spend_minor, s.currency)}</Ltr>
+								{f.money(s.spend_minor, s.currency)}
 							</li>
 						))}
 					</ul>

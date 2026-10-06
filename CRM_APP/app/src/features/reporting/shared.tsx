@@ -4,11 +4,13 @@ import { href, navigate } from "../../router.ts";
 import {
 	ErrorState,
 	ForbiddenState,
+	formatMoneyMinor,
 	LoadingState,
 	type MessageKey,
+	Money,
 	useI18n,
 } from "../../ui/index.ts";
-import { contactSearch, formatMinor, UTC_DATETIME } from "./model.ts";
+import { contactSearch, toBig, UTC_DATETIME } from "./model.ts";
 
 const LABELS: Record<string, MessageKey> = {
 	payment_captured: "rep.ev.payment_captured",
@@ -27,23 +29,36 @@ const LABELS: Record<string, MessageKey> = {
 	last_non_direct: "rep.model.last_non_direct",
 };
 
-/** Formatters shared by all report panels (money = minor units, times = UTC). */
+/** Formatters shared by all report panels (money = the one app-wide <Money>/formatMoneyMinor display, times = UTC). */
 export function useReportFmt() {
-	const { t, locale, formatDate } = useI18n();
+	const { t, locale, formatDate, formatNumber } = useI18n();
 	return useMemo(
 		() => ({
-		minor: (v: string | number | bigint, currency: string | null | undefined) =>
-			formatMinor(v, currency, locale),
-		utc: (iso: string | null | undefined) =>
-			iso ? t("rep.utcStamp", { date: formatDate(iso, UTC_DATETIME) }) : "—",
-		/** Known enum value -> translated label; unknown values are shown verbatim (never dropped). */
-		label: (value: string | null | undefined) => {
-			if (!value) return "—";
-			const key = LABELS[value];
-			return key ? t(key) : value;
-		},
+			/** Money from a minor-unit amount: same display as the Dashboard (Intl currency, locale digits, one bidi isolate). */
+			money: (
+				v: string | number | bigint,
+				currency: string | null | undefined,
+			): ReactNode => {
+				const n = Number(typeof v === "bigint" ? v : toBig(v));
+				return currency ? (
+					<Money>{formatMoneyMinor(n, locale, currency)}</Money>
+				) : (
+					<Money>{formatNumber(n)}</Money>
+				);
+			},
+			/** Plain count (not money). */
+			count: (v: string | number | bigint): string =>
+				formatNumber(Number(typeof v === "bigint" ? v : toBig(v))),
+			utc: (iso: string | null | undefined) =>
+				iso ? t("rep.utcStamp", { date: formatDate(iso, UTC_DATETIME) }) : "—",
+			/** Known enum value -> translated label; unknown values are shown verbatim (never dropped). */
+			label: (value: string | null | undefined) => {
+				if (!value) return "—";
+				const key = LABELS[value];
+				return key ? t(key) : value;
+			},
 		}),
-		[t, locale, formatDate],
+		[t, locale, formatDate, formatNumber],
 	);
 }
 

@@ -14,7 +14,13 @@ export type RecordDetailsRow = {
  * Technical record data (ids, revision) lives here, collapsed by default, never in the visible detail layer
  * (UX_AUDIT cross-cutting 8). Values render LTR; identifiers get a copy button.
  */
-export function RecordDetails({ rows, children }: { rows: readonly RecordDetailsRow[]; children?: ReactNode }) {
+export function RecordDetails({
+	rows,
+	children,
+}: {
+	rows: readonly RecordDetailsRow[];
+	children?: ReactNode;
+}) {
 	const { t } = useI18n();
 	const [copied, setCopied] = useState<string | null>(null);
 	const copy = async (label: string, value: string) => {
@@ -28,7 +34,9 @@ export function RecordDetails({ rows, children }: { rows: readonly RecordDetails
 	};
 	return (
 		<details className="sy-record-details" data-testid="record-details">
-			<summary className="sy-record-details__summary">{t("common.details")}</summary>
+			<summary className="sy-record-details__summary">
+				{t("common.details")}
+			</summary>
 			<dl className="sy-record-details__list">
 				{rows.map((r) => (
 					<div key={r.label} className="sy-record-details__row">

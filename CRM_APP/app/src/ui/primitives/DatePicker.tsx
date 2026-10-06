@@ -1,5 +1,18 @@
-import { type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { INTL_LOCALE, formatDate, formatDateTime, useI18n } from "../i18n/index.ts";
+import {
+	type KeyboardEvent,
+	useCallback,
+	useEffect,
+	useId,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+import {
+	INTL_LOCALE,
+	formatDate,
+	formatDateTime,
+	useI18n,
+} from "../i18n/index.ts";
 import { Icon } from "../icons/index.ts";
 import { useOutsideDismiss } from "../overlays/useDismiss.ts";
 import { Button } from "./Button.tsx";
@@ -20,7 +33,9 @@ export type DatePickerProps = {
 	mode?: "date" | "datetime";
 	value: string;
 	/** Same shape the native input used (`e.target.value`), so call sites stay unchanged. */
-	onChange?: (e: { target: { value: string; name: string | undefined } }) => void;
+	onChange?: (e: {
+		target: { value: string; name: string | undefined };
+	}) => void;
 	"data-testid"?: string;
 };
 
@@ -42,7 +57,12 @@ export function parseLocalValue(v: string): Parsed | null {
 	const hh = Number(m[4] ?? DEFAULT_HOUR);
 	const mm = Number(m[5] ?? 0);
 	const probe = new Date(y, mo - 1, d);
-	if (probe.getFullYear() !== y || probe.getMonth() !== mo - 1 || probe.getDate() !== d) return null;
+	if (
+		probe.getFullYear() !== y ||
+		probe.getMonth() !== mo - 1 ||
+		probe.getDate() !== d
+	)
+		return null;
 	if (hh > 23 || mm > 59) return null;
 	return { y, m: mo, d, hh, mm };
 }
@@ -96,13 +116,21 @@ export function DatePicker({
 	const [open, setOpen] = useState(false);
 	const [view, setView] = useState<{ y: number; m: number }>(() => {
 		const n = new Date();
-		return parsed ? { y: parsed.y, m: parsed.m } : { y: n.getFullYear(), m: n.getMonth() + 1 };
+		return parsed
+			? { y: parsed.y, m: parsed.m }
+			: { y: n.getFullYear(), m: n.getMonth() + 1 };
 	});
 	const [focusDay, setFocusDay] = useState<Ymd>(() => {
 		const n = new Date();
-		return parsed ?? { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() };
+		return (
+			parsed ?? { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }
+		);
 	});
-	const [pos, setPos] = useState<{ left: number; top?: number; bottom?: number } | null>(null);
+	const [pos, setPos] = useState<{
+		left: number;
+		top?: number;
+		bottom?: number;
+	} | null>(null);
 
 	const close = useCallback(() => setOpen(false), []);
 	useOutsideDismiss(open, rootRef, close);
@@ -110,14 +138,22 @@ export function DatePicker({
 	const openPanel = () => {
 		if (disabled || !triggerRef.current) return;
 		const n = new Date();
-		const base: Ymd = parsed ?? { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() };
+		const base: Ymd = parsed ?? {
+			y: n.getFullYear(),
+			m: n.getMonth() + 1,
+			d: n.getDate(),
+		};
 		setView({ y: base.y, m: base.m });
 		setFocusDay(base);
 		const r = triggerRef.current.getBoundingClientRect();
 		const below = window.innerHeight - r.bottom;
 		const flip = below < 380 && r.top > below;
 		const left = Math.max(8, Math.min(r.left, window.innerWidth - 288 - 8));
-		setPos(flip ? { left, bottom: window.innerHeight - r.top + 4 } : { left, top: r.bottom + 4 });
+		setPos(
+			flip
+				? { left, bottom: window.innerHeight - r.top + 4 }
+				: { left, top: r.bottom + 4 },
+		);
 		setOpen(true);
 	};
 
@@ -125,7 +161,8 @@ export function DatePicker({
 	useEffect(() => {
 		if (!open) return;
 		const onScroll = (e: Event) => {
-			if (e.target instanceof Node && panelRef.current?.contains(e.target)) return;
+			if (e.target instanceof Node && panelRef.current?.contains(e.target))
+				return;
 			setOpen(false);
 		};
 		window.addEventListener("scroll", onScroll, true);
@@ -140,13 +177,16 @@ export function DatePicker({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: focusDay/view identify the button to focus
 	useEffect(() => {
 		if (!open) return;
-		panelRef.current?.querySelector<HTMLButtonElement>('button[data-roving="true"]')?.focus();
+		panelRef.current
+			?.querySelector<HTMLButtonElement>('button[data-roving="true"]')
+			?.focus();
 	}, [open, focusDay, view]);
 
 	const weekStart = firstDayOfWeek(tag, locale === "ar");
-	const monthTitle = new Intl.DateTimeFormat(tag, { month: "long", year: "numeric" }).format(
-		new Date(view.y, view.m - 1, 1),
-	);
+	const monthTitle = new Intl.DateTimeFormat(tag, {
+		month: "long",
+		year: "numeric",
+	}).format(new Date(view.y, view.m - 1, 1));
 	const weekdays = useMemo(() => {
 		const narrow = new Intl.DateTimeFormat(tag, { weekday: "narrow" });
 		const long = new Intl.DateTimeFormat(tag, { weekday: "long" });
@@ -155,9 +195,18 @@ export function DatePicker({
 			return { narrow: narrow.format(ref), long: long.format(ref) };
 		});
 	}, [tag, weekStart]);
-	const numeral = useMemo(() => new Intl.NumberFormat(tag, { useGrouping: false }), [tag]);
+	const numeral = useMemo(
+		() => new Intl.NumberFormat(tag, { useGrouping: false }),
+		[tag],
+	);
 	const dayLabel = useMemo(
-		() => new Intl.DateTimeFormat(tag, { weekday: "long", day: "numeric", month: "long", year: "numeric" }),
+		() =>
+			new Intl.DateTimeFormat(tag, {
+				weekday: "long",
+				day: "numeric",
+				month: "long",
+				year: "numeric",
+			}),
 		[tag],
 	);
 
@@ -166,11 +215,17 @@ export function DatePicker({
 		const lead = (first.getDay() - weekStart + 7) % 7;
 		return Array.from({ length: 42 }, (_, i) => {
 			const dt = new Date(view.y, view.m - 1, 1 - lead + i);
-			return { y: dt.getFullYear(), m: dt.getMonth() + 1, d: dt.getDate(), outside: dt.getMonth() !== view.m - 1 };
+			return {
+				y: dt.getFullYear(),
+				m: dt.getMonth() + 1,
+				d: dt.getDate(),
+				outside: dt.getMonth() !== view.m - 1,
+			};
 		});
 	}, [view, weekStart]);
 
-	const emit = (next: Parsed) => onChange?.({ target: { value: formatLocalValue(next, mode), name } });
+	const emit = (next: Parsed) =>
+		onChange?.({ target: { value: formatLocalValue(next, mode), name } });
 	const pickDay = (c: Ymd) => {
 		emit({ ...c, hh: parsed?.hh ?? DEFAULT_HOUR, mm: parsed?.mm ?? 0 });
 		if (mode === "date") {
@@ -187,14 +242,19 @@ export function DatePicker({
 		const to = new Date(view.y, view.m - 1 + delta, 1);
 		setView({ y: to.getFullYear(), m: to.getMonth() + 1 });
 		const last = new Date(to.getFullYear(), to.getMonth() + 1, 0).getDate();
-		setFocusDay({ y: to.getFullYear(), m: to.getMonth() + 1, d: Math.min(focusDay.d, last) });
+		setFocusDay({
+			y: to.getFullYear(),
+			m: to.getMonth() + 1,
+			d: Math.min(focusDay.d, last),
+		});
 	};
 
 	const onGridKey = (e: KeyboardEvent<HTMLDivElement>) => {
 		if (e.ctrlKey || e.metaKey || e.altKey) return;
 		const cur = new Date(focusDay.y, focusDay.m - 1, focusDay.d);
 		const h = dir === "rtl" ? -1 : 1;
-		const by = (days: number) => new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + days);
+		const by = (days: number) =>
+			new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + days);
 		const col = (cur.getDay() - weekStart + 7) % 7;
 		const target: Date | "prev" | "next" | null =
 			e.key === "ArrowRight"
@@ -229,21 +289,37 @@ export function DatePicker({
 	};
 
 	const today = new Date();
-	const isToday = (c: Ymd) => c.y === today.getFullYear() && c.m === today.getMonth() + 1 && c.d === today.getDate();
+	const isToday = (c: Ymd) =>
+		c.y === today.getFullYear() &&
+		c.m === today.getMonth() + 1 &&
+		c.d === today.getDate();
 	const shown = parsed
 		? mode === "date"
 			? formatDate(new Date(parsed.y, parsed.m - 1, parsed.d), locale)
-			: formatDateTime(new Date(parsed.y, parsed.m - 1, parsed.d, parsed.hh, parsed.mm), locale)
+			: formatDateTime(
+					new Date(parsed.y, parsed.m - 1, parsed.d, parsed.hh, parsed.mm),
+					locale,
+				)
 		: "";
 	const minuteOptions = useMemo(() => {
 		const base = Array.from({ length: 12 }, (_, i) => i * 5);
-		return parsed && !base.includes(parsed.mm) ? [...base, parsed.mm].sort((a, b) => a - b) : base;
+		return parsed && !base.includes(parsed.mm)
+			? [...base, parsed.mm].sort((a, b) => a - b)
+			: base;
 	}, [parsed]);
-	const two = (n: number) => pad(n).replace(/\d/g, (x) => numeral.format(Number(x)));
-	const current = (): Parsed => parsed ?? { ...focusDay, hh: DEFAULT_HOUR, mm: 0 };
+	const two = (n: number) =>
+		pad(n).replace(/\d/g, (x) => numeral.format(Number(x)));
+	const current = (): Parsed =>
+		parsed ?? { ...focusDay, hh: DEFAULT_HOUR, mm: 0 };
 
 	return (
-		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
+		<FieldShell
+			label={label}
+			hint={hint ?? ""}
+			error={error}
+			required={required}
+			className={className}
+		>
 			{(p) => (
 				// biome-ignore lint/a11y/noStaticElementInteractions: Escape handler for the whole picker
 				<div className="sy-date" ref={rootRef} onKeyDown={onPanelKey}>
@@ -263,7 +339,10 @@ export function DatePicker({
 						data-value={value}
 						onClick={() => (open ? setOpen(false) : openPanel())}
 						onKeyDown={(e) => {
-							if (!open && (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ")) {
+							if (
+								!open &&
+								(e.key === "ArrowDown" || e.key === "Enter" || e.key === " ")
+							) {
 								e.preventDefault();
 								openPanel();
 							}
@@ -274,7 +353,9 @@ export function DatePicker({
 								<bdi>{shown}</bdi>
 							) : (
 								<span className="sy-date__placeholder">
-									{t(mode === "date" ? "datepicker.pickDate" : "datepicker.pick")}
+									{t(
+										mode === "date" ? "datepicker.pickDate" : "datepicker.pick",
+									)}
 								</span>
 							)}
 						</span>
@@ -311,11 +392,21 @@ export function DatePicker({
 									<Icon name="chevronRight" size={16} />
 								</button>
 							</div>
-							<table className="sy-date__grid" aria-label={monthTitle} onKeyDown={onGridKey}>
+							<table
+								className="sy-date__grid"
+								aria-label={monthTitle}
+								onKeyDown={onGridKey}
+							>
 								<thead>
 									<tr className="sy-date__row">
 										{weekdays.map((w) => (
-											<th key={w.long} scope="col" abbr={w.long} aria-label={w.long} className="sy-date__dow">
+											<th
+												key={w.long}
+												scope="col"
+												abbr={w.long}
+												aria-label={w.long}
+												className="sy-date__dow"
+											>
 												{w.narrow}
 											</th>
 										))}
@@ -323,12 +414,25 @@ export function DatePicker({
 								</thead>
 								<tbody>
 									{WEEK_ROWS.map((r) => (
-										<tr key={`${view.y}-${view.m}-${r}`} className="sy-date__row">
+										<tr
+											key={`${view.y}-${view.m}-${r}`}
+											className="sy-date__row"
+										>
 											{cells.slice(r * 7, r * 7 + 7).map((c) => {
-												const selected = parsed !== null && parsed.y === c.y && parsed.m === c.m && parsed.d === c.d;
-												const roving = focusDay.y === c.y && focusDay.m === c.m && focusDay.d === c.d;
+												const selected =
+													parsed !== null &&
+													parsed.y === c.y &&
+													parsed.m === c.m &&
+													parsed.d === c.d;
+												const roving =
+													focusDay.y === c.y &&
+													focusDay.m === c.m &&
+													focusDay.d === c.d;
 												return (
-													<td key={`${c.y}-${c.m}-${c.d}`} className="sy-date__cell">
+													<td
+														key={`${c.y}-${c.m}-${c.d}`}
+														className="sy-date__cell"
+													>
 														<button
 															type="button"
 															tabIndex={roving ? 0 : -1}
@@ -338,7 +442,9 @@ export function DatePicker({
 															data-today={isToday(c) || undefined}
 															aria-pressed={selected}
 															aria-current={isToday(c) ? "date" : undefined}
-															aria-label={dayLabel.format(new Date(c.y, c.m - 1, c.d))}
+															aria-label={dayLabel.format(
+																new Date(c.y, c.m - 1, c.d),
+															)}
 															className="sy-date__day"
 															onClick={() => pickDay(c)}
 														>
@@ -358,7 +464,9 @@ export function DatePicker({
 										value={String(parsed?.hh ?? DEFAULT_HOUR)}
 										size="sm"
 										data-testid="date-hour"
-										onChange={(e) => emit({ ...current(), hh: Number(e.target.value) })}
+										onChange={(e) =>
+											emit({ ...current(), hh: Number(e.target.value) })
+										}
 									>
 										{HOURS.map((h) => (
 											<option key={h} value={String(h)}>
@@ -371,7 +479,9 @@ export function DatePicker({
 										value={String(parsed?.mm ?? 0)}
 										size="sm"
 										data-testid="date-minute"
-										onChange={(e) => emit({ ...current(), mm: Number(e.target.value) })}
+										onChange={(e) =>
+											emit({ ...current(), mm: Number(e.target.value) })
+										}
 									>
 										{minuteOptions.map((m) => (
 											<option key={m} value={String(m)}>

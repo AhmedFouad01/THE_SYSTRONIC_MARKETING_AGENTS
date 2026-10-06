@@ -3,10 +3,18 @@ import { Icon, type IconName } from "../icons/index.ts";
 import { Spinner } from "./Spinner.tsx";
 import "./button.css";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "success";
+export type ButtonVariant =
+	| "primary"
+	| "secondary"
+	| "ghost"
+	| "danger"
+	| "success";
 export type ButtonSize = "sm" | "md" | "lg";
 
-export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
+export type ButtonProps = Omit<
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	"children"
+> & {
 	variant?: ButtonVariant;
 	size?: ButtonSize;
 	/** loading: sets aria-busy + disabled and swaps the icon for a spinner (no double submit). */
@@ -37,13 +45,22 @@ export function Button({
 			aria-busy={loading || undefined}
 			className={`sy-btn sy-btn--${variant} sy-btn--${size}${className ? ` ${className}` : ""}`}
 		>
-			{loading ? <Spinner size={16} /> : icon ? <Icon name={icon} size={size === "lg" ? 18 : 16} /> : null}
-			{children !== undefined && children !== null ? <span className="sy-btn__label">{children}</span> : null}
+			{loading ? (
+				<Spinner size={16} />
+			) : icon ? (
+				<Icon name={icon} size={size === "lg" ? 18 : 16} />
+			) : null}
+			{children !== undefined && children !== null ? (
+				<span className="sy-btn__label">{children}</span>
+			) : null}
 		</button>
 	);
 }
 
-export type IconButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "aria-label"> & {
+export type IconButtonProps = Omit<
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	"children" | "aria-label"
+> & {
 	/** Required accessible name (icon-only control). */
 	"aria-label": string;
 	icon: IconName;

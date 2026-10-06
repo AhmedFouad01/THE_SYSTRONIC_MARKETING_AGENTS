@@ -34,17 +34,69 @@ export function LoadingState({ label }: { label?: string }) {
 	const { t } = useI18n();
 	const text = label ?? t("state.loading");
 	return (
-		<div className="sy-state" role="status" aria-busy="true" data-testid="state-loading">
+		<div
+			className="sy-state"
+			role="status"
+			aria-busy="true"
+			data-testid="state-loading"
+		>
 			<Spinner size={24} />
 			<p className="sy-state__title">{text}</p>
 		</div>
 	);
 }
 
-export function EmptyState({ title, hint, action }: { title?: string; hint?: string; action?: ReactNode }) {
+/** Loading placeholder shaped like list rows (UX-23): keeps the layout stable instead of a lone spinner. */
+export function SkeletonRows({
+	count = 6,
+	label,
+}: {
+	count?: number;
+	label?: string;
+}) {
 	const { t } = useI18n();
 	return (
-		<Block icon="inbox" title={title ?? t("state.empty")} hint={hint} testId="state-empty">
+		<div
+			className="sy-skel"
+			role="status"
+			aria-busy="true"
+			aria-label={label ?? t("state.loading")}
+			data-testid="state-loading"
+		>
+			{Array.from({ length: count }, (_, i) => (
+				<div
+					// biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative placeholders
+					key={i}
+					className="sy-skel__row"
+					data-testid="skeleton-row"
+					aria-hidden="true"
+				>
+					<span className="sy-skel__bar sy-skel__bar--lg" />
+					<span className="sy-skel__bar sy-skel__bar--md" />
+					<span className="sy-skel__bar sy-skel__bar--sm" />
+				</div>
+			))}
+		</div>
+	);
+}
+
+export function EmptyState({
+	title,
+	hint,
+	action,
+}: {
+	title?: string;
+	hint?: string;
+	action?: ReactNode;
+}) {
+	const { t } = useI18n();
+	return (
+		<Block
+			icon="inbox"
+			title={title ?? t("state.empty")}
+			hint={hint}
+			testId="state-empty"
+		>
 			{action}
 		</Block>
 	);
@@ -63,8 +115,18 @@ export function ErrorState({
 }) {
 	const { t } = useI18n();
 	return (
-		<Block icon="warning" title={title ?? t("state.error")} hint={hint} role="alert" testId="state-error">
-			{requestId ? <p className="sy-state__ref sy-ltr">{t("error.requestId", { id: requestId })}</p> : null}
+		<Block
+			icon="warning"
+			title={title ?? t("state.error")}
+			hint={hint}
+			role="alert"
+			testId="state-error"
+		>
+			{requestId ? (
+				<p className="sy-state__ref sy-ltr">
+					{t("error.requestId", { id: requestId })}
+				</p>
+			) : null}
 			{onRetry ? (
 				<Button variant="secondary" onClick={onRetry}>
 					{t("state.retry")}
@@ -75,7 +137,13 @@ export function ErrorState({
 }
 
 /** 403: authenticated but not permitted. No retry (retrying cannot help); it is not an error of the system. */
-export function ForbiddenState({ title, hint }: { title?: string; hint?: string }) {
+export function ForbiddenState({
+	title,
+	hint,
+}: {
+	title?: string;
+	hint?: string;
+}) {
 	const { t } = useI18n();
 	return (
 		<Block

@@ -4,18 +4,6 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
-.sy-leads__top {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: var(--sy-space-10);
-}
-.sy-leads__h1 {
-	margin: 0;
-	font-size: 1.5rem;
-	color: var(--sy-text);
-}
 .sy-leads__body {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);

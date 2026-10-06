@@ -29,7 +29,9 @@ export type SelectProps = {
 	name?: string;
 	value: string;
 	/** Same shape the native select used (`e.target.value`), so call sites stay unchanged. */
-	onChange?: (e: { target: { value: string; name: string | undefined } }) => void;
+	onChange?: (e: {
+		target: { value: string; name: string | undefined };
+	}) => void;
 	/** md = 36px (forms), sm = 32px (toolbars, pager). */
 	size?: "sm" | "md";
 	"data-testid"?: string;
@@ -38,10 +40,12 @@ export type SelectProps = {
 };
 
 function textOf(node: ReactNode): string {
-	if (node === null || node === undefined || typeof node === "boolean") return "";
+	if (node === null || node === undefined || typeof node === "boolean")
+		return "";
 	if (typeof node === "string" || typeof node === "number") return String(node);
 	if (Array.isArray(node)) return node.map(textOf).join("");
-	if (isValidElement(node)) return textOf((node.props as { children?: ReactNode }).children);
+	if (isValidElement(node))
+		return textOf((node.props as { children?: ReactNode }).children);
 	return "";
 }
 
@@ -51,7 +55,11 @@ export function parseOptions(children: ReactNode): SelectOption[] {
 	const visit = (nodes: ReactNode) => {
 		for (const child of Children.toArray(nodes)) {
 			if (!isValidElement(child)) continue;
-			const el = child as ReactElement<{ value?: string | number; children?: ReactNode; disabled?: boolean }>;
+			const el = child as ReactElement<{
+				value?: string | number;
+				children?: ReactNode;
+				disabled?: boolean;
+			}>;
 			if (el.type === "option") {
 				const label = textOf(el.props.children);
 				out.push({
@@ -68,7 +76,13 @@ export function parseOptions(children: ReactNode): SelectOption[] {
 	return out;
 }
 
-type Placement = { left: number; width: number; top?: number; bottom?: number; maxHeight: number };
+type Placement = {
+	left: number;
+	width: number;
+	top?: number;
+	bottom?: number;
+	maxHeight: number;
+};
 
 const GAP = 4;
 const EDGE = 8;
@@ -83,7 +97,9 @@ function place(trigger: HTMLElement): Placement {
 		left: r.left,
 		width: r.width,
 		maxHeight,
-		...(flip ? { bottom: window.innerHeight - r.top + GAP } : { top: r.bottom + GAP }),
+		...(flip
+			? { bottom: window.innerHeight - r.top + GAP }
+			: { top: r.bottom + GAP }),
 	};
 }
 
@@ -110,7 +126,10 @@ export function Select({
 	const rootRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const listRef = useRef<HTMLDivElement>(null);
-	const typed = useRef<{ buf: string; timer: ReturnType<typeof setTimeout> | null }>({ buf: "", timer: null });
+	const typed = useRef<{
+		buf: string;
+		timer: ReturnType<typeof setTimeout> | null;
+	}>({ buf: "", timer: null });
 	const options = useMemo(() => parseOptions(children), [children]);
 	const selectedIndex = options.findIndex((o) => o.value === value);
 	const [open, setOpen] = useState(false);
@@ -131,7 +150,8 @@ export function Select({
 	useEffect(() => {
 		if (!open) return;
 		const onScroll = (e: Event) => {
-			if (e.target instanceof Node && listRef.current?.contains(e.target)) return;
+			if (e.target instanceof Node && listRef.current?.contains(e.target))
+				return;
 			setOpen(false);
 		};
 		window.addEventListener("scroll", onScroll, true);
@@ -165,7 +185,8 @@ export function Select({
 	const typeahead = (key: string): number | null => {
 		const t = typed.current;
 		if (t.timer) clearTimeout(t.timer);
-		t.buf = t.buf !== "" && [...t.buf].every((c) => c === key) ? key : t.buf + key;
+		t.buf =
+			t.buf !== "" && [...t.buf].every((c) => c === key) ? key : t.buf + key;
 		t.timer = setTimeout(() => {
 			t.buf = "";
 		}, 700);
@@ -180,9 +201,22 @@ export function Select({
 		if (disabled || e.ctrlKey || e.metaKey || e.altKey) return;
 		const key = e.key;
 		if (!open) {
-			if (key === "ArrowDown" || key === "ArrowUp" || key === "Enter" || key === " " || key === "Home" || key === "End") {
+			if (
+				key === "ArrowDown" ||
+				key === "ArrowUp" ||
+				key === "Enter" ||
+				key === " " ||
+				key === "Home" ||
+				key === "End"
+			) {
 				e.preventDefault();
-				openAt(key === "Home" ? 0 : key === "End" ? options.length - 1 : selectedIndex);
+				openAt(
+					key === "Home"
+						? 0
+						: key === "End"
+							? options.length - 1
+							: selectedIndex,
+				);
 				return;
 			}
 			if (key.length === 1) {
@@ -227,7 +261,13 @@ export function Select({
 	const selected = selectedIndex >= 0 ? options[selectedIndex] : undefined;
 
 	return (
-		<FieldShell label={label} hint={hint ?? ""} error={error} required={required} className={className}>
+		<FieldShell
+			label={label}
+			hint={hint ?? ""}
+			error={error}
+			required={required}
+			className={className}
+		>
 			{(p) => (
 				<div className="sy-select" ref={rootRef} data-size={size}>
 					<button
@@ -238,7 +278,9 @@ export function Select({
 						aria-haspopup="listbox"
 						aria-expanded={open}
 						aria-controls={open ? listId : undefined}
-						aria-activedescendant={open && active >= 0 ? `${listId}-o${active}` : undefined}
+						aria-activedescendant={
+							open && active >= 0 ? `${listId}-o${active}` : undefined
+						}
 						aria-required={required || undefined}
 						disabled={disabled}
 						className="sy-select__trigger"
@@ -248,7 +290,9 @@ export function Select({
 						onClick={() => (open ? setOpen(false) : openAt(-1))}
 						onKeyDown={onKeyDown}
 					>
-						<span className="sy-select__value">{selected ? selected.label : " "}</span>
+						<span className="sy-select__value">
+							{selected ? selected.label : " "}
+						</span>
 						<Icon name="chevronDown" size={16} className="sy-select__chevron" />
 					</button>
 					{open && pos ? (
@@ -258,7 +302,13 @@ export function Select({
 							role="listbox"
 							aria-label={label}
 							className="sy-select__list"
-							style={{ left: pos.left, width: pos.width, top: pos.top, bottom: pos.bottom, maxHeight: pos.maxHeight }}
+							style={{
+								left: pos.left,
+								width: pos.width,
+								top: pos.top,
+								bottom: pos.bottom,
+								maxHeight: pos.maxHeight,
+							}}
 						>
 							{options.map((o, i) => (
 								// biome-ignore lint/a11y/useKeyWithClickEvents: DOM focus stays on the combobox trigger, which owns all keys (aria-activedescendant)

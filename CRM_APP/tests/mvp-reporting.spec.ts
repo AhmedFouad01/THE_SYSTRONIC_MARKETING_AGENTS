@@ -73,8 +73,8 @@ async function open(
 const noPageOverflow = (page: Page) =>
 	page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
 
-// Money is grouped per locale (10,000 / ١٠٬٠٠٠).
-const AMOUNT = /10[,٬]?000|١٠[,٬]?٠٠٠/;
+// 10000 minor EGP units shown as the app-wide currency display (EGP 100 / ١٠٠ ج.م.), same as the Dashboard.
+const AMOUNT = /100|١٠٠/;
 
 const T = {
 	en: {
@@ -259,4 +259,202 @@ test("reporting en: invalid lookback blocks publish; a changed lookback after a 
 	await expect(page.getByTestId("publish-dialog")).toBeHidden();
 	expect(keys).toHaveLength(2);
 	expect(keys[0]).not.toBe(keys[1]);
+});
+
+// ---- UX-18 / UX-23 (Reporting restyle, empty + loading states) ------------------------------------------------
+
+const REPORT_URL = "**/v1/reports/campaign-performance*";
+const reportBody = (rows: unknown[], spend: unknown[] = []) =>
+	JSON.stringify({
+		data: {
+			model: "last_non_direct",
+			version: "deterministic-v1",
+			lookback_days: 30,
+			run_id: "run-1",
+			as_of: "2026-10-05T10:00:00.000Z",
+			rows,
+			spend,
+		},
+	});
+const SEEDED_ROWS = [
+	{
+		campaign_id: "a",
+		campaign_name: "Alpha",
+		source: "ads",
+		currency: "EGP",
+		conversion_type: "payment_captured",
+		value_minor: 12345678,
+		outcomes: 3,
+	},
+];
+const SEEDED_SPEND = [
+	{
+		campaign_id: "a",
+		name: "Alpha",
+		currency: "EGP",
+		spend_minor: 4000000,
+		reporting_date: "2026-10-01",
+		timezone: "UTC",
+	},
+];
+
+test("reporting en 1280 (UX-18): constrained controls, collapsed provenance, equal KPI heights, detail only with rows, no 'Minor units' label", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture(request);
+	await page.route(REPORT_URL, (r) =>
+		r.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: reportBody(SEEDED_ROWS, SEEDED_SPEND),
+		}),
+	);
+	await open(page, f, "en");
+	await expect(page.getByTestId("report-kpis")).toBeVisible();
+
+	// controls are constrained, not stretched
+	const model = await page.getByTestId("report-model").boundingBox();
+	const days = await page.getByTestId("report-days").boundingBox();
+	expect(model?.width).toBeLessThanOrEqual(241);
+	expect(days?.width).toBeLessThanOrEqual(97);
+
+	// provenance lives in a collapsed "About this calculation" block (12px, text-3)
+	const about = page.getByTestId("report-about");
+	await expect(about.locator("summary")).toHaveText("About this calculation");
+	expect(await about.evaluate((d) => (d as HTMLDetailsElement).open)).toBe(false);
+	await expect(page.getByTestId("report-meta")).toBeHidden();
+	await expect(about).toHaveCSS("font-size", "12px");
+	await expect(about).toHaveCSS("margin-top", "16px");
+	await about.locator("summary").click();
+	await expect(page.getByTestId("report-meta")).toBeVisible();
+	await expect(page.getByTestId("report-meta")).toContainText(
+		"deterministic-v1",
+	);
+
+	// KPI cards: equal heights, 12px label, 24px value
+	const heights = await page
+		.locator('[data-testid="report-kpis"] > .sy-kpi')
+		.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().height)));
+	expect(heights).toHaveLength(5);
+	expect(new Set(heights).size).toBe(1);
+	await expect(
+		page.getByTestId("kpi-roas").locator(".sy-kpi__label"),
+	).toHaveCSS("font-size", "12px");
+	await expect(
+		page.getByTestId("kpi-roas").locator(".sy-kpi__value"),
+	).toHaveCSS("font-size", "24px");
+
+	// one money display: no "Minor units" label anywhere, currency-formatted values
+	await expect(page.getByTestId("reporting-view")).not.toContainText(
+		"Minor units",
+	);
+	await expect(page.getByTestId("reporting-view")).not.toContainText(
+		"minor units",
+	);
+
+	// detail panel exists only once a row exists
+	await expect(page.getByTestId("report-detail")).toBeVisible();
+	await page.unroute(REPORT_URL);
+	await page.route(REPORT_URL, (r) =>
+		r.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: reportBody([]),
+		}),
+	);
+	await page.getByTestId("report-refresh").click();
+	await expect(page.getByTestId("state-empty")).toBeVisible();
+	await expect(page.getByTestId("report-detail")).toHaveCount(0);
+});
+
+for (const language of ["en", "ar"] as const)
+	test(`same revenue string on Dashboard and Reporting (${language})`, async ({
+		page,
+		request,
+	}) => {
+		const f = await fixture(request);
+		await page.route(REPORT_URL, (r) =>
+			r.fulfill({
+				status: 200,
+				contentType: "application/json",
+				body: reportBody(SEEDED_ROWS, SEEDED_SPEND),
+			}),
+		);
+		await page.setViewportSize({ width: 1440, height: 900 });
+		await page.addInitScript(
+			(l) => localStorage.setItem("sy.locale", l),
+			language,
+		);
+		await page.goto("/app/dashboard");
+		await page.locator("input[name=token]").fill(f.tokens.manager);
+		await page.locator("input[name=tenant]").fill(f.ids.a);
+		await page.getByTestId("connect-submit").click();
+		const dash = page.getByTestId("kpi-revenue").locator(".sy-money");
+		await expect(dash).toBeVisible();
+		const dashText = (await dash.innerText()).trim();
+
+		await page.getByTestId("nav-reporting").click();
+		await expect(page.getByTestId("reporting-view")).toBeVisible();
+		const rep = page.getByTestId("kpi-revenue").locator(".sy-money");
+		await expect(rep).toBeVisible();
+		const repText = (await rep.innerText()).trim();
+
+		expect(dashText.length).toBeGreaterThan(0);
+		expect(repText).toBe(dashText);
+		// 12,345,678 minor units = 123,456.78 in EGP; locale digits (Arabic-Indic in AR, Latin in EN)
+		if (language === "ar") expect(repText).not.toMatch(/[0-9]/);
+		else expect(repText).toMatch(/123,456\.78/);
+	});
+
+test("reporting en (UX-23): empty state has a primary 'Publish calculation' CTA that opens the confirm dialog", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture(request);
+	await page.route(REPORT_URL, (r) =>
+		r.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: reportBody([]),
+		}),
+	);
+	await open(page, f, "en");
+	const cta = page.getByTestId("report-empty-publish");
+	await expect(page.getByTestId("state-empty")).toBeVisible();
+	await expect(cta).toBeVisible();
+	await expect(cta).toBeEnabled();
+	await expect(cta).toHaveText("Publish calculation");
+	await cta.click();
+	await expect(page.getByTestId("publish-dialog")).toBeVisible();
+});
+
+test("reporting en (UX-23): loading shows six skeleton rows with aria-busy, not a lone spinner", async ({
+	page,
+	request,
+}) => {
+	const f = await fixture(request);
+	let release: () => void = () => undefined;
+	const gate = new Promise<void>((resolve) => {
+		release = resolve;
+	});
+	await page.route(REPORT_URL, async (r) => {
+		await gate;
+		await r.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: reportBody(SEEDED_ROWS, SEEDED_SPEND),
+		});
+	});
+	await open(page, f, "en");
+	const busy = page.locator('[role="tabpanel"] [aria-busy="true"]');
+	await expect(busy).toBeVisible();
+	await expect(busy.getByTestId("skeleton-row")).toHaveCount(6);
+	await expect(page.getByTestId("report-kpis-loading")).toHaveAttribute(
+		"aria-busy",
+		"true",
+	);
+	release();
+	await expect(page.getByTestId("report-kpis")).toBeVisible();
+	await expect(page.getByTestId("skeleton-row")).toHaveCount(0);
 });

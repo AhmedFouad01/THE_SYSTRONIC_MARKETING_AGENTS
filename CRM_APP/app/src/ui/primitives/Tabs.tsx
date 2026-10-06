@@ -2,7 +2,12 @@ import { type KeyboardEvent, type ReactNode, useId, useRef } from "react";
 import { useI18n } from "../i18n/index.ts";
 import "./tabs.css";
 
-export type TabItem = { id: string; label: ReactNode; panel?: ReactNode; disabled?: boolean };
+export type TabItem = {
+	id: string;
+	label: ReactNode;
+	panel?: ReactNode;
+	disabled?: boolean;
+};
 
 /**
  * Pure keyboard model (WAI-ARIA tabs, automatic activation). Returns the index to focus, or null when
@@ -29,7 +34,8 @@ export function nextTabIndex(
 	if (key === forward) return step(current, 1);
 	if (key === back) return step(current, -1);
 	if (key === "Home") return disabled[0] ? step(0, 1) : 0;
-	if (key === "End") return disabled[count - 1] ? step(count - 1, -1) : count - 1;
+	if (key === "End")
+		return disabled[count - 1] ? step(count - 1, -1) : count - 1;
 	return null;
 }
 

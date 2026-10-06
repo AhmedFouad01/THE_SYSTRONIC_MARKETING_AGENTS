@@ -95,7 +95,10 @@ describe("aggregateCampaigns / deriveKpis", () => {
 	it("mixed currencies: money KPIs cover the primary currency and say so", () => {
 		const k = deriveKpis(
 			report({
-				rows: [row("a", "100", 1), row("b", "9000", 1, "payment_captured", "USD")],
+				rows: [
+					row("a", "100", 1),
+					row("b", "9000", 1, "payment_captured", "USD"),
+				],
 			}),
 		);
 		expect(k.mixedCurrency).toBe(true);

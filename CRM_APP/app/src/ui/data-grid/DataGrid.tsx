@@ -17,7 +17,7 @@ import { Popover } from "../overlays/Popover.tsx";
 import { Button } from "../primitives/Button.tsx";
 import { Input } from "../primitives/Field.tsx";
 import { Select } from "../primitives/Select.tsx";
-import { EmptyState, ErrorState, LoadingState } from "../primitives/States.tsx";
+import { EmptyState, ErrorState, SkeletonRows } from "../primitives/States.tsx";
 import {
 	ariaSortOf,
 	computeView,
@@ -98,6 +98,8 @@ export type DataGridProps<T> = {
 	sample?: GridSample;
 	emptyTitle?: string;
 	emptyHint?: string;
+	/** Primary next step in the zero-data empty state (UX-23). Not shown for filtered-empty. */
+	emptyAction?: ReactNode;
 	toolbarExtra?: ReactNode;
 	/** Master-detail on wide layouts: open the first row when nothing is active (prototype behaviour). */
 	autoSelectFirst?: boolean;
@@ -108,7 +110,11 @@ const interactive = "input,button,a,select,label,textarea";
 export function DataGrid<T>(props: DataGridProps<T>) {
 	const { rows, columns, getRowId, selectable = false, views } = props;
 	const { t, tx, locale, formatNumber } = useI18n();
-	const [state, dispatch] = useReducer(gridReducer, props.initialView ?? DEFAULT_VIEW, initialGridState);
+	const [state, dispatch] = useReducer(
+		gridReducer,
+		props.initialView ?? DEFAULT_VIEW,
+		initialGridState,
+	);
 	const getIdRef = useRef(getRowId);
 	const selectionCb = useRef(props.onSelectionChange);
 	const activeCb = useRef(props.onActiveChange);
@@ -118,13 +124,20 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		activeCb.current = props.onActiveChange;
 	});
 
-	const cols = useMemo(() => visibleColumns(columns, state.hidden), [columns, state.hidden]);
+	const cols = useMemo(
+		() => visibleColumns(columns, state.hidden),
+		[columns, state.hidden],
+	);
 	const { matching, pageRows, pageInfo } = useMemo(
 		() => computeView(rows, columns, state, locale),
 		[rows, columns, state, locale],
 	);
-	const pageIds = useMemo(() => pageRows.map((r) => getIdRef.current(r)), [pageRows]);
-	const activeId = props.activeId !== undefined ? props.activeId : state.activeId;
+	const pageIds = useMemo(
+		() => pageRows.map((r) => getIdRef.current(r)),
+		[pageRows],
+	);
+	const activeId =
+		props.activeId !== undefined ? props.activeId : state.activeId;
 
 	// Reloads can remove rows: drop selection/active ids that are no longer loaded.
 	useEffect(() => {
@@ -150,7 +163,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	const rowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
 	const [focusIdx, setFocusIdx] = useState(0);
 	const tabIdx = Math.min(focusIdx, Math.max(0, pageRows.length - 1));
-	const onRowKey = (e: KeyboardEvent<HTMLTableRowElement>, i: number, id: string) => {
+	const onRowKey = (
+		e: KeyboardEvent<HTMLTableRowElement>,
+		i: number,
+		id: string,
+	) => {
 		if (e.target !== e.currentTarget) return;
 		const next = rovingIndex(e.key, i, pageRows.length, false);
 		if (next !== null) {
@@ -197,7 +214,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		if (!views) return;
 		const res = views.save(viewName, viewSnapshot());
 		if (!res.ok) {
-			setViewError(res.reason === "name" ? t("grid.viewNameRequired") : t("grid.viewSaveFailed"));
+			setViewError(
+				res.reason === "name"
+					? t("grid.viewNameRequired")
+					: t("grid.viewSaveFailed"),
+			);
 			return;
 		}
 		setSaved(views.list());
@@ -221,35 +242,62 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		const f = state.filters.find((x: FilterSpec) => x.key === key);
 		return f && f.op === "eq" ? String(f.value) : "";
 	};
-	const optionLabel = (c: GridColumn<T>, v: string) => c.filter?.options.find((o) => o.value === v)?.label ?? v;
+	const optionLabel = (c: GridColumn<T>, v: string) =>
+		c.filter?.options.find((o) => o.value === v)?.label ?? v;
 	const filtersActive = state.filters.length > 0 || state.query.trim() !== "";
 
-	const toggleSort = useCallback((id: string, additive: boolean) => dispatch({ type: "sort", key: id, additive }), []);
+	const toggleSort = useCallback(
+		(id: string, additive: boolean) =>
+			dispatch({ type: "sort", key: id, additive }),
+		[],
+	);
 	const selectedIds = [...state.selection];
 	const clearSelection = () => dispatch({ type: "clearSelection" });
 	const batchOpen = selectable && state.selection.size > 0;
 
 	const body = (() => {
-		if (props.status === "loading" && rows.length === 0) return <LoadingState />;
-		if (props.status === "error") return <ErrorState requestId={props.requestId ?? null} {...(props.onRetry ? { onRetry: props.onRetry } : {})} />;
+		if (props.status === "loading" && rows.length === 0)
+			return <SkeletonRows count={6} />;
+		if (props.status === "error")
+			return (
+				<ErrorState
+					requestId={props.requestId ?? null}
+					{...(props.onRetry ? { onRetry: props.onRetry } : {})}
+				/>
+			);
 		if (matching.length === 0)
 			return filtersActive || rows.length > 0 ? (
 				<EmptyState
 					title={t("state.noResults")}
 					hint={t("state.noResultsHint")}
 					action={
-						<Button size="sm" onClick={() => dispatch({ type: "clearFilters" })}>
+						<Button
+							size="sm"
+							onClick={() => dispatch({ type: "clearFilters" })}
+						>
 							{t("common.clearFilters")}
 						</Button>
 					}
 				/>
 			) : (
-				<EmptyState {...(props.emptyTitle ? { title: props.emptyTitle } : {})} {...(props.emptyHint ? { hint: props.emptyHint } : {})} />
+				<EmptyState
+					{...(props.emptyTitle ? { title: props.emptyTitle } : {})}
+					{...(props.emptyHint ? { hint: props.emptyHint } : {})}
+					{...(props.emptyAction ? { action: props.emptyAction } : {})}
+				/>
 			);
 		return (
-			// biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable region must be keyboard reachable
-			<section className="sy-grid__scroll" aria-label={props.label} tabIndex={0}>
-				<table className={`sy-grid__table${selectable ? " sy-grid__table--sel" : ""}`} data-density={state.density} data-testid="grid-table">
+			<section
+				className="sy-grid__scroll"
+				aria-label={props.label}
+				// biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable region must be keyboard reachable
+				tabIndex={0}
+			>
+				<table
+					className={`sy-grid__table${selectable ? " sy-grid__table--sel" : ""}`}
+					data-density={state.density}
+					data-testid="grid-table"
+				>
 					<caption className="sy-grid__sr">{props.label}</caption>
 					<thead>
 						<tr>
@@ -272,7 +320,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										key={c.id}
 										scope="col"
 										aria-sort={c.sortable ? dir : undefined}
-										style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
+										style={
+											c.width
+												? { width: c.width, maxWidth: c.width }
+												: undefined
+										}
 										data-mobile={c.mobile}
 										data-collapse={c.collapse}
 									>
@@ -287,7 +339,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 											>
 												<span>{c.header}</span>
 												{dir !== "none" ? (
-													<span aria-hidden="true" className="sy-grid__sortmark" data-testid="sort-mark">
+													<span
+														aria-hidden="true"
+														className="sy-grid__sortmark"
+														data-testid="sort-mark"
+													>
 														{dir === "ascending" ? "▲" : "▼"}
 													</span>
 												) : null}
@@ -328,7 +384,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										<td className="sy-grid__check">
 											<input
 												type="checkbox"
-												aria-label={t("grid.selectRow", { name: String(cols[0]?.value(row) ?? id) })}
+												aria-label={t("grid.selectRow", {
+													name: String(cols[0]?.value(row) ?? id),
+												})}
 												checked={checked}
 												onChange={() => dispatch({ type: "toggleRow", id })}
 											/>
@@ -336,12 +394,20 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 									) : null}
 									{cols.map((c, ci) => {
 										const plain = c.cell ? undefined : c.value(row);
-										const tip = c.titleText ? c.titleText(row) : typeof plain === "string" ? plain : undefined;
+										const tip = c.titleText
+											? c.titleText(row)
+											: typeof plain === "string"
+												? plain
+												: undefined;
 										return (
 											<td
 												key={c.id}
 												className={`sy-grid__cell${c.ltr ? " sy-ltr" : ""}${c.width ? "" : " sy-grid__cell--flex"}`}
-												style={c.width ? { width: c.width, maxWidth: c.width } : undefined}
+												style={
+													c.width
+														? { width: c.width, maxWidth: c.width }
+														: undefined
+												}
 												data-mobile={c.mobile ?? (ci === 0 ? "title" : "meta")}
 												data-collapse={c.collapse}
 												title={tip}
@@ -368,122 +434,163 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	return (
 		<div className="sy-grid" data-testid="data-grid">
 			<div className="sy-grid__toolwrap">
-			<search className="sy-grid__toolbar" inert={batchOpen}>
-				<div className="sy-grid__searchbox">
-					<Icon name="search" size={16} />
-					<input
-						type="search"
-						className="sy-grid__search"
-						aria-label={t("grid.search")}
-						placeholder={t("grid.searchPlaceholder")}
-						value={state.query}
-						onChange={(e) => dispatch({ type: "query", query: e.target.value })}
-						data-testid="grid-search"
-					/>
-				</div>
-				{views ? (
-					<fieldset className="sy-grid__views">
-<legend className="sy-grid__sr">{t("grid.views")}</legend>
-						<button
-							type="button"
-							className="sy-grid__view"
-							aria-pressed={viewId === null}
-							onClick={() => {
-								setViewId(null);
-								dispatch({ type: "applyView", view: props.initialView ?? DEFAULT_VIEW });
-							}}
-						>
-							{t("common.all")}
-						</button>
-						{saved.map((v) => (
+				<search className="sy-grid__toolbar" inert={batchOpen}>
+					<div className="sy-grid__searchbox">
+						<Icon name="search" size={16} />
+						<input
+							type="search"
+							className="sy-grid__search"
+							aria-label={t("grid.search")}
+							placeholder={t("grid.searchPlaceholder")}
+							value={state.query}
+							onChange={(e) =>
+								dispatch({ type: "query", query: e.target.value })
+							}
+							data-testid="grid-search"
+						/>
+					</div>
+					{views ? (
+						<fieldset className="sy-grid__views">
+							<legend className="sy-grid__sr">{t("grid.views")}</legend>
 							<button
-								key={v.id}
 								type="button"
 								className="sy-grid__view"
-								aria-pressed={v.id === viewId}
+								aria-pressed={viewId === null}
 								onClick={() => {
-									setViewId(v.id);
-									dispatch({ type: "applyView", view: v.state });
+									setViewId(null);
+									dispatch({
+										type: "applyView",
+										view: props.initialView ?? DEFAULT_VIEW,
+									});
 								}}
 							>
-								{v.name}
+								{t("common.all")}
 							</button>
-						))}
+							{saved.map((v) => (
+								<button
+									key={v.id}
+									type="button"
+									className="sy-grid__view"
+									aria-pressed={v.id === viewId}
+									onClick={() => {
+										setViewId(v.id);
+										dispatch({ type: "applyView", view: v.state });
+									}}
+								>
+									{v.name}
+								</button>
+							))}
+							<Button
+								size="sm"
+								variant="ghost"
+								icon="plus"
+								onClick={() => {
+									setViewName("");
+									setViewError(undefined);
+									setSaveOpen(true);
+								}}
+								data-testid="grid-save-view"
+							>
+								{t("grid.saveView")}
+							</Button>
+							{currentView ? (
+								<Button
+									size="sm"
+									variant="ghost"
+									icon="delete"
+									onClick={() => setDeleteOpen(true)}
+								>
+									{t("grid.deleteView")}
+								</Button>
+							) : null}
+						</fieldset>
+					) : null}
+					<div className="sy-grid__tools">
+						{filterCols.length > 0 ? (
+							<Button
+								size="sm"
+								icon="filter"
+								aria-expanded={filtersOpen}
+								onClick={() => setFiltersOpen((v) => !v)}
+								data-testid="grid-filters"
+							>
+								{state.filters.length > 0
+									? tx("grid.filtersCount", {
+											count: formatNumber(state.filters.length),
+										})
+									: t("common.filters")}
+							</Button>
+						) : null}
+						<Popover
+							label={t("grid.chooseColumns")}
+							triggerLabel={tx("grid.columnsCount", {
+								count: formatNumber(cols.length),
+							})}
+							testId="grid-columns"
+						>
+							<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
+							{columns.map((c) => (
+								<label key={c.id} className="sy-grid__colopt">
+									<input
+										type="checkbox"
+										checked={
+											c.hideable === false || !state.hidden.includes(c.id)
+										}
+										disabled={c.hideable === false}
+										onChange={() =>
+											dispatch({ type: "toggleColumn", id: c.id })
+										}
+									/>
+									<span>{c.header}</span>
+								</label>
+							))}
+						</Popover>
+						<Button
+							size="sm"
+							aria-pressed={state.density === "compact"}
+							onClick={() =>
+								dispatch({
+									type: "density",
+									density:
+										state.density === "compact" ? "comfortable" : "compact",
+								})
+							}
+							data-testid="grid-density"
+						>
+							{state.density === "compact"
+								? t("grid.densityComfortable")
+								: t("grid.densityCompact")}
+						</Button>
+						{props.toolbarExtra}
+					</div>
+					<p className="sy-grid__count" role="status" data-testid="grid-count">
+						{tx("format.matching", { count: formatNumber(matching.length) })}
+					</p>
+				</search>
+				{batchOpen ? (
+					<section
+						className="sy-grid__batch"
+						aria-label={t("format.selectedCount", {
+							count: formatNumber(state.selection.size),
+						})}
+						data-testid="grid-batch"
+					>
+						<b>
+							{tx("format.selectedCount", {
+								count: formatNumber(state.selection.size),
+							})}
+						</b>
+						{props.batchActions?.(selectedIds, clearSelection)}
 						<Button
 							size="sm"
 							variant="ghost"
-							icon="plus"
-							onClick={() => {
-								setViewName("");
-								setViewError(undefined);
-								setSaveOpen(true);
-							}}
-							data-testid="grid-save-view"
+							onClick={clearSelection}
+							data-testid="grid-batch-clear"
 						>
-							{t("grid.saveView")}
+							{t("common.clearSelection")}
 						</Button>
-						{currentView ? (
-							<Button size="sm" variant="ghost" icon="delete" onClick={() => setDeleteOpen(true)}>
-								{t("grid.deleteView")}
-							</Button>
-						) : null}
-					</fieldset>
+					</section>
 				) : null}
-				<div className="sy-grid__tools">
-					{filterCols.length > 0 ? (
-						<Button
-							size="sm"
-							icon="filter"
-							aria-expanded={filtersOpen}
-							onClick={() => setFiltersOpen((v) => !v)}
-							data-testid="grid-filters"
-						>
-							{state.filters.length > 0
-								? tx("grid.filtersCount", { count: formatNumber(state.filters.length) })
-								: t("common.filters")}
-						</Button>
-					) : null}
-					<Popover
-						label={t("grid.chooseColumns")}
-						triggerLabel={tx("grid.columnsCount", { count: formatNumber(cols.length) })}
-						testId="grid-columns"
-					>
-						<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
-						{columns.map((c) => (
-							<label key={c.id} className="sy-grid__colopt">
-								<input
-									type="checkbox"
-									checked={c.hideable === false || !state.hidden.includes(c.id)}
-									disabled={c.hideable === false}
-									onChange={() => dispatch({ type: "toggleColumn", id: c.id })}
-								/>
-								<span>{c.header}</span>
-							</label>
-						))}
-					</Popover>
-					<Button
-						size="sm"
-						aria-pressed={state.density === "compact"}
-						onClick={() => dispatch({ type: "density", density: state.density === "compact" ? "comfortable" : "compact" })}
-						data-testid="grid-density"
-					>
-						{state.density === "compact" ? t("grid.densityComfortable") : t("grid.densityCompact")}
-					</Button>
-					{props.toolbarExtra}
-				</div>
-				<p className="sy-grid__count" role="status" data-testid="grid-count">
-					{tx("format.matching", { count: formatNumber(matching.length) })}
-				</p>
-			</search>
-			{batchOpen ? (
-				<section className="sy-grid__batch" aria-label={t("format.selectedCount", { count: formatNumber(state.selection.size) })} data-testid="grid-batch">
-					<b>{tx("format.selectedCount", { count: formatNumber(state.selection.size) })}</b>
-					{props.batchActions?.(selectedIds, clearSelection)}
-					<Button size="sm" variant="ghost" onClick={clearSelection} data-testid="grid-batch-clear">
-						{t("common.clearSelection")}
-					</Button>
-				</section>
-			) : null}
 			</div>
 
 			{filtersOpen && filterCols.length > 0 ? (
@@ -495,7 +602,14 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							size="sm"
 							value={eqValue(c.id)}
 							onChange={(e) =>
-								dispatch({ type: "filters", filters: setEqFilter(state.filters, c.id, e.target.value === "" ? null : e.target.value) })
+								dispatch({
+									type: "filters",
+									filters: setEqFilter(
+										state.filters,
+										c.id,
+										e.target.value === "" ? null : e.target.value,
+									),
+								})
 							}
 						>
 							<option value="">{t("common.all")}</option>
@@ -506,7 +620,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							))}
 						</Select>
 					))}
-					<Button size="sm" onClick={() => dispatch({ type: "clearFilters" })} disabled={!filtersActive}>
+					<Button
+						size="sm"
+						onClick={() => dispatch({ type: "clearFilters" })}
+						disabled={!filtersActive}
+					>
 						{t("common.clearFilters")}
 					</Button>
 				</div>
@@ -525,7 +643,12 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										type="button"
 										className="sy-grid__chipx"
 										aria-label={t("grid.removeFilter", { name: text })}
-										onClick={() => dispatch({ type: "filters", filters: setEqFilter(state.filters, f.key, null) })}
+										onClick={() =>
+											dispatch({
+												type: "filters",
+												filters: setEqFilter(state.filters, f.key, null),
+											})
+										}
 									>
 										<Icon name="close" size={12} />
 									</button>
@@ -553,7 +676,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							label={t("common.rowsPerPage")}
 							size="sm"
 							value={String(state.pageSize)}
-							onChange={(e) => dispatch({ type: "pageSize", size: Number(e.target.value) })}
+							onChange={(e) =>
+								dispatch({ type: "pageSize", size: Number(e.target.value) })
+							}
 							className="sy-grid__size"
 						>
 							{PAGE_SIZES.map((n) => (
@@ -563,21 +688,36 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							))}
 						</Select>
 					</div>
-					<nav className="sy-grid__pager" aria-label={t("grid.pager")} data-testid="grid-pager">
+					<nav
+						className="sy-grid__pager"
+						aria-label={t("grid.pager")}
+						data-testid="grid-pager"
+					>
 						<button
 							type="button"
 							className="sy-grid__pg sy-grid__pg--prev"
 							aria-label={t("common.previousPage")}
 							disabled={pageInfo.page <= 1}
-							onClick={() => dispatch({ type: "page", page: pageInfo.page - 1 })}
+							onClick={() =>
+								dispatch({ type: "page", page: pageInfo.page - 1 })
+							}
 							data-testid="grid-prev"
 						>
-							<Icon name="chevronRight" size={16} mirrorInRtl={false} className="sy-back-icon" />
+							<Icon
+								name="chevronRight"
+								size={16}
+								mirrorInRtl={false}
+								className="sy-back-icon"
+							/>
 						</button>
 						{pagerItems(pageInfo.page, pageInfo.pageCount).map((it, i) =>
 							it === "gap" ? (
-								// biome-ignore lint/suspicious/noArrayIndexKey: gaps are positional separators
-								<span key={`gap-${i}`} className="sy-grid__pg-gap" aria-hidden="true">
+								<span
+									// biome-ignore lint/suspicious/noArrayIndexKey: gaps are positional separators
+									key={`gap-${i}`}
+									className="sy-grid__pg-gap"
+									aria-hidden="true"
+								>
 									…
 								</span>
 							) : (
@@ -599,7 +739,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							className="sy-grid__pg sy-grid__pg--next"
 							aria-label={t("common.nextPage")}
 							disabled={pageInfo.page >= pageInfo.pageCount}
-							onClick={() => dispatch({ type: "page", page: pageInfo.page + 1 })}
+							onClick={() =>
+								dispatch({ type: "page", page: pageInfo.page + 1 })
+							}
 							data-testid="grid-next"
 						>
 							<Icon name="chevronRight" size={16} />
@@ -609,16 +751,29 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 			) : null}
 
 			{props.sample?.hasMore ? (
-				<div className="sy-grid__sample" role="status" data-testid="grid-sample">
+				<div
+					className="sy-grid__sample"
+					role="status"
+					data-testid="grid-sample"
+				>
 					<Icon name="info" size={16} />
 					<span>
 						{props.sample.atCap
-							? tx("grid.sampleCap", { count: formatNumber(props.sample.loaded) })
+							? tx("grid.sampleCap", {
+									count: formatNumber(props.sample.loaded),
+								})
 							: tx("grid.sample", { count: formatNumber(props.sample.loaded) })}
 					</span>
-					{props.sample.failed ? <span role="alert">{t("grid.loadMoreFailed")}</span> : null}
+					{props.sample.failed ? (
+						<span role="alert">{t("grid.loadMoreFailed")}</span>
+					) : null}
 					{props.sample.atCap ? null : (
-						<Button size="sm" loading={props.sample.loadingMore} onClick={props.sample.onLoadMore} data-testid="grid-load-more">
+						<Button
+							size="sm"
+							loading={props.sample.loadingMore}
+							onClick={props.sample.onLoadMore}
+							data-testid="grid-load-more"
+						>
 							{t("grid.loadMore")}
 						</Button>
 					)}
@@ -629,7 +784,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				open={saveOpen}
 				onClose={() => setSaveOpen(false)}
 				title={t("grid.saveViewTitle")}
-				confirm={{ label: t("common.save"), onConfirm: saveView, tone: "primary" }}
+				confirm={{
+					label: t("common.save"),
+					onConfirm: saveView,
+					tone: "primary",
+				}}
 			>
 				<Input
 					label={t("grid.viewName")}
@@ -653,7 +812,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				open={deleteOpen}
 				onClose={() => setDeleteOpen(false)}
 				title={t("grid.deleteViewTitle")}
-				description={t("grid.deleteViewBody", { name: currentView?.name ?? "" })}
+				description={t("grid.deleteViewBody", {
+					name: currentView?.name ?? "",
+				})}
 				confirm={{ label: t("grid.deleteView"), onConfirm: removeView }}
 			/>
 		</div>
