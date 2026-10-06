@@ -26,7 +26,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	padding: 18px var(--sy-space-14);
+	padding: 0 var(--sy-space-14) 18px;
 	background: var(--sy-nav);
 	border-inline-end: 1px solid var(--sy-border);
 }
@@ -35,7 +35,11 @@
 	display: flex;
 	align-items: center;
 	gap: var(--sy-space-10);
-	padding: 2px var(--sy-space-8) var(--sy-space-14);
+	/* The brand block is exactly as tall as the topbar so nothing of it can peek out above/below a panel that starts at the topbar edge. */
+	box-sizing: border-box;
+	block-size: var(--sy-topbar-h);
+	margin-block-end: var(--sy-space-12);
+	padding: 0 var(--sy-space-8);
 }
 
 a.sy-brand {

@@ -83,11 +83,9 @@ for (const width of [360, 1280])
 			await rows(page).filter({ hasText: "Alpha lead" }).click({ position: { x: 10, y: 10 } });
 			await expect(page.getByTestId("lead-detail-title")).toHaveText("Alpha lead");
 			expect(await noPageOverflow(page)).toBe(true);
-			// Below 1024px the record is a modal sheet: go back to the list before using the page behind it.
-			if (width < 1024) {
-				await page.getByTestId("sheet-back").click();
-				await expect(page.getByTestId("lead-detail")).toHaveCount(0);
-			}
+			// The record is a slide-over (desktop, non-modal) or a modal sheet (<1024): close it before using the page behind it.
+			await page.getByTestId(width < 1024 ? "sheet-back" : "preview-close").click();
+			await expect(page.getByTestId("lead-detail")).toHaveCount(0);
 
 			// Dialog: focus enters the first field and returns to the opener on Esc.
 			const opener = page.getByTestId("new-lead");
@@ -183,6 +181,9 @@ test("leads en: grid keyboard (arrows, Enter opens detail, Space selects) and fi
 	await page.keyboard.press("Enter");
 	await expect(rows(page).nth(1)).toHaveAttribute("aria-current", "true");
 	await expect(page.getByTestId("lead-detail")).toBeVisible();
+	// Opening moves focus into the slide-over (heading); the table stays usable: back on the row, Space selects it for bulk.
+	await expect(page.getByTestId("lead-detail").getByRole("heading")).toBeFocused();
+	await rows(page).nth(1).focus();
 	await page.keyboard.press("Space");
 	await expect(rows(page).nth(1)).toHaveAttribute("data-selected", "true");
 	await expect(page.getByTestId("grid-batch")).toContainText("1 selected");
@@ -220,7 +221,7 @@ test("leads en: new lead dialog - focus trap, validation, server error mapping, 
 	const opener = page.getByTestId("new-lead");
 	await opener.focus();
 	await page.keyboard.press("Enter");
-	const dialog = page.getByRole("dialog");
+	const dialog = page.getByTestId("new-lead-dialog");
 	await expect(dialog).toBeVisible();
 	await expect(dialog.getByLabel("Title")).toBeFocused();
 	const inside = () => page.evaluate(() => document.activeElement?.closest('[role="dialog"]') !== null);

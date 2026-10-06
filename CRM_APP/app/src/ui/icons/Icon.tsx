@@ -241,6 +241,7 @@ const GLYPHS = {
 			<path d="m15 15 5 5" />
 		</>
 	),
+	chevronUp: <path d="m6 15 6-6 6 6" />,
 	chevronDown: <path d="m6 9 6 6 6-6" />,
 	chevronRight: <path d="m9 6 6 6-6 6" />,
 	menu: <path d="M4 7h16M4 12h16M4 17h16" />,

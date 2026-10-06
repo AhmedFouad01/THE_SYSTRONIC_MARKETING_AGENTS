@@ -75,14 +75,31 @@ export const elevation = {
 		shadowSubtle: "0 1px 2px rgba(16,24,40,.04)",
 		shadowMenu: "0 14px 34px rgba(0,0,0,.16)",
 		shadowModal: "0 24px 70px rgba(0,0,0,.26)",
+		// Preview slide-over, docked at the inline end: LTR (panel on the right) casts to the left, RTL (panel on the left) to the right.
+		shadowPanel: "-12px 0 32px rgba(0,0,0,.14)",
+		shadowPanelRtl: "12px 0 32px rgba(0,0,0,.14)",
 	},
 	dark: {
 		shadow: "0 12px 30px rgba(0,0,0,.28)",
 		shadowSubtle: "0 1px 2px rgba(16,24,40,.04)",
 		shadowMenu: "0 14px 34px rgba(0,0,0,.16)",
 		shadowModal: "0 24px 70px rgba(0,0,0,.26)",
+		// Stronger on dark surfaces (the menu shadow is nearly invisible there) plus a 1px hairline.
+		shadowPanel: "-16px 0 40px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1)",
+		shadowPanelRtl: "16px 0 40px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.1)",
 	},
 } as const satisfies Record<Mode, Record<string, string>>;
+
+// Preview slide-over (UI R4 C). Z-map of the app, low to high: sticky th 2, batch bar 5, row/columns menus and popovers
+// 300 (must open above the panel), topbar 45, bottom nav 60, preview panel 200, dialog scrim 1000, toasts 1100,
+// select/date lists 1200. A dialog rendered inside the panel lives in the panel's stacking context.
+export const preview = {
+	width: "clamp(360px, 30vw, 440px)",
+	/** Extra inline-start padding on the grid scroller while a preview is open (0 = pure overlay). Flip to ~400px only if the AR re-audit asks for it. */
+	reserve: "0px",
+	zPanel: "200",
+	zMenu: "300",
+} as const;
 
 export const motion = {
 	spinnerDuration: "0.7s",

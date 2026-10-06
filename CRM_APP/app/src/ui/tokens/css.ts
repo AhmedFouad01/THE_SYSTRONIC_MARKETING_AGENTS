@@ -5,6 +5,7 @@ import {
 	fonts,
 	layout,
 	motion,
+	preview,
 	radius,
 	spacing,
 	typeScale,
@@ -66,6 +67,10 @@ function sharedDecls(): string {
 	out.push([varName("row-h"), layout.rowH]);
 	out.push([varName("gutter"), layout.gutter.wide]);
 	out.push([varName("sidebar-w"), layout.sidebarW.wide]);
+	out.push([varName("preview-w"), preview.width]);
+	out.push([varName("preview-reserve"), preview.reserve]);
+	out.push([varName("z-panel"), preview.zPanel]);
+	out.push([varName("z-menu"), preview.zMenu]);
 	return decls(out);
 }
 

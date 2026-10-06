@@ -52,6 +52,19 @@ describe("tokens: css emission", () => {
 		}
 	});
 
+	it("emits the preview panel tokens: left-cast panel shadow (stronger in dark), width, reserve (off), z-map", () => {
+		expect(css).toContain("--sy-preview-w:clamp(360px, 30vw, 440px);");
+		expect(css).toContain("--sy-preview-reserve:0px;");
+		expect(css).toContain("--sy-z-panel:200;");
+		expect(css).toContain("--sy-z-menu:300;");
+		expect(elevation.light.shadowPanel).toMatch(/^-\d+px 0 /);
+		expect(elevation.dark.shadowPanel).toMatch(/^-\d+px 0 /);
+		expect(elevation.light.shadowPanelRtl).toMatch(/^\d+px 0 /);
+		expect(elevation.dark.shadowPanelRtl).toMatch(/^\d+px 0 /);
+		expect(elevation.dark.shadowPanel).not.toBe(elevation.light.shadowPanel);
+		expect(css).toContain("--sy-shadow-panel:");
+	});
+
 	it("emits shared scale vars and Arabic overrides", () => {
 		for (const k of Object.keys(spacing))
 			expect(css).toContain(`--sy-space-${k}:`);

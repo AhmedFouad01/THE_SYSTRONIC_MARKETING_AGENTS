@@ -9,6 +9,11 @@
 	--sy-control-h: 36px;
 }
 
+/* Preview slide-over open (desktop, docked at the inline end): optional reserve on that side, 0 = pure overlay (decision D7). */
+:root[data-preview-open] .sy-grid {
+	padding-inline-end: var(--sy-preview-reserve);
+}
+
 /* Toolbar slot: the bulk bar overlays it at the same height instead of pushing the table down (UX-20). */
 .sy-grid__toolwrap {
 	position: relative;

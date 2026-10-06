@@ -4,11 +4,8 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
+/* The record opens as a preview slide-over (PreviewPanel): the table always has the full width. */
 .sy-leads__body {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
-	gap: var(--sy-space-14);
-	align-items: start;
 	min-width: 0;
 }
 .sy-leads__main {
@@ -70,11 +67,6 @@
 .sy-leads__facts dd {
 	margin: 0;
 	overflow-wrap: anywhere;
-}
-@media (max-width: 1023px) {
-	.sy-leads__body {
-		grid-template-columns: minmax(0, 1fr);
-	}
 }
 .sy-leads__kpis {
 	display: grid;

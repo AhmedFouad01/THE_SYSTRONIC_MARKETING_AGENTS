@@ -111,6 +111,11 @@ export type DataGridProps<T> = {
 	toolbarExtra?: ReactNode;
 	/** Master-detail on wide layouts: open the first row when nothing is active (prototype behaviour). */
 	autoSelectFirst?: boolean;
+	/**
+	 * Keep this row visible: switch to the grid page that holds it and scroll it into view (`block: "nearest"`, never
+	 * horizontal-first). Used by the preview slide-over for Prev/Next and deep links. Off when undefined/null.
+	 */
+	revealId?: string | null;
 };
 
 const interactive = "input,button,a,select,label,textarea";
@@ -206,6 +211,33 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 
 	// ---- keyboard: roving row focus ----
 	const rowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
+
+	// ---- reveal: page switch (once per id, as soon as the row is loaded), then scroll it into view ----
+	const revealId = props.revealId ?? null;
+	const revealed = useRef<string | null>(null);
+	const scrollTo = useRef<string | null>(null);
+	useEffect(() => {
+		if (revealId === null) {
+			revealed.current = null;
+			return;
+		}
+		if (revealed.current === revealId) return;
+		const idx = matching.findIndex((r) => getIdRef.current(r) === revealId);
+		if (idx < 0) return; // not loaded yet: retried when rows arrive
+		revealed.current = revealId;
+		scrollTo.current = revealId;
+		const target = Math.floor(idx / state.pageSize) + 1;
+		if (target !== state.page) dispatch({ type: "page", page: target });
+	}, [revealId, matching, state.pageSize, state.page]);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: pageIds/revealId re-run the pending scroll (rowRefs is a ref)
+	useEffect(() => {
+		const id = scrollTo.current;
+		if (id === null) return;
+		const i = pageIds.indexOf(id);
+		if (i < 0) return;
+		scrollTo.current = null;
+		rowRefs.current[i]?.scrollIntoView({ block: "nearest", inline: "nearest" });
+	}, [pageIds, revealId]);
 	const [focusIdx, setFocusIdx] = useState(0);
 	const tabIdx = Math.min(focusIdx, Math.max(0, pageRows.length - 1));
 	const onRowKey = (

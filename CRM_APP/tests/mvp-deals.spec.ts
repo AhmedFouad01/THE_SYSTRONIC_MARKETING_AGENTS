@@ -255,7 +255,8 @@ for (const language of ["ar", "en"] as const)
 		).toBe(true);
 
 		await page.getByTestId("context-lead").locator("a").click();
-		await expect(page).toHaveURL(/\/app\/leads\?select=/);
+		// the legacy ?select= hand-off opens the preview and is rewritten to ?preview=
+		await expect(page).toHaveURL(/\/app\/leads\?(select|preview)=/);
 		await expect(page.getByTestId("lead-detail-title")).toHaveText(
 			"Context lead",
 		);

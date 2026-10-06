@@ -29,6 +29,8 @@ export type DialogProps = {
 	testId?: string;
 	/** center = modal card (default); sheet = bottom sheet; side = full-screen record sheet sliding from inline-end, with a back button. */
 	placement?: "center" | "sheet" | "side";
+	/** side only: `right` slides in from the PHYSICAL right edge in every language (preview sheet); default follows the inline-end edge. */
+	dock?: "inline-end" | "right";
 };
 
 /**
@@ -47,6 +49,7 @@ export function Dialog({
 	initialFocusRef,
 	testId,
 	placement = "center",
+	dock = "inline-end",
 }: DialogProps) {
 	const { t } = useI18n();
 	const id = useId();
@@ -98,7 +101,7 @@ export function Dialog({
 	};
 
 	return (
-		<div className="sy-scrim" role="presentation" data-placement={placement}>
+		<div className="sy-scrim" role="presentation" data-placement={placement} data-dock={placement === "side" ? dock : undefined}>
 			<div
 				ref={rootRef}
 				role="dialog"

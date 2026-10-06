@@ -11,7 +11,6 @@ import {
 	ChipCell,
 	IdentityCell,
 	RelativeTimeCell,
-	useWideLayout,
 	createSavedViewsStore,
 	DataGrid,
 	DEFAULT_VIEW,
@@ -29,11 +28,16 @@ import {
 	ownerFilter,
 	type ServerSpec,
 	useServerList,
+	parsePreview,
+	previewStep,
+	usePreviewGuard,
+	withPreview,
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import { fetchAssignees, patchLead } from "./api.ts";
 import { countRecords, fetchExpanded, listFetcher } from "../listApi.ts";
-import { parseSelect } from "../deals/model.ts";
+import { carryExpand } from "../expand.ts";
+import { toRoute } from "../../router.ts";
 import { cappedCount, formatCapped } from "../capped.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
 import "../reporting/reporting.css";
@@ -89,7 +93,6 @@ const sortFields = {
 
 export function LeadsView() {
 	const { t, formatNumber } = useI18n();
-	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -120,9 +123,22 @@ export function LeadsView() {
 	}, []);
 
 	const [view, setView] = useState<BuiltInView>("all");
+	// Open record = preview slide-over; `?preview=<id>` (legacy `?select=` accepted) keeps it across reloads and deep links.
 	const [activeId, setActiveId] = useState<string | null>(() =>
-		parseSelect(location.search),
+		parsePreview(location.search),
 	);
+	const { guard, dialog: guardDialog } = usePreviewGuard();
+	// Every way to leave or swap the open record asks first when the edit form holds unsaved changes.
+	const openRecord = useCallback(
+		(id: string | null) => guard.request(() => setActiveId(id)),
+		[guard],
+	);
+	useEffect(() => {
+		if (toRoute(location.pathname) !== "/leads") return;
+		const next = withPreview(location.search, activeId);
+		if (next !== location.search)
+			history.replaceState(history.state, "", `${location.pathname}${next}${location.hash}`);
+	}, [activeId]);
 	const [newOpen, setNewOpen] = useState(false);
 
 	const ownerByName = useMemo(
@@ -170,10 +186,108 @@ export function LeadsView() {
 	useEffect(() => {
 		rowsRef.current = allRows;
 	});
-	const active =
+	const found =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+	// The open record outlives the loaded pages (filter/sort/reload can drop its row; a deep link may point past page 1):
+	// the last seen copy is retained, and a record that was never loaded is fetched by id.
+	const [fallback, setFallback] = useState<Lead | null>(null);
+	const [missing, setMissing] = useState<string | null>(null);
+	useEffect(() => {
+		if (found !== null) setFallback(found);
+	}, [found]);
+	useEffect(() => {
+		if (activeId === null || found !== null || fallback?.id === activeId) return;
+		const ctrl = new AbortController();
+		fetchExpanded<Lead>("leads", activeId, "contact,owner", ctrl.signal)
+			.then((l) => {
+				if (ctrl.signal.aborted) return;
+				if (l) setFallback(l);
+				else setMissing(activeId);
+			})
+			.catch((e: unknown) => {
+				if (!ctrl.signal.aborted && !(e instanceof DOMException)) setMissing(activeId);
+			});
+		return () => ctrl.abort();
+	}, [activeId, found, fallback]);
+	const fallbackRow = useMemo(
+		() =>
+			fallback === null
+				? null
+				: (toRows([fallback], ownerNames, {
+						unassigned: t("common.unassigned"),
+						unknownContact: t("leads.unknownContact"),
+						unknownOwner: t("common.unknownUser"),
+					})[0] ?? null),
+		[fallback, ownerNames, t],
+	);
+	const active = found ?? (fallbackRow !== null && fallbackRow.id === activeId ? fallbackRow : null);
+	const onRecordUpdated = useCallback(
+		(lead: Lead) => {
+			if (rowsRef.current.some((r) => r.id === lead.id)) remember(lead);
+			else {
+				// Not in the loaded pages: update the retained copy only (remember() would list it as a new lead).
+				setFallback((prev) => (prev !== null ? carryExpand(lead, prev) : lead));
+				setCountsTick((n) => n + 1);
+			}
+		},
+		[remember],
+	);
+
+	// Prev/Next over the loaded rows in grid order; at the last loaded row the next server page is loaded first.
+	const ids = useMemo(() => rows.map((r) => r.id), [rows]);
+	const step = previewStep(ids, activeId, leads.hasMore);
+	const [wantMore, setWantMore] = useState<string | null>(null);
+	const { server: leadsServer } = leads;
+	useEffect(() => {
+		if (wantMore === null) return;
+		if (activeId !== wantMore || leadsServer.moreFailed) {
+			setWantMore(null);
+			return;
+		}
+		if (step.nextId !== null) {
+			setWantMore(null);
+			setActiveId(step.nextId);
+		} else if (!leads.hasMore && !leadsServer.loadingMore) setWantMore(null);
+	}, [wantMore, activeId, step.nextId, leads.hasMore, leadsServer.moreFailed, leadsServer.loadingMore]);
+	const goNext = () => {
+		if (step.nextId !== null) openRecord(step.nextId);
+		else if (step.needsMore && !leads.refreshing)
+			guard.request(() => {
+				setWantMore(activeId);
+				leadsServer.onRetryMore();
+			});
+	};
+	const listTotal = Math.max(leads.total?.value ?? 0, ids.length);
+	const lastActive = useRef<string | null>(null);
+	useEffect(() => {
+		if (activeId !== null) lastActive.current = activeId;
+	}, [activeId]);
+	const preview = {
+		guard,
+		returnFocus: () =>
+			lastActive.current === null
+				? null
+				: document.querySelector<HTMLElement>(`tr[data-row-id="${lastActive.current}"]`),
+		nav: {
+			onPrev:
+				step.prevId !== null && !leads.refreshing
+					? () => openRecord(step.prevId)
+					: null,
+			onNext: (step.nextId !== null || step.needsMore) && !leads.refreshing ? goNext : null,
+			busy: wantMore !== null,
+			...(step.index >= 0
+				? {
+						position: t("preview.position", {
+							index: formatNumber(step.index + 1),
+							total: formatNumber(listTotal),
+						}),
+					}
+				: {}),
+		},
+	};
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
-	const crumbReturn = useCrumbReturn(setActiveId);
+	const crumbReturn = useCrumbReturn(openRecord);
+
 	useRecordCrumb(active?.title, crumbReturn.back);
 
 	const views = useMemo(
@@ -515,7 +629,7 @@ export function LeadsView() {
 							requestId={isApiError(leads.error) ? leads.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={crumbReturn.onActiveChange}
-							autoSelectFirst={wide && !crumbReturn.suppressAutoOpen}
+								revealId={activeId}
 							selectable
 							batchActions={(ids, clear) => (
 								<>
@@ -555,12 +669,17 @@ export function LeadsView() {
 						/>
 					)}
 				</div>
-				<LeadDetail
-					lead={active}
-					assignees={assignees}
-					onUpdated={remember}
-					onClose={() => setActiveId(null)}
-				/>
+				{activeId !== null ? (
+					<LeadDetail
+						lead={active}
+						state={missing === activeId ? "missing" : "loading"}
+						assignees={assignees}
+						onUpdated={onRecordUpdated}
+						onClose={() => setActiveId(null)}
+						preview={preview}
+					/>
+				) : null}
+				{guardDialog}
 			</div>
 			<BulkChoiceDialog
 				open={bulkDialog?.kind === "status"}

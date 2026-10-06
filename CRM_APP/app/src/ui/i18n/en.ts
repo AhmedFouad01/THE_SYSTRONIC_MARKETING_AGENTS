@@ -142,7 +142,6 @@ export const en = {
 	"leads.emptyHint": "Create the first lead with New lead.",
 	"leads.ownersFailed": "Owner names could not be loaded. Showing short IDs.",
 	"leads.detail.title": "Lead details",
-	"leads.detail.empty": "Select a lead to see its details.",
 	"leads.detail.select": "Open lead {name}",
 	"leads.detail.evidence": "Source evidence",
 	"leads.detail.version": "Version",
@@ -680,6 +679,16 @@ export const en = {
 	"dash.error": "Could not load this section. Try again.",
 	"dash.noReportAccess": "You do not have access to marketing reports.",
 	"dash.noTaskAccess": "You do not have access to tasks.",
+	"preview.prev": "Previous record",
+	"preview.next": "Next record",
+	"preview.close": "Close details",
+	"preview.position": "{index} of {total}",
+	"preview.loading": "Loading details...",
+	"preview.loadingMore": "Loading the next records...",
+	"preview.missing": "This record is no longer available.",
+	"preview.discard.title": "Discard your changes?",
+	"preview.discard.body": "You have unsaved changes in this record.",
+	"preview.discard.confirm": "Discard",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;

@@ -33,6 +33,7 @@ export {
 	type RecordFact,
 	RecordPanel,
 	type RecordPanelProps,
+	type RecordPreview,
 } from "./RecordPanel.tsx";
 export {
 	RECORD_SHEET_QUERY,

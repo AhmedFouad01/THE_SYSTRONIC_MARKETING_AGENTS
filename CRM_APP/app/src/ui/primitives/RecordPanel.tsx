@@ -1,6 +1,8 @@
-import { createContext, type ReactNode, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 import { useI18n } from "../i18n/index.ts";
 import { Dialog } from "../overlays/Dialog.tsx";
+import type { PreviewGuard } from "../overlays/previewGuard.tsx";
+import { PreviewPanel, type PreviewNav } from "../overlays/PreviewPanel.tsx";
 import { Button } from "./Button.tsx";
 import { Panel } from "./Panel.tsx";
 import { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
@@ -9,6 +11,15 @@ import "./record-panel.css";
 
 /** Lets the sticky edit footer offer Cancel (leave edit mode). */
 const RecordCancelContext = createContext<{ cancel: () => void } | null>(null);
+/** Dirty reporting from the edit footer to the preview guard (null outside a guarded preview). */
+const RecordGuardContext = createContext<PreviewGuard | null>(null);
+
+/** Slide-over mode (UI R4 C): the record opens as an overlay instead of the inline column. */
+export type RecordPreview = {
+	nav?: PreviewNav;
+	guard?: PreviewGuard;
+	returnFocus?: () => HTMLElement | null;
+};
 
 export type RecordFact = { label: string; value: ReactNode; testId?: string };
 
@@ -43,6 +54,10 @@ export type RecordPanelProps = {
 	/** Controlled edit mode (optional). */
 	editing?: boolean;
 	onEditingChange?: (editing: boolean) => void;
+	/** Plain-text record name shown in the preview header (single line); defaults to `label`. */
+	heading?: string;
+	/** Render as the preview slide-over (docked right, non-modal on desktop, full-screen sheet below 1024px) instead of the inline column. */
+	preview?: RecordPreview;
 };
 
 /**
@@ -53,6 +68,24 @@ export type RecordPanelProps = {
 export function RecordPanel(props: RecordPanelProps) {
 	const sheet = useRecordSheet();
 	const body = <RecordBody key={props.recordKey} {...props} />;
+	if (props.preview) {
+		const { nav, guard, returnFocus } = props.preview;
+		const close = () => (guard ? guard.request(props.onClose) : props.onClose());
+		return (
+			<RecordGuardContext.Provider value={guard ?? null}>
+				<PreviewPanel
+					label={props.label}
+					testId={props.testId}
+					onClose={close}
+					{...(props.heading ? { heading: props.heading } : {})}
+					{...(nav ? { nav } : {})}
+					{...(returnFocus ? { returnFocus } : {})}
+				>
+					{body}
+				</PreviewPanel>
+			</RecordGuardContext.Provider>
+		);
+	}
 	if (sheet)
 		return (
 			<Dialog
@@ -83,6 +116,7 @@ function RecordBody(p: RecordPanelProps) {
 	const [innerEditing, setInnerEditing] = useState(false);
 	const editing = p.editing ?? innerEditing;
 	const canEdit = p.editable ?? Boolean(p.editor);
+	const guard = useContext(RecordGuardContext);
 	const setEditing = (v: boolean) => {
 		setInnerEditing(v);
 		p.onEditingChange?.(v);
@@ -100,7 +134,9 @@ function RecordBody(p: RecordPanelProps) {
 						return;
 					e.preventDefault();
 					e.stopPropagation();
-					setEditing(false);
+					// First Esc leaves edit mode; with unsaved changes it asks before discarding.
+					if (guard) guard.request(() => setEditing(false));
+					else setEditing(false);
 				}}
 			>
 				<div className="sy-record__head">
@@ -202,6 +238,11 @@ export function RecordEditFooter({
 }) {
 	const { t } = useI18n();
 	const ctx = useContext(RecordCancelContext);
+	const guard = useContext(RecordGuardContext);
+	useEffect(() => {
+		guard?.setDirty(dirty);
+		return () => guard?.setDirty(false);
+	}, [guard, dirty]);
 	const cancel = onCancel ?? ctx?.cancel;
 	const noChanges = !dirty && !saving;
 	return (

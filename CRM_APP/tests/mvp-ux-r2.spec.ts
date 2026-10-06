@@ -330,6 +330,8 @@ test("R2-08 lead edit en: Cancel lives in the sticky footer, Esc leaves edit mod
 	await makeLead(request, f, "Edit me");
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await open(page, f, "en", "/app/leads");
+	// UI R4 C: nothing opens by itself; the row opens the preview slide-over.
+	await rows(page).first().locator(".sy-cell-id").click();
 	const panel = page.getByTestId("lead-detail");
 	await expect(panel).toBeVisible();
 	await page.getByTestId("record-edit").click();
@@ -365,7 +367,7 @@ test("R2-08 lead edit en: Cancel lives in the sticky footer, Esc leaves edit mod
 	await expect(page.getByTestId("record-edit")).toBeVisible();
 	// Escape in an open Select closes only the list and keeps edit mode.
 	await page.getByTestId("record-edit").click();
-	await page.getByRole("combobox").first().click();
+	await panel.getByRole("combobox").first().click(); // scoped: a click on a page-level control is an outside click and closes the slide-over
 	await expect(page.getByRole("listbox")).toBeVisible();
 	await page.keyboard.press("Escape");
 	await expect(page.getByRole("listbox")).toHaveCount(0);
@@ -421,6 +423,7 @@ test("UX-01 ar dates carry no Latin comma; UX-11/12 evidence + task source are l
 	await makeTask(request, f, lead.contact_id, "Source check", Date.now() + DAY);
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await open(page, f, "ar", "/app/leads");
+	await rows(page).first().locator(".sy-cell-id").click();
 	const facts = page.getByTestId("record-facts");
 	await expect(facts).toBeVisible();
 	const text = (await facts.textContent()) ?? "";
@@ -428,6 +431,7 @@ test("UX-01 ar dates carry no Latin comma; UX-11/12 evidence + task source are l
 	expect(text.toLowerCase()).not.toContain("referral");
 	expect(text).not.toContain(",");
 
+	// AR: the panel docks at the left (inline end), so the sidebar navigation stays reachable while it is open
 	await page.getByRole("link", { name: "مهامي" }).click();
 	await expect(rows(page).first()).toBeVisible();
 	const taskFacts =
@@ -451,6 +455,7 @@ test("UX-11 en: source evidence 'referral' shows its label; unknown task source 
 	);
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await open(page, f, "en", "/app/leads");
+	await rows(page).first().locator(".sy-cell-id").click();
 	const facts = page.getByTestId("record-facts");
 	await expect(facts).toContainText("Referral");
 	expect((await facts.textContent()) ?? "").not.toContain("referral");

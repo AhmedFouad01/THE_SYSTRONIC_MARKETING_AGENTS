@@ -40,7 +40,7 @@ async function connect(page: Page, token: string, tenant: string) {
 const rows = (page: Page) => page.getByTestId("grid-row");
 const noPageOverflow = (page: Page) => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
 
-test("grid + record panel en 1440: active-only sort icon, numbered pager, row click, auto-select, edit-on-demand", async ({
+test("grid + record panel en 1440: active-only sort icon, numbered pager, row click, no auto-open, edit-on-demand", async ({
 	page,
 	request,
 }) => {
@@ -52,10 +52,10 @@ test("grid + record panel en 1440: active-only sort icon, numbered pager, row cl
 	await connect(page, f.tokens.manager, f.ids.a);
 	await expect(rows(page)).toHaveCount(10);
 
-	// UX-10: desktop opens the first row automatically; the empty "select a lead" card never shows.
-	await expect(page.getByTestId("lead-detail")).toBeVisible();
-	await expect(rows(page).first()).toHaveAttribute("aria-selected", "true");
+	// UI R4 C: nothing opens by itself and there is no empty "select a lead" card; the table owns the full width.
+	await expect(page.getByTestId("lead-detail")).toHaveCount(0);
 	await expect(page.getByTestId("lead-detail-empty")).toHaveCount(0);
+	await expect(rows(page).first()).not.toHaveAttribute("aria-selected", "true");
 
 	// UX-06: the sort arrow exists only on the active column (default order = Created, newest first).
 	await expect(page.getByTestId("sort-mark")).toHaveCount(1);

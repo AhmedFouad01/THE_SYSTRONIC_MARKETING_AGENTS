@@ -6,9 +6,10 @@ import {
 	Button,
 	ForbiddenState,
 	Input,
+	PreviewPanel,
 	RecordEditFooter,
-	RecordEmpty,
 	RecordPanel,
+	type RecordPreview,
 	Select,
 	sourceEvidenceLabel,
 	sourceLabel,
@@ -192,24 +193,34 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 
 export function LeadDetail({
 	lead,
+	state,
 	assignees,
 	onUpdated,
 	onClose,
+	preview,
 }: {
 	lead: LeadRow | null;
+	/** Why there is no record yet: still fetching by id, or the id does not exist / is not visible. */
+	state: "loading" | "missing";
 	assignees: readonly Assignee[];
 	onUpdated: (lead: Lead) => void;
 	onClose: () => void;
+	preview: RecordPreview;
 }) {
 	const { t, formatDateTime } = useI18n();
 	const isAdmin = useIsAdmin();
 	if (lead === null)
 		return (
-			<RecordEmpty
+			<PreviewPanel
 				label={t("leads.detail.title")}
-				hint={t("leads.detail.empty")}
-				testId="lead-detail-empty"
-			/>
+				testId="lead-detail"
+				onClose={onClose}
+				{...(preview.returnFocus ? { returnFocus: preview.returnFocus } : {})}
+			>
+				<p className="sy-record__muted" role="status" data-testid={`lead-detail-${state}`}>
+					{state === "loading" ? t("preview.loading") : t("preview.missing")}
+				</p>
+			</PreviewPanel>
 		);
 	const evidence = sourceEvidenceLabel(lead.source_evidence, t);
 	return (
@@ -217,6 +228,8 @@ export function LeadDetail({
 			label={t("leads.detail.title")}
 			testId="lead-detail"
 			recordKey={lead.id}
+			heading={lead.title}
+			preview={preview}
 			title={<Bdi>{lead.title}</Bdi>}
 			titleTestId="lead-detail-title"
 			subtitle={<Bdi>{lead.contactName}</Bdi>}

@@ -1,0 +1,201 @@
+/*
+ * Preview slide-over (UI R4 C, decision D7). Desktop dock = the INLINE END: physical right in EN, physical LEFT in AR, so
+ * the sidebar, page title and identity column stay visible in both languages. Everything is logical except the slide
+ * direction/shadow cast, which follow the dock side via :root[dir=rtl]. (The <1024px sheet is a different surface: Dialog
+ * `side`, always from the physical right.)
+ * No transform/filter/backdrop-filter/will-change may stay on this element or its ancestors after the animation:
+ * Select / DatePicker / nested dialogs inside are position: fixed and would be re-based.
+ */
+.sy-preview {
+	position: fixed;
+	top: var(--sy-topbar-h);
+	inset-inline-end: 0;
+	bottom: 0;
+	z-index: var(--sy-z-panel);
+	display: flex;
+	flex-direction: column;
+	inline-size: var(--sy-preview-w);
+	max-inline-size: 100vw;
+	border-inline-start: 1px solid var(--sy-border);
+	background: var(--sy-surface);
+	color: var(--sy-text);
+	box-shadow: var(--sy-shadow-panel);
+	animation: sy-preview-in 200ms var(--sy-ease-out, cubic-bezier(0.2, 0.8, 0.2, 1));
+}
+
+:root[dir="rtl"] .sy-preview {
+	box-shadow: var(--sy-shadow-panel-rtl);
+	animation-name: sy-preview-in-rtl;
+}
+
+/* Exit: PreviewPanel leaves a non-interactive clone of itself that plays this and removes itself (no pop-out). */
+.sy-preview.sy-ghost {
+	pointer-events: none;
+	animation: sy-preview-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+:root[dir="rtl"] .sy-preview.sy-ghost {
+	animation-name: sy-preview-out-rtl;
+}
+
+.sy-scrim.sy-ghost {
+	pointer-events: none;
+}
+
+.sy-scrim.sy-ghost .sy-dialog {
+	animation: sy-sheet-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.sy-preview:focus {
+	outline: none;
+}
+
+.sy-preview__head {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: var(--sy-space-4);
+	min-height: 56px;
+	padding-inline: var(--sy-space-16) var(--sy-space-10);
+	border-block-end: 1px solid var(--sy-border);
+	background: var(--sy-surface);
+}
+
+.sy-preview__title {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	overflow: hidden;
+	color: var(--sy-text-3);
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sy-preview__title:focus {
+	outline: none;
+}
+
+.sy-preview__title:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: var(--sy-focus-offset-input);
+	border-radius: var(--sy-radius-6);
+}
+
+.sy-preview__pos {
+	flex: none;
+	margin-inline-end: var(--sy-space-4);
+	color: var(--sy-text-3);
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+}
+
+.sy-preview__btn {
+	display: grid;
+	flex: none;
+	place-items: center;
+	inline-size: 32px;
+	block-size: 32px;
+	border: 0;
+	border-radius: var(--sy-radius-8);
+	background: transparent;
+	color: var(--sy-text-2);
+	cursor: pointer;
+}
+
+.sy-preview__btn:hover:not(:disabled) {
+	background: var(--sy-hover);
+	color: var(--sy-text);
+}
+
+.sy-preview__btn:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: var(--sy-focus-offset-input);
+}
+
+.sy-preview__btn:disabled {
+	color: var(--sy-text-disabled);
+	cursor: not-allowed;
+}
+
+.sy-preview__body {
+	flex: 1;
+	min-height: 0;
+	padding: var(--sy-space-16);
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+@keyframes sy-preview-out {
+	to {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+}
+
+@keyframes sy-preview-out-rtl {
+	to {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+}
+
+@keyframes sy-sheet-out {
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes sy-preview-in-rtl {
+	from {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes sy-preview-in {
+	from {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sy-preview,
+	:root[dir="rtl"] .sy-preview {
+		animation: sy-preview-fade 120ms linear;
+	}
+
+	.sy-preview.sy-ghost,
+	:root[dir="rtl"] .sy-preview.sy-ghost {
+		animation: sy-preview-fade-out 120ms linear forwards;
+	}
+
+	.sy-scrim.sy-ghost .sy-dialog {
+		animation: sy-preview-fade-out 120ms linear forwards;
+	}
+}
+
+@keyframes sy-preview-fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes sy-preview-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
