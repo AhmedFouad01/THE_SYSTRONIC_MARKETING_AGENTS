@@ -305,6 +305,46 @@ function decodeCursor(raw: string) {
 		throw bad();
 	return { fp: o.fp, id: o.id, raw: o.v as unknown[] };
 }
+// Keyset predicate "strictly after the cursor" for ORDER BY k1 [,k2],id with the ids' direction = idDesc.
+// P1b B0 F2: all keys (and the id tiebreak) in one direction and none nullable -> a single row-value comparison
+// `(k1,..,id) > ($a,..,$id)`, which a btree serves as an index condition (the OR-chain is only a filter: 3-4 s at 1M rows).
+// Kept as the OR-chain (equal on earlier keys AND strictly after on key i; `id` last) where a row value cannot express the
+// order: mixed directions, and nullable keys (NULLS LAST; a NULL cursor value has nothing after it).
+export function keyset(
+	keys: Key[],
+	idDesc: boolean,
+	vals: (string | null)[],
+	id: string,
+	bind: Bind,
+): string {
+	if (keys.every((k) => k.desc === idDesc && !k.fd.nullable)) {
+		const lhs = [...keys.map((k) => k.name), "id"].join(",");
+		const rhs = [
+			...keys.map((k, i) => `${bind(vals[i])}::${CAST[k.fd.t]}`),
+			`${bind(id)}::uuid`,
+		].join(",");
+		return `((${lhs}) ${idDesc ? "<" : ">"} (${rhs}))`;
+	}
+	const eq = (k: Key, v: string | null) =>
+		v === null
+			? `${k.name} IS NULL`
+			: `${k.name} = ${bind(v)}::${CAST[k.fd.t]}`;
+	const chain: string[] = [];
+	for (let i = 0; i <= keys.length; i++) {
+		// A NULL cursor value has nothing after it (nulls sort last): skip before binding anything.
+		if (i < keys.length && vals[i] === null) continue;
+		const pre = keys.slice(0, i).map((k, j) => eq(k, vals[j]));
+		let after: string;
+		if (i === keys.length)
+			after = `id ${idDesc ? "<" : ">"} ${bind(id)}::uuid`;
+		else {
+			const k = keys[i];
+			after = `(${k.name} ${k.desc ? "<" : ">"} ${bind(vals[i])}::${CAST[k.fd.t]}${k.fd.nullable ? ` OR ${k.name} IS NULL` : ""})`;
+		}
+		chain.push(`(${[...pre, after].join(" AND ")})`);
+	}
+	return `(${chain.join(" OR ")})`;
+}
 export function planList(
 	kind: Kind,
 	query: URLSearchParams,
@@ -448,25 +488,7 @@ export function planList(
 			if (!modern || c.fp !== fp) throw new Fault(422, "CURSOR_STALE");
 			if (c.raw.length !== keys.length) throw bad();
 			const vals = keys.map((k, i) => cursorValue(k.fd, c.raw[i]));
-			const eq = (k: Key, v: string | null) =>
-				v === null
-					? `${k.name} IS NULL`
-					: `${k.name} = ${bind(v)}::${CAST[k.fd.t]}`;
-			const chain: string[] = [];
-			for (let i = 0; i <= keys.length; i++) {
-				// A NULL cursor value has nothing after it (nulls sort last): skip before binding anything.
-				if (i < keys.length && vals[i] === null) continue;
-				const pre = keys.slice(0, i).map((k, j) => eq(k, vals[j]));
-				let after: string;
-				if (i === keys.length)
-					after = `id ${idDesc ? "<" : ">"} ${bind(c.id.toLowerCase())}::uuid`;
-				else {
-					const k = keys[i];
-					after = `(${k.name} ${k.desc ? "<" : ">"} ${bind(vals[i])}::${CAST[k.fd.t]}${k.fd.nullable ? ` OR ${k.name} IS NULL` : ""})`;
-				}
-				chain.push(`(${[...pre, after].join(" AND ")})`);
-			}
-			clauses.push(`(${chain.join(" OR ")})`);
+			clauses.push(keyset(keys, idDesc, vals, c.id.toLowerCase(), bind));
 		}
 	}
 	const dir = (d: boolean) => (d ? "DESC" : "ASC");
