@@ -37,4 +37,7 @@ ACCEPTANCE:      checks the agent will run on return
 - Data: no credentials/secrets ever. Sensitive client data needs explicit user approval
   and a privacy check per request before it goes to Gemini. (Keep Activity is not a
   required setting: turning it off disables most Connected Apps, incl. Workspace/Drive.)
+  Public/marketing material (posts, images, video, logos, brand guidelines, copy, published
+  product info) needs no per-request approval. Sensitive = customer lists/CRM data,
+  contracts, internal prices, internal sales/ad numbers, embargoed campaigns.
 - Gemini output never writes Real Memory directly; facts in it are proposals.
