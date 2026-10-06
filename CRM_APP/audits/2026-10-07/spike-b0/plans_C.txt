@@ -1,0 +1,860 @@
+# EXPLAIN (ANALYZE, BUFFERS) plans, phase C, spike DB crm_spike_b0, measured as NOSUPERUSER role under FORCE RLS
+
+===== W50 L4_sort_n1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..207.34 rows=51 width=247) (actual time=0.361..0.951 rows=51 loops=1)
+  Buffers: shared hit=183
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.329..0.329 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..184812.04 rows=45607 width=247) (actual time=0.361..0.948 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=183
+        ->  Index Scan using ix_c_n1_w50 on contact  (cost=0.41..172840.20 rows=45607 width=1074) (actual time=0.004..0.023 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.095 ms
+Execution Time: 0.966 ms
+
+===== W50 L4_sort_n1_desc_nullslast_compilerform_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jnum8(custom,'n1') DESC NULLS LAST,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=115669.75..115669.88 rows=51 width=247) (actual time=719.059..719.064 rows=51 loops=1)
+  Buffers: shared hit=164119 read=4573
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.329..0.329 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=115669.49..115783.51 rows=45607 width=247) (actual time=719.058..719.061 rows=51 loops=1)
+        Sort Key: (spike.jnum8(contact.custom, 'n1'::text)) DESC NULLS LAST, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 47kB
+        Buffers: shared hit=164119 read=4573
+        ->  Result  (cost=0.41..114147.95 rows=45607 width=247) (actual time=0.382..705.753 rows=50000 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=164119 read=4573
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..102176.11 rows=45607 width=1074) (actual time=0.029..70.116 rows=50000 loops=1)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=45722 read=4573
+Planning Time: 0.121 ms
+Execution Time: 719.085 ms
+
+===== W50 L4_sort_d1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..208.54 rows=51 width=271) (actual time=0.351..0.996 rows=51 loops=1)
+  Buffers: shared hit=203
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.324..0.324 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..185885.97 rows=45607 width=271) (actual time=0.351..0.992 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=203
+        ->  Index Scan using ix_c_d1_w50 on contact  (cost=0.41..173914.13 rows=45607 width=1074) (actual time=0.003..0.027 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.105 ms
+Execution Time: 1.011 ms
+
+===== W50 L4_sort_t1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jtxt(custom,'t1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..209.00 rows=51 width=271) (actual time=0.362..1.124 rows=51 loops=1)
+  Buffers: shared hit=241
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.322..0.322 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..186296.87 rows=45607 width=271) (actual time=0.362..1.120 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=241
+        ->  Index Scan using ix_c_t1_w50 on contact  (cost=0.41..174325.03 rows=45607 width=1074) (actual time=0.006..0.043 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=52
+Planning Time: 0.120 ms
+Execution Time: 1.140 ms
+
+===== W50 L4_sort_n1_desc_default_nulls_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jnum8(custom,'n1') DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..207.34 rows=51 width=247) (actual time=0.323..0.877 rows=51 loops=1)
+  Buffers: shared hit=143
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.309..0.309 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..184812.04 rows=45607 width=247) (actual time=0.322..0.875 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=143
+        ->  Index Scan Backward using ix_c_n1_w50 on contact  (cost=0.41..172840.20 rows=45607 width=1074) (actual time=0.004..0.024 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.098 ms
+Execution Time: 0.892 ms
+
+===== W50 L4_sort_n1_asc_with_filter_s1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o001"]
+Limit  (cost=991.59..991.72 rows=51 width=247) (actual time=119.383..119.388 rows=51 loops=1)
+  Buffers: shared hit=29885
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.347..0.347 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=991.33..991.90 rows=228 width=247) (actual time=119.383..119.384 rows=51 loops=1)
+        Sort Key: (spike.jnum8(contact.custom, 'n1'::text)), contact.id
+        Sort Method: top-N heapsort  Memory: 46kB
+        Buffers: shared hit=29885
+        ->  Result  (cost=0.41..983.73 rows=228 width=247) (actual time=0.378..117.032 rows=8885 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=29885
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.008..6.492 rows=8885 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = 'o001'::text)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=8940
+Planning Time: 0.132 ms
+Execution Time: 119.409 ms
+
+===== W50 L5_filter_s1_rare_sort_n1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o019"]
+Limit  (cost=991.59..991.72 rows=51 width=247) (actual time=8.940..8.944 rows=51 loops=1)
+  Buffers: shared hit=2161
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.349..0.349 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=991.33..991.90 rows=228 width=247) (actual time=8.940..8.941 rows=51 loops=1)
+        Sort Key: (spike.jnum8(contact.custom, 'n1'::text)), contact.id
+        Sort Method: top-N heapsort  Memory: 46kB
+        Buffers: shared hit=2161
+        ->  Result  (cost=0.41..983.73 rows=228 width=247) (actual time=0.384..8.761 rows=626 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=2161
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.007..0.467 rows=626 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=632
+Planning Time: 0.127 ms
+Execution Time: 8.963 ms
+
+===== W50 L5_filter_s1_random_sort_n1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o020"]
+Limit  (cost=991.59..991.72 rows=51 width=247) (actual time=29.215..29.218 rows=51 loops=1)
+  Buffers: shared hit=6610
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.438..0.438 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=991.33..991.90 rows=228 width=247) (actual time=29.214..29.216 rows=51 loops=1)
+        Sort Key: (spike.jnum8(contact.custom, 'n1'::text)), contact.id
+        Sort Method: top-N heapsort  Memory: 48kB
+        Buffers: shared hit=6610
+        ->  Result  (cost=0.41..983.73 rows=228 width=247) (actual time=0.506..28.614 rows=2082 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=6610
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.024..1.707 rows=2082 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = 'o003'::text)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=2097
+Planning Time: 0.201 ms
+Execution Time: 29.254 ms
+
+===== W50 L5_filter_c2_rare_sort_d1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jbool(custom,'c2')=true ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..635.76 rows=51 width=271) (actual time=0.574..9.412 rows=51 loops=1)
+  Buffers: shared hit=2935
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.452..0.452 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..189306.41 rows=15202 width=271) (actual time=0.573..9.407 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=2935
+        ->  Index Scan using ix_c_d1_w50 on contact  (cost=0.41..185315.88 rows=15202 width=1074) (actual time=0.103..8.450 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND spike.jbool(custom, 'c2'::text))
+              Rows Removed by Filter: 1400
+              Buffers: shared hit=2826
+Planning Time: 0.179 ms
+Execution Time: 9.446 ms
+
+===== W50 L4b_range_n1_between_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jnum8(custom,'n1') BETWEEN $2::float8 AND ($2::float8+500) ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7",764970]
+Limit  (cost=0.68..219.56 rows=51 width=247) (actual time=0.341..0.341 rows=0 loops=1)
+  Buffers: shared hit=12
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.337..0.337 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..978.96 rows=228 width=247) (actual time=0.340..0.340 rows=0 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=12
+        ->  Index Scan using ix_c_n1_w50 on contact  (cost=0.41..919.11 rows=228 width=1074) (actual time=0.003..0.003 rows=0 loops=1)
+              Index Cond: ((spike.jnum8(custom, 'n1'::text) >= '619736'::double precision) AND (spike.jnum8(custom, 'n1'::text) <= '620236'::double precision))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=3
+Planning Time: 0.106 ms
+Execution Time: 0.353 ms
+
+===== W50 L4b_range_d1_between_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'d1') BETWEEN $2::text AND '2023-12-31' ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","2023-01-01"]
+Limit  (cost=0.68..220.67 rows=51 width=271) (actual time=0.385..0.932 rows=51 loops=1)
+  Buffers: shared hit=103
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.347..0.347 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..983.92 rows=228 width=271) (actual time=0.385..0.927 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=103
+        ->  Index Scan using ix_c_d1_w50 on contact  (cost=0.41..924.07 rows=228 width=1074) (actual time=0.005..0.029 rows=51 loops=1)
+              Index Cond: ((spike.jtxt(custom, 'd1'::text) >= '2023-01-01'::text) AND (spike.jtxt(custom, 'd1'::text) <= '2023-12-31'::text))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.119 ms
+Execution Time: 0.948 ms
+
+===== W50 L4_sort_deal_n1_asc_idx (phase C) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.deal WHERE tenant_id=$1 ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..181.62 rows=51 width=307) (actual time=0.476..1.235 rows=51 loops=1)
+  Buffers: shared hit=183
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.444..0.444 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..168595.87 rows=47519 width=307) (actual time=0.476..1.232 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=183
+        ->  Index Scan using ix_d_n1_w50 on deal  (cost=0.41..156122.13 rows=47519 width=1057) (actual time=0.005..0.046 rows=51 loops=1)
+              Buffers: shared hit=54
+Planning Time: 0.113 ms
+Execution Time: 1.251 ms
+
+===== W50 L4_sort_n1_cursor_orchain_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND ((spike.jnum8(custom,'n1') > $2::float8 OR spike.jnum8(custom,'n1') IS NULL) OR (spike.jnum8(custom,'n1') = $2::float8 AND id > $3::uuid)) ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","6","7339dddb-4a10-49ad-929f-d5eef59fd27c"]
+Limit  (cost=0.68..697.01 rows=51 width=247) (actual time=462.920..463.818 rows=51 loops=1)
+  Buffers: shared hit=118951
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.344..0.345 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..211452.84 rows=15487 width=247) (actual time=462.919..463.815 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=118951
+        ->  Index Scan using ix_c_n1_w50 on contact  (cost=0.41..207387.50 rows=15487 width=1074) (actual time=462.554..462.903 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND ((spike.jnum8(custom, 'n1'::text) > '488390'::double precision) OR (spike.jnum8(custom, 'n1'::text) IS NULL) OR ((spike.jnum8(custom, 'n1'::text) = '488390'::double precision) AND (id > '1f98811c-8f93-4654-bbb1-3267c456f026'::uuid))))
+              Rows Removed by Filter: 28419
+              Buffers: shared hit=118842
+Planning Time: 0.170 ms
+Execution Time: 463.839 ms
+
+===== W50 L4_sort_n1_cursor_rowvalue_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (spike.jnum8(custom,'n1'),id) > ($2::float8,$3::uuid) ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","6","7339dddb-4a10-49ad-929f-d5eef59fd27c"]
+Limit  (cost=0.68..214.86 rows=51 width=247) (actual time=0.362..1.071 rows=51 loops=1)
+  Buffers: shared hit=164
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.332..0.332 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..63844.54 rows=15202 width=247) (actual time=0.361..1.066 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=164
+        ->  Index Scan using ix_c_n1_w50 on contact  (cost=0.41..59854.02 rows=15202 width=1074) (actual time=0.005..0.048 rows=51 loops=1)
+              Index Cond: (ROW(spike.jnum8(custom, 'n1'::text), id) > ROW('488390'::double precision, '1f98811c-8f93-4654-bbb1-3267c456f026'::uuid))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=55
+Planning Time: 0.107 ms
+Execution Time: 1.086 ms
+
+===== W50 LP_select_eq_random (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o006"]
+Limit  (cost=0.68..207.88 rows=51 width=239) (actual time=0.336..0.771 rows=51 loops=1)
+  Buffers: shared hit=123
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.315..0.315 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..926.73 rows=228 width=239) (actual time=0.336..0.768 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=123
+        ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.007..0.041 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o005'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.108 ms
+Execution Time: 0.782 ms
+
+===== W50 LP_select_eq_common (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o001"]
+Limit  (cost=0.68..207.88 rows=51 width=239) (actual time=0.344..0.815 rows=51 loops=1)
+  Buffers: shared hit=99
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.328..0.328 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..926.73 rows=228 width=239) (actual time=0.344..0.812 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=99
+        ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.006..0.024 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o001'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.102 ms
+Execution Time: 0.828 ms
+
+===== W50 LP_select_eq_rare_o019 (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o019"]
+Limit  (cost=0.68..207.88 rows=51 width=239) (actual time=0.376..0.792 rows=51 loops=1)
+  Buffers: shared hit=123
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.349..0.350 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..926.73 rows=228 width=239) (actual time=0.375..0.789 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=123
+        ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=1074) (actual time=0.007..0.042 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.130 ms
+Execution Time: 0.804 ms
+
+===== W50 LP_checkbox_c2_true_rare (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jbool(custom,'c2')=true ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.68..177.55 rows=51 width=239) (actual time=0.365..0.817 rows=51 loops=1)
+  Buffers: shared hit=123
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.347..0.347 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..52721.95 rows=15202 width=239) (actual time=0.364..0.814 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=123
+        ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..52531.92 rows=15202 width=1074) (actual time=0.004..0.024 rows=51 loops=1)
+              Index Cond: (spike.jbool(custom, 'c2'::text) = true)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.108 ms
+Execution Time: 0.830 ms
+
+===== W50 LP_s1_and_c2 (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text AND spike.jbool(custom,'c2')=true ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o018"]
+Limit  (cost=0.68..659.25 rows=51 width=239) (actual time=0.512..5.246 rows=20 loops=1)
+  Buffers: shared hit=1474
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.333..0.333 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..981.83 rows=76 width=239) (actual time=0.511..5.243 rows=20 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=1474
+        ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..980.88 rows=76 width=1074) (actual time=0.169..4.774 rows=20 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o013'::text)
+              Filter: ((merged_into_id IS NULL) AND spike.jbool(custom, 'c2'::text))
+              Rows Removed by Filter: 793
+              Buffers: shared hit=1441
+Planning Time: 0.130 ms
+Execution Time: 5.259 ms
+
+===== W50 LP_s1_in_3_values (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=ANY($2::text[]) ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7",["o006","o013","o010"]]
+Limit  (cost=2803.26..2803.38 rows=51 width=239) (actual time=34.064..34.070 rows=51 loops=1)
+  Buffers: shared hit=8804
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.333..0.333 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=2803.00..2804.71 rows=684 width=239) (actual time=34.063..34.067 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=8804
+        ->  Result  (cost=0.41..2780.18 rows=684 width=239) (actual time=0.351..33.251 rows=3401 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=8804
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..2771.63 rows=684 width=1074) (actual time=0.006..2.508 rows=3401 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = ANY ('{o009,o019,o004}'::text[]))
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=3431
+Planning Time: 0.137 ms
+Execution Time: 34.088 ms
+
+===== W50 LP_total_s1_rare_o019 (phase C) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o019"]
+Aggregate  (cost=926.99..927.00 rows=1 width=4) (actual time=0.568..0.568 rows=1 loops=1)
+  Buffers: shared hit=641
+  ->  Limit  (cost=0.68..924.14 rows=228 width=4) (actual time=0.330..0.548 rows=626 loops=1)
+        Buffers: shared hit=641
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.324..0.324 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.41..923.88 rows=228 width=4) (actual time=0.330..0.530 rows=626 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=641
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=0) (actual time=0.006..0.177 rows=626 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=632
+Planning Time: 0.097 ms
+Execution Time: 0.579 ms
+
+===== W50 LP_total_s1_common_o001 (phase C) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o001"]
+Aggregate  (cost=926.99..927.00 rows=1 width=4) (actual time=4.518..4.519 rows=1 loops=1)
+  Buffers: shared hit=8949
+  ->  Limit  (cost=0.68..924.14 rows=228 width=4) (actual time=0.326..4.265 rows=8885 loops=1)
+        Buffers: shared hit=8949
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.318..0.318 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.41..923.88 rows=228 width=4) (actual time=0.326..3.990 rows=8885 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=8949
+              ->  Index Scan using ix_c_s1_w50 on contact  (cost=0.41..923.88 rows=228 width=0) (actual time=0.007..3.312 rows=8885 loops=1)
+                    Index Cond: (spike.jtxt(custom, 's1'::text) = 'o001'::text)
+                    Filter: (merged_into_id IS NULL)
+                    Buffers: shared hit=8940
+Planning Time: 0.115 ms
+Execution Time: 4.532 ms
+
+===== W50 LP_deal_select_eq_random (phase C) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.deal WHERE tenant_id=$1 AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o019"]
+Limit  (cost=0.68..205.88 rows=51 width=299) (actual time=0.418..0.931 rows=51 loops=1)
+  Buffers: shared hit=144
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.402..0.402 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.41..958.06 rows=238 width=299) (actual time=0.418..0.928 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=144
+        ->  Index Scan using ix_d_s1_w50 on deal  (cost=0.41..955.08 rows=238 width=1057) (actual time=0.005..0.036 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o010'::text)
+              Buffers: shared hit=54
+Planning Time: 0.083 ms
+Execution Time: 0.943 ms
+
+===== W50 LP_unindexed_s2_eq_rare (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s2')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","o019"]
+Limit  (cost=0.69..35589.28 rows=51 width=239) (actual time=1.427..23.934 rows=51 loops=1)
+  Buffers: shared hit=7053
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.343..0.343 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..159102.35 rows=228 width=239) (actual time=1.427..23.928 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=7053
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..159099.50 rows=228 width=1074) (actual time=1.070..23.135 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's2'::text) = 'o019'::text))
+              Rows Removed by Filter: 3815
+              Buffers: shared hit=6972
+Planning Time: 0.130 ms
+Execution Time: 23.951 ms
+
+===== W1M L4_sort_n1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..93.62 rows=51 width=247) (actual time=0.340..1.102 rows=51 loops=1)
+  Buffers: shared hit=203
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.314..0.315 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1846008.66 rows=1013005 width=247) (actual time=0.340..1.098 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=203
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..1580094.85 rows=1013005 width=1074) (actual time=0.004..0.044 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.100 ms
+Execution Time: 1.117 ms
+
+===== W1M L4_sort_n1_desc_nullslast_compilerform_idx: EXPLAIN failed: canceling statement due to statement timeout
+
+===== W1M L4_sort_d1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..93.75 rows=51 width=271) (actual time=0.376..1.090 rows=51 loops=1)
+  Buffers: shared hit=263
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.344..0.344 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1848623.65 rows=1013005 width=271) (actual time=0.376..1.086 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=263
+        ->  Index Scan using ix_c_d1_w1m on contact  (cost=0.42..1582709.84 rows=1013005 width=1074) (actual time=0.004..0.024 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.103 ms
+Execution Time: 1.105 ms
+
+===== W1M L4_sort_t1_asc_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jtxt(custom,'t1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..94.01 rows=51 width=271) (actual time=0.343..1.030 rows=51 loops=1)
+  Buffers: shared hit=278
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.315..0.315 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1853733.09 rows=1013005 width=271) (actual time=0.343..1.025 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=278
+        ->  Index Scan using ix_c_t1_w1m on contact  (cost=0.42..1587819.28 rows=1013005 width=1074) (actual time=0.003..0.021 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=49
+Planning Time: 0.096 ms
+Execution Time: 1.043 ms
+
+===== W1M L4_sort_n1_desc_default_nulls_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY spike.jnum8(custom,'n1') DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..93.62 rows=51 width=247) (actual time=0.332..0.818 rows=51 loops=1)
+  Buffers: shared hit=129
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.321 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1846008.66 rows=1013005 width=247) (actual time=0.332..0.815 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=129
+        ->  Index Scan Backward using ix_c_n1_w1m on contact  (cost=0.42..1580094.85 rows=1013005 width=1074) (actual time=0.002..0.026 rows=51 loops=1)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=56
+Planning Time: 0.098 ms
+Execution Time: 0.832 ms
+
+===== W1M L4_sort_n1_asc_with_filter_s1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o001"]
+Limit  (cost=0.69..18499.72 rows=51 width=247) (actual time=0.384..2.438 rows=51 loops=1)
+  Buffers: shared hit=679
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.309..0.309 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1837208.17 rows=5065 width=247) (actual time=0.384..2.434 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=679
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..1835878.61 rows=5065 width=1074) (actual time=0.056..1.612 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's1'::text) = 'o001'::text))
+              Rows Removed by Filter: 235
+              Buffers: shared hit=550
+Planning Time: 0.116 ms
+Execution Time: 2.453 ms
+
+===== W1M L5_filter_s1_rare_sort_n1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o019"]
+Limit  (cost=0.69..18499.72 rows=51 width=247) (actual time=0.564..26.590 rows=51 loops=1)
+  Buffers: shared hit=8298
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.346..0.346 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1837208.17 rows=5065 width=247) (actual time=0.564..26.583 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=8298
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..1835878.61 rows=5065 width=1074) (actual time=0.196..25.581 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's1'::text) = 'o019'::text))
+              Rows Removed by Filter: 4406
+              Buffers: shared hit=8109
+Planning Time: 0.132 ms
+Execution Time: 26.611 ms
+
+===== W1M L5_filter_s1_random_sort_n1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o013"]
+Limit  (cost=0.69..18499.72 rows=51 width=247) (actual time=0.341..18.532 rows=51 loops=1)
+  Buffers: shared hit=5769
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.312..0.313 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1837208.17 rows=5065 width=247) (actual time=0.341..18.527 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=5769
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..1835878.61 rows=5065 width=1074) (actual time=0.020..17.541 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's1'::text) = 'o014'::text))
+              Rows Removed by Filter: 3079
+              Buffers: shared hit=5640
+Planning Time: 0.124 ms
+Execution Time: 18.552 ms
+
+===== W1M L5_filter_c2_rare_sort_d1_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jbool(custom,'c2')=true ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..291.37 rows=51 width=271) (actual time=0.571..11.694 rows=51 loops=1)
+  Buffers: shared hit=3609
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.298..0.298 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1924598.94 rows=337668 width=271) (actual time=0.570..11.690 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=3609
+        ->  Index Scan using ix_c_d1_w1m on contact  (cost=0.42..1835961.09 rows=337668 width=1074) (actual time=0.225..10.762 rows=51 loops=1)
+              Filter: ((merged_into_id IS NULL) AND spike.jbool(custom, 'c2'::text))
+              Rows Removed by Filter: 1799
+              Buffers: shared hit=3460
+Planning Time: 0.123 ms
+Execution Time: 11.711 ms
+
+===== W1M L4b_range_n1_between_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jnum8(custom,'n1') BETWEEN $2::float8 AND ($2::float8+500) ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d",264909]
+Limit  (cost=0.69..218.81 rows=51 width=247) (actual time=0.401..1.595 rows=51 loops=1)
+  Buffers: shared hit=126 read=57
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.346..0.346 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..21663.28 rows=5065 width=247) (actual time=0.400..1.592 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=126 read=57
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..20333.72 rows=5065 width=1074) (actual time=0.028..0.517 rows=51 loops=1)
+              Index Cond: ((spike.jnum8(custom, 'n1'::text) >= '107054'::double precision) AND (spike.jnum8(custom, 'n1'::text) <= '107554'::double precision))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=3 read=51
+Planning Time: 0.116 ms
+Execution Time: 1.614 ms
+
+===== W1M L4b_range_d1_between_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'d1') BETWEEN $2::text AND '2023-12-31' ORDER BY spike.jtxt(custom,'d1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","2023-01-01"]
+Limit  (cost=0.69..218.96 rows=51 width=271) (actual time=0.346..1.088 rows=51 loops=1)
+  Buffers: shared hit=203
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.327..0.327 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..21678.30 rows=5065 width=271) (actual time=0.346..1.084 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=203
+        ->  Index Scan using ix_c_d1_w1m on contact  (cost=0.42..20348.74 rows=5065 width=1074) (actual time=0.007..0.030 rows=51 loops=1)
+              Index Cond: ((spike.jtxt(custom, 'd1'::text) >= '2023-01-01'::text) AND (spike.jtxt(custom, 'd1'::text) <= '2023-12-31'::text))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.125 ms
+Execution Time: 1.105 ms
+
+===== W1M L4_sort_deal_n1_asc_idx (phase C) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.deal WHERE tenant_id=$1 ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.68..57.66 rows=51 width=307) (actual time=0.344..0.930 rows=51 loops=1)
+  Buffers: shared hit=168
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.324..0.324 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..560693.89 rows=501835 width=307) (actual time=0.344..0.927 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=168
+        ->  Index Scan using ix_d_n1_w1m on deal  (cost=0.42..428962.20 rows=501835 width=1057) (actual time=0.004..0.030 rows=51 loops=1)
+              Buffers: shared hit=54
+Planning Time: 0.082 ms
+Execution Time: 0.945 ms
+
+===== W1M L4_sort_n1_cursor_orchain_idx: EXPLAIN failed: canceling statement due to statement timeout
+
+===== W1M L4_sort_n1_cursor_rowvalue_idx (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (spike.jnum8(custom,'n1'),id) > ($2::float8,$3::uuid) ORDER BY spike.jnum8(custom,'n1') ASC NULLS LAST,id ASC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","333437","4213d84c-b279-4657-a0a7-f61593ed501f"]
+Limit  (cost=0.69..157.92 rows=51 width=247) (actual time=0.344..1.001 rows=51 loops=1)
+  Buffers: shared hit=203
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.312..0.312 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..1041027.04 rows=337668 width=247) (actual time=0.344..0.997 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=203
+        ->  Index Scan using ix_c_n1_w1m on contact  (cost=0.42..952389.19 rows=337668 width=1074) (actual time=0.006..0.038 rows=51 loops=1)
+              Index Cond: (ROW(spike.jnum8(custom, 'n1'::text), id) > ROW('217'::double precision, '21d41a3d-5dd8-4cbc-804c-97adec7854f1'::uuid))
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.105 ms
+Execution Time: 1.016 ms
+
+===== W1M LP_select_eq_random (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o020"]
+Limit  (cost=0.69..204.62 rows=51 width=239) (actual time=0.359..0.903 rows=51 loops=1)
+  Buffers: shared hit=135
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.337..0.338 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..20253.49 rows=5065 width=239) (actual time=0.358..0.900 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=135
+        ->  Index Scan using ix_c_s1_w1m on contact  (cost=0.42..20190.18 rows=5065 width=1074) (actual time=0.007..0.064 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o017'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.140 ms
+Execution Time: 0.915 ms
+
+===== W1M LP_select_eq_common (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o001"]
+Limit  (cost=0.69..204.62 rows=51 width=239) (actual time=0.338..0.791 rows=51 loops=1)
+  Buffers: shared hit=147
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.317..0.317 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..20253.49 rows=5065 width=239) (actual time=0.338..0.788 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=147
+        ->  Index Scan using ix_c_s1_w1m on contact  (cost=0.42..20190.18 rows=5065 width=1074) (actual time=0.006..0.024 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o001'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.104 ms
+Execution Time: 0.802 ms
+
+===== W1M LP_select_eq_rare_o019 (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o019"]
+Limit  (cost=0.69..204.62 rows=51 width=239) (actual time=0.346..0.793 rows=51 loops=1)
+  Buffers: shared hit=124
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.328..0.328 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..20253.49 rows=5065 width=239) (actual time=0.346..0.790 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=124
+        ->  Index Scan using ix_c_s1_w1m on contact  (cost=0.42..20190.18 rows=5065 width=1074) (actual time=0.003..0.024 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=55
+Planning Time: 0.106 ms
+Execution Time: 0.804 ms
+
+===== W1M LP_checkbox_c2_true_rare (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jbool(custom,'c2')=true ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d"]
+Limit  (cost=0.69..111.76 rows=51 width=239) (actual time=0.331..0.745 rows=51 loops=1)
+  Buffers: shared hit=111
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.322..0.322 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..735426.12 rows=337668 width=239) (actual time=0.330..0.743 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=111
+        ->  Index Scan using ix_c_c2_w1m on contact  (cost=0.42..731205.27 rows=337668 width=1074) (actual time=0.005..0.022 rows=51 loops=1)
+              Index Cond: (spike.jbool(custom, 'c2'::text) = true)
+              Filter: (merged_into_id IS NULL)
+              Buffers: shared hit=54
+Planning Time: 0.102 ms
+Execution Time: 0.757 ms
+
+===== W1M LP_s1_and_c2 (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text AND spike.jbool(custom,'c2')=true ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o013"]
+Limit  (cost=0.69..649.58 rows=51 width=239) (actual time=1.259..20.868 rows=51 loops=1)
+  Buffers: shared hit=1524 read=1645
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.333..0.333 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..21477.53 rows=1688 width=239) (actual time=1.259..20.861 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=1524 read=1645
+        ->  Index Scan using ix_c_s1_w1m on contact  (cost=0.42..21456.43 rows=1688 width=1074) (actual time=0.906..20.133 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o008'::text)
+              Filter: ((merged_into_id IS NULL) AND spike.jbool(custom, 'c2'::text))
+              Rows Removed by Filter: 1632
+              Buffers: shared hit=1419 read=1645
+Planning Time: 0.134 ms
+Execution Time: 20.887 ms
+
+===== W1M LP_s1_in_3_values (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=ANY($2::text[]) ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d",["o006","o007","o012"]]
+Limit  (cost=0.69..5488.67 rows=51 width=239) (actual time=0.339..3.723 rows=51 loops=1)
+  Buffers: shared hit=1068
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.321 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1635095.02 rows=15195 width=239) (actual time=0.339..3.720 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=1068
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1634905.08 rows=15195 width=1074) (actual time=0.013..3.068 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's1'::text) = ANY ('{o005,o008,o009}'::text[])))
+              Rows Removed by Filter: 491
+              Buffers: shared hit=987
+Planning Time: 0.125 ms
+Execution Time: 3.737 ms
+
+===== W1M LP_total_s1_rare_o019 (phase C) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o019"]
+Aggregate  (cost=19977.95..19977.97 rows=1 width=4) (actual time=7.522..7.523 rows=1 loops=1)
+  Buffers: shared hit=9807
+  ->  Limit  (cost=163.94..19914.64 rows=5065 width=4) (actual time=2.544..7.232 rows=10001 loops=1)
+        Buffers: shared hit=9807
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.330..0.331 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=163.68..19914.38 rows=5065 width=4) (actual time=2.543..6.859 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=9807
+              ->  Bitmap Heap Scan on contact  (cost=163.68..19914.38 rows=5065 width=0) (actual time=2.212..6.088 rows=10001 loops=1)
+                    Recheck Cond: ((spike.jtxt(custom, 's1'::text) = 'o019'::text) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))
+                    Filter: (merged_into_id IS NULL)
+                    Heap Blocks: exact=9719
+                    Buffers: shared hit=9798
+                    ->  Bitmap Index Scan on ix_c_s1_w1m  (cost=0.00..162.41 rows=5065 width=0) (actual time=1.158..1.158 rows=12489 loops=1)
+                          Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)
+                          Buffers: shared hit=79
+Planning Time: 0.117 ms
+Execution Time: 7.595 ms
+
+===== W1M LP_total_s1_common_o001 (phase C) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s1')=$2::text LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o001"]
+Aggregate  (cost=19977.95..19977.97 rows=1 width=4) (actual time=140.632..140.633 rows=1 loops=1)
+  Buffers: shared hit=25241
+  ->  Limit  (cost=163.94..19914.64 rows=5065 width=4) (actual time=26.242..140.025 rows=10001 loops=1)
+        Buffers: shared hit=25241
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.358..0.358 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=163.68..19914.38 rows=5065 width=4) (actual time=26.241..139.524 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=25241
+              ->  Bitmap Heap Scan on contact  (cost=163.68..19914.38 rows=5065 width=0) (actual time=25.881..138.487 rows=10001 loops=1)
+                    Recheck Cond: ((spike.jtxt(custom, 's1'::text) = 'o001'::text) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))
+                    Rows Removed by Index Recheck: 13821
+                    Filter: (merged_into_id IS NULL)
+                    Heap Blocks: exact=3223 lossy=3646
+                    Buffers: shared hit=25232
+                    ->  Bitmap Index Scan on ix_c_s1_w1m  (cost=0.00..162.41 rows=5065 width=0) (actual time=18.375..18.375 rows=180763 loops=1)
+                          Index Cond: (spike.jtxt(custom, 's1'::text) = 'o001'::text)
+                          Buffers: shared hit=1091
+Planning Time: 0.123 ms
+Execution Time: 141.486 ms
+
+===== W1M LP_deal_select_eq_random (phase C) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.deal WHERE tenant_id=$1 AND spike.jtxt(custom,'s1')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o014"]
+Limit  (cost=0.68..203.46 rows=51 width=299) (actual time=0.354..0.701 rows=51 loops=1)
+  Buffers: shared hit=108
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.321 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..9976.25 rows=2509 width=299) (actual time=0.354..0.698 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=108
+        ->  Index Scan using ix_d_s1_w1m on deal  (cost=0.42..9944.89 rows=2509 width=1057) (actual time=0.006..0.036 rows=51 loops=1)
+              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o011'::text)
+              Buffers: shared hit=54
+Planning Time: 0.081 ms
+Execution Time: 0.713 ms
+
+===== W1M LP_unindexed_s2_eq_rare (phase C) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND spike.jtxt(custom,'s2')=$2::text ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","o019"]
+Limit  (cost=0.69..16450.60 rows=51 width=239) (actual time=0.341..23.186 rows=51 loops=1)
+  Buffers: shared hit=7333
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.320..0.320 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1633702.14 rows=5065 width=239) (actual time=0.340..23.180 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=7333
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1633638.82 rows=5065 width=1074) (actual time=0.016..22.482 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (spike.jtxt(custom, 's2'::text) = 'o019'::text))
+              Rows Removed by Filter: 4001
+              Buffers: shared hit=7264
+Planning Time: 0.124 ms
+Execution Time: 23.202 ms

@@ -1,0 +1,1298 @@
+# EXPLAIN (ANALYZE, BUFFERS) plans, phase D, spike DB crm_spike_b0, measured as NOSUPERUSER role under FORCE RLS
+
+===== W50 L6_q_common_en_display_only_P1a_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..103899.13 rows=51 width=239) (actual time=0.352..0.990 rows=51 loops=1)
+  Buffers: shared hit=655
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.334..0.334 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169090.05 rows=83 width=239) (actual time=0.352..0.988 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=655
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169089.01 rows=83 width=1073) (actual time=0.006..0.171 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 490
+              Buffers: shared hit=550
+Planning Time: 0.127 ms
+Execution Time: 1.002 ms
+
+===== W50 L6_q_common_en_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..51990.07 rows=51 width=239) (actual time=0.337..0.897 rows=51 loops=1)
+  Buffers: shared hit=196
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.323..0.323 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169220.77 rows=166 width=239) (actual time=0.337..0.894 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=196
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=166 width=1073) (actual time=0.004..0.095 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+              Rows Removed by Filter: 47
+              Buffers: shared hit=103
+Planning Time: 0.150 ms
+Execution Time: 0.908 ms
+
+===== W50 L6_q_common_ar_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%أحمد%"]
+Limit  (cost=108142.24..108142.26 rows=10 width=239) (actual time=378.829..378.835 rows=51 loops=1)
+  Buffers: shared hit=104858 read=4558
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.362..0.362 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=108141.98..108142.00 rows=10 width=239) (actual time=378.828..378.832 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=104858 read=4558
+        ->  Result  (cost=0.41..108141.81 rows=10 width=239) (actual time=0.411..371.738 rows=28639 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=104858 read=4558
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=10 width=1073) (actual time=0.035..91.050 rows=28639 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احمد%'::text) OR (custom_search ~~ '%احمد%'::text)))
+                    Rows Removed by Filter: 21361
+                    Buffers: shared hit=45737 read=4558
+Planning Time: 0.190 ms
+Execution Time: 378.851 ms
+
+===== W50 L6_q_mid_en_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%cairo%"]
+Limit  (cost=0.69..51990.07 rows=51 width=239) (actual time=0.326..1.030 rows=51 loops=1)
+  Buffers: shared hit=328
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.311..0.311 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169220.77 rows=166 width=239) (actual time=0.326..1.027 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=328
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=166 width=1073) (actual time=0.004..0.207 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%cairo%'::text) OR (custom_search ~~ '%cairo%'::text)))
+              Rows Removed by Filter: 154
+              Buffers: shared hit=211
+Planning Time: 0.154 ms
+Execution Time: 1.041 ms
+
+===== W50 L6_q_mid_ar_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%القاهرة%"]
+Limit  (cost=108142.24..108142.26 rows=10 width=239) (actual time=186.587..186.594 rows=51 loops=1)
+  Buffers: shared hit=75360
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.339..0.339 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=108141.98..108142.00 rows=10 width=239) (actual time=186.586..186.590 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=75360
+        ->  Result  (cost=0.41..108141.81 rows=10 width=239) (actual time=0.362..183.874 rows=11304 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=75360
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=10 width=1073) (actual time=0.010..74.344 rows=11304 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%القاهره%'::text) OR (custom_search ~~ '%القاهره%'::text)))
+                    Rows Removed by Filter: 38696
+                    Buffers: shared hit=50295
+Planning Time: 0.187 ms
+Execution Time: 186.610 ms
+
+===== W50 L6_q_rare_token_display_only_P1a_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%df12a6%"]
+Limit  (cost=108012.83..108012.87 rows=17 width=239) (actual time=21.151..21.152 rows=1 loops=1)
+  Buffers: shared hit=50304
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.368..0.368 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=108012.57..108012.61 rows=17 width=239) (actual time=21.150..21.151 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=50304
+        ->  Result  (cost=0.41..108012.22 rows=17 width=239) (actual time=4.004..21.145 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=50304
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108012.01 rows=17 width=1073) (actual time=3.616..20.756 rows=1 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ebf1d3%'::text))
+                    Rows Removed by Filter: 49999
+                    Buffers: shared hit=50295
+Planning Time: 0.163 ms
+Execution Time: 21.170 ms
+
+===== W50 L6_q_rare_token_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%8f2479%"]
+Limit  (cost=108143.19..108143.28 rows=33 width=239) (actual time=67.510..67.511 rows=1 loops=1)
+  Buffers: shared hit=50304
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.342..0.343 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=108142.93..108143.02 rows=33 width=239) (actual time=67.509..67.510 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=50304
+        ->  Result  (cost=0.41..108142.10 rows=33 width=239) (actual time=21.100..67.504 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=50304
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=33 width=1073) (actual time=20.745..67.148 rows=1 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ad58a1%'::text) OR (custom_search ~~ '%ad58a1%'::text)))
+                    Rows Removed by Filter: 49999
+                    Buffers: shared hit=50295
+Planning Time: 0.183 ms
+Execution Time: 67.528 ms
+
+===== W50 L6_q_short3_display_only_P1a_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahm%"]
+Limit  (cost=0.69..4157.24 rows=51 width=239) (actual time=0.344..0.986 rows=51 loops=1)
+  Buffers: shared hit=570
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.320..0.320 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169114.95 rows=2075 width=239) (actual time=0.344..0.982 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=570
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169089.01 rows=2075 width=1073) (actual time=0.009..0.205 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahm%'::text))
+              Rows Removed by Filter: 418
+              Buffers: shared hit=477
+Planning Time: 0.151 ms
+Execution Time: 0.997 ms
+
+===== W50 L6_q_short3_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahm%"]
+Limit  (cost=0.69..2123.31 rows=51 width=239) (actual time=0.331..0.878 rows=51 loops=1)
+  Buffers: shared hit=206
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.317..0.317 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169269.53 rows=4067 width=239) (actual time=0.331..0.875 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=206
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=4067 width=1073) (actual time=0.004..0.088 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahm%'::text) OR (custom_search ~~ '%ahm%'::text)))
+              Rows Removed by Filter: 45
+              Buffers: shared hit=101
+Planning Time: 0.147 ms
+Execution Time: 0.889 ms
+
+===== W50 L6_q_short2_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ah%"]
+Limit  (cost=0.69..463.47 rows=51 width=239) (actual time=0.593..1.480 rows=51 loops=1)
+  Buffers: shared hit=211
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.568..0.568 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169452.12 rows=18674 width=239) (actual time=0.593..1.476 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=211
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=18674 width=1073) (actual time=0.009..0.189 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ah%'::text) OR (custom_search ~~ '%ah%'::text)))
+              Rows Removed by Filter: 39
+              Buffers: shared hit=94
+Planning Time: 0.211 ms
+Execution Time: 1.496 ms
+
+===== W50 L6_q_ar3_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%احم%"]
+Limit  (cost=108143.19..108143.28 rows=33 width=239) (actual time=370.288..370.294 rows=51 loops=1)
+  Buffers: shared hit=104869 read=4547
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.331..0.332 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=108142.93..108143.02 rows=33 width=239) (actual time=370.287..370.291 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 38kB
+        Buffers: shared hit=104869 read=4547
+        ->  Result  (cost=0.41..108142.10 rows=33 width=239) (actual time=0.373..363.233 rows=28639 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=104869 read=4547
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=33 width=1073) (actual time=0.030..91.654 rows=28639 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احم%'::text) OR (custom_search ~~ '%احم%'::text)))
+                    Rows Removed by Filter: 21361
+                    Buffers: shared hit=45748 read=4547
+Planning Time: 0.186 ms
+Execution Time: 370.311 ms
+
+===== W50 L6_q_prefix_common_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","ahm%"]
+Limit  (cost=0.69..3380.39 rows=51 width=239) (actual time=0.346..1.086 rows=51 loops=1)
+  Buffers: shared hit=727
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.321 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169250.62 rows=2554 width=239) (actual time=0.345..1.084 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=727
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=2554 width=1073) (actual time=0.012..0.310 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ 'ahm%'::text) OR (custom_search ~~ 'ahm%'::text)))
+              Rows Removed by Filter: 549
+              Buffers: shared hit=610
+Planning Time: 0.277 ms
+Execution Time: 1.099 ms
+
+===== W50 L7_total_q_common_tri (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Aggregate  (cost=108144.02..108144.04 rows=1 width=4) (actual time=19.240..19.241 rows=1 loops=1)
+  Buffers: shared hit=17556
+  ->  Limit  (cost=0.68..108141.95 rows=166 width=4) (actual time=0.329..18.925 rows=10001 loops=1)
+        Buffers: shared hit=17556
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.323..0.323 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.41..108141.69 rows=166 width=4) (actual time=0.328..18.546 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=17556
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=166 width=0) (actual time=0.004..17.797 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+                    Rows Removed by Filter: 7443
+                    Buffers: shared hit=17547
+Planning Time: 0.172 ms
+Execution Time: 19.257 ms
+
+===== W50 L7_total_q_rare_tri (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%6ad11c%"]
+Aggregate  (cost=108142.36..108142.37 rows=1 width=4) (actual time=58.605..58.606 rows=1 loops=1)
+  Buffers: shared hit=50304
+  ->  Limit  (cost=0.68..108141.95 rows=33 width=4) (actual time=46.983..58.600 rows=1 loops=1)
+        Buffers: shared hit=50304
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.342..0.342 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.41..108141.69 rows=33 width=4) (actual time=46.982..58.599 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=50304
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=33 width=0) (actual time=46.639..58.255 rows=1 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%d4a6c0%'::text) OR (custom_search ~~ '%d4a6c0%'::text)))
+                    Rows Removed by Filter: 49999
+                    Buffers: shared hit=50295
+Planning Time: 0.178 ms
+Execution Time: 58.621 ms
+
+===== W50 L6_deal_q_common_tri (phase D) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0 FROM (SELECT b.*,(SELECT c.search_normalized FROM crm.contact c WHERE c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL) AS related_search FROM crm.deal b) records WHERE tenant_id=$1 AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR related_search LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..109602.40 rows=51 width=203) (actual time=0.653..0.854 rows=51 loops=1)
+  Buffers: shared hit=379
+  InitPlan 3
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.337..0.337 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..517922.26 rows=241 width=203) (actual time=0.653..0.852 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 3).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=379
+        ->  Index Scan using deal_tenant_created on deal b  (cost=0.42..517921.06 rows=241 width=171) (actual time=0.313..0.482 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((search_normalized ~~ '%ahmed%'::text) OR ((SubPlan 2) ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 31
+              Buffers: shared hit=370
+              SubPlan 2
+                ->  Result  (cost=0.69..8.71 rows=1 width=21) (actual time=0.006..0.006 rows=1 loops=69)
+                      One-Time Filter: ((InitPlan 1).col1 = b.tenant_id)
+                      Buffers: shared hit=285
+                      InitPlan 1
+                        ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.297..0.297 rows=1 loops=1)
+                              Buffers: shared hit=9
+                      ->  Index Scan using contact_pkey on contact c  (cost=0.69..8.71 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=69)
+                            Index Cond: ((tenant_id = b.tenant_id) AND (id = b.contact_id))
+                            Filter: (merged_into_id IS NULL)
+                            Buffers: shared hit=276
+Planning Time: 0.212 ms
+Execution Time: 0.871 ms
+
+===== W1M L6_q_common_en_display_only_P1a_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..44493.58 rows=51 width=239) (actual time=0.542..1.356 rows=51 loops=1)
+  Buffers: shared hit=819
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.515..0.516 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1397600.80 rows=1602 width=239) (actual time=0.542..1.353 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=819
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1397580.78 rows=1602 width=1073) (actual time=0.008..0.334 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 629
+              Buffers: shared hit=690
+Planning Time: 0.207 ms
+Execution Time: 1.368 ms
+
+===== W1M L6_q_common_en_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..22308.17 rows=51 width=239) (actual time=0.343..0.822 rows=51 loops=1)
+  Buffers: shared hit=178
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.333..0.333 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400123.23 rows=3201 width=239) (actual time=0.342..0.819 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=178
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=3201 width=1073) (actual time=0.005..0.086 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+              Rows Removed by Filter: 42
+              Buffers: shared hit=97
+Planning Time: 0.145 ms
+Execution Time: 0.833 ms
+
+===== W1M L6_q_common_ar_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%أحمد%"]
+Limit  (cost=0.69..357022.44 rows=51 width=239) (actual time=0.346..0.893 rows=51 loops=1)
+  Buffers: shared hit=149
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.322 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400085.71 rows=200 width=239) (actual time=0.346..0.890 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=149
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=200 width=1073) (actual time=0.006..0.089 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احمد%'::text) OR (custom_search ~~ '%احمد%'::text)))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=92
+Planning Time: 0.147 ms
+Execution Time: 0.904 ms
+
+===== W1M L6_q_mid_en_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%cairo%"]
+Limit  (cost=0.69..22308.17 rows=51 width=239) (actual time=0.391..1.320 rows=51 loops=1)
+  Buffers: shared hit=394
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.359..0.360 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400123.23 rows=3201 width=239) (actual time=0.390..1.317 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=394
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=3201 width=1073) (actual time=0.023..0.389 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%cairo%'::text) OR (custom_search ~~ '%cairo%'::text)))
+              Rows Removed by Filter: 221
+              Buffers: shared hit=277
+Planning Time: 0.189 ms
+Execution Time: 1.334 ms
+
+===== W1M L6_q_mid_ar_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%القاهرة%"]
+Limit  (cost=0.69..357022.44 rows=51 width=239) (actual time=0.348..0.991 rows=51 loops=1)
+  Buffers: shared hit=276
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.323..0.323 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400085.71 rows=200 width=239) (actual time=0.348..0.989 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=276
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=200 width=1073) (actual time=0.007..0.258 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%القاهره%'::text) OR (custom_search ~~ '%القاهره%'::text)))
+              Rows Removed by Filter: 151
+              Buffers: shared hit=207
+Planning Time: 0.151 ms
+Execution Time: 1.003 ms
+
+===== W1M L6_q_rare_token_display_only_P1a_tri: EXPLAIN failed: canceling statement due to statement timeout
+
+===== W1M L6_q_rare_token_display_plus_custom_search_tri: EXPLAIN failed: canceling statement due to statement timeout
+
+===== W1M L6_q_short3_display_only_P1a_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahm%"]
+Limit  (cost=0.69..1781.50 rows=51 width=239) (actual time=0.324..1.008 rows=51 loops=1)
+  Buffers: shared hit=777
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.302..0.302 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1398081.27 rows=40039 width=239) (actual time=0.323..1.004 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=777
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1397580.78 rows=40039 width=1073) (actual time=0.005..0.189 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahm%'::text))
+              Rows Removed by Filter: 564
+              Buffers: shared hit=624
+Planning Time: 0.126 ms
+Execution Time: 1.019 ms
+
+===== W1M L6_q_short3_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahm%"]
+Limit  (cost=0.69..911.21 rows=51 width=239) (actual time=0.350..0.834 rows=51 loops=1)
+  Buffers: shared hit=178
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.341..0.342 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1401064.16 rows=78476 width=239) (actual time=0.349..0.832 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=178
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=78476 width=1073) (actual time=0.004..0.081 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahm%'::text) OR (custom_search ~~ '%ahm%'::text)))
+              Rows Removed by Filter: 42
+              Buffers: shared hit=97
+Planning Time: 0.144 ms
+Execution Time: 0.845 ms
+
+===== W1M L6_q_short2_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ah%"]
+Limit  (cost=0.69..199.48 rows=51 width=239) (actual time=0.358..0.902 rows=51 loops=1)
+  Buffers: shared hit=168
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.332..0.332 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1404587.59 rows=360350 width=239) (actual time=0.358..0.899 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=168
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=360350 width=1073) (actual time=0.005..0.079 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ah%'::text) OR (custom_search ~~ '%ah%'::text)))
+              Rows Removed by Filter: 33
+              Buffers: shared hit=87
+Planning Time: 0.146 ms
+Execution Time: 0.913 ms
+
+===== W1M L6_q_ar3_display_plus_custom_search_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%احم%"]
+Limit  (cost=0.69..111396.37 rows=51 width=239) (actual time=0.339..0.827 rows=51 loops=1)
+  Buffers: shared hit=149
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.314..0.314 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400091.23 rows=641 width=239) (actual time=0.338..0.824 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=149
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=641 width=1073) (actual time=0.006..0.077 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احم%'::text) OR (custom_search ~~ '%احم%'::text)))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=92
+Planning Time: 0.148 ms
+Execution Time: 0.838 ms
+
+===== W1M L6_q_prefix_common_tri (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","ahm%"]
+Limit  (cost=0.69..1450.42 rows=51 width=239) (actual time=0.434..1.325 rows=51 loops=1)
+  Buffers: shared hit=891
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.417..0.418 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400699.15 rows=49275 width=239) (actual time=0.434..1.322 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=891
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=49275 width=1073) (actual time=0.010..0.496 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ 'ahm%'::text) OR (custom_search ~~ 'ahm%'::text)))
+              Rows Removed by Filter: 748
+              Buffers: shared hit=810
+Planning Time: 0.262 ms
+Execution Time: 1.337 ms
+
+===== W1M L7_total_q_common_tri (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Aggregate  (cost=422188.14..422188.15 rows=1 width=4) (actual time=22.560..22.561 rows=1 loops=1)
+  Buffers: shared hit=282 read=3032
+  ->  Limit  (cost=0.26..422148.12 rows=3201 width=4) (actual time=0.349..22.251 rows=10001 loops=1)
+        Buffers: shared hit=282 read=3032
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.342..0.342 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.00..422147.86 rows=3201 width=4) (actual time=0.348..21.916 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=282 read=3032
+              ->  Seq Scan on contact  (cost=0.00..422147.86 rows=3201 width=0) (actual time=0.005..21.140 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+                    Rows Removed by Filter: 7525
+                    Buffers: shared hit=273 read=3032
+Planning Time: 0.173 ms
+Execution Time: 22.600 ms
+
+===== W1M L7_total_q_rare_tri (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%b88f67%"]
+Aggregate  (cost=422156.14..422156.15 rows=1 width=4) (actual time=1834.532..1834.533 rows=1 loops=1)
+  Buffers: shared hit=16321 read=369955
+  ->  Limit  (cost=0.26..422148.13 rows=641 width=4) (actual time=1266.070..1834.528 rows=1 loops=1)
+        Buffers: shared hit=16321 read=369955
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.348..0.349 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.00..422147.86 rows=641 width=4) (actual time=1266.069..1834.525 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=16321 read=369955
+              ->  Seq Scan on contact  (cost=0.00..422147.86 rows=641 width=0) (actual time=1265.718..1834.174 rows=1 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND ((search_normalized ~~ '%dc0356%'::text) OR (custom_search ~~ '%dc0356%'::text)))
+                    Rows Removed by Filter: 2049999
+                    Buffers: shared hit=16312 read=369955
+Planning Time: 0.171 ms
+Execution Time: 1834.580 ms
+
+===== W1M L6_deal_q_common_tri (phase D) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0 FROM (SELECT b.*,(SELECT c.search_normalized FROM crm.contact c WHERE c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL) AS related_search FROM crm.deal b) records WHERE tenant_id=$1 AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR related_search LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..98292.81 rows=51 width=203) (actual time=0.743..1.022 rows=51 loops=1)
+  Buffers: shared hit=414
+  InitPlan 3
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.423..0.423 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..4613948.45 rows=2394 width=203) (actual time=0.743..1.018 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 3).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=414
+        ->  Index Scan using deal_tenant_created on deal b  (cost=0.42..4613936.48 rows=2394 width=171) (actual time=0.315..0.561 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((search_normalized ~~ '%ahmed%'::text) OR ((SubPlan 2) ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=405
+              SubPlan 2
+                ->  Result  (cost=0.69..8.71 rows=1 width=21) (actual time=0.006..0.006 rows=1 loops=76)
+                      One-Time Filter: ((InitPlan 1).col1 = b.tenant_id)
+                      Buffers: shared hit=313
+                      InitPlan 1
+                        ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.304..0.304 rows=1 loops=1)
+                              Buffers: shared hit=9
+                      ->  Index Scan using contact_pkey on contact c  (cost=0.69..8.71 rows=1 width=21) (actual time=0.002..0.002 rows=1 loops=76)
+                            Index Cond: ((tenant_id = b.tenant_id) AND (id = b.contact_id))
+                            Filter: (merged_into_id IS NULL)
+                            Buffers: shared hit=304
+Planning Time: 0.355 ms
+Execution Time: 1.041 ms
+
+===== W50 L6_q_common_en_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..2004.00 rows=51 width=239) (actual time=0.404..1.030 rows=51 loops=1)
+  Buffers: shared hit=655
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.382..0.382 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169142.83 rows=4306 width=239) (actual time=0.404..1.026 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=655
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169089.01 rows=4306 width=1073) (actual time=0.009..0.171 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 490
+              Buffers: shared hit=550
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.160 ms
+Execution Time: 1.041 ms
+
+===== W50 L6_q_common_en_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..307.73 rows=51 width=239) (actual time=0.340..0.930 rows=51 loops=1)
+  Buffers: shared hit=196
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.322..0.322 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169570.77 rows=28166 width=239) (actual time=0.340..0.928 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=196
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=28166 width=1073) (actual time=0.006..0.127 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+              Rows Removed by Filter: 47
+              Buffers: shared hit=103
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.311 ms
+Execution Time: 0.942 ms
+
+===== W50 L6_q_common_ar_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%أحمد%"]
+Limit  (cost=0.69..263.90 rows=51 width=239) (actual time=0.335..0.854 rows=51 loops=1)
+  Buffers: shared hit=150
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.320..0.320 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169629.53 rows=32867 width=239) (actual time=0.335..0.851 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=150
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=32867 width=1073) (actual time=0.004..0.070 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احمد%'::text) OR (custom_search ~~ '%احمد%'::text)))
+              Rows Removed by Filter: 26
+              Buffers: shared hit=81
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.300 ms
+Execution Time: 0.865 ms
+
+===== W50 L6_q_mid_en_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%cairo%"]
+Limit  (cost=0.69..778.81 rows=51 width=239) (actual time=0.342..1.007 rows=51 loops=1)
+  Buffers: shared hit=328
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.329..0.329 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169357.44 rows=11100 width=239) (actual time=0.342..1.004 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=328
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=11100 width=1073) (actual time=0.003..0.185 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%cairo%'::text) OR (custom_search ~~ '%cairo%'::text)))
+              Rows Removed by Filter: 154
+              Buffers: shared hit=211
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.264 ms
+Execution Time: 1.018 ms
+
+===== W50 L6_q_mid_ar_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%القاهرة%"]
+Limit  (cost=0.69..709.87 rows=51 width=239) (actual time=0.329..1.089 rows=51 loops=1)
+  Buffers: shared hit=362
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.311..0.311 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169370.94 rows=12180 width=239) (actual time=0.329..1.087 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=362
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=12180 width=1073) (actual time=0.008..0.260 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%القاهره%'::text) OR (custom_search ~~ '%القاهره%'::text)))
+              Rows Removed by Filter: 152
+              Buffers: shared hit=209
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.305 ms
+Execution Time: 1.101 ms
+
+===== W50 L6_q_rare_token_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%72c73f%"]
+Limit  (cost=835.70..835.71 rows=5 width=239) (actual time=0.437..0.438 rows=1 loops=1)
+  Buffers: shared hit=21 read=2
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.358..0.359 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=835.44..835.45 rows=5 width=239) (actual time=0.437..0.437 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=21 read=2
+        ->  Result  (cost=73.36..835.38 rows=5 width=239) (actual time=0.434..0.435 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=21 read=2
+              ->  Bitmap Heap Scan on contact  (cost=73.36..835.32 rows=5 width=1073) (actual time=0.058..0.058 rows=1 loops=1)
+                    Recheck Cond: (search_normalized ~~ '%64c9ad%'::text)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid))
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=12 read=2
+                    ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.047..0.047 rows=1 loops=1)
+                          Index Cond: (search_normalized ~~ '%64c9ad%'::text)
+                          Buffers: shared hit=11 read=2
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.158 ms
+Execution Time: 0.452 ms
+
+===== W50 L6_q_rare_token_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ee7b22%"]
+Limit  (cost=2249.40..2249.43 rows=10 width=239) (actual time=3.546..3.550 rows=1 loops=1)
+  Buffers: shared hit=281
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.359..0.360 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=2249.14..2249.17 rows=10 width=239) (actual time=3.539..3.542 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=281
+        ->  Result  (cost=2208.83..2248.98 rows=10 width=239) (actual time=3.520..3.527 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=281
+              ->  Bitmap Heap Scan on contact  (cost=2208.83..2248.85 rows=10 width=1073) (actual time=3.102..3.109 rows=1 loops=1)
+                    Recheck Cond: (((search_normalized ~~ '%1e36fe%'::text) OR (custom_search ~~ '%1e36fe%'::text)) AND (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid))
+                    Filter: (merged_into_id IS NULL)
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=272
+                    ->  BitmapAnd  (cost=2208.83..2208.83 rows=10 width=0) (actual time=3.064..3.066 rows=0 loops=1)
+                          Buffers: shared hit=271
+                          ->  BitmapOr  (cost=954.16..954.16 rows=385 width=0) (actual time=0.034..0.035 rows=0 loops=1)
+                                Buffers: shared hit=22
+                                ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.029..0.030 rows=1 loops=1)
+                                      Index Cond: (search_normalized ~~ '%1e36fe%'::text)
+                                      Buffers: shared hit=13
+                                ->  Bitmap Index Scan on contact_custom_search_trgm  (cost=0.00..880.80 rows=192 width=0) (actual time=0.005..0.005 rows=0 loops=1)
+                                      Index Cond: (custom_search ~~ '%1e36fe%'::text)
+                                      Buffers: shared hit=9
+                          ->  Bitmap Index Scan on ix_c_n1_w50  (cost=0.00..1254.41 rows=51873 width=0) (actual time=2.969..2.969 rows=50000 loops=1)
+                                Buffers: shared hit=249
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.307 ms
+Execution Time: 3.578 ms
+
+===== W50 L6_q_short3_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahm%"]
+Limit  (cost=0.69..1491.99 rows=51 width=239) (actual time=0.335..1.101 rows=51 loops=1)
+  Buffers: shared hit=570
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.315..0.316 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169161.32 rows=5785 width=239) (actual time=0.335..1.097 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=570
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169089.01 rows=5785 width=1073) (actual time=0.007..0.189 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahm%'::text))
+              Rows Removed by Filter: 418
+              Buffers: shared hit=477
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.155 ms
+Execution Time: 1.112 ms
+
+===== W50 L6_q_short3_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahm%"]
+Limit  (cost=0.69..278.96 rows=51 width=239) (actual time=0.358..1.019 rows=51 loops=1)
+  Buffers: shared hit=206
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.341..0.341 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169607.24 rows=31084 width=239) (actual time=0.358..1.016 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=206
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=31084 width=1073) (actual time=0.004..0.096 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahm%'::text) OR (custom_search ~~ '%ahm%'::text)))
+              Rows Removed by Filter: 45
+              Buffers: shared hit=101
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.260 ms
+Execution Time: 1.030 ms
+
+===== W50 L6_q_short2_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ah%"]
+Limit  (cost=0.69..253.09 rows=51 width=239) (actual time=0.355..0.914 rows=51 loops=1)
+  Buffers: shared hit=211
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.341..0.341 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169647.18 rows=34279 width=239) (actual time=0.354..0.911 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=211
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=34279 width=1073) (actual time=0.004..0.081 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ah%'::text) OR (custom_search ~~ '%ah%'::text)))
+              Rows Removed by Filter: 39
+              Buffers: shared hit=94
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.269 ms
+Execution Time: 0.926 ms
+
+===== W50 L6_q_ar3_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%احم%"]
+Limit  (cost=0.69..263.90 rows=51 width=239) (actual time=0.336..0.850 rows=51 loops=1)
+  Buffers: shared hit=150
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.322..0.322 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169629.53 rows=32867 width=239) (actual time=0.335..0.848 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=150
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=32867 width=1073) (actual time=0.004..0.068 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احم%'::text) OR (custom_search ~~ '%احم%'::text)))
+              Rows Removed by Filter: 26
+              Buffers: shared hit=81
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.256 ms
+Execution Time: 0.861 ms
+
+===== W50 L6_q_prefix_common_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","ahm%"]
+Limit  (cost=0.69..2720.33 rows=51 width=239) (actual time=0.329..1.047 rows=51 loops=1)
+  Buffers: shared hit=727
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.303..0.303 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..169258.37 rows=3174 width=239) (actual time=0.328..1.044 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=727
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..169218.69 rows=3174 width=1073) (actual time=0.012..0.308 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ 'ahm%'::text) OR (custom_search ~~ 'ahm%'::text)))
+              Rows Removed by Filter: 549
+              Buffers: shared hit=610
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.268 ms
+Execution Time: 1.059 ms
+
+===== W50 L7_total_q_common_trilp (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Aggregate  (cost=38523.79..38523.80 rows=1 width=4) (actual time=18.769..18.771 rows=1 loops=1)
+  Buffers: shared hit=17556
+  ->  Limit  (cost=0.68..38398.77 rows=10001 width=4) (actual time=0.350..18.456 rows=10001 loops=1)
+        Buffers: shared hit=17556
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.344..0.345 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.41..108141.69 rows=28166 width=4) (actual time=0.349..18.105 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=17556
+              ->  Index Scan using ix_c_c2_w50 on contact  (cost=0.41..108141.69 rows=28166 width=0) (actual time=0.004..17.300 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+                    Rows Removed by Filter: 7443
+                    Buffers: shared hit=17547
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.299 ms
+Execution Time: 18.789 ms
+
+===== W50 L7_total_q_rare_trilp (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%c33490%"]
+Aggregate  (cost=2249.24..2249.25 rows=1 width=4) (actual time=3.248..3.248 rows=1 loops=1)
+  Buffers: shared hit=281
+  ->  Limit  (cost=2209.09..2249.11 rows=10 width=4) (actual time=3.234..3.235 rows=1 loops=1)
+        Buffers: shared hit=281
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.342..0.343 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=2208.83..2248.85 rows=10 width=4) (actual time=3.233..3.234 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=281
+              ->  Bitmap Heap Scan on contact  (cost=2208.83..2248.85 rows=10 width=0) (actual time=2.888..2.889 rows=1 loops=1)
+                    Recheck Cond: (((search_normalized ~~ '%e1e111%'::text) OR (custom_search ~~ '%e1e111%'::text)) AND (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid))
+                    Filter: (merged_into_id IS NULL)
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=272
+                    ->  BitmapAnd  (cost=2208.83..2208.83 rows=10 width=0) (actual time=2.847..2.848 rows=0 loops=1)
+                          Buffers: shared hit=271
+                          ->  BitmapOr  (cost=954.16..954.16 rows=385 width=0) (actual time=0.034..0.035 rows=0 loops=1)
+                                Buffers: shared hit=22
+                                ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.028..0.028 rows=1 loops=1)
+                                      Index Cond: (search_normalized ~~ '%e1e111%'::text)
+                                      Buffers: shared hit=13
+                                ->  Bitmap Index Scan on contact_custom_search_trgm  (cost=0.00..880.80 rows=192 width=0) (actual time=0.006..0.006 rows=0 loops=1)
+                                      Index Cond: (custom_search ~~ '%e1e111%'::text)
+                                      Buffers: shared hit=9
+                          ->  Bitmap Index Scan on ix_c_n1_w50  (cost=0.00..1254.41 rows=51873 width=0) (actual time=2.716..2.716 rows=50000 loops=1)
+                                Buffers: shared hit=249
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.311 ms
+Execution Time: 3.342 ms
+
+===== W50 L6_deal_q_common_trilp (phase D) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0 FROM (SELECT b.*,(SELECT c.search_normalized FROM crm.contact c WHERE c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL) AS related_search FROM crm.deal b) records WHERE tenant_id=$1 AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR related_search LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","%ahmed%"]
+Limit  (cost=0.69..959.67 rows=51 width=203) (actual time=0.806..1.073 rows=51 loops=1)
+  Buffers: shared hit=379
+  InitPlan 3
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.408..0.408 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..518058.81 rows=27551 width=203) (actual time=0.805..1.070 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 3).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=379
+        ->  Index Scan using deal_tenant_created on deal b  (cost=0.42..517921.06 rows=27551 width=171) (actual time=0.393..0.627 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((search_normalized ~~ '%ahmed%'::text) OR ((SubPlan 2) ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 31
+              Buffers: shared hit=370
+              SubPlan 2
+                ->  Result  (cost=0.69..8.71 rows=1 width=21) (actual time=0.007..0.007 rows=1 loops=69)
+                      One-Time Filter: ((InitPlan 1).col1 = b.tenant_id)
+                      Buffers: shared hit=285
+                      InitPlan 1
+                        ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.355..0.355 rows=1 loops=1)
+                              Buffers: shared hit=9
+                      ->  Index Scan using contact_pkey on contact c  (cost=0.69..8.71 rows=1 width=21) (actual time=0.002..0.002 rows=1 loops=69)
+                            Index Cond: ((tenant_id = b.tenant_id) AND (id = b.contact_id))
+                            Filter: (merged_into_id IS NULL)
+                            Buffers: shared hit=276
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.359 ms
+Execution Time: 1.116 ms
+
+===== W1M L6_q_common_en_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..859.17 rows=51 width=239) (actual time=0.351..1.034 rows=51 loops=1)
+  Buffers: shared hit=819
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.328..0.328 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1398619.38 rows=83088 width=239) (actual time=0.351..1.031 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=819
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1397580.78 rows=83088 width=1073) (actual time=0.005..0.208 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 629
+              Buffers: shared hit=690
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.152 ms
+Execution Time: 1.046 ms
+
+===== W1M L6_q_common_en_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..132.70 rows=51 width=239) (actual time=0.342..0.840 rows=51 loops=1)
+  Buffers: shared hit=178
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.331..0.332 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1406877.05 rows=543507 width=239) (actual time=0.342..0.836 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=178
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=543507 width=1073) (actual time=0.005..0.105 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+              Rows Removed by Filter: 42
+              Buffers: shared hit=97
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.290 ms
+Execution Time: 0.852 ms
+
+===== W1M L6_q_common_ar_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%أحمد%"]
+Limit  (cost=0.69..113.91 rows=51 width=239) (actual time=0.353..0.845 rows=51 loops=1)
+  Buffers: shared hit=149
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.331..0.331 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1408010.98 rows=634221 width=239) (actual time=0.352..0.842 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=149
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=634221 width=1073) (actual time=0.006..0.075 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احمد%'::text) OR (custom_search ~~ '%احمد%'::text)))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=92
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.277 ms
+Execution Time: 0.856 ms
+
+===== W1M L6_q_mid_en_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%cairo%"]
+Limit  (cost=0.69..334.69 rows=51 width=239) (actual time=0.366..1.083 rows=51 loops=1)
+  Buffers: shared hit=394
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.349..0.349 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1402760.63 rows=214193 width=239) (actual time=0.365..1.080 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=394
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=214193 width=1073) (actual time=0.013..0.251 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%cairo%'::text) OR (custom_search ~~ '%cairo%'::text)))
+              Rows Removed by Filter: 221
+              Buffers: shared hit=277
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.272 ms
+Execution Time: 1.095 ms
+
+===== W1M L6_q_mid_ar_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%القاهرة%"]
+Limit  (cost=0.69..305.14 rows=51 width=239) (actual time=0.372..1.069 rows=51 loops=1)
+  Buffers: shared hit=276
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.343..0.343 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1403021.08 rows=235029 width=239) (actual time=0.372..1.067 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=276
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=235029 width=1073) (actual time=0.008..0.280 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%القاهره%'::text) OR (custom_search ~~ '%القاهره%'::text)))
+              Rows Removed by Filter: 151
+              Buffers: shared hit=207
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.333 ms
+Execution Time: 1.080 ms
+
+===== W1M L6_q_rare_token_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%4d7c8d%"]
+Limit  (cost=839.85..839.98 rows=51 width=239) (actual time=0.480..0.481 rows=1 loops=1)
+  Buffers: shared hit=23
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.425..0.425 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=839.59..839.83 rows=94 width=239) (actual time=0.479..0.480 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=23
+        ->  Result  (cost=73.39..836.51 rows=94 width=239) (actual time=0.474..0.475 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=23
+              ->  Bitmap Heap Scan on contact  (cost=73.39..835.34 rows=94 width=1073) (actual time=0.034..0.034 rows=1 loops=1)
+                    Recheck Cond: (search_normalized ~~ '%fa5d8e%'::text)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=14
+                    ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.029..0.029 rows=1 loops=1)
+                          Index Cond: (search_normalized ~~ '%fa5d8e%'::text)
+                          Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.241 ms
+Execution Time: 0.494 ms
+
+===== W1M L6_q_rare_token_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%7547e7%"]
+Limit  (cost=2473.41..2473.53 rows=51 width=239) (actual time=0.381..0.382 rows=1 loops=1)
+  Buffers: shared hit=32
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.332..0.332 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=2473.15..2473.62 rows=188 width=239) (actual time=0.381..0.382 rows=1 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=32
+        ->  Result  (cost=954.25..2466.88 rows=188 width=239) (actual time=0.379..0.379 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=32
+              ->  Bitmap Heap Scan on contact  (cost=954.25..2464.53 rows=188 width=1073) (actual time=0.042..0.043 rows=1 loops=1)
+                    Recheck Cond: ((search_normalized ~~ '%fc5c91%'::text) OR (custom_search ~~ '%fc5c91%'::text))
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=23
+                    ->  BitmapOr  (cost=954.25..954.25 rows=385 width=0) (actual time=0.035..0.036 rows=0 loops=1)
+                          Buffers: shared hit=22
+                          ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.032..0.032 rows=1 loops=1)
+                                Index Cond: (search_normalized ~~ '%fc5c91%'::text)
+                                Buffers: shared hit=13
+                          ->  Bitmap Index Scan on contact_custom_search_trgm  (cost=0.00..880.80 rows=192 width=0) (actual time=0.003..0.003 rows=0 loops=1)
+                                Index Cond: (custom_search ~~ '%fc5c91%'::text)
+                                Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.282 ms
+Execution Time: 0.400 ms
+
+===== W1M L6_q_short3_display_only_P1a_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahm%"]
+Limit  (cost=0.69..639.80 rows=51 width=239) (actual time=0.349..1.163 rows=51 loops=1)
+  Buffers: shared hit=777
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.327..0.327 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1398976.23 rows=111636 width=239) (actual time=0.349..1.160 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=777
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1397580.78 rows=111636 width=1073) (actual time=0.005..0.257 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (search_normalized ~~ '%ahm%'::text))
+              Rows Removed by Filter: 564
+              Buffers: shared hit=624
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.204 ms
+Execution Time: 1.175 ms
+
+===== W1M L6_q_short3_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahm%"]
+Limit  (cost=0.69..120.37 rows=51 width=239) (actual time=0.340..0.818 rows=51 loops=1)
+  Buffers: shared hit=178
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.329..0.329 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1407580.96 rows=599820 width=239) (actual time=0.340..0.815 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=178
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=599820 width=1073) (actual time=0.006..0.085 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ahm%'::text) OR (custom_search ~~ '%ahm%'::text)))
+              Rows Removed by Filter: 42
+              Buffers: shared hit=97
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.268 ms
+Execution Time: 0.829 ms
+
+===== W1M L6_q_short2_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ah%"]
+Limit  (cost=0.69..109.27 rows=51 width=239) (actual time=0.350..0.821 rows=51 loops=1)
+  Buffers: shared hit=168
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.339..0.339 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1408351.53 rows=661465 width=239) (actual time=0.350..0.818 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=168
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=661465 width=1073) (actual time=0.005..0.082 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%ah%'::text) OR (custom_search ~~ '%ah%'::text)))
+              Rows Removed by Filter: 33
+              Buffers: shared hit=87
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.291 ms
+Execution Time: 0.832 ms
+
+===== W1M L6_q_ar3_display_plus_custom_search_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%احم%"]
+Limit  (cost=0.69..113.91 rows=51 width=239) (actual time=0.344..0.843 rows=51 loops=1)
+  Buffers: shared hit=149
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.319..0.319 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1408010.98 rows=634221 width=239) (actual time=0.344..0.841 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=149
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=634221 width=1073) (actual time=0.007..0.081 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ '%احم%'::text) OR (custom_search ~~ '%احم%'::text)))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=92
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.284 ms
+Execution Time: 0.855 ms
+
+===== W1M L6_q_prefix_common_trilp (phase D) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","ahm%"]
+Limit  (cost=0.69..1167.28 rows=51 width=239) (actual time=0.349..1.250 rows=51 loops=1)
+  Buffers: shared hit=891
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.337..0.338 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1400848.73 rows=61241 width=239) (actual time=0.348..1.247 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=891
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1400083.21 rows=61241 width=1073) (actual time=0.006..0.484 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND ((search_normalized ~~ 'ahm%'::text) OR (custom_search ~~ 'ahm%'::text)))
+              Rows Removed by Filter: 748
+              Buffers: shared hit=810
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.259 ms
+Execution Time: 1.262 ms
+
+===== W1M L7_total_q_common_trilp (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Aggregate  (cost=7893.16..7893.17 rows=1 width=4) (actual time=28.756..28.757 rows=1 loops=1)
+  Buffers: shared hit=132 read=5922
+  ->  Limit  (cost=0.26..7768.15 rows=10001 width=4) (actual time=0.341..28.431 rows=10001 loops=1)
+        Buffers: shared hit=132 read=5922
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.334..0.334 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.00..422147.86 rows=543507 width=4) (actual time=0.341..28.092 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=132 read=5922
+              ->  Seq Scan on contact  (cost=0.00..422147.86 rows=543507 width=0) (actual time=0.006..27.292 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND ((search_normalized ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text)))
+                    Rows Removed by Filter: 22149
+                    Buffers: shared hit=123 read=5922
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.301 ms
+Execution Time: 28.793 ms
+
+===== W1M L7_total_q_rare_trilp (phase D) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%c099d2%"]
+Aggregate  (cost=2467.14..2467.15 rows=1 width=4) (actual time=0.367..0.368 rows=1 loops=1)
+  Buffers: shared hit=32
+  ->  Limit  (cost=954.51..2464.79 rows=188 width=4) (actual time=0.366..0.366 rows=1 loops=1)
+        Buffers: shared hit=32
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.329..0.329 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=954.25..2464.53 rows=188 width=4) (actual time=0.365..0.366 rows=1 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=32
+              ->  Bitmap Heap Scan on contact  (cost=954.25..2464.53 rows=188 width=0) (actual time=0.036..0.036 rows=1 loops=1)
+                    Recheck Cond: ((search_normalized ~~ '%6cec6f%'::text) OR (custom_search ~~ '%6cec6f%'::text))
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))
+                    Heap Blocks: exact=1
+                    Buffers: shared hit=23
+                    ->  BitmapOr  (cost=954.25..954.25 rows=385 width=0) (actual time=0.030..0.031 rows=0 loops=1)
+                          Buffers: shared hit=22
+                          ->  Bitmap Index Scan on contact_search_trgm  (cost=0.00..73.36 rows=193 width=0) (actual time=0.027..0.027 rows=1 loops=1)
+                                Index Cond: (search_normalized ~~ '%6cec6f%'::text)
+                                Buffers: shared hit=13
+                          ->  Bitmap Index Scan on contact_custom_search_trgm  (cost=0.00..880.80 rows=192 width=0) (actual time=0.003..0.003 rows=0 loops=1)
+                                Index Cond: (custom_search ~~ '%6cec6f%'::text)
+                                Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=2
+Planning Time: 0.267 ms
+Execution Time: 0.387 ms
+
+===== W1M L6_deal_q_common_trilp (phase D) =====
+SELECT tenant_id,id,contact_id,pipeline_id,stage_id,owner_id,version,lead_id,title,amount_minor,currency,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0 FROM (SELECT b.*,(SELECT c.search_normalized FROM crm.contact c WHERE c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL) AS related_search FROM crm.deal b) records WHERE tenant_id=$1 AND (search_normalized LIKE crm.normalize_search($2::text) ESCAPE '\' OR related_search LIKE crm.normalize_search($2::text) ESCAPE '\' OR custom_search LIKE crm.normalize_search($2::text) ESCAPE '\') ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","%ahmed%"]
+Limit  (cost=0.69..862.16 rows=51 width=203) (actual time=0.677..0.921 rows=51 loops=1)
+  Buffers: shared hit=414
+  InitPlan 3
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.374..0.374 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.42..4615302.63 rows=273229 width=203) (actual time=0.677..0.918 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 3).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=414
+        ->  Index Scan using deal_tenant_created on deal b  (cost=0.42..4613936.48 rows=273229 width=171) (actual time=0.299..0.511 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((search_normalized ~~ '%ahmed%'::text) OR ((SubPlan 2) ~~ '%ahmed%'::text) OR (custom_search ~~ '%ahmed%'::text))
+              Rows Removed by Filter: 37
+              Buffers: shared hit=405
+              SubPlan 2
+                ->  Result  (cost=0.69..8.71 rows=1 width=21) (actual time=0.005..0.005 rows=1 loops=76)
+                      One-Time Filter: ((InitPlan 1).col1 = b.tenant_id)
+                      Buffers: shared hit=313
+                      InitPlan 1
+                        ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.290..0.290 rows=1 loops=1)
+                              Buffers: shared hit=9
+                      ->  Index Scan using contact_pkey on contact c  (cost=0.69..8.71 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=76)
+                            Index Cond: ((tenant_id = b.tenant_id) AND (id = b.contact_id))
+                            Filter: (merged_into_id IS NULL)
+                            Buffers: shared hit=304
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.328 ms
+Execution Time: 0.937 ms

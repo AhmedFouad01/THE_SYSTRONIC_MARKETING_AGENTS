@@ -1,0 +1,9812 @@
+{
+ "A:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T20:04:39.169Z"
+ },
+ "A:indexes:A_baseline": {
+  "idx": [
+   {
+    "relname": "contact_pkey",
+    "bytes": "137453568",
+    "pretty": "131 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_normalized",
+    "bytes": "219176960",
+    "pretty": "209 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_created",
+    "bytes": "163733504",
+    "pretty": "156 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_owner_created",
+    "bytes": "215810048",
+    "pretty": "206 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "deal_pkey",
+    "bytes": "35708928",
+    "pretty": "34 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_normalized",
+    "bytes": "60735488",
+    "pretty": "58 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_created",
+    "bytes": "42024960",
+    "pretty": "40 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_owner_created",
+    "bytes": "54992896",
+    "pretty": "52 MB",
+    "tbl": "deal"
+   }
+  ],
+  "heap": [
+   {
+    "relname": "contact",
+    "heap": "3314745344",
+    "toast": "473702400",
+    "idx": "736174080",
+    "n_live": 0
+   },
+   {
+    "relname": "deal",
+    "heap": "842801152",
+    "toast": "157220864",
+    "idx": "193462272",
+    "n_live": 0
+   }
+  ]
+ },
+ "A:timing:validate_contact_custom_check_2M": {
+  "ms": 1
+ },
+ "A:timing:validate_deal_custom_check": {
+  "ms": 0
+ },
+ "A:insert_throughput:A_baseline_P1a_indexes_only": {
+  "rows": 100000,
+  "ms": 5953,
+  "rows_per_s": 16799
+ },
+ "A:W50:L1_default_first": {
+  "tier": "W50",
+  "name": "L1_default_first",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 3.7,
+    "max": 4.7
+   },
+   {
+    "p50": 2.5,
+    "p95": 3.4,
+    "max": 4.7
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.1,
+    "max": 4
+   }
+  ],
+  "p50": 2.5,
+  "p95": 3.4,
+  "max": 4.7,
+  "cold": 27.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L1_default_cursor_orchain": {
+  "tier": "W50",
+  "name": "L1_default_cursor_orchain",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 10.9,
+    "p95": 20.7,
+    "max": 42.8
+   },
+   {
+    "p50": 13.6,
+    "p95": 20.8,
+    "max": 21.5
+   },
+   {
+    "p50": 11.9,
+    "p95": 20,
+    "max": 20.7
+   }
+  ],
+  "p50": 11.9,
+  "p95": 20.7,
+  "max": 42.8,
+  "cold": 139.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L1_default_cursor_deep_orchain": {
+  "tier": "W50",
+  "name": "L1_default_cursor_deep_orchain",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 12.3,
+    "p95": 13.8,
+    "max": 15.3
+   },
+   {
+    "p50": 12.2,
+    "p95": 13.9,
+    "max": 15
+   },
+   {
+    "p50": 12.1,
+    "p95": 13.9,
+    "max": 18.1
+   }
+  ],
+  "p50": 12.2,
+  "p95": 13.9,
+  "max": 18.1,
+  "cold": 53.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L1_default_cursor_deep_rowvalue": {
+  "tier": "W50",
+  "name": "L1_default_cursor_deep_rowvalue",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.6,
+    "p95": 3.2,
+    "max": 4.5
+   },
+   {
+    "p50": 2.3,
+    "p95": 3,
+    "max": 7
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.8,
+    "max": 3
+   }
+  ],
+  "p50": 2.3,
+  "p95": 3,
+  "max": 7,
+  "cold": 12.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L2_contact_owner_source": {
+  "tier": "W50",
+  "name": "L2_contact_owner_source",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.8,
+    "p95": 3.5,
+    "max": 3.8
+   },
+   {
+    "p50": 2.5,
+    "p95": 3.2,
+    "max": 6.3
+   },
+   {
+    "p50": 2.5,
+    "p95": 3,
+    "max": 3.6
+   }
+  ],
+  "p50": 2.5,
+  "p95": 3.2,
+  "max": 6.3,
+  "cold": 13.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L2_rep_scope_default": {
+  "tier": "W50",
+  "name": "L2_rep_scope_default",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.6,
+    "p95": 3,
+    "max": 4.6
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.1,
+    "max": 7.6
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.9,
+    "max": 3.3
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3,
+  "max": 7.6,
+  "cold": 11.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L2_deal_stage_owner": {
+  "tier": "W50",
+  "name": "L2_deal_stage_owner",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 5.1,
+    "max": 6
+   },
+   {
+    "p50": 2.5,
+    "p95": 3.3,
+    "max": 5.9
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.1,
+    "max": 3.4
+   }
+  ],
+  "p50": 2.5,
+  "p95": 3.3,
+  "max": 6,
+  "cold": 13.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L1_deal_default_first": {
+  "tier": "W50",
+  "name": "L1_deal_default_first",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.1,
+    "max": 4.7
+   },
+   {
+    "p50": 2.4,
+    "p95": 3,
+    "max": 3.2
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.4
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3,
+  "max": 4.7,
+  "cold": 15.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L2_deal_rep_scope": {
+  "tier": "W50",
+  "name": "L2_deal_rep_scope",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.1,
+    "max": 3.4
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.4
+   },
+   {
+    "p50": 2.4,
+    "p95": 3,
+    "max": 4
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3,
+  "max": 4,
+  "cold": 11.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L7_total_unfiltered": {
+  "tier": "W50",
+  "name": "L7_total_unfiltered",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 10.1,
+    "p95": 11.5,
+    "max": 11.7
+   },
+   {
+    "p50": 9.9,
+    "p95": 10.7,
+    "max": 12.7
+   },
+   {
+    "p50": 10,
+    "p95": 10.8,
+    "max": 12.1
+   }
+  ],
+  "p50": 10,
+  "p95": 10.8,
+  "max": 12.7,
+  "cold": 34.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L3_select_eq_random": {
+  "tier": "W50",
+  "name": "L3_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 15.3,
+    "p95": 20.9,
+    "max": 26.8
+   },
+   {
+    "p50": 13.1,
+    "p95": 19.2,
+    "max": 21.9
+   },
+   {
+    "p50": 13.1,
+    "p95": 21.6,
+    "max": 23.1
+   }
+  ],
+  "p50": 13.1,
+  "p95": 20.9,
+  "max": 26.8,
+  "cold": 32.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_select_eq_common": {
+  "tier": "W50",
+  "name": "L3_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.9,
+    "p95": 4.6,
+    "max": 4.9
+   },
+   {
+    "p50": 4,
+    "p95": 4.6,
+    "max": 5.1
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 4.7
+   }
+  ],
+  "p50": 3.9,
+  "p95": 4.6,
+  "max": 5.1,
+  "cold": 13.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_select_eq_rare": {
+  "tier": "W50",
+  "name": "L3_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 19.6,
+    "p95": 20.6,
+    "max": 23.4
+   },
+   {
+    "p50": 19.9,
+    "p95": 21.1,
+    "max": 22.3
+   },
+   {
+    "p50": 19.7,
+    "p95": 21.4,
+    "max": 24.1
+   }
+  ],
+  "p50": 19.7,
+  "p95": 21.1,
+  "max": 24.1,
+  "cold": 36.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_multi_has_any": {
+  "tier": "W50",
+  "name": "L3_multi_has_any",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.4,
+    "p95": 6.3,
+    "max": 6.8
+   },
+   {
+    "p50": 5,
+    "p95": 5.8,
+    "max": 7.5
+   },
+   {
+    "p50": 5,
+    "p95": 6.1,
+    "max": 6.8
+   }
+  ],
+  "p50": 5,
+  "p95": 6.1,
+  "max": 7.5,
+  "cold": 13.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_multi_has_all": {
+  "tier": "W50",
+  "name": "L3_multi_has_all",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 29.4,
+    "p95": 39.8,
+    "max": 44.7
+   },
+   {
+    "p50": 25.4,
+    "p95": 38.9,
+    "max": 50.1
+   },
+   {
+    "p50": 26.4,
+    "p95": 39.4,
+    "max": 44.1
+   }
+  ],
+  "p50": 26.4,
+  "p95": 39.4,
+  "max": 50.1,
+  "cold": 74.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_checkbox_c1_true": {
+  "tier": "W50",
+  "name": "L3_checkbox_c1_true",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.1,
+    "p95": 4.9,
+    "max": 5.3
+   },
+   {
+    "p50": 4,
+    "p95": 4.7,
+    "max": 5.6
+   },
+   {
+    "p50": 4,
+    "p95": 4.7,
+    "max": 5.4
+   }
+  ],
+  "p50": 4,
+  "p95": 4.7,
+  "max": 5.6,
+  "cold": 15.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_checkbox_c2_true_rare": {
+  "tier": "W50",
+  "name": "L3_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9.5,
+    "p95": 10.3,
+    "max": 12.2
+   },
+   {
+    "p50": 9.4,
+    "p95": 10,
+    "max": 10.3
+   },
+   {
+    "p50": 9.4,
+    "p95": 10.2,
+    "max": 10.7
+   }
+  ],
+  "p50": 9.4,
+  "p95": 10.2,
+  "max": 12.2,
+  "cold": 21.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_two_conditions_s1_and_c2": {
+  "tier": "W50",
+  "name": "L3_two_conditions_s1_and_c2",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 205.5,
+    "p95": 220.3,
+    "max": 241.9
+   },
+   {
+    "p50": 203.1,
+    "p95": 211.6,
+    "max": 221.2
+   },
+   {
+    "p50": 201,
+    "p95": 211.3,
+    "max": 213.6
+   }
+  ],
+  "p50": 203.1,
+  "p95": 211.6,
+  "max": 241.9,
+  "cold": 186.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_multi_has_any_questionbar_NOT_INDEXABLE": {
+  "tier": "W50",
+  "name": "L3_multi_has_any_questionbar_NOT_INDEXABLE",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 4.8,
+    "p95": 5.3,
+    "max": 5.5
+   },
+   {
+    "p50": 4.3,
+    "p95": 5.1,
+    "max": 5.2
+   },
+   {
+    "p50": 4,
+    "p95": 4.7,
+    "max": 6.1
+   }
+  ],
+  "p50": 4.3,
+  "p95": 5.1,
+  "max": 6.1,
+  "cold": 27.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L3_deal_select_eq_random": {
+  "tier": "W50",
+  "name": "L3_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 14.8,
+    "p95": 20.2,
+    "max": 21.2
+   },
+   {
+    "p50": 14.4,
+    "p95": 19.8,
+    "max": 20.6
+   },
+   {
+    "p50": 14.7,
+    "p95": 20.3,
+    "max": 21.7
+   }
+  ],
+  "p50": 14.7,
+  "p95": 20.2,
+  "max": 21.7,
+  "cold": 48.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L7_total_select_eq_common": {
+  "tier": "W50",
+  "name": "L7_total_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 217.5,
+    "p95": 231.7,
+    "max": 239.9
+   },
+   {
+    "p50": 215.4,
+    "p95": 227.9,
+    "max": 231.7
+   },
+   {
+    "p50": 248.3,
+    "p95": 252.6,
+    "max": 266
+   }
+  ],
+  "p50": 217.5,
+  "p95": 231.7,
+  "max": 266,
+  "cold": 276.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L7_total_select_eq_rare": {
+  "tier": "W50",
+  "name": "L7_total_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 248.3,
+    "p95": 254.4,
+    "max": 256.9
+   },
+   {
+    "p50": 247.2,
+    "p95": 252.3,
+    "max": 258.7
+   },
+   {
+    "p50": 247.5,
+    "p95": 253.8,
+    "max": 256.2
+   }
+  ],
+  "p50": 247.5,
+  "p95": 253.8,
+  "max": 258.7,
+  "cold": 300.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L4_sort_n1_asc_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_asc_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 701.4,
+    "p95": 709.9,
+    "max": 709.9
+   },
+   {
+    "p50": 702.9,
+    "p95": 724.4,
+    "max": 724.4
+   },
+   {
+    "p50": 699.1,
+    "p95": 714,
+    "max": 714
+   }
+  ],
+  "p50": 701.4,
+  "p95": 714,
+  "max": 724.4,
+  "cold": 758,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L4_sort_n1_desc_nullslast_compilerform_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_desc_nullslast_compilerform_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 699.5,
+    "p95": 704.4,
+    "max": 704.4
+   },
+   {
+    "p50": 698.2,
+    "p95": 712.5,
+    "max": 712.5
+   },
+   {
+    "p50": 698.8,
+    "p95": 711.2,
+    "max": 711.2
+   }
+  ],
+  "p50": 698.8,
+  "p95": 711.2,
+  "max": 712.5,
+  "cold": 758.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L4_sort_d1_asc_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_d1_asc_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 689.6,
+    "p95": 703.3,
+    "max": 703.3
+   },
+   {
+    "p50": 687.4,
+    "p95": 695.3,
+    "max": 695.3
+   },
+   {
+    "p50": 691.1,
+    "p95": 699.1,
+    "max": 699.1
+   }
+  ],
+  "p50": 689.6,
+  "p95": 699.1,
+  "max": 703.3,
+  "cold": 732.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L4_sort_t1_asc_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_t1_asc_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 687.3,
+    "p95": 710.3,
+    "max": 710.3
+   },
+   {
+    "p50": 687,
+    "p95": 707,
+    "max": 707
+   },
+   {
+    "p50": 694.2,
+    "p95": 704.4,
+    "max": 704.4
+   }
+  ],
+  "p50": 687.3,
+  "p95": 707,
+  "max": 710.3,
+  "cold": 745.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L4_sort_s1_option_position_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_s1_option_position_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 633.9,
+    "p95": 664.4,
+    "max": 664.4
+   },
+   {
+    "p50": 633.9,
+    "p95": 640.8,
+    "max": 640.8
+   },
+   {
+    "p50": 633.5,
+    "p95": 644.5,
+    "max": 644.5
+   }
+  ],
+  "p50": 633.9,
+  "p95": 644.5,
+  "max": 664.4,
+  "cold": 685.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L4b_range_n1_between_noidx": {
+  "tier": "W50",
+  "name": "L4b_range_n1_between_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 304.5,
+    "p95": 334.1,
+    "max": 334.1
+   },
+   {
+    "p50": 309.2,
+    "p95": 328.6,
+    "max": 328.6
+   },
+   {
+    "p50": 308.2,
+    "p95": 339.4,
+    "max": 339.4
+   }
+  ],
+  "p50": 308.2,
+  "p95": 334.1,
+  "max": 339.4,
+  "cold": 356.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 2
+ },
+ "A:W50:L4_sort_deal_n1_asc_noidx": {
+  "tier": "W50",
+  "name": "L4_sort_deal_n1_asc_noidx",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 671,
+    "p95": 676.3,
+    "max": 676.3
+   },
+   {
+    "p50": 671.9,
+    "p95": 685.6,
+    "max": 685.6
+   },
+   {
+    "p50": 669.4,
+    "p95": 677.8,
+    "max": 677.8
+   }
+  ],
+  "p50": 671,
+  "p95": 677.8,
+  "max": 685.6,
+  "cold": 816.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_common_en_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.9,
+    "p95": 4.6,
+    "max": 4.6
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.4,
+    "max": 4.4
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 3.9
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.4,
+  "max": 4.6,
+  "cold": 29.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_common_en_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 3.9
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.7,
+    "max": 3.7
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 3.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.7,
+  "max": 3.9,
+  "cold": 13.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_common_ar_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_common_ar_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 62.5,
+    "p95": 65.3,
+    "max": 65.3
+   },
+   {
+    "p50": 62.7,
+    "p95": 68,
+    "max": 68
+   },
+   {
+    "p50": 63,
+    "p95": 64.8,
+    "max": 64.8
+   }
+  ],
+  "p50": 62.7,
+  "p95": 65.3,
+  "max": 68,
+  "cold": 144.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_common_ar_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_common_ar_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 328.1,
+    "p95": 337.9,
+    "max": 337.9
+   },
+   {
+    "p50": 326.9,
+    "p95": 336.4,
+    "max": 336.4
+   },
+   {
+    "p50": 324.7,
+    "p95": 337.6,
+    "max": 337.6
+   }
+  ],
+  "p50": 326.9,
+  "p95": 337.6,
+  "max": 337.9,
+  "cold": 388.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_mid_en_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_mid_en_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 5.5,
+    "p95": 6.1,
+    "max": 6.1
+   },
+   {
+    "p50": 5.4,
+    "p95": 6,
+    "max": 6
+   },
+   {
+    "p50": 5.3,
+    "p95": 6.1,
+    "max": 6.1
+   }
+  ],
+  "p50": 5.4,
+  "p95": 6.1,
+  "max": 6.1,
+  "cold": 34.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_mid_en_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_mid_en_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.6,
+    "p95": 4.1,
+    "max": 4.1
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.7,
+    "max": 4.7
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.7,
+    "max": 3.7
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.1,
+  "max": 4.7,
+  "cold": 13.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_mid_ar_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_mid_ar_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 30.4,
+    "p95": 33.6,
+    "max": 33.6
+   },
+   {
+    "p50": 29.8,
+    "p95": 31.7,
+    "max": 31.7
+   },
+   {
+    "p50": 29.7,
+    "p95": 31.7,
+    "max": 31.7
+   }
+  ],
+  "p50": 29.8,
+  "p95": 31.7,
+  "max": 33.6,
+  "cold": 64.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_mid_ar_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_mid_ar_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 184.1,
+    "p95": 186.7,
+    "max": 186.7
+   },
+   {
+    "p50": 184.1,
+    "p95": 198.6,
+    "max": 198.6
+   },
+   {
+    "p50": 187.6,
+    "p95": 203.8,
+    "max": 203.8
+   }
+  ],
+  "p50": 184.1,
+  "p95": 198.6,
+  "max": 203.8,
+  "cold": 225.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_rare_token_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 21.5,
+    "p95": 23.2,
+    "max": 23.2
+   },
+   {
+    "p50": 21.4,
+    "p95": 23.8,
+    "max": 23.8
+   },
+   {
+    "p50": 20.9,
+    "p95": 22.6,
+    "max": 22.6
+   }
+  ],
+  "p50": 21.4,
+  "p95": 23.2,
+  "max": 23.8,
+  "cold": 55.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L6_q_rare_token_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 55.1,
+    "p95": 67.6,
+    "max": 67.6
+   },
+   {
+    "p50": 54.3,
+    "p95": 58.7,
+    "max": 58.7
+   },
+   {
+    "p50": 56,
+    "p95": 58.2,
+    "max": 58.2
+   }
+  ],
+  "p50": 55.1,
+  "p95": 58.7,
+  "max": 67.6,
+  "cold": 91.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L6_q_short3_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.5,
+    "max": 4.5
+   },
+   {
+    "p50": 3.6,
+    "p95": 5.2,
+    "max": 5.2
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.5,
+  "max": 5.2,
+  "cold": 14.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_short3_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.2,
+    "max": 4.2
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.6,
+    "max": 3.6
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4,
+  "max": 4.2,
+  "cold": 12.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_short2_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_short2_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4
+   }
+  ],
+  "p50": 3.4,
+  "p95": 3.8,
+  "max": 4,
+  "cold": 12.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_ar3_display_only_P1a_notri": {
+  "tier": "W50",
+  "name": "L6_q_ar3_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 62.2,
+    "p95": 63.9,
+    "max": 63.9
+   },
+   {
+    "p50": 62.7,
+    "p95": 67.1,
+    "max": 67.1
+   },
+   {
+    "p50": 62.4,
+    "p95": 65.5,
+    "max": 65.5
+   }
+  ],
+  "p50": 62.4,
+  "p95": 65.5,
+  "max": 67.1,
+  "cold": 98.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_ar3_display_plus_custom_search_notri": {
+  "tier": "W50",
+  "name": "L6_q_ar3_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 326.9,
+    "p95": 357.4,
+    "max": 357.4
+   },
+   {
+    "p50": 328.4,
+    "p95": 364.2,
+    "max": 364.2
+   },
+   {
+    "p50": 325.9,
+    "p95": 333.2,
+    "max": 333.2
+   }
+  ],
+  "p50": 326.9,
+  "p95": 357.4,
+  "max": 364.2,
+  "cold": 384.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L6_q_prefix_common_notri": {
+  "tier": "W50",
+  "name": "L6_q_prefix_common_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 4.3,
+    "p95": 4.7,
+    "max": 4.7
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.3,
+    "max": 4.3
+   },
+   {
+    "p50": 3.4,
+    "p95": 3.9,
+    "max": 3.9
+   }
+  ],
+  "p50": 3.7,
+  "p95": 4.3,
+  "max": 4.7,
+  "cold": 27.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:L7_total_q_common_notri": {
+  "tier": "W50",
+  "name": "L7_total_q_common_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 23.4,
+    "p95": 23.8,
+    "max": 23.8
+   },
+   {
+    "p50": 23,
+    "p95": 25.3,
+    "max": 25.3
+   },
+   {
+    "p50": 23,
+    "p95": 25.3,
+    "max": 25.3
+   }
+  ],
+  "p50": 23,
+  "p95": 25.3,
+  "max": 25.3,
+  "cold": 40.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L7_total_q_rare_notri": {
+  "tier": "W50",
+  "name": "L7_total_q_rare_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 55.5,
+    "p95": 67.9,
+    "max": 67.9
+   },
+   {
+    "p50": 56,
+    "p95": 67.2,
+    "max": 67.2
+   },
+   {
+    "p50": 55.1,
+    "p95": 62,
+    "max": 62
+   }
+  ],
+  "p50": 55.5,
+  "p95": 67.2,
+  "max": 67.9,
+  "cold": 89.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:L6_deal_q_common_notri": {
+  "tier": "W50",
+  "name": "L6_deal_q_common_notri",
+  "runs": 30,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.2,
+    "max": 4.2
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.1,
+    "max": 4.1
+   },
+   {
+    "p50": 3.6,
+    "p95": 4,
+    "max": 4
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.1,
+  "max": 4.2,
+  "cold": 17.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W50:R_get_with_properties_baseline": {
+  "tier": "W50",
+  "name": "R_get_with_properties_baseline",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4,
+    "p95": 5,
+    "max": 5.9
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.3,
+    "max": 5
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.3,
+  "max": 5.9,
+  "cold": 24,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 0
+ },
+ "A:W50:R_patch_5props_baseline": {
+  "tier": "W50",
+  "name": "R_patch_5props_baseline",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 6.8,
+    "p95": 7.5,
+    "max": 9.4
+   },
+   {
+    "p50": 6.8,
+    "p95": 7.9,
+    "max": 8.6
+   },
+   {
+    "p50": 6.8,
+    "p95": 7.5,
+    "max": 8.3
+   }
+  ],
+  "p50": 6.8,
+  "p95": 7.5,
+  "max": 9.4,
+  "cold": 35.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W50:R_patch_20_concurrent_baseline": {
+  "tier": "W50",
+  "name": "R_patch_20_concurrent_baseline",
+  "runs": 600,
+  "p50": 15.9,
+  "p95": 22.4,
+  "max": 112.9,
+  "errors": 0,
+  "throughput_per_s": 866.5
+ },
+ "A:W1M:L1_default_first": {
+  "tier": "W1M",
+  "name": "L1_default_first",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.2,
+    "max": 3.5
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.1,
+    "max": 3.9
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.8,
+    "max": 3.1
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3.1,
+  "max": 3.9,
+  "cold": 11.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L1_default_cursor_orchain": {
+  "tier": "W1M",
+  "name": "L1_default_cursor_orchain",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 2551.1,
+    "p95": 4442.5,
+    "max": 4442.5
+   },
+   {
+    "p50": 2963,
+    "p95": 3773.7,
+    "max": 3773.7
+   },
+   {
+    "p50": 3379.6,
+    "p95": 5017.5,
+    "max": 5017.5
+   }
+  ],
+  "p50": 2963,
+  "p95": 4442.5,
+  "max": 5017.5,
+  "cold": 4720,
+  "errors": 2,
+  "timeouts": 2,
+  "rows": 51
+ },
+ "A:W1M:L1_default_cursor_deep_orchain": {
+  "tier": "W1M",
+  "name": "L1_default_cursor_deep_orchain",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 2944.5,
+    "p95": 3163.2,
+    "max": 3163.2
+   },
+   {
+    "p50": 2928.9,
+    "p95": 3173.7,
+    "max": 3173.7
+   },
+   {
+    "p50": 2939.8,
+    "p95": 3348.6,
+    "max": 3348.6
+   }
+  ],
+  "p50": 2939.8,
+  "p95": 3173.7,
+  "max": 3348.6,
+  "cold": 2779.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L1_default_cursor_deep_rowvalue": {
+  "tier": "W1M",
+  "name": "L1_default_cursor_deep_rowvalue",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.2,
+    "max": 3.6
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.7
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.8,
+    "max": 3.2
+   }
+  ],
+  "p50": 2.3,
+  "p95": 2.9,
+  "max": 3.7,
+  "cold": 23.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L2_contact_owner_source": {
+  "tier": "W1M",
+  "name": "L2_contact_owner_source",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 6.6,
+    "max": 8
+   },
+   {
+    "p50": 2.5,
+    "p95": 3.5,
+    "max": 4.7
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.9,
+    "max": 4.4
+   }
+  ],
+  "p50": 2.5,
+  "p95": 3.5,
+  "max": 8,
+  "cold": 13.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L2_rep_scope_default": {
+  "tier": "W1M",
+  "name": "L2_rep_scope_default",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.1,
+    "max": 4
+   },
+   {
+    "p50": 2.3,
+    "p95": 3,
+    "max": 3.4
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.9,
+    "max": 3.5
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3,
+  "max": 4,
+  "cold": 11.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L2_deal_stage_owner": {
+  "tier": "W1M",
+  "name": "L2_deal_stage_owner",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.3,
+    "p95": 6.7,
+    "max": 8.2
+   },
+   {
+    "p50": 2.5,
+    "p95": 3,
+    "max": 3.4
+   },
+   {
+    "p50": 2.4,
+    "p95": 3,
+    "max": 3.2
+   }
+  ],
+  "p50": 2.5,
+  "p95": 3,
+  "max": 8.2,
+  "cold": 13.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L1_deal_default_first": {
+  "tier": "W1M",
+  "name": "L1_deal_default_first",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3,
+    "max": 3.4
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.8,
+    "max": 3
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.8,
+    "max": 3.5
+   }
+  ],
+  "p50": 2.4,
+  "p95": 2.8,
+  "max": 3.5,
+  "cold": 19.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L2_deal_rep_scope": {
+  "tier": "W1M",
+  "name": "L2_deal_rep_scope",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 2.9,
+    "max": 3.1
+   },
+   {
+    "p50": 2.3,
+    "p95": 3,
+    "max": 3.1
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.8,
+    "max": 3.4
+   }
+  ],
+  "p50": 2.4,
+  "p95": 2.9,
+  "max": 3.4,
+  "cold": 11.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L7_total_unfiltered": {
+  "tier": "W1M",
+  "name": "L7_total_unfiltered",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 10.4,
+    "p95": 15.4,
+    "max": 550.1
+   },
+   {
+    "p50": 9.8,
+    "p95": 14.7,
+    "max": 495.6
+   },
+   {
+    "p50": 9.6,
+    "p95": 14.6,
+    "max": 427.1
+   }
+  ],
+  "p50": 9.8,
+  "p95": 14.7,
+  "max": 550.1,
+  "cold": 21.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:L3_select_eq_random": {
+  "tier": "W1M",
+  "name": "L3_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 15,
+    "p95": 19.3,
+    "max": 22.6
+   },
+   {
+    "p50": 13.7,
+    "p95": 19.5,
+    "max": 21.7
+   },
+   {
+    "p50": 13.1,
+    "p95": 18.9,
+    "max": 20.8
+   }
+  ],
+  "p50": 13.7,
+  "p95": 19.3,
+  "max": 22.6,
+  "cold": 34.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_select_eq_common": {
+  "tier": "W1M",
+  "name": "L3_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.5,
+    "p95": 5.3,
+    "max": 5.7
+   },
+   {
+    "p50": 4.5,
+    "p95": 5.1,
+    "max": 5.4
+   },
+   {
+    "p50": 4.4,
+    "p95": 5.1,
+    "max": 6
+   }
+  ],
+  "p50": 4.5,
+  "p95": 5.1,
+  "max": 6,
+  "cold": 13.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_select_eq_rare": {
+  "tier": "W1M",
+  "name": "L3_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 17.9,
+    "p95": 19.8,
+    "max": 23.2
+   },
+   {
+    "p50": 17.9,
+    "p95": 19.4,
+    "max": 20.6
+   },
+   {
+    "p50": 17.9,
+    "p95": 19,
+    "max": 19.8
+   }
+  ],
+  "p50": 17.9,
+  "p95": 19.4,
+  "max": 23.2,
+  "cold": 33.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_multi_has_any": {
+  "tier": "W1M",
+  "name": "L3_multi_has_any",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.4,
+    "p95": 6.4,
+    "max": 7.8
+   },
+   {
+    "p50": 5.3,
+    "p95": 6.3,
+    "max": 7.4
+   },
+   {
+    "p50": 5.5,
+    "p95": 6.5,
+    "max": 6.8
+   }
+  ],
+  "p50": 5.4,
+  "p95": 6.4,
+  "max": 7.8,
+  "cold": 15.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_multi_has_all": {
+  "tier": "W1M",
+  "name": "L3_multi_has_all",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 25.2,
+    "p95": 41.7,
+    "max": 96.4
+   },
+   {
+    "p50": 28.6,
+    "p95": 41.4,
+    "max": 50
+   },
+   {
+    "p50": 27.8,
+    "p95": 42.1,
+    "max": 45.1
+   }
+  ],
+  "p50": 27.8,
+  "p95": 41.7,
+  "max": 96.4,
+  "cold": 35.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_checkbox_c1_true": {
+  "tier": "W1M",
+  "name": "L3_checkbox_c1_true",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.3,
+    "p95": 5,
+    "max": 5.2
+   },
+   {
+    "p50": 4.4,
+    "p95": 4.9,
+    "max": 5.2
+   },
+   {
+    "p50": 4.3,
+    "p95": 4.9,
+    "max": 5.6
+   }
+  ],
+  "p50": 4.3,
+  "p95": 4.9,
+  "max": 5.6,
+  "cold": 14.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_checkbox_c2_true_rare": {
+  "tier": "W1M",
+  "name": "L3_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9,
+    "p95": 9.9,
+    "max": 11.3
+   },
+   {
+    "p50": 8.9,
+    "p95": 9.5,
+    "max": 10.1
+   },
+   {
+    "p50": 9,
+    "p95": 9.7,
+    "max": 11.2
+   }
+  ],
+  "p50": 9,
+  "p95": 9.7,
+  "max": 11.3,
+  "cold": 21.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_two_conditions_s1_and_c2": {
+  "tier": "W1M",
+  "name": "L3_two_conditions_s1_and_c2",
+  "runs": 120,
+  "rounds": [
+   {
+    "p50": 987.2,
+    "p95": 1460.1,
+    "max": 1516.1
+   },
+   {
+    "p50": 838,
+    "p95": 1514.4,
+    "max": 1519.5
+   },
+   {
+    "p50": 1036.6,
+    "p95": 1509.7,
+    "max": 1518.5
+   }
+  ],
+  "p50": 987.2,
+  "p95": 1509.7,
+  "max": 1519.5,
+  "cold": 576.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_multi_has_any_questionbar_NOT_INDEXABLE": {
+  "tier": "W1M",
+  "name": "L3_multi_has_any_questionbar_NOT_INDEXABLE",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 4.7,
+    "p95": 6.3,
+    "max": 8
+   },
+   {
+    "p50": 4.7,
+    "p95": 5.9,
+    "max": 6.3
+   },
+   {
+    "p50": 4.6,
+    "p95": 5.3,
+    "max": 6.1
+   }
+  ],
+  "p50": 4.7,
+  "p95": 5.9,
+  "max": 8,
+  "cold": 25.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L3_deal_select_eq_random": {
+  "tier": "W1M",
+  "name": "L3_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 13.2,
+    "p95": 19,
+    "max": 20.3
+   },
+   {
+    "p50": 13.2,
+    "p95": 18.8,
+    "max": 20.3
+   },
+   {
+    "p50": 12.8,
+    "p95": 19.6,
+    "max": 21.6
+   }
+  ],
+  "p50": 13.2,
+  "p95": 19,
+  "max": 21.6,
+  "cold": 33.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L7_total_select_eq_common": {
+  "tier": "W1M",
+  "name": "L7_total_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 232.3,
+    "p95": 267,
+    "max": 792.8
+   },
+   {
+    "p50": 234.2,
+    "p95": 723.6,
+    "max": 829.6
+   },
+   {
+    "p50": 234.1,
+    "p95": 269.8,
+    "max": 791.3
+   }
+  ],
+  "p50": 234.1,
+  "p95": 269.8,
+  "max": 829.6,
+  "cold": 255.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:L7_total_select_eq_rare": {
+  "tier": "W1M",
+  "name": "L7_total_select_eq_rare",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3927.4,
+    "p95": 4005.5,
+    "max": 4005.5
+   },
+   {
+    "p50": 3963.8,
+    "p95": 4013.6,
+    "max": 4013.6
+   },
+   {
+    "p50": 3887.8,
+    "p95": 3978.5,
+    "max": 3978.5
+   }
+  ],
+  "p50": 3927.4,
+  "p95": 4005.5,
+  "max": 4013.6,
+  "cold": 3954.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:L4_sort_n1_asc_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_asc_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5007.4,
+    "p95": 5013.9,
+    "max": 5013.9
+   },
+   {
+    "p50": 5007.8,
+    "p95": 5010.3,
+    "max": 5010.3
+   },
+   {
+    "p50": 5009.7,
+    "p95": 5014.5,
+    "max": 5014.5
+   }
+  ],
+  "p50": 5007.8,
+  "p95": 5013.9,
+  "max": 5014.5,
+  "cold": 5031.7,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L4_sort_n1_desc_nullslast_compilerform_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_desc_nullslast_compilerform_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5007.3,
+    "p95": 5010.5,
+    "max": 5010.5
+   },
+   {
+    "p50": 5005.9,
+    "p95": 5015.2,
+    "max": 5015.2
+   },
+   {
+    "p50": 5006.9,
+    "p95": 5016.1,
+    "max": 5016.1
+   }
+  ],
+  "p50": 5006.9,
+  "p95": 5015.2,
+  "max": 5016.1,
+  "cold": 5031.4,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L4_sort_d1_asc_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_d1_asc_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5013.3,
+    "p95": 5016.9,
+    "max": 5016.9
+   },
+   {
+    "p50": 5009.4,
+    "p95": 5018.5,
+    "max": 5018.5
+   },
+   {
+    "p50": 5007.3,
+    "p95": 5012.2,
+    "max": 5012.2
+   }
+  ],
+  "p50": 5009.4,
+  "p95": 5016.9,
+  "max": 5018.5,
+  "cold": 5027,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L4_sort_t1_asc_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_t1_asc_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5007.4,
+    "p95": 5017.2,
+    "max": 5017.2
+   },
+   {
+    "p50": 5013.9,
+    "p95": 5018.4,
+    "max": 5018.4
+   },
+   {
+    "p50": 5008.9,
+    "p95": 5017.2,
+    "max": 5017.2
+   }
+  ],
+  "p50": 5008.9,
+  "p95": 5017.2,
+  "max": 5018.4,
+  "cold": 5022,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L4_sort_s1_option_position_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_s1_option_position_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5012.8,
+    "p95": 5015,
+    "max": 5015
+   },
+   {
+    "p50": 5010.8,
+    "p95": 5013.7,
+    "max": 5013.7
+   },
+   {
+    "p50": 5009.7,
+    "p95": 5014.4,
+    "max": 5014.4
+   }
+  ],
+  "p50": 5010.8,
+  "p95": 5014.4,
+  "max": 5015,
+  "cold": 5022.5,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L4b_range_n1_between_noidx": {
+  "tier": "W1M",
+  "name": "L4b_range_n1_between_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5004.8,
+    "p95": 5018,
+    "max": 5018
+   },
+   {
+    "p50": 5012.9,
+    "p95": 5017.4,
+    "max": 5017.4
+   },
+   {
+    "p50": 5006.6,
+    "p95": 5014,
+    "max": 5014
+   }
+  ],
+  "p50": 5006.6,
+  "p95": 5017.4,
+  "max": 5018,
+  "cold": 5026.9,
+  "errors": 14,
+  "timeouts": 14,
+  "rows": 0
+ },
+ "A:W1M:L4_sort_deal_n1_asc_noidx": {
+  "tier": "W1M",
+  "name": "L4_sort_deal_n1_asc_noidx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5010.5,
+    "p95": 5017.2,
+    "max": 5017.2
+   },
+   {
+    "p50": 5007.2,
+    "p95": 5015.8,
+    "max": 5015.8
+   },
+   {
+    "p50": 5015.2,
+    "p95": 5016.9,
+    "max": 5016.9
+   }
+  ],
+  "p50": 5010.5,
+  "p95": 5016.9,
+  "max": 5017.2,
+  "cold": 5022.4,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L6_q_common_en_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 4,
+    "p95": 4.4,
+    "max": 4.4
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.6,
+    "max": 4.6
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.5,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.7,
+  "p95": 4.5,
+  "max": 4.6,
+  "cold": 31.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_common_en_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.4,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 3.9
+   }
+  ],
+  "p50": 3.4,
+  "p95": 3.8,
+  "max": 3.9,
+  "cold": 13.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_common_ar_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_common_ar_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 2227.5,
+    "p95": 2309.9,
+    "max": 2309.9
+   },
+   {
+    "p50": 2257.2,
+    "p95": 2298.4,
+    "max": 2298.4
+   },
+   {
+    "p50": 2158.4,
+    "p95": 2285.6,
+    "max": 2285.6
+   }
+  ],
+  "p50": 2227.5,
+  "p95": 2298.4,
+  "max": 2309.9,
+  "cold": 2172.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_common_ar_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_common_ar_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 3.7,
+    "max": 3.7
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.4,
+    "max": 3.4
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 3.8
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.7,
+  "max": 3.8,
+  "cold": 22.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_mid_en_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_en_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 5.2,
+    "p95": 5.6,
+    "max": 5.6
+   },
+   {
+    "p50": 5.1,
+    "p95": 6.1,
+    "max": 6.1
+   },
+   {
+    "p50": 5.3,
+    "p95": 6.6,
+    "max": 6.6
+   }
+  ],
+  "p50": 5.2,
+  "p95": 6.1,
+  "max": 6.6,
+  "cold": 35.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_mid_en_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_en_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.3,
+    "max": 4.3
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.2,
+    "max": 4.2
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.2,
+  "max": 4.3,
+  "cold": 13,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_mid_ar_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_ar_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 1403.4,
+    "p95": 1567.1,
+    "max": 1567.1
+   },
+   {
+    "p50": 1401.5,
+    "p95": 1477.6,
+    "max": 1477.6
+   },
+   {
+    "p50": 1385.7,
+    "p95": 1495.8,
+    "max": 1495.8
+   }
+  ],
+  "p50": 1401.5,
+  "p95": 1495.8,
+  "max": 1567.1,
+  "cold": 1408.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_mid_ar_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_ar_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 4.8,
+    "max": 4.8
+   },
+   {
+    "p50": 3.8,
+    "p95": 5.6,
+    "max": 5.6
+   },
+   {
+    "p50": 3.4,
+    "p95": 3.8,
+    "max": 3.8
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.8,
+  "max": 5.6,
+  "cold": 26,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_rare_token_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_only_P1a_notri",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5008,
+    "p95": 5012.4,
+    "max": 5012.4
+   },
+   {
+    "p50": 5014,
+    "p95": 5018.4,
+    "max": 5018.4
+   },
+   {
+    "p50": 5012.3,
+    "p95": 5017.2,
+    "max": 5017.2
+   }
+  ],
+  "p50": 5012.3,
+  "p95": 5017.2,
+  "max": 5018.4,
+  "cold": 5021.4,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L6_q_rare_token_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_plus_custom_search_notri",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5008.8,
+    "p95": 5012.2,
+    "max": 5012.2
+   },
+   {
+    "p50": 5004.7,
+    "p95": 5016.4,
+    "max": 5016.4
+   },
+   {
+    "p50": 5015,
+    "p95": 5016.7,
+    "max": 5016.7
+   }
+  ],
+  "p50": 5008.8,
+  "p95": 5016.4,
+  "max": 5016.7,
+  "cold": 5030.8,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "A:W1M:L6_q_short3_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 4,
+    "p95": 4.5,
+    "max": 4.5
+   },
+   {
+    "p50": 3.6,
+    "p95": 5,
+    "max": 5
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.5,
+  "max": 5,
+  "cold": 29.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_short3_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.2,
+    "max": 4.2
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.6,
+    "max": 3.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.8,
+  "max": 4.2,
+  "cold": 12.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_short2_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_short2_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 3.8
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.8,
+  "max": 3.8,
+  "cold": 11.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_ar3_display_only_P1a_notri": {
+  "tier": "W1M",
+  "name": "L6_q_ar3_display_only_P1a_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 4.7,
+    "max": 4.7
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.2,
+    "max": 4.2
+   },
+   {
+    "p50": 3.7,
+    "p95": 4,
+    "max": 4
+   }
+  ],
+  "p50": 3.7,
+  "p95": 4.2,
+  "max": 4.7,
+  "cold": 13.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_ar3_display_plus_custom_search_notri": {
+  "tier": "W1M",
+  "name": "L6_q_ar3_display_plus_custom_search_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 3.8,
+    "max": 3.8
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 3.7
+   }
+  ],
+  "p50": 3.4,
+  "p95": 3.8,
+  "max": 4,
+  "cold": 14.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L6_q_prefix_common_notri": {
+  "tier": "W1M",
+  "name": "L6_q_prefix_common_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 4,
+    "p95": 4.5,
+    "max": 4.5
+   },
+   {
+    "p50": 4.1,
+    "p95": 4.7,
+    "max": 4.7
+   },
+   {
+    "p50": 4.1,
+    "p95": 4.6,
+    "max": 4.6
+   }
+  ],
+  "p50": 4.1,
+  "p95": 4.6,
+  "max": 4.7,
+  "cold": 15.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:L7_total_q_common_notri": {
+  "tier": "W1M",
+  "name": "L7_total_q_common_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 27.3,
+    "p95": 493.5,
+    "max": 493.5
+   },
+   {
+    "p50": 26.1,
+    "p95": 27.1,
+    "max": 27.1
+   },
+   {
+    "p50": 25.9,
+    "p95": 27.8,
+    "max": 27.8
+   }
+  ],
+  "p50": 26.1,
+  "p95": 27.8,
+  "max": 493.5,
+  "cold": 42.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:L7_total_q_rare_notri": {
+  "tier": "W1M",
+  "name": "L7_total_q_rare_notri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 1880,
+    "p95": 2100.8,
+    "max": 2100.8
+   },
+   {
+    "p50": 1685.4,
+    "p95": 1968.1,
+    "max": 1968.1
+   },
+   {
+    "p50": 1691.5,
+    "p95": 1790,
+    "max": 1790
+   }
+  ],
+  "p50": 1691.5,
+  "p95": 1968.1,
+  "max": 2100.8,
+  "cold": 2259.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:L6_deal_q_common_notri": {
+  "tier": "W1M",
+  "name": "L6_deal_q_common_notri",
+  "runs": 30,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 3.9,
+    "max": 3.9
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.7,
+    "max": 4.7
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.5,
+  "max": 4.7,
+  "cold": 29,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "A:W1M:R_get_with_properties_baseline": {
+  "tier": "W1M",
+  "name": "R_get_with_properties_baseline",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.1,
+    "p95": 4.8,
+    "max": 5.7
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.8
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.8,
+    "max": 5.2
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.8,
+  "max": 5.7,
+  "cold": 22.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 0
+ },
+ "A:W1M:R_patch_5props_baseline": {
+  "tier": "W1M",
+  "name": "R_patch_5props_baseline",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 7.3,
+    "p95": 8.5,
+    "max": 10.2
+   },
+   {
+    "p50": 6.8,
+    "p95": 7.4,
+    "max": 7.6
+   },
+   {
+    "p50": 6.8,
+    "p95": 7.5,
+    "max": 9
+   }
+  ],
+  "p50": 6.8,
+  "p95": 7.5,
+  "max": 10.2,
+  "cold": 34.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "A:W1M:R_patch_20_concurrent_baseline": {
+  "tier": "W1M",
+  "name": "R_patch_20_concurrent_baseline",
+  "runs": 600,
+  "p50": 15.4,
+  "p95": 20.7,
+  "max": 107,
+  "errors": 0,
+  "throughput_per_s": 845.6
+ },
+ "A:tablestats:after_A": [
+  {
+   "relname": "contact",
+   "n_live_tup": "2050668",
+   "n_dead_tup": "1745",
+   "n_tup_upd": "1804",
+   "n_tup_hot_upd": "100"
+  },
+  {
+   "relname": "deal",
+   "n_live_tup": "549806",
+   "n_dead_tup": "0",
+   "n_tup_upd": "0",
+   "n_tup_hot_upd": "0"
+  }
+ ],
+ "B:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T20:40:22.200Z"
+ },
+ "B:timing:create_gin_jsonb_path_ops_contact": {
+  "ms": 40171
+ },
+ "B:timing:create_gin_jsonb_path_ops_deal": {
+  "ms": 9932
+ },
+ "B:indexes:B_gin": {
+  "idx": [
+   {
+    "relname": "contact_custom_gin",
+    "bytes": "512385024",
+    "pretty": "489 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_pkey",
+    "bytes": "144154624",
+    "pretty": "137 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_normalized",
+    "bytes": "229539840",
+    "pretty": "219 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_created",
+    "bytes": "171048960",
+    "pretty": "163 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_owner_created",
+    "bytes": "225902592",
+    "pretty": "215 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "deal_custom_gin",
+    "bytes": "146685952",
+    "pretty": "140 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_pkey",
+    "bytes": "35708928",
+    "pretty": "34 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_normalized",
+    "bytes": "60735488",
+    "pretty": "58 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_created",
+    "bytes": "42024960",
+    "pretty": "40 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_owner_created",
+    "bytes": "54992896",
+    "pretty": "52 MB",
+    "tbl": "deal"
+   }
+  ],
+  "heap": [
+   {
+    "relname": "contact",
+    "heap": "3164299264",
+    "toast": "452427776",
+    "idx": "1283031040",
+    "n_live": 0
+   },
+   {
+    "relname": "deal",
+    "heap": "842801152",
+    "toast": "157220864",
+    "idx": "340148224",
+    "n_live": 0
+   }
+  ]
+ },
+ "B:W50:L3_select_eq_random": {
+  "tier": "W50",
+  "name": "L3_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 13.6,
+    "p95": 19.3,
+    "max": 38.8
+   },
+   {
+    "p50": 14.3,
+    "p95": 19.1,
+    "max": 22.4
+   },
+   {
+    "p50": 13.3,
+    "p95": 18.7,
+    "max": 21.7
+   }
+  ],
+  "p50": 13.6,
+  "p95": 19.1,
+  "max": 38.8,
+  "cold": 55.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_select_eq_common": {
+  "tier": "W50",
+  "name": "L3_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.3,
+    "p95": 5.3,
+    "max": 5.7
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 6.5
+   },
+   {
+    "p50": 4,
+    "p95": 4.6,
+    "max": 5.2
+   }
+  ],
+  "p50": 4,
+  "p95": 4.6,
+  "max": 6.5,
+  "cold": 12.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_select_eq_rare": {
+  "tier": "W50",
+  "name": "L3_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 19.2,
+    "p95": 20.2,
+    "max": 21.5
+   },
+   {
+    "p50": 19.2,
+    "p95": 20.7,
+    "max": 22.2
+   },
+   {
+    "p50": 19.1,
+    "p95": 20.1,
+    "max": 21
+   }
+  ],
+  "p50": 19.2,
+  "p95": 20.2,
+  "max": 22.2,
+  "cold": 35.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_multi_has_any": {
+  "tier": "W50",
+  "name": "L3_multi_has_any",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.2,
+    "p95": 6.4,
+    "max": 8.2
+   },
+   {
+    "p50": 5.2,
+    "p95": 6,
+    "max": 6.9
+   },
+   {
+    "p50": 5.2,
+    "p95": 6.1,
+    "max": 6.5
+   }
+  ],
+  "p50": 5.2,
+  "p95": 6.1,
+  "max": 8.2,
+  "cold": 16.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_multi_has_all": {
+  "tier": "W50",
+  "name": "L3_multi_has_all",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 25.1,
+    "p95": 40,
+    "max": 49.6
+   },
+   {
+    "p50": 24.3,
+    "p95": 38,
+    "max": 39.4
+   },
+   {
+    "p50": 27.5,
+    "p95": 39.9,
+    "max": 43.8
+   }
+  ],
+  "p50": 25.1,
+  "p95": 39.9,
+  "max": 49.6,
+  "cold": 21.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_checkbox_c1_true": {
+  "tier": "W50",
+  "name": "L3_checkbox_c1_true",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.2,
+    "p95": 5.2,
+    "max": 10
+   },
+   {
+    "p50": 4,
+    "p95": 4.8,
+    "max": 5.3
+   },
+   {
+    "p50": 4.1,
+    "p95": 4.7,
+    "max": 5
+   }
+  ],
+  "p50": 4.1,
+  "p95": 4.8,
+  "max": 10,
+  "cold": 14.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_checkbox_c2_true_rare": {
+  "tier": "W50",
+  "name": "L3_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9.6,
+    "p95": 10.4,
+    "max": 11.1
+   },
+   {
+    "p50": 9.5,
+    "p95": 10.3,
+    "max": 11.2
+   },
+   {
+    "p50": 9.6,
+    "p95": 10.6,
+    "max": 12.4
+   }
+  ],
+  "p50": 9.6,
+  "p95": 10.4,
+  "max": 12.4,
+  "cold": 21.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_two_conditions_s1_and_c2": {
+  "tier": "W50",
+  "name": "L3_two_conditions_s1_and_c2",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 215.8,
+    "p95": 234.5,
+    "max": 245.2
+   },
+   {
+    "p50": 208.2,
+    "p95": 225.4,
+    "max": 233.5
+   },
+   {
+    "p50": 212.3,
+    "p95": 228.3,
+    "max": 235.4
+   }
+  ],
+  "p50": 212.3,
+  "p95": 228.3,
+  "max": 245.2,
+  "cold": 317.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 25
+ },
+ "B:W50:L3_multi_has_any_questionbar_NOT_INDEXABLE": {
+  "tier": "W50",
+  "name": "L3_multi_has_any_questionbar_NOT_INDEXABLE",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 4.9,
+    "p95": 6,
+    "max": 6.1
+   },
+   {
+    "p50": 4.6,
+    "p95": 5.5,
+    "max": 5.5
+   },
+   {
+    "p50": 4.3,
+    "p95": 5.5,
+    "max": 5.7
+   }
+  ],
+  "p50": 4.6,
+  "p95": 5.5,
+  "max": 6.1,
+  "cold": 27.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L3_deal_select_eq_random": {
+  "tier": "W50",
+  "name": "L3_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 15,
+    "p95": 20,
+    "max": 22.2
+   },
+   {
+    "p50": 14.9,
+    "p95": 20.4,
+    "max": 23.5
+   },
+   {
+    "p50": 14.7,
+    "p95": 19.6,
+    "max": 21.4
+   }
+  ],
+  "p50": 14.9,
+  "p95": 20,
+  "max": 23.5,
+  "cold": 59.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W50:L7_total_select_eq_common": {
+  "tier": "W50",
+  "name": "L7_total_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 223.9,
+    "p95": 249.1,
+    "max": 254.5
+   },
+   {
+    "p50": 246,
+    "p95": 253.3,
+    "max": 256
+   },
+   {
+    "p50": 248,
+    "p95": 253.6,
+    "max": 268.8
+   }
+  ],
+  "p50": 246,
+  "p95": 253.3,
+  "max": 268.8,
+  "cold": 274.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B:W50:L7_total_select_eq_rare": {
+  "tier": "W50",
+  "name": "L7_total_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 246.7,
+    "p95": 256.3,
+    "max": 275.6
+   },
+   {
+    "p50": 246,
+    "p95": 255.9,
+    "max": 310.5
+   },
+   {
+    "p50": 246.6,
+    "p95": 253.3,
+    "max": 260
+   }
+  ],
+  "p50": 246.6,
+  "p95": 255.9,
+  "max": 310.5,
+  "cold": 296.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B:W1M:L3_select_eq_random": {
+  "tier": "W1M",
+  "name": "L3_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 13.1,
+    "p95": 19.5,
+    "max": 22.6
+   },
+   {
+    "p50": 13.3,
+    "p95": 19.3,
+    "max": 21.5
+   },
+   {
+    "p50": 13.1,
+    "p95": 19.2,
+    "max": 21.6
+   }
+  ],
+  "p50": 13.1,
+  "p95": 19.3,
+  "max": 22.6,
+  "cold": 75.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_select_eq_common": {
+  "tier": "W1M",
+  "name": "L3_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.5,
+    "p95": 5.4,
+    "max": 6.6
+   },
+   {
+    "p50": 4.3,
+    "p95": 4.9,
+    "max": 5.2
+   },
+   {
+    "p50": 4.4,
+    "p95": 4.8,
+    "max": 5.1
+   }
+  ],
+  "p50": 4.4,
+  "p95": 4.9,
+  "max": 6.6,
+  "cold": 15,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_select_eq_rare": {
+  "tier": "W1M",
+  "name": "L3_select_eq_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 18,
+    "p95": 19.6,
+    "max": 21.5
+   },
+   {
+    "p50": 17.8,
+    "p95": 18.6,
+    "max": 20.3
+   },
+   {
+    "p50": 17.8,
+    "p95": 18.6,
+    "max": 19.2
+   }
+  ],
+  "p50": 17.8,
+  "p95": 18.6,
+  "max": 21.5,
+  "cold": 33.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_multi_has_any": {
+  "tier": "W1M",
+  "name": "L3_multi_has_any",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.3,
+    "p95": 6.4,
+    "max": 7.8
+   },
+   {
+    "p50": 5.2,
+    "p95": 6.3,
+    "max": 6.7
+   },
+   {
+    "p50": 5.2,
+    "p95": 5.9,
+    "max": 6.8
+   }
+  ],
+  "p50": 5.2,
+  "p95": 6.3,
+  "max": 7.8,
+  "cold": 15.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_multi_has_all": {
+  "tier": "W1M",
+  "name": "L3_multi_has_all",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 27.6,
+    "p95": 41.7,
+    "max": 43.5
+   },
+   {
+    "p50": 29.5,
+    "p95": 40,
+    "max": 42
+   },
+   {
+    "p50": 28.9,
+    "p95": 41.4,
+    "max": 49.5
+   }
+  ],
+  "p50": 28.9,
+  "p95": 41.4,
+  "max": 49.5,
+  "cold": 78.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_checkbox_c1_true": {
+  "tier": "W1M",
+  "name": "L3_checkbox_c1_true",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.2,
+    "p95": 4.9,
+    "max": 5.2
+   },
+   {
+    "p50": 4.1,
+    "p95": 4.8,
+    "max": 5.3
+   },
+   {
+    "p50": 4.2,
+    "p95": 4.7,
+    "max": 5.1
+   }
+  ],
+  "p50": 4.2,
+  "p95": 4.8,
+  "max": 5.3,
+  "cold": 15.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_checkbox_c2_true_rare": {
+  "tier": "W1M",
+  "name": "L3_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9,
+    "p95": 9.7,
+    "max": 10.9
+   },
+   {
+    "p50": 8.9,
+    "p95": 9.7,
+    "max": 10.1
+   },
+   {
+    "p50": 8.9,
+    "p95": 9.7,
+    "max": 10.1
+   }
+  ],
+  "p50": 8.9,
+  "p95": 9.7,
+  "max": 10.9,
+  "cold": 20.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_two_conditions_s1_and_c2": {
+  "tier": "W1M",
+  "name": "L3_two_conditions_s1_and_c2",
+  "runs": 120,
+  "rounds": [
+   {
+    "p50": 1019.4,
+    "p95": 1507.2,
+    "max": 1517.5
+   },
+   {
+    "p50": 872.5,
+    "p95": 1495.3,
+    "max": 1532
+   },
+   {
+    "p50": 982.1,
+    "p95": 1511.8,
+    "max": 1518.2
+   }
+  ],
+  "p50": 982.1,
+  "p95": 1507.2,
+  "max": 1532,
+  "cold": 439.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_multi_has_any_questionbar_NOT_INDEXABLE": {
+  "tier": "W1M",
+  "name": "L3_multi_has_any_questionbar_NOT_INDEXABLE",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 4.9,
+    "p95": 6.6,
+    "max": 7.4
+   },
+   {
+    "p50": 4.4,
+    "p95": 5.1,
+    "max": 5.2
+   },
+   {
+    "p50": 4.6,
+    "p95": 6.5,
+    "max": 7.2
+   }
+  ],
+  "p50": 4.6,
+  "p95": 6.5,
+  "max": 7.4,
+  "cold": 28.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L3_deal_select_eq_random": {
+  "tier": "W1M",
+  "name": "L3_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 14.4,
+    "p95": 19.8,
+    "max": 25.6
+   },
+   {
+    "p50": 14.5,
+    "p95": 19.4,
+    "max": 20.6
+   },
+   {
+    "p50": 13.5,
+    "p95": 18.4,
+    "max": 19.6
+   }
+  ],
+  "p50": 14.4,
+  "p95": 19.4,
+  "max": 25.6,
+  "cold": 64.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B:W1M:L7_total_select_eq_common": {
+  "tier": "W1M",
+  "name": "L7_total_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 234,
+    "p95": 700.1,
+    "max": 769.4
+   },
+   {
+    "p50": 234,
+    "p95": 284.7,
+    "max": 817.4
+   },
+   {
+    "p50": 234.4,
+    "p95": 712.4,
+    "max": 809
+   }
+  ],
+  "p50": 234,
+  "p95": 700.1,
+  "max": 817.4,
+  "cold": 249.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B:W1M:L7_total_select_eq_rare": {
+  "tier": "W1M",
+  "name": "L7_total_select_eq_rare",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3924.5,
+    "p95": 4028.6,
+    "max": 4028.6
+   },
+   {
+    "p50": 3935.7,
+    "p95": 4005.4,
+    "max": 4005.4
+   },
+   {
+    "p50": 3927.7,
+    "p95": 3985.2,
+    "max": 3985.2
+   }
+  ],
+  "p50": 3927.7,
+  "p95": 4005.4,
+  "max": 4028.6,
+  "cold": 4003.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T20:50:55.041Z"
+ },
+ "B2:W50:B2_select_eq_veryrare_s5_plain_gin_planner": {
+  "tier": "W50",
+  "name": "B2_select_eq_veryrare_s5_plain_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 116.7,
+    "p95": 128.8,
+    "max": 130.1
+   },
+   {
+    "p50": 117.9,
+    "p95": 134.1,
+    "max": 134.3
+   },
+   {
+    "p50": 109,
+    "p95": 126.5,
+    "max": 133.7
+   }
+  ],
+  "p50": 116.7,
+  "p95": 128.8,
+  "max": 134.3,
+  "cold": 260.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W50:B2_total_select_eq_rare_s1o019_plain_gin_planner": {
+  "tier": "W50",
+  "name": "B2_total_select_eq_rare_s1o019_plain_gin_planner",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 200.7,
+    "p95": 212.7,
+    "max": 212.7
+   },
+   {
+    "p50": 200.4,
+    "p95": 208.5,
+    "max": 208.5
+   },
+   {
+    "p50": 200.3,
+    "p95": 207.3,
+    "max": 207.3
+   }
+  ],
+  "p50": 200.4,
+  "p95": 208.5,
+  "max": 212.7,
+  "cold": 258.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W50:B2_two_cond_s1_c2_plain_gin_planner": {
+  "tier": "W50",
+  "name": "B2_two_cond_s1_c2_plain_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 210.9,
+    "p95": 218.9,
+    "max": 225.4
+   },
+   {
+    "p50": 212.3,
+    "p95": 221.3,
+    "max": 221.5
+   },
+   {
+    "p50": 214.8,
+    "p95": 231.8,
+    "max": 236.8
+   }
+  ],
+  "p50": 212.3,
+  "p95": 221.3,
+  "max": 236.8,
+  "cold": 295.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 44
+ },
+ "B2:W1M:B2_select_eq_veryrare_s5_plain_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_select_eq_veryrare_s5_plain_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 317.6,
+    "p95": 330.2,
+    "max": 335.9
+   },
+   {
+    "p50": 320,
+    "p95": 331,
+    "max": 331.3
+   },
+   {
+    "p50": 315,
+    "p95": 326.6,
+    "max": 331.3
+   }
+  ],
+  "p50": 317.6,
+  "p95": 330.2,
+  "max": 335.9,
+  "cold": 381.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W1M:B2_total_select_eq_rare_s1o019_plain_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_total_select_eq_rare_s1o019_plain_gin_planner",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3855.2,
+    "p95": 4011.3,
+    "max": 4011.3
+   },
+   {
+    "p50": 3947.3,
+    "p95": 4004.2,
+    "max": 4004.2
+   },
+   {
+    "p50": 3939.8,
+    "p95": 3985.2,
+    "max": 3985.2
+   }
+  ],
+  "p50": 3939.8,
+  "p95": 4004.2,
+  "max": 4011.3,
+  "cold": 3892.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W1M:B2_two_cond_s1_c2_plain_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_two_cond_s1_c2_plain_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 845,
+    "p95": 1516.7,
+    "max": 1529.9
+   },
+   {
+    "p50": 782.9,
+    "p95": 1507.3,
+    "max": 1578.2
+   },
+   {
+    "p50": 838.9,
+    "p95": 1521.2,
+    "max": 1562
+   }
+  ],
+  "p50": 838.9,
+  "p95": 1516.7,
+  "max": 1578.2,
+  "cold": 143.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W50:B2_select_eq_veryrare_s5_plain_gin_forced_bitmap": {
+  "tier": "W50",
+  "name": "B2_select_eq_veryrare_s5_plain_gin_forced_bitmap",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 248.2,
+    "p95": 262,
+    "max": 262
+   },
+   {
+    "p50": 248.3,
+    "p95": 251.1,
+    "max": 252.7
+   },
+   {
+    "p50": 248,
+    "p95": 252.5,
+    "max": 253.6
+   }
+  ],
+  "p50": 248.2,
+  "p95": 252.5,
+  "max": 262,
+  "cold": 308.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W50:B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap": {
+  "tier": "W50",
+  "name": "B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 248.4,
+    "p95": 253.2,
+    "max": 253.2
+   },
+   {
+    "p50": 248.1,
+    "p95": 256.6,
+    "max": 256.6
+   },
+   {
+    "p50": 247,
+    "p95": 249.5,
+    "max": 249.5
+   }
+  ],
+  "p50": 248.1,
+  "p95": 253.2,
+  "max": 256.6,
+  "cold": 298.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W50:B2_two_cond_s1_c2_plain_gin_forced_bitmap": {
+  "tier": "W50",
+  "name": "B2_two_cond_s1_c2_plain_gin_forced_bitmap",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 247.6,
+    "p95": 256.6,
+    "max": 257.6
+   },
+   {
+    "p50": 246,
+    "p95": 251.5,
+    "max": 254.8
+   },
+   {
+    "p50": 245.7,
+    "p95": 252.2,
+    "max": 252.7
+   }
+  ],
+  "p50": 246,
+  "p95": 252.2,
+  "max": 257.6,
+  "cold": 301,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W1M:B2_select_eq_veryrare_s5_plain_gin_forced_bitmap": {
+  "tier": "W1M",
+  "name": "B2_select_eq_veryrare_s5_plain_gin_forced_bitmap",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 4491.9,
+    "p95": 4500.4,
+    "max": 4500.4
+   },
+   {
+    "p50": 4495.5,
+    "p95": 4508.9,
+    "max": 4508.9
+   },
+   {
+    "p50": 4499.4,
+    "p95": 4510.5,
+    "max": 4510.5
+   }
+  ],
+  "p50": 4495.5,
+  "p95": 4508.9,
+  "max": 4510.5,
+  "cold": 4590.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W1M:B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap": {
+  "tier": "W1M",
+  "name": "B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3580.1,
+    "p95": 3614.4,
+    "max": 3614.4
+   },
+   {
+    "p50": 3602.2,
+    "p95": 3610.3,
+    "max": 3610.3
+   },
+   {
+    "p50": 3576,
+    "p95": 3585,
+    "max": 3585
+   }
+  ],
+  "p50": 3580.1,
+  "p95": 3610.3,
+  "max": 3614.4,
+  "cold": 3629,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W1M:B2_two_cond_s1_c2_plain_gin_forced_bitmap": {
+  "tier": "W1M",
+  "name": "B2_two_cond_s1_c2_plain_gin_forced_bitmap",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 4494.9,
+    "p95": 4502.7,
+    "max": 4502.7
+   },
+   {
+    "p50": 4470.2,
+    "p95": 4493.6,
+    "max": 4493.6
+   },
+   {
+    "p50": 4483,
+    "p95": 4520,
+    "max": 4520
+   }
+  ],
+  "p50": 4483,
+  "p95": 4502.7,
+  "max": 4520,
+  "cold": 4560.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:timing:create_extension_btree_gin": {
+  "ms": 92
+ },
+ "B2:timing:create_gin_tenant_custom_composite": {
+  "ms": 41711
+ },
+ "B2:composite_gin_size": {
+  "b": "515809280"
+ },
+ "B2:W50:B2_select_eq_veryrare_s5_composite_gin_planner": {
+  "tier": "W50",
+  "name": "B2_select_eq_veryrare_s5_composite_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 118,
+    "p95": 134.2,
+    "max": 140.5
+   },
+   {
+    "p50": 117,
+    "p95": 120.8,
+    "max": 125.8
+   },
+   {
+    "p50": 117.3,
+    "p95": 123.5,
+    "max": 124.9
+   }
+  ],
+  "p50": 117.3,
+  "p95": 123.5,
+  "max": 140.5,
+  "cold": 319.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W50:B2_total_select_eq_rare_s1o019_composite_gin_planner": {
+  "tier": "W50",
+  "name": "B2_total_select_eq_rare_s1o019_composite_gin_planner",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 186.4,
+    "p95": 198.8,
+    "max": 198.8
+   },
+   {
+    "p50": 187,
+    "p95": 191.1,
+    "max": 191.1
+   },
+   {
+    "p50": 187,
+    "p95": 202.9,
+    "max": 202.9
+   }
+  ],
+  "p50": 187,
+  "p95": 198.8,
+  "max": 202.9,
+  "cold": 246.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W50:B2_two_cond_s1_c2_composite_gin_planner": {
+  "tier": "W50",
+  "name": "B2_two_cond_s1_c2_composite_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 212.6,
+    "p95": 244.2,
+    "max": 250.9
+   },
+   {
+    "p50": 211.8,
+    "p95": 233.4,
+    "max": 238.2
+   },
+   {
+    "p50": 218.3,
+    "p95": 229.9,
+    "max": 230.6
+   }
+  ],
+  "p50": 212.6,
+  "p95": 233.4,
+  "max": 250.9,
+  "cold": 282.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 19
+ },
+ "B2:W1M:B2_select_eq_veryrare_s5_composite_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_select_eq_veryrare_s5_composite_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 319,
+    "p95": 333.7,
+    "max": 338.2
+   },
+   {
+    "p50": 317.6,
+    "p95": 330.6,
+    "max": 337.9
+   },
+   {
+    "p50": 320.7,
+    "p95": 332.9,
+    "max": 350.3
+   }
+  ],
+  "p50": 319,
+  "p95": 332.9,
+  "max": 350.3,
+  "cold": 378.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W1M:B2_total_select_eq_rare_s1o019_composite_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_total_select_eq_rare_s1o019_composite_gin_planner",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3924.7,
+    "p95": 4068.7,
+    "max": 4068.7
+   },
+   {
+    "p50": 3914.1,
+    "p95": 3981,
+    "max": 3981
+   },
+   {
+    "p50": 3950.6,
+    "p95": 3983.8,
+    "max": 3983.8
+   }
+  ],
+  "p50": 3924.7,
+  "p95": 3983.8,
+  "max": 4068.7,
+  "cold": 3747.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B2:W1M:B2_two_cond_s1_c2_composite_gin_planner": {
+  "tier": "W1M",
+  "name": "B2_two_cond_s1_c2_composite_gin_planner",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 850.5,
+    "p95": 1519.6,
+    "max": 1520.8
+   },
+   {
+    "p50": 997.6,
+    "p95": 1370.1,
+    "max": 1520.1
+   },
+   {
+    "p50": 878,
+    "p95": 1361.2,
+    "max": 1506.6
+   }
+  ],
+  "p50": 878,
+  "p95": 1370.1,
+  "max": 1520.8,
+  "cold": 929.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W50:B2_select_eq_random_composite": {
+  "tier": "W50",
+  "name": "B2_select_eq_random_composite",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 12.7,
+    "p95": 19.5,
+    "max": 27.1
+   },
+   {
+    "p50": 13.4,
+    "p95": 21.6,
+    "max": 23.4
+   },
+   {
+    "p50": 14,
+    "p95": 21.6,
+    "max": 23.6
+   }
+  ],
+  "p50": 13.4,
+  "p95": 21.6,
+  "max": 27.1,
+  "cold": 67.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B2:W1M:B2_select_eq_random_composite": {
+  "tier": "W1M",
+  "name": "B2_select_eq_random_composite",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 11.7,
+    "p95": 19.9,
+    "max": 23.5
+   },
+   {
+    "p50": 13.2,
+    "p95": 19.1,
+    "max": 20.7
+   },
+   {
+    "p50": 13.2,
+    "p95": 19.4,
+    "max": 22.8
+   }
+  ],
+  "p50": 13.2,
+  "p95": 19.4,
+  "max": 23.5,
+  "cold": 21.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:04:53.098Z"
+ },
+ "B3:timing:cic_partial_gin_W50": {
+  "ms": 2990
+ },
+ "B3:timing:cic_expr_s1_created_W50": {
+  "ms": 1701
+ },
+ "B3:timing:cic_partial_gin_W1M": {
+  "ms": 21679
+ },
+ "B3:timing:cic_expr_s1_created_W1M": {
+  "ms": 3599
+ },
+ "B3:partial_index_sizes": [
+  {
+   "relname": "ix_c_gin_w50",
+   "b": "14942208"
+  },
+  {
+   "relname": "ix_c_s1_w50",
+   "b": "2506752"
+  },
+  {
+   "relname": "ix_c_gin_w1m",
+   "b": "258924544"
+  },
+  {
+   "relname": "ix_c_s1_w1m",
+   "b": "49618944"
+  }
+ ],
+ "B3:W50:B3_gin_veryrare_s5": {
+  "tier": "W50",
+  "name": "B3_gin_veryrare_s5",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 116.9,
+    "p95": 127.6,
+    "max": 134.7
+   },
+   {
+    "p50": 116.3,
+    "p95": 124.9,
+    "max": 126
+   },
+   {
+    "p50": 108,
+    "p95": 120.7,
+    "max": 121.6
+   }
+  ],
+  "p50": 116.3,
+  "p95": 124.9,
+  "max": 134.7,
+  "cold": 258.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W50:B3_gin_total_rare_s1o019": {
+  "tier": "W50",
+  "name": "B3_gin_total_rare_s1o019",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 198.8,
+    "p95": 202.2,
+    "max": 211.8
+   },
+   {
+    "p50": 197.8,
+    "p95": 204.8,
+    "max": 216.6
+   },
+   {
+    "p50": 197,
+    "p95": 204.9,
+    "max": 209.2
+   }
+  ],
+  "p50": 197.8,
+  "p95": 204.8,
+  "max": 216.6,
+  "cold": 251.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B3:W50:B3_gin_two_cond_s1_c2": {
+  "tier": "W50",
+  "name": "B3_gin_two_cond_s1_c2",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 214.4,
+    "p95": 224.1,
+    "max": 225.3
+   },
+   {
+    "p50": 211.9,
+    "p95": 218.7,
+    "max": 220
+   },
+   {
+    "p50": 205.9,
+    "p95": 241.7,
+    "max": 243.2
+   }
+  ],
+  "p50": 211.9,
+  "p95": 224.1,
+  "max": 243.2,
+  "cold": 263.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 40
+ },
+ "B3:W50:B3_expr_s1_eq_random": {
+  "tier": "W50",
+  "name": "B3_expr_s1_eq_random",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 13.2,
+    "p95": 21.4,
+    "max": 21.8
+   },
+   {
+    "p50": 12.6,
+    "p95": 19.2,
+    "max": 19.9
+   },
+   {
+    "p50": 14.5,
+    "p95": 20.9,
+    "max": 23.8
+   }
+  ],
+  "p50": 13.2,
+  "p95": 20.9,
+  "max": 23.8,
+  "cold": 47.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W50:B3_expr_s1_eq_rare_o019": {
+  "tier": "W50",
+  "name": "B3_expr_s1_eq_rare_o019",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 19.3,
+    "p95": 20.7,
+    "max": 21.5
+   },
+   {
+    "p50": 19.1,
+    "p95": 21.3,
+    "max": 21.5
+   },
+   {
+    "p50": 19.3,
+    "p95": 20.7,
+    "max": 20.7
+   }
+  ],
+  "p50": 19.3,
+  "p95": 20.7,
+  "max": 21.5,
+  "cold": 36.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W50:B3_expr_total_s1_o019": {
+  "tier": "W50",
+  "name": "B3_expr_total_s1_o019",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 196.1,
+    "p95": 203.1,
+    "max": 205.6
+   },
+   {
+    "p50": 197.8,
+    "p95": 206.8,
+    "max": 207.3
+   },
+   {
+    "p50": 197.7,
+    "p95": 204,
+    "max": 210.2
+   }
+  ],
+  "p50": 197.7,
+  "p95": 204,
+  "max": 210.2,
+  "cold": 240.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B3:W50:B3_expr_s1_and_c2": {
+  "tier": "W50",
+  "name": "B3_expr_s1_and_c2",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 205.5,
+    "p95": 213.6,
+    "max": 218.6
+   },
+   {
+    "p50": 205.7,
+    "p95": 214.6,
+    "max": 222.9
+   },
+   {
+    "p50": 207.7,
+    "p95": 213,
+    "max": 224
+   }
+  ],
+  "p50": 205.7,
+  "p95": 213.6,
+  "max": 224,
+  "cold": 255.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W1M:B3_gin_veryrare_s5": {
+  "tier": "W1M",
+  "name": "B3_gin_veryrare_s5",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 319.7,
+    "p95": 335.1,
+    "max": 335.1
+   },
+   {
+    "p50": 319,
+    "p95": 336.5,
+    "max": 342.4
+   },
+   {
+    "p50": 327,
+    "p95": 353.5,
+    "max": 356.3
+   }
+  ],
+  "p50": 319.7,
+  "p95": 336.5,
+  "max": 356.3,
+  "cold": 353.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W1M:B3_gin_total_rare_s1o019": {
+  "tier": "W1M",
+  "name": "B3_gin_total_rare_s1o019",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3982,
+    "p95": 4032.8,
+    "max": 4032.8
+   },
+   {
+    "p50": 3969.2,
+    "p95": 4057.6,
+    "max": 4057.6
+   },
+   {
+    "p50": 3941.5,
+    "p95": 4011.8,
+    "max": 4011.8
+   }
+  ],
+  "p50": 3969.2,
+  "p95": 4032.8,
+  "max": 4057.6,
+  "cold": 3931.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B3:W1M:B3_gin_two_cond_s1_c2": {
+  "tier": "W1M",
+  "name": "B3_gin_two_cond_s1_c2",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 1037.9,
+    "p95": 1517.6,
+    "max": 1526.3
+   },
+   {
+    "p50": 840.3,
+    "p95": 1516.3,
+    "max": 1525
+   },
+   {
+    "p50": 811.7,
+    "p95": 1367.8,
+    "max": 1503.4
+   }
+  ],
+  "p50": 840.3,
+  "p95": 1516.3,
+  "max": 1526.3,
+  "cold": 647.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W1M:B3_expr_s1_eq_random": {
+  "tier": "W1M",
+  "name": "B3_expr_s1_eq_random",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 12.9,
+    "p95": 20.9,
+    "max": 23.4
+   },
+   {
+    "p50": 13.6,
+    "p95": 19.5,
+    "max": 20.8
+   },
+   {
+    "p50": 13.2,
+    "p95": 19.1,
+    "max": 19.1
+   }
+  ],
+  "p50": 13.2,
+  "p95": 19.5,
+  "max": 23.4,
+  "cold": 57.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W1M:B3_expr_s1_eq_rare_o019": {
+  "tier": "W1M",
+  "name": "B3_expr_s1_eq_rare_o019",
+  "runs": 90,
+  "rounds": [
+   {
+    "p50": 18.3,
+    "p95": 19.7,
+    "max": 21.1
+   },
+   {
+    "p50": 18,
+    "p95": 20.2,
+    "max": 22.4
+   },
+   {
+    "p50": 17.7,
+    "p95": 19.3,
+    "max": 20.5
+   }
+  ],
+  "p50": 18,
+  "p95": 19.7,
+  "max": 22.4,
+  "cold": 36.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "B3:W1M:B3_expr_total_s1_o019": {
+  "tier": "W1M",
+  "name": "B3_expr_total_s1_o019",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 3952.8,
+    "p95": 4185.1,
+    "max": 4185.1
+   },
+   {
+    "p50": 4023.5,
+    "p95": 4234.3,
+    "max": 4234.3
+   },
+   {
+    "p50": 3897.7,
+    "p95": 3943.6,
+    "max": 3943.6
+   }
+  ],
+  "p50": 3952.8,
+  "p95": 4185.1,
+  "max": 4234.3,
+  "cold": 3865.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "B3:W1M:B3_expr_s1_and_c2": {
+  "tier": "W1M",
+  "name": "B3_expr_s1_and_c2",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 4903.8,
+    "p95": 4977.8,
+    "max": 4977.8
+   },
+   {
+    "p50": 4870.2,
+    "p95": 4910.8,
+    "max": 4910.8
+   },
+   {
+    "p50": 4877.9,
+    "p95": 4926.9,
+    "max": 4926.9
+   }
+  ],
+  "p50": 4877.9,
+  "p95": 4926.9,
+  "max": 4977.8,
+  "cold": 5022.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:15:12.478Z"
+ },
+ "C:timing:cic_n1_W50": {
+  "ms": 2202
+ },
+ "C:timing:cic_d1_W50": {
+  "ms": 2153
+ },
+ "C:timing:cic_t1_W50": {
+  "ms": 2185
+ },
+ "C:timing:cic_s1_created_W50": {
+  "ms": 1625
+ },
+ "C:timing:cic_c2_created_W50": {
+  "ms": 1605
+ },
+ "C:timing:cic_deal_n1_W50": {
+  "ms": 521
+ },
+ "C:timing:cic_deal_s1_W50": {
+  "ms": 501
+ },
+ "C:timing:cic_n1_W1M": {
+  "ms": 4431
+ },
+ "C:timing:cic_d1_W1M": {
+  "ms": 4257
+ },
+ "C:timing:cic_t1_W1M": {
+  "ms": 4575
+ },
+ "C:timing:cic_s1_created_W1M": {
+  "ms": 4319
+ },
+ "C:timing:cic_c2_created_W1M": {
+  "ms": 4133
+ },
+ "C:timing:cic_deal_n1_W1M": {
+  "ms": 1870
+ },
+ "C:timing:cic_deal_s1_W1M": {
+  "ms": 1869
+ },
+ "C:indexes:C_expr": {
+  "idx": [
+   {
+    "relname": "contact_pkey",
+    "bytes": "144154624",
+    "pretty": "137 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_normalized",
+    "bytes": "229539840",
+    "pretty": "219 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_created",
+    "bytes": "171048960",
+    "pretty": "163 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_owner_created",
+    "bytes": "225902592",
+    "pretty": "215 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w1m",
+    "bytes": "49618944",
+    "pretty": "47 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w1m",
+    "bytes": "46112768",
+    "pretty": "44 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w50",
+    "bytes": "2334720",
+    "pretty": "2280 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w1m",
+    "bytes": "40615936",
+    "pretty": "39 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w1m",
+    "bytes": "49618944",
+    "pretty": "47 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w1m",
+    "bytes": "56492032",
+    "pretty": "54 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w50",
+    "bytes": "2842624",
+    "pretty": "2776 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "deal_custom_gin",
+    "bytes": "146685952",
+    "pretty": "140 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_pkey",
+    "bytes": "35708928",
+    "pretty": "34 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_normalized",
+    "bytes": "60735488",
+    "pretty": "58 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_created",
+    "bytes": "42024960",
+    "pretty": "40 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_owner_created",
+    "bytes": "54992896",
+    "pretty": "52 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w1m",
+    "bytes": "20324352",
+    "pretty": "19 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w1m",
+    "bytes": "24821760",
+    "pretty": "24 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "deal"
+   }
+  ],
+  "heap": [
+   {
+    "relname": "contact",
+    "heap": "3164299264",
+    "toast": "452427776",
+    "idx": "1025351680",
+    "n_live": 0
+   },
+   {
+    "relname": "deal",
+    "heap": "842801152",
+    "toast": "157220864",
+    "idx": "389857280",
+    "n_live": 0
+   }
+  ]
+ },
+ "C:W50:L4_sort_n1_asc_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.4,
+    "max": 6.2
+   },
+   {
+    "p50": 3,
+    "p95": 3.7,
+    "max": 4.2
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 5.2
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.8,
+  "max": 6.2,
+  "cold": 29.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_n1_desc_nullslast_compilerform_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_desc_nullslast_compilerform_idx",
+  "runs": 120,
+  "rounds": [
+   {
+    "p50": 718.7,
+    "p95": 727.9,
+    "max": 729.5
+   },
+   {
+    "p50": 716.8,
+    "p95": 728.1,
+    "max": 734.7
+   },
+   {
+    "p50": 718.8,
+    "p95": 731.7,
+    "max": 746.3
+   }
+  ],
+  "p50": 718.7,
+  "p95": 728.1,
+  "max": 746.3,
+  "cold": 866.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_d1_asc_idx": {
+  "tier": "W50",
+  "name": "L4_sort_d1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 5.1
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.6,
+    "max": 4.1
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.9,
+    "max": 4.8
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.9,
+  "max": 5.1,
+  "cold": 29.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_t1_asc_idx": {
+  "tier": "W50",
+  "name": "L4_sort_t1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 4.5,
+    "max": 5.1
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 6.1
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 4.4
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.2,
+  "max": 6.1,
+  "cold": 17.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_n1_desc_default_nulls_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_desc_default_nulls_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 5.4
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 6
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 5.2
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.7,
+  "max": 6,
+  "cold": 16.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_n1_asc_with_filter_s1_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_asc_with_filter_s1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 122.6,
+    "p95": 128.7,
+    "max": 137.1
+   },
+   {
+    "p50": 122.9,
+    "p95": 128,
+    "max": 135.6
+   },
+   {
+    "p50": 122.6,
+    "p95": 126,
+    "max": 146.8
+   }
+  ],
+  "p50": 122.6,
+  "p95": 128,
+  "max": 146.8,
+  "cold": 148.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L5_filter_s1_rare_sort_n1_idx": {
+  "tier": "W50",
+  "name": "L5_filter_s1_rare_sort_n1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 11.5,
+    "p95": 12.8,
+    "max": 16
+   },
+   {
+    "p50": 11.9,
+    "p95": 13.5,
+    "max": 15.7
+   },
+   {
+    "p50": 11.7,
+    "p95": 12.4,
+    "max": 13.1
+   }
+  ],
+  "p50": 11.7,
+  "p95": 12.8,
+  "max": 16,
+  "cold": 26.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L5_filter_s1_random_sort_n1_idx": {
+  "tier": "W50",
+  "name": "L5_filter_s1_random_sort_n1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 16.2,
+    "p95": 46.6,
+    "max": 137.4
+   },
+   {
+    "p50": 15.6,
+    "p95": 122,
+    "max": 135.1
+   },
+   {
+    "p50": 16.2,
+    "p95": 48.3,
+    "max": 125.2
+   }
+  ],
+  "p50": 16.2,
+  "p95": 48.3,
+  "max": 137.4,
+  "cold": 38.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L5_filter_c2_rare_sort_d1_idx": {
+  "tier": "W50",
+  "name": "L5_filter_c2_rare_sort_d1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 12.2,
+    "p95": 13.1,
+    "max": 14
+   },
+   {
+    "p50": 12,
+    "p95": 12.7,
+    "max": 13.8
+   },
+   {
+    "p50": 12,
+    "p95": 13.1,
+    "max": 14
+   }
+  ],
+  "p50": 12,
+  "p95": 13.1,
+  "max": 14,
+  "cold": 30,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4b_range_n1_between_idx": {
+  "tier": "W50",
+  "name": "L4b_range_n1_between_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.2,
+    "max": 3.5
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.1
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.8,
+    "max": 3.4
+   }
+  ],
+  "p50": 2.3,
+  "p95": 2.9,
+  "max": 3.5,
+  "cold": 16,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 7
+ },
+ "C:W50:L4b_range_d1_between_idx": {
+  "tier": "W50",
+  "name": "L4b_range_d1_between_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 3.6,
+    "max": 4.1
+   },
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.3
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 4
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.6,
+  "max": 4.3,
+  "cold": 19.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_deal_n1_asc_idx": {
+  "tier": "W50",
+  "name": "L4_sort_deal_n1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 4.1
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 4.3
+   },
+   {
+    "p50": 3,
+    "p95": 3.7,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.8,
+  "max": 4.5,
+  "cold": 19.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_n1_cursor_orchain_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_cursor_orchain_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 274.1,
+    "p95": 477.4,
+    "max": 482.9
+   },
+   {
+    "p50": 275.5,
+    "p95": 477.4,
+    "max": 487.9
+   },
+   {
+    "p50": 271.1,
+    "p95": 473.3,
+    "max": 482.7
+   }
+  ],
+  "p50": 274.1,
+  "p95": 477.4,
+  "max": 487.9,
+  "cold": 96.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:L4_sort_n1_cursor_rowvalue_idx": {
+  "tier": "W50",
+  "name": "L4_sort_n1_cursor_rowvalue_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.5
+   },
+   {
+    "p50": 3.2,
+    "p95": 4.1,
+    "max": 4.9
+   },
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.1,
+  "max": 4.9,
+  "cold": 19.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_select_eq_random": {
+  "tier": "W50",
+  "name": "LP_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 4.2
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.6,
+    "max": 4.2
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.4,
+    "max": 4.3
+   }
+  ],
+  "p50": 2.9,
+  "p95": 3.6,
+  "max": 4.3,
+  "cold": 16.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_select_eq_common": {
+  "tier": "W50",
+  "name": "LP_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 3.6,
+    "max": 4
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 3.7
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.6,
+    "max": 4.4
+   }
+  ],
+  "p50": 2.8,
+  "p95": 3.6,
+  "max": 4.4,
+  "cold": 14.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_select_eq_rare_o019": {
+  "tier": "W50",
+  "name": "LP_select_eq_rare_o019",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 3.5,
+    "max": 3.9
+   },
+   {
+    "p50": 3.2,
+    "p95": 4,
+    "max": 5.5
+   },
+   {
+    "p50": 3.2,
+    "p95": 4.7,
+    "max": 6.2
+   }
+  ],
+  "p50": 3.2,
+  "p95": 4,
+  "max": 6.2,
+  "cold": 15.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_checkbox_c2_true_rare": {
+  "tier": "W50",
+  "name": "LP_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 4.1,
+    "max": 4.8
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.5,
+    "max": 4
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.6,
+    "max": 4.1
+   }
+  ],
+  "p50": 2.9,
+  "p95": 3.6,
+  "max": 4.8,
+  "cold": 21,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_s1_and_c2": {
+  "tier": "W50",
+  "name": "LP_s1_and_c2",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9.9,
+    "p95": 13.6,
+    "max": 16.5
+   },
+   {
+    "p50": 8.6,
+    "p95": 12.8,
+    "max": 13.8
+   },
+   {
+    "p50": 9,
+    "p95": 13.5,
+    "max": 14.5
+   }
+  ],
+  "p50": 9,
+  "p95": 13.5,
+  "max": 16.5,
+  "cold": 26.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 40
+ },
+ "C:W50:LP_s1_in_3_values": {
+  "tier": "W50",
+  "name": "LP_s1_in_3_values",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 33.4,
+    "p95": 110.7,
+    "max": 129.7
+   },
+   {
+    "p50": 32.4,
+    "p95": 109.9,
+    "max": 122.3
+   },
+   {
+    "p50": 35.3,
+    "p95": 108.9,
+    "max": 120.8
+   }
+  ],
+  "p50": 33.4,
+  "p95": 109.9,
+  "max": 129.7,
+  "cold": 71.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_total_s1_rare_o019": {
+  "tier": "W50",
+  "name": "LP_total_s1_rare_o019",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.4,
+    "p95": 3,
+    "max": 3.5
+   },
+   {
+    "p50": 2.2,
+    "p95": 2.9,
+    "max": 3.2
+   },
+   {
+    "p50": 2.2,
+    "p95": 2.8,
+    "max": 3.3
+   }
+  ],
+  "p50": 2.2,
+  "p95": 2.9,
+  "max": 3.5,
+  "cold": 17.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "C:W50:LP_total_s1_common_o001": {
+  "tier": "W50",
+  "name": "LP_total_s1_common_o001",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 6.2,
+    "p95": 7.5,
+    "max": 8.1
+   },
+   {
+    "p50": 6.1,
+    "p95": 7.4,
+    "max": 8.7
+   },
+   {
+    "p50": 5.9,
+    "p95": 7,
+    "max": 8.1
+   }
+  ],
+  "p50": 6.1,
+  "p95": 7.4,
+  "max": 8.7,
+  "cold": 28.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "C:W50:LP_deal_select_eq_random": {
+  "tier": "W50",
+  "name": "LP_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 4.2,
+    "max": 5.3
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 4
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.4,
+    "max": 4.3
+   }
+  ],
+  "p50": 2.8,
+  "p95": 3.4,
+  "max": 5.3,
+  "cold": 20,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W50:LP_unindexed_s2_eq_rare": {
+  "tier": "W50",
+  "name": "LP_unindexed_s2_eq_rare",
+  "runs": 30,
+  "rounds": [
+   {
+    "p50": 26.8,
+    "p95": 30.3,
+    "max": 30.3
+   },
+   {
+    "p50": 26.2,
+    "p95": 27.9,
+    "max": 27.9
+   },
+   {
+    "p50": 26.1,
+    "p95": 27,
+    "max": 27
+   }
+  ],
+  "p50": 26.2,
+  "p95": 27.9,
+  "max": 30.3,
+  "cold": 50.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_asc_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4.1,
+    "max": 4.7
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.9,
+    "max": 4
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.2
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.9,
+  "max": 4.7,
+  "cold": 18.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_desc_nullslast_compilerform_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_desc_nullslast_compilerform_idx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5010.1,
+    "p95": 5018,
+    "max": 5018
+   },
+   {
+    "p50": 5014.3,
+    "p95": 5016.9,
+    "max": 5016.9
+   },
+   {
+    "p50": 5015.4,
+    "p95": 5019.8,
+    "max": 5019.8
+   }
+  ],
+  "p50": 5014.3,
+  "p95": 5018,
+  "max": 5019.8,
+  "cold": 5011.6,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "C:W1M:L4_sort_d1_asc_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_d1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.6,
+    "p95": 4.1,
+    "max": 4.4
+   },
+   {
+    "p50": 3.5,
+    "p95": 4,
+    "max": 4.2
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.2
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4,
+  "max": 4.4,
+  "cold": 31.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_t1_asc_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_t1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.5
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.2
+   },
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4,
+  "max": 4.5,
+  "cold": 16.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_desc_default_nulls_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_desc_default_nulls_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 3.8,
+    "max": 4
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 4.1
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.6,
+    "max": 4
+   }
+  ],
+  "p50": 3,
+  "p95": 3.6,
+  "max": 4.1,
+  "cold": 19.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_asc_with_filter_s1_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_asc_with_filter_s1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.1,
+    "p95": 6,
+    "max": 6.2
+   },
+   {
+    "p50": 5,
+    "p95": 5.7,
+    "max": 6.3
+   },
+   {
+    "p50": 5,
+    "p95": 5.5,
+    "max": 5.8
+   }
+  ],
+  "p50": 5,
+  "p95": 5.7,
+  "max": 6.3,
+  "cold": 23.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L5_filter_s1_rare_sort_n1_idx": {
+  "tier": "W1M",
+  "name": "L5_filter_s1_rare_sort_n1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 29.6,
+    "p95": 30.9,
+    "max": 33.9
+   },
+   {
+    "p50": 29.5,
+    "p95": 31.5,
+    "max": 33.7
+   },
+   {
+    "p50": 29.6,
+    "p95": 30.9,
+    "max": 32.3
+   }
+  ],
+  "p50": 29.6,
+  "p95": 30.9,
+  "max": 33.9,
+  "cold": 80.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L5_filter_s1_random_sort_n1_idx": {
+  "tier": "W1M",
+  "name": "L5_filter_s1_random_sort_n1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 19.3,
+    "p95": 28.1,
+    "max": 31
+   },
+   {
+    "p50": 19.6,
+    "p95": 27.6,
+    "max": 29.9
+   },
+   {
+    "p50": 19.4,
+    "p95": 29.1,
+    "max": 31.3
+   }
+  ],
+  "p50": 19.4,
+  "p95": 28.1,
+  "max": 31.3,
+  "cold": 46.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L5_filter_c2_rare_sort_d1_idx": {
+  "tier": "W1M",
+  "name": "L5_filter_c2_rare_sort_d1_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 14.4,
+    "p95": 15.1,
+    "max": 15.8
+   },
+   {
+    "p50": 14.3,
+    "p95": 15.1,
+    "max": 17.8
+   },
+   {
+    "p50": 14.2,
+    "p95": 15.1,
+    "max": 15.4
+   }
+  ],
+  "p50": 14.3,
+  "p95": 15.1,
+  "max": 17.8,
+  "cold": 47.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4b_range_n1_between_idx": {
+  "tier": "W1M",
+  "name": "L4b_range_n1_between_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 4.7,
+    "max": 5.4
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.5,
+    "max": 5
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 4.8
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.5,
+  "max": 5.4,
+  "cold": 18.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4b_range_d1_between_idx": {
+  "tier": "W1M",
+  "name": "L4b_range_d1_between_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.4,
+    "max": 5.4
+   },
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.4
+   },
+   {
+    "p50": 3.5,
+    "p95": 4,
+    "max": 4.4
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4,
+  "max": 5.4,
+  "cold": 21,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_deal_n1_asc_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_deal_n1_asc_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.8,
+    "max": 4.5
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.4,
+    "max": 3.9
+   }
+  ],
+  "p50": 2.9,
+  "p95": 3.7,
+  "max": 4.5,
+  "cold": 17.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_cursor_orchain_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_cursor_orchain_idx",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5005.5,
+    "p95": 5017,
+    "max": 5017
+   },
+   {
+    "p50": 5005.2,
+    "p95": 5014.2,
+    "max": 5014.2
+   },
+   {
+    "p50": 5004.4,
+    "p95": 5014.1,
+    "max": 5014.1
+   }
+  ],
+  "p50": 5005.2,
+  "p95": 5014.2,
+  "max": 5017,
+  "cold": 5021.8,
+  "errors": 11,
+  "timeouts": 11,
+  "rows": 51
+ },
+ "C:W1M:L4_sort_n1_cursor_rowvalue_idx": {
+  "tier": "W1M",
+  "name": "L4_sort_n1_cursor_rowvalue_idx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 5,
+    "max": 5.3
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.2
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.1,
+  "max": 5.3,
+  "cold": 30.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_select_eq_random": {
+  "tier": "W1M",
+  "name": "LP_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 4.7,
+    "max": 5.1
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.7,
+    "max": 4.4
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 5
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.7,
+  "max": 5.1,
+  "cold": 19.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_select_eq_common": {
+  "tier": "W1M",
+  "name": "LP_select_eq_common",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 3.8,
+    "max": 4.6
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.7,
+    "max": 4.3
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 4.2
+   }
+  ],
+  "p50": 2.9,
+  "p95": 3.7,
+  "max": 4.6,
+  "cold": 18.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_select_eq_rare_o019": {
+  "tier": "W1M",
+  "name": "LP_select_eq_rare_o019",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.9,
+    "p95": 3.8,
+    "max": 4.2
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 3.7
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.6,
+    "max": 3.9
+   }
+  ],
+  "p50": 2.9,
+  "p95": 3.6,
+  "max": 4.2,
+  "cold": 14.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_checkbox_c2_true_rare": {
+  "tier": "W1M",
+  "name": "LP_checkbox_c2_true_rare",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 3.7,
+    "max": 4.2
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.7,
+    "max": 4.2
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 3.6
+   }
+  ],
+  "p50": 2.8,
+  "p95": 3.7,
+  "max": 4.2,
+  "cold": 15.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_s1_and_c2": {
+  "tier": "W1M",
+  "name": "LP_s1_and_c2",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 22.8,
+    "p95": 29.6,
+    "max": 33.7
+   },
+   {
+    "p50": 21.4,
+    "p95": 28.1,
+    "max": 30.6
+   },
+   {
+    "p50": 24.1,
+    "p95": 28.4,
+    "max": 31.3
+   }
+  ],
+  "p50": 22.8,
+  "p95": 28.4,
+  "max": 33.7,
+  "cold": 43.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_s1_in_3_values": {
+  "tier": "W1M",
+  "name": "LP_s1_in_3_values",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 7.8,
+    "p95": 13,
+    "max": 14.4
+   },
+   {
+    "p50": 8.2,
+    "p95": 13.8,
+    "max": 41.5
+   },
+   {
+    "p50": 8,
+    "p95": 12.1,
+    "max": 14.8
+   }
+  ],
+  "p50": 8,
+  "p95": 13,
+  "max": 41.5,
+  "cold": 43.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_total_s1_rare_o019": {
+  "tier": "W1M",
+  "name": "LP_total_s1_rare_o019",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 9.4,
+    "p95": 11,
+    "max": 11.2
+   },
+   {
+    "p50": 9.2,
+    "p95": 10.5,
+    "max": 11.8
+   },
+   {
+    "p50": 9,
+    "p95": 10.1,
+    "max": 10.7
+   }
+  ],
+  "p50": 9.2,
+  "p95": 10.5,
+  "max": 11.8,
+  "cold": 84.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "C:W1M:LP_total_s1_common_o001": {
+  "tier": "W1M",
+  "name": "LP_total_s1_common_o001",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 142.7,
+    "p95": 147.2,
+    "max": 154.3
+   },
+   {
+    "p50": 142.6,
+    "p95": 147.1,
+    "max": 153.6
+   },
+   {
+    "p50": 142.4,
+    "p95": 145.3,
+    "max": 147.5
+   }
+  ],
+  "p50": 142.6,
+  "p95": 147.1,
+  "max": 154.3,
+  "cold": 208.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "C:W1M:LP_deal_select_eq_random": {
+  "tier": "W1M",
+  "name": "LP_deal_select_eq_random",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 4.1,
+    "max": 4.6
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.4,
+    "max": 3.9
+   },
+   {
+    "p50": 2.8,
+    "p95": 3.3,
+    "max": 3.7
+   }
+  ],
+  "p50": 2.8,
+  "p95": 3.4,
+  "max": 4.6,
+  "cold": 30.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "C:W1M:LP_unindexed_s2_eq_rare": {
+  "tier": "W1M",
+  "name": "LP_unindexed_s2_eq_rare",
+  "runs": 30,
+  "rounds": [
+   {
+    "p50": 26.5,
+    "p95": 26.9,
+    "max": 26.9
+   },
+   {
+    "p50": 26.5,
+    "p95": 28.7,
+    "max": 28.7
+   },
+   {
+    "p50": 26.6,
+    "p95": 27,
+    "max": 27
+   }
+  ],
+  "p50": 26.5,
+  "p95": 27,
+  "max": 28.7,
+  "cold": 85.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:25:00.459Z"
+ },
+ "D:timing:create_extension_pg_trgm": {
+  "ms": 112
+ },
+ "D:timing:create_trgm_contact_search_normalized": {
+  "ms": 5328
+ },
+ "D:timing:create_trgm_contact_custom_search": {
+  "ms": 57276
+ },
+ "D:timing:create_trgm_deal_search_normalized": {
+  "ms": 1547
+ },
+ "D:timing:create_trgm_deal_custom_search": {
+  "ms": 14898
+ },
+ "D:indexes:D_all_indexes": {
+  "idx": [
+   {
+    "relname": "contact_custom_search_trgm",
+    "bytes": "292880384",
+    "pretty": "279 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_pkey",
+    "bytes": "144154624",
+    "pretty": "137 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_normalized",
+    "bytes": "229539840",
+    "pretty": "219 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_trgm",
+    "bytes": "50716672",
+    "pretty": "48 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_created",
+    "bytes": "171048960",
+    "pretty": "163 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_owner_created",
+    "bytes": "225902592",
+    "pretty": "215 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w1m",
+    "bytes": "49618944",
+    "pretty": "47 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w1m",
+    "bytes": "46112768",
+    "pretty": "44 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w50",
+    "bytes": "2334720",
+    "pretty": "2280 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w1m",
+    "bytes": "40615936",
+    "pretty": "39 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w1m",
+    "bytes": "49618944",
+    "pretty": "47 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w1m",
+    "bytes": "56492032",
+    "pretty": "54 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w50",
+    "bytes": "2842624",
+    "pretty": "2776 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "deal_custom_gin",
+    "bytes": "146685952",
+    "pretty": "140 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_custom_search_trgm",
+    "bytes": "81264640",
+    "pretty": "78 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_pkey",
+    "bytes": "35708928",
+    "pretty": "34 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_normalized",
+    "bytes": "60735488",
+    "pretty": "58 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_trgm",
+    "bytes": "16646144",
+    "pretty": "16 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_created",
+    "bytes": "42024960",
+    "pretty": "40 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_owner_created",
+    "bytes": "54992896",
+    "pretty": "52 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w1m",
+    "bytes": "20324352",
+    "pretty": "19 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w1m",
+    "bytes": "24821760",
+    "pretty": "24 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "deal"
+   }
+  ],
+  "heap": [
+   {
+    "relname": "contact",
+    "heap": "3164299264",
+    "toast": "452427776",
+    "idx": "1368948736",
+    "n_live": 0
+   },
+   {
+    "relname": "deal",
+    "heap": "842801152",
+    "toast": "157220864",
+    "idx": "487768064",
+    "n_live": 0
+   }
+  ]
+ },
+ "D:insert_throughput:D_all_indexes_gin_trgm_expr": {
+  "rows": 100000,
+  "ms": 12188,
+  "rows_per_s": 8205
+ },
+ "D:W50:L6_q_common_en_display_only_P1a_tri": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_only_P1a_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.1,
+    "p95": 4.9,
+    "max": 5.6
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.5,
+    "max": 4.9
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.9
+   }
+  ],
+  "p50": 3.7,
+  "p95": 4.5,
+  "max": 5.6,
+  "cold": 34.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_common_en_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.2,
+    "max": 5.2
+   },
+   {
+    "p50": 3.2,
+    "p95": 4,
+    "max": 6
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.2,
+  "p95": 4,
+  "max": 6,
+  "cold": 20.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_common_ar_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_common_ar_display_plus_custom_search_tri",
+  "runs": 120,
+  "rounds": [
+   {
+    "p50": 375.8,
+    "p95": 386.3,
+    "max": 388.4
+   },
+   {
+    "p50": 375.7,
+    "p95": 381.9,
+    "max": 389.4
+   },
+   {
+    "p50": 376.1,
+    "p95": 385.1,
+    "max": 388
+   }
+  ],
+  "p50": 375.8,
+  "p95": 385.1,
+  "max": 389.4,
+  "cold": 524.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_mid_en_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_mid_en_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 5.3
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 5.3
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.9,
+  "max": 5.3,
+  "cold": 34.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_mid_ar_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_mid_ar_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 190.8,
+    "p95": 200,
+    "max": 211.1
+   },
+   {
+    "p50": 190.8,
+    "p95": 196.5,
+    "max": 206.5
+   },
+   {
+    "p50": 190.8,
+    "p95": 197.3,
+    "max": 199.6
+   }
+  ],
+  "p50": 190.8,
+  "p95": 197.3,
+  "max": 211.1,
+  "cold": 270.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_rare_token_display_only_P1a_tri": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_only_P1a_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 24.5,
+    "p95": 28.7,
+    "max": 31
+   },
+   {
+    "p50": 24.2,
+    "p95": 26.7,
+    "max": 30
+   },
+   {
+    "p50": 24.4,
+    "p95": 26.4,
+    "max": 30.8
+   }
+  ],
+  "p50": 24.4,
+  "p95": 26.7,
+  "max": 31,
+  "cold": 75.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_q_rare_token_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 59.4,
+    "p95": 67.4,
+    "max": 72.3
+   },
+   {
+    "p50": 59,
+    "p95": 69.9,
+    "max": 71.5
+   },
+   {
+    "p50": 58.7,
+    "p95": 70.3,
+    "max": 76.3
+   }
+  ],
+  "p50": 59,
+  "p95": 69.9,
+  "max": 76.3,
+  "cold": 112.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_q_short3_display_only_P1a_tri": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_only_P1a_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4.2,
+    "max": 4.7
+   },
+   {
+    "p50": 3.1,
+    "p95": 4,
+    "max": 4.4
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.2,
+    "max": 5.7
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.2,
+  "max": 5.7,
+  "cold": 18.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_short3_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.2,
+    "p95": 4,
+    "max": 5.8
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 4.3
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.8,
+  "max": 5.8,
+  "cold": 16.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_short2_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_short2_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.2,
+    "p95": 3.9,
+    "max": 4.2
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 4.1
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 3.9
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.8,
+  "max": 4.2,
+  "cold": 19.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_ar3_display_plus_custom_search_tri": {
+  "tier": "W50",
+  "name": "L6_q_ar3_display_plus_custom_search_tri",
+  "runs": 120,
+  "rounds": [
+   {
+    "p50": 365.8,
+    "p95": 373.1,
+    "max": 384.4
+   },
+   {
+    "p50": 363.9,
+    "p95": 373.3,
+    "max": 376.7
+   },
+   {
+    "p50": 376.2,
+    "p95": 409.9,
+    "max": 419.5
+   }
+  ],
+  "p50": 365.8,
+  "p95": 373.3,
+  "max": 419.5,
+  "cold": 396.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_prefix_common_tri": {
+  "tier": "W50",
+  "name": "L6_q_prefix_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.4,
+    "max": 4.8
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.4,
+    "max": 5
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.3,
+    "max": 4.8
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.4,
+  "max": 5,
+  "cold": 31,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L7_total_q_common_tri": {
+  "tier": "W50",
+  "name": "L7_total_q_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 21.7,
+    "p95": 25.7,
+    "max": 28.5
+   },
+   {
+    "p50": 21.4,
+    "p95": 24.3,
+    "max": 25.8
+   },
+   {
+    "p50": 21.5,
+    "p95": 22.8,
+    "max": 23.8
+   }
+  ],
+  "p50": 21.5,
+  "p95": 24.3,
+  "max": 28.5,
+  "cold": 65.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L7_total_q_rare_tri": {
+  "tier": "W50",
+  "name": "L7_total_q_rare_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 59.1,
+    "p95": 70.6,
+    "max": 75.7
+   },
+   {
+    "p50": 59.4,
+    "p95": 70.6,
+    "max": 73.9
+   },
+   {
+    "p50": 59.3,
+    "p95": 70.7,
+    "max": 75.2
+   }
+  ],
+  "p50": 59.3,
+  "p95": 70.6,
+  "max": 75.7,
+  "cold": 120.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_deal_q_common_tri": {
+  "tier": "W50",
+  "name": "L6_deal_q_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.5,
+    "max": 4.8
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.3
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.1,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.1,
+  "max": 4.8,
+  "cold": 33.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_en_display_only_P1a_tri": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_only_P1a_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.5
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 5.1
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.8
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.1,
+  "max": 5.1,
+  "cold": 24.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_en_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 3.6,
+    "max": 4
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.4,
+    "max": 3.8
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 4.2
+   }
+  ],
+  "p50": 3,
+  "p95": 3.6,
+  "max": 4.2,
+  "cold": 17.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_ar_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_common_ar_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.2,
+    "p95": 3.9,
+    "max": 4
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.4,
+    "max": 4.2
+   },
+   {
+    "p50": 3,
+    "p95": 3.6,
+    "max": 3.9
+   }
+  ],
+  "p50": 3,
+  "p95": 3.6,
+  "max": 4.2,
+  "cold": 17.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_mid_en_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_en_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.2,
+    "max": 4.4
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 5.8
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.2,
+  "max": 5.8,
+  "cold": 17.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_mid_ar_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_mid_ar_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.9
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.9
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 4
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.9,
+  "max": 4.9,
+  "cold": 17.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_rare_token_display_only_P1a_tri": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_only_P1a_tri",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5012,
+    "p95": 5015.1,
+    "max": 5015.1
+   },
+   {
+    "p50": 5014,
+    "p95": 5015.9,
+    "max": 5015.9
+   },
+   {
+    "p50": 5010.8,
+    "p95": 5017.8,
+    "max": 5017.8
+   }
+  ],
+  "p50": 5012,
+  "p95": 5015.9,
+  "max": 5017.8,
+  "cold": 5020.1,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "D:W1M:L6_q_rare_token_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_plus_custom_search_tri",
+  "runs": 15,
+  "rounds": [
+   {
+    "p50": 5011.7,
+    "p95": 5018.6,
+    "max": 5018.6
+   },
+   {
+    "p50": 5014.9,
+    "p95": 5019.3,
+    "max": 5019.3
+   },
+   {
+    "p50": 5008.8,
+    "p95": 5015.5,
+    "max": 5015.5
+   }
+  ],
+  "p50": 5011.7,
+  "p95": 5018.6,
+  "max": 5019.3,
+  "cold": 5021.7,
+  "errors": 17,
+  "timeouts": 17,
+  "rows": 0
+ },
+ "D:W1M:L6_q_short3_display_only_P1a_tri": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_only_P1a_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4.3,
+    "max": 6.1
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.2
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.3,
+    "max": 5.2
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.3,
+  "max": 6.1,
+  "cold": 33.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_short3_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3,
+    "p95": 3.8,
+    "max": 4.4
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.5,
+    "max": 4.1
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4
+   }
+  ],
+  "p50": 3,
+  "p95": 3.7,
+  "max": 4.4,
+  "cold": 16.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_short2_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_short2_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.1,
+    "p95": 4.3,
+    "max": 5.9
+   },
+   {
+    "p50": 3,
+    "p95": 3.5,
+    "max": 3.8
+   },
+   {
+    "p50": 2.9,
+    "p95": 3.4,
+    "max": 3.8
+   }
+  ],
+  "p50": 3,
+  "p95": 3.5,
+  "max": 5.9,
+  "cold": 15.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_ar3_display_plus_custom_search_tri": {
+  "tier": "W1M",
+  "name": "L6_q_ar3_display_plus_custom_search_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.2,
+    "p95": 3.9,
+    "max": 4.8
+   },
+   {
+    "p50": 3,
+    "p95": 3.7,
+    "max": 4.1
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.7,
+  "max": 4.8,
+  "cold": 19.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_prefix_common_tri": {
+  "tier": "W1M",
+  "name": "L6_q_prefix_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.6,
+    "p95": 4.3,
+    "max": 4.9
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.3,
+    "max": 4.7
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.4,
+    "max": 4.7
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.3,
+  "max": 4.9,
+  "cold": 20.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L7_total_q_common_tri": {
+  "tier": "W1M",
+  "name": "L7_total_q_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 26,
+    "p95": 35.9,
+    "max": 591.7
+   },
+   {
+    "p50": 26.1,
+    "p95": 34.5,
+    "max": 598.8
+   },
+   {
+    "p50": 26.7,
+    "p95": 35.2,
+    "max": 591.8
+   }
+  ],
+  "p50": 26.1,
+  "p95": 35.2,
+  "max": 598.8,
+  "cold": 39.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L7_total_q_rare_tri": {
+  "tier": "W1M",
+  "name": "L7_total_q_rare_tri",
+  "runs": 45,
+  "rounds": [
+   {
+    "p50": 1957.4,
+    "p95": 2100.2,
+    "max": 2100.2
+   },
+   {
+    "p50": 1603.6,
+    "p95": 1720.9,
+    "max": 1720.9
+   },
+   {
+    "p50": 1677,
+    "p95": 1977.6,
+    "max": 1977.6
+   }
+  ],
+  "p50": 1677,
+  "p95": 1977.6,
+  "max": 2100.2,
+  "cold": 2038.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L6_deal_q_common_tri": {
+  "tier": "W1M",
+  "name": "L6_deal_q_common_tri",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.4,
+    "max": 4.9
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.2,
+    "max": 5.2
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.2,
+  "max": 5.2,
+  "cold": 34.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_common_en_display_only_P1a_trilp": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 4.9
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.2,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.2,
+  "max": 4.9,
+  "cold": 26.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_common_en_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_common_en_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.9
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.7
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.1,
+  "max": 4.9,
+  "cold": 17.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_common_ar_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_common_ar_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.6
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.3,
+    "max": 5.1
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.1,
+  "max": 5.1,
+  "cold": 16.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_mid_en_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_mid_en_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.4,
+    "max": 4.7
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 4.7
+   },
+   {
+    "p50": 3.5,
+    "p95": 4,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.2,
+  "max": 4.7,
+  "cold": 17.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_mid_ar_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_mid_ar_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.9,
+    "p95": 4.7,
+    "max": 4.8
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.3,
+    "max": 4.6
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.3,
+    "max": 5.9
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.3,
+  "max": 5.9,
+  "cold": 19.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_rare_token_display_only_P1a_trilp": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.3,
+    "max": 4.2
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.7
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.3,
+    "max": 3.9
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3.3,
+  "max": 4.2,
+  "cold": 15.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_q_rare_token_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_rare_token_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 6.3,
+    "p95": 7.2,
+    "max": 8
+   },
+   {
+    "p50": 6.1,
+    "p95": 7.2,
+    "max": 9.1
+   },
+   {
+    "p50": 6.2,
+    "p95": 7.1,
+    "max": 8.1
+   }
+  ],
+  "p50": 6.2,
+  "p95": 7.2,
+  "max": 9.1,
+  "cold": 20.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_q_short3_display_only_P1a_trilp": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.6
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.7,
+    "max": 4.1
+   }
+  ],
+  "p50": 3.1,
+  "p95": 3.7,
+  "max": 4.6,
+  "cold": 17.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_short3_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_short3_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.4
+   },
+   {
+    "p50": 3.4,
+    "p95": 3.9,
+    "max": 4.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 4.2
+   }
+  ],
+  "p50": 3.4,
+  "p95": 3.9,
+  "max": 4.8,
+  "cold": 15.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_short2_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_short2_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.4
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.4
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.7
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.8,
+  "max": 4.7,
+  "cold": 18.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_ar3_display_plus_custom_search_trilp": {
+  "tier": "W50",
+  "name": "L6_q_ar3_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.3,
+    "max": 4.7
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.3
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 5.6
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4,
+  "max": 5.6,
+  "cold": 18.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L6_q_prefix_common_trilp": {
+  "tier": "W50",
+  "name": "L6_q_prefix_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.4,
+    "max": 5.6
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 4.8
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.3,
+    "max": 4.5
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.3,
+  "max": 5.6,
+  "cold": 21.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:L7_total_q_common_trilp": {
+  "tier": "W50",
+  "name": "L7_total_q_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 21.3,
+    "p95": 22.5,
+    "max": 25
+   },
+   {
+    "p50": 20.8,
+    "p95": 22.8,
+    "max": 27.9
+   },
+   {
+    "p50": 20.9,
+    "p95": 22.6,
+    "max": 26.3
+   }
+  ],
+  "p50": 20.9,
+  "p95": 22.6,
+  "max": 27.9,
+  "cold": 104.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L7_total_q_rare_trilp": {
+  "tier": "W50",
+  "name": "L7_total_q_rare_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 6.4,
+    "p95": 7.3,
+    "max": 7.9
+   },
+   {
+    "p50": 6.2,
+    "p95": 6.8,
+    "max": 7
+   },
+   {
+    "p50": 6,
+    "p95": 6.7,
+    "max": 7.7
+   }
+  ],
+  "p50": 6.2,
+  "p95": 6.8,
+  "max": 7.9,
+  "cold": 18.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:L6_deal_q_common_trilp": {
+  "tier": "W50",
+  "name": "L6_deal_q_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 5.1
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.2
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.8
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.1,
+  "max": 5.1,
+  "cold": 22.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_en_display_only_P1a_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.4,
+    "max": 4.7
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.4
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.1,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.1,
+  "max": 4.7,
+  "cold": 23.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_en_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_common_en_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.2,
+    "max": 4.9
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 3.9
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 4
+   }
+  ],
+  "p50": 3.2,
+  "p95": 3.7,
+  "max": 4.9,
+  "cold": 19,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_common_ar_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_common_ar_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 4.3,
+    "max": 4.8
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.8,
+    "max": 4.4
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.2,
+    "max": 4.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.2,
+  "max": 4.8,
+  "cold": 17.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_mid_en_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_mid_en_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.6,
+    "p95": 4.4,
+    "max": 5
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.2,
+    "max": 4.7
+   },
+   {
+    "p50": 3.7,
+    "p95": 4.3,
+    "max": 4.9
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.3,
+  "max": 5,
+  "cold": 17.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_mid_ar_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_mid_ar_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.5,
+    "max": 5.3
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.2,
+    "max": 5.2
+   },
+   {
+    "p50": 3.6,
+    "p95": 4.4,
+    "max": 5.1
+   }
+  ],
+  "p50": 3.6,
+  "p95": 4.4,
+  "max": 5.3,
+  "cold": 19.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_rare_token_display_only_P1a_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.5,
+    "p95": 3.2,
+    "max": 3.8
+   },
+   {
+    "p50": 2.3,
+    "p95": 3,
+    "max": 3.6
+   },
+   {
+    "p50": 2.3,
+    "p95": 2.9,
+    "max": 3.4
+   }
+  ],
+  "p50": 2.3,
+  "p95": 3,
+  "max": 3.8,
+  "cold": 17.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L6_q_rare_token_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_rare_token_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.6,
+    "p95": 3.2,
+    "max": 3.6
+   },
+   {
+    "p50": 2.4,
+    "p95": 3.2,
+    "max": 4
+   },
+   {
+    "p50": 2.4,
+    "p95": 2.9,
+    "max": 3.2
+   }
+  ],
+  "p50": 2.4,
+  "p95": 3.2,
+  "max": 4,
+  "cold": 17.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L6_q_short3_display_only_P1a_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_only_P1a_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.2,
+    "max": 4.8
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 5.7
+   },
+   {
+    "p50": 3.3,
+    "p95": 4,
+    "max": 4.9
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.2,
+  "max": 5.7,
+  "cold": 20.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_short3_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_short3_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.8,
+    "max": 4.3
+   },
+   {
+    "p50": 3.4,
+    "p95": 4.1,
+    "max": 4.4
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4.1,
+  "max": 4.8,
+  "cold": 20.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_short2_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_short2_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.1
+   },
+   {
+    "p50": 3.2,
+    "p95": 3.7,
+    "max": 3.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 3.9,
+    "max": 4.3
+   }
+  ],
+  "p50": 3.3,
+  "p95": 3.9,
+  "max": 4.3,
+  "cold": 17.4,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_ar3_display_plus_custom_search_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_ar3_display_plus_custom_search_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.3
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.2
+   },
+   {
+    "p50": 3.4,
+    "p95": 4,
+    "max": 4.3
+   }
+  ],
+  "p50": 3.4,
+  "p95": 4,
+  "max": 4.3,
+  "cold": 17.6,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L6_q_prefix_common_trilp": {
+  "tier": "W1M",
+  "name": "L6_q_prefix_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 4.3,
+    "max": 5.2
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.5,
+    "max": 5
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.5,
+    "max": 4.9
+   }
+  ],
+  "p50": 3.8,
+  "p95": 4.5,
+  "max": 5.2,
+  "cold": 19.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W1M:L7_total_q_common_trilp": {
+  "tier": "W1M",
+  "name": "L7_total_q_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 25.1,
+    "p95": 32.2,
+    "max": 477.2
+   },
+   {
+    "p50": 24.7,
+    "p95": 31.6,
+    "max": 572.3
+   },
+   {
+    "p50": 23.6,
+    "p95": 32.5,
+    "max": 481.6
+   }
+  ],
+  "p50": 24.7,
+  "p95": 32.2,
+  "max": 572.3,
+  "cold": 34.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L7_total_q_rare_trilp": {
+  "tier": "W1M",
+  "name": "L7_total_q_rare_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 2.7,
+    "p95": 3.3,
+    "max": 3.8
+   },
+   {
+    "p50": 2.6,
+    "p95": 3.3,
+    "max": 3.9
+   },
+   {
+    "p50": 2.6,
+    "p95": 3,
+    "max": 3.3
+   }
+  ],
+  "p50": 2.6,
+  "p95": 3.3,
+  "max": 3.9,
+  "cold": 28.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:L6_deal_q_common_trilp": {
+  "tier": "W1M",
+  "name": "L6_deal_q_common_trilp",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.7,
+    "p95": 4.3,
+    "max": 4.6
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.4,
+    "max": 4.6
+   },
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.4
+   }
+  ],
+  "p50": 3.7,
+  "p95": 4.3,
+  "max": 4.6,
+  "cold": 25.2,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "D:W50:R_get_with_properties_allidx": {
+  "tier": "W50",
+  "name": "R_get_with_properties_allidx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 4.2,
+    "p95": 4.9,
+    "max": 5.3
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.5,
+    "max": 4.8
+   },
+   {
+    "p50": 3.8,
+    "p95": 4.7,
+    "max": 5.3
+   }
+  ],
+  "p50": 3.9,
+  "p95": 4.7,
+  "max": 5.3,
+  "cold": 33.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 0
+ },
+ "D:W50:R_patch_5props_allidx": {
+  "tier": "W50",
+  "name": "R_patch_5props_allidx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 7.4,
+    "p95": 8.4,
+    "max": 9.7
+   },
+   {
+    "p50": 7.3,
+    "p95": 7.8,
+    "max": 9.1
+   },
+   {
+    "p50": 7.2,
+    "p95": 7.9,
+    "max": 8.2
+   }
+  ],
+  "p50": 7.3,
+  "p95": 7.9,
+  "max": 9.7,
+  "cold": 79.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W50:R_patch_20_concurrent_allidx": {
+  "tier": "W50",
+  "name": "R_patch_20_concurrent_allidx",
+  "runs": 600,
+  "p50": 16.5,
+  "p95": 23.2,
+  "max": 179.6,
+  "errors": 0,
+  "throughput_per_s": 800.6
+ },
+ "D:W1M:R_get_with_properties_allidx": {
+  "tier": "W1M",
+  "name": "R_get_with_properties_allidx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.8,
+    "p95": 5.2,
+    "max": 6.6
+   },
+   {
+    "p50": 3.9,
+    "p95": 4.9,
+    "max": 5.4
+   },
+   {
+    "p50": 4,
+    "p95": 4.8,
+    "max": 5.1
+   }
+  ],
+  "p50": 3.9,
+  "p95": 4.9,
+  "max": 6.6,
+  "cold": 23.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 0
+ },
+ "D:W1M:R_patch_5props_allidx": {
+  "tier": "W1M",
+  "name": "R_patch_5props_allidx",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 7.8,
+    "p95": 9,
+    "max": 10.9
+   },
+   {
+    "p50": 7.5,
+    "p95": 8.4,
+    "max": 10
+   },
+   {
+    "p50": 7.4,
+    "p95": 8.3,
+    "max": 9
+   }
+  ],
+  "p50": 7.5,
+  "p95": 8.4,
+  "max": 10.9,
+  "cold": 36.1,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "D:W1M:R_patch_20_concurrent_allidx": {
+  "tier": "W1M",
+  "name": "R_patch_20_concurrent_allidx",
+  "runs": 600,
+  "p50": 18.1,
+  "p95": 26.3,
+  "max": 164.3,
+  "errors": 0,
+  "throughput_per_s": 755.8
+ },
+ "D:tablestats:after_D": [
+  {
+   "relname": "contact",
+   "n_live_tup": "1950335",
+   "n_dead_tup": "101804",
+   "n_tup_upd": "3608",
+   "n_tup_hot_upd": "100"
+  },
+  {
+   "relname": "deal",
+   "n_live_tup": "549968",
+   "n_dead_tup": "0",
+   "n_tup_upd": "0",
+   "n_tup_hot_upd": "0"
+  }
+ ],
+ "E:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:36:24.366Z"
+ },
+ "E:cic_flip_W1M": {
+  "build_ms": 6288,
+  "baseline": {
+   "n": 19907,
+   "p50": 3.8,
+   "p95": 4.6,
+   "max": 510.4,
+   "errs": 0
+  },
+  "during": {
+   "n": 6002,
+   "p50": 3.9,
+   "p95": 4.8,
+   "max": 221.3,
+   "errs": 0
+  },
+  "ratio_p95": 1,
+  "index_bytes": "40943616"
+ },
+ "E:cic_flip_W50": {
+  "build_ms": 2029
+ },
+ "F:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:51:48.777Z"
+ },
+ "F:W50:S_schema_get_100props": {
+  "tier": "W50",
+  "name": "S_schema_get_100props",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.9,
+    "p95": 4.9,
+    "max": 5.8
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.2,
+    "max": 5.6
+   },
+   {
+    "p50": 3.2,
+    "p95": 4.1,
+    "max": 7.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.2,
+  "max": 7.6,
+  "cold": 24.8,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:W50:schema_json_kb": {
+  "kb": 89.9404296875
+ },
+ "F:W50:S_property_edit": {
+  "tier": "W50",
+  "name": "S_property_edit",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 6,
+    "p95": 6.9,
+    "max": 12.3
+   },
+   {
+    "p50": 5.9,
+    "p95": 7.1,
+    "max": 7.6
+   },
+   {
+    "p50": 5.9,
+    "p95": 7,
+    "max": 8.1
+   }
+  ],
+  "p50": 5.9,
+  "p95": 7,
+  "max": 12.3,
+  "cold": 43,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:W50:S_property_create": {
+  "tier": "W50",
+  "name": "S_property_create",
+  "runs": 150,
+  "rounds": [
+   {
+    "p50": 5.1,
+    "p95": 5.7,
+    "max": 6.4
+   },
+   {
+    "p50": 5,
+    "p95": 5.5,
+    "max": 5.6
+   },
+   {
+    "p50": 5,
+    "p95": 5.6,
+    "max": 6
+   }
+  ],
+  "p50": 5,
+  "p95": 5.6,
+  "max": 6.4,
+  "cold": 26,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:W1M:S_schema_get_100props": {
+  "tier": "W1M",
+  "name": "S_schema_get_100props",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.6,
+    "p95": 5,
+    "max": 7.1
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.1,
+    "max": 5.1
+   },
+   {
+    "p50": 3.1,
+    "p95": 3.8,
+    "max": 5.6
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.1,
+  "max": 7.1,
+  "cold": 11.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:W1M:schema_json_kb": {
+  "kb": 89.9404296875
+ },
+ "F:W1M:S_property_edit": {
+  "tier": "W1M",
+  "name": "S_property_edit",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 5.9,
+    "p95": 7,
+    "max": 7.3
+   },
+   {
+    "p50": 5.8,
+    "p95": 6.6,
+    "max": 7.4
+   },
+   {
+    "p50": 5.8,
+    "p95": 6.7,
+    "max": 7.7
+   }
+  ],
+  "p50": 5.8,
+  "p95": 6.7,
+  "max": 7.7,
+  "cold": 29.3,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:W1M:S_property_create": {
+  "tier": "W1M",
+  "name": "S_property_create",
+  "runs": 150,
+  "rounds": [
+   {
+    "p50": 5,
+    "p95": 6.5,
+    "max": 6.7
+   },
+   {
+    "p50": 4.9,
+    "p95": 5.7,
+    "max": 6.8
+   },
+   {
+    "p50": 5.1,
+    "p95": 6.4,
+    "max": 6.9
+   }
+  ],
+  "p50": 5,
+  "p95": 6.4,
+  "max": 6.9,
+  "cold": 25.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "F:timing:wide_gin_build": {
+  "ms": 1
+ },
+ "F:wide_variant": {
+  "wide": {
+   "n": "50000",
+   "avg_stored_bytes": 5155,
+   "max_stored": 8113,
+   "avg_text_len": 12642
+  },
+  "sizes": {
+   "heap": "4661248",
+   "toast": "287825920"
+  },
+  "gin_bytes": "54468608"
+ },
+ "F:W50:W_wide_filter_select_eq": {
+  "tier": "W50",
+  "name": "W_wide_filter_select_eq",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 61.6,
+    "p95": 110.8,
+    "max": 118.1
+   },
+   {
+    "p50": 75.7,
+    "p95": 112.6,
+    "max": 117.7
+   },
+   {
+    "p50": 77.8,
+    "p95": 115.1,
+    "max": 119.4
+   }
+  ],
+  "p50": 75.7,
+  "p95": 112.6,
+  "max": 119.4,
+  "cold": 170.7,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "F:W50:W_wide_list_default_projection": {
+  "tier": "W50",
+  "name": "W_wide_list_default_projection",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.5,
+    "p95": 4.3,
+    "max": 4.9
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.1,
+    "max": 5.1
+   },
+   {
+    "p50": 3.5,
+    "p95": 4,
+    "max": 4.3
+   }
+  ],
+  "p50": 3.5,
+  "p95": 4.1,
+  "max": 5.1,
+  "cold": 11.9,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 51
+ },
+ "F:W50:W_wide_get_full_blob": {
+  "tier": "W50",
+  "name": "W_wide_get_full_blob",
+  "runs": 300,
+  "rounds": [
+   {
+    "p50": 3.4,
+    "p95": 4.6,
+    "max": 5
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.2,
+    "max": 14
+   },
+   {
+    "p50": 3.3,
+    "p95": 4.4,
+    "max": 5
+   }
+  ],
+  "p50": 3.3,
+  "p95": 4.4,
+  "max": 14,
+  "cold": 12.5,
+  "errors": 0,
+  "timeouts": 0,
+  "rows": 1
+ },
+ "G:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:38:36.114Z"
+ },
+ "G:timing:bulk_update_1M_custom_merge": {
+  "ms": 556724
+ },
+ "G:timing:vacuum_after_1M_updates": {
+  "ms": 17350
+ },
+ "G:bloat_1M_updates": {
+  "before": {
+   "heap": "3179986944",
+   "idx": "1484095488",
+   "toast": "450887680"
+  },
+  "after_update": {
+   "heap": "4692131840",
+   "idx": "2094227456",
+   "toast": "678371328"
+  },
+  "after_vacuum": {
+   "heap": "4692131840",
+   "idx": "2094243840"
+  },
+  "stats_before": {
+   "n_tup_upd": "29517",
+   "n_tup_hot_upd": "100",
+   "n_dead_tup": "27056"
+  },
+  "stats_after": {
+   "n_tup_upd": "1029517",
+   "n_tup_hot_upd": "110",
+   "n_dead_tup": "1027056"
+  },
+  "wal_bytes": "43509415032"
+ },
+ "G:indexes:G_final": {
+  "idx": [
+   {
+    "relname": "contact_custom_search_trgm",
+    "bytes": "582533120",
+    "pretty": "556 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_pkey",
+    "bytes": "164700160",
+    "pretty": "157 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_normalized",
+    "bytes": "243982336",
+    "pretty": "233 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_search_trgm",
+    "bytes": "90923008",
+    "pretty": "87 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_created",
+    "bytes": "189177856",
+    "pretty": "180 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "contact_tenant_owner_created",
+    "bytes": "240582656",
+    "pretty": "229 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w1m",
+    "bytes": "99205120",
+    "pretty": "95 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_c2_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w1m",
+    "bytes": "92291072",
+    "pretty": "88 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_d1_w50",
+    "bytes": "2392064",
+    "pretty": "2336 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w1m",
+    "bytes": "81723392",
+    "pretty": "78 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n1_w50",
+    "bytes": "2187264",
+    "pretty": "2136 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n2_flip",
+    "bytes": "81846272",
+    "pretty": "78 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_n2_flip50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w1m",
+    "bytes": "99205120",
+    "pretty": "95 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_s1_w50",
+    "bytes": "2514944",
+    "pretty": "2456 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w1m",
+    "bytes": "113041408",
+    "pretty": "108 MB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "ix_c_t1_w50",
+    "bytes": "2932736",
+    "pretty": "2864 kB",
+    "tbl": "contact"
+   },
+   {
+    "relname": "deal_custom_gin",
+    "bytes": "146685952",
+    "pretty": "140 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_custom_search_trgm",
+    "bytes": "81264640",
+    "pretty": "78 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_pkey",
+    "bytes": "35708928",
+    "pretty": "34 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_normalized",
+    "bytes": "60735488",
+    "pretty": "58 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_search_trgm",
+    "bytes": "16646144",
+    "pretty": "16 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_created",
+    "bytes": "42024960",
+    "pretty": "40 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "deal_tenant_owner_created",
+    "bytes": "54992896",
+    "pretty": "52 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w1m",
+    "bytes": "20324352",
+    "pretty": "19 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_n1_w50",
+    "bytes": "2056192",
+    "pretty": "2008 kB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w1m",
+    "bytes": "24821760",
+    "pretty": "24 MB",
+    "tbl": "deal"
+   },
+   {
+    "relname": "ix_d_s1_w50",
+    "bytes": "2506752",
+    "pretty": "2448 kB",
+    "tbl": "deal"
+   }
+  ],
+  "heap": [
+   {
+    "relname": "contact",
+    "heap": "4692131840",
+    "toast": "689143808",
+    "idx": "2094243840",
+    "n_live": 0
+   },
+   {
+    "relname": "deal",
+    "heap": "842801152",
+    "toast": "157220864",
+    "idx": "487768064",
+    "n_live": 0
+   }
+  ]
+ },
+ "H:env": {
+  "ver": "PostgreSQL 17.10 on x86_64-windows, compiled by msvc-19.44.35226, 64-bit",
+  "cpus": 16,
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11700K @ 3.60GHz",
+  "ram_gb": 32,
+  "settings": [
+   {
+    "name": "effective_cache_size",
+    "setting": "524288",
+    "unit": "8kB"
+   },
+   {
+    "name": "fsync",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "gin_pending_list_limit",
+    "setting": "4096",
+    "unit": "kB"
+   },
+   {
+    "name": "jit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "maintenance_work_mem",
+    "setting": "65536",
+    "unit": "kB"
+   },
+   {
+    "name": "max_parallel_workers_per_gather",
+    "setting": "2",
+    "unit": null
+   },
+   {
+    "name": "max_wal_size",
+    "setting": "1024",
+    "unit": "MB"
+   },
+   {
+    "name": "random_page_cost",
+    "setting": "4",
+    "unit": null
+   },
+   {
+    "name": "shared_buffers",
+    "setting": "16384",
+    "unit": "8kB"
+   },
+   {
+    "name": "synchronous_commit",
+    "setting": "on",
+    "unit": null
+   },
+   {
+    "name": "work_mem",
+    "setting": "4096",
+    "unit": "kB"
+   }
+  ],
+  "measured_as": {
+   "cu": "crm_spike_b0_rt",
+   "su": false,
+   "byp": false,
+   "force_rls": true
+  },
+  "other_db_sessions": "0",
+  "collation": {
+   "datcollate": "C",
+   "datctype": "C"
+  },
+  "node": "v24.18.0",
+  "date": "2026-10-06T21:52:59.657Z"
+ },
+ "H:insert_throughput:H_without_contact_custom_search_trgm": {
+  "rows": 100000,
+  "ms": 6093,
+  "rows_per_s": 16411
+ },
+ "H:insert_throughput:H_without_any_contact_trigram": {
+  "rows": 100000,
+  "ms": 5272,
+  "rows_per_s": 18969
+ }
+}

@@ -1,0 +1,1 @@
+# EXPLAIN (ANALYZE, BUFFERS) plans, phase G, spike DB crm_spike_b0, measured as NOSUPERUSER role under FORCE RLS

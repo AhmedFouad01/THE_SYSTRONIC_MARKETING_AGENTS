@@ -1,0 +1,42 @@
+# EXPLAIN (ANALYZE, BUFFERS) plans, phase F, spike DB crm_spike_b0, measured as NOSUPERUSER role under FORCE RLS
+
+===== W50 W_wide_filter_select_eq (phase F) =====
+SELECT tenant_id,id,created_at FROM spike.contact_wide WHERE tenant_id=$1 AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"p1\":\"o020\"}"]
+Limit  (cost=0.41..385.31 rows=51 width=40) (actual time=0.982..57.691 rows=51 loops=1)
+  Buffers: shared hit=13995
+  ->  Index Scan using wide_created on contact_wide  (cost=0.41..3773.91 rows=500 width=40) (actual time=0.981..57.685 rows=51 loops=1)
+        Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Filter: (custom @> '{"p1": "o009"}'::jsonb)
+        Rows Removed by Filter: 2483
+        Buffers: shared hit=13995
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.049 ms
+Execution Time: 57.702 ms
+
+===== W50 W_wide_list_default_projection (phase F) =====
+SELECT tenant_id,id,created_at,custom->'p2' p2 FROM spike.contact_wide WHERE tenant_id=$1 ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Limit  (cost=0.41..4.26 rows=51 width=72) (actual time=0.033..1.123 rows=51 loops=1)
+  Buffers: shared hit=290
+  ->  Index Scan using wide_created on contact_wide  (cost=0.41..3773.91 rows=50000 width=72) (actual time=0.033..1.120 rows=51 loops=1)
+        Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=290
+Planning Time: 0.038 ms
+Execution Time: 1.131 ms
+
+===== W50 W_wide_get_full_blob (phase F) =====
+SELECT custom FROM spike.contact_wide WHERE tenant_id=$1 AND id=(SELECT id FROM spike.contact_wide WHERE tenant_id=$1 LIMIT 1 OFFSET floor(random()*50000)::int)
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7"]
+Index Scan using contact_wide_pkey on contact_wide  (cost=119.84..127.86 rows=1 width=18) (actual time=2.903..2.903 rows=1 loops=1)
+  Index Cond: ((tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid) AND (id = (InitPlan 1).col1))
+  Buffers: shared hit=467
+  InitPlan 1
+    ->  Limit  (cost=119.40..119.42 rows=1 width=16) (actual time=2.896..2.896 rows=1 loops=1)
+          Buffers: shared hit=463
+          ->  Seq Scan on contact_wide contact_wide_1  (cost=0.00..1194.00 rows=50000 width=16) (actual time=0.004..2.190 rows=40631 loops=1)
+                Filter: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                Buffers: shared hit=463
+Planning Time: 0.052 ms
+Execution Time: 2.911 ms

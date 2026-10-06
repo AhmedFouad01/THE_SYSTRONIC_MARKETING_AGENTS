@@ -1,0 +1,458 @@
+# EXPLAIN (ANALYZE, BUFFERS) plans, phase B2, spike DB crm_spike_b0, measured as NOSUPERUSER role under FORCE RLS
+
+===== W50 B2_select_eq_veryrare_s5_plain_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s5\":\"o199\"}"]
+Limit  (cost=0.69..16648.75 rows=51 width=239) (actual time=1.942..102.356 rows=51 loops=1)
+  Buffers: shared hit=40578
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.449..0.449 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..157014.55 rows=481 width=239) (actual time=1.941..102.349 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=40578
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..157008.53 rows=481 width=1072) (actual time=1.478..101.447 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o200"}'::jsonb))
+              Rows Removed by Filter: 26598
+              Buffers: shared hit=40473
+Planning Time: 0.081 ms
+Execution Time: 102.376 ms
+
+===== W50 B2_total_select_eq_rare_s1o019_plain_gin_planner (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o019\"}"]
+Aggregate  (cost=137361.97..137361.98 rows=1 width=4) (actual time=201.851..201.852 rows=1 loops=1)
+  Buffers: shared hit=36595 read=3719
+  ->  Limit  (cost=2013.58..137355.96 rows=481 width=4) (actual time=5.781..201.781 rows=626 loops=1)
+        Buffers: shared hit=36595 read=3719
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.600..0.601 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=2013.32..137355.70 rows=481 width=4) (actual time=5.780..201.725 rows=626 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=36595 read=3719
+              ->  Bitmap Heap Scan on contact  (cost=2013.32..137355.70 rows=481 width=0) (actual time=5.179..201.029 rows=626 loops=1)
+                    Recheck Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 49374
+                    Heap Blocks: exact=14299
+                    Buffers: shared hit=36586 read=3719
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..2013.20 rows=48103 width=0) (actual time=3.801..3.801 rows=50004 loops=1)
+                          Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                          Buffers: shared hit=363 read=63
+Planning Time: 0.103 ms
+Execution Time: 201.948 ms
+
+===== W50 B2_two_cond_s1_c2_plain_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o013\",\"c2\":true}"]
+Limit  (cost=0.69..16648.75 rows=51 width=239) (actual time=9.201..221.054 rows=27 loops=1)
+  Buffers: shared hit=72862 read=3281
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.343..0.343 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..157014.55 rows=481 width=239) (actual time=9.200..221.044 rows=27 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=72862 read=3281
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..157008.53 rows=481 width=1072) (actual time=8.839..220.353 rows=27 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o016"}'::jsonb))
+              Rows Removed by Filter: 49973
+              Buffers: shared hit=72781 read=3281
+Planning Time: 0.072 ms
+Execution Time: 221.075 ms
+
+===== W1M B2_select_eq_veryrare_s5_plain_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s5\":\"o200\"}"]
+Limit  (cost=0.69..7177.16 rows=51 width=239) (actual time=15.120..319.982 rows=51 loops=1)
+  Buffers: shared hit=14128 read=33768
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.331..0.331 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1391672.56 rows=9890 width=239) (actual time=15.119..319.966 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=14128 read=33768
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1391548.93 rows=9890 width=1072) (actual time=14.769..319.028 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o200"}'::jsonb))
+              Rows Removed by Filter: 31559
+              Buffers: shared hit=14035 read=33768
+Planning Time: 0.071 ms
+Execution Time: 320.011 ms
+
+===== W1M B2_total_select_eq_rare_s1o019_plain_gin_planner (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o019\"}"]
+Aggregate  (cost=417138.52..417138.53 rows=1 width=4) (actual time=3387.686..3387.687 rows=1 loops=1)
+  Buffers: shared hit=386131 read=211595
+  ->  Limit  (cost=0.26..417014.89 rows=9890 width=4) (actual time=1.963..3386.270 rows=10001 loops=1)
+        Buffers: shared hit=386131 read=211595
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.342..0.342 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.00..417014.63 rows=9890 width=4) (actual time=1.962..3385.252 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=386131 read=211595
+              ->  Seq Scan on contact  (cost=0.00..417014.63 rows=9890 width=0) (actual time=1.619..3383.728 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 993283
+                    Buffers: shared hit=386122 read=211595
+Planning Time: 0.065 ms
+Execution Time: 3387.710 ms
+
+===== W1M B2_two_cond_s1_c2_plain_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o006\",\"c2\":true}"]
+Limit  (cost=0.69..7177.16 rows=51 width=239) (actual time=4.351..1153.746 rows=51 loops=1)
+  Buffers: shared hit=50382 read=121656
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.323..0.323 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1391672.56 rows=9890 width=239) (actual time=4.350..1153.720 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=50382 read=121656
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1391548.93 rows=9890 width=1072) (actual time=4.014..1152.666 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o018"}'::jsonb))
+              Rows Removed by Filter: 113703
+              Buffers: shared hit=50325 read=121656
+Planning Time: 0.066 ms
+Execution Time: 1153.790 ms
+
+===== W50 B2_select_eq_veryrare_s5_plain_gin_forced_bitmap (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s5\":\"o200\"}"]
+Limit  (cost=137378.02..137378.14 rows=51 width=239) (actual time=245.947..245.955 rows=51 loops=1)
+  Buffers: shared hit=25239 read=15123
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.586..0.586 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=137377.76..137378.96 rows=481 width=239) (actual time=245.946..245.951 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 45kB
+        Buffers: shared hit=25239 read=15123
+        ->  Result  (cost=2013.32..137361.71 rows=481 width=239) (actual time=8.534..245.873 rows=78 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=25239 read=15123
+              ->  Bitmap Heap Scan on contact  (cost=2013.32..137355.70 rows=481 width=1072) (actual time=7.933..244.597 rows=78 loops=1)
+                    Recheck Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o198"}'::jsonb))
+                    Rows Removed by Filter: 49922
+                    Heap Blocks: exact=14299
+                    Buffers: shared hit=25182 read=15123
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..2013.20 rows=48103 width=0) (actual time=5.154..5.154 rows=50004 loops=1)
+                          Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                          Buffers: shared read=426
+Planning Time: 0.097 ms
+Execution Time: 246.106 ms
+
+===== W50 B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o019\"}"]
+Aggregate  (cost=137361.97..137361.98 rows=1 width=4) (actual time=241.247..241.249 rows=1 loops=1)
+  Buffers: shared hit=25193 read=15121
+  ->  Limit  (cost=2013.58..137355.96 rows=481 width=4) (actual time=7.320..241.157 rows=626 loops=1)
+        Buffers: shared hit=25193 read=15121
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.384..0.384 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=2013.32..137355.70 rows=481 width=4) (actual time=7.319..241.089 rows=626 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=25193 read=15121
+              ->  Bitmap Heap Scan on contact  (cost=2013.32..137355.70 rows=481 width=0) (actual time=6.934..240.616 rows=626 loops=1)
+                    Recheck Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 49374
+                    Heap Blocks: exact=14299
+                    Buffers: shared hit=25184 read=15121
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..2013.20 rows=48103 width=0) (actual time=5.399..5.399 rows=50004 loops=1)
+                          Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                          Buffers: shared read=426
+Planning Time: 0.066 ms
+Execution Time: 241.342 ms
+
+===== W50 B2_two_cond_s1_c2_plain_gin_forced_bitmap (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o006\",\"c2\":true}"]
+Limit  (cost=137378.02..137378.14 rows=51 width=239) (actual time=244.000..244.006 rows=46 loops=1)
+  Buffers: shared hit=25279 read=15119
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.376..0.377 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=137377.76..137378.96 rows=481 width=239) (actual time=243.999..244.002 rows=46 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: quicksort  Memory: 36kB
+        Buffers: shared hit=25279 read=15119
+        ->  Result  (cost=2013.32..137361.71 rows=481 width=239) (actual time=9.236..243.949 rows=46 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=25279 read=15119
+              ->  Bitmap Heap Scan on contact  (cost=2013.32..137355.70 rows=481 width=1072) (actual time=8.840..243.077 rows=46 loops=1)
+                    Recheck Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o005"}'::jsonb))
+                    Rows Removed by Filter: 49954
+                    Heap Blocks: exact=14299
+                    Buffers: shared hit=25186 read=15119
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..2013.20 rows=48103 width=0) (actual time=5.387..5.387 rows=50004 loops=1)
+                          Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                          Buffers: shared read=426
+Planning Time: 0.072 ms
+Execution Time: 244.109 ms
+
+===== W1M B2_select_eq_veryrare_s5_plain_gin_forced_bitmap (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s5\":\"o199\"}"]
+Limit  (cost=457498.78..457498.91 rows=51 width=239) (actual time=4493.195..4493.202 rows=51 loops=1)
+  Buffers: shared hit=483232 read=237837
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.385..0.385 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=457498.52..457523.24 rows=9890 width=239) (actual time=4493.194..4493.199 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 46kB
+        Buffers: shared hit=483232 read=237837
+        ->  Result  (cost=41380.25..457168.57 rows=9890 width=239) (actual time=104.659..4492.030 rows=1503 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=483232 read=237837
+              ->  Bitmap Heap Scan on contact  (cost=41380.25..457044.94 rows=9890 width=1072) (actual time=104.246..4477.577 rows=1503 loops=1)
+                    Recheck Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                    Rows Removed by Index Recheck: 38384
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o200"}'::jsonb))
+                    Rows Removed by Filter: 998497
+                    Heap Blocks: exact=36751 lossy=165300
+                    Buffers: shared hit=480823 read=237837
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..41377.78 rows=988980 width=0) (actual time=94.895..94.895 rows=1000000 loops=1)
+                          Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                          Buffers: shared read=7657
+Planning Time: 0.074 ms
+Execution Time: 4493.832 ms
+
+===== W1M B2_total_select_eq_rare_s1o019_plain_gin_forced_bitmap (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o019\"}"]
+Aggregate  (cost=457168.83..457168.84 rows=1 width=4) (actual time=3578.506..3578.508 rows=1 loops=1)
+  Buffers: shared hit=386293 read=186597
+  ->  Limit  (cost=41380.51..457045.20 rows=9890 width=4) (actual time=100.623..3577.232 rows=10001 loops=1)
+        Buffers: shared hit=386293 read=186597
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.420..0.420 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=41380.25..457044.94 rows=9890 width=4) (actual time=100.623..3576.232 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=386293 read=186597
+              ->  Bitmap Heap Scan on contact  (cost=41380.25..457044.94 rows=9890 width=0) (actual time=100.201..3574.497 rows=10001 loops=1)
+                    Recheck Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                    Rows Removed by Index Recheck: 17069
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 790911
+                    Heap Blocks: exact=26402 lossy=130414
+                    Buffers: shared hit=386284 read=186597
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..41377.78 rows=988980 width=0) (actual time=94.977..94.977 rows=1000000 loops=1)
+                          Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                          Buffers: shared read=7657
+Planning Time: 0.139 ms
+Execution Time: 3579.299 ms
+
+===== W1M B2_two_cond_s1_c2_plain_gin_forced_bitmap (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o015\",\"c2\":true}"]
+Limit  (cost=457498.78..457498.91 rows=51 width=239) (actual time=4460.383..4460.390 rows=51 loops=1)
+  Buffers: shared hit=481528 read=237837
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.382..0.383 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Sort  (cost=457498.52..457523.24 rows=9890 width=239) (actual time=4460.382..4460.385 rows=51 loops=1)
+        Sort Key: contact.created_at DESC, contact.id DESC
+        Sort Method: top-N heapsort  Memory: 47kB
+        Buffers: shared hit=481528 read=237837
+        ->  Result  (cost=41380.25..457168.57 rows=9890 width=239) (actual time=106.257..4459.613 rows=514 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=481528 read=237837
+              ->  Bitmap Heap Scan on contact  (cost=41380.25..457044.94 rows=9890 width=1072) (actual time=105.857..4453.259 rows=514 loops=1)
+                    Recheck Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                    Rows Removed by Index Recheck: 38384
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o013"}'::jsonb))
+                    Rows Removed by Filter: 999486
+                    Heap Blocks: exact=36751 lossy=165300
+                    Buffers: shared hit=480823 read=237837
+                    ->  Bitmap Index Scan on contact_pkey  (cost=0.00..41377.78 rows=988980 width=0) (actual time=92.230..92.230 rows=1000000 loops=1)
+                          Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+                          Buffers: shared read=7657
+Planning Time: 0.074 ms
+Execution Time: 4461.051 ms
+
+===== W50 B2_select_eq_veryrare_s5_composite_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s5\":\"o200\"}"]
+Limit  (cost=0.69..16696.76 rows=51 width=239) (actual time=1.474..102.867 rows=51 loops=1)
+  Buffers: shared hit=40578
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.341..0.341 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..156485.19 rows=478 width=239) (actual time=1.474..102.858 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=40578
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..156479.21 rows=478 width=1079) (actual time=1.122..102.029 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o200"}'::jsonb))
+              Rows Removed by Filter: 26598
+              Buffers: shared hit=40473
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.076 ms
+Execution Time: 102.886 ms
+
+===== W50 B2_total_select_eq_rare_s1o019_composite_gin_planner (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o019\"}"]
+Aggregate  (cost=135061.53..135061.54 rows=1 width=4) (actual time=185.145..185.146 rows=1 loops=1)
+  Buffers: shared hit=39901
+  ->  Limit  (cost=335.22..135055.55 rows=478 width=4) (actual time=5.465..185.074 rows=626 loops=1)
+        Buffers: shared hit=39901
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.345..0.346 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=334.96..135055.29 rows=478 width=4) (actual time=5.465..185.032 rows=626 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Buffers: shared hit=39901
+              ->  Bitmap Heap Scan on contact  (cost=334.96..135055.29 rows=478 width=0) (actual time=5.118..184.615 rows=626 loops=1)
+                    Recheck Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                    Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 49374
+                    Heap Blocks: exact=14298
+                    Buffers: shared hit=39892
+                    ->  Bitmap Index Scan on contact_tenant_custom_gin  (cost=0.00..334.84 rows=47820 width=0) (actual time=3.624..3.624 rows=50000 loops=1)
+                          Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+                          Buffers: shared hit=14
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.071 ms
+Execution Time: 185.311 ms
+
+===== W50 B2_two_cond_s1_c2_composite_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o020\",\"c2\":true}"]
+Limit  (cost=0.69..16696.76 rows=51 width=239) (actual time=10.515..229.507 rows=27 loops=1)
+  Buffers: shared hit=71020 read=5123
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.337..0.338 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..156485.19 rows=478 width=239) (actual time=10.514..229.497 rows=27 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=71020 read=5123
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..156479.21 rows=478 width=1079) (actual time=10.157..228.830 rows=27 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o016"}'::jsonb))
+              Rows Removed by Filter: 49973
+              Buffers: shared hit=70939 read=5123
+Planning:
+  Buffers: shared read=1
+Planning Time: 0.083 ms
+Execution Time: 229.529 ms
+
+===== W1M B2_select_eq_veryrare_s5_composite_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s5\":\"o199\"}"]
+Limit  (cost=0.69..7093.84 rows=51 width=239) (actual time=20.095..303.407 rows=51 loops=1)
+  Buffers: shared hit=13147 read=31468
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.343..0.344 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1395683.16 rows=10035 width=239) (actual time=20.095..303.390 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=13147 read=31468
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1395557.72 rows=10035 width=1079) (actual time=19.735..302.467 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s5": "o199"}'::jsonb))
+              Rows Removed by Filter: 29390
+              Buffers: shared hit=13090 read=31468
+Planning:
+  Buffers: shared read=1
+Planning Time: 0.088 ms
+Execution Time: 303.433 ms
+
+===== W1M B2_total_select_eq_rare_s1o019_composite_gin_planner (phase B2) =====
+SELECT count(*)::int n FROM (SELECT 1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb LIMIT 10001) c
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o019\"}"]
+Aggregate  (cost=415720.84..415720.85 rows=1 width=4) (actual time=4117.148..4117.150 rows=1 loops=1)
+  Buffers: shared hit=389651 read=369557
+  ->  Limit  (cost=0.26..415595.83 rows=10001 width=4) (actual time=0.329..4115.706 rows=10001 loops=1)
+        Buffers: shared hit=389651 read=369557
+        InitPlan 1
+          ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.304..0.305 rows=1 loops=1)
+                Buffers: shared hit=9
+        ->  Result  (cost=0.00..417008.45 rows=10035 width=4) (actual time=0.329..4114.646 rows=10001 loops=1)
+              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Buffers: shared hit=389651 read=369557
+              ->  Seq Scan on contact  (cost=0.00..417008.45 rows=10035 width=0) (actual time=0.023..4113.079 rows=10001 loops=1)
+                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND (custom @> '{"s1": "o019"}'::jsonb))
+                    Rows Removed by Filter: 1830076
+                    Buffers: shared hit=389642 read=369557
+Planning:
+  Buffers: shared read=1
+Planning Time: 0.074 ms
+Execution Time: 4117.209 ms
+
+===== W1M B2_two_cond_s1_c2_composite_gin_planner (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o006\",\"c2\":true}"]
+Limit  (cost=0.69..7093.84 rows=51 width=239) (actual time=11.315..1191.106 rows=51 loops=1)
+  Buffers: shared hit=51886 read=125062
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.321..0.321 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1395683.16 rows=10035 width=239) (actual time=11.315..1191.084 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=51886 read=125062
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1395557.72 rows=10035 width=1079) (actual time=10.984..1190.071 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"c2": true, "s1": "o012"}'::jsonb))
+              Rows Removed by Filter: 116917
+              Buffers: shared hit=51841 read=125062
+Planning:
+  Buffers: shared read=1
+Planning Time: 0.079 ms
+Execution Time: 1191.139 ms
+
+===== W50 B2_select_eq_random_composite (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["333d4684-3d0b-4e5f-b180-4684d16e2ba7","{\"s1\":\"o003\"}"]
+Limit  (cost=0.69..16696.76 rows=51 width=239) (actual time=0.380..8.274 rows=51 loops=1)
+  Buffers: shared hit=3289
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.341..0.341 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..156485.19 rows=478 width=239) (actual time=0.379..8.269 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+        Buffers: shared hit=3289
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..156479.21 rows=478 width=1079) (actual time=0.034..7.596 rows=51 loops=1)
+              Index Cond: (tenant_id = '333d4684-3d0b-4e5f-b180-4684d16e2ba7'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o006"}'::jsonb))
+              Rows Removed by Filter: 2090
+              Buffers: shared hit=3220
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.078 ms
+Execution Time: 8.288 ms
+
+===== W1M B2_select_eq_random_composite (phase B2) =====
+SELECT tenant_id,id,display_name,owner_id,version,source,merged_into_id,created_at,updated_at,to_char(created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS _k0,custom->'s1' AS p_s1,custom->'n1' AS p_n1,custom->'t1' AS p_t1 FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL AND custom @> $2::jsonb ORDER BY created_at DESC,id DESC LIMIT 51
+params: ["3ac6134e-282e-4198-9037-c287057fc73d","{\"s1\":\"o006\"}"]
+Limit  (cost=0.69..7093.84 rows=51 width=239) (actual time=0.714..16.522 rows=51 loops=1)
+  Buffers: shared hit=6457
+  InitPlan 1
+    ->  Result  (cost=0.00..0.26 rows=1 width=16) (actual time=0.327..0.327 rows=1 loops=1)
+          Buffers: shared hit=9
+  ->  Result  (cost=0.43..1395683.16 rows=10035 width=239) (actual time=0.713..16.518 rows=51 loops=1)
+        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+        Buffers: shared hit=6457
+        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1395557.72 rows=10035 width=1079) (actual time=0.375..15.848 rows=51 loops=1)
+              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)
+              Filter: ((merged_into_id IS NULL) AND (custom @> '{"s1": "o017"}'::jsonb))
+              Rows Removed by Filter: 4187
+              Buffers: shared hit=6376
+Planning:
+  Buffers: shared hit=1
+Planning Time: 0.083 ms
+Execution Time: 16.538 ms

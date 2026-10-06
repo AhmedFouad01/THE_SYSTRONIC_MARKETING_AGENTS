@@ -1,0 +1,106 @@
+{
+ "leakproof": [
+  {
+   "proname": "arraycontains",
+   "proleakproof": false
+  },
+  {
+   "proname": "booleq",
+   "proleakproof": true
+  },
+  {
+   "proname": "int4eq",
+   "proleakproof": true
+  },
+  {
+   "proname": "jsonb_contains",
+   "proleakproof": false
+  },
+  {
+   "proname": "jsonb_exists",
+   "proleakproof": false
+  },
+  {
+   "proname": "jsonb_object_field",
+   "proleakproof": false
+  },
+  {
+   "proname": "jsonb_object_field_text",
+   "proleakproof": false
+  },
+  {
+   "proname": "jsonb_typeof",
+   "proleakproof": false
+  },
+  {
+   "proname": "numeric_eq",
+   "proleakproof": false
+  },
+  {
+   "proname": "numeric_le",
+   "proleakproof": false
+  },
+  {
+   "proname": "numeric_lt",
+   "proleakproof": false
+  },
+  {
+   "proname": "text_ge",
+   "proleakproof": true
+  },
+  {
+   "proname": "text_le",
+   "proleakproof": true
+  },
+  {
+   "proname": "texteq",
+   "proleakproof": true
+  },
+  {
+   "proname": "texticlike",
+   "proleakproof": false
+  },
+  {
+   "proname": "textlike",
+   "proleakproof": false
+  },
+  {
+   "proname": "timestamptz_lt",
+   "proleakproof": true
+  },
+  {
+   "proname": "uuid_eq",
+   "proleakproof": true
+  }
+ ],
+ "admin_superuser_count_rare": {
+  "p50": 42.8,
+  "max": 73,
+  "plan": "        ->  Bitmap Heap Scan on contact  (cost=57.42..35615.98 rows=10204 width=4) (actual time=2.399..40.429 rows=10001 loops=1)\n              Recheck Cond: ((custom @> '{\"s1\": \"o019\"}'::jsonb) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))\n              Filter: (merged_into_id IS NULL)\n              ->  Bitmap Index Scan on ix_c_gin_w1m  (cost=0.00..54.87 rows=10204 width=0) (actual time=1.383..1.383 rows=12489 loops=1)\n                    Index Cond: (custom @> '{\"s1\": \"o019\"}'::jsonb)\nExecution Time: 41.255 ms"
+ },
+ "role_rls_count_rare": {
+  "p50": 4074.6,
+  "max": 4075,
+  "plan": "              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n              ->  Seq Scan on contact  (cost=0.00..417027.95 rows=10102 width=0) (actual time=1.345..3288.226 rows=10001 loops=1)\n                    Filter: ((merged_into_id IS NULL) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid) AND (custom @> '{\"s1\": \"o019\"}'::jsonb))\n                    Rows Removed by Filter: 896821\nExecution Time: 3292.433 ms"
+ },
+ "admin_superuser_list_veryrare": {
+  "p50": 298.7,
+  "max": 303,
+  "plan": "  ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1389481.23 rows=10204 width=24) (actual time=18.521..295.498 rows=51 loops=1)\n        Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n        Filter: ((merged_into_id IS NULL) AND (custom @> '{\"s5\": \"o199\"}'::jsonb))\n        Rows Removed by Filter: 29390\nExecution Time: 295.534 ms"
+ },
+ "role_rls_list_veryrare": {
+  "p50": 299.8,
+  "max": 301,
+  "plan": "        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n        ->  Index Scan using contact_tenant_created on contact  (cost=0.43..1389481.23 rows=10102 width=24) (actual time=18.695..301.616 rows=51 loops=1)\n              Index Cond: (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n              Filter: ((merged_into_id IS NULL) AND (custom @> '{\"s5\": \"o199\"}'::jsonb))\n              Rows Removed by Filter: 29390\nExecution Time: 302.101 ms"
+ },
+ "role_leakproof_wrapper_count_rare": {
+  "p50": 8.2,
+  "max": 16,
+  "plan": "              One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n              ->  Bitmap Heap Scan on contact  (cost=162.70..19443.82 rows=4939 width=0) (actual time=2.177..5.778 rows=10001 loops=1)\n                    Recheck Cond: ((spike.jtxt(custom, 's1'::text) = 'o019'::text) AND (tenant_id = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid))\n                    Filter: (merged_into_id IS NULL)\n                    ->  Bitmap Index Scan on ix_c_s1_lp_w1m  (cost=0.00..161.47 rows=4939 width=0) (actual time=1.161..1.161 rows=12489 loops=1)\n                          Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)\nExecution Time: 7.320 ms"
+ },
+ "role_leakproof_wrapper_list_rare": {
+  "p50": 1.5,
+  "max": 2,
+  "plan": "        One-Time Filter: ((InitPlan 1).col1 = '3ac6134e-282e-4198-9037-c287057fc73d'::uuid)\n        ->  Index Scan using ix_c_s1_lp_w1m on contact  (cost=0.42..19642.67 rows=4939 width=24) (actual time=0.003..0.022 rows=51 loops=1)\n              Index Cond: (spike.jtxt(custom, 's1'::text) = 'o019'::text)\n              Filter: (merged_into_id IS NULL)\nExecution Time: 0.371 ms"
+ }
+}
