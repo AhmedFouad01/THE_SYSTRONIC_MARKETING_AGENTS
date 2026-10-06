@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
-	Bdi,
+	BidiText,
 	Button,
 	DataGrid,
 	type GridColumn,
@@ -43,7 +43,7 @@ export function CampaignsPanel({
 				value: (a) => name(a),
 				sortable: true,
 				hideable: false,
-				cell: (a) => <b>{name(a)}</b>,
+				cell: (a) => <BidiText className="sy-rep__strong">{name(a)}</BidiText>,
 			},
 			{
 				id: "source",
@@ -147,7 +147,7 @@ function CampaignDetail({ agg }: { agg: CampaignAgg }) {
 	return (
 		<div>
 			<p className="sy-rep__ptitle">
-				<Bdi>{campaignName(agg, t("rep.unknown"))}</Bdi>
+				<BidiText wrap>{campaignName(agg, t("rep.unknown"))}</BidiText>
 			</p>
 			{unknown ? (
 				<p className="sy-rep__muted">{t("rep.detail.unknownNote")}</p>

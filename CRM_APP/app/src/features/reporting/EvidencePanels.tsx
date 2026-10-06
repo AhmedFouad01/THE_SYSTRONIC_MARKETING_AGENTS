@@ -7,6 +7,7 @@ import {
 	type GridColumn,
 	type GridSample,
 	Bdi,
+	BidiText,
 	Ltr,
 	useCursorList,
 	useI18n,
@@ -69,7 +70,9 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 				value: (c) => f.label(c.conversion_type),
 				sortable: true,
 				hideable: false,
-				cell: (c) => <b>{f.label(c.conversion_type)}</b>,
+				cell: (c) => (
+					<BidiText className="sy-rep__strong">{f.label(c.conversion_type)}</BidiText>
+				),
 			},
 			{
 				id: "value",

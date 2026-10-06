@@ -142,6 +142,9 @@
 .sy-rep__pbody {
 	min-width: 0;
 }
+.sy-rep__strong {
+	font-weight: 700;
+}
 .sy-rep__ptitle {
 	margin: 0;
 	font-size: 18px;

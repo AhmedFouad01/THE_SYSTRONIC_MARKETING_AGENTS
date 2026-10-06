@@ -279,3 +279,80 @@ for (const language of ["en", "ar"] as const)
 		await expect(page).toHaveURL(/\/app\/reporting$/);
 		await expect(page.getByTestId("reporting-view")).toBeVisible();
 	});
+
+// CREATIVE gate F1-F3: mixed AR/EN campaign names align on the start edge in both UI languages (central BidiText), and
+// the AR counters render real Arabic-Indic digits for the right numbers (U+0665 for 5 looks like a "0" in some fonts).
+const MIXED = [
+	"Ramadan Sale - حملة رمضان",
+	"Summer Launch 2026",
+	"عرض الجمعة البيضاء",
+	"Retargeting - Cart abandoners",
+	"حملة الواتساب - WhatsApp Broadcast",
+];
+const mockMixed = (page: Page) =>
+	page.route(REPORT_URL, (r) =>
+		r.fulfill({
+			status: 200,
+			contentType: "application/json",
+			body: JSON.stringify({
+				data: {
+					model: "last_non_direct",
+					version: "deterministic-v1",
+					lookback_days: 30,
+					run_id: "run-1",
+					as_of: "2026-10-05T10:00:00.000Z",
+					rows: MIXED.map((name, i) => ({
+						campaign_id: `c${i}`,
+						campaign_name: name,
+						source: "ads",
+						currency: "EGP",
+						conversion_type: "payment_captured",
+						value_minor: 1_000_000 - i * 100_000,
+						outcomes: 5 - i,
+					})),
+					spend: [],
+				},
+			}),
+		}),
+	);
+
+for (const language of ["en", "ar"] as const)
+	test(`reporting preview ${language} 1440: mixed Arabic/Latin campaign names start-align in the first column; counters carry the right digits`, async ({
+		page,
+		request,
+	}) => {
+		const f = await fixture(request);
+		await mockMixed(page);
+		await start(page, f, { language });
+		await expect(rows(page)).toHaveCount(5);
+		// start edge of the value inside each first-column cell (EN: left edge, AR: right edge) is the same for every row
+		const edges = await rows(page).evaluateAll((trs, ar) =>
+			trs.map((tr) => {
+				const el = tr.querySelector("td .sy-bidi-text");
+				if (!el) return Number.NaN;
+				const b = el.getBoundingClientRect();
+				return Math.round(ar ? b.right : b.left);
+			}),
+		language === "ar");
+		expect(edges.every((e) => !Number.isNaN(e))).toBe(true);
+		expect(Math.max(...edges) - Math.min(...edges)).toBeLessThanOrEqual(1);
+		// the value keeps its own resolved direction (Arabic-first names are rtl, Latin-first ltr) and is not zig-zagged
+		const dirs = await rows(page).evaluateAll((trs) =>
+			trs.map((tr) => getComputedStyle(tr.querySelector("td .sy-bidi-text") as Element).direction),
+		);
+		expect(dirs).toEqual(["ltr", "ltr", "rtl", "ltr", "rtl"]);
+
+		const cp = (s: string) => Array.from(s, (c) => c.codePointAt(0)?.toString(16).padStart(4, "0")).join(" ");
+		await openRow(page, 1);
+		const pos = await panel(page).getByTestId("preview-position").innerText();
+		const range = await page.getByTestId("grid-range").innerText();
+		if (language === "ar") {
+			// 2 / 5 in Arabic-Indic digits: U+0662 and U+0665; never a Latin 0 (U+0030)
+			expect(cp(pos)).toBe(cp("٢ من ٥"));
+			expect(cp(range)).toBe(cp("١–٥ من ٥"));
+			expect(pos + range).not.toContain("0");
+		} else {
+			expect(pos).toBe("2 of 5");
+			expect(range).toBe("1–5 of 5");
+		}
+	});
