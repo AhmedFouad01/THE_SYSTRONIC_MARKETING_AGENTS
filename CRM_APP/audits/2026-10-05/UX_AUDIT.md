@@ -143,3 +143,80 @@ UX-03 OPEN (Deal = same summary card, no stepper/stat cards/Mark won-lost/page; 
 5. Reporting restyle (UX-18, R2-07), bulk actions breadth (UX-20), mobile toolbar collapse (UX-25).
 6. Dark + RTL icon pass, empty/loading, a11y (UX-21/22/23/26), edit-mode footer (R2-08), UX-01 comma fix.
 Gate: no 375/AR regression; AR tasks and pipeline re-captured; zero "slice"/route text.
+
+## Re-audit r3 (after batch 2, 0bceaa3)
+Auditor: CREATIVE_AG. Skills: SK-030 (retest + task walk), 026 (RTL), 029 (Dashboard/Reporting vs DASHBOARD_SPEC s9). Shots: shots-r3/{en-light-1440,ar-light-1440,ar-dark-1440,en-light-375,ar-light-375}__NN-name.png (cap3.spec.ts + pw3.config.ts; API :4318 stopped after). VIEWED: EN-1440 dashboard, leads list/edit/bulk/status dialog, contact detail, deal record + Tasks tab, pipeline, tasks, new-task, reporting; AR-1440 dashboard, leads, deal record, tasks, reporting; AR-dark dashboard, deal record, pipeline; 375 EN+AR dashboard, leads, record sheet, filter sheet, bulk, deal record, tasks, pipeline, reporting, AR contacts, EN More sheet. NOT viewed (captured only): connect gate, merge, Ctrl+K, 404, workspace menu, 375 dark, deal-lost/new-deal/new-contact dialogs. Seed has no attribution results: Dashboard revenue/ROAS/campaign widgets seen in EMPTY state only.
+
+### Status of every open finding
+| ID | Status | Evidence / residue |
+|---|---|---|
+| UX-01 | PARTIAL | counts/pager/relative OK. Residue: Latin comma in AR dates "١ أكتوبر ,٢٠٢٦، ١٠:٤٨ ص" and "ص" orphans to line 2 (AR-10 panel, AR-50 panel) |
+| UX-03 | CLOSED | Deal record page: back link, eyebrow, h1, Mark lost/won, stepper (done=success+check, current=info), 4 stat cards, tabs Overview/Activity/Tasks, Edit button, Details disclosure; RTL + dark correct (ar-31, ar-dark-31). No probability/expected-close card (no data, acceptable). 375 stepper clips (R3-02) |
+| UX-05/13 | PARTIAL | titles readable; Arabic inside EN grid still ~2px smaller than Latin (E-10 rows 1,7) |
+| UX-09 | CLOSED | subtitle + 3-card strip Open/Qualified/Closed EN+AR (E-10, AR-10). Nit: cards 95px vs 76 spec |
+| UX-11 | PARTIAL | "Source evidence: instagram" raw lower-case (E-10); "Details" link cut by footer in edit mode (E-11b) |
+| UX-12 | PARTIAL | enum labels fine; stage names/pipeline name are data, untranslated in AR (ar-31, ar-dark-40); "Synthetic manager" is fixture |
+| UX-15 | CLOSED | New task Due = themed date-time picker (E-52); Select popovers everywhere |
+| UX-16 | PARTIAL | flex board, selector inline beside New deal, cards styled, "Final stage" gone. Lost column still clipped at 1440 with no cue (R3-08) |
+| UX-17 | PARTIAL | due filter tabs, Sep 24 + Overdue chip, icon Complete, 48px rows. Chip still crowds Owner ("Syn..." rows Sep 27-30, E-50; AR owner truncated AR-50) |
+| UX-18 | CLOSED | constrained controls, collapsed "About this calculation", 5 equal KPI cards, no orphan detail card, empty CTA (E-60b) |
+| UX-19 | PARTIAL | New contact + dialog, identifier "+ Add" popover, h1 aligned. Grid has no Phone/Email columns (E-21) |
+| UX-20 | PARTIAL | bar = Assign to me / Change status / Add task / Clear, no layout jump, status dialog good (E-12, E-12b). No Delete by decision. 375 bar clips (R3-04) |
+| UX-21 | CLOSED | dark cyan pair consistent on dashboard/deal/pipeline (ar-dark-03/31/40); other dark screens unviewed |
+| UX-22 | CLOSED | back chevron mirrors in AR (ar-31), search/filter unmirrored |
+| UX-23 | CLOSED | empty states with CTA (reporting, dashboard); skeleton not observed |
+| UX-25 | CLOSED | 375: 56px header, search + filter icon, filter sheet Status/Owner/Columns/Done (M-13, AR-13) |
+| UX-26 | PARTIAL | whole-row selection + selected bar OK; keyboard walk not done |
+| UX-R2-01 | CLOSED | wide title column, rows distinguishable |
+| UX-R2-02 | PARTIAL | AR grid + 375 cards clip correctly on seed; long mixed strings not stress-tested |
+| UX-R2-03 | PARTIAL | grid fits, Complete = icon; owner/chip collision remains (see UX-17) |
+| UX-R2-04 | CLOSED | Dashboard built, no route/"slice" text (E-03) |
+| UX-R2-05 | OPEN | AR money still ".ج.م ١٩٨٫١٤٠" (leading period): deal stat card, pipeline cards and column totals (ar-31, ar-dark-40) |
+| UX-R2-06 | OPEN | 375 task card: stray dot before owner, Due/Owner split across rows (M-50, AR-50) |
+| UX-R2-07 | OPEN | AR zero = tiny "٠" dot in Leads strip and Reporting KPIs; AR helper ".(365)" punctuation broken |
+| UX-R2-08 | PARTIAL | footer Cancel (+Save when dirty) added; Esc did not leave edit in capture (E-11b then E-12 still in edit) |
+
+Dashboard vs DASHBOARD_SPEC s9: one clear first read (navy Overdue 13) PASS; <=2 filled cards (1) PASS; windows labelled PASS; no sample-derived totals PASS; money = Reporting (dash/empty only, parity unverified) PARTIAL; AR bidi clean PASS (no money seen); 375 no horizontal scroll PASS; empty states with next action PASS; Leads strip matches rhythm PASS.
+
+### New regressions / defects
+| ID | Sev | Shot | Defect | Fix spec | Skill |
+|---|---|---|---|---|---|
+| UX-R3-01 | MAJOR | E-03, AR-03 | Dashboard Follow-ups caption "Unknown record" / "سجل غير معروف" for tasks whose contact is outside the loaded page; rows heavy (underlined title + 2nd line) | Resolve contact name by id (batch) or hide caption; never "Unknown record"; link underline on hover only | 029, 030 |
+| UX-R3-02 | MAJOR | M-31, AR-31 (375) | Deal stepper clips last stage (EN) / first stage (AR), no scroll cue | scroll-snap + auto-scroll current into view + edge fade, or compact "Step 3 of 4 - Proposal" below 640px | 028 |
+| UX-R3-03 | MAJOR | AR-10, AR-60 | Zero renders as tiny "٠" dot in KPI cards (same cause as R2-07) | KPI numerals 20px+ weight 700, lining-nums; Western digits for KPI values only if Arabic zero stays illegible | 026 |
+| UX-R3-04 | MAJOR | M-12, AR-12 (375) | Bulk bar overflows: "Clear" off-screen, 3rd action icon-only/clipped | <640px: "3 selected" + primary + "More" menu (Change status, Add task, Clear) | 028 |
+| UX-R3-05 | MAJOR | AR-10 (375) | AR bottom-nav labels collide ("العملاء المحتملون" over "جهات الاتصال") | nowrap, 10-11px, max-width 20%, ellipsis; shorter AR labels (العملاء / جهات / صفقات / مهامي / المزيد) | 028, 026 |
+| UX-R3-06 | MINOR | M-50 | Tasks status tabs clip ("No date", "Done"), no cue | scrollable tabs with fade, or select | 028 |
+| UX-R3-07 | MINOR | E-60 | Lookback helper wraps in narrow column; Refresh/Publish top-misaligned with controls | helper as 12px description max-width 360; align buttons to input baseline | 004 |
+| UX-R3-08 | MINOR | E-40 | Lost column cut at 1440, no cue | visible scrollbar/right fade or min column 220 | 022 |
+
+### Scores vs prototype (1-5; r2 in brackets)
+| Screen | EN 1440 | AR 1440 | 375 EN | 375 AR |
+|---|---|---|---|---|
+| Shell/nav | 5 (4) | 4 (4) | 4 (4) | 3 |
+| Dashboard | 4 (1) | 4 | 4 | 4 |
+| Leads list/strip | 5 (4) | 4 (3) | 4 (3) | 4 |
+| Lead detail/edit | 4 (4) | 4 (4) | 4 (4) | 4 |
+| Bulk | 4 | 4 | 3 | 3 |
+| Contacts | 4 (3) | n/v | n/v | 4 |
+| Deals list + record | 4 (2) | 4 (2) | 3 | 3 |
+| Pipeline | 4 (3) | 4 (3) | 3 (3) | 3 |
+| Tasks | 4 (2) | 3 (2) | 3 (2) | 3 |
+| Reporting | 4 (2) | 3 (2) | 4 | 3 |
+| Dialogs | 4 (4) | 4 | 4 | n/v |
+(5 = matches prototype; Pipeline/Tasks/Reporting scored against shared patterns, no prototype.)
+
+### Task walk (SK-030)
+Lead intake PASS; find contact PASS; move deal PASS (stepper + Mark won/lost visible; lost dialog not viewed); create task PASS; inspect journey not walked; view report PASS (empty-state only). No severity-1 open. Severity-2 open: R2-05, R3-05.
+
+### Verdict
+UI/UX acceptable for MVP: YES, conditional on items 1-2 below (small shared-layer fixes). The "far below approved" gap is closed: record-first deal page, dashboard, KPI strip, grids, sheets, dialogs match the prototype pattern in EN, AR, dark and 375. No fake actions, no UUID/dev leakage (fixture words only).
+Remaining, priority order:
+1. UX-R2-05 AR money bidi: one Intl string in `<bdi dir=ltr>` (SK-026).
+2. UX-R3-05 AR 375 bottom-nav collision (SK-028/026).
+3. UX-R3-03 / R2-07 AR zero legibility + ".(365)" helper punctuation.
+4. UX-R3-01 Dashboard "Unknown record" caption.
+5. UX-R3-04 / R3-02 / R3-06 mobile overflow cues (bulk bar, stepper, tabs).
+6. UX-17 chip/owner collision, R2-06 stray dot, Contacts Phone/Email columns (UX-19).
+7. UX-01 AR date comma + orphan "ص"; UX-11 "instagram" label; Esc leaves edit (R2-08); Arabic font size in EN grid; R3-07/08.
+Gate: re-capture AR 375 and a populated attribution dataset (Dashboard revenue/ROAS/campaign widgets never seen populated; money parity Dashboard vs Reporting unverified).
