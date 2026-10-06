@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
 import { type Context, Fault, transaction } from "./db.js";
+import { listRecords } from "./list.js";
 import { type Kind, projection } from "./query.js";
 export type Body = Record<string, unknown>;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -641,45 +642,7 @@ export async function crmRequest(
 				return { data: r };
 			}
 			await permit(db, ctx, "crm.read", kind);
-			const cursor = query.get("cursor");
-			if (cursor) id(cursor);
-			const filter =
-				kind === "task"
-					? query.get("due") === "overdue"
-						? " AND status='open' AND due_at<now()"
-						: query.get("due") === "today"
-							? " AND status='open' AND due_at<now()+interval '24 hours'"
-							: ""
-					: kind === "contact"
-						? " AND merged_into_id IS NULL"
-						: "";
-			// Scope is resolved ONCE per request (crm.object_scope), not per row via crm.can_object (ADR-002 4.8 / P1a-S2).
-			const {
-				rows: [scope],
-			} = await db.query("SELECT mode,actor FROM crm.object_scope('crm.read',$1)", [
-				ctx.grant ?? null,
-			]);
-			if (!scope) throw new Fault(403, "FORBIDDEN");
-			const rows = (
-				await db.query(
-					`SELECT ${projection(kind as Kind)} FROM crm.${kind} WHERE tenant_id=$1 AND ($2::uuid IS NULL OR id>$2) ${
-						scope.mode === "tenant" ? "" : "AND owner_id=$3"
-					} ${filter} ORDER BY id LIMIT 51`,
-					scope.mode === "tenant"
-						? [ctx.tenant, cursor]
-						: [ctx.tenant, cursor, scope.actor],
-				)
-			).rows;
-			return {
-				data: rows
-					.slice(0, 50)
-					.map((r) =>
-						"amount_minor" in r
-							? { ...r, amount_minor: Number(r.amount_minor) }
-							: r,
-					),
-				next_cursor: rows.length > 50 ? rows[49].id : null,
-			};
+			return listRecords(db, ctx, kind as Kind, query);
 		}
 		if (
 			!["POST", "PATCH"].includes(method) ||
