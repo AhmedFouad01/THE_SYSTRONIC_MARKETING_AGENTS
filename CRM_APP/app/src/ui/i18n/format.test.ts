@@ -7,6 +7,8 @@ import {
 	formatDateTime,
 	formatMoney,
 	formatMoneyMinor,
+	formatNumber,
+	formatPercent,
 	formatRelative,
 	interpolateParts,
 	minorToMajorUnits,
@@ -35,9 +37,24 @@ describe("locale layer: dates", () => {
 		expect(formatDateTime(d, "ar", UTC)).toContain("،");
 	});
 
-	it("AR money is a single Intl string whose symbol keeps its trailing period (UX-R2-05)", () => {
-		const m = formatMoney(296900, "ar").replace(/[‎‏ \s]/g, "");
-		expect(m).toMatch(/^[٠-٩٬٫]+ج\.م\.$/);
+	it("AR money is one Intl string whose symbol has no trailing period that could read as a leading dot (UX-R2-05)", () => {
+		const m = formatMoney(296900, "ar").replace(/[‎‏ \s]/g, "");
+		expect(m).toMatch(/^[٠-٩٬٫]+ج\.م$/);
+		expect(formatMoney(0, "ar").replace(/[‎‏ \s]/g, "")).toBe("0ج.م");
+		expect(formatMoney(1250.5, "ar").replace(/[‎‏ \s]/g, "")).toMatch(/^[٠-٩٬٫]+ج\.م$/);
+		expect(formatMoney(5, "ar", { currency: "USD" })).not.toMatch(/\.‏?$/);
+		// EN is untouched
+		expect(formatMoney(296900, "en").replace(/\s/g, " ")).toBe("EGP 296,900");
+	});
+
+	it("AR lone zero is the legible Western 0; zeros inside longer numbers stay Arabic-Indic (UX-R2-07/R3-03)", () => {
+		expect(formatCount(0, "ar")).toBe("0");
+		expect(formatNumber(0, "ar")).toBe("0");
+		expect(formatCount(30, "ar")).toBe("٣٠");
+		expect(formatCount(1000, "ar")).toBe("١٬٠٠٠");
+		expect(formatNumber(0.5, "ar", { minimumFractionDigits: 1 })).toContain("٠٫٥");
+		expect(formatPercent(0, "ar")).toContain("0");
+		expect(formatCount(0, "en")).toBe("0");
 	});
 
 	it("sourceEvidenceLabel maps known source tokens, keeps free text, omits empty (UX-11)", () => {

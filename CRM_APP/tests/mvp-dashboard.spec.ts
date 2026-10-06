@@ -445,12 +445,16 @@ test("leads 375: the three strip cards share one row without page overflow; stri
 	page,
 }) => {
 	const f = await fixture();
-	await page.route("**/v1/leads", (r) =>
+	// The list auto-loads follow-up pages (cursor requests carry a query string). Every page must stay mocked, or a
+	// follow-up page falls through to the real API and the "+" disappears (that raced under full-suite load).
+	await page.route(/\/v1\/leads(\?.*)?$/, (r) =>
 		json(r, 200, {
-			data: [
-				{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L1", source: "manual", source_evidence: "x", status: "open", version: 1, received_at: new Date().toISOString() },
-				{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L2", source: "manual", source_evidence: "x", status: "qualified", version: 1, received_at: new Date().toISOString() },
-			],
+			data: new URL(r.request().url()).searchParams.has("cursor")
+				? []
+				: [
+						{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L1", source: "manual", source_evidence: "x", status: "open", version: 1, received_at: new Date().toISOString() },
+						{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L2", source: "manual", source_evidence: "x", status: "qualified", version: 1, received_at: new Date().toISOString() },
+					],
 			next_cursor: randomUUID(),
 		}),
 	);

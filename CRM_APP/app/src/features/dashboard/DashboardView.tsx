@@ -36,6 +36,7 @@ import {
 	fetchDealRefsPage,
 	fetchTasksPageFor,
 } from "../tasks/api.ts";
+import { relatedKey, relatedOf, useRelatedNames } from "./useRelatedNames.ts";
 import { NewTaskDialog } from "../tasks/NewTaskDialog.tsx";
 import { RelatedLink } from "../tasks/RelatedLink.tsx";
 import { type Task, overdueDays } from "../tasks/model.ts";
@@ -94,7 +95,7 @@ export function DashboardView() {
 		(signal) => fetchCampaignReport(DEFAULT_MODEL, signal),
 		tenantId,
 	);
-	// Names for the follow-ups list: page 1 only, cosmetic (unresolved ids show a neutral label).
+	// Names for the follow-ups list: page 1 is the cheap first source; anything else is fetched by id (UX-R3-01).
 	const contacts = useLoad(
 		(signal) => fetchContactRefsPage({ cursor: null, signal }),
 		tenantId,
@@ -248,23 +249,28 @@ export function DashboardView() {
 
 	// ---- W5 follow-ups ------------------------------------------------------------------------------------
 
-	const contactNames = useMemo(
+	const knownNames = useMemo(() => {
+		const m = new Map<string, string>();
+		if (contacts.state.status === "ready")
+			for (const c of contacts.state.data.items) m.set(`contact:${c.id}`, c.display_name);
+		if (deals.state.status === "ready")
+			for (const d of deals.state.data.items) m.set(`deal:${d.id}`, d.title);
+		return m;
+	}, [contacts.state, deals.state]);
+	const followList = useMemo(
 		() =>
-			new Map(
-				contacts.state.status === "ready"
-					? contacts.state.data.items.map((c) => [c.id, c.display_name] as const)
-					: [],
+			followUps(
+				overdue.state.status === "ready" ? overdue.state.data.items : [],
+				soon.state.status === "ready" ? soon.state.data.items : [],
+				now,
 			),
-		[contacts.state],
+		[overdue.state, soon.state, now],
 	);
-	const dealNames = useMemo(
-		() =>
-			new Map(
-				deals.state.status === "ready"
-					? deals.state.data.items.map((d) => [d.id, d.title] as const)
-					: [],
-			),
-		[deals.state],
+	const fetchedNames = useRelatedNames(
+		followList,
+		knownNames,
+		contacts.state.status !== "loading" && deals.state.status !== "loading",
+		tenantId,
 	);
 
 	const renderDue = (task: Task) => {
@@ -304,11 +310,7 @@ export function DashboardView() {
 				/>
 			);
 		}
-		const list = followUps(
-			overdue.state.status === "ready" ? overdue.state.data.items : [],
-			soon.state.status === "ready" ? soon.state.data.items : [],
-			now,
-		);
+		const list = followList;
 		if (list.length === 0)
 			return (
 				<EmptyState
@@ -323,13 +325,8 @@ export function DashboardView() {
 		return (
 			<ul className="sy-dash__list" data-testid="dash-followup-list">
 				{list.map((task) => {
-					const relatedKind = task.deal_id ? "deal" : task.contact_id ? "contact" : null;
-					const relatedId = task.deal_id ?? task.contact_id;
-					const relatedName = task.deal_id
-						? (dealNames.get(task.deal_id) ?? t("tasks.unknownRecord"))
-						: task.contact_id
-							? (contactNames.get(task.contact_id) ?? t("tasks.unknownRecord"))
-							: "";
+					const rel = relatedOf(task);
+					const relatedName = rel ? (knownNames.get(relatedKey(rel)) ?? fetchedNames.get(relatedKey(rel)) ?? null) : null;
 					return (
 						<li key={task.id} className="sy-dash__row" data-testid="dash-followup">
 							<div className="sy-dash__row-main">
@@ -343,11 +340,15 @@ export function DashboardView() {
 								>
 									<Bdi>{task.title}</Bdi>
 								</a>
-								<span className="sy-dash__muted">
-									<Bdi>
-										<RelatedLink row={{ relatedKind, relatedId, relatedName }} />
-									</Bdi>
-								</span>
+								{rel && relatedName ? (
+									<span className="sy-dash__muted">
+										<Bdi>
+											<RelatedLink
+												row={{ relatedKind: rel.kind, relatedId: rel.id, relatedName }}
+											/>
+										</Bdi>
+									</span>
+								) : null}
 							</div>
 							<div className="sy-dash__row-due">{renderDue(task)}</div>
 						</li>

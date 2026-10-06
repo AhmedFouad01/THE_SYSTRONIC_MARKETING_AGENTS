@@ -340,6 +340,8 @@
 
 	.sy-bottomnav .sy-nav {
 		flex: 1 1 0;
+		min-width: 0;
+		max-width: 20%;
 		flex-direction: column;
 		justify-content: center;
 		gap: 3px;
@@ -349,11 +351,14 @@
 		cursor: pointer;
 	}
 
+	/* UX-R3-05: five equal tabs; a label can never spill into its neighbour (short AR labels + ellipsis as a backstop). */
 	.sy-bottomnav .sy-nav__label {
 		display: block;
-		max-width: none;
-		overflow: visible;
-		text-overflow: clip;
+		max-width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		text-align: center;
 	}
 
 	.sy-sheet-nav {

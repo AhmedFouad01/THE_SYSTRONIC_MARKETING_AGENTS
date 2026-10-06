@@ -193,6 +193,21 @@
 	white-space: nowrap;
 }
 
+/* UX-R3-04: on a phone the bar leaves the toolbar slot and wraps onto a second row instead of scrolling
+   sideways, so "Clear" and every action stay on screen. */
+@media (max-width: 768px) {
+	.sy-grid__toolwrap:has(.sy-grid__batch) > .sy-grid__toolbar {
+		display: none;
+	}
+	.sy-grid__batch {
+		position: relative;
+		inset: auto;
+		flex-wrap: wrap;
+		overflow: visible;
+		padding-block: var(--sy-space-8);
+	}
+}
+
 /* Phone sheet (UX-25): saved views, filters, columns and density live here, not in three toolbar rows. */
 .sy-grid__sheet {
 	display: flex;

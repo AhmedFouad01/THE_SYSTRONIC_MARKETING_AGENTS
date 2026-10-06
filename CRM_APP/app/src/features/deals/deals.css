@@ -168,8 +168,17 @@
 	padding: 0;
 	list-style: none;
 	overflow-x: auto;
+	scroll-snap-type: x proximity;
+}
+/* UX-R3-02: below 640px the scrolling stepper fades at both edges so a cut-off stage reads as "more". */
+@media (max-width: 640px) {
+	.sy-deals__stepper {
+		scrollbar-width: none;
+		mask-image: linear-gradient(to right, transparent 0, var(--sy-surface) 14px, var(--sy-surface) calc(100% - 14px), transparent 100%);
+	}
 }
 .sy-deals__step {
+	scroll-snap-align: center;
 	position: relative;
 	flex: 1 1 0;
 	min-width: 96px;

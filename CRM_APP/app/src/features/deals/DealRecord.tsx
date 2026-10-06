@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { href, navigate } from "../../router.ts";
 import {
 	Badge,
@@ -59,10 +59,23 @@ function DealStepper({
 }) {
 	const { t } = useI18n();
 	const steps = stepperSteps(pipeline, deal.stage_id);
+	const list = useRef<HTMLOListElement>(null);
+	const currentId = steps.find((s) => s.state === "current" || s.state === "won" || s.state === "lost")?.stage.id;
+	// UX-R3-02: on a phone the stepper scrolls; bring the current stage into view (inside the list only,
+	// never the page) so it is not the clipped one.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: re-centre when the current stage changes
+	useEffect(() => {
+		const ol = list.current;
+		const el = ol?.querySelector<HTMLElement>('[aria-current="step"]');
+		if (!ol || !el || ol.scrollWidth <= ol.clientWidth) return;
+		const o = ol.getBoundingClientRect();
+		const r = el.getBoundingClientRect();
+		ol.scrollBy({ left: r.left + r.width / 2 - (o.left + o.width / 2) });
+	}, [currentId, steps.length]);
 	if (steps.length === 0) return null;
 	return (
 		<nav aria-label={t("deals.stepper.label")}>
-			<ol className="sy-deals__stepper" data-testid="deal-stepper">
+			<ol className="sy-deals__stepper" data-testid="deal-stepper" ref={list}>
 				{steps.map(({ stage, state }) => (
 					<li
 						key={stage.id}

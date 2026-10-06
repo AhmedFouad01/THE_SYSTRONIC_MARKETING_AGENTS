@@ -5,6 +5,17 @@
 	overflow-x: auto;
 }
 
+/* UX-R3-06: a phone-width tab row that scrolls fades at both edges so a cut-off tab ("No date", "Done") reads as "more". */
+@media (max-width: 640px) {
+	.sy-tabs {
+		scrollbar-width: none;
+		mask-image: linear-gradient(to right, transparent 0, var(--sy-surface) 12px, var(--sy-surface) calc(100% - 28px), transparent 100%);
+	}
+	:root[dir="rtl"] .sy-tabs {
+		mask-image: linear-gradient(to left, transparent 0, var(--sy-surface) 12px, var(--sy-surface) calc(100% - 28px), transparent 100%);
+	}
+}
+
 .sy-tab {
 	flex: 0 0 auto;
 	height: 38px;

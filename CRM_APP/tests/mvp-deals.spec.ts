@@ -10,7 +10,7 @@ import { seed } from "../scripts/seed.js";
 import { pickDay, pickValue } from "./select-helper.js";
 
 // Money follows the locale (Intl currency): Arabic shows the Egyptian pound symbol, not the ISO code.
-const egp = (language: "ar" | "en") => (language === "ar" ? "ج.م." : "EGP");
+const egp = (language: "ar" | "en") => (language === "ar" ? "ج.م" : "EGP");
 
 process.loadEnvFile(".env");
 

@@ -63,6 +63,11 @@
 	font-weight: 700;
 	color: var(--sy-text);
 	overflow-wrap: anywhere;
+	text-decoration: none; /* UX-R3-01: lighter rows, underline on hover/focus only */
+}
+.sy-dash__name:hover,
+.sy-dash__name:focus-visible {
+	text-decoration: underline;
 }
 .sy-dash__muted {
 	margin: 0;

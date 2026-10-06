@@ -73,7 +73,7 @@ async function open(
 const noPageOverflow = (page: Page) =>
 	page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
 
-// 10000 minor EGP units shown as the app-wide currency display (EGP 100 / ١٠٠ ج.م.), same as the Dashboard.
+// 10000 minor EGP units shown as the app-wide currency display (EGP 100 / ١٠٠ ج.م), same as the Dashboard.
 const AMOUNT = /100|١٠٠/;
 
 const T = {
@@ -419,8 +419,12 @@ for (const language of ["en", "ar"] as const)
 		expect(repRoas).toMatch(language === "ar" ? /^[^0-9]*[٠-٩]/ : /\d/);
 		if (language === "ar") {
 			expect(repRoas).not.toMatch(/[0-9]/);
-			expect(repShare).not.toMatch(/[0-9]/);
-			expect(repShare).toMatch(/[٠-٩]/);
+			// a lone zero is the legible Western "0" (UX-R3-03); any other value uses Arabic-Indic digits only
+			if (/^0(?![0-9٠-٩٫٬])/.test(repShare)) expect(repShare).not.toMatch(/[1-9٠-٩]/);
+			else {
+				expect(repShare).not.toMatch(/[0-9]/);
+				expect(repShare).toMatch(/[٠-٩]/);
+			}
 		}
 		// 12,345,678 minor units = 123,456.78 in EGP; locale digits (Arabic-Indic in AR, Latin in EN)
 		if (language === "ar") expect(repText).not.toMatch(/[0-9]/);

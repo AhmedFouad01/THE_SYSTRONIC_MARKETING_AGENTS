@@ -19,6 +19,7 @@ export default defineConfig({
 		"mvp-ux-r2.spec.ts",
 		"mvp-dashboard.spec.ts",
 		"mvp-bulk.spec.ts",
+		"mvp-ux-r3.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

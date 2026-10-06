@@ -41,6 +41,26 @@ export const fetchContactRefsPage: FetchPage<ContactRef> = async ({
 	return { items: r.data, nextCursor: r.nextCursor };
 };
 
+/** GET /v1/contacts/{id}: the one related contact of a task row, whichever page it would be on. */
+export async function fetchContactRef(
+	id: string,
+	signal?: AbortSignal,
+): Promise<ContactRef> {
+	return (
+		await apiClient.get<ContactRef>(`contacts/${id}`, signal ? { signal } : {})
+	).data;
+}
+
+/** GET /v1/deals/{id}. */
+export async function fetchDealRef(
+	id: string,
+	signal?: AbortSignal,
+): Promise<DealRef> {
+	return (
+		await apiClient.get<DealRef>(`deals/${id}`, signal ? { signal } : {})
+	).data;
+}
+
 export async function fetchAssignees(
 	signal?: AbortSignal,
 ): Promise<Assignee[]> {

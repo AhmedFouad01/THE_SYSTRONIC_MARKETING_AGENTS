@@ -24,7 +24,10 @@
 	width: min(100%, 240px);
 }
 .sy-rep__controls .sy-rep__days {
-	width: min(100%, 240px);
+	width: min(100%, 360px); /* UX-R3-07: the helper sentence fits on one or two clean lines */
+}
+.sy-rep__controls .sy-rep__days .sy-field__hint {
+	font-size: 12px;
 }
 .sy-rep__controls .sy-rep__days .sy-field__control {
 	width: 96px;

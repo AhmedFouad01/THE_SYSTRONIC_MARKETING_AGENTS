@@ -12,12 +12,23 @@ export function dirOf(locale: Locale): "rtl" | "ltr" {
 	return locale === "ar" ? "rtl" : "ltr";
 }
 
+/**
+ * The Arabic-Indic zero is a bare dot (U+0660) and vanishes next to words and KPI values ("· نتيجة", UX-R2-07/R3-03).
+ * A lone zero (not part of a longer number such as ٣٠ or ٠٫٥) is written with the Western "0" so it stays readable.
+ */
+function legibleZero(text: string, locale: Locale): string {
+	return locale === "ar" ? text.replace(/(?<![٠-٩٫٬])٠(?![٠-٩٫٬])/g, "0") : text;
+}
+
 export function formatNumber(
 	value: number,
 	locale: Locale,
 	opts?: Intl.NumberFormatOptions,
 ): string {
-	return new Intl.NumberFormat(INTL_LOCALE[locale], opts).format(value);
+	return legibleZero(
+		new Intl.NumberFormat(INTL_LOCALE[locale], opts).format(value),
+		locale,
+	);
 }
 
 /** Count / quantity: grouped integer in the locale's digits. */
@@ -53,6 +64,26 @@ export function minorToMajorUnits(minor: number, currency: string): number {
 }
 
 /**
+ * ICU writes the Egyptian pound as "ج.م." (trailing period). In an RTL line that period lands on the visual
+ * left edge, where it reads as a stray leading dot (".ج.م ١٩٨٫١٤٠", UX-R2-05/R3). The Arabic symbol is therefore
+ * written without its final period ("ج.م"), which is also the common Egyptian price-tag form. The string is
+ * still ONE Intl rendering joined from its own parts (digits, separators, spacing and placement untouched).
+ */
+function arabicCurrencyWithoutTrailingDot(
+	parts: Intl.NumberFormatPart[],
+	locale: Locale,
+): string {
+	return legibleZero(
+		parts
+			.map((p) =>
+				locale === "ar" && p.type === "currency" ? p.value.replace(/\.$/, "") : p.value,
+			)
+			.join(""),
+		locale,
+	);
+}
+
+/**
  * Money as ONE string via Intl currency style (symbol/placement/digits per locale); `value` is in MAJOR units.
  * Whole amounts drop the fraction digits. Wrap the result in <Bdi> / <Ltr> when rendering.
  */
@@ -69,7 +100,10 @@ export function formatMoney(
 	else if (Number.isInteger(value))
 		o = { ...base, minimumFractionDigits: 0, maximumFractionDigits: 0 };
 	try {
-		return formatNumber(value, locale, o);
+		return arabicCurrencyWithoutTrailingDot(
+			new Intl.NumberFormat(INTL_LOCALE[locale], o).formatToParts(value),
+			locale,
+		);
 	} catch {
 		return `${formatNumber(value, locale)} ${currency}`; // malformed currency code from the server
 	}

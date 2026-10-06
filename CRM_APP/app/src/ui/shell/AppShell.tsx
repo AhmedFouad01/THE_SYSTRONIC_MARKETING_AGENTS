@@ -6,16 +6,24 @@ import { Dialog, MenuButton } from "../overlays/index.ts";
 import { useTheme } from "../theme/index.ts";
 import "./shell.css";
 
-type NavItem = { key: string; label: MessageKey; icon: IconName; route: RoutePath; also?: RoutePath };
+type NavItem = {
+	key: string;
+	label: MessageKey;
+	/** Short label for the 5-tab mobile bottom bar (UX-R3-05); falls back to `label`. */
+	tab?: MessageKey;
+	icon: IconName;
+	route: RoutePath;
+	also?: RoutePath;
+};
 
 // Only screens that exist. Email/Call/Import have no MVP backend, so they are not shown at all (no fake affordances).
 export const NAV: readonly NavItem[] = [
 	{ key: "dashboard", label: "nav.dashboard", icon: "home", route: "/dashboard", also: "/" },
-	{ key: "leads", label: "nav.leads", icon: "leads", route: "/leads" },
-	{ key: "contacts", label: "nav.contacts", icon: "contacts", route: "/contacts" },
-	{ key: "deals", label: "nav.deals", icon: "deals", route: "/deals" },
+	{ key: "leads", label: "nav.leads", tab: "nav.tab.leads", icon: "leads", route: "/leads" },
+	{ key: "contacts", label: "nav.contacts", tab: "nav.tab.contacts", icon: "contacts", route: "/contacts" },
+	{ key: "deals", label: "nav.deals", tab: "nav.tab.deals", icon: "deals", route: "/deals" },
 	{ key: "pipeline", label: "nav.pipeline", icon: "route", route: "/pipeline" },
-	{ key: "tasks", label: "nav.tasks", icon: "tasks", route: "/tasks" },
+	{ key: "tasks", label: "nav.tasks", tab: "nav.tab.tasks", icon: "tasks", route: "/tasks" },
 	{ key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting", also: "/reporting-v2" },
 ];
 
@@ -82,7 +90,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 	const { primary, overflow } = splitMobileNav();
 	const moreActive = activeItem !== undefined && overflow.includes(activeItem);
 
-	const link = (item: NavItem, className: string, afterNavigate?: () => void) => (
+	const link = (item: NavItem, className: string, afterNavigate?: () => void, shortLabel = false) => (
 		<a
 			key={item.key}
 			href={href(item.route)}
@@ -97,7 +105,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 			}}
 		>
 			<Icon name={item.icon} size={mobile ? 20 : 17} />
-			<span className="sy-nav__label">{t(item.label)}</span>
+			<span className="sy-nav__label">{t(shortLabel && item.tab ? item.tab : item.label)}</span>
 		</a>
 	);
 
@@ -202,7 +210,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 			{mobile && connected ? (
 				<>
 					<nav className="sy-bottomnav" aria-label={t("nav.primary")}>
-						{primary.map((item) => link(item, "sy-nav sy-nav--route"))}
+						{primary.map((item) => link(item, "sy-nav sy-nav--route", undefined, true))}
 						<button
 							type="button"
 							className="sy-nav sy-nav--route sy-nav--more"

@@ -282,7 +282,7 @@ test("R2-06 tasks en 375: card shows the due line (no stray placeholder) and a l
 	).toBe(true);
 });
 
-test("R2-05 deals ar: money is one RTL isolate, symbol period trails the amount", async ({
+test("R2-05 deals ar: money is one RTL isolate; the symbol has no trailing period (see mvp-ux-r3 for rendered edge)", async ({
 	page,
 	request,
 }) => {
@@ -294,22 +294,8 @@ test("R2-05 deals ar: money is one RTL isolate, symbol period trails the amount"
 	await expect(money).toBeVisible();
 	expect(await money.getAttribute("dir")).toBe("rtl");
 	const text = (await money.textContent()) ?? "";
-	expect(text.replace(/[‎‏ \s]/g, "")).toMatch(/^[٠-٩٬٫]+ج\.م\.$/);
-	// Visual order: the digits sit to the right of the currency symbol and the final "." is the leftmost glyph.
-	const order = await money.evaluate((node) => {
-		const t = node.firstChild as Text;
-		const s = t.data;
-		const rect = (i: number) => {
-			const r = document.createRange();
-			r.setStart(t, i);
-			r.setEnd(t, i + 1);
-			return r.getBoundingClientRect();
-		};
-		const firstDigit = s.search(/[٠-٩]/);
-		const lastDot = s.lastIndexOf(".");
-		return { digit: rect(firstDigit).left, dot: rect(lastDot).left };
-	});
-	expect(order.dot).toBeLessThan(order.digit);
+	// a lone zero amount is the legible Western "0" (UX-R3-03); every other amount is Arabic-Indic
+	expect(text.replace(/[‎‏ \s]/g, "")).toMatch(/^(?:[٠-٩٬٫]+|0)ج\.م$/);
 });
 
 test("R2-07 reporting ar: meta is three short lines and KPI values use Western digits", async ({

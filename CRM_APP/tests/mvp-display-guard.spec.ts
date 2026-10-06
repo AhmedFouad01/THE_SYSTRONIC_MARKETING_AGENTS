@@ -110,10 +110,12 @@ for (const language of ["ar", "en"] as const)
 			expect(text, `${where}: slash/ISO date`).not.toMatch(LATIN_DATE);
 			expect(text, `${where}: reversed clock`).not.toMatch(CLOCK_TAIL);
 			if (language === "ar") {
-				// grid counts/pages are in Arabic-Indic digits
+				// grid counts/pages are in Arabic-Indic digits; the one deliberate exception is a lone zero, which is the
+				// legible Western "0" (the Arabic-Indic zero is a bare dot, UX-R2-07/R3-03) - "٣٠" or "٠٫٥" never contain it
 				for (const id of ["grid-range", "grid-count"]) {
 					const el = page.getByTestId(id);
-					if (await el.count()) expect(await el.first().innerText(), `${where}: ${id}`).not.toMatch(/[0-9]/);
+					if (await el.count())
+						expect((await el.first().innerText()).replace(/(?<![0-9٠-٩٫٬])0(?![0-9٠-٩٫٬])/g, ""), `${where}: ${id}`).not.toMatch(/[0-9]/);
 				}
 			}
 			expect(await page.locator("[data-testid=actor]").innerText(), `${where}: actor`).toContain("Mona Adel");
