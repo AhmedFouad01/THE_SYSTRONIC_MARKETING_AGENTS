@@ -28,7 +28,7 @@ const whales: Record<string, { id: string; name: string; manager: string; rep: s
 for (const w of JSON.parse((await admin.query("SELECT v FROM spike.meta WHERE k='whales'")).rows[0].v)) whales[w.name] = w;
 const aq = async (sql: string, p: unknown[] = []) => (await admin.query(sql, p)).rows;
 
-async function results(): Promise<Record<string, any>> {
+async function results(): Promise<Record<string, unknown>> {
 	try { return JSON.parse(await readFile(RES, "utf8")); } catch { return {}; }
 }
 async function save(key: string, val: unknown) {
@@ -61,7 +61,7 @@ async function oneRequest(c: pg.Client, w: (typeof whales)[string], who: "mgr" |
 	} catch (e) {
 		await c.query("ROLLBACK").catch(() => {});
 		const ee = e as { code?: string; message?: string };
-		if (!(globalThis as any).__shown) { (globalThis as any).__shown = 1; console.log("first error:", ee.code, (ee.message ?? "").slice(0, 160)); }
+		if (!firstErrorShown) { firstErrorShown = true; console.log("first error:", ee.code, (ee.message ?? "").slice(0, 160)); }
 		return { ms: performance.now() - t, err: ee.code ?? String(e), rows };
 	}
 	return { ms: performance.now() - t, err: null as string | null, rows };
@@ -70,7 +70,8 @@ async function oneRequest(c: pg.Client, w: (typeof whales)[string], who: "mgr" |
 type Stat = { p50: number; p95: number; max: number };
 const stat = (a: number[]): Stat => ({ p50: pct(a, 50), p95: pct(a, 95), max: Math.max(...a) });
 const r1 = (n: number) => Math.round(n * 10) / 10;
-const rows: any[] = [];
+const rows: Record<string, unknown>[] = [];
+let firstErrorShown = false;
 async function measure(name: string, tier: string, gen: (i: number) => Q[], o: { who?: "mgr" | "rep"; n?: number; explain?: boolean; note?: string } = {}) {
 	const w = whales[tier];
 	const c = await connect();
@@ -151,7 +152,7 @@ const bool = (k: string) => `spike.jbool(custom,'${k}')`;
 const O = (i: number) => `o${String(i).padStart(3, "0")}`;
 const base = (k: string, w: (typeof whales)[string], scope?: { actor: string }) => {
 	const params: unknown[] = [w.id];
-	let where = "tenant_id=$1" + (k === "contact" ? " AND merged_into_id IS NULL" : "");
+	let where = `tenant_id=$1${k === "contact" ? " AND merged_into_id IS NULL" : ""}`;
 	if (scope) { params.push(scope.actor); where += ` AND owner_id=$${params.length}::uuid`; }
 	return { params, where };
 };
@@ -187,7 +188,7 @@ async function timed<T>(name: string, fn: () => Promise<T>) { const t = performa
 // ---------- environment record ----------
 async function envRecord() {
 	const s = await aq("select name,setting,unit from pg_settings where name in ('shared_buffers','work_mem','maintenance_work_mem','effective_cache_size','max_parallel_workers_per_gather','random_page_cost','jit','synchronous_commit','max_wal_size','gin_pending_list_limit','fsync')");
-	const me = await aq("select current_user cu, rolsuper, rolbypassrls from pg_roles where rolname=current_user");
+	await aq("select current_user cu, rolsuper, rolbypassrls from pg_roles where rolname=current_user");
 	const c = await connect(); const who = (await c.query("select current_user cu, (select rolsuper from pg_roles where rolname=current_user) su, (select rolbypassrls from pg_roles where rolname=current_user) byp, (select relforcerowsecurity from pg_class where oid='crm.contact'::regclass) force_rls")).rows[0]; await c.end();
 	const act = await aq("select count(*) n from pg_stat_activity where datname is not null and datname<>'crm_spike_b0'");
 	const ver = (await aq("select version()"))[0].version;
@@ -199,7 +200,7 @@ async function envRecord() {
 // ======================= PHASES =======================
 async function listSuite(tier: string, phase: string) {
 	const w = whales[tier], S = samples[tier];
-	const contact = (name: string, g: (i: number) => { sql: string; params: unknown[] }, o: any = {}) => measure(name, tier, (i) => [g(i)], o);
+	const contact = (name: string, g: (i: number) => { sql: string; params: unknown[] }, o: Parameters<typeof measure>[3] = {}) => measure(name, tier, (i) => [g(i)], o);
 	// --- L1 default list
 	await contact("L1_default_first", () => { const b = base("contact", w); return { sql: listSql("contact", b.where), params: b.params }; });
 	await contact("L1_default_cursor_orchain", (i) => { const b = base("contact", w); const wh = b.where + orChain(b.params, S.cursors[i % S.cursors.length]); return { sql: listSql("contact", wh), params: b.params }; });
@@ -226,7 +227,7 @@ async function customFilters(tier: string) {
 	await sel("contact", "L3_select_eq_random", () => pick(OPTS20));
 	await sel("contact", "L3_select_eq_common", () => "o001");
 	await sel("contact", "L3_select_eq_rare", () => "o019");
-	await measure("L3_multi_has_any", tier, (i) => { const b = base("contact", w); const a = pick(OPTS12), c = pick(OPTS12); b.params.push(js({ m1: [a] }), js({ m1: [c] })); return [{ sql: listSql("contact", `${b.where} AND (custom @> $2::jsonb OR custom @> $3::jsonb)`, ORDER, `,${PROPS}`), params: b.params }]; });
+	await measure("L3_multi_has_any", tier, () => { const b = base("contact", w); const a = pick(OPTS12), c = pick(OPTS12); b.params.push(js({ m1: [a] }), js({ m1: [c] })); return [{ sql: listSql("contact", `${b.where} AND (custom @> $2::jsonb OR custom @> $3::jsonb)`, ORDER, `,${PROPS}`), params: b.params }]; });
 	await measure("L3_multi_has_all", tier, () => { const b = base("contact", w); const a = pick(OPTS12), c = pick(OPTS12); b.params.push(js({ m1: a === c ? [a] : [a, c] })); return [{ sql: listSql("contact", `${b.where} AND custom @> $2::jsonb`, ORDER, `,${PROPS}`), params: b.params }]; });
 	await measure("L3_checkbox_c1_true", tier, () => { const b = base("contact", w); b.params.push(js({ c1: true })); return [{ sql: listSql("contact", `${b.where} AND custom @> $2::jsonb`, ORDER, `,${PROPS}`), params: b.params }]; });
 	await measure("L3_checkbox_c2_true_rare", tier, () => { const b = base("contact", w); b.params.push(js({ c2: true })); return [{ sql: listSql("contact", `${b.where} AND custom @> $2::jsonb`, ORDER, `,${PROPS}`), params: b.params }]; });
@@ -299,7 +300,7 @@ async function recordOps(tier: string, tag: string) {
 			{ sql: "SELECT id,kind,crm.identifier_value(id) value,provenance,original_contact_id FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2 AND crm.can_object('sensitive.read','contact',contact_id,$3)", params: [w.id, id, null] },
 		];
 	}, { explain: false });
-	const patchReq = (id: string, ver: number, i: number): Q[] => {
+	const patchReq = (id: string, _ver: number, i: number): Q[] => {
 		const patch = { t1: `${pick(["أحمد", "Ahmed", "شركة", "Company"])} ${i} ${pick(["محمد", "Cairo"])}`, s1: pick(OPTS20), n1: Math.floor(Math.random() * 1000000), d1: "2025-06-15", c1: Math.random() < 0.5 };
 		const reqId = randomUUID();
 		return [
@@ -481,13 +482,13 @@ if (PHASE === "A") {
 	const baseline = await writers(20000);
 	log(`baseline writers: ${JSON.stringify(baseline)}`);
 	await admin.query("SET maintenance_work_mem='64MB'"); // default-like for the flip
-	let during: any; let buildMs = 0;
+	let buildMs = 0;
 	const t = performance.now();
 	let finished = false;
 	const build = admin.query(`CREATE INDEX CONCURRENTLY ix_c_n2_flip ON crm.contact (${num("n2")}, id) WHERE tenant_id='${w.id}'`).then(() => { finished = true; buildMs = performance.now() - t; });
 	const lat: number[] = []; let errs = 0;
 	await Promise.all([build, ...Array.from({ length: 4 }, async (_, k) => { const c = await connect(); let i = k * 700; while (!finished) { const x = await patchOnce(c, i++); lat.push(x.ms); if (x.err) errs++; } await c.end(); })]);
-	during = { n: lat.length, p50: r1(pct(lat, 50)), p95: r1(pct(lat, 95)), max: r1(Math.max(...lat)), errs };
+	const during = { n: lat.length, p50: r1(pct(lat, 50)), p95: r1(pct(lat, 95)), max: r1(Math.max(...lat)), errs };
 	await save("cic_flip_W1M", { build_ms: Math.round(buildMs), baseline, during, ratio_p95: r1(during.p95 / baseline.p95), index_bytes: (await aq("select pg_relation_size('crm.ix_c_n2_flip') b"))[0].b });
 	log(`CIC flip: build ${(buildMs / 1000).toFixed(1)} s; baseline p95=${baseline.p95}, during p95=${during.p95}`);
 	// same flip on the 50k whale
@@ -508,7 +509,7 @@ if (PHASE === "A") {
 		await measure("S_schema_get_100props", tier, () => [{ sql: "SELECT id,key,type,label_en,label_ar,flags,options,version,archived FROM spike.prop_def WHERE tenant_id=$1 AND object='contact' AND NOT archived ORDER BY key", params: [w.id] }, { sql: "SELECT rev FROM spike.schema_rev WHERE tenant_id=$1 AND object='contact'", params: [w.id] }], { explain: false });
 		const sizeKb = (await aq("SELECT pg_column_size(jsonb_agg(to_jsonb(p)))/1024.0 kb FROM spike.prop_def p WHERE tenant_id=$1", [w.id]))[0].kb;
 		await save(`${tier}:schema_json_kb`, { kb: Number(sizeKb) });
-		const evidenceQs = (id: string): Q[] => [
+		const evidenceQs = (_id: string): Q[] => [
 			{ sql: "INSERT INTO crm.audit_log(tenant_id,id,actor_id,grant_id,action,request_id,object_kind,object_id,changed_fields) VALUES($1,$2,crm.actor(),NULL,'property.updated',$3,'contact',$4,$5)", params: [w.id, randomUUID(), randomUUID(), samples[tier].ids[0], ["label"]] },
 			{ sql: "WITH e AS (INSERT INTO crm.business_event(tenant_id,id,name,object_kind,object_id) VALUES($1,$2,'property.updated','contact',$3) RETURNING id) INSERT INTO crm.outbox(tenant_id,id,event_id,actor_id,grant_id,deal_id,object_kind,object_id) SELECT $1,$4,e.id,crm.actor(),NULL,NULL,'contact',$3 FROM e", params: [w.id, randomUUID(), samples[tier].ids[0], randomUUID()] },
 		];

@@ -25,6 +25,9 @@ export async function seed(db: pg.Client) {
 		agency: randomBytes(32).toString("hex"),
 		worker: randomBytes(32).toString("hex"),
 	};
+	const hasRegistry = Boolean(
+		(await db.query("SELECT to_regprocedure('crm.seed_system_properties(uuid)') p")).rows[0].p,
+	);
 	await db.query("BEGIN");
 	try {
 		for (const [id, name] of [
@@ -33,6 +36,9 @@ export async function seed(db: pg.Client) {
 		]) {
 			await db.query("INSERT INTO crm.tenant VALUES($1,$2)", [id, name]);
 			await db.query("SELECT crm.provision_identifier_key($1)", [id]);
+			// 010+: system properties for the new tenant (owner-only, idempotent). Absent on pre-010 schemas (M2 upgrade checks).
+			if (hasRegistry)
+				await db.query("SELECT crm.seed_system_properties($1)", [id]);
 		}
 		for (const role of ["manager", "reader", "agency", "worker"] as const) {
 			await db.query("INSERT INTO crm.principal VALUES($1,$2)", [

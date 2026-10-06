@@ -3,10 +3,10 @@ import { randomBytes } from "node:crypto";
 import pg from "pg";
 import { SPIKE_ROLE, adminClient, roleUrl } from "./b0-lib.js";
 const admin = adminClient(); await admin.connect();
-const out: any = {};
+const out: Record<string, unknown> = {};
 const q = async (s: string, p: unknown[] = []) => (await admin.query(s, p)).rows;
 out.leakproof = await q("select proname, proleakproof from pg_proc where proname in ('jsonb_contains','jsonb_object_field_text','jsonb_object_field','texteq','numeric_eq','numeric_le','numeric_lt','textlike','texticlike','array_overlap','arraycontains','jsonb_exists','jsonb_typeof','text_ge','text_le','int4eq','booleq','uuid_eq','timestamptz_lt') order by 1");
-const w = JSON.parse((await q("select v from spike.meta where k='whales'"))[0].v).find((x: any) => x.name === "W1M");
+const w = JSON.parse((await q("select v from spike.meta where k='whales'"))[0].v).find((x: { name: string }) => x.name === "W1M");
 const pw = randomBytes(18).toString("hex");
 await admin.query(`ALTER ROLE ${SPIKE_ROLE} PASSWORD '${pw}'`);
 // leakproof wrapper functions (superuser-created); plpgsql so they are never inlined
