@@ -36,4 +36,5 @@ ACCEPTANCE:      checks the agent will run on return
   are composited, never regenerated.
 - Data: no credentials/secrets ever. Before client or private data, Ahmed confirms the
   Gemini account does not use activity for training (Gemini Apps Activity off).
+  Status: Ahmed confirmed Gemini Apps Activity OFF on 2026-10-06; re-confirm if the account changes.
 - Gemini output never writes Real Memory directly; facts in it are proposals.
