@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
-import { useI18n } from "../i18n/index.ts";
+import { BidiText, useI18n } from "../i18n/index.ts";
 import { Dialog } from "../overlays/Dialog.tsx";
 import type { PreviewGuard } from "../overlays/previewGuard.tsx";
 import { PreviewPanel, type PreviewNav } from "../overlays/PreviewPanel.tsx";
@@ -29,6 +29,7 @@ export type RecordPanelProps = {
 	testId: string;
 	/** Changing record resets edit mode. */
 	recordKey: string;
+	/** Pass the user value ALONE as a string: it is isolated, direction-resolved per value and aligned to the UI start. */
 	title: ReactNode;
 	titleTestId?: string;
 	subtitle?: ReactNode;
@@ -142,10 +143,20 @@ function RecordBody(p: RecordPanelProps) {
 				<div className="sy-record__head">
 					<div className="sy-record__titles">
 						<p className="sy-record__title" data-testid={p.titleTestId}>
-							<bdi dir="auto">{p.title}</bdi>
+							{typeof p.title === "string" ? (
+								<BidiText wrap>{p.title}</BidiText>
+							) : (
+								<bdi dir="auto">{p.title}</bdi>
+							)}
 						</p>
 						{p.subtitle ? (
-							<p className="sy-record__subtitle">{p.subtitle}</p>
+							<p className="sy-record__subtitle">
+								{typeof p.subtitle === "string" ? (
+									<BidiText title={p.subtitle}>{p.subtitle}</BidiText>
+								) : (
+									p.subtitle
+								)}
+							</p>
 						) : null}
 					</div>
 					{p.chip ? <span data-testid={p.chipTestId}>{p.chip}</span> : null}

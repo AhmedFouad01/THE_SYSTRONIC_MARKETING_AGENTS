@@ -19,7 +19,7 @@ export function RelatedLink({
 				navigate(target.route, target.search);
 			}}
 		>
-			{row.relatedName}
+			<bdi>{row.relatedName}</bdi>
 		</a>
 	);
 }

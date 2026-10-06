@@ -75,18 +75,29 @@ a {
 }
 
 /* Truncating mixed-script text (UX-R2-02): the element takes the direction of its own first strong character
-   (dir="auto" set by <BidiText>), so the ellipsis lands on the logical END of the string. Alignment follows the UI
-   direction so a column does not zig-zag; an overflowing line is start-aligned by the browser. */
-.sy-bidi-text {
+   (dir="auto" set by <BidiText>), so the ellipsis lands on the logical END of the string. The wrapper keeps the UI
+   direction with `text-align: start` and the value is a shrink-wrapped inline-block inside it: it sits at the UI start
+   edge (right in AR, left in EN) whatever its own direction, so a column does not zig-zag. */
+.sy-bidi-wrap {
 	display: block;
 	min-width: 0;
+	text-align: start;
+}
+.sy-bidi-text {
+	display: inline-block;
+	max-width: 100%;
+	vertical-align: top;
 	overflow: hidden;
-	text-align: left;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-:root[dir="rtl"] .sy-bidi-text {
-	text-align: right;
+/* Titles: several lines, no truncation, no orphaned last word. */
+.sy-bidi-text--wrap {
+	overflow: visible;
+	text-overflow: clip;
+	white-space: normal;
+	overflow-wrap: anywhere;
+	text-wrap: balance;
 }
 
 /* Money (UX-R2-05): one isolate in the locale's own direction so the currency symbol's period stays at its end. */

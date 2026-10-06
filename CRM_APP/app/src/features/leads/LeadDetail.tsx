@@ -230,9 +230,9 @@ export function LeadDetail({
 			recordKey={lead.id}
 			heading={lead.title}
 			preview={preview}
-			title={<Bdi>{lead.title}</Bdi>}
+			title={lead.title}
 			titleTestId="lead-detail-title"
-			subtitle={<Bdi>{lead.contactName}</Bdi>}
+			subtitle={lead.contactName}
 			chip={
 				<Badge tone={STATUS_TONE[lead.status]}>
 					{t(STATUS_KEY[lead.status])}

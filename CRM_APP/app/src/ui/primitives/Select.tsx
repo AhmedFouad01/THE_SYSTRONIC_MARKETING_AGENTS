@@ -310,7 +310,7 @@ export function Select({
 						onKeyDown={onKeyDown}
 					>
 						<span className="sy-select__value">
-							{selected ? selected.label : " "}
+							{selected ? <bdi>{selected.label}</bdi> : " "}
 						</span>
 						<Icon name="chevronDown" size={16} className="sy-select__chevron" />
 					</button>

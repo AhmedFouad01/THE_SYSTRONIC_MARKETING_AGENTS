@@ -261,7 +261,7 @@ for (const lang of ["en", "ar"] as const) {
 			await expect(input).toHaveAttribute("dir", "auto");
 			await page.getByTestId("lead-save").click();
 			await expect(page.getByTestId("record-editor")).toHaveCount(0);
-			await expect(page.getByTestId("lead-detail").locator(".sy-record__title bdi[dir=auto]")).toHaveText(s);
+			await expect(page.getByTestId("lead-detail").locator(".sy-record__title .sy-bidi-text[dir=auto]")).toHaveText(s);
 			await expect(page.locator(".sy-cell-id__name .sy-bidi-text[dir=auto]").first()).toHaveText(s);
 			await expect(page.getByTestId("breadcrumb-current").locator("bdi[dir=auto]")).toHaveText(s);
 			await expect(page.getByTestId("toast").locator(".sy-toast__msg bdi[dir=auto]").last()).toBeVisible();

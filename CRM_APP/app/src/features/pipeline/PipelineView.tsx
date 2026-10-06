@@ -4,6 +4,7 @@ import { navigate } from "../../router.ts";
 import { readPref, writePref } from "../../ui/storage.ts";
 import {
 	Badge,
+	BidiText,
 	Button,
 	EmptyState,
 	ErrorState,
@@ -106,10 +107,10 @@ function DealCard({
 				onClick={() => navigate("/deals", `?select=${deal.id}`)}
 			>
 				<b className="sy-pipe__title" title={deal.title}>
-					{deal.title}
+					<BidiText>{deal.title}</BidiText>
 				</b>
 				<span className="sy-pipe__meta" title={contactName}>
-					{contactName}
+					<BidiText>{contactName}</BidiText>
 				</span>
 				<span className="sy-pipe__foot">
 					<span
@@ -184,7 +185,7 @@ function Column({
 		>
 			<header className="sy-pipe__head">
 				<h2 className="sy-pipe__stage" id={headId}>
-					{col.stage.name}
+					<bdi>{col.stage.name}</bdi>
 				</h2>
 				<Badge
 					tone={
@@ -249,7 +250,7 @@ function Column({
 }
 
 export function PipelineView() {
-	const { t, formatNumber } = useI18n();
+	const { t, tx, formatNumber } = useI18n();
 	const toast = useToast();
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 
@@ -581,7 +582,7 @@ export function PipelineView() {
 						role="alert"
 						data-testid="pipeline-error"
 					>
-						<b>{t("pipeline.moveFailed", { title: notice.title })}</b>
+						<b>{tx("pipeline.moveFailed", { title: notice.title })}</b>
 						<p>{t(TRANSITION_ERR[notice.kind])}</p>
 						<Button size="sm" variant="ghost" onClick={() => setNotice(null)}>
 							{t("pipeline.dismiss")}

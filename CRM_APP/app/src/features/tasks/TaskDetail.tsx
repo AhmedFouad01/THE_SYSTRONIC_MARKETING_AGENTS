@@ -258,7 +258,7 @@ export function TaskDetail({
 			label={t("tasks.detail.title")}
 			testId="task-detail"
 			recordKey={task.id}
-			title={<Bdi>{task.title}</Bdi>}
+			title={task.title}
 			titleTestId="task-detail-title"
 			subtitle={<RelatedLink row={task} />}
 			chip={

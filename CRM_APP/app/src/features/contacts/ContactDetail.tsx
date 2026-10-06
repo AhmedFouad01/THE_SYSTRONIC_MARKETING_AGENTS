@@ -562,9 +562,9 @@ export function ContactDetail({
 			label={t("contacts.detail.title")}
 			testId="contact-detail"
 			recordKey={contact.id}
-			title={<Bdi>{contact.display_name}</Bdi>}
+			title={contact.display_name}
 			titleTestId="contact-detail-title"
-			subtitle={<Bdi>{contact.ownerName}</Bdi>}
+			subtitle={contact.ownerName}
 			onClose={onClose}
 			actions={
 				<>

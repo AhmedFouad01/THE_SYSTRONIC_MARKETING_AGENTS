@@ -543,7 +543,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							dispatch({ type: "applyView", view: v.state });
 						}}
 					>
-						{v.name}
+						<bdi>{v.name}</bdi>
 					</button>
 				))}
 				<Button
