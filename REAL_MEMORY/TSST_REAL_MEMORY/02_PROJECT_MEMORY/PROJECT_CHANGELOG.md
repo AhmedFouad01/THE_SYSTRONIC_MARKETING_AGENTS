@@ -57,3 +57,7 @@
 - `PROJECT_DECISIONS.md` — added TSD-016.
 - Repo: `TSST/core/rules.md` — new section R11–R14 (one-pass batches, resume not restart, phase-bounded sessions, cheapest reader first).
 - Readiness unchanged (`NOT_READY`).
+
+## 2026-10-06 — Local AI reader parked (user decision in chat 2026-10-06)
+
+- `PROJECT_DECISIONS.md` — added TSD-017 (qwen3:14b benchmark result; idea parked; gpt-oss:20b = next candidate if resumed).

@@ -107,3 +107,10 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Status: `APPROVED` (user approval in chat 2026-10-06)
 - Decision: Add usage-discipline rules to `TSST/core/rules.md`: one-pass batches (R11), resume an unfinished agent instead of re-dispatching (R12), phase-bounded Lead sessions with handoff (R13), cheapest reader first and no generic/retired agents (R14). Based on the CRM MVP session audit (46 dispatches; ~10 "verify + finish" re-dispatches; per-agent cache reads up to ~17M tokens). No roster, readiness or authority change.
 - Source: `TSST/core/rules.md` § Usage discipline.
+
+## TSD-017 — Local AI reader parked
+
+- Date: `2026-10-06`
+- Status: `PARKED` (user decision in chat 2026-10-06)
+- Decision: Local AI (Ollama + headless Claude Code, read-only) is not adopted for now. Benchmark of `qwen3:14b` (num_ctx 32768, 5 read-only TSST tasks, one run each): tool calling worked and all cited paths existed, but counts, "latest version" judgements and rule locations were wrong in every answered task; ~108 s/task; VRAM 15.3/16 GB. Haiku baseline not run (CLI auth expired). Next candidate if resumed: `gpt-oss:20b`, reusing the same scripts. Do not repeat the qwen3:14b benchmark.
+- Source: `TSST/brands/t-sag/projects/tsst-ai/local-ai-bench/RESULTS.md` (Drive only, not committed).
