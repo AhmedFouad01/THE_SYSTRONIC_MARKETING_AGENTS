@@ -178,3 +178,15 @@ Approve Option D and P1a (server query tranche) as the first execution slice, wi
 - Client stack (TECH_RESEARCH picks) ACCEPTED, adoption gated by a BUILD RTL spike: React Aria Components (behaviour/a11y/RTL) styled with **Tailwind CSS** (user preference for component styling, mapped to existing `--sy-*` tokens), TanStack Table + Virtual, dnd-kit (+ "Move to…" alternative), TanStack Query, React Hook Form + Zod, react-querybuilder (AST only), motion (lazy), in-house formula engine (P3).
 - Visual direction: user likes transparency / glass effect — CREATIVE_AG to spec within the approved token system (contrast, dark, RTL, reduced-transparency).
 - Skills: import React Aria, TanStack, Postgres best-practices skills via TSST-CTX-SK-023 + BUILD test; author RTL/bidi QA skill and property-grid skill.
+
+### 9.1 Amendment (user, 2026-10-06, late): client stack and roadmap
+- **Superseded:** a full migration to React Aria Components + Tailwind CSS. It is not a phase. The in-house components (`app/src/ui/*`, verified by 246 UI tests, with RTL and focus handled) remain the base.
+- **New rule:** React Aria Components may be adopted per component only, for new complex widgets that P1b and later phases need: multi-select with search, date-range picker, filter builder, and sortable column drag. Each adoption is a new dependency and needs a separate user approval. Other libraries in the §9 list follow the same rule: no blanket adoption.
+- **Tailwind CSS: dropped.** Styling stays on the `--sy-*` tokens and CSS.
+- **Glass effect: deferred.** `RAC_TAILWIND_GLASS_SPEC.md` is parked and is not a current input.
+- **Roadmap, in order (backend-first, each server feature ships with a plain working UI on the current components so the user can try it):**
+  1. P1b property engine, server plus plain UI. The user tries it and accepts it, as the gate for P2.
+  2. Server aggregate endpoints for charts and widgets: revenue and spend over time, outcomes by source, deals by stage, period comparison for trends.
+  3. P2 custom objects, server plus plain UI.
+  4. UI polish pass: charts and widgets from the MagicPath design system (component 457127428263931904, sections 10–12; hand-drawn SVG, so no chart library), plus the deferred R4 items (AR "،" in dates, "New" action reachable while the preview is open, wiring the S5 sorts and sources into the grids).
+  5. P3 formulas, rollups and configurable status, after real usage.
