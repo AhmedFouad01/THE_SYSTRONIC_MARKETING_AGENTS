@@ -5,8 +5,18 @@ import { Fault } from "./db.js";
 import { type Kind, projection } from "./query.js";
 
 type T = "uuid" | "text" | "int" | "big" | "ts";
-type Field = { t: T; sort?: true; nullable?: true; enum?: readonly string[] };
+type Field = {
+	t: T;
+	sort?: true;
+	sortOnly?: true;
+	nullable?: true;
+	enum?: readonly string[];
+};
 const f = (t: T, o: Partial<Field> = {}): Field => ({ t, ...o });
+const relatedNames = {
+	contact_name: f("text", { sort: true, sortOnly: true, nullable: true }),
+	owner_name: f("text", { sort: true, sortOnly: true, nullable: true }),
+};
 const stamps = {
 	created_at: f("ts", { sort: true }),
 	updated_at: f("ts", { sort: true }),
@@ -23,6 +33,7 @@ export const FIELDS: Record<Kind, Map<string, Field>> = {
 		...stamps,
 	}),
 	lead: fields({
+		...relatedNames,
 		id: f("uuid"),
 		contact_id: f("uuid"),
 		owner_id: f("uuid"),
@@ -33,6 +44,8 @@ export const FIELDS: Record<Kind, Map<string, Field>> = {
 		...stamps,
 	}),
 	deal: fields({
+		...relatedNames,
+		stage: f("int", { sort: true, sortOnly: true, nullable: true }),
 		id: f("uuid"),
 		contact_id: f("uuid"),
 		pipeline_id: f("uuid"),
@@ -45,6 +58,7 @@ export const FIELDS: Record<Kind, Map<string, Field>> = {
 		...stamps,
 	}),
 	task: fields({
+		owner_name: relatedNames.owner_name,
 		id: f("uuid"),
 		contact_id: f("uuid"),
 		deal_id: f("uuid"),
@@ -78,8 +92,7 @@ export const LIMITS = {
 	total: 10000,
 };
 const bad = () => new Fault(422, "VALIDATION_FAILED");
-const UUID =
-	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const isObj = (v: unknown): v is Record<string, unknown> =>
 	typeof v === "object" && v !== null && !Array.isArray(v);
 // NUL cannot be stored in PostgreSQL text and would surface as a 500: reject at the boundary.
@@ -133,7 +146,7 @@ function condition(kind: Kind, n: Record<string, unknown>, bind: Bind): Node {
 			? FIELDS[kind].get(n.p)
 			: undefined;
 	const op = n.op as string;
-	if (!fd || !OPS[fd.t].includes(op)) throw bad();
+	if (!fd || fd.sortOnly || !OPS[fd.t].includes(op)) throw bad();
 	const col = n.p as string;
 	if (!/^[a-z_]+$/.test(col)) throw bad();
 	const cast = CAST[fd.t],
@@ -304,20 +317,23 @@ export function planList(
 		return `$${params.length}`;
 	};
 	const where: string[] = ["tenant_id=$1"];
-	if (scope.mode !== "tenant") where.push(`owner_id=${bind(scope.actor)}::uuid`);
+	if (scope.mode !== "tenant")
+		where.push(`owner_id=${bind(scope.actor)}::uuid`);
 	if (kind === "contact") where.push("merged_into_id IS NULL");
 	const due = query.get("due");
 	if (kind === "task" && due === "overdue")
 		where.push("status='open' AND due_at<now()");
 	if (kind === "task" && due === "today")
 		where.push("status='open' AND due_at<now()+interval '24 hours'");
-	// q: bounded ILIKE on the display column only (identifier-digest search is intentionally not part of S4).
+	// Fold both sides in SQL, preserving bounded literal patterns and raw-q fingerprint semantics.
 	const qRaw = query.get("q");
 	const q = qRaw === null ? "" : str(qRaw, LIMITS.q).trim();
-	if (q)
+	if (q) {
+		const pattern = `crm.normalize_search(${bind(`%${likeEscape(q)}%`)}::text)`;
 		where.push(
-			`${kind === "contact" ? "display_name" : "title"} ILIKE ${bind(`%${likeEscape(q)}%`)} ESCAPE '\\'`,
+			`(search_normalized LIKE ${pattern} ESCAPE '\\'${kind === "contact" ? "" : ` OR related_search LIKE ${pattern} ESCAPE '\\'`})`,
 		);
+	}
 	let canon: unknown = null;
 	const fRaw = query.get("filter");
 	if (fRaw) {
@@ -382,6 +398,40 @@ export function planList(
 	const allowed = kind === "contact" ? ["owner"] : ["contact", "owner"];
 	if (expand.some((e, i) => !allowed.includes(e) || expand.indexOf(e) !== i))
 		throw bad();
+	// Scalar lookups stay inside the tenant and the related record's assigned scope.
+	// Compute only requested names; keep the legacy FROM/projection exactly unchanged.
+	const derived: string[] = [];
+	const assigned = (alias: string) =>
+		scope.mode === "tenant" ? "" : ` AND ${alias}.owner_id=$2::uuid`;
+	if (
+		keys.some((k) => k.name === "contact_name") ||
+		(q && (kind === "lead" || kind === "deal"))
+	) {
+		const visible = `c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL${assigned("c")}`;
+		if (keys.some((k) => k.name === "contact_name"))
+			derived.push(
+				`(SELECT c.display_name FROM crm.contact c WHERE ${visible}) AS contact_name`,
+			);
+		if (q)
+			derived.push(
+				`(SELECT c.search_normalized FROM crm.contact c WHERE ${visible}) AS related_search`,
+			);
+	}
+	if (q && kind === "task")
+		derived.push(
+			`(SELECT concat_ws(' ',d.search_normalized,l.search_normalized) FROM crm.deal d LEFT JOIN crm.lead l ON l.tenant_id=d.tenant_id AND l.id=d.lead_id${assigned("l")} WHERE d.tenant_id=b.tenant_id AND d.id=b.deal_id${assigned("d")}) AS related_search`,
+		);
+	if (keys.some((k) => k.name === "owner_name"))
+		derived.push(
+			"(SELECT n.name FROM crm.owner_names(ARRAY[b.owner_id]) n) AS owner_name",
+		);
+	if (keys.some((k) => k.name === "stage"))
+		derived.push(
+			"(SELECT s.position FROM crm.stage s WHERE s.tenant_id=b.tenant_id AND s.pipeline_id=b.pipeline_id AND s.id=b.stage_id) AS stage",
+		);
+	const from = derived.length
+		? `(SELECT b.*,${derived.join(",")} FROM crm.${kind} b) records`
+		: `crm.${kind}`;
 	const base = where.join(" AND ");
 	const countParams = params.slice();
 	// Keyset predicate: OR-chain of (equal on earlier keys AND strictly after on key i); `id` is the last key.
@@ -429,9 +479,9 @@ export function planList(
 	return {
 		legacy: !modern,
 		limit,
-		sql: `SELECT ${[projection(kind), ...extra].join(",")} FROM crm.${kind} WHERE ${[base, ...clauses].join(" AND ")} ORDER BY ${order} LIMIT ${limit + 1}`,
+		sql: `SELECT ${[projection(kind), ...extra].join(",")} FROM ${from} WHERE ${[base, ...clauses].join(" AND ")} ORDER BY ${order} LIMIT ${limit + 1}`,
 		params,
-		countSql: `SELECT count(*)::int n FROM (SELECT 1 FROM crm.${kind} WHERE ${base} LIMIT ${LIMITS.total + 1}) c`,
+		countSql: `SELECT count(*)::int n FROM (SELECT 1 FROM ${from} WHERE ${base} LIMIT ${LIMITS.total + 1}) c`,
 		countParams,
 		keys,
 		fp,

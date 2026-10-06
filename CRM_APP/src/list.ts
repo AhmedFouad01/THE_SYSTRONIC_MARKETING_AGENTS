@@ -13,10 +13,9 @@ export async function listRecords(
 ) {
 	const {
 		rows: [scope],
-	} = await db.query(
-		"SELECT mode,actor FROM crm.object_scope('crm.read',$1)",
-		[ctx.grant ?? null],
-	);
+	} = await db.query("SELECT mode,actor FROM crm.object_scope('crm.read',$1)", [
+		ctx.grant ?? null,
+	]);
 	if (!scope) throw new Fault(403, "FORBIDDEN");
 	const plan = planList(kind, query, ctx.tenant, scope);
 	// Bound the cost of a hostile filter/q on the new path (transaction-local; the legacy path is untouched).
@@ -32,15 +31,14 @@ export async function listRecords(
 	}
 	const data = page.map((r) => {
 		const o: Record<string, unknown> = {};
-		for (const [k, v] of Object.entries(r))
-			if (!k.startsWith("_k")) o[k] = v;
+		for (const [k, v] of Object.entries(r)) if (!k.startsWith("_k")) o[k] = v;
 		if ("amount_minor" in o) o.amount_minor = Number(o.amount_minor);
 		return o;
 	});
 	if (plan.expand.includes("owner")) {
-		const ids = [...new Set(data.map((r) => r.owner_id as string | null))].filter(
-			Boolean,
-		);
+		const ids = [
+			...new Set(data.map((r) => r.owner_id as string | null)),
+		].filter(Boolean);
 		const names = new Map<string, string>();
 		if (ids.length)
 			for (const r of (
@@ -53,9 +51,9 @@ export async function listRecords(
 		}
 	}
 	if (plan.expand.includes("contact")) {
-		const ids = [...new Set(data.map((r) => r.contact_id as string | null))].filter(
-			Boolean,
-		);
+		const ids = [
+			...new Set(data.map((r) => r.contact_id as string | null)),
+		].filter(Boolean);
 		const names = new Map<string, string>();
 		if (ids.length)
 			// Same visibility as the contact list: the caller's scope (assigned = owner_id = actor) in SQL.
@@ -91,4 +89,22 @@ export async function listRecords(
 		};
 	}
 	return out;
+}
+
+// Distinct visible sources; same tenant/assigned predicate and authorization as contact lists.
+export async function contactSources(db: pg.PoolClient, ctx: Context) {
+	const {
+		rows: [scope],
+	} = await db.query("SELECT mode,actor FROM crm.object_scope('crm.read',$1)", [
+		ctx.grant ?? null,
+	]);
+	if (!scope) throw new Fault(403, "FORBIDDEN");
+	await db.query("SELECT set_config('statement_timeout','5000',true)");
+	const rows = (
+		await db.query(
+			`SELECT DISTINCT source FROM crm.contact WHERE tenant_id=$1 AND source IS NOT NULL AND merged_into_id IS NULL${scope.mode === "tenant" ? "" : " AND owner_id=$2::uuid"} ORDER BY source LIMIT 200`,
+			scope.mode === "tenant" ? [ctx.tenant] : [ctx.tenant, scope.actor],
+		)
+	).rows;
+	return { data: rows.map((r) => r.source as string) };
 }
