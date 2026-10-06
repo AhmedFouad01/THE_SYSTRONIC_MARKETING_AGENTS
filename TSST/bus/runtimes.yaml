@@ -21,8 +21,8 @@ codex:
   caps: [fs_read, shell, fs_write, git]
   unverified: [image]
   roles: []
-  status: available
-  until:
+  status: limited
+  until: "2099-12-31T23:59Z"
   verified: 2026-10-04
   models_source: ~/.codex/models_cache.json (2026-10-05)
   tier_FAST: gpt-6-luna · low

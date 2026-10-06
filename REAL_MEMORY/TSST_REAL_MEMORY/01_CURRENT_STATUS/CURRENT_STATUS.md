@@ -2,7 +2,7 @@
 
 Project Key: `TSST`  
 Project Name: `The Systronic Smart Agents`  
-Last Updated: `2026-10-05`  
+Last Updated: `2026-10-06`  
 State: `BASELINE_FROZEN`  
 Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 
@@ -14,7 +14,7 @@ Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 
 `TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval).
 
-`C7` live-project pilot on VILL Studio — phase 1 (C7-VILL-01..06) `DELIVERED` 2026-10-05; phase 2c `C7-VILL-11` (final VILL identity from the approved logo) `OPEN`, assigned to codex / studio / tsst-creative. TSST Core v0.2 (ADR-003/004) merged to master `eac4446` (PR #6) 2026-10-05.
+`C7` live-project pilot on VILL Studio — phase 1 (C7-VILL-01..06) `DELIVERED` 2026-10-05; phase 2c `C7-VILL-11` (final identity from approved logo) `DONE` (codex, Lead-accepted 2026-10-05; user approved colour direction, template execution not approved); `C7-VILL-12` Brand Guidelines v1.0 (24 pp.) codex done 2026-10-05, Lead review: system accepted as base, book not client-ready, round 2 needed (not yet issued). TSST Core v0.2 (ADR-003/004) merged to master `eac4446` (PR #6) 2026-10-05.
 
 ## Current Objective
 
@@ -37,17 +37,16 @@ All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPER
 
 ## Pending Tasks
 
-1. C7 phase 2c: codex executes `C7-VILL-11` → Lead review against `BRIEF_C7-VILL-11.md` → user acceptance (phase 1 delivered 2026-10-05).
+1. C7 phase 2c: Lead issues `C7-VILL-12` round 2 (fix list in `LEAD_REVIEW_C7-VILL-12.md`) → Lead re-review → user acceptance; native review of `VERBAL_IDENTITY_v1.0.md` (user).
 2. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
 
 ## Blockers
 
-- Codex must trust `G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS` (and be opened there) to load `.codex/agents` and claim `C7-VILL-11`.
 - Production readiness stays `NOT_READY` until the C7 pilot is completed and reviewed.
 
 ## Next Recommended Action
 
-User opens Codex on the G: repo (trust) → codex claims `C7-VILL-11` (studio / tsst-creative, skills CREATIVE-SK-006/001/010) → TSST Lead reviews → user accepts. Then commit the PILOTS assets and run the C7 KPI review.
+Lead issues `C7-VILL-12` round 2 → review → user accepts brand guidelines + native-reviews verbal identity. Then commit the PILOTS assets and run the C7 KPI review.
 
 ## State as of 2026-10-04
 
