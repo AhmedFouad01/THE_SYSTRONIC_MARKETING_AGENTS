@@ -23,6 +23,7 @@ export default defineConfig({
 		"mvp-ui-r4-b1.spec.ts",
 		"mvp-server-query.spec.ts",
 		"mvp-preview-leads.spec.ts",
+		"mvp-preview-contacts.spec.ts",
 		"mvp-bidi-user-content.spec.ts",
 	],
 	workers: 1,

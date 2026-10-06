@@ -1,5 +1,4 @@
-import { parseSelect } from "../deals/model.ts";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	isApiError,
 	isForbidden,
@@ -12,7 +11,6 @@ import {
 	Button,
 	DEFAULT_VIEW,
 	IdentityCell,
-	useWideLayout,
 	ForbiddenState,
 	type GridColumn,
 	PageHeader,
@@ -26,10 +24,16 @@ import {
 	ownerFilter,
 	type ServerSpec,
 	useServerList,
+	parsePreview,
+	previewStep,
+	usePreviewGuard,
+	withPreview,
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import { fetchAssignees } from "./api.ts";
 import { fetchExpanded, listFetcher } from "../listApi.ts";
+import { carryExpand } from "../expand.ts";
+import { toRoute } from "../../router.ts";
 import { ContactDetail } from "./ContactDetail.tsx";
 import { MergeDialogs } from "./MergeDialogs.tsx";
 import { NewContactDialog } from "./NewContactDialog.tsx";
@@ -61,8 +65,7 @@ const getRawId = (c: Contact) => c.id;
 const fetchContacts = listFetcher<Contact>("contacts");
 
 export function ContactsView() {
-	const { t } = useI18n();
-	const wide = useWideLayout();
+	const { t, formatNumber } = useI18n();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -97,9 +100,22 @@ export function ContactsView() {
 	);
 
 	const [view, setView] = useState<BuiltInView>("all");
+	// Open record = preview slide-over; `?preview=<id>` (legacy `?select=` accepted) keeps it across reloads and deep links.
 	const [activeId, setActiveId] = useState<string | null>(() =>
-		parseSelect(location.search),
+		parsePreview(location.search),
 	);
+	const { guard, dialog: guardDialog } = usePreviewGuard();
+	// Every way to leave or swap the open record asks first when the edit form holds unsaved changes.
+	const openRecord = useCallback(
+		(id: string | null) => guard.request(() => setActiveId(id)),
+		[guard],
+	);
+	useEffect(() => {
+		if (toRoute(location.pathname) !== "/contacts") return;
+		const next = withPreview(location.search, activeId);
+		if (next !== location.search)
+			history.replaceState(history.state, "", `${location.pathname}${next}${location.hash}`);
+	}, [activeId]);
 	const [mergeWith, setMergeWith] = useState<Duplicate | null>(null);
 	const [newOpen, setNewOpen] = useState(false);
 	const [added, setAdded] = useState<readonly Contact[]>([]);
@@ -147,12 +163,102 @@ export function ContactsView() {
 		() => toRows(added.map((c) => overlay.get(c.id) ?? c), ownerNames, t("common.unassigned"), t("common.unknownUser")),
 		[added, overlay, ownerNames, t],
 	);
-	const active =
+	const found =
 		activeId === null
 			? null
 			: (allRows.find((r) => r.id === activeId) ?? addedRows.find((r) => r.id === activeId) ?? null);
+	// The open record outlives the loaded pages (filter/sort/reload can drop its row; a deep link may point past page 1):
+	// the last seen copy is retained, and a record that was never loaded is fetched by id.
+	const [fallback, setFallback] = useState<Contact | null>(null);
+	const [missing, setMissing] = useState<string | null>(null);
+	useEffect(() => {
+		if (found !== null) setFallback(found);
+	}, [found]);
+	useEffect(() => {
+		if (activeId === null || found !== null || fallback?.id === activeId) return;
+		const ctrl = new AbortController();
+		fetchExpanded<Contact>("contacts", activeId, "owner", ctrl.signal)
+			.then((c) => {
+				if (ctrl.signal.aborted) return;
+				if (c) setFallback(c);
+				else setMissing(activeId);
+			})
+			.catch((e: unknown) => {
+				if (!ctrl.signal.aborted && !(e instanceof DOMException)) setMissing(activeId);
+			});
+		return () => ctrl.abort();
+	}, [activeId, found, fallback]);
+	const fallbackRow = useMemo(
+		() =>
+			fallback === null
+				? null
+				: (toRows([fallback], ownerNames, t("common.unassigned"), t("common.unknownUser"))[0] ?? null),
+		[fallback, ownerNames, t],
+	);
+	const active = found ?? (fallbackRow !== null && fallbackRow.id === activeId ? fallbackRow : null);
+	const onRecordUpdated = useCallback(
+		(c: Contact) => {
+			remember(c);
+			// The overlay only decorates loaded rows: a record opened by id (not in the loaded pages) updates its retained copy.
+			setFallback((prev) => (prev !== null && prev.id === c.id ? carryExpand(c, prev) : prev));
+		},
+		[remember],
+	);
+
+	// Prev/Next over the loaded rows in grid order; at the last loaded row the next server page is loaded first.
+	const ids = useMemo(() => rows.map((r) => r.id), [rows]);
+	const step = previewStep(ids, activeId, contacts.hasMore);
+	const [wantMore, setWantMore] = useState<string | null>(null);
+	const { server: contactsServer } = contacts;
+	useEffect(() => {
+		if (wantMore === null) return;
+		if (activeId !== wantMore || contactsServer.moreFailed) {
+			setWantMore(null);
+			return;
+		}
+		if (step.nextId !== null) {
+			setWantMore(null);
+			setActiveId(step.nextId);
+		} else if (!contacts.hasMore && !contactsServer.loadingMore) setWantMore(null);
+	}, [wantMore, activeId, step.nextId, contacts.hasMore, contactsServer.moreFailed, contactsServer.loadingMore]);
+	const goNext = () => {
+		if (step.nextId !== null) openRecord(step.nextId);
+		else if (step.needsMore && !contacts.refreshing)
+			guard.request(() => {
+				setWantMore(activeId);
+				contactsServer.onRetryMore();
+			});
+	};
+	const listTotal = Math.max(contacts.total?.value ?? 0, ids.length);
+	const lastActive = useRef<string | null>(null);
+	useEffect(() => {
+		if (activeId !== null) lastActive.current = activeId;
+	}, [activeId]);
+	const preview = {
+		guard,
+		returnFocus: () =>
+			lastActive.current === null
+				? null
+				: document.querySelector<HTMLElement>(`tr[data-row-id="${lastActive.current}"]`),
+		nav: {
+			onPrev:
+				step.prevId !== null && !contacts.refreshing
+					? () => openRecord(step.prevId)
+					: null,
+			onNext: (step.nextId !== null || step.needsMore) && !contacts.refreshing ? goNext : null,
+			busy: wantMore !== null,
+			...(step.index >= 0
+				? {
+						position: t("preview.position", {
+							index: formatNumber(step.index + 1),
+							total: formatNumber(listTotal),
+						}),
+					}
+				: {}),
+		},
+	};
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
-	const crumbReturn = useCrumbReturn(setActiveId);
+	const crumbReturn = useCrumbReturn(openRecord);
 	useRecordCrumb(active?.display_name, crumbReturn.back);
 
 	const views = useMemo(
@@ -295,7 +401,7 @@ export function ContactsView() {
 							}
 							activeId={activeId}
 							onActiveChange={crumbReturn.onActiveChange}
-							autoSelectFirst={wide && !crumbReturn.suppressAutoOpen}
+							revealId={activeId}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
 							server={contacts.server}
@@ -304,15 +410,20 @@ export function ContactsView() {
 						/>
 					)}
 				</div>
-				<ContactDetail
-					key={detailEpoch}
-					contact={active}
-					assignees={assignees}
-					canMerge={canMerge}
-					onUpdated={remember}
-					onMerge={setMergeWith}
-					onClose={() => setActiveId(null)}
-				/>
+				{activeId !== null ? (
+					<ContactDetail
+						contact={active}
+						state={missing === activeId ? "missing" : "loading"}
+						epoch={detailEpoch}
+						assignees={assignees}
+						canMerge={canMerge}
+						onUpdated={onRecordUpdated}
+						onMerge={setMergeWith}
+						onClose={() => setActiveId(null)}
+						preview={preview}
+					/>
+				) : null}
+				{guardDialog}
 			</div>
 			{mergeWith && active ? (
 				<MergeDialogs

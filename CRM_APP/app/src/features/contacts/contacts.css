@@ -4,15 +4,9 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
-.sy-contacts__body {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
-	gap: var(--sy-space-14);
-	align-items: start;
-	min-width: 0;
-}
-.sy-contacts__main,
-.sy-contacts__detail {
+/* The record opens as a preview slide-over (PreviewPanel): the table always has the full width. */
+.sy-contacts__body,
+.sy-contacts__main {
 	min-width: 0;
 }
 .sy-contacts__main {
@@ -109,11 +103,6 @@
 .sy-contacts__table tr[data-differs="true"] td:nth-child(2) {
 	text-decoration: line-through;
 	color: var(--sy-text-3);
-}
-@media (max-width: 1023px) {
-	.sy-contacts__body {
-		grid-template-columns: minmax(0, 1fr);
-	}
 }
 
 .sy-contacts__section-head {

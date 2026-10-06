@@ -15,9 +15,10 @@ import {
 	Ltr,
 	type MessageKey,
 	Popover,
+	PreviewPanel,
 	RecordEditFooter,
-	RecordEmpty,
 	RecordPanel,
+	type RecordPreview,
 	Select,
 	sourceLabel,
 	Tabs,
@@ -534,35 +535,50 @@ function ContactBody({
 
 export function ContactDetail({
 	contact,
+	state,
+	epoch,
 	assignees,
 	canMerge,
 	onUpdated,
 	onMerge,
 	onClose,
+	preview,
 }: {
 	contact: ContactRow | null;
+	/** Why there is no record yet: still fetching by id, or the id does not exist / is not visible. */
+	state: "loading" | "missing";
+	/** Bumped by a merge: the panel body remounts (overview tab, fresh identifiers) without re-opening the slide-over. */
+	epoch: number;
 	assignees: readonly Assignee[];
 	canMerge: boolean;
 	onUpdated: (c: Contact) => void;
 	onMerge: (d: Duplicate) => void;
 	onClose: () => void;
+	preview: RecordPreview;
 }) {
 	const { t } = useI18n();
 	const isAdmin = useIsAdmin();
 	if (contact === null)
 		return (
-			<RecordEmpty
+			<PreviewPanel
 				label={t("contacts.detail.title")}
-				hint={t("contacts.detail.empty")}
-				testId="contact-detail-empty"
-			/>
+				testId="contact-detail"
+				onClose={onClose}
+				{...(preview.returnFocus ? { returnFocus: preview.returnFocus } : {})}
+			>
+				<p className="sy-record__muted" role="status" data-testid={`contact-detail-${state}`}>
+					{state === "loading" ? t("preview.loading") : t("preview.missing")}
+				</p>
+			</PreviewPanel>
 		);
 	return (
 		<RecordPanel
 			label={t("contacts.detail.title")}
 			testId="contact-detail"
-			recordKey={contact.id}
-			title={contact.display_name}
+			recordKey={`${contact.id}:${epoch}`}
+			heading={contact.display_name}
+			preview={preview}
+			title={<Bdi>{contact.display_name}</Bdi>}
 			titleTestId="contact-detail-title"
 			subtitle={contact.ownerName}
 			onClose={onClose}
