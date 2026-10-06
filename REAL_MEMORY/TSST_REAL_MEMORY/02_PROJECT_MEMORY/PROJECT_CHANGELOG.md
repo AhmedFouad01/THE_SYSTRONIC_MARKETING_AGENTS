@@ -66,3 +66,4 @@
 
 - `PROJECT_DECISIONS.md` — added TSD-018.
 - Repo: new `TSST/context/adapters/gemini-desktop.md` (flow + handoff template); pointers in `AGENTS.md`, `adapters/claude.md`; note in ADR-004.
+- Amended same day: data rule → explicit approval + privacy check (no Keep Activity requirement); ADR-004 note → Appendix A clarification.

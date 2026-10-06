@@ -119,5 +119,6 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 
 - Date: `2026-10-06`
 - Status: `APPROVED` (user approval in chat 2026-10-06)
-- Decision: Gemini Desktop is available as an external tool, not a TSST agent or runtime (not Antigravity; no GEMINI_AG). Any agent may recommend it; the responsible agent prepares the handoff (objective, context, files, references, prompt, constraints, acceptance); the Lead packages it; Ahmed runs it manually and returns the output; the agent reviews and the Lead accepts. Output is input, not a deliverable; creative passes FINAL_ASSET_GATE; no secrets; client data only with Gemini activity training off. No roster, routing, readiness or governance change.
-- Source: `TSST/context/adapters/gemini-desktop.md`; note in `TSST/decisions/TSST-ADR-004.md`.
+- Decision: Gemini Desktop is available as an external tool, not a TSST agent or runtime (not Antigravity; no GEMINI_AG). Any agent may recommend it; the responsible agent prepares the handoff (objective, context, files, references, prompt, constraints, acceptance); the Lead packages it; Ahmed runs it manually and returns the output; the agent reviews and the Lead accepts. Output is input, not a deliverable; creative passes FINAL_ASSET_GATE; no secrets ever; sensitive client data only with explicit user approval + privacy check per request. No roster, routing, readiness or governance change.
+- Amended 2026-10-06 (user): data rule changed from "Keep Activity off" to approval + privacy check (Activity off breaks Connected Apps); ADR-004 note moved to Appendix A.
+- Source: `TSST/context/adapters/gemini-desktop.md`; `TSST/decisions/TSST-ADR-004.md` Appendix A.

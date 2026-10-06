@@ -34,7 +34,7 @@ ACCEPTANCE:      checks the agent will run on return
 - Output is **input, not a deliverable** (as R2): the responsible agent reviews it and the
   Lead accepts it. Images/video pass `TSST/CREATIVE/FINAL_ASSET_GATE.md`; approved logos
   are composited, never regenerated.
-- Data: no credentials/secrets ever. Before client or private data, Ahmed confirms the
-  Gemini account does not use activity for training (Gemini Apps Activity off).
-  Status: Ahmed confirmed Gemini Apps Activity OFF on 2026-10-06; re-confirm if the account changes.
+- Data: no credentials/secrets ever. Sensitive client data needs explicit user approval
+  and a privacy check per request before it goes to Gemini. (Keep Activity is not a
+  required setting: turning it off disables most Connected Apps, incl. Workspace/Drive.)
 - Gemini output never writes Real Memory directly; facts in it are proposals.
