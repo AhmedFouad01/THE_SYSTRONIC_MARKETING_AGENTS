@@ -72,7 +72,7 @@ function useCampaignReport(
 }
 
 export function ReportingView() {
-	const { t, formatNumber } = useI18n();
+	const { t, formatNumber, locale } = useI18n();
 	const toast = useToast();
 	const f = useReportFmt();
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
@@ -278,7 +278,7 @@ export function ReportingView() {
 										testId="kpi-roas"
 										tone="navy"
 										label={t("rep.kpi.roas")}
-										value={formatRoas(kpis.roas, "en")}
+										value={formatRoas(kpis.roas, locale)}
 										sub={
 											kpis.spend > 0n
 												? (kpis.currency ?? undefined)
@@ -309,7 +309,7 @@ export function ReportingView() {
 										testId="kpi-unattributed"
 										tone={unattributedAlert(kpis) ? "magenta" : "neutral"}
 										label={t("rep.kpi.unattributed")}
-										value={formatShare(kpis.unattributedShare, "en")}
+										value={formatShare(kpis.unattributedShare, locale)}
 										sub={t("rep.kpi.unattributedHint")}
 									/>
 								</div>

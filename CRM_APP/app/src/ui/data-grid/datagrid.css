@@ -170,11 +170,11 @@
 	inset: 0;
 	z-index: 5;
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	align-items: center;
-	align-content: center;
 	gap: var(--sy-space-8);
 	min-height: var(--sy-control-h);
+	overflow-x: auto;
 	padding-inline: var(--sy-space-12);
 	border: 1px solid var(--sy-border);
 	border-radius: var(--sy-radius-10);
@@ -185,6 +185,26 @@
 .sy-grid__batch .sy-btn,
 .sy-grid__batch .sy-btn--sm {
 	height: 28px;
+	flex: none;
+}
+
+.sy-grid__batch > b {
+	flex: none;
+	white-space: nowrap;
+}
+
+/* Phone sheet (UX-25): saved views, filters, columns and density live here, not in three toolbar rows. */
+.sy-grid__sheet {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: var(--sy-space-10);
+}
+
+.sy-grid__sheet .sy-grid__filters {
+	padding: 0;
+	border: 0;
+	background: transparent;
 }
 
 .sy-grid__poptitle {
@@ -468,8 +488,14 @@
 
 /* ---- mobile (<=768px): rows become cards, no clipped columns, no horizontal page scroll (UX-02) ---- */
 @media (max-width: 768px) {
+	/* One toolbar row: search takes the remaining width, Filters is a 36px icon button. */
+	.sy-grid__toolbar {
+		flex-wrap: nowrap;
+	}
+
 	.sy-grid__searchbox {
-		flex-basis: 100%;
+		flex: 1 1 0;
+		min-width: 0;
 		max-width: none;
 	}
 

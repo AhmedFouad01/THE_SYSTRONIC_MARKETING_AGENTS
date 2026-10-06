@@ -393,6 +393,9 @@ for (const language of ["en", "ar"] as const)
 		const dash = page.getByTestId("kpi-revenue").locator(".sy-money");
 		await expect(dash).toBeVisible();
 		const dashText = (await dash.innerText()).trim();
+		const dashRoas = (
+			await page.getByTestId("kpi-roas").locator(".sy-kpi__value").innerText()
+		).trim();
 
 		await page.getByTestId("nav-reporting").click();
 		await expect(page.getByTestId("reporting-view")).toBeVisible();
@@ -402,6 +405,23 @@ for (const language of ["en", "ar"] as const)
 
 		expect(dashText.length).toBeGreaterThan(0);
 		expect(repText).toBe(dashText);
+		// ROAS and the unattributed share use locale digits like the Dashboard (consistency decision)
+		const repRoas = (
+			await page.getByTestId("kpi-roas").locator(".sy-kpi__value").innerText()
+		).trim();
+		const repShare = (
+			await page
+				.getByTestId("kpi-unattributed")
+				.locator(".sy-kpi__value")
+				.innerText()
+		).trim();
+		expect(repRoas).toBe(dashRoas);
+		expect(repRoas).toMatch(language === "ar" ? /^[^0-9]*[٠-٩]/ : /\d/);
+		if (language === "ar") {
+			expect(repRoas).not.toMatch(/[0-9]/);
+			expect(repShare).not.toMatch(/[0-9]/);
+			expect(repShare).toMatch(/[٠-٩]/);
+		}
 		// 12,345,678 minor units = 123,456.78 in EGP; locale digits (Arabic-Indic in AR, Latin in EN)
 		if (language === "ar") expect(repText).not.toMatch(/[0-9]/);
 		else expect(repText).toMatch(/123,456\.78/);

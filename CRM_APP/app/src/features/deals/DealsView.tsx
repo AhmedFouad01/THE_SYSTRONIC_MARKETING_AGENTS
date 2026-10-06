@@ -33,7 +33,11 @@ import {
 	fetchDealsPage,
 	fetchLeadRef,
 	fetchPipelines,
+	patchDeal,
+	transitionDeal,
 } from "./api.ts";
+import { BulkChoiceDialog } from "../BulkChoiceDialog.tsx";
+import { bulkMessage, GENERIC_BULK_KEYS, runBulkOps } from "../bulk.ts";
 import { toneOf } from "./DealDetail.tsx";
 import { DealRecord } from "./DealRecord.tsx";
 import {
@@ -47,6 +51,9 @@ import {
 	currencyChoices,
 	dealContextSearch,
 	dealValueText,
+	applyTransition,
+	bulkMoveTargets,
+	buildTransitionBody,
 	filterBuiltInView,
 	type LeadRef,
 	mergeLatest,
@@ -132,7 +139,7 @@ function ContextStrip({
 }
 
 export function DealsView() {
-	const { t, formatMoney } = useI18n();
+	const { t, formatMoney, formatNumber } = useI18n();
 	const sheet = useRecordSheet();
 	const toast = useToast();
 	const session = useSession();
@@ -405,6 +412,88 @@ export function DealsView() {
 		}
 	};
 
+	// ---- bulk: assign to me / move stage (one write per row, partial failures reported) ----
+	const [bulk, setBulk] = useState<{ done: number; total: number } | null>(null);
+	const [moveDialog, setMoveDialog] = useState<{
+		ids: readonly string[];
+		clear: () => void;
+	} | null>(null);
+	const rowsRef = useRef(allRows);
+	useEffect(() => {
+		rowsRef.current = allRows;
+	});
+	const finishBulk = (summary: Parameters<typeof bulkMessage>[0], clear: () => void) => {
+		setBulk(null);
+		const m = bulkMessage(summary, GENERIC_BULK_KEYS, t, formatNumber);
+		toast.notify(m.text, m.tone);
+		clear();
+		if (summary.failed.some((f) => f.kind === "version_conflict")) deals.reload();
+	};
+	const assignToMe = async (ids: readonly string[], clear: () => void) => {
+		if (actor === null) {
+			toast.notify(t("leads.bulk.noActor"), "error");
+			return;
+		}
+		const byId = new Map(rowsRef.current.map((r) => [r.id, r]));
+		const items = ids.flatMap((id) => {
+			const r = byId.get(id);
+			return r ? [{ id, skip: r.owner_id === actor }] : [];
+		});
+		setBulk({ done: 0, total: items.length });
+		const summary = await runBulkOps(
+			items,
+			async (id) => {
+				const r = byId.get(id);
+				if (!r) return;
+				remember(
+					await patchDeal(id, {
+						command_id: crypto.randomUUID(),
+						expected_version: r.version,
+						owner_id: actor,
+					}),
+				);
+			},
+			(done, total) => setBulk({ done, total }),
+		);
+		finishBulk(summary, clear);
+	};
+	const moveSelected = async (stageId: string) => {
+		if (moveDialog === null) return;
+		const { ids, clear } = moveDialog;
+		setMoveDialog(null);
+		const byId = new Map(rowsRef.current.map((r) => [r.id, r]));
+		const items = ids.flatMap((id) => (byId.has(id) ? [{ id }] : []));
+		setBulk({ done: 0, total: items.length });
+		const summary = await runBulkOps(
+			items,
+			async (id) => {
+				const r = byId.get(id);
+				const target = pipelineById
+					.get(r?.pipeline_id ?? "")
+					?.stages.find((s) => s.id === stageId);
+				if (!r || !target) return;
+				const commandId = crypto.randomUUID();
+				const res = await transitionDeal(
+					id,
+					buildTransitionBody(r, target, "", commandId),
+				);
+				remember(applyTransition(r, res));
+			},
+			(done, total) => setBulk({ done, total }),
+		);
+		finishBulk(summary, clear);
+	};
+	const moveTargetsFor = (ids: readonly string[]) => {
+		const byId = new Map(allRows.map((r) => [r.id, r]));
+		return bulkMoveTargets(
+			ids.flatMap((id) => {
+				const r = byId.get(id);
+				return r ? [r] : [];
+			}),
+			pipelineById,
+		);
+	};
+
 	const currencies = useMemo(
 		() => currencyChoices(allRows.map((r) => r.currency)),
 		[allRows],
@@ -497,6 +586,14 @@ export function DealsView() {
 			) : null}
 			<div className="sy-deals__body">
 				<div className="sy-deals__main">
+					{bulk ? (
+						<p role="status" className="sy-deals__muted" data-testid="bulk-progress">
+							{t("bulk.progress", {
+								done: formatNumber(bulk.done),
+								total: formatNumber(bulk.total),
+							})}
+						</p>
+					) : null}
 					{deals.status === "error" && isForbidden(deals.error) ? (
 						<ForbiddenState />
 					) : (
@@ -511,6 +608,30 @@ export function DealsView() {
 							requestId={isApiError(deals.error) ? deals.error.requestId : null}
 							activeId={activeId}
 							onActiveChange={setActiveId}
+							selectable
+							batchActions={(ids, clear) => (
+								<>
+									<Button
+										size="sm"
+										variant="primary"
+										loading={bulk !== null}
+										onClick={() => void assignToMe(ids, clear)}
+										data-testid="bulk-assign"
+									>
+										{t("action.assignToMe")}
+									</Button>
+									{moveTargetsFor(ids).length > 0 ? (
+										<Button
+											size="sm"
+											disabled={bulk !== null}
+											onClick={() => setMoveDialog({ ids, clear })}
+											data-testid="bulk-move-stage"
+										>
+											{t("bulk.moveStage")}
+										</Button>
+									) : null}
+								</>
+							)}
 							{...(views ? { views } : {})}
 							sample={sample}
 							emptyTitle={t("deals.emptyTitle")}
@@ -520,6 +641,19 @@ export function DealsView() {
 				</div>
 			</div>
 			</div>
+			<BulkChoiceDialog
+				open={moveDialog !== null}
+				onClose={() => setMoveDialog(null)}
+				title={t("bulk.moveStage")}
+				label={t("bulk.stagePick")}
+				count={moveDialog?.ids.length ?? 0}
+				options={(moveDialog ? moveTargetsFor(moveDialog.ids) : []).map((s) => ({
+					value: s.id,
+					label: s.name,
+				}))}
+				onConfirm={(v) => void moveSelected(v)}
+				testId="bulk-move-dialog"
+			/>
 			<NewDealDialog
 				open={newOpen}
 				onClose={() => setNewOpen(false)}

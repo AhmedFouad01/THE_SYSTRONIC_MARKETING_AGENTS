@@ -425,7 +425,7 @@ for (const language of ["en", "ar"] as const)
 		await open(page, f, language, 1440, "/app/leads", "leads-view");
 		const L = {
 			en: ["Manage and qualify incoming leads", "Open", "Qualified", "Closed"],
-			ar: ["إدارة العملاء المحتملين وتأهيلهم", "مفتوحة", "مؤهلة", "مغلقة"],
+			ar: ["إدارة العملاء المحتملين وتأهيلهم", "مفتوح", "مؤهل", "مغلق"],
 		}[language];
 		const num = (n: number) => (language === "ar" ? String.fromCharCode(0x660 + n) : String(n));
 		await expect(page.getByText(L[0] as string)).toBeVisible();

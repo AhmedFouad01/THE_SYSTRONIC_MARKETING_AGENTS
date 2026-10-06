@@ -18,6 +18,7 @@ export default defineConfig({
 		"mvp-record-grid.spec.ts",
 		"mvp-ux-r2.spec.ts",
 		"mvp-dashboard.spec.ts",
+		"mvp-bulk.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

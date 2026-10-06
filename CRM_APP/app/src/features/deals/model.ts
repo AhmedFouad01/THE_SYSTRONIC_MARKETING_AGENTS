@@ -111,6 +111,31 @@ export function allowedTargets(
 	);
 }
 
+/**
+ * Stages the whole selection can be moved to in one bulk action: every selected deal must be in the same
+ * pipeline and have a configured edge to the target (so the server cannot answer INVALID_TRANSITION). Lost
+ * targets are excluded (they need a per-deal reason). Empty = the action is not offered.
+ */
+export function bulkMoveTargets(
+	selected: readonly Pick<Deal, "pipeline_id" | "stage_id">[],
+	pipelineById: ReadonlyMap<string, Pipeline>,
+): Stage[] {
+	const first = selected[0];
+	if (first === undefined) return [];
+	if (selected.some((d) => d.pipeline_id !== first.pipeline_id)) return [];
+	const p = pipelineById.get(first.pipeline_id);
+	let common: Stage[] | null = null;
+	for (const d of selected) {
+		const ids = new Set(
+			allowedTargets(p, d.stage_id)
+				.filter((s) => s.outcome !== "lost")
+				.map((s) => s.id),
+		);
+		common = (common ?? allowedTargets(p, d.stage_id)).filter((s) => ids.has(s.id));
+	}
+	return common ?? [];
+}
+
 export const stageOf = (
 	p: Pipeline | undefined,
 	stageId: string,

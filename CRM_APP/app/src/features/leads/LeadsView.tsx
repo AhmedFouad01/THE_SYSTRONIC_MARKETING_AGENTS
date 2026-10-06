@@ -48,6 +48,7 @@ import {
 	filterBuiltInView,
 	LEAD_STATUSES,
 	type Lead,
+	type LeadStatus,
 	leadStatusCounts,
 	leadStripTone,
 	type LeadRow,
@@ -56,13 +57,12 @@ import {
 	toRows,
 } from "./model.ts";
 import { NewLeadDialog } from "./NewLeadDialog.tsx";
+import { BulkChoiceDialog } from "../BulkChoiceDialog.tsx";
+import { bulkMessage, GENERIC_BULK_KEYS, runBulkOps, TASK_BULK_KEYS } from "../bulk.ts";
+import { buildCreateBody as buildTaskBody, type NewTaskInput } from "../tasks/model.ts";
+import { createTask } from "../tasks/api.ts";
+import { BulkTaskDialog } from "./BulkTaskDialog.tsx";
 import "./leads.css";
-
-const KPI_LABEL = {
-	open: "leads.kpi.open",
-	qualified: "leads.kpi.qualified",
-	closed: "leads.kpi.closed",
-} as const;
 
 const VIEW_LABEL = {
 	all: "leads.view.all",
@@ -307,6 +307,70 @@ export function LeadsView() {
 			leads.reload();
 	};
 
+	// ---- bulk change status / add task (one PATCH or POST per row; partial failures reported like Assign) ----
+	const [bulkDialog, setBulkDialog] = useState<{
+		kind: "status" | "task";
+		ids: readonly string[];
+		clear: () => void;
+	} | null>(null);
+	const finishBulk = (
+		summary: Parameters<typeof bulkMessage>[0],
+		keys: Parameters<typeof bulkMessage>[1],
+		clear: () => void,
+	) => {
+		setBulk(null);
+		const m = bulkMessage(summary, keys, t, formatNumber);
+		toast.notify(m.text, m.tone);
+		clear();
+		if (summary.failed.some((f) => f.kind === "version_conflict")) leads.reload();
+	};
+	const changeStatus = async (status: LeadStatus) => {
+		if (bulkDialog === null) return;
+		const { ids, clear } = bulkDialog;
+		setBulkDialog(null);
+		const byId = new Map(rowsRef.current.map((r) => [r.id, r]));
+		const items = ids.flatMap((id) => {
+			const r = byId.get(id);
+			return r ? [{ id, skip: r.status === status }] : [];
+		});
+		setBulk({ done: 0, total: items.length });
+		const summary = await runBulkOps(
+			items,
+			async (id) => {
+				const r = byId.get(id);
+				if (!r) return;
+				remember(
+					await patchLead(id, {
+						command_id: crypto.randomUUID(),
+						expected_version: r.version,
+						status,
+					}),
+				);
+			},
+			(done, total) => setBulk({ done, total }),
+		);
+		finishBulk(summary, GENERIC_BULK_KEYS, clear);
+	};
+	const addTasks = async (input: NewTaskInput) => {
+		if (bulkDialog === null) return;
+		const { ids, clear } = bulkDialog;
+		setBulkDialog(null);
+		const byId = new Map(rowsRef.current.map((r) => [r.id, r]));
+		const items = ids.flatMap((id) => (byId.has(id) ? [{ id }] : []));
+		setBulk({ done: 0, total: items.length });
+		const summary = await runBulkOps(
+			items,
+			async (id) => {
+				const r = byId.get(id);
+				if (!r) return;
+				const key = crypto.randomUUID();
+				await createTask(buildTaskBody({ ...input, contactId: r.contact_id }, key), key);
+			},
+			(done, total) => setBulk({ done, total }),
+		);
+		finishBulk(summary, TASK_BULK_KEYS, clear);
+	};
+
 	const sample: GridSample = {
 		loaded: leads.items.length,
 		hasMore: leads.sample,
@@ -353,7 +417,7 @@ export function LeadsView() {
 								<KpiCard
 									key={st}
 									testId={`leads-kpi-${st}`}
-									label={t(KPI_LABEL[st])}
+									label={t(STATUS_KEY[st])}
 									loading={leads.status === "loading"}
 									value={formatCapped(strip[st], formatNumber)}
 									sub={stripSub}
@@ -416,15 +480,34 @@ export function LeadsView() {
 							autoSelectFirst={wide}
 							selectable
 							batchActions={(ids, clear) => (
-								<Button
-									size="sm"
-									variant="primary"
-									loading={bulk !== null}
-									onClick={() => void assignToMe(ids, clear)}
-									data-testid="bulk-assign"
-								>
-									{t("action.assignToMe")}
-								</Button>
+								<>
+									<Button
+										size="sm"
+										variant="primary"
+										loading={bulk !== null}
+										onClick={() => void assignToMe(ids, clear)}
+										data-testid="bulk-assign"
+									>
+										{t("action.assignToMe")}
+									</Button>
+									<Button
+										size="sm"
+										disabled={bulk !== null}
+										onClick={() => setBulkDialog({ kind: "status", ids, clear })}
+										data-testid="bulk-status"
+									>
+										{t("bulk.changeStatus")}
+									</Button>
+									<Button
+										size="sm"
+										icon="tasks"
+										disabled={bulk !== null}
+										onClick={() => setBulkDialog({ kind: "task", ids, clear })}
+										data-testid="bulk-add-task"
+									>
+										{t("bulk.addTask")}
+									</Button>
+								</>
 							)}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
@@ -441,6 +524,23 @@ export function LeadsView() {
 					onClose={() => setActiveId(null)}
 				/>
 			</div>
+			<BulkChoiceDialog
+				open={bulkDialog?.kind === "status"}
+				onClose={() => setBulkDialog(null)}
+				title={t("bulk.changeStatus")}
+				label={t("bulk.statusPick")}
+				count={bulkDialog?.ids.length ?? 0}
+				options={LEAD_STATUSES.map((s) => ({ value: s, label: t(STATUS_KEY[s]) }))}
+				onConfirm={(v) => void changeStatus(v as LeadStatus)}
+				testId="bulk-status-dialog"
+			/>
+			<BulkTaskDialog
+				open={bulkDialog?.kind === "task"}
+				onClose={() => setBulkDialog(null)}
+				count={bulkDialog?.ids.length ?? 0}
+				assignees={assignees}
+				onSubmit={(i) => void addTasks(i)}
+			/>
 			<NewLeadDialog
 				open={newOpen}
 				onClose={() => setNewOpen(false)}
