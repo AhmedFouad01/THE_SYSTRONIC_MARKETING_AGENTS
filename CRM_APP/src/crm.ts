@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
 import { type Context, Fault, transaction } from "./db.js";
-import { listRecords } from "./list.js";
+import { contactSources, listRecords } from "./list.js";
 import { type Kind, projection } from "./query.js";
 export type Body = Record<string, unknown>;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -279,6 +279,15 @@ export async function crmRequest(
 				tasks: "task",
 			} as Record<string, string>
 		)[resource];
+		if (
+			method === "GET" &&
+			resource === "contacts" &&
+			object === "sources" &&
+			!sub
+		) {
+			await permit(db, ctx, "crm.read", "contact");
+			return contactSources(db, ctx);
+		}
 		if (method === "GET" && resource === "session" && !object) {
 			await permit(db, ctx, "crm.read", "contact");
 			return {

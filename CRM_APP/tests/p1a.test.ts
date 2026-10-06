@@ -6,6 +6,7 @@ import pg from "pg";
 import { seed } from "../scripts/seed.js";
 import { crmRequest, type Body } from "../src/crm.js";
 import { Fault, pool, transaction, type Context } from "../src/db.js";
+import { planList } from "../src/listquery.js";
 import { transition } from "../src/transition.js";
 
 const admin = new pg.Client({
@@ -736,4 +737,333 @@ test("P1A-S4e tenant isolation, rep scope, expand, total cap, legacy behaviour",
 	await admin.query("DELETE FROM crm.contact WHERE id=(SELECT id FROM crm.contact WHERE tenant_id=$1 AND display_name LIKE 'Cap %' LIMIT 1)", [f.ids.a]);
 	assert.deepEqual((await list("q=cap&include_total=1&limit=1")).total_count, { value: 10000, exact: true });
 	assert.equal((await list("q=cap&limit=1")).total_count, undefined);
+});
+
+// ---------------------------------------------------------------- S5 Arabic/related search and named sort keys
+async function s5Bulk() {
+	const rep = await member("rep");
+	const s = await sample();
+	await admin.query("UPDATE crm.principal SET name='Alpha owner' WHERE id=$1", [
+		f.ids.manager,
+	]);
+	await admin.query("UPDATE crm.principal SET name='Zulu owner' WHERE id=$1", [
+		rep.id,
+	]);
+	await admin.query(
+		`INSERT INTO crm.contact(tenant_id,id,display_name,owner_id,source) SELECT $1,gen_random_uuid(),'S5 name '||(i%13),CASE WHEN i%3=0 THEN $2::uuid ELSE $3::uuid END,'S5 source '||lpad(i::text,3,'0') FROM generate_series(1,160) i`,
+		[f.ids.a, rep.id, f.ids.manager],
+	);
+	await admin.query(
+		`INSERT INTO crm.lead(tenant_id,id,contact_id,owner_id,title,source,source_evidence) SELECT tenant_id,gen_random_uuid(),id,CASE WHEN source IN ('S5 source 002','S5 source 005') THEN $2::uuid ELSE owner_id END,'S5 lead '||source,'test','synthetic' FROM crm.contact WHERE tenant_id=$1 AND source LIKE 'S5 source %'`,
+		[f.ids.a, rep.id],
+	);
+	await admin.query(
+		`INSERT INTO crm.deal(tenant_id,id,contact_id,lead_id,owner_id,title,pipeline_id,stage_id) SELECT tenant_id,gen_random_uuid(),contact_id,id,owner_id,'S5 deal '||source,$2,CASE WHEN right(source,1) IN ('0','2','4','6','8') THEN $3::uuid ELSE $4::uuid END FROM crm.lead WHERE tenant_id=$1 AND title LIKE 'S5 lead %'`,
+		[f.ids.a, s.p.id, s.p.stages[0].id, s.p.stages[1].id],
+	);
+	await admin.query(
+		`INSERT INTO crm.task(tenant_id,id,contact_id,deal_id,owner_id,title,due_at) SELECT tenant_id,gen_random_uuid(),contact_id,id,owner_id,'S5 task '||title,now()+interval '1 day' FROM crm.deal WHERE tenant_id=$1 AND title LIKE 'S5 deal %'`,
+		[f.ids.a],
+	);
+	return { rep, s };
+}
+test("P1A-S5a all Arabic folds in every kind, bidirectional query folding, mixed AR/EN and update storage", async () => {
+	await fresh();
+	await s5Bulk();
+	const s = await sample();
+	const pairs = [
+		["أحمد", "احمد"],
+		["إياد", "اياد"],
+		["آدم", "ادم"],
+		["على", "علي"],
+		["فاطمة", "فاطمه"],
+		["مُحَمَّد", "محمد"],
+		["مـدينة", "مدينه"],
+		["أحمد AcME", "احمد acme"],
+	];
+	for (const [original, folded] of pairs) {
+		for (const [kind, record, column] of [
+			["contacts", s.c, "display_name"],
+			["leads", s.l, "title"],
+			["deals", s.d, "title"],
+			["tasks", s.t, "title"],
+		] as const) {
+			const table = {
+				contacts: "contact",
+				leads: "lead",
+				deals: "deal",
+				tasks: "task",
+			}[kind];
+			await admin.query(
+				`UPDATE crm.${table} SET ${column}=$1 WHERE tenant_id=$2 AND id=$3`,
+				[original, f.ids.a, record.id],
+			);
+			assert.ok(
+				(await list(`q=${encodeURIComponent(folded)}`, kind)).data.some(
+					(r) => r.id === record.id,
+				),
+				`${kind} ${original}`,
+			);
+			await admin.query(
+				`UPDATE crm.${table} SET ${column}=$1 WHERE tenant_id=$2 AND id=$3`,
+				[folded, f.ids.a, record.id],
+			);
+			assert.ok(
+				(await list(`q=${encodeURIComponent(original)}`, kind)).data.some(
+					(r) => r.id === record.id,
+				),
+				`${kind} reverse ${original}`,
+			);
+			// Neutralize the related contact after each case so own-field search cannot be masked.
+			await admin.query(`UPDATE crm.${table} SET ${column}=$1 WHERE tenant_id=$2 AND id=$3`, [`S5 neutral ${kind}`, f.ids.a, record.id]);
+		}
+	}
+	const plan = await admin.query(
+		"EXPLAIN (ANALYZE,FORMAT JSON) SELECT id FROM crm.lead WHERE tenant_id=$1 AND search_normalized LIKE '%s5%' ORDER BY title,id LIMIT 38",
+		[f.ids.a],
+	);
+	console.log(
+		"S5 representative 160-lead search plan:",
+		JSON.stringify({
+			planning_ms: plan.rows[0]["QUERY PLAN"][0]["Planning Time"],
+			execution_ms: plan.rows[0]["QUERY PLAN"][0]["Execution Time"],
+			node: plan.rows[0]["QUERY PLAN"][0].Plan["Node Type"],
+		}),
+	);
+});
+test("P1A-S5b related-name search respects tenant and rep visibility; task deal and lead titles", async () => {
+	await fresh();
+	const { rep, s } = await s5Bulk();
+	await admin.query(
+		"UPDATE crm.contact SET display_name='إياد AcME' WHERE tenant_id=$1 AND id=$2",
+		[f.ids.a, s.c.id],
+	);
+	for (const kind of ["leads", "deals"])
+		assert.ok(
+			(await list(`q=${encodeURIComponent("اياد acme")}`, kind)).data.some(
+				(r) => r.contact_id === s.c.id,
+			),
+		);
+	await admin.query(
+		"UPDATE crm.deal SET title='أفق UNIQUEDEAL',lead_id=$1 WHERE tenant_id=$2 AND id=$3",
+		[s.l.id, f.ids.a, s.d.id],
+	);
+	await admin.query(
+		"UPDATE crm.lead SET title='مدرسة UNIQUELEAD' WHERE tenant_id=$1 AND id=$2",
+		[f.ids.a, s.l.id],
+	);
+	await admin.query(
+		"UPDATE crm.task SET deal_id=$1 WHERE tenant_id=$2 AND id=$3",
+		[s.d.id, f.ids.a, s.t.id],
+	);
+	for (const q of ["افق uniquedeal", "مدرسه uniquelead"])
+		assert.deepEqual(
+			(await list(`q=${encodeURIComponent(q)}`, "tasks")).data.map((r) => r.id),
+			[s.t.id],
+		);
+	// Rep-owned rows pointing to a manager-owned contact cannot search/sort by its hidden name.
+	const restricted = await create("leads", {
+		contact_id: s.c.id,
+		title: "Restricted lead",
+		source_evidence: "synthetic",
+		owner_id: rep.id,
+	});
+	assert.equal(
+		(
+			await list(`q=${encodeURIComponent("اياد acme")}`, "leads", rep.ctx)
+		).data.some((r) => r.id === restricted.id),
+		false,
+	);
+	const hiddenTask = await create("tasks", {
+		deal_id: s.d.id,
+		title: "Restricted task",
+		due_at: new Date(Date.now() + 3600e3).toISOString(),
+		owner_id: rep.id,
+	});
+	assert.equal(
+		(await list("q=uniquedeal", "tasks", rep.ctx)).data.some(
+			(r) => r.id === hiddenTask.id,
+		),
+		false,
+	);
+	await transaction(ctx, async (db) => {
+		const plan = planList(
+			"lead",
+			new URLSearchParams({ q: "S5 name", sort: "contact_name", limit: "38" }),
+			ctx.tenant,
+			{ mode: "tenant", actor: f.ids.manager },
+		);
+		const result = (
+			await db.query(`EXPLAIN (ANALYZE,FORMAT JSON) ${plan.sql}`, plan.params)
+		).rows[0]["QUERY PLAN"][0];
+		console.log(
+			"S5 scoped related-search/contact-sort plan:",
+			JSON.stringify({
+				planning_ms: result["Planning Time"],
+				execution_ms: result["Execution Time"],
+				rows: result.Plan["Actual Rows"],
+				node: result.Plan["Node Type"],
+			}),
+		);
+	});
+	const b = { tenant: f.ids.b, token: f.tokens.agency };
+	for (const kind of KINDS)
+		assert.equal(
+			(await list(`q=${encodeURIComponent("اياد acme")}`, kind, b)).data.length,
+			0,
+		);
+});
+test("P1A-S5c all six new sort keys asc/desc and two-key keyset across 160 rows, ties and restricted NULLs", async () => {
+	await fresh();
+	const { rep } = await s5Bulk();
+	const cases = [
+		["leads", "contact_name"],
+		["leads", "owner_name"],
+		["deals", "contact_name"],
+		["deals", "owner_name"],
+		["deals", "stage"],
+		["tasks", "owner_name"],
+	] as const;
+	for (const [kind, key] of cases)
+		for (const desc of [false, true])
+			for (const scoped of [false, true]) {
+				const table = { leads: "lead", deals: "deal", tasks: "task" }[kind];
+				const direction = desc ? "DESC" : "ASC";
+				const expression =
+					key === "contact_name"
+						? `(SELECT c.display_name FROM crm.contact c WHERE c.tenant_id=b.tenant_id AND c.id=b.contact_id AND c.merged_into_id IS NULL${scoped ? " AND c.owner_id=$2" : ""})`
+						: key === "owner_name"
+							? "(SELECT p.name FROM crm.principal p WHERE p.id=b.owner_id)"
+							: "(SELECT position FROM crm.stage s WHERE s.tenant_id=b.tenant_id AND s.id=b.stage_id)";
+				const want = await truth(
+					`SELECT b.id FROM crm.${table} b WHERE tenant_id=$1${scoped ? " AND owner_id=$2" : ""} ORDER BY ${expression} ${direction} NULLS LAST,id ${direction}`,
+					scoped ? [f.ids.a, rep.id] : [f.ids.a],
+				);
+				const got = await pageAll(
+					`sort=${desc ? "-" : ""}${key}&limit=17`,
+					kind,
+					scoped ? rep.ctx : ctx,
+				);
+				assert.ok(want.length >= 50);
+				assert.ok(got.pages > 1);
+				assert.equal(new Set(got.ids).size, got.ids.length);
+				assert.deepEqual(
+					got.ids,
+					want,
+					`${kind} ${key} ${direction} scoped=${scoped}`,
+				);
+			}
+	const want = await truth(
+		"SELECT b.id FROM crm.deal b WHERE tenant_id=$1 ORDER BY (SELECT position FROM crm.stage s WHERE s.tenant_id=b.tenant_id AND s.id=b.stage_id),(SELECT p.name FROM crm.principal p WHERE p.id=b.owner_id) DESC NULLS LAST,id",
+		[f.ids.a],
+	);
+	assert.deepEqual(
+		(await pageAll("sort=stage,-owner_name&limit=19", "deals")).ids,
+		want,
+	);
+	await admin.query(
+		"UPDATE crm.membership SET active=false WHERE tenant_id=$1 AND principal_id=$2",
+		[f.ids.a, rep.id],
+	);
+	const nullWant = await truth(
+		"SELECT b.id FROM crm.task b WHERE tenant_id=$1 ORDER BY (SELECT p.name FROM crm.principal p JOIN crm.membership m ON m.principal_id=p.id WHERE m.tenant_id=b.tenant_id AND m.active AND p.id=b.owner_id) NULLS LAST,id",
+		[f.ids.a],
+	);
+	assert.deepEqual(
+		(await pageAll("sort=owner_name&limit=17", "tasks")).ids,
+		nullWant,
+	);
+	for (const kind of ["leads", "deals", "tasks"]) {
+		const r = await list("sort=owner_name", kind);
+		assert.ok(
+			!Object.keys(r.data[0]).some((k) =>
+				[
+					"owner_name",
+					"contact_name",
+					"stage",
+					"related_search",
+					"search_normalized",
+				].includes(k),
+			),
+		);
+	}
+	await assert.rejects(
+		list(`filter=${enc({ p: "owner_name", op: "eq", v: "x" })}`, "leads"),
+		fail("VALIDATION_FAILED"),
+	);
+});
+test("P1A-S5d distinct sources cap200, tenant/rep/auth scope and byte-compatible legacy response", async () => {
+	await fresh();
+	const { rep } = await s5Bulk();
+	await admin.query(
+		`INSERT INTO crm.contact(tenant_id,id,display_name,owner_id,source) SELECT $1,gen_random_uuid(),'extra',$2,'ZZ source '||lpad(i::text,3,'0') FROM generate_series(1,60) i`,
+		[f.ids.a, f.ids.manager],
+	);
+	const sources = (await request("contacts/sources")).data;
+	const want = (
+		await admin.query(
+			"SELECT DISTINCT source FROM crm.contact WHERE tenant_id=$1 AND source IS NOT NULL AND merged_into_id IS NULL ORDER BY source LIMIT 200",
+			[f.ids.a],
+		)
+	).rows.map((r) => r.source);
+	assert.equal(want.length, 200);
+	assert.deepEqual(sources, want);
+	const mine = (await request("contacts/sources", "GET", {}, rep.ctx)).data;
+	assert.deepEqual(
+		mine,
+		(
+			await admin.query(
+				"SELECT DISTINCT source FROM crm.contact WHERE tenant_id=$1 AND owner_id=$2 AND merged_into_id IS NULL ORDER BY source LIMIT 200",
+				[f.ids.a, rep.id],
+			)
+		).rows.map((r) => r.source),
+	);
+	const b = { tenant: f.ids.b, token: f.tokens.agency };
+	assert.deepEqual(
+		(await request("contacts/sources", "GET", {}, b)).data,
+		(
+			await admin.query(
+				"SELECT DISTINCT source FROM crm.contact WHERE tenant_id=$1 AND merged_into_id IS NULL ORDER BY source LIMIT 200",
+				[f.ids.b],
+			)
+		).rows.map((r) => r.source),
+	);
+	const analyst = await member("analyst");
+	await assert.rejects(
+		request("contacts/sources", "GET", {}, analyst.ctx),
+		fail("FORBIDDEN"),
+	);
+	await assert.rejects(
+		request("contacts/sources", "GET", {}, { ...ctx, token: "x".repeat(64) }),
+		(e) => e instanceof Fault && e.status === 401,
+	);
+	for (const kind of KINDS) {
+		const table = {
+			contacts: "contact",
+			leads: "lead",
+			deals: "deal",
+			tasks: "task",
+		}[kind];
+		const columns = [...S1_COLUMNS[kind], "created_at", "updated_at"].join(",");
+		const rows = (
+			await admin.query(
+				`SELECT ${columns} FROM crm.${table} WHERE tenant_id=$1${table === "contact" ? " AND merged_into_id IS NULL" : ""} ORDER BY id LIMIT 51`,
+				[f.ids.a],
+			)
+		).rows;
+		const data = rows.slice(0, 50).map((r) => ({
+			...r,
+			...("amount_minor" in r ? { amount_minor: Number(r.amount_minor) } : {}),
+		}));
+		const expected = {
+			data,
+			next_cursor: rows.length > 50 ? data[49].id : null,
+			has_more: rows.length > 50,
+		};
+		assert.equal(
+			JSON.stringify(await list("", kind)),
+			JSON.stringify(expected),
+			`${kind} exact legacy bytes`,
+		);
+	}
 });

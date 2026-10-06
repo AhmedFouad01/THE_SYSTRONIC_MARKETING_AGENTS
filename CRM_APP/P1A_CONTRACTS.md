@@ -36,3 +36,16 @@ Applied with `npm run migrate` (transactional, advisory-locked). Runner now asse
 - Authorization unchanged: `crm.read` + `crm.object_scope` once per request; agency grant header, analyst, no-MFA still 403.
 
 Open items (not S4): trigram/GIN index for `q`; digest search; default-order flip; `fields=`, `view_id`, `POST .../search` (later ADR slices).
+
+## S5 delivered contract: normalized and related search, named sort keys, sources
+
+Migration 009 adds immutable strict SQL function `crm.normalize_search(text)` and stored `search_normalized` columns for all four objects. It folds أ/إ/آ to ا, ى to ي, ة to ه; removes Arabic marks U+0610..061A, U+064B..065F, U+0670, U+06D6..06ED and tatweel U+0640; lowercases Latin. The same function folds the bound query pattern. Original display fields and explicit response projections stay unchanged.
+
+- Grammar remains `q=<URL-encoded text>`, raw length <=100 characters, trimmed, with literal escaped `%`, `_` and `\` and transaction-local 5s timeout. All kinds search their own display_name/title; leads/deals also search visible unmerged contact display_name; tasks also search the visible related deal title and its visible linked lead title. Related lookups match tenant and assigned owner scope; restricted related names contribute no search match.
+- Sort grammar remains at most 2 comma-separated keys, optional `-` for descending. Additional **sort-only** whitelist: lead `contact_name owner_name`; deal `contact_name owner_name stage`; task `owner_name`. Existing filter fields/operators are unchanged. `stage` sorts by the stage's integer `position` (pipeline order; equal positions across pipelines tie by subsequent key/id). Owner names use the same active tenant-member visibility as `expand=owner`. Hidden/missing names sort NULLS LAST in both directions. Exact text/integer key values and id tiebreak travel in the existing opaque cursor; raw trimmed q fingerprint/staleness behavior remains unchanged. Derived names/normalized values never appear in default response fields.
+- `GET /v1/contacts/sources` returns `{data: string[]}`: DISTINCT non-null sources from visible unmerged contacts in the current tenant, sorted by database text order, at most 200. Uses crm.read/object_scope and assigned owner predicate, with 5s timeout. Existing auth failures remain 401/403. No pagination; no source normalization.
+- Legacy requests without q/filter/sort preserve SQL, field order, JSON bytes and UUID cursor behavior.
+
+Migration 009 is additive and transactional; generated storage backfills on ADD COLUMN, with four non-concurrent B-tree indexes on tenant_id/search_normalized/id. This takes table locks and rewrites stored values, suitable for this local fixture. The indexes support tenant narrowing and ordered/prefix access; leading-% substring patterns still scan the scoped records and do **not** have trigram acceleration. No extension or npm dependency added. Recovery is a forward fix; preserve the original columns/data and explicit projections. The runner verifies before/after object row counts.
+
+Setup addendum: 001 changes only CREATE ROLE to the issued IF NOT EXISTS guard, preserving identical role attributes. Existing applied 001 databases do not rerun it. Migration runner registers 009; existing password logic is unchanged.
