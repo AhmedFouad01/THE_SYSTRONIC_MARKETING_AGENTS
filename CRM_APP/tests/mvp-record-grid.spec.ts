@@ -164,7 +164,7 @@ for (const language of ["ar", "en"] as const)
 		await expect(page.getByTestId("lead-detail-title")).toHaveText("Alpha lead");
 		await expect(page.getByTestId("sheet-back")).toBeFocused();
 		const sheetBox = await sheet.boundingBox();
-		expect(sheetBox?.width).toBe(375);
+		expect(sheetBox?.width ?? 0).toBeCloseTo(375, 0); // sub-pixel while the sheet animation settles
 		expect(await noPageOverflow(page)).toBe(true);
 
 		await page.getByTestId("sheet-back").click();

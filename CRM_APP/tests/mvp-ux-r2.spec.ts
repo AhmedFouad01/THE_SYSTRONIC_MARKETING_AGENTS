@@ -434,6 +434,7 @@ test("UX-01 ar dates carry no Latin comma; UX-11/12 evidence + task source are l
 	// AR: the panel docks at the left (inline end), so the sidebar navigation stays reachable while it is open
 	await page.getByRole("link", { name: "مهامي" }).click();
 	await expect(rows(page).first()).toBeVisible();
+	await rows(page).first().locator(".sy-cell-id").click(); // no auto-open: the preview opens on demand
 	const taskFacts =
 		(await page.getByTestId("record-facts").textContent()) ?? "";
 	expect(taskFacts).not.toContain(",");
@@ -461,6 +462,7 @@ test("UX-11 en: source evidence 'referral' shows its label; unknown task source 
 	expect((await facts.textContent()) ?? "").not.toContain("referral");
 	await page.getByRole("link", { name: "My tasks" }).click();
 	await expect(rows(page).first()).toBeVisible();
+	await rows(page).first().locator(".sy-cell-id").click(); // no auto-open: the preview opens on demand
 	const taskFacts = page.getByTestId("record-facts");
 	await expect(taskFacts).not.toContainText("Not recorded");
 	await expect(taskFacts).not.toContainText("Source");

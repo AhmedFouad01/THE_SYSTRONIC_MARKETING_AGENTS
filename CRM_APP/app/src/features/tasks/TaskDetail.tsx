@@ -8,9 +8,10 @@ import {
 	Input,
 	Bdi,
 	type MessageKey,
+	PreviewPanel,
 	RecordEditFooter,
-	RecordEmpty,
 	RecordPanel,
+	type RecordPreview,
 	Select,
 	StatusPill,
 	useI18n,
@@ -228,16 +229,21 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 
 export function TaskDetail({
 	task,
+	state,
 	assignees,
 	now,
 	onUpdated,
 	onClose,
+	preview,
 }: {
 	task: TaskRow | null;
+	/** Why there is no record yet: still fetching by id, or the id does not exist / is not visible. */
+	state: "loading" | "missing";
 	assignees: readonly Assignee[];
 	now: Date;
 	onUpdated: (task: Task) => void;
 	onClose: () => void;
+	preview: RecordPreview;
 }) {
 	const { t, formatDateTime } = useI18n();
 	const isAdmin = useIsAdmin();
@@ -247,18 +253,25 @@ export function TaskDetail({
 	useEffect(() => setEditing(false), [taskId]);
 	if (task === null)
 		return (
-			<RecordEmpty
+			<PreviewPanel
 				label={t("tasks.detail.title")}
-				hint={t("tasks.detail.empty")}
-				testId="task-detail-empty"
-			/>
+				testId="task-detail"
+				onClose={onClose}
+				{...(preview.returnFocus ? { returnFocus: preview.returnFocus } : {})}
+			>
+				<p className="sy-record__muted" role="status" data-testid={`task-detail-${state}`}>
+					{state === "loading" ? t("preview.loading") : t("preview.missing")}
+				</p>
+			</PreviewPanel>
 		);
 	return (
 		<RecordPanel
 			label={t("tasks.detail.title")}
 			testId="task-detail"
 			recordKey={task.id}
-			title={task.title}
+			heading={task.title}
+			preview={preview}
+			title={<Bdi>{task.title}</Bdi>}
 			titleTestId="task-detail-title"
 			subtitle={<RelatedLink row={task} />}
 			chip={

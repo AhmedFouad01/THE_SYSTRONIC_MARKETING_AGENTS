@@ -284,8 +284,9 @@ test("tasks en: Add task from deal detail keeps the relation; related link retur
 
 	await page.goto("/app/tasks");
 	await expect(rows(page)).toHaveCount(1);
-	// UX-R2-01: the grid's Related column drops out beside the open record, whose subtitle carries the same link.
-	await page.locator('[data-testid="task-related"]:visible').first().click();
+	// No auto-open: open the task, then follow the related link from the preview's subtitle.
+	await rows(page).first().locator(".sy-cell-id").click();
+	await page.getByTestId("task-detail").getByTestId("task-related").click();
 	await expect(page.getByTestId("deal-detail-title")).toHaveText(
 		"Relation deal",
 	);
@@ -346,7 +347,9 @@ test("tasks en: create from the Tasks screen needs a contact; complete from row 
 	await expect(rows(page)).toHaveCount(3);
 	await expect(page.getByTestId("task-detail-title")).toHaveText("Fresh task");
 
-	// complete from the row: it leaves Open and appears in Done
+	// complete from the row: it leaves Open and appears in Done (the new task's preview overlays the action column: close it first)
+	await page.keyboard.press("Escape");
+	await expect(page.getByTestId("task-detail")).toHaveCount(0);
 	await rows(page)
 		.filter({ hasText: "Row task" })
 		.getByRole("button", { name: "Complete task Row task" })
@@ -506,6 +509,10 @@ for (const width of [360, 1280])
 			expect(await noPageOverflow(page)).toBe(true);
 			if (width < 1024) {
 				await page.getByTestId("sheet-back").click();
+				await expect(page.getByTestId("task-detail")).toHaveCount(0);
+			} else {
+				// the slide-over overlays the page header's action: close it first
+				await page.keyboard.press("Escape");
 				await expect(page.getByTestId("task-detail")).toHaveCount(0);
 			}
 			const opener = page.getByTestId("new-task");

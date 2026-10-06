@@ -281,6 +281,9 @@
 	font-weight: 600;
 	letter-spacing: 0.04em;
 	text-align: start;
+	/* Header labels are UI chrome: they follow the UI direction. base.css gives th `unicode-bidi: plaintext`, which resolves a header
+	   that holds only a sort <button> (an atomic inline, no strong character) to LTR and pushed it to the physical left in AR. */
+	unicode-bidi: normal;
 	text-transform: uppercase;
 	white-space: nowrap;
 }

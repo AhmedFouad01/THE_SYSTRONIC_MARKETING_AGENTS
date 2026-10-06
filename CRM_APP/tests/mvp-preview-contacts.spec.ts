@@ -307,6 +307,14 @@ for (const language of ["en", "ar"] as const)
 		await start(page, f, { language });
 		await expect(page.locator("html")).toHaveAttribute("dir", language === "ar" ? "rtl" : "ltr");
 		const tableBefore = await page.getByTestId("grid-table").boundingBox();
+		// sort headers sit at the inline-start edge of their cell (AR: right, EN: left), not at the opposite end (th was LTR-resolved)
+		for (const col of ["name", "source"]) {
+			const th = await page.locator("th").filter({ has: page.getByTestId(`sort-${col}`) }).boundingBox();
+			const btn = await page.getByTestId(`sort-${col}`).boundingBox();
+			if (!th || !btn) throw new Error("no header boxes");
+			if (language === "ar") expect(Math.abs(th.x + th.width - (btn.x + btn.width))).toBeLessThanOrEqual(12);
+			else expect(Math.abs(btn.x - th.x)).toBeLessThanOrEqual(12);
+		}
 		await open(page, "Contact 02");
 		await expect(panel(page)).toBeVisible();
 		const startX = await panel(page).evaluate((el) => new DOMMatrixReadOnly(getComputedStyle(el).transform).m41);
@@ -369,8 +377,8 @@ for (const language of ["en", "ar"] as const)
 		expect(await panel(page).evaluate((el) => getComputedStyle(el).animationName)).toBe("sy-sheet-in");
 		await page.waitForTimeout(400);
 		const box = await panel(page).boundingBox();
-		expect(box?.x).toBe(0);
-		expect(box?.width).toBe(375);
+		expect(box?.x ?? -1).toBeCloseTo(0, 0);
+		expect(box?.width ?? 0).toBeCloseTo(375, 0);
 		await expect(panel(page).locator(".sy-dialog__sidetitle")).toHaveText("Contact 02");
 		await expect(page.getByTestId("sheet-back")).toBeVisible();
 		await expect.poll(() => page.evaluate(() => history.length)).toBe(base + 1);

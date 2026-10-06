@@ -11,7 +11,6 @@ import {
 	createSavedViewsStore,
 	DataGrid,
 	IdentityCell,
-	useWideLayout,
 	DEFAULT_VIEW,
 	ForbiddenState,
 	type GridColumn,
@@ -28,9 +27,14 @@ import {
 	ownerFilter,
 	type ServerSpec,
 	useServerList,
+	parsePreview,
+	previewStep,
+	usePreviewGuard,
+	withPreview,
 } from "../../ui/index.ts";
-import { useRecordCrumb } from "../../ui/shell/index.ts";
-import { parseSelect } from "../deals/model.ts";
+import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
+import { carryExpand } from "../expand.ts";
+import { toRoute } from "../../router.ts";
 import {
 	type Assignee,
 	type ContactRef,
@@ -91,7 +95,6 @@ function useNow(): Date {
 
 export function TasksView() {
 	const { t, formatNumber } = useI18n();
-	const wide = useWideLayout();
 	const toast = useToast();
 	const session = useSession();
 	const actor = session.info?.actor ?? null;
@@ -132,9 +135,26 @@ export function TasksView() {
 		reloadRef.current();
 	}, []);
 
+	// Open record = preview slide-over; `?preview=<id>` (legacy `?select=` accepted) keeps it across reloads and deep links.
 	const [activeId, setActiveId] = useState<string | null>(() =>
-		parseSelect(location.search),
+		parsePreview(location.search),
 	);
+	const { guard, dialog: guardDialog } = usePreviewGuard();
+	// Every way to leave or swap the open record asks first when the edit form holds unsaved changes.
+	const openRecord = useCallback(
+		(id: string | null) => guard.request(() => setActiveId(id)),
+		[guard],
+	);
+	useEffect(() => {
+		if (toRoute(location.pathname) !== "/tasks") return;
+		const next = withPreview(location.search, activeId);
+		if (next !== location.search)
+			history.replaceState(history.state, "", `${location.pathname}${next}${location.hash}`);
+	}, [activeId]);
+	// The open record outlives the loaded pages (tab/filter/sort/reload can drop its row; a deep link may point past page 1):
+	// the last seen copy is retained, and a record that was never loaded is fetched by id.
+	const [fallback, setFallback] = useState<Task | null>(null);
+	const [missing, setMissing] = useState<string | null>(null);
 	const [newOpen, setNewOpen] = useState(false);
 
 	const ownerByName = useMemo(
@@ -170,7 +190,7 @@ export function TasksView() {
 		enabled: newOpen,
 	});
 	reloadRef.current = tasks.reload;
-	const dealIds = useMemo(() => tasks.items.map((x) => x.deal_id), [tasks.items]);
+	const dealIds = useMemo(() => [...tasks.items.map((x) => x.deal_id), fallback?.deal_id ?? null], [tasks.items, fallback]);
 	const dealNames = useDealTitles(dealIds, tenantId);
 
 	const ownerNames = useMemo(
@@ -198,12 +218,96 @@ export function TasksView() {
 		() => toRows([...overlay.values()], dealNames, ownerNames, { unknown: t("tasks.unknownRecord"), unknownOwner: t("common.unknownUser") }, now),
 		[overlay, dealNames, ownerNames, t, now],
 	);
-	const active =
+	const found =
 		activeId === null
 			? null
 			: (allRows.find((r) => r.id === activeId) ?? overlayRows.find((r) => r.id === activeId) ?? null);
+	useEffect(() => {
+		if (found !== null) setFallback(found);
+	}, [found]);
+	useEffect(() => {
+		if (activeId === null || found !== null || fallback?.id === activeId) return;
+		const ctrl = new AbortController();
+		fetchExpanded<Task>("tasks", activeId, "contact,owner", ctrl.signal)
+			.then((x) => {
+				if (ctrl.signal.aborted) return;
+				if (x) setFallback(x);
+				else setMissing(activeId);
+			})
+			.catch((e: unknown) => {
+				if (!ctrl.signal.aborted && !(e instanceof DOMException)) setMissing(activeId);
+			});
+		return () => ctrl.abort();
+	}, [activeId, found, fallback]);
+	const fallbackRow = useMemo(
+		() =>
+			fallback === null
+				? null
+				: (toRows([fallback], dealNames, ownerNames, { unknown: t("tasks.unknownRecord"), unknownOwner: t("common.unknownUser") }, now)[0] ?? null),
+		[fallback, dealNames, ownerNames, t, now],
+	);
+	const active = found ?? (fallbackRow !== null && fallbackRow.id === activeId ? fallbackRow : null);
+	const onRecordUpdated = useCallback(
+		(task: Task) => {
+			remember(task);
+			// The overlay only decorates loaded rows: a record opened by id keeps its own retained copy current too.
+			setFallback((prev) => (prev !== null && prev.id === task.id ? carryExpand(task, prev) : prev));
+		},
+		[remember],
+	);
+
+	// Prev/Next over the loaded rows in grid order; at the last loaded row the next server page is loaded first.
+	const ids = useMemo(() => rows.map((r) => r.id), [rows]);
+	const step = previewStep(ids, activeId, tasks.hasMore);
+	const [wantMore, setWantMore] = useState<string | null>(null);
+	const { server: tasksServer } = tasks;
+	useEffect(() => {
+		if (wantMore === null) return;
+		if (activeId !== wantMore || tasksServer.moreFailed) {
+			setWantMore(null);
+			return;
+		}
+		if (step.nextId !== null) {
+			setWantMore(null);
+			setActiveId(step.nextId);
+		} else if (!tasks.hasMore && !tasksServer.loadingMore) setWantMore(null);
+	}, [wantMore, activeId, step.nextId, tasks.hasMore, tasksServer.moreFailed, tasksServer.loadingMore]);
+	const goNext = () => {
+		if (step.nextId !== null) openRecord(step.nextId);
+		else if (step.needsMore && !tasks.refreshing)
+			guard.request(() => {
+				setWantMore(activeId);
+				tasksServer.onRetryMore();
+			});
+	};
+	const listTotal = Math.max(tasks.total?.value ?? 0, ids.length);
+	const lastActive = useRef<string | null>(null);
+	useEffect(() => {
+		if (activeId !== null) lastActive.current = activeId;
+	}, [activeId]);
+	const preview = {
+		guard,
+		returnFocus: () =>
+			lastActive.current === null
+				? null
+				: document.querySelector<HTMLElement>(`tr[data-row-id="${lastActive.current}"]`),
+		nav: {
+			onPrev: step.prevId !== null && !tasks.refreshing ? () => openRecord(step.prevId) : null,
+			onNext: (step.nextId !== null || step.needsMore) && !tasks.refreshing ? goNext : null,
+			busy: wantMore !== null,
+			...(step.index >= 0
+				? {
+						position: t("preview.position", {
+							index: formatNumber(step.index + 1),
+							total: formatNumber(listTotal),
+						}),
+					}
+				: {}),
+		},
+	};
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
-	useRecordCrumb(active?.title, () => setActiveId(null));
+	const crumbReturn = useCrumbReturn(openRecord);
+	useRecordCrumb(active?.title, crumbReturn.back);
 
 	const views = useMemo(
 		() =>
@@ -495,8 +599,8 @@ export function TasksView() {
 							onRetry={tasks.reload}
 							requestId={isApiError(tasks.error) ? tasks.error.requestId : null}
 							activeId={activeId}
-							onActiveChange={setActiveId}
-							autoSelectFirst={wide}
+							onActiveChange={crumbReturn.onActiveChange}
+							revealId={activeId}
 							selectable
 							batchActions={(ids, clear) => (
 								<Button
@@ -517,13 +621,18 @@ export function TasksView() {
 						/>
 					)}
 				</div>
-				<TaskDetail
-					task={active}
-					assignees={assignees}
-					now={now}
-					onUpdated={remember}
-					onClose={() => setActiveId(null)}
-				/>
+				{activeId !== null ? (
+					<TaskDetail
+						task={active}
+						state={missing === activeId ? "missing" : "loading"}
+						assignees={assignees}
+						now={now}
+						onUpdated={onRecordUpdated}
+						onClose={() => setActiveId(null)}
+						preview={preview}
+					/>
+				) : null}
+				{guardDialog}
 			</div>
 			<NewTaskDialog
 				open={newOpen}

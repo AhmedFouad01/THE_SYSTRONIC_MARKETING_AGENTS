@@ -4,11 +4,8 @@
 	gap: var(--sy-space-12);
 	min-width: 0;
 }
+/* The record opens as a preview slide-over (PreviewPanel): the table always has the full width. */
 .sy-tasks__body {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
-	gap: var(--sy-space-14);
-	align-items: start;
 	min-width: 0;
 }
 .sy-tasks__main {
@@ -16,9 +13,6 @@
 	display: flex;
 	flex-direction: column;
 	gap: var(--sy-space-8);
-}
-.sy-tasks__detail {
-	min-width: 0;
 }
 .sy-tasks__head {
 	display: flex;
@@ -70,11 +64,6 @@
 .sy-tasks__facts dd {
 	margin: 0;
 	overflow-wrap: anywhere;
-}
-@media (max-width: 1023px) {
-	.sy-tasks__body {
-		grid-template-columns: minmax(0, 1fr);
-	}
 }
 .sy-tasks__due {
 	display: inline-flex;

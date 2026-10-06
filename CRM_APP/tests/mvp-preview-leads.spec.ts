@@ -396,9 +396,9 @@ for (const language of ["en", "ar"] as const)
 		expect(await panel(page).evaluate((el) => getComputedStyle(el).animationName)).toBe("sy-sheet-in");
 		await page.waitForTimeout(400);
 		const box = await panel(page).boundingBox();
-		expect(box?.x).toBe(0);
-		expect(box?.width).toBe(375);
-		expect((box?.x ?? 0) + (box?.width ?? 0)).toBe(375); // right edge = viewport right edge in both languages
+		expect(box?.x ?? -1).toBeCloseTo(0, 0);
+		expect(box?.width ?? 0).toBeCloseTo(375, 0);
+		expect((box?.x ?? 0) + (box?.width ?? 0)).toBeCloseTo(375, 0); // right edge = viewport right edge in both languages
 		// the header carries the record name
 		await expect(panel(page).locator(".sy-dialog__sidetitle")).toHaveText("Lead 02");
 		await expect(page.getByTestId("sheet-back")).toBeVisible();

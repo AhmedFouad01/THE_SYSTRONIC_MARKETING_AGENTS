@@ -24,6 +24,7 @@ export default defineConfig({
 		"mvp-server-query.spec.ts",
 		"mvp-preview-leads.spec.ts",
 		"mvp-preview-contacts.spec.ts",
+		"mvp-preview-tasks.spec.ts",
 		"mvp-bidi-user-content.spec.ts",
 	],
 	workers: 1,
