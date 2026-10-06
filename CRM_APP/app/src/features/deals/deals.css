@@ -22,9 +22,6 @@
 	flex-direction: column;
 	gap: var(--sy-space-8);
 }
-.sy-deals__detail {
-	min-width: 0;
-}
 .sy-deals__head {
 	display: flex;
 	justify-content: space-between;

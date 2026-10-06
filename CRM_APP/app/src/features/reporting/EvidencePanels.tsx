@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isApiError, isForbidden } from "../../api/index.ts";
 import {
 	Button,
@@ -8,7 +8,6 @@ import {
 	type GridSample,
 	Bdi,
 	Ltr,
-	Panel,
 	useCursorList,
 	useI18n,
 } from "../../ui/index.ts";
@@ -19,6 +18,7 @@ import {
 	fetchOrdersPage,
 } from "./api.ts";
 import type { Conversion, Money, Order } from "./model.ts";
+import { ReportPreview } from "./ReportPreview.tsx";
 import {
 	ContactLink,
 	DetailState,
@@ -38,6 +38,18 @@ function sampleOf<T>(l: ReturnType<typeof useCursorList<T>>): GridSample {
 		failed: l.moreError !== null,
 		onLoadMore: l.loadMore,
 	};
+}
+
+/** The open row can disappear after a reload / recalculation: close the preview once the list has settled without it. */
+function useClosedWhenGone(
+	activeId: string | null,
+	present: boolean,
+	status: "loading" | "ready" | "error",
+	close: (id: null) => void,
+) {
+	useEffect(() => {
+		if (activeId !== null && !present && status === "ready") close(null);
+	}, [activeId, present, status, close]);
 }
 
 export function ConversionsPanel({ resetKey }: { resetKey: string }) {
@@ -112,66 +124,64 @@ export function ConversionsPanel({ resetKey }: { resetKey: string }) {
 		[t, f],
 	);
 
+	const active = list.items.find((c) => c.id === activeId) ?? null;
+	const ids = useMemo(() => list.items.map(convId), [list.items]);
+	useClosedWhenGone(activeId, active !== null, list.status, setActiveId);
+
 	return (
-		<div
-			className={`sy-rep__body${list.items.length === 0 ? " sy-rep__body--solo" : ""}`}
-		>
-			<div className="sy-rep__main">
-				{list.status === "error" && isForbidden(list.error) ? (
-					<ForbiddenState />
-				) : (
-					<DataGrid<Conversion>
-						gridId="report-conversions"
-						label={t("rep.grid.conversions")}
-						rows={list.items}
-						columns={columns}
-						getRowId={convId}
-						status={list.status}
-						onRetry={list.reload}
-						requestId={isApiError(list.error) ? list.error.requestId : null}
-						activeId={activeId}
-						onActiveChange={setActiveId}
-						sample={sampleOf(list)}
-						emptyTitle={t("rep.empty")}
-						emptyHint={t("rep.emptyHint")}
-					/>
-				)}
-			</div>
-			{list.items.length > 0 ? (
-				<Panel
-					as="aside"
-					className="sy-rep__detail"
-					title={t("rep.detail.credits")}
-					data-testid="report-detail"
+		<div className="sy-rep__main">
+			{list.status === "error" && isForbidden(list.error) ? (
+				<ForbiddenState />
+			) : (
+				<DataGrid<Conversion>
+					gridId="report-conversions"
+					label={t("rep.grid.conversions")}
+					rows={list.items}
+					columns={columns}
+					getRowId={convId}
+					status={list.status}
+					onRetry={list.reload}
+					requestId={isApiError(list.error) ? list.error.requestId : null}
+					activeId={activeId}
+					onActiveChange={setActiveId}
+					revealId={activeId}
+					sample={sampleOf(list)}
+					emptyTitle={t("rep.empty")}
+					emptyHint={t("rep.emptyHint")}
+				/>
+			)}
+			{active ? (
+				<ReportPreview
+					label={t("rep.detail.credits")}
+					heading={f.label(active.conversion_type)}
+					activeId={activeId}
+					ids={ids}
+					partial={list.sample}
+					onChange={setActiveId}
 				>
-					{activeId ? (
-						<ConversionDetailView id={activeId} resetKey={resetKey} />
-					) : (
-						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-					)}
-				</Panel>
+					<ConversionDetailView conversion={active} resetKey={resetKey} />
+				</ReportPreview>
 			) : null}
 		</div>
 	);
 }
 
 function ConversionDetailView({
-	id,
+	conversion,
 	resetKey,
 }: {
-	id: string;
+	conversion: Conversion;
 	resetKey: string;
 }) {
 	const { t } = useI18n();
 	const f = useReportFmt();
-	const state = useDetail(fetchConversion, id, resetKey);
+	const state = useDetail(fetchConversion, conversion.id, resetKey);
 	return (
 		<DetailState state={state}>
 			{(c) => (
 				<div className="details" data-testid="detail-body">
-					<p>
-						<b>{f.label(c.conversion_type)}</b> ·{" "}
-						{f.money(c.value_minor, c.currency)}
+					<p className="sy-rep__ptitle">
+						{f.label(c.conversion_type)} · {f.money(c.value_minor, c.currency)}
 					</p>
 					<p className="sy-rep__muted">
 						<Bdi>{f.utc(c.occurred_at)}</Bdi>
@@ -277,44 +287,43 @@ export function OrdersPanel({ resetKey }: { resetKey: string }) {
 		[t, f],
 	);
 
+	const active = list.items.find((o) => o.id === activeId) ?? null;
+	const ids = useMemo(() => list.items.map(orderId), [list.items]);
+	useClosedWhenGone(activeId, active !== null, list.status, setActiveId);
+
 	return (
-		<div
-			className={`sy-rep__body${list.items.length === 0 ? " sy-rep__body--solo" : ""}`}
-		>
-			<div className="sy-rep__main">
-				{list.status === "error" && isForbidden(list.error) ? (
-					<ForbiddenState />
-				) : (
-					<DataGrid<Order>
-						gridId="report-orders"
-						label={t("rep.grid.orders")}
-						rows={list.items}
-						columns={columns}
-						getRowId={orderId}
-						status={list.status}
-						onRetry={list.reload}
-						requestId={isApiError(list.error) ? list.error.requestId : null}
-						activeId={activeId}
-						onActiveChange={setActiveId}
-						sample={sampleOf(list)}
-						emptyTitle={t("rep.empty")}
-						emptyHint={t("rep.emptyHint")}
-					/>
-				)}
-			</div>
-			{list.items.length > 0 ? (
-				<Panel
-					as="aside"
-					className="sy-rep__detail"
-					title={t("rep.tab.orders")}
-					data-testid="report-detail"
+		<div className="sy-rep__main">
+			{list.status === "error" && isForbidden(list.error) ? (
+				<ForbiddenState />
+			) : (
+				<DataGrid<Order>
+					gridId="report-orders"
+					label={t("rep.grid.orders")}
+					rows={list.items}
+					columns={columns}
+					getRowId={orderId}
+					status={list.status}
+					onRetry={list.reload}
+					requestId={isApiError(list.error) ? list.error.requestId : null}
+					activeId={activeId}
+					onActiveChange={setActiveId}
+					revealId={activeId}
+					sample={sampleOf(list)}
+					emptyTitle={t("rep.empty")}
+					emptyHint={t("rep.emptyHint")}
+				/>
+			)}
+			{active ? (
+				<ReportPreview
+					label={t("rep.tab.orders")}
+					heading={active.external_id}
+					activeId={activeId}
+					ids={ids}
+					partial={list.sample}
+					onChange={setActiveId}
 				>
-					{activeId ? (
-						<OrderDetailView id={activeId} resetKey={resetKey} />
-					) : (
-						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-					)}
-				</Panel>
+					<OrderDetailView order={active} resetKey={resetKey} />
+				</ReportPreview>
 			) : null}
 		</div>
 	);
@@ -337,14 +346,21 @@ function MoneyList({ items }: { items: readonly Money[] }) {
 	);
 }
 
-function OrderDetailView({ id, resetKey }: { id: string; resetKey: string }) {
+function OrderDetailView({ order, resetKey }: { order: Order; resetKey: string }) {
 	const { t } = useI18n();
 	const f = useReportFmt();
-	const state = useDetail(fetchOrder, id, resetKey);
+	const state = useDetail(fetchOrder, order.id, resetKey);
 	return (
 		<DetailState state={state}>
 			{(o) => (
 				<div className="details" data-testid="detail-body">
+					<p className="sy-rep__ptitle">
+						<Ltr>{order.external_id}</Ltr>
+					</p>
+					<p className="sy-rep__muted">
+						{order.source} · {f.label(order.order_status)} ·{" "}
+						{f.money(order.net_minor, order.currency)}
+					</p>
 					<h3>{t("rep.detail.payments")}</h3>
 					<MoneyList items={o.payment} />
 					<h3>{t("rep.detail.refunds")}</h3>

@@ -152,7 +152,7 @@ test("E brand and CRM crumb navigate to the Dashboard; the list crumb on a recor
 	await expect(page.getByTestId("breadcrumb-current")).toHaveText("Crumb alpha");
 	await page.getByTestId("breadcrumb-list").click();
 	await expect(page.getByTestId("lead-detail")).toHaveCount(0);
-	// Wide layouts auto-open the first row; closing via the crumb must stay closed (regression: it re-selected).
+	// Closing via the crumb must stay closed (regression: it re-selected).
 	await page.waitForTimeout(500);
 	await expect(page.getByTestId("lead-detail")).toHaveCount(0);
 	await expect(rows(page).first()).not.toHaveAttribute("aria-current", "true");

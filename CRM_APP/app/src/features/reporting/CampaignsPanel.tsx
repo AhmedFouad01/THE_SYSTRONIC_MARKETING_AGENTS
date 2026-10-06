@@ -1,16 +1,19 @@
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
+	Bdi,
 	Button,
 	DataGrid,
 	type GridColumn,
 	Ltr,
-	Panel,
 	useI18n,
 } from "../../ui/index.ts";
 import { type CampaignAgg, formatRoas, isUnknownCampaign } from "./model.ts";
+import { ReportPreview } from "./ReportPreview.tsx";
 import { useReportFmt } from "./shared.tsx";
 
 const getRowId = (a: CampaignAgg) => a.key;
+const campaignName = (a: CampaignAgg, unknown: string) =>
+	isUnknownCampaign(a.campaignId) ? unknown : (a.name ?? a.campaignId);
 
 export function CampaignsPanel({
 	aggs,
@@ -22,14 +25,17 @@ export function CampaignsPanel({
 }) {
 	const { t, locale } = useI18n();
 	const f = useReportFmt();
+	// Open row = preview slide-over (no permanent detail column); closed on first load.
 	const [activeId, setActiveId] = useState<string | null>(null);
 	const active = aggs.find((a) => a.key === activeId) ?? null;
+	const ids = useMemo(() => aggs.map(getRowId), [aggs]);
+	// A recalculation can drop the open campaign: close instead of showing a stale one.
+	useEffect(() => {
+		if (activeId !== null && active === null) setActiveId(null);
+	}, [activeId, active]);
 
 	const columns = useMemo<ReadonlyArray<GridColumn<CampaignAgg>>>(() => {
-		const name = (a: CampaignAgg) =>
-			isUnknownCampaign(a.campaignId)
-				? t("rep.unknown")
-				: (a.name ?? a.campaignId);
+		const name = (a: CampaignAgg) => campaignName(a, t("rep.unknown"));
 		return [
 			{
 				id: "campaign",
@@ -104,37 +110,31 @@ export function CampaignsPanel({
 	}, [t, f, locale]);
 
 	return (
-		<div
-			className={`sy-rep__body${aggs.length === 0 ? " sy-rep__body--solo" : ""}`}
-		>
-			<div className="sy-rep__main">
-				<DataGrid<CampaignAgg>
-					gridId="report-campaigns"
-					label={t("rep.grid.campaigns")}
-					rows={aggs}
-					columns={columns}
-					getRowId={getRowId}
-					status="ready"
+		<div className="sy-rep__main">
+			<DataGrid<CampaignAgg>
+				gridId="report-campaigns"
+				label={t("rep.grid.campaigns")}
+				rows={aggs}
+				columns={columns}
+				getRowId={getRowId}
+				status="ready"
+				activeId={activeId}
+				onActiveChange={setActiveId}
+				revealId={activeId}
+				emptyTitle={t("rep.empty")}
+				emptyHint={t("rep.emptyHint")}
+				{...(emptyAction ? { emptyAction } : {})}
+			/>
+			{active ? (
+				<ReportPreview
+					label={t("rep.detail.campaign")}
+					heading={campaignName(active, t("rep.unknown"))}
 					activeId={activeId}
-					onActiveChange={setActiveId}
-					emptyTitle={t("rep.empty")}
-					emptyHint={t("rep.emptyHint")}
-					{...(emptyAction ? { emptyAction } : {})}
-				/>
-			</div>
-			{aggs.length > 0 ? (
-				<Panel
-					as="aside"
-					className="sy-rep__detail"
-					title={t("rep.detail.campaign")}
-					data-testid="report-detail"
+					ids={ids}
+					onChange={setActiveId}
 				>
-					{active ? (
-						<CampaignDetail agg={active} />
-					) : (
-						<p className="sy-rep__muted">{t("rep.detail.pick")}</p>
-					)}
-				</Panel>
+					<CampaignDetail agg={active} />
+				</ReportPreview>
 			) : null}
 		</div>
 	);
@@ -146,8 +146,8 @@ function CampaignDetail({ agg }: { agg: CampaignAgg }) {
 	const unknown = isUnknownCampaign(agg.campaignId);
 	return (
 		<div>
-			<p>
-				<b>{unknown ? t("rep.unknown") : (agg.name ?? agg.campaignId)}</b>
+			<p className="sy-rep__ptitle">
+				<Bdi>{campaignName(agg, t("rep.unknown"))}</Bdi>
 			</p>
 			{unknown ? (
 				<p className="sy-rep__muted">{t("rep.detail.unknownNote")}</p>

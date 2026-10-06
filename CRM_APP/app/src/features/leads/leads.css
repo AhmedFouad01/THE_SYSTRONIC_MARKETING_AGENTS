@@ -14,9 +14,6 @@
 	flex-direction: column;
 	gap: var(--sy-space-8);
 }
-.sy-leads__detail {
-	min-width: 0;
-}
 .sy-leads__head {
 	display: flex;
 	justify-content: space-between;

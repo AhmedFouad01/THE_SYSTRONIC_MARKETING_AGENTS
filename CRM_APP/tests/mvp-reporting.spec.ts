@@ -165,8 +165,11 @@ for (const width of [360, 1280])
 			await expect(page.getByTestId("grid-row").first()).toContainText(
 				t.unknown,
 			);
+			await expect(page.getByTestId("report-detail")).toHaveCount(0); // no permanent detail column
 			await page.getByTestId("campaign-detail").first().click();
 			await expect(page.getByTestId("report-detail")).toBeVisible();
+			await page.keyboard.press("Escape"); // preview slide-over (panel from 1024px, sheet below)
+			await expect(page.getByTestId("report-detail")).toHaveCount(0);
 
 			// conversions -> detail with credits
 			await page.getByRole("tab", { name: t.tabs[1], exact: true }).click();
@@ -175,12 +178,16 @@ for (const width of [360, 1280])
 			await expect(page.getByTestId("detail-body")).toContainText(
 				"deterministic-v1",
 			);
+			await page.keyboard.press("Escape");
+			await expect(page.getByTestId("report-detail")).toHaveCount(0);
 
 			// orders -> detail
 			await page.getByRole("tab", { name: t.tabs[2], exact: true }).click();
 			await expect(page.getByTestId("grid-row").first()).toBeVisible();
 			await page.getByTestId("order-detail").first().click();
 			await expect(page.getByTestId("detail-body")).toContainText(AMOUNT);
+			await page.keyboard.press("Escape");
+			await expect(page.getByTestId("report-detail")).toHaveCount(0);
 
 			// contact journey
 			await page.getByRole("tab", { name: t.tabs[3], exact: true }).click();
@@ -298,7 +305,7 @@ const SEEDED_SPEND = [
 	},
 ];
 
-test("reporting en 1280 (UX-18): constrained controls, collapsed provenance, equal KPI heights, detail only with rows, no 'Minor units' label", async ({
+test("reporting en 1280 (UX-18): constrained controls, collapsed provenance, equal KPI heights, detail on demand only, no 'Minor units' label", async ({
 	page,
 	request,
 }) => {
@@ -353,8 +360,13 @@ test("reporting en 1280 (UX-18): constrained controls, collapsed provenance, equ
 		"minor units",
 	);
 
-	// detail panel exists only once a row exists
+	// the detail is a preview slide-over: absent until a row is opened, no permanent column or placeholder
+	await expect(page.getByTestId("report-detail")).toHaveCount(0);
+	await expect(page.getByTestId("reporting-view")).not.toContainText(/select a row to see/i);
+	await page.getByTestId("campaign-detail").first().click();
 	await expect(page.getByTestId("report-detail")).toBeVisible();
+	await page.keyboard.press("Escape");
+	await expect(page.getByTestId("report-detail")).toHaveCount(0);
 	await page.unroute(REPORT_URL);
 	await page.route(REPORT_URL, (r) =>
 		r.fulfill({

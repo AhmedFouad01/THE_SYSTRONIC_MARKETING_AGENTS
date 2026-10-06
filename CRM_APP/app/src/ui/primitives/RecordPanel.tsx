@@ -1,12 +1,9 @@
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 import { BidiText, useI18n } from "../i18n/index.ts";
-import { Dialog } from "../overlays/Dialog.tsx";
 import type { PreviewGuard } from "../overlays/previewGuard.tsx";
 import { PreviewPanel, type PreviewNav } from "../overlays/PreviewPanel.tsx";
 import { Button } from "./Button.tsx";
-import { Panel } from "./Panel.tsx";
 import { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
-import { useRecordSheet } from "./useMediaQuery.ts";
 import "./record-panel.css";
 
 /** Lets the sticky edit footer offer Cancel (leave edit mode). */
@@ -14,7 +11,7 @@ const RecordCancelContext = createContext<{ cancel: () => void } | null>(null);
 /** Dirty reporting from the edit footer to the preview guard (null outside a guarded preview). */
 const RecordGuardContext = createContext<PreviewGuard | null>(null);
 
-/** Slide-over mode (UI R4 C): the record opens as an overlay instead of the inline column. */
+/** Slide-over wiring (UI R4 C): Prev/Next, the unsaved-changes guard and focus return of the preview surface. */
 export type RecordPreview = {
 	nav?: PreviewNav;
 	guard?: PreviewGuard;
@@ -57,58 +54,30 @@ export type RecordPanelProps = {
 	onEditingChange?: (editing: boolean) => void;
 	/** Plain-text record name shown in the preview header (single line); defaults to `label`. */
 	heading?: string;
-	/** Render as the preview slide-over (docked right, non-modal on desktop, full-screen sheet below 1024px) instead of the inline column. */
-	preview?: RecordPreview;
+	/** The record always renders as the preview slide-over (docked at the inline end, non-modal on desktop, full-screen sheet below 1024px). */
+	preview: RecordPreview;
 };
 
 /**
  * Shared record surface (UX_AUDIT cross-cutting 5): read-first summary card, edit on demand with a dirty-only sticky
- * footer (see RecordEditFooter), technical details disclosure. From 1024px it is an inline panel; below it opens as a
- * full-screen sheet from the inline-end edge with a back button and focus return.
+ * footer (see RecordEditFooter), technical details disclosure. Always rendered inside the preview slide-over.
  */
 export function RecordPanel(props: RecordPanelProps) {
-	const sheet = useRecordSheet();
-	const body = <RecordBody key={props.recordKey} {...props} />;
-	if (props.preview) {
-		const { nav, guard, returnFocus } = props.preview;
-		const close = () => (guard ? guard.request(props.onClose) : props.onClose());
-		return (
-			<RecordGuardContext.Provider value={guard ?? null}>
-				<PreviewPanel
-					label={props.label}
-					testId={props.testId}
-					onClose={close}
-					{...(props.heading ? { heading: props.heading } : {})}
-					{...(nav ? { nav } : {})}
-					{...(returnFocus ? { returnFocus } : {})}
-				>
-					{body}
-				</PreviewPanel>
-			</RecordGuardContext.Provider>
-		);
-	}
-	if (sheet)
-		return (
-			<Dialog
-				open
-				onClose={props.onClose}
-				title={props.label}
-				placement="side"
-				testId={props.testId}
-			>
-				{body}
-			</Dialog>
-		);
+	const { nav, guard, returnFocus } = props.preview;
+	const close = () => (guard ? guard.request(props.onClose) : props.onClose());
 	return (
-		<Panel
-			as="aside"
-			title={props.label}
-			className="sy-record-panel"
-			data-testid={props.testId}
-			aria-label={props.label}
-		>
-			{body}
-		</Panel>
+		<RecordGuardContext.Provider value={guard ?? null}>
+			<PreviewPanel
+				label={props.label}
+				testId={props.testId}
+				onClose={close}
+				{...(props.heading ? { heading: props.heading } : {})}
+				{...(nav ? { nav } : {})}
+				{...(returnFocus ? { returnFocus } : {})}
+			>
+				<RecordBody key={props.recordKey} {...props} />
+			</PreviewPanel>
+		</RecordGuardContext.Provider>
 	);
 }
 
@@ -199,30 +168,6 @@ function RecordBody(p: RecordPanelProps) {
 				{p.details ? <RecordDetails rows={p.details} /> : null}
 			</div>
 		</RecordCancelContext.Provider>
-	);
-}
-
-/** Desktop-only placeholder when no record is selected (the sheet has nothing to show). */
-export function RecordEmpty({
-	label,
-	hint,
-	testId,
-}: {
-	label: string;
-	hint: string;
-	testId: string;
-}) {
-	const sheet = useRecordSheet();
-	if (sheet) return null;
-	return (
-		<Panel
-			as="aside"
-			title={label}
-			className="sy-record-panel"
-			data-testid={testId}
-		>
-			<p className="sy-record__muted">{hint}</p>
-		</Panel>
 	);
 }
 

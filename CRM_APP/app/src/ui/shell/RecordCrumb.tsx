@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef } from "react";
 
 /** The open record shown as the last breadcrumb (`CRM > Leads > <name>`); `back` returns to the list. */
 export type RecordCrumb = { name: string; back: () => void };
@@ -20,26 +20,11 @@ export function useRecordCrumb(name: string | null | undefined, back: () => void
 	}, [set, name]);
 }
 
-/**
- * For master-detail lists that auto-open the first row on wide screens: the list crumb must really close the record,
- * so after `back()` auto-open is suppressed until the user picks a row again.
- */
+/** The list crumb closes the open record (the list keeps its filters because the view stays mounted). */
 export function useCrumbReturn(setActiveId: (id: string | null) => void): {
 	back: () => void;
-	suppressAutoOpen: boolean;
 	onActiveChange: (id: string | null) => void;
 } {
-	const [suppressAutoOpen, setSuppress] = useState(false);
-	const back = useCallback(() => {
-		setSuppress(true);
-		setActiveId(null);
-	}, [setActiveId]);
-	const onActiveChange = useCallback(
-		(id: string | null) => {
-			if (id !== null) setSuppress(false);
-			setActiveId(id);
-		},
-		[setActiveId],
-	);
-	return { back, suppressAutoOpen, onActiveChange };
+	const back = useCallback(() => setActiveId(null), [setActiveId]);
+	return { back, onActiveChange: setActiveId };
 }

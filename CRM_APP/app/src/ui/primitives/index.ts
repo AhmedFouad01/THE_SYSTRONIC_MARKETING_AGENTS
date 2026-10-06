@@ -29,7 +29,6 @@ export {
 export { nextTabIndex, type TabItem, Tabs, type TabsProps } from "./Tabs.tsx";
 export {
 	RecordEditFooter,
-	RecordEmpty,
 	type RecordFact,
 	RecordPanel,
 	type RecordPanelProps,

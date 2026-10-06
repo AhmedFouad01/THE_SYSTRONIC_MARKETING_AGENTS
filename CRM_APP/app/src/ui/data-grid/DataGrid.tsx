@@ -109,8 +109,6 @@ export type DataGridProps<T> = {
 	/** Primary next step in the zero-data empty state (UX-23). Not shown for filtered-empty. */
 	emptyAction?: ReactNode;
 	toolbarExtra?: ReactNode;
-	/** Master-detail on wide layouts: open the first row when nothing is active (prototype behaviour). */
-	autoSelectFirst?: boolean;
 	/**
 	 * Keep this row visible: switch to the grid page that holds it and scroll it into view (`block: "nearest"`, never
 	 * horizontal-first). Used by the preview slide-over for Prev/Next and deep links. Off when undefined/null.
@@ -201,13 +199,6 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		dispatch({ type: "open", id });
 		activeCb.current?.(id);
 	};
-
-	const autoSelect = props.autoSelectFirst === true;
-	const firstId = pageIds[0];
-	// biome-ignore lint/correctness/useExhaustiveDependencies: open() only dispatches and calls refs
-	useEffect(() => {
-		if (autoSelect && activeId === null && firstId !== undefined) open(firstId);
-	}, [autoSelect, activeId, firstId]);
 
 	// ---- keyboard: roving row focus ----
 	const rowRefs = useRef<Array<HTMLTableRowElement | null>>([]);
