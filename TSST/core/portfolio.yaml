@@ -2,7 +2,7 @@
 # Paths starting with "drive:" are provider-neutral Google Drive addresses relative to
 # "My Drive/". Repo paths are relative to the repository root. Adapters map both.
 version: 1
-updated: 2026-10-04
+updated: 2026-10-06
 brands:
   t-sag:
     name: T.SAG (The Systronic)
@@ -29,7 +29,7 @@ brands:
   vill-studio:
     name: VILL_STUDIO
     kind: client
-    active: strategy-baseline  # phase 2c C7-VILL-11 active (2026-10-05); detail in canonical source
+    active: strategy-baseline  # phase 2c C7-VILL-12 codex done, Lead review: round 2 needed (2026-10-06); see project.md
     memory: TSST/brands/vill-studio/memory/source.md
     projects:
       strategy-baseline:
