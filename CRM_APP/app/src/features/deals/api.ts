@@ -9,14 +9,6 @@ import type {
 	Pipeline,
 } from "./model.ts";
 
-export const fetchDealsPage: FetchPage<Deal> = async ({ cursor, signal }) => {
-	const r = await apiClient.get<Deal[]>("deals", {
-		query: { cursor: cursor ?? undefined },
-		signal,
-	});
-	return { items: r.data, nextCursor: r.nextCursor };
-};
-
 export const fetchContactsPage: FetchPage<Contact> = async ({
 	cursor,
 	signal,

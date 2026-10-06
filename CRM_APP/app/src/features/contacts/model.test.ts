@@ -8,7 +8,7 @@ import {
 	type Contact,
 	classifyMergeError,
 	draftOf,
-	filterBuiltInView,
+	builtInViewNodes,
 	identifierView,
 	journeyActionKey,
 	mergeFieldRows,
@@ -34,11 +34,14 @@ const err = (status: number, code: string) =>
 
 describe("views and rows", () => {
 	const rows = [contact("a"), contact("b", { owner_id: OTHER }), contact("c", { owner_id: null })];
-	it("mine keeps only the actor's contacts", () =>
-		expect(filterBuiltInView(rows, "mine", ME).map((r) => r.id)).toEqual(["a"]));
-	it("mine without an actor is empty, all keeps everything", () => {
-		expect(filterBuiltInView(rows, "mine", null)).toEqual([]);
-		expect(filterBuiltInView(rows, "all", null)).toHaveLength(3);
+	it("mine is the server condition owner_id eq actor; without an actor it matches nothing", () => {
+		expect(builtInViewNodes("mine", ME)).toEqual([{ p: "owner_id", op: "eq", v: ME }]);
+		expect(builtInViewNodes("mine", null)).toEqual([{ p: "id", op: "is_null" }]);
+		expect(builtInViewNodes("all", null)).toEqual([]);
+	});
+	it("toRows prefers the embedded owner name", () => {
+		const r = toRows([contact("a", { owner: { id: ME, name: "Embedded" } })], new Map([[ME, "Dir"]]), "None", "Someone");
+		expect(r[0]?.ownerName).toBe("Embedded");
 	});
 	it("toRows resolves owner names, neutral fallback (never an id), unassigned", () => {
 		const r = toRows(rows, new Map([[ME, "Me"]]), "None", "Someone");

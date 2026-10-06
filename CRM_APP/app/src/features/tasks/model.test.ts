@@ -7,9 +7,8 @@ import {
 	dayDiff,
 	draftOf,
 	dueBucket,
-	dueFilterFor,
 	fromLocalInput,
-	inTab,
+	tabQuery,
 	keyFor,
 	mergeLatest,
 	overdueDays,
@@ -73,11 +72,15 @@ describe("dueBucket (fixed clock 2026-10-05 14:30 local)", () => {
 		expect(dueBucket({ status: "open", due_at: null }, NOW)).toBe("none");
 		expect(dueBucket({ status: "open", due_at: "garbage" }, NOW)).toBe("none");
 	});
-	it("tabs: open excludes done; others are exact", () => {
-		expect(inTab("done", "open")).toBe(false);
-		expect(inTab("none", "open")).toBe(true);
-		expect(inTab("overdue", "overdue")).toBe(true);
-		expect(inTab("today", "upcoming")).toBe(false);
+	it("tabs are server queries: status/due_at conditions, or the server's own due=overdue clock", () => {
+		expect(tabQuery("open", NOW)).toEqual({ nodes: [{ p: "status", op: "eq", v: "open" }] });
+		expect(tabQuery("overdue", NOW)).toEqual({ due: "overdue", nodes: [] });
+		expect(tabQuery("done", NOW).nodes).toEqual([{ p: "status", op: "eq", v: "completed" }]);
+		const today = tabQuery("today", NOW).nodes;
+		expect(today).toContainEqual({ p: "due_at", op: "gte", v: NOW.toISOString() });
+		expect(today).toContainEqual({ p: "due_at", op: "lt", v: new Date(2026, 9, 6).toISOString() });
+		expect(tabQuery("upcoming", NOW).nodes).toContainEqual({ p: "due_at", op: "gte", v: new Date(2026, 9, 6).toISOString() });
+		expect(tabQuery("none", NOW).nodes).toContainEqual({ p: "due_at", op: "is_null" });
 	});
 	it("dayDiff counts local calendar days", () => {
 		expect(dayDiff(new Date(2026, 9, 5, 23, 59), NOW)).toBe(0);
@@ -105,8 +108,7 @@ describe("rows, source, related", () => {
 			[
 				task({ deal_id: "d1" }),
 				task({ id: "t2", contact_id: "zz", deal_id: null }),
-			],
-			new Map([[ID, "Ada"]]),
+			].map((x) => (x.id === ID ? { ...x, contact: { id: ID, display_name: "Ada" } } : x)),
 			new Map([["d1", "Big deal"]]),
 			new Map([[ID, "Owner"]]),
 			{ unknown: "?", unknownOwner: "Someone" },
@@ -202,6 +204,8 @@ describe("create / edit bodies", () => {
 		);
 		expect(merged.map((m) => m.id)).toEqual(["n", "a"]);
 		expect(merged[1]?.status).toBe("completed");
+		// server-query lists show only what the server returned
+		expect(mergeLatest([a], new Map([["n", task({ id: "n" })]]), false).map((m) => m.id)).toEqual(["a"]);
 	});
 });
 
@@ -240,13 +244,7 @@ describe("runBulkComplete", () => {
 	});
 });
 
-describe("server due filter and overdue chip (UX-17, F-06)", () => {
-	it("only the Overdue and Today tabs ask the server", () => {
-		expect(dueFilterFor("overdue")).toBe("overdue");
-		expect(dueFilterFor("today")).toBe("today");
-		for (const tab of ["open", "upcoming", "none", "done"] as const)
-			expect(dueFilterFor(tab)).toBeNull();
-	});
+describe("overdue chip (UX-17)", () => {
 	it("counts whole local days late; earlier today is 0, never negative", () => {
 		expect(overdueDays(new Date(2026, 8, 23, 9), NOW)).toBe(12);
 		expect(overdueDays(new Date(2026, 9, 4, 23, 59), NOW)).toBe(1);

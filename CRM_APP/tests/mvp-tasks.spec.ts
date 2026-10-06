@@ -561,7 +561,8 @@ test("tasks en: Overdue/Today tabs use the server ?due= filter; due cell, links 
 	await expect.poll(() => taskUrls.some((q) => q.includes("due=overdue"))).toBe(true);
 	await page.getByRole("tab", { name: "Today", exact: true }).click();
 	await expect(rows(page)).toHaveCount(1);
-	await expect(rows(page).first()).toContainText("Today task"); // the server's today set also holds overdue; the tab filters it
-	await expect.poll(() => taskUrls.some((q) => q.includes("due=today"))).toBe(true);
+	await expect(rows(page).first()).toContainText("Today task"); // overdue is excluded by the server query itself
+	// Today is expressed as status/due_at conditions (exact local-day window), not the legacy ?due=today (which also holds overdue)
+	await expect.poll(() => taskUrls.some((q) => q.includes("filter=") && q.includes("due_at"))).toBe(true);
 	expect(await noPageOverflow(page)).toBe(true);
 });

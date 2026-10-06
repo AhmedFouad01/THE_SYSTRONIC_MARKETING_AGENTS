@@ -6,10 +6,16 @@ export type Credentials = {
 	grantId?: string | undefined;
 };
 
+/** `total_count` of a list response (only present when `include_total=1` was sent). `exact:false` = capped lower bound. */
+export type ListTotal = { value: number; exact: boolean };
+
 export type ApiResult<T> = {
 	data: T;
 	nextCursor: string | null;
 	requestId: string | null;
+	/** List envelope `has_more` (null when the endpoint does not send it). */
+	hasMore: boolean | null;
+	total: ListTotal | null;
 };
 
 export type RequestOptions = {
@@ -106,10 +112,20 @@ export function createApiClient(options: ApiClientOptions) {
 			throw err;
 		}
 		const env = (typeof json === "object" && json !== null ? json : {}) as Record<string, unknown>;
+		const tc = env.total_count;
+		const total =
+			typeof tc === "object" &&
+			tc !== null &&
+			typeof (tc as ListTotal).value === "number" &&
+			typeof (tc as ListTotal).exact === "boolean"
+				? { value: (tc as ListTotal).value, exact: (tc as ListTotal).exact }
+				: null;
 		return {
 			data: env.data as T,
 			nextCursor: typeof env.next_cursor === "string" ? env.next_cursor : null,
 			requestId: typeof env.request_id === "string" ? env.request_id : null,
+			hasMore: typeof env.has_more === "boolean" ? env.has_more : null,
+			total,
 		};
 	}
 

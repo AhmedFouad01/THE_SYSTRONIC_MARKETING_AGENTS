@@ -8,17 +8,6 @@ import type {
 	MergePreview,
 } from "./model.ts";
 
-export const fetchContactsPage: FetchPage<Contact> = async ({
-	cursor,
-	signal,
-}) => {
-	const r = await apiClient.get<Contact[]>("contacts", {
-		query: { cursor: cursor ?? undefined },
-		signal,
-	});
-	return { items: r.data, nextCursor: r.nextCursor };
-};
-
 export async function fetchAssignees(
 	signal?: AbortSignal,
 ): Promise<Assignee[]> {

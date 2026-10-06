@@ -226,15 +226,17 @@ test("dashboard en 1440: eight widgets with exact data, emphasis limited to two 
 	expect(await noPageOverflow(page)).toBe(true);
 });
 
-test("dashboard counts cap at 50+ (and N+) when the server has another page, never above what it returned", async ({
+test("dashboard counts are the server total_count; only the server ceiling shows N+", async ({
 	page,
 }) => {
 	const f = await fixture();
 	const now = Date.now();
 	await mockTasks(page, "overdue", (r) =>
 		json(r, 200, {
-			data: Array.from({ length: 50 }, (_, i) => fakeTask(i, now - (i + 1) * HOUR)),
+			data: Array.from({ length: 25 }, (_, i) => fakeTask(i, now - (i + 1) * HOUR)),
 			next_cursor: randomUUID(),
+			has_more: true,
+			total_count: { value: 10000, exact: false }, // the server's ceiling: a lower bound
 		}),
 	);
 	await mockTasks(page, "today", (r) =>
@@ -245,12 +247,14 @@ test("dashboard counts cap at 50+ (and N+) when the server has another page, nev
 				...[1, 2, 3].map((h) => fakeTask(200 + h, now + h * HOUR)),
 			],
 			next_cursor: randomUUID(),
+			has_more: true,
+			total_count: { value: 3, exact: true }, // exact even though another page exists
 		}),
 	);
 	await open(page, f, "en");
-	await expect(page.getByTestId("kpi-overdue").locator(".sy-kpi__value")).toHaveText("50+");
-	await expect(page.getByTestId("kpi-overdue")).toContainText("50 or more; open Tasks for the full list");
-	await expect(page.getByTestId("kpi-next24h").locator(".sy-kpi__value")).toHaveText("3+");
+	await expect(page.getByTestId("kpi-overdue").locator(".sy-kpi__value")).toHaveText("10,000+");
+	await expect(page.getByTestId("kpi-overdue")).toContainText("10,000 or more; open Tasks for the full list");
+	await expect(page.getByTestId("kpi-next24h").locator(".sy-kpi__value")).toHaveText("3");
 	await expect(page.getByTestId("dash-followup")).toHaveCount(5);
 	// no list is paged beyond page 1
 	const cursors: string[] = [];
@@ -441,27 +445,26 @@ for (const language of ["en", "ar"] as const)
 		await expect(page.getByTestId("leads-kpi-open")).toContainText(language === "en" ? "In this view" : "في هذا العرض");
 	});
 
-test("leads 375: the three strip cards share one row without page overflow; strip capped with N+ when pages remain", async ({
+test("leads 375: the three strip cards share one row without page overflow; strip shows the server count, N+ only at the ceiling", async ({
 	page,
 }) => {
 	const f = await fixture();
 	// The list auto-loads follow-up pages (cursor requests carry a query string). Every page must stay mocked, or a
 	// follow-up page falls through to the real API and the "+" disappears (that raced under full-suite load).
-	await page.route(/\/v1\/leads(\?.*)?$/, (r) =>
-		json(r, 200, {
-			data: new URL(r.request().url()).searchParams.has("cursor")
-				? []
-				: [
-						{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L1", source: "manual", source_evidence: "x", status: "open", version: 1, received_at: new Date().toISOString() },
-						{ id: randomUUID(), contact_id: randomUUID(), owner_id: null, title: "L2", source: "manual", source_evidence: "x", status: "qualified", version: 1, received_at: new Date().toISOString() },
-					],
-			next_cursor: randomUUID(),
-		}),
-	);
+	// Counts are the server's `total_count` per status (limit=1 queries); the ceiling reads "N+".
+	await page.route(/\/v1\/leads(\?.*)?$/, (r) => {
+		const filter = new URL(r.request().url()).searchParams.get("filter") ?? "";
+		const open = filter.includes('"open"');
+		return json(r, 200, {
+			data: [],
+			next_cursor: null,
+			has_more: false,
+			total_count: open ? { value: 10000, exact: false } : { value: 0, exact: true },
+		});
+	});
 	await open(page, f, "en", 375, "/app/leads", "leads-view");
-	await expect(page.getByTestId("leads-kpi-open").locator(".sy-kpi__value")).toHaveText("1+");
-	await expect(page.getByTestId("leads-kpi-closed").locator(".sy-kpi__value")).toHaveText("0+");
-	await expect(page.getByTestId("leads-kpi-open")).toContainText("Loaded so far");
+	await expect(page.getByTestId("leads-kpi-open").locator(".sy-kpi__value")).toHaveText("10,000+");
+	await expect(page.getByTestId("leads-kpi-closed").locator(".sy-kpi__value")).toHaveText("0");
 	const tops = await page
 		.getByTestId("leads-kpis")
 		.locator("[data-tone]")

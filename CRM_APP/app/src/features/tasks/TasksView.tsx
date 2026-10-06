@@ -15,7 +15,6 @@ import {
 	DEFAULT_VIEW,
 	ForbiddenState,
 	type GridColumn,
-	type GridSample,
 	type MessageKey,
 	PageHeader,
 	safeLocalStorage,
@@ -25,28 +24,30 @@ import {
 	useI18n,
 	useToast,
 	type ViewState,
+	enumFilter,
+	ownerFilter,
+	type ServerSpec,
+	useServerList,
 } from "../../ui/index.ts";
 import { useRecordCrumb } from "../../ui/shell/index.ts";
 import { parseSelect } from "../deals/model.ts";
 import {
 	type Assignee,
 	type ContactRef,
-	type DealRef,
 	fetchAssignees,
 	fetchContactRefsPage,
-	fetchDealRefsPage,
-	fetchTasksPageFor,
 	patchTask,
 } from "./api.ts";
+import { fetchExpanded, listFetcher } from "../listApi.ts";
+import { useDealTitles } from "./useDealTitles.ts";
 import { DueLabel } from "./DueLabel.tsx";
 import {
 	type BulkCompleteItem,
 	completeBody,
-	dueFilterFor,
-	inTab,
 	mergeLatest,
 	runBulkComplete,
 	TASK_TABS,
+	tabQuery,
 	type Task,
 	type TaskRow,
 	type TaskTab,
@@ -76,6 +77,7 @@ const INITIAL_VIEW: ViewState = {
 const getRowId = (r: TaskRow) => r.id;
 const getTaskId = (t: Task) => t.id;
 const getRefId = (r: { id: string }) => r.id;
+const fetchTasks = listFetcher<Task>("tasks");
 
 /** Wall clock that re-evaluates due buckets once a minute. */
 function useNow(): Date {
@@ -97,22 +99,14 @@ export function TasksView() {
 	const now = useNow();
 
 	const [tab, setTab] = useState<TaskTab>("open");
-	// Overdue/Today tabs ask the server (`?due=`): exact membership, not a bucket over the loaded sample (F-06).
-	const dueFilter = dueFilterFor(tab);
-	const fetchTasks = useMemo(() => fetchTasksPageFor(dueFilter), [dueFilter]);
-	const tasks = useCursorList<Task>(fetchTasks, {
-		getId: getTaskId,
-		resetKey: `${tenantId}:${dueFilter ?? ""}`,
-	});
+	// Every tab is a server query (status / due_at conditions, or the server's own `due=overdue` clock): exact totals.
+	const [anchor, setAnchor] = useState(() => new Date());
+	const tabQ = useMemo(() => tabQuery(tab, anchor), [tab, anchor]);
+	const chooseTab = (next: TaskTab) => {
+		setAnchor(new Date());
+		setTab(next);
+	};
 
-	const contacts = useCursorList<ContactRef>(fetchContactRefsPage, {
-		getId: getRefId,
-		resetKey: tenantId,
-	});
-	const deals = useCursorList<DealRef>(fetchDealRefsPage, {
-		getId: getRefId,
-		resetKey: tenantId,
-	});
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const [ownersFailed, setOwnersFailed] = useState(false);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: tenantId re-fetches the directory for a new tenant
@@ -131,24 +125,54 @@ export function TasksView() {
 
 	// Confirmed writes (PATCH/POST results) layered over the loaded pages.
 	const [overlay, setOverlay] = useState<ReadonlyMap<string, Task>>(new Map());
-	const remember = useCallback(
-		(task: Task) => setOverlay((m) => new Map(m).set(task.id, task)),
-		[],
-	);
+	// A write can move a task between tabs (status / due date): re-ask the server after every confirmed write.
+	const reloadRef = useRef<() => void>(() => undefined);
+	const remember = useCallback((task: Task) => {
+		setOverlay((m) => new Map(m).set(task.id, task));
+		reloadRef.current();
+	}, []);
 
 	const [activeId, setActiveId] = useState<string | null>(() =>
 		parseSelect(location.search),
 	);
 	const [newOpen, setNewOpen] = useState(false);
 
-	const contactNames = useMemo(
-		() => new Map(contacts.items.map((c) => [c.id, c.display_name])),
-		[contacts.items],
+	const ownerByName = useMemo(
+		() => new Map(assignees.map((a) => [a.name, a.id])),
+		[assignees],
 	);
-	const dealNames = useMemo(
-		() => new Map(deals.items.map((d) => [d.id, d.title])),
-		[deals.items],
+	const spec = useMemo<ServerSpec>(
+		() => ({
+			sort: { title: "title", due: "due_at", status: "status" },
+			defaultSort: "due_at",
+			filters: {
+				owner: ownerFilter(ownerByName),
+				status: enumFilter("status", ["open", "completed"]),
+			},
+		}),
+		[ownerByName],
 	);
+	const tasks = useServerList<Task>({
+		fetchPage: fetchTasks,
+		getId: getTaskId,
+		spec,
+		initial: INITIAL_VIEW,
+		initialPageSize: INITIAL_VIEW.pageSize,
+		extra: tabQ.nodes,
+		...(tabQ.due ? { due: tabQ.due } : {}),
+		expand: "contact,owner",
+		resetKey: tenantId,
+	});
+	// Contact picker of the create dialog (F-08 is a later track): loaded only once the dialog opens.
+	const contacts = useCursorList<ContactRef>(fetchContactRefsPage, {
+		getId: getRefId,
+		resetKey: tenantId,
+		enabled: newOpen,
+	});
+	reloadRef.current = tasks.reload;
+	const dealIds = useMemo(() => tasks.items.map((x) => x.deal_id), [tasks.items]);
+	const dealNames = useDealTitles(dealIds, tenantId);
+
 	const ownerNames = useMemo(
 		() => new Map(assignees.map((a) => [a.id, a.name])),
 		[assignees],
@@ -156,25 +180,28 @@ export function TasksView() {
 	const allRows = useMemo(
 		() =>
 			toRows(
-				mergeLatest(tasks.items, overlay),
-				contactNames,
+				mergeLatest(tasks.items, overlay, false),
 				dealNames,
 				ownerNames,
 				{ unknown: t("tasks.unknownRecord"), unknownOwner: t("common.unknownUser") },
 				now,
 			),
-		[tasks.items, overlay, contactNames, dealNames, ownerNames, t, now],
+		[tasks.items, overlay, dealNames, ownerNames, t, now],
 	);
-	const rows = useMemo(
-		() => allRows.filter((r) => inTab(r.bucket, tab)),
-		[allRows, tab],
-	);
+	const rows = allRows;
 	const rowsRef = useRef(allRows);
 	useEffect(() => {
 		rowsRef.current = allRows;
 	});
+	// A task written this session still opens in the detail panel when the server list no longer returns it (e.g. completed on the Open tab).
+	const overlayRows = useMemo(
+		() => toRows([...overlay.values()], dealNames, ownerNames, { unknown: t("tasks.unknownRecord"), unknownOwner: t("common.unknownUser") }, now),
+		[overlay, dealNames, ownerNames, t, now],
+	);
 	const active =
-		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+		activeId === null
+			? null
+			: (allRows.find((r) => r.id === activeId) ?? overlayRows.find((r) => r.id === activeId) ?? null);
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
 	useRecordCrumb(active?.title, () => setActiveId(null));
 
@@ -191,13 +218,13 @@ export function TasksView() {
 		[actor, tenantId],
 	);
 
-	const ownerOptions = useMemo(() => {
-		const names = new Set<string>(assignees.map((a) => a.name));
-		for (const r of allRows) names.add(r.ownerName);
-		return [...names]
-			.sort((a, b) => a.localeCompare(b))
-			.map((n) => ({ value: n, label: n }));
-	}, [assignees, allRows]);
+	const ownerOptions = useMemo(
+		() =>
+			[...assignees]
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((a) => ({ value: a.id, label: a.name })),
+		[assignees],
+	);
 
 	// ---- complete (row action) ----
 	const [completingId, setCompletingId] = useState<string | null>(null);
@@ -246,7 +273,6 @@ export function TasksView() {
 				id: "related",
 				header: t("tasks.col.related"),
 				value: (r) => r.relatedName,
-				sortable: true,
 				width: "160px",
 				mobile: "hide",
 				collapse: 1,
@@ -268,7 +294,6 @@ export function TasksView() {
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
-				sortable: true,
 				width: "130px",
 				filter: { options: ownerOptions },
 			},
@@ -300,7 +325,6 @@ export function TasksView() {
 				id: "source",
 				header: t("common.source"),
 				value: (r) => t(SOURCE_KEY[r.sourceKind]),
-				sortable: true,
 				width: "120px",
 				mobile: "hide",
 				cell: (r) => (
@@ -405,17 +429,13 @@ export function TasksView() {
 			tasks.reload();
 	};
 
-	const sample: GridSample = {
-		loaded: tasks.items.length,
-		hasMore: tasks.sample,
-		loadingMore: tasks.loadingMore,
-		atCap: tasks.atCap,
-		failed: tasks.moreError !== null,
-		onLoadMore: tasks.loadMore,
-	};
-
 	const onCreated = (task: Task) => {
 		remember(task);
+		void fetchExpanded<Task>("tasks", task.id, "contact,owner")
+			.then((full) => full && remember(full))
+			.catch(() => undefined);
+		setAnchor(new Date());
+		tasks.reload();
 		setTab("open");
 		setActiveId(task.id);
 		setNewOpen(false);
@@ -440,7 +460,7 @@ export function TasksView() {
 			<Tabs
 				label={t("tasks.tabs")}
 				value={tab}
-				onChange={(id) => setTab(id as TaskTab)}
+				onChange={(id) => chooseTab(id as TaskTab)}
 				tabs={TASK_TABS.map((v) => ({ id: v, label: t(TAB_LABEL[v]) }))}
 			/>
 			{ownersFailed ? (
@@ -491,7 +511,7 @@ export function TasksView() {
 							)}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
-							sample={sample}
+							server={tasks.server}
 							emptyTitle={t("tasks.emptyTitle")}
 							emptyHint={t("tasks.emptyHint")}
 						/>

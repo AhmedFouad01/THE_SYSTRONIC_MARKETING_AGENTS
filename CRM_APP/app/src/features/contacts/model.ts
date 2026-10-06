@@ -1,6 +1,8 @@
 // Pure contacts view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (contacts, duplicates,
 // merge-previews, merges) and the journey timeline (audit rows).
 import { isApiError } from "../../api/errors.ts";
+import { cond, NOTHING, type ServerNode } from "../../ui/data-grid/serverQuery.ts";
+import { type Expanded, ownerNameOf } from "../expand.ts";
 
 export type IdentifierKind = "phone" | "email";
 export type Identifier = {
@@ -20,6 +22,8 @@ export type Contact = {
 	version: number;
 	merged_into_id?: string | null;
 	identifiers?: Identifier[];
+	/** Embedded by the list (`expand=owner`). */
+	owner?: Expanded["owner"];
 };
 export type Assignee = { id: string; name: string };
 export type ContactRow = Contact & { ownerName: string };
@@ -52,11 +56,10 @@ export type MergePreview = {
 export type BuiltInView = "all" | "mine";
 export const BUILT_IN_VIEWS: readonly BuiltInView[] = ["all", "mine"];
 
-export function filterBuiltInView<
-	T extends { owner_id: string | null | undefined },
->(rows: readonly T[], view: BuiltInView, actor: string | null): T[] {
-	if (view === "all") return [...rows];
-	return actor === null ? [] : rows.filter((r) => r.owner_id === actor);
+/** Built-in views as server conditions: "mine" = owned by the session actor (nothing without an actor). */
+export function builtInViewNodes(view: BuiltInView, actor: string | null): ServerNode[] {
+	if (view === "all") return [];
+	return [actor === null ? NOTHING : cond("owner_id", "eq", actor)];
 }
 
 export function toRows(
@@ -68,7 +71,7 @@ export function toRows(
 	return contacts.map((c) => ({
 		...c,
 		ownerName: c.owner_id
-			? (owners.get(c.owner_id) ?? unknownOwner)
+			? (ownerNameOf(c) ?? owners.get(c.owner_id) ?? unknownOwner)
 			: unassigned,
 	}));
 }
@@ -83,7 +86,9 @@ export function mergeLatest(
 		.filter((i) => !hidden.has(i.id))
 		.map((i) => {
 			const o = overlay.get(i.id);
-			return o !== undefined && o.version > i.version ? o : i;
+			if (o === undefined || o.version <= i.version) return i;
+			// A confirmed write carries no embedded owner: keep it only while the owner is unchanged.
+			return o.owner === undefined && o.owner_id === i.owner_id && i.owner !== undefined ? { ...o, owner: i.owner } : o;
 		});
 }
 

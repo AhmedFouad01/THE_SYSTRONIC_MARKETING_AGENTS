@@ -21,6 +21,8 @@ import {
 	EMPTY_NEW_DEAL,
 	initialStages,
 	keyFor,
+	builtInViewNodes,
+	stageIdsByName,
 	mergeLatest,
 	type Pipeline,
 	parseDealContext,
@@ -337,5 +339,33 @@ describe("amount input and currencies", () => {
 			"USD",
 		]);
 		expect(currencyChoices([])).toEqual(["EGP"]);
+	});
+});
+
+describe("built-in views and stage names (server conditions)", () => {
+	const P1 = {
+		id: "p1",
+		name: "A",
+		transitions: [],
+		stages: [
+			{ id: "s1", name: "New", outcome: null, position: 0, archived: false },
+			{ id: "s2", name: "Won", outcome: "won", position: 1, archived: false },
+		],
+	} as Pipeline;
+	const P2 = {
+		id: "p2",
+		name: "B",
+		transitions: [],
+		stages: [{ id: "s3", name: "New", outcome: null, position: 0, archived: false }],
+	} as Pipeline;
+	it("open = stage_id in every non won/lost stage of every pipeline; nothing when none", () => {
+		expect(builtInViewNodes("open", null, [P1, P2])).toEqual([{ p: "stage_id", op: "in", v: ["s1", "s3"] }]);
+		expect(builtInViewNodes("open", null, [])).toEqual([{ p: "id", op: "is_null" }]);
+		expect(builtInViewNodes("mine", "u1", [])).toEqual([{ p: "owner_id", op: "eq", v: "u1" }]);
+		expect(builtInViewNodes("all", "u1", [P1])).toEqual([]);
+	});
+	it("a stage name repeated across pipelines maps to all its stage ids", () => {
+		expect(stageIdsByName([P1, P2], "New")).toEqual(["s1", "s3"]);
+		expect(stageIdsByName([P1, P2], "Gone")).toEqual([]);
 	});
 });

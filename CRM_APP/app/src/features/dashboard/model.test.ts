@@ -7,9 +7,7 @@ import {
 	followUps,
 	isReportEmpty,
 	isReportStale,
-	nextWindowCount,
 	nextWindowTasks,
-	overdueCount,
 	summarizeReport,
 	topCampaigns,
 } from "./model.ts";
@@ -50,19 +48,11 @@ const row = (campaign_id: string, value_minor: number, outcomes: number, currenc
 });
 
 describe("capped counts (W1/W2)", () => {
-	it("is exact without a next page and a lower bound with one", () => {
-		const fifty = Array.from({ length: 50 }, (_, i) => task(`t${i}`, -1));
-		expect(overdueCount(fifty.slice(0, 3), false)).toEqual({ count: 3, capped: false });
-		const c = overdueCount(fifty, true);
-		expect(c).toEqual({ count: 50, capped: true });
-		expect(formatCapped(c, String)).toBe("50+");
+	it("formats an exact count plainly and a capped (ceiling) count as N+", () => {
+		expect(formatCapped(cappedCount(10000, true), String)).toBe("10000+");
 		expect(formatCapped(cappedCount(3, false), String)).toBe("3");
 	});
-	it("never exceeds what the server returned (zero is a valid, exact value)", () => {
-		expect(overdueCount([], false)).toEqual({ count: 0, capped: false });
-		expect(overdueCount([task("a", -2)], false).count).toBe(1);
-	});
-	it("next-24h drops the overdue rows the server also returns, and anything outside the window", () => {
+	it("next-24h drops the overdue rows and anything outside the window", () => {
 		const rows = [
 			task("past", -5),
 			task("soon", 3),
@@ -72,7 +62,6 @@ describe("capped counts (W1/W2)", () => {
 			task("done", 2, "completed"),
 		];
 		expect(nextWindowTasks(rows, NOW).map((t) => t.id)).toEqual(["soon", "edge"]);
-		expect(nextWindowCount(rows, true, NOW)).toEqual({ count: 2, capped: true });
 	});
 });
 

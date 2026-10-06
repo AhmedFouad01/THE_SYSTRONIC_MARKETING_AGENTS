@@ -1,6 +1,8 @@
 // Pure leads view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (leads + assignees).
 import { type ApiErrorKind, isApiError } from "../../api/errors.ts";
-import { type CappedCount, cappedCount } from "../capped.ts";
+import type { CappedCount } from "../capped.ts";
+import { carryExpand, contactNameOf, type Expanded, ownerNameOf } from "../expand.ts";
+import { cond, NOTHING, type ServerNode } from "../../ui/data-grid/serverQuery.ts";
 
 export type LeadStatus = "open" | "qualified" | "closed";
 export const LEAD_STATUSES: readonly LeadStatus[] = [
@@ -19,12 +21,12 @@ export type Lead = {
 	status: LeadStatus;
 	version: number;
 	received_at: string;
-};
+} & Expanded;
 
 export type Assignee = { id: string; name: string };
 export type Contact = { id: string; display_name: string };
 
-/** Lead enriched for the grid (names are resolved client-side: the lead payload only has ids). */
+/** Lead enriched for the grid (names come from the list's `expand=contact,owner`; the assignee directory names owners of confirmed writes). */
 export type LeadRow = Lead & { contactName: string; ownerName: string };
 
 export type BuiltInView = "all" | "mine" | "unassigned";
@@ -34,14 +36,14 @@ export const BUILT_IN_VIEWS: readonly BuiltInView[] = [
 	"unassigned",
 ];
 
-/** Built-in saved views, computed from the session actor. A lead is unassigned when it has no owner. */
-export function filterBuiltInView<
-	T extends { owner_id: string | null | undefined },
->(rows: readonly T[], view: BuiltInView, actor: string | null): T[] {
-	if (view === "all") return [...rows];
-	if (view === "mine")
-		return actor === null ? [] : rows.filter((r) => r.owner_id === actor);
-	return rows.filter((r) => !r.owner_id);
+/**
+ * Built-in views as server conditions (the grid never filters client-side): "mine" = owned by the session actor,
+ * "unassigned" = no owner. With no actor "mine" matches nothing.
+ */
+export function builtInViewNodes(view: BuiltInView, actor: string | null): ServerNode[] {
+	if (view === "all") return [];
+	if (view === "mine") return [actor === null ? NOTHING : cond("owner_id", "eq", actor)];
+	return [cond("owner_id", "is_null")];
 }
 
 export type RowLabels = {
@@ -53,15 +55,14 @@ export type RowLabels = {
 
 export function toRows(
 	leads: readonly Lead[],
-	contacts: ReadonlyMap<string, string>,
 	owners: ReadonlyMap<string, string>,
 	labels: RowLabels,
 ): LeadRow[] {
 	return leads.map((l) => ({
 		...l,
-		contactName: contacts.get(l.contact_id) ?? labels.unknownContact,
+		contactName: contactNameOf(l) ?? labels.unknownContact,
 		ownerName: l.owner_id
-			? (owners.get(l.owner_id) ?? labels.unknownOwner)
+			? (ownerNameOf(l) ?? owners.get(l.owner_id) ?? labels.unknownOwner)
 			: labels.unassigned,
 	}));
 }
@@ -293,8 +294,8 @@ export function buildPatchBody(
 }
 
 /**
- * Loaded pages + locally confirmed writes. useCursorList has no item replace, so confirmed PATCH/POST results
- * are kept in an overlay: a newer version wins; overlay-only entries are new leads (shown first, newest first).
+ * Loaded pages + locally confirmed writes: a newer version wins (keeping the embedded names it cannot carry);
+ * overlay-only entries are new leads (shown first, newest first) until the next reload brings them in server order.
  */
 export function mergeLatest(
 	items: readonly Lead[],
@@ -304,7 +305,7 @@ export function mergeLatest(
 	const merged = items.map((i) => {
 		seen.add(i.id);
 		const o = overlay.get(i.id);
-		return o !== undefined && o.version > i.version ? o : i;
+		return o !== undefined && o.version > i.version ? carryExpand(o, i) : i;
 	});
 	const created = [...overlay.values()]
 		.filter((o) => !seen.has(o.id))
@@ -315,23 +316,6 @@ export function mergeLatest(
 // ---- KPI strip (UX-09) -----------------------------------------------------------------------------------
 
 export type LeadStrip = Record<LeadStatus, CappedCount>;
-
-/**
- * Counts by status over the rows the grid has loaded. Exact only when every page is loaded (`complete`);
- * otherwise each count is a lower bound ("N+"). No extra request, nothing extrapolated.
- */
-export function leadStatusCounts(
-	rows: readonly Pick<Lead, "status">[],
-	complete: boolean,
-): LeadStrip {
-	const n: Record<LeadStatus, number> = { open: 0, qualified: 0, closed: 0 };
-	for (const r of rows) if (r.status in n) n[r.status] += 1;
-	return {
-		open: cappedCount(n.open, !complete),
-		qualified: cappedCount(n.qualified, !complete),
-		closed: cappedCount(n.closed, !complete),
-	};
-}
 
 /** Qualified is the one emphasised card, and only when there is something qualified. Others stay neutral. */
 export function leadStripTone(

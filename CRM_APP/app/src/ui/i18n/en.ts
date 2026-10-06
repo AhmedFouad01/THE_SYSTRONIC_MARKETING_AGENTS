@@ -645,7 +645,6 @@ export const en = {
 	"grid.goToPage": "Page {page}",
 	"leads.subtitle": "Manage and qualify incoming leads",
 	"leads.kpis": "Lead counts by status",
-	"leads.kpi.loaded": "Loaded so far",
 	"leads.kpi.view": "In this view",
 	"dash.subtitle": "What needs action now and how campaigns are performing",
 	"dash.kpis": "Key figures",

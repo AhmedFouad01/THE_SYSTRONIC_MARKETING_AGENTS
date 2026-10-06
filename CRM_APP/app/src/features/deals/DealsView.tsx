@@ -11,12 +11,13 @@ import {
 	Button,
 	createSavedViewsStore,
 	DataGrid,
+	DEFAULT_VIEW,
+	type ViewState,
 	IdentityCell,
 	Dialog,
 	useRecordSheet,
 	ForbiddenState,
 	type GridColumn,
-	type GridSample,
 	Money,
 	PageHeader,
 	safeLocalStorage,
@@ -24,6 +25,10 @@ import {
 	useCursorList,
 	useI18n,
 	useToast,
+	cond,
+	ownerFilter,
+	type ServerSpec,
+	useServerList,
 } from "../../ui/index.ts";
 import { useRecordCrumb } from "../../ui/shell/index.ts";
 import {
@@ -31,12 +36,12 @@ import {
 	fetchContact,
 	fetchContactsPage,
 	fetchDeal,
-	fetchDealsPage,
 	fetchLeadRef,
 	fetchPipelines,
 	patchDeal,
 	transitionDeal,
 } from "./api.ts";
+import { fetchExpanded, listFetcher } from "../listApi.ts";
 import { BulkChoiceDialog } from "../BulkChoiceDialog.tsx";
 import { bulkMessage, GENERIC_BULK_KEYS, runBulkOps } from "../bulk.ts";
 import { toneOf } from "./DealDetail.tsx";
@@ -55,7 +60,8 @@ import {
 	applyTransition,
 	bulkMoveTargets,
 	buildTransitionBody,
-	filterBuiltInView,
+	builtInViewNodes,
+	stageIdsByName,
 	type LeadRef,
 	mergeLatest,
 	type Pipeline,
@@ -66,6 +72,8 @@ import {
 import { NewDealDialog, type NewDealPrefill } from "./NewDealDialog.tsx";
 import "./deals.css";
 
+const DEALS_VIEW: ViewState = { ...DEFAULT_VIEW };
+
 const VIEW_LABEL = {
 	all: "deals.view.all",
 	mine: "deals.view.mine",
@@ -75,6 +83,7 @@ const VIEW_LABEL = {
 const getDealId = (d: DealRow) => d.id;
 const getDealIdRaw = (d: Deal) => d.id;
 const getContactId = (c: Contact) => c.id;
+const fetchDeals = listFetcher<Deal>("deals");
 
 type PipelinesState = {
 	status: "loading" | "ready" | "error";
@@ -147,14 +156,6 @@ export function DealsView() {
 	const actor = session.info?.actor ?? null;
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 
-	const deals = useCursorList<Deal>(fetchDealsPage, {
-		getId: getDealIdRaw,
-		resetKey: tenantId,
-	});
-	const contacts = useCursorList<Contact>(fetchContactsPage, {
-		getId: getContactId,
-		resetKey: tenantId,
-	});
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const [ownersFailed, setOwnersFailed] = useState(false);
 	const [pipelines, setPipelines] = useState<PipelinesState>({
@@ -220,12 +221,12 @@ export function DealsView() {
 	);
 	const [newOpen, setNewOpen] = useState(false);
 
-	const contactNames = useMemo(() => {
-		const m = new Map(contacts.items.map((c) => [c.id, c.display_name]));
-		if (ctxContact && !m.has(ctxContact.id))
-			m.set(ctxContact.id, ctxContact.display_name);
-		return m;
-	}, [contacts.items, ctxContact]);
+	// Contact picker of the create dialog (F-08 is a later track): loaded only once a dialog needs it.
+	const contacts = useCursorList<Contact>(fetchContactsPage, {
+		getId: getContactId,
+		resetKey: tenantId,
+		enabled: newOpen || ctx !== null,
+	});
 	const ownerNames = useMemo(
 		() => new Map(assignees.map((a) => [a.id, a.name])),
 		[assignees],
@@ -234,11 +235,44 @@ export function DealsView() {
 		() => new Map(pipelines.items.map((p) => [p.id, p])),
 		[pipelines.items],
 	);
+	const ownerByName = useMemo(
+		() => new Map(assignees.map((a) => [a.name, a.id])),
+		[assignees],
+	);
+	const spec = useMemo<ServerSpec>(
+		() => ({
+			sort: { deal: "title", value: "amount_minor" },
+			defaultSort: "-created_at",
+			filters: {
+				owner: ownerFilter(ownerByName),
+				stage: (f) => {
+					if (f.op !== "eq") return null;
+					const ids = stageIdsByName(pipelines.items, String(f.value));
+					return ids.length === 0 ? null : cond("stage_id", "in", ids);
+				},
+			},
+		}),
+		[ownerByName, pipelines.items],
+	);
+	const viewNodes = useMemo(
+		() => builtInViewNodes(view, actor, pipelines.items),
+		[view, actor, pipelines.items],
+	);
+	const deals = useServerList<Deal>({
+		fetchPage: fetchDeals,
+		getId: getDealIdRaw,
+		spec,
+		initial: DEALS_VIEW,
+		extra: viewNodes,
+		expand: "contact,owner",
+		resetKey: tenantId,
+		// "Open deals" and stage names need the pipelines directory first.
+		enabled: pipelines.status !== "loading",
+	});
 	const allRows = useMemo(
 		() =>
 			toRows(
 				mergeLatest(deals.items, overlay),
-				contactNames,
 				ownerNames,
 				pipelineById,
 				{
@@ -248,12 +282,9 @@ export function DealsView() {
 					unknownOwner: t("common.unknownUser"),
 				},
 			),
-		[deals.items, overlay, contactNames, ownerNames, pipelineById, t],
+		[deals.items, overlay, ownerNames, pipelineById, t],
 	);
-	const rows = useMemo(
-		() => filterBuiltInView(allRows, view, actor),
-		[allRows, view, actor],
-	);
+	const rows = allRows;
 	const active =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
@@ -301,13 +332,13 @@ export function DealsView() {
 		[actor, tenantId],
 	);
 
-	const ownerOptions = useMemo(() => {
-		const names = new Set<string>(assignees.map((a) => a.name));
-		for (const r of allRows) names.add(r.ownerName);
-		return [...names]
-			.sort((a, b) => a.localeCompare(b))
-			.map((n) => ({ value: n, label: n }));
-	}, [assignees, allRows]);
+	const ownerOptions = useMemo(
+		() =>
+			[...assignees]
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((a) => ({ value: a.id, label: a.name })),
+		[assignees],
+	);
 	const stageOptions = useMemo(() => {
 		const names = new Set<string>();
 		for (const p of pipelines.items)
@@ -330,7 +361,6 @@ export function DealsView() {
 				id: "contact",
 				header: t("deals.col.contact"),
 				value: (r) => r.contactName,
-				sortable: true,
 				width: "170px",
 				mobile: "hide",
 				collapse: 1,
@@ -339,7 +369,6 @@ export function DealsView() {
 				id: "pipeline",
 				header: t("deals.col.pipeline"),
 				value: (r) => r.pipelineName,
-				sortable: true,
 				width: "150px",
 				mobile: "hide",
 				collapse: 2,
@@ -348,7 +377,6 @@ export function DealsView() {
 				id: "stage",
 				header: t("common.stage"),
 				value: (r) => r.stageName,
-				sortable: true,
 				width: "140px",
 				mobile: "chip",
 				filter: { options: stageOptions },
@@ -367,22 +395,12 @@ export function DealsView() {
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
-				sortable: true,
 				width: "150px",
 				filter: { options: ownerOptions },
 			},
 		],
 		[t, formatMoney, stageOptions, ownerOptions],
 	);
-
-	const sample: GridSample = {
-		loaded: deals.items.length,
-		hasMore: deals.sample,
-		loadingMore: deals.loadingMore,
-		atCap: deals.atCap,
-		failed: deals.moreError !== null,
-		onLoadMore: deals.loadMore,
-	};
 
 	const prefill = useMemo<NewDealPrefill | null>(
 		() =>
@@ -404,6 +422,10 @@ export function DealsView() {
 
 	const onCreated = (deal: Deal) => {
 		remember(deal);
+		void fetchExpanded<Deal>("deals", deal.id, "contact,owner")
+			.then((full) => full && remember(full))
+			.catch(() => undefined);
+		deals.reload();
 		setView("all");
 		setActiveId(deal.id);
 		setNewOpen(false);
@@ -636,7 +658,7 @@ export function DealsView() {
 								</>
 							)}
 							{...(views ? { views } : {})}
-							sample={sample}
+							server={deals.server}
 							emptyTitle={t("deals.emptyTitle")}
 							emptyHint={t("deals.emptyHint")}
 						/>

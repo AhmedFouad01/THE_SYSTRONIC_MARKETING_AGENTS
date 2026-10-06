@@ -30,11 +30,13 @@ import {
 	PAGE_SIZES,
 	pageSelectionState,
 	pagerItems,
+	paginate,
 	setEqFilter,
 	type ViewState,
 	visibleColumns,
 } from "./gridModel.ts";
 import type { SavedView, SavedViewsStore } from "./savedViews.ts";
+import type { ServerBinding } from "./useServerList.ts";
 import "./datagrid.css";
 
 export type GridColumn<T> = ModelColumn<T> & {
@@ -97,6 +99,11 @@ export type DataGridProps<T> = {
 	views?: SavedViewsStore;
 	initialView?: ViewState;
 	sample?: GridSample;
+	/**
+	 * Server mode (P1A S4): search, filters, sort and the total come from the API. `rows` are the rows loaded so far
+	 * in server order; the grid performs no client-side search/filter/sort and reports its (debounced) query instead.
+	 */
+	server?: ServerBinding;
 	emptyTitle?: string;
 	emptyHint?: string;
 	/** Primary next step in the zero-data empty state (UX-23). Not shown for filtered-empty. */
@@ -107,9 +114,11 @@ export type DataGridProps<T> = {
 };
 
 const interactive = "input,button,a,select,label,textarea";
+/** Typing in the search box reaches the server after this pause (filters and sort apply at once). */
+export const SEARCH_DEBOUNCE_MS = 275;
 
 export function DataGrid<T>(props: DataGridProps<T>) {
-	const { rows, columns, getRowId, selectable = false, views } = props;
+	const { rows, columns, getRowId, selectable = false, views, server } = props;
 	const { t, tx, locale, formatNumber, dir: uiDir } = useI18n();
 	const [state, dispatch] = useReducer(
 		gridReducer,
@@ -129,10 +138,20 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		() => visibleColumns(columns, state.hidden),
 		[columns, state.hidden],
 	);
-	const { matching, pageRows, pageInfo } = useMemo(
-		() => computeView(rows, columns, state, locale),
-		[rows, columns, state, locale],
-	);
+	const { matching, pageRows, pageInfo } = useMemo(() => {
+		if (!server) return computeView(rows, columns, state, locale);
+		// Server mode: `rows` already are the server's answer in server order; only the page window is cut here.
+		const loaded = rows.length;
+		const known = server.total
+			? Math.max(server.total.value, loaded)
+			: loaded + (server.hasMore ? 1 : 0);
+		const info = paginate(known, state.page, state.pageSize);
+		return {
+			matching: rows as T[],
+			pageRows: rows.slice(info.start, info.end) as T[],
+			pageInfo: info,
+		};
+	}, [rows, columns, state, locale, server]);
 	const pageIds = useMemo(
 		() => pageRows.map((r) => getIdRef.current(r)),
 		[pageRows],
@@ -147,6 +166,31 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	useEffect(() => {
 		selectionCb.current?.(state.selection);
 	}, [state.selection]);
+
+	// ---- server mode: report the query (search debounced) and how many rows the current page needs ----
+	const serverRef = useRef(server);
+	useEffect(() => {
+		serverRef.current = server;
+	});
+	const hasServer = server !== undefined;
+	const sentQuery = useRef(props.initialView?.query ?? DEFAULT_VIEW.query);
+	useEffect(() => {
+		if (!hasServer) return;
+		const delay = state.query === sentQuery.current ? 0 : SEARCH_DEBOUNCE_MS;
+		const id = setTimeout(() => {
+			sentQuery.current = state.query;
+			serverRef.current?.onQueryChange({
+				query: state.query,
+				filters: state.filters,
+				sorts: state.sorts,
+			});
+		}, delay);
+		return () => clearTimeout(id);
+	}, [hasServer, state.query, state.filters, state.sorts]);
+	const needRows = pageInfo.start + pageInfo.pageSize;
+	useEffect(() => {
+		if (hasServer) serverRef.current?.onNeedRows(needRows, state.pageSize);
+	}, [hasServer, needRows, state.pageSize]);
 
 	const open = (id: string) => {
 		dispatch({ type: "open", id });
@@ -260,6 +304,10 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	const clearSelection = () => dispatch({ type: "clearSelection" });
 	const batchOpen = selectable && state.selection.size > 0;
 
+	// Exact server total ("1,234"); a capped count (10,000 is the server ceiling) reads "10,000+".
+	const totalText = server?.total
+		? `${formatNumber(Math.max(server.total.value, matching.length))}${server.total.exact ? "" : "+"}`
+		: formatNumber(matching.length);
 	const body = (() => {
 		if (props.status === "loading" && rows.length === 0)
 			return <SkeletonRows count={6} />;
@@ -270,6 +318,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					{...(props.onRetry ? { onRetry: props.onRetry } : {})}
 				/>
 			);
+		// Server mode: a page beyond the loaded rows is still on its way (keyset cursor), not an empty result.
+		if (server && pageRows.length === 0 && matching.length > 0)
+			return <SkeletonRows count={6} />;
 		if (matching.length === 0)
 			return filtersActive || rows.length > 0 ? (
 				<EmptyState
@@ -575,7 +626,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	);
 
 	return (
-		<div className="sy-grid" data-testid="data-grid">
+		<div className="sy-grid" data-testid="data-grid" aria-busy={server?.refreshing || undefined}>
 			<div className="sy-grid__toolwrap">
 				<search className="sy-grid__toolbar" inert={batchOpen}>
 					<div className="sy-grid__searchbox">
@@ -667,7 +718,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 								{props.toolbarExtra}
 							</div>
 							<p className="sy-grid__count" role="status" data-testid="grid-count">
-								{tx("format.matching", { count: formatNumber(matching.length) })}
+								{tx("format.matching", { count: totalText })}
 							</p>
 						</>
 					)}
@@ -736,8 +787,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					<span className="sy-grid__range" data-testid="grid-range">
 						{tx("grid.range", {
 							from: formatNumber(pageInfo.start + 1),
-							to: formatNumber(pageInfo.end),
-							total: formatNumber(pageInfo.total),
+							to: formatNumber(pageInfo.start + pageRows.length),
+							total: totalText,
 						})}
 					</span>
 					<div className="sy-grid__rows">
@@ -817,6 +868,16 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							<Icon name="chevronRight" size={16} />
 						</button>
 					</nav>
+				</div>
+			) : null}
+
+			{server?.moreFailed ? (
+				<div className="sy-grid__sample" role="status" data-testid="grid-more-failed">
+					<Icon name="info" size={16} />
+					<span role="alert">{t("grid.loadMoreFailed")}</span>
+					<Button size="sm" loading={server.loadingMore} onClick={server.onRetryMore}>
+						{t("state.retry")}
+					</Button>
 				</div>
 			) : null}
 

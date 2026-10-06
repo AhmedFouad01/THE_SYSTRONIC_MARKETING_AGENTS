@@ -1,5 +1,7 @@
 // Pure tasks view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (tasks).
 import { isApiError } from "../../api/errors.ts";
+import { cond, type ServerNode } from "../../ui/data-grid/serverQuery.ts";
+import { carryExpand, contactNameOf, type Expanded, ownerNameOf } from "../expand.ts";
 import {
 	type BulkFailureKind,
 	type BulkItem,
@@ -25,7 +27,7 @@ export type Task = {
 	/** Not exposed by the API yet (gap): honoured when present so automation badges light up without a UI change. */
 	source?: string | null;
 	automation_run_id?: string | null;
-};
+} & Expanded;
 
 export type TaskSource = "manual" | "automation" | "unknown";
 
@@ -69,19 +71,45 @@ export function dueBucket(
 	return dayDiff(due, now) <= 0 ? "today" : "upcoming";
 }
 
-/** Server `?due=` filter for the tab (F-06): exact over everything the server holds, not just the loaded sample. */
+/** Legacy server `?due=` window (kept for the Dashboard counters). */
 export type DueFilter = "overdue" | "today";
-export function dueFilterFor(tab: TaskTab): DueFilter | null {
-	return tab === "overdue" || tab === "today" ? tab : null;
-}
 
 /** Whole local days a past-due task is late (0 = overdue earlier today). */
 export function overdueDays(due: Date, now: Date): number {
 	return Math.max(0, -dayDiff(due, now));
 }
 
-export function inTab(bucket: DueBucket, tab: TaskTab): boolean {
-	return tab === "open" ? bucket !== "done" : bucket === tab;
+/** Start of the next LOCAL calendar day (the "Today" / "Upcoming" boundary of `dueBucket`). */
+export function startOfTomorrow(now: Date): Date {
+	return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+}
+
+/**
+ * A tab as a server query (nothing is bucketed client-side): `due=overdue` for Overdue (the server's own clock),
+ * otherwise conditions on `status`/`due_at`. `anchor` is the instant the tab was opened (stable per query).
+ */
+export function tabQuery(tab: TaskTab, anchor: Date): { due?: string; nodes: ServerNode[] } {
+	const open = cond("status", "eq", "open");
+	switch (tab) {
+		case "open":
+			return { nodes: [open] };
+		case "overdue":
+			return { due: "overdue", nodes: [] };
+		case "today":
+			return {
+				nodes: [
+					open,
+					cond("due_at", "gte", anchor.toISOString()),
+					cond("due_at", "lt", startOfTomorrow(anchor).toISOString()),
+				],
+			};
+		case "upcoming":
+			return { nodes: [open, cond("due_at", "gte", startOfTomorrow(anchor).toISOString())] };
+		case "none":
+			return { nodes: [open, cond("due_at", "is_null")] };
+		case "done":
+			return { nodes: [cond("status", "eq", "completed")] };
+	}
 }
 
 export type TaskRow = Task & {
@@ -100,16 +128,13 @@ export type RowLabels = { unknown: string; unknownOwner: string };
 
 export function toRows(
 	tasks: readonly Task[],
-	contacts: ReadonlyMap<string, string>,
 	deals: ReadonlyMap<string, string>,
 	owners: ReadonlyMap<string, string>,
 	labels: RowLabels,
 	now: Date,
 ): TaskRow[] {
 	return tasks.map((t) => {
-		const contactName = t.contact_id
-			? (contacts.get(t.contact_id) ?? labels.unknown)
-			: "";
+		const contactName = t.contact_id ? (contactNameOf(t) ?? labels.unknown) : "";
 		const relatedKind = t.deal_id ? "deal" : t.contact_id ? "contact" : null;
 		const relatedId = t.deal_id ?? t.contact_id;
 		const relatedName = t.deal_id
@@ -119,7 +144,7 @@ export function toRows(
 		return {
 			...t,
 			bucket: dueBucket(t, now),
-			ownerName: owners.get(t.owner_id) ?? labels.unknownOwner,
+			ownerName: ownerNameOf(t) ?? owners.get(t.owner_id) ?? labels.unknownOwner,
 			relatedKind,
 			relatedId,
 			relatedName,
@@ -270,13 +295,16 @@ export const completeBody = (
 export function mergeLatest(
 	items: readonly Task[],
 	overlay: ReadonlyMap<string, Task>,
+	/** false = list only what the server returned (every tab is a server query; a written task may have left it). */
+	includeCreated = true,
 ): Task[] {
 	const seen = new Set<string>();
 	const merged = items.map((i) => {
 		seen.add(i.id);
 		const o = overlay.get(i.id);
-		return o !== undefined && o.version > i.version ? o : i;
+		return o !== undefined && o.version > i.version ? carryExpand(o, i) : i;
 	});
+	if (!includeCreated) return merged;
 	const created = [...overlay.values()]
 		.filter((o) => !seen.has(o.id))
 		.reverse();

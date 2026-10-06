@@ -14,12 +14,15 @@ import {
 	Panel,
 	StatusPill,
 	useI18n,
+	useCursorList,
 	useMediaQuery,
 	useToast,
+	cond,
 } from "../../ui/index.ts";
 import { formatMoneyMinor } from "../../ui/i18n/format.ts";
 import { NewLeadDialog } from "../leads/NewLeadDialog.tsx";
-import { formatCapped } from "../capped.ts";
+import { cappedCount, formatCapped } from "../capped.ts";
+import { listFetcher } from "../listApi.ts";
 import { fetchCampaignReport } from "../reporting/api.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
 import {
@@ -33,18 +36,17 @@ import {
 	type Assignee,
 	fetchAssignees,
 	fetchContactRefsPage,
-	fetchDealRefsPage,
-	fetchTasksPageFor,
+	type ContactRef,
 } from "../tasks/api.ts";
 import { relatedKey, relatedOf, useRelatedNames } from "./useRelatedNames.ts";
 import { NewTaskDialog } from "../tasks/NewTaskDialog.tsx";
+import { contactNameOf } from "../expand.ts";
 import { RelatedLink } from "../tasks/RelatedLink.tsx";
 import { type Task, overdueDays } from "../tasks/model.ts";
 import {
 	emphasis,
 	followUps,
-	nextWindowCount,
-	overdueCount,
+	NEXT_WINDOW_MS,
 	summarizeReport,
 } from "./model.ts";
 import { type Load, useLoad } from "./useLoad.ts";
@@ -52,6 +54,21 @@ import "../reporting/reporting.css";
 import "./dashboard.css";
 
 const NARROW = "(max-width: 720px)";
+
+const fetchTasks = listFetcher<Task>("tasks");
+const FOLLOW_ROWS = 25;
+const getRefId = (r: { id: string }) => r.id;
+
+/** First rows of a server query with their exact total (`total_count`), names embedded (`expand=contact`). */
+const loadTasks = (params: { due?: string; filter?: string }) => (signal: AbortSignal) =>
+	fetchTasks({
+		params: { sort: "due_at", ...params },
+		expand: "contact",
+		limit: FOLLOW_ROWS,
+		cursor: null,
+		includeTotal: true,
+		signal,
+	});
 
 /** Wall clock that re-evaluates the next-24h window once a minute. */
 function useNow(): Date {
@@ -83,34 +100,38 @@ export function DashboardView() {
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 	const now = useNow();
 
-	const overdue = useLoad(
-		(signal) => fetchTasksPageFor("overdue")({ cursor: null, signal }),
-		tenantId,
-	);
-	const soon = useLoad(
-		(signal) => fetchTasksPageFor("today")({ cursor: null, signal }),
-		tenantId,
-	);
+	// W1/W2 are server counts (`total_count`), not a count of one loaded page.
+	const overdue = useLoad(loadTasks({ due: "overdue" }), tenantId);
+	const soon = useLoad((signal) => {
+		const from = new Date();
+		const to = new Date(from.getTime() + NEXT_WINDOW_MS);
+		// `due=today` = the server's open-and-due-within-24h window; `due_at >= now` excludes what is already overdue.
+		return loadTasks({
+			due: "today",
+			filter: JSON.stringify({
+				and: [
+					cond("due_at", "gte", from.toISOString()),
+					cond("due_at", "lt", to.toISOString()),
+				],
+			}),
+		})(signal);
+	}, tenantId);
 	const report = useLoad(
 		(signal) => fetchCampaignReport(DEFAULT_MODEL, signal),
 		tenantId,
 	);
-	// Names for the follow-ups list: page 1 is the cheap first source; anything else is fetched by id (UX-R3-01).
-	const contacts = useLoad(
-		(signal) => fetchContactRefsPage({ cursor: null, signal }),
-		tenantId,
-	);
-	const deals = useLoad(
-		(signal) => fetchDealRefsPage({ cursor: null, signal }),
-		tenantId,
-	);
-
 	const reloadTasks = () => {
 		overdue.reload();
 		soon.reload();
 	};
 
 	const [taskOpen, setTaskOpen] = useState(false);
+	// Contact picker of the new-task dialog (F-08 is a later track): loaded only once the dialog opens.
+	const contacts = useCursorList<ContactRef>(fetchContactRefsPage, {
+		getId: getRefId,
+		resetKey: tenantId,
+		enabled: taskOpen,
+	});
 	const [leadOpen, setLeadOpen] = useState(false);
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const loadAssignees = () => {
@@ -121,7 +142,6 @@ export function DashboardView() {
 	const openTask = () => {
 		setTaskOpen(true);
 		loadAssignees();
-		if (contacts.state.status === "error") contacts.reload();
 	};
 	const openLead = () => {
 		setLeadOpen(true);
@@ -135,11 +155,11 @@ export function DashboardView() {
 
 	const overdueC =
 		overdue.state.status === "ready"
-			? overdueCount(overdue.state.data.items, overdue.state.data.nextCursor !== null)
+			? cappedCount(overdue.state.data.total?.value ?? overdue.state.data.items.length, overdue.state.data.total?.exact === false)
 			: null;
 	const soonC =
 		soon.state.status === "ready"
-			? nextWindowCount(soon.state.data.items, soon.state.data.nextCursor !== null, now)
+			? cappedCount(soon.state.data.total?.value ?? soon.state.data.items.length, soon.state.data.total?.exact === false)
 			: null;
 	const emph = emphasis({
 		overdue: overdueC?.count ?? null,
@@ -156,7 +176,7 @@ export function DashboardView() {
 		label: string,
 		load: Load<unknown>,
 		reload: () => void,
-		c: ReturnType<typeof overdueCount> | null,
+		c: ReturnType<typeof cappedCount> | null,
 		sub: string,
 		none: string,
 		tone: "neutral" | "navy",
@@ -249,14 +269,17 @@ export function DashboardView() {
 
 	// ---- W5 follow-ups ------------------------------------------------------------------------------------
 
+	// Contact names come embedded in the task rows (`expand=contact`); deal titles are fetched by id (UX-R3-01).
 	const knownNames = useMemo(() => {
 		const m = new Map<string, string>();
-		if (contacts.state.status === "ready")
-			for (const c of contacts.state.data.items) m.set(`contact:${c.id}`, c.display_name);
-		if (deals.state.status === "ready")
-			for (const d of deals.state.data.items) m.set(`deal:${d.id}`, d.title);
+		for (const st of [overdue.state, soon.state])
+			if (st.status === "ready")
+				for (const task of st.data.items) {
+					const n = contactNameOf(task);
+					if (task.contact_id && n !== null) m.set(`contact:${task.contact_id}`, n);
+				}
 		return m;
-	}, [contacts.state, deals.state]);
+	}, [overdue.state, soon.state]);
 	const followList = useMemo(
 		() =>
 			followUps(
@@ -269,7 +292,7 @@ export function DashboardView() {
 	const fetchedNames = useRelatedNames(
 		followList,
 		knownNames,
-		contacts.state.status !== "loading" && deals.state.status !== "loading",
+		overdue.state.status !== "loading" && soon.state.status !== "loading",
 		tenantId,
 	);
 
@@ -568,7 +591,7 @@ export function DashboardView() {
 				open={taskOpen}
 				onClose={() => setTaskOpen(false)}
 				assignees={assignees}
-				contacts={contacts.state.status === "ready" ? contacts.state.data.items : []}
+				contacts={contacts.items}
 				prefill={null}
 				onCreated={() => {
 					setTaskOpen(false);

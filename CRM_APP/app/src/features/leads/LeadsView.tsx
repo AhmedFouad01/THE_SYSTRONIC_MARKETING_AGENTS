@@ -17,25 +17,24 @@ import {
 	DEFAULT_VIEW,
 	ForbiddenState,
 	type GridColumn,
-	type GridSample,
 	PageHeader,
 	safeLocalStorage,
 	sourceLabel,
 	Tabs,
-	useCursorList,
 	useI18n,
 	useToast,
 	type ViewState,
+	cond,
+	enumFilter,
+	ownerFilter,
+	type ServerSpec,
+	useServerList,
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
-import {
-	fetchAssignees,
-	fetchContactsPage,
-	fetchLeadsPage,
-	patchLead,
-} from "./api.ts";
+import { fetchAssignees, patchLead } from "./api.ts";
+import { countRecords, fetchExpanded, listFetcher } from "../listApi.ts";
 import { parseSelect } from "../deals/model.ts";
-import { formatCapped } from "../capped.ts";
+import { cappedCount, formatCapped } from "../capped.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
 import "../reporting/reporting.css";
 import { LeadDetail } from "./LeadDetail.tsx";
@@ -45,12 +44,11 @@ import {
 	BUILT_IN_VIEWS,
 	type BuiltInView,
 	type BulkItem,
-	type Contact,
-	filterBuiltInView,
+	builtInViewNodes,
 	LEAD_STATUSES,
 	type Lead,
 	type LeadStatus,
-	leadStatusCounts,
+	type LeadStrip,
 	leadStripTone,
 	type LeadRow,
 	mergeLatest,
@@ -79,7 +77,15 @@ const INITIAL_VIEW: ViewState = {
 
 const getLeadId = (l: LeadRow) => l.id;
 const getLeadIdRaw = (l: Lead) => l.id;
-const getContactId = (c: Contact) => c.id;
+const fetchLeads = listFetcher<Lead>("leads");
+
+// Column id -> server field (P1A_CONTRACTS S4 sort whitelist). Derived columns (contact/owner names) are not sortable.
+const sortFields = {
+	lead: "title",
+	source: "source",
+	status: "status",
+	created: "received_at",
+} as const;
 
 export function LeadsView() {
 	const { t, formatNumber } = useI18n();
@@ -89,14 +95,6 @@ export function LeadsView() {
 	const actor = session.info?.actor ?? null;
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 
-	const leads = useCursorList<Lead>(fetchLeadsPage, {
-		getId: getLeadIdRaw,
-		resetKey: tenantId,
-	});
-	const contacts = useCursorList<Contact>(fetchContactsPage, {
-		getId: getContactId,
-		resetKey: tenantId,
-	});
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const [ownersFailed, setOwnersFailed] = useState(false);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: tenantId re-fetches the directory for a new tenant
@@ -115,10 +113,11 @@ export function LeadsView() {
 
 	// Confirmed writes (PATCH/POST results) layered over the loaded pages.
 	const [overlay, setOverlay] = useState<ReadonlyMap<string, Lead>>(new Map());
-	const remember = useCallback(
-		(lead: Lead) => setOverlay((m) => new Map(m).set(lead.id, lead)),
-		[],
-	);
+	const [countsTick, setCountsTick] = useState(0);
+	const remember = useCallback((lead: Lead) => {
+		setOverlay((m) => new Map(m).set(lead.id, lead));
+		setCountsTick((n) => n + 1); // a write can move a lead between status counts
+	}, []);
 
 	const [view, setView] = useState<BuiltInView>("all");
 	const [activeId, setActiveId] = useState<string | null>(() =>
@@ -126,27 +125,47 @@ export function LeadsView() {
 	);
 	const [newOpen, setNewOpen] = useState(false);
 
-	const contactNames = useMemo(
-		() => new Map(contacts.items.map((c) => [c.id, c.display_name])),
-		[contacts.items],
+	const ownerByName = useMemo(
+		() => new Map(assignees.map((a) => [a.name, a.id])),
+		[assignees],
 	);
+	const spec = useMemo<ServerSpec>(
+		() => ({
+			sort: sortFields,
+			defaultSort: "-received_at",
+			filters: {
+				status: enumFilter("status", LEAD_STATUSES),
+				owner: ownerFilter(ownerByName),
+			},
+		}),
+		[ownerByName],
+	);
+	const viewNodes = useMemo(() => builtInViewNodes(view, actor), [view, actor]);
+	const leads = useServerList<Lead>({
+		fetchPage: fetchLeads,
+		getId: getLeadIdRaw,
+		spec,
+		initial: INITIAL_VIEW,
+		initialPageSize: INITIAL_VIEW.pageSize,
+		extra: viewNodes,
+		expand: "contact,owner",
+		resetKey: tenantId,
+	});
+
 	const ownerNames = useMemo(
 		() => new Map(assignees.map((a) => [a.id, a.name])),
 		[assignees],
 	);
 	const allRows = useMemo(
 		() =>
-			toRows(mergeLatest(leads.items, overlay), contactNames, ownerNames, {
+			toRows(mergeLatest(leads.items, overlay), ownerNames, {
 				unassigned: t("common.unassigned"),
 				unknownContact: t("leads.unknownContact"),
 				unknownOwner: t("common.unknownUser"),
 			}),
-		[leads.items, overlay, contactNames, ownerNames, t],
+		[leads.items, overlay, ownerNames, t],
 	);
-	const rows = useMemo(
-		() => filterBuiltInView(allRows, view, actor),
-		[allRows, view, actor],
-	);
+	const rows = allRows;
 	const rowsRef = useRef(allRows);
 	useEffect(() => {
 		rowsRef.current = allRows;
@@ -170,13 +189,14 @@ export function LeadsView() {
 		[actor, tenantId],
 	);
 
-	const ownerOptions = useMemo(() => {
-		const names = new Set<string>(assignees.map((a) => a.name));
-		for (const r of allRows) names.add(r.ownerName);
-		return [...names]
-			.sort((a, b) => a.localeCompare(b))
-			.map((n) => ({ value: n, label: n }));
-	}, [assignees, allRows]);
+	// Owner filter is keyed by assignee id (names can repeat) and resolved on the server (`owner_id`).
+	const ownerOptions = useMemo(
+		() =>
+			[...assignees]
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((a) => ({ value: a.id, label: a.name })),
+		[assignees],
+	);
 
 	const columns = useMemo<ReadonlyArray<GridColumn<LeadRow>>>(
 		() => [
@@ -193,7 +213,6 @@ export function LeadsView() {
 				id: "contact",
 				header: t("leads.col.contact"),
 				value: (r) => r.contactName,
-				sortable: true,
 				width: "180px",
 				mobile: "hide",
 				collapse: 2,
@@ -220,7 +239,6 @@ export function LeadsView() {
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
-				sortable: true,
 				width: "150px",
 				filter: { options: ownerOptions },
 			},
@@ -375,30 +393,46 @@ export function LeadsView() {
 		finishBulk(summary, TASK_BULK_KEYS, clear);
 	};
 
-	const sample: GridSample = {
-		loaded: leads.items.length,
-		hasMore: leads.sample,
-		loadingMore: leads.loadingMore,
-		atCap: leads.atCap,
-		failed: leads.moreError !== null,
-		onLoadMore: leads.loadMore,
-	};
-
-	// UX-09: counts from the rows the grid has loaded (no extra request); "N+" while pages remain.
-	const strip = useMemo(
-		() => leadStatusCounts(rows, !leads.sample),
-		[rows, leads.sample],
-	);
-	const stripSub =
-		view !== "all"
-			? t("leads.kpi.view")
-			: leads.sample
-				? t("leads.kpi.loaded")
-				: undefined;
+	// UX-09: exact counts per status from the server (`total_count`) for the current built-in view; "N+" only above the 10,000 ceiling.
+	const [counts, setCounts] = useState<{ status: "loading" | "ready" | "error"; strip: LeadStrip | null }>({
+		status: "loading",
+		strip: null,
+	});
+	const viewKey = JSON.stringify(viewNodes);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: viewKey is the identity of viewNodes; countsTick re-counts after writes
+	useEffect(() => {
+		const ctrl = new AbortController();
+		const timer = setTimeout(() => {
+			Promise.all(
+				LEAD_STATUSES.map((st) =>
+					countRecords("leads", [...viewNodes, cond("status", "eq", st)], ctrl.signal),
+				),
+			)
+				.then((r) => {
+					const strip = Object.fromEntries(
+						LEAD_STATUSES.map((st, i) => [st, cappedCount(r[i]?.value ?? 0, r[i]?.exact === false)]),
+					) as LeadStrip;
+					setCounts({ status: "ready", strip });
+				})
+				.catch((e: unknown) => {
+					if (!ctrl.signal.aborted && !(e instanceof DOMException)) setCounts({ status: "error", strip: null });
+				});
+		}, 150);
+		return () => {
+			clearTimeout(timer);
+			ctrl.abort();
+		};
+	}, [viewKey, tenantId, countsTick]);
+	const strip = counts.strip;
+	const stripSub = view !== "all" ? t("leads.kpi.view") : undefined;
 
 	const onCreated = (lead: Lead) => {
 		remember(lead);
-		contacts.reload();
+		// The create response carries no names: list the row once with its embedded contact/owner, then re-list.
+		void fetchExpanded<Lead>("leads", lead.id, "contact,owner")
+			.then((full) => full && remember(full))
+			.catch(() => undefined);
+		leads.reload();
 		setView("all");
 		setActiveId(lead.id);
 		setNewOpen(false);
@@ -422,10 +456,10 @@ export function LeadsView() {
 									key={st}
 									testId={`leads-kpi-${st}`}
 									label={t(STATUS_KEY[st])}
-									loading={leads.status === "loading"}
-									value={formatCapped(strip[st], formatNumber)}
+									loading={counts.status === "loading"}
+									value={strip ? formatCapped(strip[st], formatNumber) : "—"}
 									sub={stripSub}
-									tone={leadStripTone(st, strip[st])}
+									tone={strip ? leadStripTone(st, strip[st]) : "neutral"}
 								/>
 							))}
 						</section>
@@ -515,7 +549,7 @@ export function LeadsView() {
 							)}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
-							sample={sample}
+							server={leads.server}
 							emptyTitle={t("leads.emptyTitle")}
 							emptyHint={t("leads.emptyHint")}
 						/>

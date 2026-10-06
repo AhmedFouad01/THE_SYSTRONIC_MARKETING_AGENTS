@@ -248,6 +248,10 @@ export function server() {
 					"status" in response ? Number(response.status ?? 200) : 200;
 				if ("next_cursor" in response)
 					extra = { next_cursor: response.next_cursor };
+				// P1A S4 list envelope: `has_more` always, `total_count` only when `include_total=1` was sent.
+				if ("has_more" in response) extra = { ...extra, has_more: response.has_more };
+				if ("total_count" in response)
+					extra = { ...extra, total_count: response.total_count };
 			}
 			res.setHeader("Content-Type", "application/json");
 			res.end(

@@ -1,7 +1,6 @@
 // Dashboard view-model (pure: no DOM, no React). Spec: audits/2026-10-05/DASHBOARD_SPEC.md.
-// Every figure is derived from ONE page of an existing list endpoint or from the campaign-performance payload.
-// A count is exact only when the server said there is no next page; otherwise it is a lower bound ("N+").
-import { type CappedCount, cappedCount } from "../capped.ts";
+// Task counts come from the server (`total_count`, exact up to its 10,000 ceiling); the follow-ups list is the first rows
+// of the same queries. Report figures come from the campaign-performance payload.
 import {
 	aggregateCampaigns,
 	type CampaignAgg,
@@ -28,14 +27,6 @@ const dueMs = (t: Pick<Task, "due_at">): number => {
 	return Date.parse(t.due_at);
 };
 
-/** W1: `?due=overdue` page 1. Count = rows returned; "N+" when the server has another page. */
-export function overdueCount(
-	tasks: readonly Task[],
-	hasMore: boolean,
-): CappedCount {
-	return cappedCount(tasks.length, hasMore);
-}
-
 /**
  * W2: the server's `?due=today` also returns everything overdue, so keep only open tasks due from `now` on
  * (the same client-side rule the Tasks screen applies). Within the next 24 hours by construction.
@@ -51,14 +42,6 @@ export function nextWindowTasks(tasks: readonly Task[], now: Date): Task[] {
 			d < from + NEXT_WINDOW_MS
 		);
 	});
-}
-
-export function nextWindowCount(
-	tasks: readonly Task[],
-	hasMore: boolean,
-	now: Date,
-): CappedCount {
-	return cappedCount(nextWindowTasks(tasks, now).length, hasMore);
 }
 
 /** W5: first `limit` of overdue + next-24h tasks by due time, oldest first (an id is listed once). */

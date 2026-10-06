@@ -644,7 +644,6 @@ export const ar: Record<MessageKey, string> = {
 	"grid.goToPage": "الصفحة {page}",
 	"leads.subtitle": "إدارة العملاء المحتملين وتأهيلهم",
 	"leads.kpis": "أعداد العملاء المحتملين حسب الحالة",
-	"leads.kpi.loaded": "المحمّلة حتى الآن",
 	"leads.kpi.view": "في هذا العرض",
 	"dash.subtitle": "ما يحتاج إلى إجراء الآن وأداء الحملات",
 	"dash.kpis": "الأرقام الرئيسية",

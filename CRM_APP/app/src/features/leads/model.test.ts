@@ -1,14 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { ApiError } from "../../api/errors.ts";
 import {
-	leadStatusCounts,
 	leadStripTone,
 	type BulkItem,
 	buildCreateBody,
 	buildPatchBody,
 	classifyCreateError,
 	EMPTY_NEW_LEAD,
-	filterBuiltInView,
+	builtInViewNodes,
 	keyFor,
 	mergeLatest,
 	type Lead,
@@ -45,38 +44,31 @@ const err = (status: number, code: string) =>
 		retryable: false,
 	});
 
-describe("built-in views", () => {
-	const rows = [lead("a", ME), lead("b", OTHER), lead("c", null)];
-	it("all keeps everything", () =>
-		expect(filterBuiltInView(rows, "all", ME).map((r) => r.id)).toEqual([
-			"a",
-			"b",
-			"c",
-		]));
-	it("mine = owner is the session actor", () =>
-		expect(filterBuiltInView(rows, "mine", ME).map((r) => r.id)).toEqual([
-			"a",
-		]));
-	it("mine with no actor is empty", () =>
-		expect(filterBuiltInView(rows, "mine", null)).toEqual([]));
-	it("unassigned = no owner", () =>
-		expect(filterBuiltInView(rows, "unassigned", ME).map((r) => r.id)).toEqual([
-			"c",
-		]));
+describe("built-in views (server conditions)", () => {
+	it("all adds nothing", () => expect(builtInViewNodes("all", ME)).toEqual([]));
+	it("mine = owner_id eq the session actor", () =>
+		expect(builtInViewNodes("mine", ME)).toEqual([{ p: "owner_id", op: "eq", v: ME }]));
+	it("mine with no actor matches nothing", () =>
+		expect(builtInViewNodes("mine", null)).toEqual([{ p: "id", op: "is_null" }]));
+	it("unassigned = owner_id is null", () =>
+		expect(builtInViewNodes("unassigned", ME)).toEqual([{ p: "owner_id", op: "is_null" }]));
 });
 
 describe("toRows", () => {
-	it("resolves names with fallbacks", () => {
+	it("names come from expand, owners fall back to the directory, then to neutral labels", () => {
 		const out = toRows(
-			[lead("a", ME), lead("b", OTHER), lead("c", null)],
-			new Map([["c1", "Ada"]]),
-			new Map([[ME, "Me"]]),
+			[
+				lead("a", ME, { contact: { id: "c1", display_name: "Ada" }, owner: { id: ME, name: "Me" } }),
+				lead("b", OTHER, { contact: { id: "c1", restricted: true } }),
+				lead("c", null),
+			],
+			new Map([[OTHER, "Other"]]),
 			{ unassigned: "None", unknownContact: "?", unknownOwner: "Someone" },
 		);
 		expect(out.map((r) => [r.contactName, r.ownerName])).toEqual([
 			["Ada", "Me"],
-			["Ada", "Someone"],
-			["Ada", "None"],
+			["?", "Other"],
+			["?", "None"],
 		]);
 	});
 });
@@ -260,28 +252,10 @@ describe("mergeLatest", () => {
 });
 
 describe("leads KPI strip", () => {
-	const rows = [
-		{ status: "open" as const },
-		{ status: "open" as const },
-		{ status: "qualified" as const },
-		{ status: "closed" as const },
-	];
-	it("counts by status exactly when every page is loaded", () => {
-		const s = leadStatusCounts(rows, true);
-		expect(s.open).toEqual({ count: 2, capped: false });
-		expect(s.qualified).toEqual({ count: 1, capped: false });
-		expect(s.closed).toEqual({ count: 1, capped: false });
-	});
-	it("is a lower bound (N+) while pages remain, and zeros are exact when complete", () => {
-		const s = leadStatusCounts(rows, false);
-		expect(Object.values(s).every((c) => c.capped)).toBe(true);
-		expect(leadStatusCounts([], true).open).toEqual({ count: 0, capped: false });
-	});
 	it("only qualified > 0 is emphasised", () => {
-		const s = leadStatusCounts(rows, true);
-		expect(leadStripTone("qualified", s.qualified)).toBe("navy");
-		expect(leadStripTone("open", s.open)).toBe("neutral");
-		expect(leadStripTone("closed", s.closed)).toBe("neutral");
-		expect(leadStripTone("qualified", leadStatusCounts([], true).qualified)).toBe("neutral");
+		expect(leadStripTone("qualified", { count: 1, capped: false })).toBe("navy");
+		expect(leadStripTone("open", { count: 5, capped: false })).toBe("neutral");
+		expect(leadStripTone("closed", { count: 5, capped: true })).toBe("neutral");
+		expect(leadStripTone("qualified", { count: 0, capped: false })).toBe("neutral");
 	});
 });

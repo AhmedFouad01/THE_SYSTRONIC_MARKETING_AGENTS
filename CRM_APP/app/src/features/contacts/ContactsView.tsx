@@ -15,18 +15,21 @@ import {
 	useWideLayout,
 	ForbiddenState,
 	type GridColumn,
-	type GridSample,
 	PageHeader,
 	safeLocalStorage,
 	sourceLabel,
 	Tabs,
-	useCursorList,
 	useI18n,
 	useToast,
 	type ViewState,
+	defaultFilter,
+	ownerFilter,
+	type ServerSpec,
+	useServerList,
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
-import { fetchAssignees, fetchContactsPage } from "./api.ts";
+import { fetchAssignees } from "./api.ts";
+import { fetchExpanded, listFetcher } from "../listApi.ts";
 import { ContactDetail } from "./ContactDetail.tsx";
 import { MergeDialogs } from "./MergeDialogs.tsx";
 import { NewContactDialog } from "./NewContactDialog.tsx";
@@ -37,7 +40,7 @@ import {
 	type Contact,
 	type ContactRow,
 	type Duplicate,
-	filterBuiltInView,
+	builtInViewNodes,
 	mergeLatest,
 	toRows,
 } from "./model.ts";
@@ -55,6 +58,7 @@ const INITIAL_VIEW: ViewState = {
 
 const getRowId = (c: ContactRow) => c.id;
 const getRawId = (c: Contact) => c.id;
+const fetchContacts = listFetcher<Contact>("contacts");
 
 export function ContactsView() {
 	const { t } = useI18n();
@@ -65,10 +69,6 @@ export function ContactsView() {
 	const canMerge = session.info?.merge === true;
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 
-	const contacts = useCursorList<Contact>(fetchContactsPage, {
-		getId: getRawId,
-		resetKey: tenantId,
-	});
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const [ownersFailed, setOwnersFailed] = useState(false);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: tenantId re-fetches the directory for a new tenant
@@ -89,6 +89,8 @@ export function ContactsView() {
 		new Map(),
 	);
 	const [merged, setMerged] = useState<ReadonlySet<string>>(new Set());
+	// A merge changes the record under the open panel: remount it so it returns to the overview with fresh identifiers.
+	const [detailEpoch, setDetailEpoch] = useState(0);
 	const remember = useCallback(
 		(c: Contact) => setOverlay((m) => new Map(m).set(c.id, c)),
 		[],
@@ -100,33 +102,55 @@ export function ContactsView() {
 	);
 	const [mergeWith, setMergeWith] = useState<Duplicate | null>(null);
 	const [newOpen, setNewOpen] = useState(false);
-	// Contacts created this session stay visible even when the id-ordered sample does not reach them.
 	const [added, setAdded] = useState<readonly Contact[]>([]);
 
 	const ownerNames = useMemo(
 		() => new Map(assignees.map((a) => [a.id, a.name])),
 		[assignees],
 	);
-	const loaded = useMemo(() => {
-		const seen = new Set(contacts.items.map(getRawId));
-		return [...contacts.items, ...added.filter((a) => !seen.has(a.id))];
-	}, [contacts.items, added]);
+	const ownerByName = useMemo(
+		() => new Map(assignees.map((a) => [a.name, a.id])),
+		[assignees],
+	);
+	const spec = useMemo<ServerSpec>(
+		() => ({
+			sort: { name: "display_name", source: "source" },
+			defaultSort: "display_name",
+			filters: { owner: ownerFilter(ownerByName), source: defaultFilter("source") },
+		}),
+		[ownerByName],
+	);
+	const viewNodes = useMemo(() => builtInViewNodes(view, actor), [view, actor]);
+	const contacts = useServerList<Contact>({
+		fetchPage: fetchContacts,
+		getId: getRawId,
+		spec,
+		initial: INITIAL_VIEW,
+		initialPageSize: INITIAL_VIEW.pageSize,
+		extra: viewNodes,
+		expand: "owner",
+		resetKey: tenantId,
+	});
 	const allRows = useMemo(
 		() =>
 			toRows(
-				mergeLatest(loaded, overlay, merged),
+				mergeLatest(contacts.items, overlay, merged),
 				ownerNames,
 				t("common.unassigned"),
 				t("common.unknownUser"),
 			),
-		[loaded, overlay, merged, ownerNames, t],
+		[contacts.items, overlay, merged, ownerNames, t],
 	);
-	const rows = useMemo(
-		() => filterBuiltInView(allRows, view, actor),
-		[allRows, view, actor],
+	const rows = allRows;
+	// A contact created this session opens in the detail panel even before the list reload brings it in server order.
+	const addedRows = useMemo(
+		() => toRows(added.map((c) => overlay.get(c.id) ?? c), ownerNames, t("common.unassigned"), t("common.unknownUser")),
+		[added, overlay, ownerNames, t],
 	);
 	const active =
-		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+		activeId === null
+			? null
+			: (allRows.find((r) => r.id === activeId) ?? addedRows.find((r) => r.id === activeId) ?? null);
 	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
 	const crumbReturn = useCrumbReturn(setActiveId);
 	useRecordCrumb(active?.display_name, crumbReturn.back);
@@ -144,19 +168,28 @@ export function ContactsView() {
 		[actor, tenantId],
 	);
 
-	const ownerOptions = useMemo(() => {
-		const names = new Set<string>(assignees.map((a) => a.name));
-		for (const r of allRows) names.add(r.ownerName);
-		return [...names]
-			.sort((a, b) => a.localeCompare(b))
-			.map((n) => ({ value: n, label: n }));
-	}, [assignees, allRows]);
+	const ownerOptions = useMemo(
+		() =>
+			[...assignees]
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((a) => ({ value: a.id, label: a.name })),
+		[assignees],
+	);
+	// `source` is free text: the filter offers the sources seen in any loaded result so far (no distinct-values endpoint yet).
+	const [seenSources, setSeenSources] = useState<readonly string[]>([]);
+	useEffect(() => {
+		setSeenSources((prev) => {
+			const next = new Set(prev);
+			for (const c of contacts.items) next.add(c.source);
+			return next.size === prev.length ? prev : [...next];
+		});
+	}, [contacts.items]);
 	const sourceOptions = useMemo(
 		() =>
-			[...new Set(allRows.map((r) => r.source))]
+			[...seenSources]
 				.sort((a, b) => a.localeCompare(b))
 				.map((s) => ({ value: s, label: sourceLabel(s, t) })),
-		[allRows, t],
+		[seenSources, t],
 	);
 
 	const columns = useMemo<ReadonlyArray<GridColumn<ContactRow>>>(
@@ -174,7 +207,6 @@ export function ContactsView() {
 				id: "owner",
 				header: t("common.owner"),
 				value: (r) => r.ownerName,
-				sortable: true,
 				width: "180px",
 				mobile: "hide",
 				filter: { options: ownerOptions },
@@ -192,15 +224,6 @@ export function ContactsView() {
 		[t, ownerOptions, sourceOptions],
 	);
 
-	const sample: GridSample = {
-		loaded: contacts.items.length,
-		hasMore: contacts.sample,
-		loadingMore: contacts.loadingMore,
-		atCap: contacts.atCap,
-		failed: contacts.moreError !== null,
-		onLoadMore: contacts.loadMore,
-	};
-
 	const ownerName = useCallback(
 		(id: string | null) =>
 			id ? (ownerNames.get(id) ?? t("common.unknownUser")) : t("common.unassigned"),
@@ -209,6 +232,7 @@ export function ContactsView() {
 
 	const onMerged = (sourceId: string) => {
 		setMerged((s) => new Set(s).add(sourceId));
+		setDetailEpoch((n) => n + 1);
 		setMergeWith(null);
 		contacts.reload();
 		toast.notify(t("contacts.merge.done"), "success");
@@ -217,6 +241,9 @@ export function ContactsView() {
 	const onCreated = (c: Contact) => {
 		setAdded((a) => [...a, c]);
 		remember(c);
+		void fetchExpanded<Contact>("contacts", c.id, "owner")
+			.then((full) => full && remember(full))
+			.catch(() => undefined);
 		contacts.reload();
 		setView("all");
 		setActiveId(c.id);
@@ -271,13 +298,14 @@ export function ContactsView() {
 							autoSelectFirst={wide && !crumbReturn.suppressAutoOpen}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
-							sample={sample}
+							server={contacts.server}
 							emptyTitle={t("contacts.emptyTitle")}
 							emptyHint={t("contacts.emptyHint")}
 						/>
 					)}
 				</div>
 				<ContactDetail
+					key={detailEpoch}
 					contact={active}
 					assignees={assignees}
 					canMerge={canMerge}

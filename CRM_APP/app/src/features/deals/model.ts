@@ -1,7 +1,9 @@
 // Pure deals view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (deals, transitions,
 // history, pipelines). Stage writes go ONLY through the transition command; PATCH never carries stage_id.
 import { isApiError } from "../../api/errors.ts";
+import { cond, NOTHING, type ServerNode } from "../../ui/data-grid/serverQuery.ts";
 import { minorToMajorUnits } from "../../ui/i18n/format.ts";
+import { carryExpand, contactNameOf, type Expanded, ownerNameOf } from "../expand.ts";
 
 export type StageOutcome = "won" | "lost" | null;
 export type Stage = {
@@ -30,7 +32,7 @@ export type Deal = {
 	amount_minor: number;
 	currency: string;
 	version: number;
-};
+} & Expanded;
 export type Assignee = { id: string; name: string };
 export type Contact = { id: string; display_name: string };
 export type LeadRef = { id: string; title: string; contact_id: string };
@@ -143,7 +145,6 @@ export const stageOf = (
 
 export function toRows(
 	deals: readonly Deal[],
-	contacts: ReadonlyMap<string, string>,
 	owners: ReadonlyMap<string, string>,
 	pipelines: ReadonlyMap<string, Pipeline>,
 	labels: {
@@ -158,9 +159,9 @@ export function toRows(
 		const s = stageOf(p, d.stage_id);
 		return {
 			...d,
-			contactName: contacts.get(d.contact_id) ?? labels.unknownContact,
+			contactName: contactNameOf(d) ?? labels.unknownContact,
 			ownerName: d.owner_id
-				? (owners.get(d.owner_id) ?? labels.unknownOwner)
+				? (ownerNameOf(d) ?? owners.get(d.owner_id) ?? labels.unknownOwner)
 				: labels.unassigned,
 			pipelineName: p?.name ?? "",
 			stageName: s?.name ?? labels.unknownStage,
@@ -173,15 +174,24 @@ export function toRows(
 export type BuiltInView = "all" | "mine" | "open";
 export const BUILT_IN_VIEWS: readonly BuiltInView[] = ["all", "mine", "open"];
 
-export function filterBuiltInView(
-	rows: readonly DealRow[],
+/**
+ * Built-in views as server conditions. "open" = deals sitting in a non won/lost stage of any pipeline (stage ids
+ * come from the pipelines directory); with no open stage it matches nothing.
+ */
+export function builtInViewNodes(
 	view: BuiltInView,
 	actor: string | null,
-): DealRow[] {
-	if (view === "all") return [...rows];
-	if (view === "mine")
-		return actor === null ? [] : rows.filter((r) => r.owner_id === actor);
-	return rows.filter((r) => r.stageOutcome === null);
+	pipelines: readonly Pipeline[],
+): ServerNode[] {
+	if (view === "all") return [];
+	if (view === "mine") return [actor === null ? NOTHING : cond("owner_id", "eq", actor)];
+	const open = pipelines.flatMap((p) => p.stages.filter((s) => s.outcome === null).map((s) => s.id));
+	return [open.length === 0 ? NOTHING : cond("stage_id", "in", open)];
+}
+
+/** Stage filter (keyed by stage name, which repeats across pipelines) -> `stage_id in [every stage with that name]`. */
+export function stageIdsByName(pipelines: readonly Pipeline[], name: string): string[] {
+	return pipelines.flatMap((p) => p.stages.filter((s) => s.name === name).map((s) => s.id));
 }
 
 /** Loaded pages + locally confirmed writes: newer version wins; overlay-only entries (new deals) come first. */
@@ -193,7 +203,7 @@ export function mergeLatest(
 	const merged = items.map((i) => {
 		seen.add(i.id);
 		const o = overlay.get(i.id);
-		return o !== undefined && o.version > i.version ? o : i;
+		return o !== undefined && o.version > i.version ? carryExpand(o, i) : i;
 	});
 	const created = [...overlay.values()]
 		.filter((o) => !seen.has(o.id))

@@ -162,6 +162,9 @@ test("R3-03 / R2-07 AR zero is a readable 0 (not the bare dot); longer numbers k
 	await page.setViewportSize({ width: 1440, height: 900 });
 	await open(page, f, "ar", "/app/leads");
 	await expect(page.getByTestId("leads-view")).toBeVisible();
+	// the strip counts arrive from the server (separate requests): wait for the first one
+	await expect(page.locator(".sy-leads__kpis .sy-kpi__value").first()).toHaveText("١");
+	await expect(page.locator(".sy-leads__kpis .sy-kpi__value").nth(2)).toHaveText("0");
 	const kpiText = await page.locator(".sy-leads__kpis .sy-kpi__value").allTextContents();
 	expect(kpiText.length).toBeGreaterThanOrEqual(3);
 	expect(kpiText.some((v) => v.trim() === "0")).toBe(true);
@@ -244,10 +247,11 @@ test("R3-01 dashboard: an unreadable related record shows no caption instead of 
 	const f = await fixture();
 	const lead = await makeLead(request, f, "Hidden lead", "Hidden Person");
 	await makeTask(request, f, lead.contact_id, "Call hidden", Date.now() - DAY);
-	await page.route(/\/v1\/contacts(\?.*)?$/, async (route) => {
+	// the caller's scope cannot read the contact: the list embeds `{id, restricted:true}` instead of a name
+	await page.route(/\/v1\/tasks(\?.*)?$/, async (route) => {
 		const r = await route.fetch();
 		const body = await r.json();
-		body.data = [];
+		for (const t of body.data) if (t.contact_id) t.contact = { id: t.contact_id, restricted: true };
 		return route.fulfill({ response: r, json: body });
 	});
 	await page.route(/\/v1\/contacts\/[0-9a-f-]{36}$/, (route) =>

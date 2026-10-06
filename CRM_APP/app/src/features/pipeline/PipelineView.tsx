@@ -15,16 +15,19 @@ import {
 	minorToMajorUnits,
 	PageHeader,
 	Select,
+	cond,
 	useCursorList,
 	useI18n,
+	useServerList,
 	useToast,
 } from "../../ui/index.ts";
+import { contactNameOf, ownerNameOf } from "../expand.ts";
+import { countRecords, fetchExpanded, listFetcher } from "../listApi.ts";
 import { NewDealDialog } from "../deals/NewDealDialog.tsx";
 import {
 	fetchAssignees,
 	fetchContactsPage,
 	fetchDeal,
-	fetchDealsPage,
 	fetchPipelines,
 	transitionDeal,
 } from "../deals/api.ts";
@@ -58,6 +61,11 @@ import "./pipeline.css";
 const lastPipelineKey = (tenantId: string) => `sy.pipeline.last.${tenantId}`;
 const getDealId = (d: Deal) => d.id;
 const getContactId = (c: Contact) => c.id;
+const fetchDeals = listFetcher<Deal>("deals");
+const BOARD_SPEC = { sort: {}, defaultSort: "-created_at" } as const;
+const BOARD_VIEW = { query: "", filters: [], sorts: [] } as const;
+/** Cards the board loads per step (no server aggregate by stage exists yet, so card totals stay loaded-only). */
+const BOARD_STEP = 150;
 
 type PipelinesState = {
 	status: "loading" | "ready" | "error";
@@ -147,6 +155,7 @@ function DealCard({
 
 function Column({
 	col,
+	count,
 	pipeline,
 	contactNames,
 	ownerNames,
@@ -154,6 +163,8 @@ function Column({
 	onMove,
 }: {
 	col: StageColumn;
+	/** Exact server count of the stage (falls back to the loaded cards until it arrives). */
+	count: number;
 	pipeline: Pipeline;
 	contactNames: ReadonlyMap<string, string>;
 	ownerNames: ReadonlyMap<string, string>;
@@ -181,10 +192,10 @@ function Column({
 					}
 				>
 					<span
-						title={t("pipeline.count", { count: formatNumber(col.count) })}
+						title={t("pipeline.count", { count: formatNumber(count) })}
 						data-testid="column-count"
 					>
-						<Ltr>{formatNumber(col.count)}</Ltr>
+						<Ltr>{formatNumber(count)}</Ltr>
 					</span>
 				</Badge>
 				{kind !== "open" ? (
@@ -242,13 +253,23 @@ export function PipelineView() {
 	const toast = useToast();
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 
-	const deals = useCursorList<Deal>(fetchDealsPage, {
+	const [want, setWant] = useState(BOARD_STEP);
+	const deals = useServerList<Deal>({
+		fetchPage: fetchDeals,
 		getId: getDealId,
+		spec: BOARD_SPEC,
+		initial: BOARD_VIEW,
+		expand: "contact,owner",
 		resetKey: tenantId,
 	});
+	const askRows = deals.server.onNeedRows;
+	useEffect(() => askRows(want, 100), [askRows, want]);
+	const [newOpen, setNewOpen] = useState(false);
+	// Contact picker of the create dialog (F-08 is a later track): loaded only once the dialog opens.
 	const contacts = useCursorList<Contact>(fetchContactsPage, {
 		getId: getContactId,
 		resetKey: tenantId,
+		enabled: newOpen,
 	});
 	const [assignees, setAssignees] = useState<readonly Assignee[]>([]);
 	const [pipelines, setPipelines] = useState<PipelinesState>({
@@ -257,8 +278,6 @@ export function PipelineView() {
 	});
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [remembered] = useState<string | null>(() => readPref(lastPipelineKey(tenantId)));
-	const [newOpen, setNewOpen] = useState(false);
-
 	const loadPipelines = useCallback((signal?: AbortSignal) => {
 		setPipelines({ status: "loading", items: [] });
 		fetchPipelines(signal)
@@ -289,10 +308,11 @@ export function PipelineView() {
 		null,
 	);
 
-	const remember = useCallback(
-		(deal: Deal) => setOverlay((m) => new Map(m).set(deal.id, deal)),
-		[],
-	);
+	const [countsTick, setCountsTick] = useState(0);
+	const remember = useCallback((deal: Deal) => {
+		setOverlay((m) => new Map(m).set(deal.id, deal));
+		setCountsTick((n) => n + 1);
+	}, []);
 	const allDeals = useMemo(
 		() => mergeLatest(deals.items, overlay),
 		[deals.items, overlay],
@@ -329,6 +349,9 @@ export function PipelineView() {
 	};
 	const onDealCreated = (deal: Deal) => {
 		remember(deal);
+		void fetchExpanded<Deal>("deals", deal.id, "contact,owner")
+			.then((full) => full && remember(full))
+			.catch(() => undefined);
 		setNewOpen(false);
 		toast.notify(t("deals.new.created"), "success");
 	};
@@ -336,14 +359,47 @@ export function PipelineView() {
 		() => (pipeline ? groupByStage(pipeline, allDeals, pending) : []),
 		[pipeline, allDeals, pending],
 	);
+	// Names come from the deals list itself (`expand=contact,owner`); the assignee directory names owners of fresh writes.
 	const contactNames = useMemo(
-		() => new Map(contacts.items.map((c) => [c.id, c.display_name])),
-		[contacts.items],
+		() =>
+			new Map(
+				allDeals.flatMap((d) => {
+					const n = contactNameOf(d);
+					return n === null ? [] : [[d.contact_id, n] as const];
+				}),
+			),
+		[allDeals],
 	);
-	const ownerNames = useMemo(
-		() => new Map(assignees.map((a) => [a.id, a.name])),
-		[assignees],
-	);
+	const ownerNames = useMemo(() => {
+		const m = new Map(assignees.map((a) => [a.id, a.name]));
+		for (const d of allDeals) {
+			const n = ownerNameOf(d);
+			if (d.owner_id && n !== null) m.set(d.owner_id, n);
+		}
+		return m;
+	}, [assignees, allDeals]);
+
+	// Exact card count per stage of the pipeline on screen (`total_count`), re-asked after writes.
+	const [stageCounts, setStageCounts] = useState<ReadonlyMap<string, number>>(new Map());
+	const stageIds = (pipeline?.stages ?? []).map((s) => s.id).join("|");
+	// biome-ignore lint/correctness/useExhaustiveDependencies: stageIds is the identity of the stage list; countsTick re-counts after writes
+	useEffect(() => {
+		if (!pipeline) return;
+		const ctrl = new AbortController();
+		const timer = setTimeout(() => {
+			Promise.all(
+				pipeline.stages.map((s) =>
+					countRecords("deals", [cond("stage_id", "eq", s.id)], ctrl.signal).then((r) => [s.id, r.value] as const),
+				),
+			)
+				.then((pairs) => setStageCounts(new Map(pairs)))
+				.catch(() => undefined);
+		}, 150);
+		return () => {
+			clearTimeout(timer);
+			ctrl.abort();
+		};
+	}, [stageIds, tenantId, countsTick]);
 	const moving = useMemo(() => new Set(pending.keys()), [pending]);
 	const inPipeline = columns.reduce((n, c) => n + c.count, 0);
 
@@ -435,30 +491,28 @@ export function PipelineView() {
 						hint={t("pipeline.empty.hint")}
 					/>
 				) : null}
-				{deals.sample ? (
+				{deals.hasMore ? (
 					<div
 						className="sy-pipe__sample"
 						role="status"
 						data-testid="pipeline-sample"
 					>
 						<span>
-							{t(deals.atCap ? "grid.sampleCap" : "grid.sample", {
+							{t("grid.sample", {
 								count: formatNumber(deals.items.length),
 							})}
 						</span>
-						{deals.moreError !== null ? (
+						{deals.server.moreFailed ? (
 							<span role="alert">{t("grid.loadMoreFailed")}</span>
 						) : null}
-						{deals.atCap ? null : (
-							<Button
-								size="sm"
-								loading={deals.loadingMore}
-								onClick={deals.loadMore}
-								data-testid="pipeline-load-more"
-							>
-								{t("grid.loadMore")}
-							</Button>
-						)}
+						<Button
+							size="sm"
+							loading={deals.server.loadingMore}
+							onClick={() => (deals.server.moreFailed ? deals.server.onRetryMore() : setWant((w) => w + BOARD_STEP))}
+							data-testid="pipeline-load-more"
+						>
+							{t("grid.loadMore")}
+						</Button>
 					</div>
 				) : null}
 				<div className="sy-pipe__board" data-testid="pipeline-board">
@@ -466,6 +520,7 @@ export function PipelineView() {
 						<Column
 							key={c.stage.id}
 							col={c}
+							count={stageCounts.get(c.stage.id) ?? c.count}
 							pipeline={pipeline}
 							contactNames={contactNames}
 							ownerNames={ownerNames}

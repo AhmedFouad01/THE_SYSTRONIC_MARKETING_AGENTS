@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useReducer, useRef } from "react";
 
-// Loads cursor pages (API has no server-side search/filter/sort: decision D3). Bounded: at most `maxPages`
+// Loads cursor pages for directories and timelines that need no query (the record grids use useServerList: P1A S4). Bounded: at most `maxPages`
 // pages are ever loaded; the first `autoPages` load automatically, the rest on demand ("load more").
 // While a next_cursor remains the list is a SAMPLE and the UI must say so.
 
@@ -76,6 +76,8 @@ export type CursorListOptions<T> = {
 	autoPages?: number;
 	/** Change to reset and reload (e.g. tenant). */
 	resetKey?: string;
+	/** false = do not load yet (e.g. a picker's directory until its dialog opens). Default true. */
+	enabled?: boolean;
 };
 
 export type CursorList<T> = {
@@ -128,17 +130,18 @@ export function useCursorList<T>(fetchPage: FetchPage<T>, opts: CursorListOption
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: resetKey intentionally re-runs the initial load
 	useEffect(() => {
+		if (opts.enabled === false) return;
 		run(null, false);
 		return () => {
 			seqRef.current += 1; // drop any in-flight response
 			abortRef.current?.abort();
 		};
-	}, [run, opts.resetKey]);
+	}, [run, opts.resetKey, opts.enabled]);
 
 	// Bounded auto-fetch: keep loading until `autoPages` pages are in or the data ends. A failed load-more stops the loop.
 	useEffect(() => {
-		if (canLoadMore(state, autoPages) && state.moreError === null && state.nextCursor !== null) run(state.nextCursor, true);
-	}, [state, autoPages, run]);
+		if (opts.enabled !== false && canLoadMore(state, autoPages) && state.moreError === null && state.nextCursor !== null) run(state.nextCursor, true);
+	}, [state, autoPages, run, opts.enabled]);
 
 	const loadMore = useCallback(() => {
 		const s = stateRef.current;

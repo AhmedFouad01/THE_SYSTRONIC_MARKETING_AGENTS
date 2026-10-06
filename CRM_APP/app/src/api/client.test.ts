@@ -76,7 +76,7 @@ describe("api client envelope and errors", () => {
 	it("parses { data, next_cursor, request_id }", async () => {
 		const f = mockFetch(200, { data: [{ id: 1 }], next_cursor: "n", request_id: "req-7" });
 		const r = await client(f).get<Array<{ id: number }>>("leads");
-		expect(r).toEqual({ data: [{ id: 1 }], nextCursor: "n", requestId: "req-7" });
+		expect(r).toEqual({ data: [{ id: 1 }], nextCursor: "n", requestId: "req-7", hasMore: null, total: null });
 	});
 
 	it("maps the error envelope into ApiError", async () => {
