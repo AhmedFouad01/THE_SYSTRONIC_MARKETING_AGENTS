@@ -110,7 +110,7 @@ const interactive = "input,button,a,select,label,textarea";
 
 export function DataGrid<T>(props: DataGridProps<T>) {
 	const { rows, columns, getRowId, selectable = false, views } = props;
-	const { t, tx, locale, formatNumber } = useI18n();
+	const { t, tx, locale, formatNumber, dir: uiDir } = useI18n();
 	const [state, dispatch] = useReducer(
 		gridReducer,
 		props.initialView ?? DEFAULT_VIEW,
@@ -292,12 +292,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				/>
 			);
 		return (
-			<section
-				className="sy-grid__scroll"
-				aria-label={props.label}
-				// biome-ignore lint/a11y/noNoninteractiveTabindex: scrollable region must be keyboard reachable
-				tabIndex={0}
-			>
+			// F2: not focusable itself (no wrapper ring after a mouse click); keyboard users reach the rows, which scroll into view.
+			<section className="sy-grid__scroll" aria-label={props.label}>
 				<table
 					className={`sy-grid__table${selectable ? " sy-grid__table--sel" : ""}`}
 					data-density={state.density}
@@ -586,6 +582,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						<Icon name="search" size={16} />
 						<input
 							type="search"
+							// UI_R4_SPEC I: the typed query takes its own direction; an empty box keeps the UI direction.
+							dir={state.query ? "auto" : uiDir}
 							className="sy-grid__search"
 							aria-label={t("grid.search")}
 							placeholder={t("grid.searchPlaceholder")}

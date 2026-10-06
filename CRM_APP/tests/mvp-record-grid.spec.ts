@@ -93,12 +93,13 @@ test("grid + record panel en 1440: active-only sort icon, numbered pager, row cl
 	await expect(detail.getByRole("button", { name: /^(Email|Call)$/ })).toHaveCount(0);
 	await expect(page.getByText(/not in MVP/i)).toHaveCount(0);
 
-	// Edit on demand; the footer appears only while the draft differs from the record.
+	// Edit on demand; UI_R4 D: the footer is always visible in edit mode, Save disabled until the draft is dirty.
 	await page.getByTestId("record-edit").click();
 	await expect(detail.getByLabel("Title")).toBeVisible();
-	await expect(page.getByTestId("record-footer")).toHaveCount(0);
-	await detail.getByLabel("Title").fill("Edited title");
 	await expect(page.getByTestId("record-footer")).toBeVisible();
+	await expect(page.getByTestId("lead-save")).toBeDisabled();
+	await detail.getByLabel("Title").fill("Edited title");
+	await expect(page.getByTestId("lead-save")).toBeEnabled();
 	// Footer = Save + Cancel only (no separate Discard); Cancel drops the draft and leaves edit mode.
 	await expect(page.getByTestId("record-discard")).toHaveCount(0);
 	await expect(page.getByTestId("record-footer").getByRole("button")).toHaveCount(2);

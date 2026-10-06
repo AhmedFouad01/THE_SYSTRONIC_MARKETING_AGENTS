@@ -25,6 +25,7 @@ import {
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
+import { useRecordCrumb } from "../../ui/shell/index.ts";
 import {
 	fetchAssignees,
 	fetchContact,
@@ -255,6 +256,8 @@ export function DealsView() {
 	);
 	const active =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
+	useRecordCrumb(active?.title, () => setActiveId(null));
 
 	// A deal selected via the URL (after refresh) may not be on a loaded page: fetch it once.
 	const fetchedDeal = useRef<string | null>(null);

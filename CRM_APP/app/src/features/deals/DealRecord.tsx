@@ -1,4 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { useIsAdmin } from "../../api/index.ts";
 import { href, navigate } from "../../router.ts";
 import {
 	Badge,
@@ -245,6 +246,7 @@ export function DealRecord({
 	onBack?: () => void;
 }) {
 	const { t, formatMoney } = useI18n();
+	const isAdmin = useIsAdmin();
 	const [tab, setTab] = useState<TabId>("overview");
 	const [editing, setEditing] = useState(false);
 	const [lost, setLost] = useState<Stage | null>(null);
@@ -418,6 +420,7 @@ export function DealRecord({
 										) : null}
 									</dl>
 								)}
+								{isAdmin ? (
 								<RecordDetails
 									rows={[
 										{
@@ -432,6 +435,7 @@ export function DealRecord({
 										},
 									]}
 								/>
+								) : null}
 							</Panel>
 						),
 					},

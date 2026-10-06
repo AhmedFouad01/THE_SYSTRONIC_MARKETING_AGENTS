@@ -1,10 +1,35 @@
 import {
+	type FormEvent,
 	type InputHTMLAttributes,
 	type ReactNode,
 	type TextareaHTMLAttributes,
 	useId,
+	useState,
 } from "react";
+import { useUiDir } from "../i18n/index.ts";
 import "./field.css";
+
+/** Value types whose content is always left-to-right (digits, @, +): the island stays LTR, aligned by CSS. */
+const LTR_TYPES: ReadonlySet<string> = new Set(["email", "tel", "url", "number", "date", "datetime-local", "time"]);
+
+/**
+ * UI_R4_SPEC I: free text takes its direction from its first strong character (`dir="auto"`); an EMPTY field keeps the
+ * UI direction (browsers resolve an empty dir=auto field as LTR, which would left-align the placeholder in Arabic).
+ * Explicit `dir` from the caller always wins.
+ */
+function useValueDir(
+	explicit: string | undefined,
+	type: string | undefined,
+	value: unknown,
+	defaultValue: unknown,
+): { dir: string; onInput: (e: FormEvent<{ value: string }>) => void } {
+	const uiDir = useUiDir();
+	const controlled = value !== undefined;
+	const [typed, setTyped] = useState(String(defaultValue ?? "").length > 0);
+	const hasText = controlled ? String(value).length > 0 : typed;
+	const resolved = explicit ?? (type && LTR_TYPES.has(type) ? "ltr" : hasText ? "auto" : uiDir);
+	return { dir: resolved, onInput: (e) => setTyped(e.currentTarget.value.length > 0) };
+}
 
 type Shared = {
 	label: string;
@@ -72,6 +97,7 @@ export function Input({
 	required,
 	...rest
 }: InputProps) {
+	const bidi = useValueDir(rest.dir, rest.type, rest.value, rest.defaultValue);
 	return (
 		<FieldShell
 			label={label}
@@ -84,6 +110,11 @@ export function Input({
 				<input
 					{...rest}
 					{...p}
+					dir={bidi.dir}
+					onInput={(e) => {
+						bidi.onInput(e);
+						rest.onInput?.(e);
+					}}
 					required={required}
 					className="sy-field__control"
 				/>
@@ -102,6 +133,7 @@ export function Textarea({
 	required,
 	...rest
 }: TextareaProps) {
+	const bidi = useValueDir(rest.dir, undefined, rest.value, rest.defaultValue);
 	return (
 		<FieldShell
 			label={label}
@@ -114,6 +146,11 @@ export function Textarea({
 				<textarea
 					{...rest}
 					{...p}
+					dir={bidi.dir}
+					onInput={(e) => {
+						bidi.onInput(e);
+						rest.onInput?.(e);
+					}}
 					required={required}
 					className="sy-field__control sy-field__control--area"
 				/>

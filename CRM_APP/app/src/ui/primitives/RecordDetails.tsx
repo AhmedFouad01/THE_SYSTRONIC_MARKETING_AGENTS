@@ -35,7 +35,7 @@ export function RecordDetails({
 	return (
 		<details className="sy-record-details" data-testid="record-details">
 			<summary className="sy-record-details__summary">
-				{t("common.details")}
+				{t("record.technical")}
 			</summary>
 			<dl className="sy-record-details__list">
 				{rows.map((r) => (

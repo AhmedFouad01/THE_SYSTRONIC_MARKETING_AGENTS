@@ -32,6 +32,7 @@ export const typeScale = {
 } as const;
 
 export const spacing = {
+	2: "2px",
 	4: "4px",
 	6: "6px",
 	8: "8px",
@@ -39,7 +40,22 @@ export const spacing = {
 	12: "12px",
 	14: "14px",
 	16: "16px",
+	20: "20px",
 	22: "22px",
+	24: "24px",
+	32: "32px",
+	40: "40px",
+} as const;
+
+// UI_R4_SPEC section A: page frame. Gutter/sidebar steps per breakpoint are emitted by css.ts (media queries).
+export const layout = {
+	pageMax: "1440px",
+	topbarH: "56px",
+	controlH: "36px",
+	controlHSm: "32px",
+	rowH: "44px",
+	gutter: { wide: "24px", mid: "16px", narrow: "12px" },
+	sidebarW: { wide: "228px", mid: "76px" },
 } as const;
 
 export const radius = {

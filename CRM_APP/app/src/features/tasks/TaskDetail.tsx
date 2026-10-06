@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
+import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
 import {
 	DatePicker,
 	Badge,
@@ -240,6 +240,7 @@ export function TaskDetail({
 	onClose: () => void;
 }) {
 	const { t, formatDateTime } = useI18n();
+	const isAdmin = useIsAdmin();
 	const [editing, setEditing] = useState(false);
 	const taskId = task?.id ?? null;
 	// biome-ignore lint/correctness/useExhaustiveDependencies: leaving edit mode when another task is opened
@@ -301,14 +302,18 @@ export function TaskDetail({
 					onDone={() => setEditing(false)}
 				/>
 			)}
-			details={[
+			details={
+				isAdmin
+					? [
 				{ label: t("tasks.detail.id"), value: task.id, copyable: true },
 				{
 					label: t("tasks.detail.version"),
 					value: task.version,
 					testId: "task-version",
 				},
-			]}
+					]
+					: undefined
+			}
 		/>
 	);
 }

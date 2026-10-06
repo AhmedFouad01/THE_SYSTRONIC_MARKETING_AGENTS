@@ -6,9 +6,11 @@ import {
 	useCallback,
 	useEffect,
 	useId,
+	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
+	type CSSProperties,
 	type KeyboardEvent,
 } from "react";
 import { Icon } from "../icons/index.ts";
@@ -77,8 +79,11 @@ export function parseOptions(children: ReactNode): SelectOption[] {
 }
 
 type Placement = {
-	left: number;
-	width: number;
+	/** Distance from the viewport edge on the trigger's inline-start side (left in LTR, right in RTL). */
+	start: number;
+	/** Trigger width: a minimum for the list (never the width), see select.css. */
+	triggerW: number;
+	rtl: boolean;
 	top?: number;
 	bottom?: number;
 	maxHeight: number;
@@ -93,9 +98,11 @@ function place(trigger: HTMLElement): Placement {
 	const above = r.top - EDGE;
 	const flip = below < 200 && above > below;
 	const maxHeight = Math.max(120, Math.min(280, (flip ? above : below) - GAP));
+	const rtl = getComputedStyle(trigger).direction === "rtl";
 	return {
-		left: r.left,
-		width: r.width,
+		start: rtl ? document.documentElement.clientWidth - r.right : r.left,
+		triggerW: r.width,
+		rtl,
 		maxHeight,
 		...(flip
 			? { bottom: window.innerHeight - r.top + GAP }
@@ -161,6 +168,18 @@ export function Select({
 			window.removeEventListener("resize", close);
 		};
 	}, [open, close]);
+
+	// F1: the list is content-sized (min = trigger / 160px), anchored at the trigger's inline-start; clamp into the viewport.
+	useLayoutEffect(() => {
+		const el = listRef.current;
+		if (!open || !pos || !el) return;
+		const vw = document.documentElement.clientWidth;
+		const r = el.getBoundingClientRect();
+		let shift = 0;
+		if (r.right > vw - EDGE) shift = vw - EDGE - r.right;
+		if (r.left + shift < EDGE) shift = EDGE - r.left;
+		if (shift !== 0) el.style.insetInlineStart = `${pos.start + (pos.rtl ? -shift : shift)}px`;
+	}, [open, pos]);
 
 	useEffect(() => {
 		if (!open || active < 0) return;
@@ -302,13 +321,15 @@ export function Select({
 							role="listbox"
 							aria-label={label}
 							className="sy-select__list"
-							style={{
-								left: pos.left,
-								width: pos.width,
-								top: pos.top,
-								bottom: pos.bottom,
-								maxHeight: pos.maxHeight,
-							}}
+							style={
+								{
+									insetInlineStart: pos.start,
+									"--sy-trigger-w": `${pos.triggerW}px`,
+									top: pos.top,
+									bottom: pos.bottom,
+									maxHeight: pos.maxHeight,
+								} as CSSProperties
+							}
 						>
 							{options.map((o, i) => (
 								// biome-ignore lint/a11y/useKeyWithClickEvents: DOM focus stays on the combobox trigger, which owns all keys (aria-activedescendant)
@@ -326,7 +347,9 @@ export function Select({
 									onMouseEnter={() => setActive(i)}
 									onClick={() => choose(i)}
 								>
-									<span className="sy-select__option-label">{o.label}</span>
+									<span className="sy-select__option-label">
+										<bdi>{o.label}</bdi>
+									</span>
 									{i === selectedIndex ? <Icon name="check" size={14} /> : null}
 								</div>
 							))}

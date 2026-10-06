@@ -26,6 +26,7 @@ import {
 	useToast,
 	type ViewState,
 } from "../../ui/index.ts";
+import { useRecordCrumb } from "../../ui/shell/index.ts";
 import { parseSelect } from "../deals/model.ts";
 import {
 	type Assignee,
@@ -174,6 +175,8 @@ export function TasksView() {
 	});
 	const active =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
+	useRecordCrumb(active?.title, () => setActiveId(null));
 
 	const views = useMemo(
 		() =>

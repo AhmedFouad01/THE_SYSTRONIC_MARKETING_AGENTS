@@ -24,6 +24,7 @@ export {
 	LOCALE_STORAGE_KEY,
 	parseLocale,
 	useI18n,
+	useUiDir,
 } from "./I18nProvider.tsx";
 export { roleLabel, personLabel, sourceEvidenceLabel, sourceLabel, type Translate } from "./labels.ts";
 export { LRI, Ltr, ltrIsolate, PDI } from "./Ltr.tsx";

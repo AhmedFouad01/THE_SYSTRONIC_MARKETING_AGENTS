@@ -20,7 +20,11 @@ export function Badge({
 	tone?: BadgeTone;
 	children: ReactNode;
 }) {
-	return <span className={`sy-badge sy-badge--${tone}`}>{children}</span>;
+	return (
+		<span className={`sy-badge sy-badge--${tone}`}>
+			<bdi>{children}</bdi>
+		</span>
+	);
 }
 
 export function StatusPill({

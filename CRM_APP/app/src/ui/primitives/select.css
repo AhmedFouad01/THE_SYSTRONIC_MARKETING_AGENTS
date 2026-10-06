@@ -57,7 +57,12 @@
 	color: var(--sy-icon-muted);
 }
 
+/* F1: content-sized list (never trigger width): min = trigger or 160px, max 360px, options never wrap per character. */
 .sy-select__list {
+	box-sizing: border-box;
+	min-inline-size: max(var(--sy-trigger-w, 0px), 160px);
+	inline-size: max-content;
+	max-inline-size: min(360px, calc(100vw - 16px));
 	position: fixed;
 	z-index: 1200;
 	margin: 0;
@@ -75,7 +80,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--sy-space-8);
-	min-height: 32px;
+	min-height: 36px;
 	padding-inline: var(--sy-space-10);
 	border-radius: var(--sy-radius-8);
 	color: var(--sy-text);
@@ -85,7 +90,16 @@
 
 .sy-select__option-label {
 	min-width: 0;
-	overflow-wrap: anywhere;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow-wrap: normal;
+}
+
+@media (max-width: 720px) {
+	.sy-select__option {
+		min-height: 44px;
+	}
 }
 
 .sy-select__option[data-active="true"] {

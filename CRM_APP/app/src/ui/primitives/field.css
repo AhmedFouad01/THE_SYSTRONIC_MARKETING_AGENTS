@@ -19,9 +19,16 @@
 	border-radius: var(--sy-radius-8);
 	background: var(--sy-surface);
 	color: var(--sy-text);
+	text-align: start;
+}
+
+/* LTR islands (email, phone, numbers) sit at the inline-end edge in RTL like other fields; digits/@/+ never reorder. */
+:root[dir="rtl"] .sy-field__control[dir="ltr"] {
+	text-align: end;
 }
 
 .sy-field__control--area {
+	unicode-bidi: plaintext;
 	height: auto;
 	min-height: 84px;
 	padding-block: var(--sy-space-8);

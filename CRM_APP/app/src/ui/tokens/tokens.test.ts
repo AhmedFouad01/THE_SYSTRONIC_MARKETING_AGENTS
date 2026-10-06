@@ -61,6 +61,17 @@ describe("tokens: css emission", () => {
 		expect(css).toContain("--sy-font-body:Cairo");
 	});
 
+	it("emits the page frame vars with responsive gutters (UI_R4_SPEC A)", () => {
+		expect(css).toContain("--sy-page-max:1440px;");
+		expect(css).toContain("--sy-topbar-h:56px;");
+		expect(css).toContain("--sy-control-h:36px;");
+		expect(css).toContain("--sy-gutter:24px;");
+		expect(css).toContain("--sy-sidebar-w:228px;");
+		expect(css).toContain("@media (max-width:1180px){:root{--sy-gutter:16px;--sy-sidebar-w:76px}}");
+		expect(css).toContain("@media (max-width:720px){:root{--sy-gutter:12px}}");
+		for (const k of ["2", "20", "24", "32", "40"]) expect(css).toContain(`--sy-space-${k}:`);
+	});
+
 	it("kebab/varName/cssVar naming", () => {
 		expect(kebab("surface2")).toBe("surface-2");
 		expect(kebab("primaryFg")).toBe("primary-fg");

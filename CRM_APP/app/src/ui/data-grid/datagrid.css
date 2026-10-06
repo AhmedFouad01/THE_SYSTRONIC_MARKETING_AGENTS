@@ -246,6 +246,11 @@
 	background: var(--sy-surface);
 }
 
+.sy-grid__scroll:focus,
+.sy-grid__table:focus {
+	outline: none;
+}
+
 .sy-grid__table {
 	inline-size: 100%;
 	min-inline-size: 560px;

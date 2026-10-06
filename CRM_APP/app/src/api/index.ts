@@ -26,3 +26,8 @@ export const sessionStore = createSessionStore({
 export function useSession(): SessionState {
 	return useSyncExternalStore(sessionStore.subscribe, sessionStore.getState);
 }
+
+/** Admin = may configure the tenant (UI_R4_SPEC B: ID/Version "Technical details" are shown to admins only). */
+export function useIsAdmin(): boolean {
+	return useSession().info?.configure === true;
+}

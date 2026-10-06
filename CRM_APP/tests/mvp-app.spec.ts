@@ -240,6 +240,9 @@ test("keyboard: skip-link first, activates main; nav links show a visible focus 
 	await expect(page.getByTestId("actor")).toBeVisible();
 	await page.keyboard.press("Tab");
 	await page.keyboard.press("Tab");
+	// UI_R4 E: the brand mark is a link (to the Dashboard) and sits between the skip-link and the nav.
+	await expect(page.getByTestId("brand-link")).toBeFocused();
+	await page.keyboard.press("Tab");
 	const first = page.getByTestId("nav-dashboard");
 	await expect(first).toBeFocused();
 	const ring = await first.evaluate((el) => {

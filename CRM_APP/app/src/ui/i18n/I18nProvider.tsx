@@ -118,3 +118,8 @@ export function useI18n(): I18nCtx {
 	if (!v) throw new Error("I18nProvider missing");
 	return v;
 }
+
+/** UI direction for primitives that can render outside a provider (unit tests, isolated previews): LTR fallback. */
+export function useUiDir(): "ltr" | "rtl" {
+	return useContext(Ctx)?.dir ?? "ltr";
+}

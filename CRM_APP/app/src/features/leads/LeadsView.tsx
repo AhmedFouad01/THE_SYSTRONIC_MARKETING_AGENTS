@@ -27,6 +27,7 @@ import {
 	useToast,
 	type ViewState,
 } from "../../ui/index.ts";
+import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import {
 	fetchAssignees,
 	fetchContactsPage,
@@ -152,6 +153,9 @@ export function LeadsView() {
 	});
 	const active =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
+	const crumbReturn = useCrumbReturn(setActiveId);
+	useRecordCrumb(active?.title, crumbReturn.back);
 
 	const views = useMemo(
 		() =>
@@ -476,8 +480,8 @@ export function LeadsView() {
 							onRetry={leads.reload}
 							requestId={isApiError(leads.error) ? leads.error.requestId : null}
 							activeId={activeId}
-							onActiveChange={setActiveId}
-							autoSelectFirst={wide}
+							onActiveChange={crumbReturn.onActiveChange}
+							autoSelectFirst={wide && !crumbReturn.suppressAutoOpen}
 							selectable
 							batchActions={(ids, clear) => (
 								<>

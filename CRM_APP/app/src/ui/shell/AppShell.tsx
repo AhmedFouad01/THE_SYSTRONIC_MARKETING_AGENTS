@@ -3,6 +3,7 @@ import { href, navigate, ROUTES, type RoutePath } from "../../router.ts";
 import { Bdi, type MessageKey, personLabel, useI18n } from "../i18n/index.ts";
 import { Icon, type IconName } from "../icons/index.ts";
 import { Dialog, MenuButton } from "../overlays/index.ts";
+import { type RecordCrumb, RecordCrumbContext } from "./RecordCrumb.tsx";
 import { useTheme } from "../theme/index.ts";
 import "./shell.css";
 
@@ -84,11 +85,18 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 	const { mode, toggleMode } = useTheme();
 	const mobile = useIsMobile();
 	const [moreOpen, setMoreOpen] = useState(false);
+	const [recordCrumb, setRecordCrumb] = useState<RecordCrumb | null>(null);
 	const connected = actor !== null;
 	const activeItem = NAV.find((n) => n.route === route || n.also === route);
 	const name = personLabel(actorName, t);
 	const { primary, overflow } = splitMobileNav();
 	const moreActive = activeItem !== undefined && overflow.includes(activeItem);
+
+	const goDashboard = (e: MouseEvent) => {
+		if (!plainClick(e)) return;
+		e.preventDefault();
+		navigate("/dashboard");
+	};
 
 	const link = (item: NavItem, className: string, afterNavigate?: () => void, shortLabel = false) => (
 		<a
@@ -124,13 +132,21 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 	);
 
 	return (
+		<RecordCrumbContext.Provider value={setRecordCrumb}>
 		<div className="sy-shell" data-connected={connected}>
 			<a className="sy-skip" href="#sy-main">
 				{t("shell.skipToContent")}
 			</a>
 			{mobile ? null : (
 				<aside className="sy-sidebar">
-					<div className="sy-brand">
+					{connected ? (
+						<a
+							className="sy-brand"
+							href={href("/dashboard")}
+							aria-label={t("shell.brandHome")}
+							data-testid="brand-link"
+							onClick={(e) => goDashboard(e)}
+						>
 						<div className="sy-brand__mark" aria-hidden="true">
 							TS
 						</div>
@@ -138,7 +154,18 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 							<div className="sy-brand__name">THE SYSTRONIC</div>
 							<div className="sy-brand__sub">{t("nav.workspace")}</div>
 						</div>
-					</div>
+						</a>
+					) : (
+						<div className="sy-brand">
+						<div className="sy-brand__mark" aria-hidden="true">
+							TS
+						</div>
+						<div className="sy-brand__copy">
+							<div className="sy-brand__name">THE SYSTRONIC</div>
+							<div className="sy-brand__sub">{t("nav.workspace")}</div>
+						</div>
+						</div>
+					)}
 					{connected ? (
 						<>
 							<nav className="sy-primary-nav" aria-label={t("nav.primary")}>
@@ -157,11 +184,46 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 					{connected ? (
 						<nav className="sy-crumbs" aria-label={t("shell.breadcrumb")}>
 							<ol className="sy-crumbs__list">
-								<li className="sy-crumbs__item">{t("nav.crmSection")}</li>
+								<li className="sy-crumbs__item">
+									<a
+										className="sy-crumbs__link"
+										href={href("/dashboard")}
+										data-testid="breadcrumb-crm"
+										onClick={(e) => goDashboard(e)}
+									>
+										{t("nav.crmSection")}
+									</a>
+								</li>
 								{activeItem ? (
+									<li
+										className={`sy-crumbs__item${recordCrumb ? "" : " sy-crumbs__item--current"}`}
+										aria-current={recordCrumb ? undefined : "page"}
+									>
+										<Icon name="chevronRight" size={14} className="sy-crumbs__icon" />
+										{recordCrumb ? (
+											<a
+												className="sy-crumbs__link"
+												href={href(activeItem.route)}
+												data-testid="breadcrumb-list"
+												onClick={(e) => {
+													if (!plainClick(e)) return;
+													e.preventDefault();
+													recordCrumb.back();
+												}}
+											>
+												{t(activeItem.label)}
+											</a>
+										) : (
+											<span data-testid="breadcrumb-current">{t(activeItem.label)}</span>
+										)}
+									</li>
+								) : null}
+								{activeItem && recordCrumb ? (
 									<li className="sy-crumbs__item sy-crumbs__item--current" aria-current="page">
 										<Icon name="chevronRight" size={14} className="sy-crumbs__icon" />
-										<span data-testid="breadcrumb-current">{t(activeItem.label)}</span>
+										<span className="sy-crumbs__record" data-testid="breadcrumb-current" title={recordCrumb.name}>
+											<bdi dir="auto">{recordCrumb.name}</bdi>
+										</span>
 									</li>
 								) : null}
 							</ol>
@@ -204,7 +266,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 					</div>
 				</header>
 				<main id="sy-main" className="sy-main" tabIndex={-1}>
-					{children}
+					<div className="sy-page">{children}</div>
 				</main>
 			</div>
 			{mobile && connected ? (
@@ -238,5 +300,6 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 				</>
 			) : null}
 		</div>
+		</RecordCrumbContext.Provider>
 	);
 }

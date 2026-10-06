@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
+import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
 import {
 	Badge,
 	Bdi,
@@ -202,6 +202,7 @@ export function LeadDetail({
 	onClose: () => void;
 }) {
 	const { t, formatDateTime } = useI18n();
+	const isAdmin = useIsAdmin();
 	if (lead === null)
 		return (
 			<RecordEmpty
@@ -272,14 +273,18 @@ export function LeadDetail({
 					onDone={done}
 				/>
 			)}
-			details={[
+			details={
+				isAdmin
+					? [
 				{ label: t("leads.detail.id"), value: lead.id, copyable: true },
 				{
 					label: t("leads.detail.version"),
 					value: lead.version,
 					testId: "lead-version",
 				},
-			]}
+					]
+					: undefined
+			}
 		/>
 	);
 }

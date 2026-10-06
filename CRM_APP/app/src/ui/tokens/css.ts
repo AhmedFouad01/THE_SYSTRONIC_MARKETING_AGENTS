@@ -3,6 +3,7 @@ import {
 	elevation,
 	focus,
 	fonts,
+	layout,
 	motion,
 	radius,
 	spacing,
@@ -58,6 +59,13 @@ function sharedDecls(): string {
 	out.push([varName("focus-offset"), focus.offset]);
 	out.push([varName("focus-offset-input"), focus.offsetInput]);
 	out.push([varName("motion-spinner"), motion.spinnerDuration]);
+	out.push([varName("page-max"), layout.pageMax]);
+	out.push([varName("topbar-h"), layout.topbarH]);
+	out.push([varName("control-h"), layout.controlH]);
+	out.push([varName("control-h-sm"), layout.controlHSm]);
+	out.push([varName("row-h"), layout.rowH]);
+	out.push([varName("gutter"), layout.gutter.wide]);
+	out.push([varName("sidebar-w"), layout.sidebarW.wide]);
 	return decls(out);
 }
 
@@ -84,6 +92,8 @@ export function buildTokensCss(): string {
 	return [
 		`:root{${sharedDecls()}${fontDecls("en")}}`,
 		`:root[lang="ar"]{${fontDecls("ar")}${arabicLineDecls()}}`,
+		`@media (max-width:1180px){:root{${varName("gutter")}:${layout.gutter.mid};${varName("sidebar-w")}:${layout.sidebarW.mid}}}`,
+		`@media (max-width:720px){:root{${varName("gutter")}:${layout.gutter.narrow}}}`,
 		`:root,:root[data-theme="light"]{color-scheme:light;${modeDecls(lightColors, elevation.light)}}`,
 		`:root[data-theme="dark"]{color-scheme:dark;${modeDecls(darkColors, elevation.dark)}}`,
 	].join("\n");

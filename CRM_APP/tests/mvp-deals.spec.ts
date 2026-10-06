@@ -629,7 +629,9 @@ test("deals en: edit on demand uses a formatted money input and a currency selec
 	await page.getByTestId("record-edit").click();
 	const amount = page.locator("input[name=amount]");
 	await expect(amount).toHaveValue("296,900");
-	await expect(page.getByTestId("record-footer")).toHaveCount(0);
+	// UI_R4 D: footer present from the start of edit mode, Save disabled until the draft is dirty.
+	await expect(page.getByTestId("record-footer")).toBeVisible();
+	await expect(page.getByTestId("deal-save")).toBeDisabled();
 
 	// Typing groups thousands and drops stray characters; currency is a select of codes in the data.
 	await amount.fill("1234567.5x");

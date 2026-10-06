@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../../router.ts";
 import { AddTaskButton } from "../tasks/index.ts";
 import { dealContextSearch } from "../deals/model.ts";
-import { isApiError, isForbidden, isVersionConflict } from "../../api/index.ts";
+import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
 import {
 	Badge,
 	Bdi,
@@ -548,6 +548,7 @@ export function ContactDetail({
 	onClose: () => void;
 }) {
 	const { t } = useI18n();
+	const isAdmin = useIsAdmin();
 	if (contact === null)
 		return (
 			<RecordEmpty
@@ -605,14 +606,18 @@ export function ContactDetail({
 					onDone={done}
 				/>
 			)}
-			details={[
+			details={
+				isAdmin
+					? [
 				{ label: t("contacts.detail.id"), value: contact.id, copyable: true },
 				{
 					label: t("contacts.detail.version"),
 					value: contact.version,
 					testId: "contact-version",
 				},
-			]}
+					]
+					: undefined
+			}
 		>
 			<ContactBody
 				key={contact.id}

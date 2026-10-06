@@ -1,6 +1,6 @@
 # ADR-002 — Object & Property System (HubSpot-style) for T.SAG CRM
 
-Status: PROPOSED, awaiting user approval. Date 2026-10-06. Author: DEV_AG (TSST BUILD). Design only: no code, schema, commit or deploy. Extends ADR-001 (stack unchanged: Node 24, PG 17, `pg`, no new infra).
+Status: ACCEPTED by user 2026-10-06 (see §9). Date 2026-10-06. Author: DEV_AG (TSST BUILD). Design only: no code, schema, commit or deploy. Extends ADR-001 (stack unchanged: Node 24, PG 17, `pg`, no new infra).
 Skills applied: TSST-DEV-SK-003 (decision record), TSST-DEV-SK-006 (schema/migration), TSST-DEV-SK-005 (API contract). All UNVALIDATED.
 Evidence base: migrations 001-007, `src/crm.ts`, `src/api.ts`, `src/db.ts`, M1/M2 contracts, `audits/2026-10-05/DEV_REVIEW.md` (F-01/F-02, P0 tranche), `HUBSPOT_COMPETITOR_INTEL.md` (rows 5/7/10/29), `app/src/ui/data-grid/*`. **No performance was measured** (no `psql` on PATH; the live DB was deliberately not touched). All volume figures are estimates and are gated by a spike in slice P1-S10.
 
@@ -172,3 +172,9 @@ Reversal/migration triggers: if spike S10 fails the pass bar and promotion to co
 
 ## 8. Approval request
 Approve Option D and P1a (server query tranche) as the first execution slice, with P1b following after the S10 performance gate. Nothing in this ADR has been implemented.
+
+## 9. Decision record (user, 2026-10-06)
+- ACCEPTED: Option D (hybrid), phased; P1a server query tranche first; §7 recommended answers 1–5.
+- Client stack (TECH_RESEARCH picks) ACCEPTED, adoption gated by a BUILD RTL spike: React Aria Components (behaviour/a11y/RTL) styled with **Tailwind CSS** (user preference for component styling, mapped to existing `--sy-*` tokens), TanStack Table + Virtual, dnd-kit (+ "Move to…" alternative), TanStack Query, React Hook Form + Zod, react-querybuilder (AST only), motion (lazy), in-house formula engine (P3).
+- Visual direction: user likes transparency / glass effect — CREATIVE_AG to spec within the approved token system (contrast, dark, RTL, reduced-transparency).
+- Skills: import React Aria, TanStack, Postgres best-practices skills via TSST-CTX-SK-023 + BUILD test; author RTL/bidi QA skill and property-grid skill.

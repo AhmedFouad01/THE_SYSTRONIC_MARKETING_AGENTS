@@ -1,10 +1,4 @@
-import {
-	createContext,
-	type ReactNode,
-	useContext,
-	useLayoutEffect,
-	useState,
-} from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 import { useI18n } from "../i18n/index.ts";
 import { Dialog } from "../overlays/Dialog.tsx";
 import { Button } from "./Button.tsx";
@@ -13,11 +7,8 @@ import { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
 import { useRecordSheet } from "./useMediaQuery.ts";
 import "./record-panel.css";
 
-/** Lets the sticky edit footer offer Cancel (leave edit mode) while the draft is dirty. */
-const RecordCancelContext = createContext<{
-	cancel: () => void;
-	setFooterShown: (v: boolean) => void;
-} | null>(null);
+/** Lets the sticky edit footer offer Cancel (leave edit mode). */
+const RecordCancelContext = createContext<{ cancel: () => void } | null>(null);
 
 export type RecordFact = { label: string; value: ReactNode; testId?: string };
 
@@ -92,14 +83,13 @@ function RecordBody(p: RecordPanelProps) {
 	const [innerEditing, setInnerEditing] = useState(false);
 	const editing = p.editing ?? innerEditing;
 	const canEdit = p.editable ?? Boolean(p.editor);
-	const [footerShown, setFooterShown] = useState(false);
 	const setEditing = (v: boolean) => {
 		setInnerEditing(v);
 		p.onEditingChange?.(v);
 	};
 	return (
 		<RecordCancelContext.Provider
-			value={{ cancel: () => setEditing(false), setFooterShown }}
+			value={{ cancel: () => setEditing(false) }}
 		>
 			{/* biome-ignore lint/a11y/noStaticElementInteractions: Escape leaves edit mode; popovers (Select) consume their own Escape first */}
 			<div
@@ -116,7 +106,7 @@ function RecordBody(p: RecordPanelProps) {
 				<div className="sy-record__head">
 					<div className="sy-record__titles">
 						<p className="sy-record__title" data-testid={p.titleTestId}>
-							{p.title}
+							<bdi dir="auto">{p.title}</bdi>
 						</p>
 						{p.subtitle ? (
 							<p className="sy-record__subtitle">{p.subtitle}</p>
@@ -160,19 +150,6 @@ function RecordBody(p: RecordPanelProps) {
 					</>
 				)}
 				{p.details ? <RecordDetails rows={p.details} /> : null}
-				{editing && canEdit && !footerShown ? (
-					// Cancel lives in the sticky footer (UX-R2-08); the dirty Save/Cancel footer carries its own Cancel and replaces this bar.
-					<div className="sy-record__footer sy-record__cancelbar">
-						<Button
-							size="sm"
-							variant="ghost"
-							onClick={() => setEditing(false)}
-							data-testid="record-edit-cancel"
-						>
-							{t("record.cancelEdit")}
-						</Button>
-					</div>
-				) : null}
 			</div>
 		</RecordCancelContext.Provider>
 	);
@@ -203,8 +180,9 @@ export function RecordEmpty({
 }
 
 /**
- * Sticky Save / Cancel footer of an edit form. Rendered only while the draft differs from the record. Cancel discards
- * the draft and leaves edit mode (the editor unmounts, so its draft state is dropped); there is no separate Discard.
+ * Sticky Save / Cancel footer of an edit form (UI_R4_SPEC D). Always rendered while editing: Save is disabled until
+ * the draft differs from the record, Cancel discards the draft and leaves edit mode (the editor unmounts, so its draft
+ * state is dropped); there is no separate Discard.
  */
 export function RecordEditFooter({
 	dirty,
@@ -224,14 +202,8 @@ export function RecordEditFooter({
 }) {
 	const { t } = useI18n();
 	const ctx = useContext(RecordCancelContext);
-	const setFooterShown = ctx?.setFooterShown;
-	useLayoutEffect(() => {
-		if (!dirty || !setFooterShown) return;
-		setFooterShown(true);
-		return () => setFooterShown(false);
-	}, [dirty, setFooterShown]);
-	if (!dirty) return null;
 	const cancel = onCancel ?? ctx?.cancel;
+	const noChanges = !dirty && !saving;
 	return (
 		<div className="sy-record__footer" data-testid="record-footer">
 			<Button
@@ -239,7 +211,9 @@ export function RecordEditFooter({
 				variant="primary"
 				size="sm"
 				loading={saving}
-				disabled={disabled ?? false}
+				disabled={(disabled ?? false) || !dirty}
+				aria-disabled={noChanges || undefined}
+				title={noChanges ? t("record.noChanges") : undefined}
 				data-testid={saveTestId}
 			>
 				{saveLabel}

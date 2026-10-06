@@ -36,7 +36,9 @@ function ToastView({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: num
 	return (
 		<div className="sy-toast" data-tone={toast.tone} data-testid="toast">
 			<Icon name={ICON[toast.tone]} size={18} />
-			<span className="sy-toast__msg">{toast.message}</span>
+			<span className="sy-toast__msg">
+				<bdi dir="auto">{toast.message}</bdi>
+			</span>
 			<button type="button" className="sy-toast__close" aria-label={t("common.close")} onClick={() => onDismiss(toast.id)}>
 				<Icon name="close" size={14} />
 			</button>

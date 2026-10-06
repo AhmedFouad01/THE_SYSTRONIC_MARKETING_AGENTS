@@ -25,6 +25,7 @@ import {
 	useToast,
 	type ViewState,
 } from "../../ui/index.ts";
+import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import { fetchAssignees, fetchContactsPage } from "./api.ts";
 import { ContactDetail } from "./ContactDetail.tsx";
 import { MergeDialogs } from "./MergeDialogs.tsx";
@@ -126,6 +127,9 @@ export function ContactsView() {
 	);
 	const active =
 		activeId === null ? null : (allRows.find((r) => r.id === activeId) ?? null);
+	// Breadcrumb `CRM > list > record`: the list crumb closes the record (filters/sort/view stay: the view is mounted).
+	const crumbReturn = useCrumbReturn(setActiveId);
+	useRecordCrumb(active?.display_name, crumbReturn.back);
 
 	const views = useMemo(
 		() =>
@@ -164,7 +168,7 @@ export function ContactsView() {
 				sortable: true,
 				hideable: false,
 				mobile: "title",
-				cell: (r) => <IdentityCell name={r.display_name} caption={r.ownerName} />,
+				cell: (r) => <IdentityCell name={r.display_name} />,
 			},
 			{
 				id: "owner",
@@ -263,8 +267,8 @@ export function ContactsView() {
 								isApiError(contacts.error) ? contacts.error.requestId : null
 							}
 							activeId={activeId}
-							onActiveChange={setActiveId}
-							autoSelectFirst={wide}
+							onActiveChange={crumbReturn.onActiveChange}
+							autoSelectFirst={wide && !crumbReturn.suppressAutoOpen}
 							{...(views ? { views } : {})}
 							initialView={INITIAL_VIEW}
 							sample={sample}

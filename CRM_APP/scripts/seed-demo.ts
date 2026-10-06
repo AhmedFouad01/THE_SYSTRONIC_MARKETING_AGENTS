@@ -21,6 +21,7 @@ const fixture = JSON.parse(
 const TENANT = fixture.ids.a;
 const PREFIX = "[DEMO]";
 
+// biome-ignore lint/suspicious/noExplicitAny: demo seed script consumes loosely-typed API JSON
 type Json = Record<string, any>;
 type Row = Json & { id: string; version: number };
 

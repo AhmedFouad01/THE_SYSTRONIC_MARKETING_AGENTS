@@ -1,6 +1,6 @@
 .sy-shell {
 	display: grid;
-	grid-template-columns: 228px minmax(0, 1fr);
+	grid-template-columns: var(--sy-sidebar-w) minmax(0, 1fr);
 	min-height: 100vh;
 	background: var(--sy-canvas);
 	color: var(--sy-text);
@@ -36,6 +36,12 @@
 	align-items: center;
 	gap: var(--sy-space-10);
 	padding: 2px var(--sy-space-8) var(--sy-space-14);
+}
+
+a.sy-brand {
+	color: inherit;
+	text-decoration: none;
+	border-radius: var(--sy-radius-10);
 }
 
 .sy-brand__mark {
@@ -179,8 +185,12 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--sy-space-10);
-	min-height: 62px;
-	padding: var(--sy-space-8) var(--sy-space-22);
+	position: sticky;
+	top: 0;
+	z-index: 45;
+	min-height: var(--sy-topbar-h);
+	height: var(--sy-topbar-h);
+	padding: 0 var(--sy-gutter);
 	background: var(--sy-surface);
 	border-bottom: 1px solid var(--sy-border);
 }
@@ -218,6 +228,26 @@
 	color: var(--sy-icon-muted);
 }
 
+.sy-crumbs__link {
+	color: var(--sy-text-2);
+	text-decoration: none;
+	border-radius: var(--sy-radius-6);
+}
+
+.sy-crumbs__link:hover {
+	color: var(--sy-text);
+	text-decoration: underline;
+}
+
+/* Record name: truncates at the END of its own resolved direction (bdi dir=auto), 24ch (UI_R4_SPEC E/I). */
+.sy-crumbs__record {
+	min-width: 0;
+	max-inline-size: 24ch;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .sy-crumbs__item--current {
 	color: var(--sy-text);
 	font-weight: 600;
@@ -233,7 +263,14 @@
 
 .sy-main {
 	min-width: 0;
-	padding: var(--sy-space-22);
+	padding: var(--sy-gutter);
+}
+
+/* Page frame (UI_R4_SPEC A): one max width, centred, gutters from tokens. */
+.sy-page {
+	min-width: 0;
+	max-inline-size: var(--sy-page-max);
+	margin-inline: auto;
 }
 
 .sy-main:focus {
@@ -245,10 +282,6 @@
 }
 
 @media (max-width: 1180px) {
-	.sy-shell {
-		grid-template-columns: 76px minmax(0, 1fr);
-	}
-
 	.sy-sidebar {
 		padding-inline: var(--sy-space-10);
 	}
@@ -290,22 +323,11 @@
 	}
 
 	.sy-main {
-		padding: var(--sy-space-14);
 		padding-block-end: 82px;
 	}
 
 	.sy-shell[data-connected="false"] .sy-main {
-		padding-block-end: var(--sy-space-14);
-	}
-
-	/* compact 56px header: breadcrumb at start, actor chip + menu at end */
-	.sy-topbar {
-		position: sticky;
-		top: 0;
-		z-index: 45;
-		min-height: 56px;
-		height: 56px;
-		padding: 0 var(--sy-space-14);
+		padding-block-end: var(--sy-gutter);
 	}
 
 	.sy-topbar__brand {
