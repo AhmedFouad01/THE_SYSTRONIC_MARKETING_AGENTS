@@ -51,6 +51,11 @@ try {
 			]);
 		}
 	}
+	// Repair privileges on databases that applied 008 before its PUBLIC EXECUTE fix.
+	// This is idempotent and runs under the same migration lock and transaction.
+	await db.query(
+		"REVOKE EXECUTE ON FUNCTION crm.context_tenant_if_allowed(),crm.object_scope(text,uuid),crm.owner_names(uuid[]) FROM PUBLIC",
+	);
 	const password = new URL(process.env.DATABASE_URL ?? "").password;
 	if (!/^[a-zA-Z0-9]{24,}$/.test(password))
 		throw new Error("Use generated alphanumeric runtime password");

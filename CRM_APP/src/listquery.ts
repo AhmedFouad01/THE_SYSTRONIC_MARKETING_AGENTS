@@ -316,9 +316,11 @@ export function planList(
 		params.push(v);
 		return `$${params.length}`;
 	};
+	if (scope.mode !== "tenant" && scope.mode !== "assigned")
+		throw new Fault(403, "FORBIDDEN");
 	const where: string[] = ["tenant_id=$1"];
-	if (scope.mode !== "tenant")
-		where.push(`owner_id=${bind(scope.actor)}::uuid`);
+	const actorParam = scope.mode === "assigned" ? bind(scope.actor) : null;
+	if (actorParam) where.push(`owner_id=${actorParam}::uuid`);
 	if (kind === "contact") where.push("merged_into_id IS NULL");
 	const due = query.get("due");
 	if (kind === "task" && due === "overdue")
@@ -402,7 +404,7 @@ export function planList(
 	// Compute only requested names; keep the legacy FROM/projection exactly unchanged.
 	const derived: string[] = [];
 	const assigned = (alias: string) =>
-		scope.mode === "tenant" ? "" : ` AND ${alias}.owner_id=$2::uuid`;
+		actorParam ? ` AND ${alias}.owner_id=${actorParam}::uuid` : "";
 	if (
 		keys.some((k) => k.name === "contact_name") ||
 		(q && (kind === "lead" || kind === "deal"))

@@ -24,6 +24,20 @@ async function fresh() {
 	f = await seed(admin);
 	ctx = { tenant: f.ids.a, token: f.tokens.manager };
 }
+test("P1A security: new definer functions exclude PUBLIC EXECUTE", async () => {
+	for (const signature of [
+		"crm.context_tenant_if_allowed()",
+		"crm.object_scope(text,uuid)",
+		"crm.owner_names(uuid[])",
+	]) {
+		const { rows: [acl] } = await admin.query(
+			`SELECT EXISTS(SELECT 1 FROM pg_proc p CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE p.oid=$1::regprocedure AND a.grantee=0 AND a.privilege_type='EXECUTE') public_execute, has_function_privilege('crm_runtime',$1::regprocedure,'EXECUTE') runtime_execute`,
+			[signature],
+		);
+		assert.equal(acl.public_execute, false, signature);
+		assert.equal(acl.runtime_execute, true, signature);
+	}
+});
 async function request(
 	path: string,
 	method = "GET",
