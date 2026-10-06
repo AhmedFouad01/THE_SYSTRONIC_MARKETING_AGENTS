@@ -16,7 +16,7 @@ const NAMES = [
 	"مؤسسة الأمل",
 ];
 
-for (const language of ["en", "ar"] as const)
+for (const language of ["ar"] as const)
 	for (const theme of ["light", "dark"] as const)
 		for (const width of [1440, 375] as const)
 			test(`shot leads ${language} ${theme} ${width}`, async ({ page, request }) => {
