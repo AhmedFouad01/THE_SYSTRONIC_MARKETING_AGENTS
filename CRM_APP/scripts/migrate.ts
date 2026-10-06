@@ -16,18 +16,35 @@ try {
 		[5, "005_protected_key_configuration.sql"],
 		[6, "006_journey_reporting.sql"],
 		[7, "007_collect_event_canonical_id.sql"],
+		[8, "008_list_query_timestamps_scope.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
 			"SELECT 1 FROM public.crm_migrations WHERE version=$1",
 			[version],
 		);
 		if (!rowCount) {
+			// Additive upgrades must not change object row counts (ADR-002 4.10 verification step).
+			const counts = async () => {
+				const out: Record<string, number> = {};
+				for (const t of ["contact", "lead", "deal", "task"])
+					out[t] = Number(
+						(await db.query(`SELECT count(*) n FROM crm.${t}`)).rows[0].n,
+					);
+				return out;
+			};
+			const before = version >= 8 ? await counts() : null;
 			await db.query(
 				await readFile(
 					new URL(`../migrations/${file}`, import.meta.url),
 					"utf8",
 				),
 			);
+			if (before) {
+				const after = await counts();
+				if (JSON.stringify(before) !== JSON.stringify(after))
+					throw new Error(`Row counts changed in migration ${version}`);
+				console.log(`Migration ${version} row counts unchanged:`, after);
+			}
 			await db.query("INSERT INTO public.crm_migrations(version) VALUES($1)", [
 				version,
 			]);
@@ -38,7 +55,7 @@ try {
 		throw new Error("Use generated alphanumeric runtime password");
 	await db.query(`ALTER ROLE crm_runtime PASSWORD '${password}'`);
 	await db.query("COMMIT");
-	console.log("Migrations 001–007 applied/verified");
+	console.log("Migrations 001–008 applied/verified");
 } catch (e) {
 	await db.query("ROLLBACK");
 	throw e;

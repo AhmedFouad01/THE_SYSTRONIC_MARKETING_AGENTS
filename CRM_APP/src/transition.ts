@@ -20,7 +20,7 @@ export async function transition(
 		const {
 			rows: [deal],
 		} = await db.query(
-			"SELECT * FROM crm.deal WHERE tenant_id=$1 AND id=$2 FOR UPDATE",
+			"SELECT id,pipeline_id,stage_id,version FROM crm.deal WHERE tenant_id=$1 AND id=$2 FOR UPDATE",
 			[ctx.tenant, dealId],
 		);
 		if (!deal) throw new Fault(404, "NOT_FOUND");

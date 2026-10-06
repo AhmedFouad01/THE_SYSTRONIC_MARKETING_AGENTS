@@ -28,6 +28,7 @@ try {
 				"005_protected_key_configuration.sql",
 				"006_journey_reporting.sql",
 				"007_collect_event_canonical_id.sql",
+				"008_list_query_timestamps_scope.sql",
 			])
 				await db.query(await readFile(`migrations/${file}`, "utf8"));
 			const fixture = await seed(db);
@@ -47,7 +48,7 @@ try {
 				JSON.stringify(
 					{
 						result: "PASS",
-						migrations: "001-007",
+						migrations: "001-008",
 						tables,
 						syntheticTenants: 2,
 						protectedConfiguration: "PASS",

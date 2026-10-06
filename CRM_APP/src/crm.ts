@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
 import { type Context, Fault, transaction } from "./db.js";
+import { type Kind, projection } from "./query.js";
 export type Body = Record<string, unknown>;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export function id(v: unknown): string {
@@ -61,7 +62,7 @@ export async function record(
 	const {
 		rows: [r],
 	} = await db.query(
-		`SELECT * FROM crm.${kind} WHERE tenant_id=$1 AND id=$2 ${lock ? "FOR UPDATE" : ""}`,
+		`SELECT ${projection(kind as Kind)} FROM crm.${kind} WHERE tenant_id=$1 AND id=$2 ${lock ? "FOR UPDATE" : ""}`,
 		[ctx.tenant, object],
 	);
 	if (!r) throw new Fault(404, "NOT_FOUND");
@@ -652,10 +653,21 @@ export async function crmRequest(
 					: kind === "contact"
 						? " AND merged_into_id IS NULL"
 						: "";
+			// Scope is resolved ONCE per request (crm.object_scope), not per row via crm.can_object (ADR-002 4.8 / P1a-S2).
+			const {
+				rows: [scope],
+			} = await db.query("SELECT mode,actor FROM crm.object_scope('crm.read',$1)", [
+				ctx.grant ?? null,
+			]);
+			if (!scope) throw new Fault(403, "FORBIDDEN");
 			const rows = (
 				await db.query(
-					`SELECT * FROM crm.${kind} WHERE tenant_id=$1 AND crm.can_object('crm.read',$2,id,$3) AND ($4::uuid IS NULL OR id>$4) ${filter} ORDER BY id LIMIT 51`,
-					[ctx.tenant, kind, ctx.grant ?? null, cursor],
+					`SELECT ${projection(kind as Kind)} FROM crm.${kind} WHERE tenant_id=$1 AND ($2::uuid IS NULL OR id>$2) ${
+						scope.mode === "tenant" ? "" : "AND owner_id=$3"
+					} ${filter} ORDER BY id LIMIT 51`,
+					scope.mode === "tenant"
+						? [ctx.tenant, cursor]
+						: [ctx.tenant, cursor, scope.actor],
 				)
 			).rows;
 			return {
