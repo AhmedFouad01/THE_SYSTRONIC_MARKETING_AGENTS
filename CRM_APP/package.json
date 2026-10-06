@@ -11,6 +11,7 @@
 		"worker": "tsx --env-file=.env src/worker.ts",
 		"migrate": "tsx --env-file=.env scripts/migrate.ts",
 		"seed": "tsx --env-file=.env scripts/seed.ts",
+		"seed:demo": "tsx scripts/seed-demo.ts",
 		"lint": "biome lint src scripts tests app vitest.config.ts",
 		"app:dev": "vite app",
 		"app:build": "vite build app",
