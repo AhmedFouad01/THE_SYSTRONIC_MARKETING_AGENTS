@@ -18,7 +18,7 @@ Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated fr
 | DEV_AG (BUILD manager) | `tsst-dev` | CODE (Sonnet, high effort) |
 | utility reader (R2) | `tsst-reader` / `Explore` | FAST (Haiku) |
 | TSST Lead | main conversation (current Opus) | DEEP — Skill Plan, architecture, conflict, acceptance |
-| IMAGE / VIDEO | not native — route to a runtime/tool that has them; never fake | — |
+| IMAGE / VIDEO | not native — route to a runtime/tool that has them (e.g. `gemini-desktop.md`, manual); never fake | — |
 
 - Dispatch guard: `.claude/settings.json` PreToolUse hook on `Agent` →
   `TSST/context/hooks/agent_dispatch_guard.py` (team agents need `TEAM:` + indexed `SKILLS:`;

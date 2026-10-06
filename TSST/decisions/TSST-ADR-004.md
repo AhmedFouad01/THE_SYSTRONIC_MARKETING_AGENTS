@@ -38,7 +38,9 @@ Antigravity (Gemini) from the system: too many permission prompts and no mobile 
 4. **Antigravity retired.** `gemini` runtime `status: retired`; adapter kept as history; Gemini-era
    `.agents/skills` wrappers archived to `TSST/migration/retired-agents-skills-2026-10-05/` and
    replaced by one `tsst-router` skill so Codex auto-loads TSST routing. Historical bus/evidence
-   files are untouched.
+   files are untouched. *Note 2026-10-06 (TSD-018):* Gemini Desktop is allowed as a manual
+   external tool run by Ahmed (`TSST/context/adapters/gemini-desktop.md`); this does not revive the
+   `gemini` runtime or add an agent.
 5. **Enforcement.** Claude: PreToolUse dispatch hook. Codex: bus `team`/`skills` checks + generated
    `developer_instructions`; no Codex hook is claimed until verified.
 

@@ -61,3 +61,8 @@
 ## 2026-10-06 — Local AI reader parked (user decision in chat 2026-10-06)
 
 - `PROJECT_DECISIONS.md` — added TSD-017 (qwen3:14b benchmark result; idea parked; gpt-oss:20b = next candidate if resumed).
+
+## 2026-10-06 — Gemini Desktop tool (user approval in chat 2026-10-06)
+
+- `PROJECT_DECISIONS.md` — added TSD-018.
+- Repo: new `TSST/context/adapters/gemini-desktop.md` (flow + handoff template); pointers in `AGENTS.md`, `adapters/claude.md`; note in ADR-004.
