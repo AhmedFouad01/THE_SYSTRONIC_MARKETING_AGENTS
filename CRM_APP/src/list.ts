@@ -18,8 +18,8 @@ export async function listRecords(
 	]);
 	if (!scope) throw new Fault(403, "FORBIDDEN");
 	const plan = planList(kind, query, ctx.tenant, scope);
-	// Bound the cost of a hostile filter/q on the new path (transaction-local; the legacy path is untouched).
-	if (!plan.legacy)
+	// Also bound opt-in count/expansion on a legacy list; plain legacy calls keep their prior behavior.
+	if (!plan.legacy || plan.includeTotal || plan.expand.length)
 		await db.query("SELECT set_config('statement_timeout','5000',true)");
 	const rows = (await db.query(plan.sql, plan.params)).rows;
 	const page = rows.slice(0, plan.limit);

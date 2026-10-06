@@ -31,6 +31,17 @@ describe("S4 list compiler (pure)", () => {
 		expect(p.sql).toContain("owner_id=$2::uuid");
 		expect(p.params[1]).toBe(U);
 	});
+	it("related lookups reuse the bound rep actor after q and filter parameters", () => {
+		const scope = { mode: "assigned", actor: U };
+		const lead = planList("lead", new URLSearchParams({ q: "needle", filter: j({ p: "status", op: "eq", v: "open" }), sort: "contact_name" }), T, scope);
+		expect(lead.sql).toContain("c.owner_id=$2::uuid");
+		expect(lead.params).toEqual([T, U, "%needle%", "open"]);
+		const task = planList("task", new URLSearchParams({ q: "needle", sort: "owner_name" }), T, scope);
+		expect(task.sql).toContain("d.owner_id=$2::uuid");
+		expect(task.sql).toContain("l.owner_id=$2::uuid");
+		expect(task.params[1]).toBe(U);
+		expect(() => planList("lead", new URLSearchParams({ q: "needle" }), T, { mode: "unexpected", actor: U })).toThrow(Fault);
+	});
 	it("fuzz: hostile text never reaches the SQL text (bound only); unknown identifiers are rejected", () => {
 		const nul = String.fromCharCode(0), bs = String.fromCharCode(92);
 		const evil = ["x';DROP TABLE t;--", 'x"y', `x${bs}y`, "x%_y", "x$1y", `x${nul}y`, "a".repeat(300), `x${"$"}{y}z`, "x`y", "x/*y*/", "x;SELECT 1"];

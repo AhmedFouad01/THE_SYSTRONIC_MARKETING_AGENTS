@@ -77,6 +77,8 @@ CREATE FUNCTION crm.owner_names(ids uuid[]) RETURNS TABLE(id uuid,name text) LAN
    AND EXISTS(SELECT 1 FROM crm.role_permission r WHERE r.role=m.role AND r.action='crm.write')
    AND (SELECT crm.can_object('crm.read','contact',NULL))
 $$;
+-- PostgreSQL's global default grants EXECUTE to PUBLIC; schema-level default REVOKE does not cancel it.
+REVOKE EXECUTE ON FUNCTION crm.context_tenant_if_allowed(),crm.object_scope(text,uuid),crm.owner_names(uuid[]) FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION crm.context_tenant_if_allowed(),crm.object_scope(text,uuid),crm.owner_names(uuid[]) TO crm_runtime;
 
 ALTER POLICY tenant_boundary ON crm.contact USING (tenant_id=(SELECT crm.context_tenant_if_allowed())) WITH CHECK (tenant_id=(SELECT crm.context_tenant_if_allowed()));
