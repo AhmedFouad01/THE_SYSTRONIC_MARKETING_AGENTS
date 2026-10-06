@@ -190,3 +190,18 @@ Approve Option D and P1a (server query tranche) as the first execution slice, wi
   3. P2 custom objects, server plus plain UI.
   4. UI polish pass: charts and widgets from the MagicPath design system (component 457127428263931904, sections 10–12; hand-drawn SVG, so no chart library), plus the deferred R4 items (AR "،" in dates, "New" action reachable while the preview is open, wiring the S5 sorts and sources into the grids).
   5. P3 formulas, rollups and configurable status, after real usage.
+
+### 9.2 Amendment (user, 2026-10-07): sellable-first roadmap (supersedes the §9.1 order)
+Goal: a strong product **ready to sell** as soon as possible. Cost discipline: defer costly tests that the first customers do not need.
+1. **P1b essentials only:**
+   - B1 registry (migration 010);
+   - B2 property settings page;
+   - B3 custom values on records (forms);
+   - B4 filter/sort by custom fields.
+   - Deferred: B5 server saved views, B6 the 1M perf gate and index management (until a large customer), and B7 docs beyond the contract.
+2. **Real sign-in and users.** Email + password, users and roles per company. This replaces the session-token entry screen.
+3. **Data import.** Contacts and leads from Excel/CSV, with mapping and duplicate handling.
+4. **Dashboard charts and widgets.** These need the server aggregate endpoints, and come from MagicPath sections 10–12.
+5. **Hosting.** The user's **AWS EC2 server**, with a domain, HTTPS and daily database backups. Deploying always needs the user's go.
+6. After the first customers: P2 custom objects, the rest of P1b, small R4 polish, and P3.
+Stack rules from §9.1 still hold: no full RAC/Tailwind migration, React Aria per widget with approval, glass deferred.
