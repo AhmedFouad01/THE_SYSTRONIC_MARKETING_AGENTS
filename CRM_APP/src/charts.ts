@@ -56,18 +56,23 @@ function series(query: URLSearchParams) {
 	if (raw !== null && !/^[0-9]{1,3}$/.test(raw)) throw invalid();
 	const periods = raw === null ? PERIODS_DEFAULT : Number(raw);
 	if (periods < 1 || periods > PERIODS_MAX) throw invalid();
-	return { bucket, periods };
+	const weekStart = query.get("week_start") ?? "monday";
+	if (weekStart !== "monday" && weekStart !== "saturday") throw invalid();
+	if (query.has("week_start") && bucket !== "week") throw invalid();
+	return { bucket, periods, weekStart };
 }
 /** SQL fragment: the rep's assigned scope (a NULL actor parameter means tenant scope). */
 const owned = (col: string, p: string) => `(${p}::uuid IS NULL OR ${col}=${p}::uuid)`;
 const actorOf = (s: Scope) => (s.mode === "assigned" ? s.actor : null);
 
-// Bucket series in the caller's timezone: one row per bucket start (a local calendar date; weeks start Monday, ISO 8601).
-// $2 = tz, $3 = 'week'|'month', $4 = periods. The half-open bounds are local midnights converted back to timestamptz, so
+// Bucket series in the caller's timezone: one row per local calendar bucket start.
+// $2 = tz, $3 = 'week'|'month', $4 = periods, $6 = validated 'monday'|'saturday'. The half-open bounds are local midnights converted back to timestamptz, so
 // range predicates on created_at / completed_at can use the (tenant_id, created_at) indexes.
 const BUCKETS = `
-WITH cur AS (SELECT date_trunc($3::text, now() AT TIME ZONE $2::text) c,
-  CASE WHEN $3::text='week' THEN interval '1 week' ELSE interval '1 month' END step),
+WITH shift_by AS (SELECT CASE WHEN $3::text='week' AND $6::text='saturday'
+  THEN interval '2 days' ELSE interval '0 days' END shift),
+cur AS (SELECT date_trunc($3::text, (now() AT TIME ZONE $2::text)+shift_by.shift)-shift_by.shift c,
+  CASE WHEN $3::text='week' THEN interval '1 week' ELSE interval '1 month' END step FROM shift_by),
 b AS (SELECT gs::date start_d, (gs+cur.step)::date end_d,
   (gs AT TIME ZONE $2::text) lo, ((gs+cur.step) AT TIME ZONE $2::text) hi
   FROM cur, generate_series(cur.c-cur.step*($4::int-1), cur.c, cur.step) gs)`;
@@ -194,8 +199,8 @@ async function dealsOutcomes(
 	query: URLSearchParams,
 	scope: Scope,
 ) {
-	params(query, ["bucket", "periods", "tz"]);
-	const { bucket, periods } = series(query);
+	params(query, ["bucket", "periods", "tz", "week_start"]);
+	const { bucket, periods, weekStart } = series(query);
 	const tz = await timezone(db, query);
 	// A deal is "closed" when it currently sits in a won/lost stage; the close moment is its latest transition INTO that stage
 	// (a deal that was reopened and closed again counts once, at the latest close), falling back to updated_at for deals that
@@ -212,7 +217,7 @@ SELECT b.start_d::text start,b.end_d::text "end",c.outcome,c.currency,count(c.ou
   coalesce(sum(c.amount_minor),0)::text amount_minor,now() as_of
 FROM b LEFT JOIN closed c ON c.closed_at>=b.lo AND c.closed_at<b.hi
 GROUP BY b.start_d,b.end_d,c.outcome,c.currency ORDER BY b.start_d,c.outcome,c.currency`,
-		[ctx.tenant, tz, bucket, periods, actorOf(scope)],
+		[ctx.tenant, tz, bucket, periods, actorOf(scope), weekStart],
 	);
 	type Side = { count: number; totals: Totals };
 	const buckets = new Map<string, { start: string; end: string; won: Side; lost: Side }>();
@@ -242,6 +247,7 @@ GROUP BY b.start_d,b.end_d,c.outcome,c.currency ORDER BY b.start_d,c.outcome,c.c
 			as_of: rows[0]?.as_of ?? null,
 			tz,
 			bucket,
+			...(bucket === "week" ? { week_start: weekStart } : {}),
 			periods,
 			from: list[0]?.start ?? null,
 			to: list[list.length - 1]?.end ?? null,
@@ -302,8 +308,8 @@ async function activity(
 	query: URLSearchParams,
 	scope: Scope,
 ) {
-	params(query, ["bucket", "periods", "tz"]);
-	const { bucket, periods } = series(query);
+	params(query, ["bucket", "periods", "tz", "week_start"]);
+	const { bucket, periods, weekStart } = series(query);
 	const tz = await timezone(db, query);
 	// Activity = records created per bucket plus tasks completed. Deliberately NOT crm.audit_log: that stream is gated by
 	// `audit.read` (managers only), while the dashboard is a `crm.read` surface that reps use for their own assigned records.
@@ -319,7 +325,7 @@ SELECT b.start_d::text start,b.end_d::text "end",
   ${cnt("task", "completed_at", " AND x.status='completed'")} tasks_completed,
   now() as_of
 FROM b ORDER BY b.start_d`,
-		[ctx.tenant, tz, bucket, periods, actorOf(scope)],
+		[ctx.tenant, tz, bucket, periods, actorOf(scope), weekStart],
 	);
 	return {
 		data: {
@@ -327,6 +333,7 @@ FROM b ORDER BY b.start_d`,
 			as_of: rows[0]?.as_of ?? null,
 			tz,
 			bucket,
+			...(bucket === "week" ? { week_start: weekStart } : {}),
 			periods,
 			from: rows[0]?.start ?? null,
 			to: rows[rows.length - 1]?.end ?? null,

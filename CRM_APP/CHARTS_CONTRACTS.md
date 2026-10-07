@@ -19,7 +19,8 @@ No migration, no SECURITY DEFINER function, no new dependency. Chart.js 4.5.1 + 
   - Dates: ISO. Bucket `start` and `end` are local calendar dates `YYYY-MM-DD` (`end` exclusive = next bucket start). `as_of` is a UTC ISO timestamp.
   - Stage, pipeline and source names are returned raw (user content: the UI must apply its bidi isolation).
 - Time series parameters (`deals-outcomes`, `activity`):
-  - `bucket`: `week` | `month`, default `month`. Weeks start Monday (ISO 8601); a locale week start (Saturday in Egypt) is a UI-round decision.
+  - `bucket`: `week` | `month`, default `month`.
+  - `week_start`: `monday` | `saturday`, default `monday` for backward compatibility. Only valid with `bucket=week`; invalid values, repeats, or use with month/default buckets return 422. Weekly responses echo the effective `week_start`; monthly payloads stay unchanged. The server aggregates the actual local Saturday-to-Saturday interval when requested, rather than changing labels on Monday aggregates.
   - `periods`: integer 1..104, default 12. The series is the last `periods` buckets ending with the current one. It is zero-filled and contiguous, so a line or bar chart needs no gap handling.
   - `tz`: IANA name (must exist in `pg_timezone_names`), default `UTC`. **There is no tenant timezone column in the data model today**, so the UI passes the tenant's/browser timezone (e.g. `Africa/Cairo`). Storing a tenant timezone is a later setting (would be a migration at that time).
 
@@ -46,7 +47,7 @@ Leads by source and status.
 ```
 - `sources`: top 20 by total (ties by name), the rest rolled into `other` (`null` when there are at most 20 sources). Sum of `sources[].total` plus `other.total` equals `total`.
 
-### 2.3 `GET /v1/dashboard/deals-outcomes?bucket=&periods=&tz=`
+### 2.3 `GET /v1/dashboard/deals-outcomes?bucket=&periods=&tz=&week_start=`
 Deals won and lost over time.
 ```json
 { "scope": "tenant", "as_of": "2026-10-07T10:00:00.000Z", "tz": "Africa/Cairo", "bucket": "month", "periods": 12,
@@ -69,10 +70,10 @@ Open tasks, partitioned by due time (completed tasks excluded).
 - Invariant: `overdue + sum(days[].count) + later = open_total`. `days` only counts tasks not yet due (`due_at >= now`), so today's already-overdue tasks are in `overdue`.
 - `overdue` and `next_24h` are exact (no 50+ cap) and use the same definitions as the dashboard W1/W2 (`due_at < now`, `now <= due_at < now + 24h`). `next_24h` overlaps `days` by design (it is the W2 KPI); it is not part of the partition.
 
-### 2.5 `GET /v1/dashboard/activity?bucket=&periods=&tz=`
+### 2.5 `GET /v1/dashboard/activity?bucket=&periods=&tz=&week_start=`
 Activity over time = records created per bucket plus tasks completed.
 ```json
-{ "scope": "tenant", "as_of": "...", "tz": "UTC", "bucket": "week", "periods": 12, "from": "...", "to": "...",
+{ "scope": "tenant", "as_of": "...", "tz": "UTC", "bucket": "week", "week_start": "monday", "periods": 12, "from": "...", "to": "...",
   "buckets": [ { "start": "2026-10-05", "end": "2026-10-12", "contacts_created": 4, "leads_created": 9,
                  "deals_created": 2, "tasks_created": 11, "tasks_completed": 8 } ] }
 ```
@@ -89,9 +90,9 @@ They are exactly the aggregates the existing dashboard cannot compute from page-
 |---|---|---|---|
 | C1 Pipeline by stage | 2.1 | horizontal bar (count), value as secondary label/tooltip | One bar per stage in `position` order; a currency selector when `totals` has several currencies (primary first), never summed. In RTL the value axis runs right-to-left (`indexAxis: "y"`, reversed x scale). Won/lost terminal stages shown with their own token colors. |
 | C2 Leads by source | 2.2 | stacked horizontal bar (open/qualified/closed per source) + doughnut or KPI strip for `by_status` | `other` as a final muted bar labelled "Other (N sources)". |
-| C3 Won vs lost over time | 2.3 | grouped column (won/lost counts) per bucket; optional line for won value in the chosen currency | Month default, week toggle. Pass the tenant `tz`. |
+| C3 Won vs lost over time | 2.3 | grouped column (won/lost counts) per bucket; optional line for won value in the chosen currency | Month default, week toggle. Pass the browser `tz` and `week_start=saturday` for weeks. |
 | C4 Tasks due | 2.4 | column chart over `days` (today..+6) with `overdue` and `later` as end columns, or KPI cards W1/W2 backed by `overdue`/`next_24h` | W1/W2 can now show exact counts instead of `50+`. |
-| C5 Activity | 2.5 | multi-line or stacked column per bucket (created records vs tasks completed) | Week buckets for a 12-week view. |
+| C5 Activity | 2.5 | multi-line or stacked column per bucket (created records vs tasks completed) | Pass `bucket=week&week_start=saturday` and the browser `tz` for a 12-week view. |
 
 UI requirements carried from NIGHT_RUN §5 item 4 (not done here):
 - Animations on, respecting `prefers-reduced-motion`.
@@ -107,5 +108,5 @@ UI requirements carried from NIGHT_RUN §5 item 4 (not done here):
 - **No index migration was added** (migration 019 is not used). The 1M-row measurement is deferred; if it shows these three scans over budget, the candidates are `deal(tenant_id, stage_id) INCLUDE (owner_id, amount_minor, currency)`, `lead(tenant_id, source, status) INCLUDE (owner_id)` and `stage_transition(tenant_id, deal_id, to_stage, occurred_at)`. The 5 s statement timeout bounds the risk until then.
 
 ## 6. User decisions (Ahmed, 2026-10-07)
-- **Week start = Saturday.** The UI round passes/derives Saturday-start week buckets (server currently ISO Monday — adjust `bucket=week` to accept a week-start or shift in SQL).
+- **Week start = Saturday.** The UI must request `bucket=week&week_start=saturday` on C3/C5. Never relabel or shift Monday aggregates in the UI: the server computes Saturday local-midnight boundaries in SQL, including DST changes. Omitted `week_start` retains Monday for existing clients.
 - **Timezone = browser.** The UI sends the browser's IANA zone as `tz`. No stored tenant timezone for now (no migration).
