@@ -1,6 +1,6 @@
 # CHARTS_CONTRACTS — dashboard aggregate endpoints (roadmap v2 item 4, server half)
 
-Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline, C2 leads and C3 outcomes widgets live in the dashboard; C4–C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
+Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline, C2 leads, C3 outcomes and C4 tasks widgets live in the dashboard; C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
 No migration or SECURITY DEFINER function. Approved exact dependencies Chart.js 4.5.1 + react-chartjs-2 5.3.1 are installed for the UI round. The shared typed row model drives canvas data, exact bigint money tooltips and accessible tables; unsafe numeric plots are omitted and explained alongside their exact table values.
 
 ## 1. Common rules
@@ -69,6 +69,7 @@ Open tasks, partitioned by due time (completed tasks excluded).
   "later": 12 }
 ```
 - Invariant: `overdue + sum(days[].count) + later = open_total`. `days` only counts tasks not yet due (`due_at >= now`), so today's already-overdue tasks are in `overdue`.
+- The live C4 shares one scoped aggregate snapshot with W1/W2. Top KPIs use these exact counts; follow-up lists remain independent. Its partition chart excludes `next_24h` and labels `open_total` as tasks with due dates (undated open tasks are excluded by the server).
 - `overdue` and `next_24h` are exact (no 50+ cap) and use the same definitions as the dashboard W1/W2 (`due_at < now`, `now <= due_at < now + 24h`). `next_24h` overlaps `days` by design (it is the W2 KPI); it is not part of the partition.
 
 ### 2.5 `GET /v1/dashboard/activity?bucket=&periods=&tz=&week_start=`
