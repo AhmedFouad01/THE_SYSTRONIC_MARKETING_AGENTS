@@ -1,6 +1,6 @@
 # vill-studio — status
 
-updated: 2026-10-06
+updated: 2026-10-07
 
 ## Current
 Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
@@ -18,6 +18,12 @@ Durable detail stays in the canonical memory source (`memory/source.md`).
 `C7-VILL-12` Brand Guidelines v1.0 (24 pp.): codex done; Lead review = round 2 required (max_rounds 2).
 Bus: `TSST/bus/tasks/C7-VILL-12.yaml` (status done, rounds 0 — round 2 not yet issued per bus/log.tsv).
 Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-12.md`.
+
+## 2026-10-07 — Creative live training (TSD-019)
+- Brand main colour = PETROL `#01304A` (not navy). Palette v2 approved: the logo 3 plus deep petrol, terracotta, stone and cream. Logo variants are in `assets/final/logo/` and recorded in `assets/ASSETS.yaml`.
+- Direction B, "light leads the eye". Benchmark: Lugar Nefertiti set-up. English, minimal text. Logo small. First post: a 4:5 carousel of the place and sea, then details.
+- `DIRECTION_SHEET_v0.1.md` (v0.2 content), post-01 layered carousel (PREVIS; relight requests in `RETOUCH_REQUESTS.md`, not yet run).
+- dresser-01 product track: `products/dresser-01/`. PAUSED by the user after studio round 2. The round-3 single-chat edit script is ready.
 
 ## Next action
 Lead decides/issues C7-VILL-12 round 2 (fix list in the review); native review of `VERBAL_IDENTITY_v1.0.md` is pending (user). See `projects/strategy-baseline/project.md#Next`.

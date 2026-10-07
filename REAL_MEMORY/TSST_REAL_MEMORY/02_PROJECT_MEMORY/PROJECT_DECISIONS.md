@@ -122,3 +122,32 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Decision: Gemini Desktop is available as an external tool, not a TSST agent or runtime (not Antigravity; no GEMINI_AG). Any agent may recommend it; the responsible agent prepares the handoff (objective, context, files, references, prompt, constraints, acceptance); the Lead packages it; Ahmed runs it manually and returns the output; the agent reviews and the Lead accepts. Output is input, not a deliverable; creative passes FINAL_ASSET_GATE; no secrets ever; sensitive client data only with explicit user approval + privacy check per request. No roster, routing, readiness or governance change.
 - Amended 2026-10-06 (user): data rule changed from "Keep Activity off" to approval + privacy check (Activity off breaks Connected Apps); ADR-004 note moved to Appendix A.
 - Source: `TSST/context/adapters/gemini-desktop.md`; `TSST/decisions/TSST-ADR-004.md` Appendix A.
+
+## TSD-019 — CREATIVE_AG live training on VILL; production rules installed
+
+- Date: `2026-10-07`
+- Status: `APPROVED` (user direction and approvals in chat 2026-10-07)
+- Decision: The main goal is to develop CREATIVE_AG's execution, using VILL Studio as the live training ground. Every creative round delivers the work AND writes its lesson back into the team. Rules installed (all `UNVALIDATED`):
+  - `TSST/CREATIVE/INTAKE_GATE.md`: stage 0, 12 blocking fields and 6 questions, no render before they are answered.
+  - FINAL_ASSET_GATE: open or measure every asset before writing rules, upscale at most 1.25x, scored self-review.
+  - SK-006 v0.2: colours are named by measured hue.
+  - SK-008 v0.2: references become a style sheet.
+  - SK-010 v0.3: no feature is "invented" without all views plus owner confirmation.
+  - SK-011 v0.2: design types and logo on photos.
+  - SK-014 v0.7: manual image bridge and product-fidelity protocol. The card captures the signature form first and the owner confirms it. Edit the real photo rather than generating from references. One continuous chat per product. Staged rounds, at most 3 per stage. Owner acceptance may override the numeric gate.
+  - SK-019 v0.2: layered build.
+  - Tools: `contrast.py`, `phone_preview.py`, `geometry_compare.py`.
+  - Examples: EX-001 and EX-002.
+- Image production stays a manual bridge via Ahmed (ChatGPT image edit, Magnific premium). Blender (installed) is deferred to a later phase. No runtime has a verified IMAGE capability.
+- VILL decisions the same day:
+  - The brand main colour is PETROL `#01304A`, not navy. The palette is the 3 logo colours plus deep petrol, terracotta, stone and cream; sage and brass are removed.
+  - Direction B, "light leads the eye", with Lugar Nefertiti set-up quality as the floor.
+  - The dresser-01 product track was paused by the user after studio round 2.
+- Source: `TSST/CREATIVE/TRAINING_STATUS.md`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/DIRECTION_SHEET_v0.1.md`, `products/dresser-01/`; commit `166b084`.
+
+## TSD-020 — Request role for every external tool or runtime
+
+- Date: `2026-10-07`
+- Status: `APPROVED` (user direction in chat 2026-10-07)
+- Decision: The request decides the role, not the tool. Every request to a tool that can read or write files starts with ROLE A (team runtime: boot, write scope, Skills used) or ROLE B (external tool: not a TSST agent, writes only its output file, edits nothing else). This applies to Codex, ChatGPT, Gemini and any future tool. The trigger was GEM-CR-001, where Gemini labelled itself "Lead/SPARK" and edited TOOLCHAIN.md directly; the Lead reviewed it and accepted it partially.
+- Source: `TSST/context/request-role.md`; pointers in the `adapters/` for claude, codex, chatgpt and gemini-desktop.

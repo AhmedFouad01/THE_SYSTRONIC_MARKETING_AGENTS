@@ -2,7 +2,7 @@
 
 Project Key: `TSST`  
 Project Name: `The Systronic Smart Agents`  
-Last Updated: `2026-10-06`  
+Last Updated: `2026-10-07`  
 State: `BASELINE_FROZEN`  
 Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 
@@ -15,6 +15,8 @@ Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 `TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval).
 
 `C7` live-project pilot on VILL Studio — phase 1 (C7-VILL-01..06) `DELIVERED` 2026-10-05; phase 2c `C7-VILL-11` (final identity from approved logo) `DONE` (codex, Lead-accepted 2026-10-05; user approved colour direction, template execution not approved); `C7-VILL-12` Brand Guidelines v1.0 (24 pp.) codex done 2026-10-05, Lead review: system accepted as base, book not client-ready, round 2 needed (not yet issued). TSST Core v0.2 (ADR-003/004) merged to master `eac4446` (PR #6) 2026-10-05.
+
+2026-10-07: C7 is now also the live training ground for CREATIVE_AG (TSD-019). Rules were installed, the VILL palette was corrected to petrol `#01304A`, direction B was chosen, the post-01 layered carousel was built (PREVIS), and the dresser-01 product track was paused by the user after studio round 2.
 
 ## Current Objective
 
@@ -38,7 +40,8 @@ All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPER
 ## Pending Tasks
 
 1. C7 phase 2c: Lead issues `C7-VILL-12` round 2 (fix list in `LEAD_REVIEW_C7-VILL-12.md`) → Lead re-review → user acceptance; native review of `VERBAL_IDENTITY_v1.0.md` (user).
-2. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
+2. First real job under the new Creative rules (TSD-019) validates them end-to-end. Before any paid launch, re-verify the platform specs in `TSST/CREATIVE/gemini/GEM-CR-001_out.md`.
+3. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
 
 ## Blockers
 

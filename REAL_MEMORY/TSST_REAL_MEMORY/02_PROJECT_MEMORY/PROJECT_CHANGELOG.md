@@ -67,3 +67,9 @@
 - `PROJECT_DECISIONS.md` — added TSD-018.
 - Repo: new `TSST/context/adapters/gemini-desktop.md` (flow + handoff template); pointers in `AGENTS.md`, `adapters/claude.md`; note in ADR-004.
 - Amended same day: data rule → explicit approval + privacy check (no Keep Activity requirement); ADR-004 note → Appendix A clarification.
+
+## 2026-10-07 — Creative live training + request-role rule (user direction in chat 2026-10-07)
+
+- `PROJECT_DECISIONS.md`: added TSD-019 (CREATIVE_AG training on VILL; rules, skills, tools) and TSD-020 (request role A/B).
+- Repo commit `166b084`: INTAKE_GATE, FINAL_ASSET_GATE, SK-006/008/010/011/014/019 bumps, `TSST/CREATIVE/tools/`, examples, GEM-CR-001 (platform specs = working defaults), `TSST/context/request-role.md`, VILL pilot direction sheet and dresser-01 evidence.
+- Readiness unchanged (`NOT_READY`).
