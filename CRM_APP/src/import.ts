@@ -705,6 +705,40 @@ async function preview(db: Db, ctx: Context, b: Body) {
 	};
 }
 
+/** Upload inspection is independent of CRM matching: authorize before decoding or parsing user-owned bytes. */
+export async function inspectImport(b: Body, deps: {
+	authorize: (object: ImportObject) => Promise<void>;
+	parse?: typeof parseFile;
+}) {
+	only(b, ["object", "format", "filename", "file_base64", "options"]);
+	if (b.object !== "contact" && b.object !== "lead") bad("object");
+	await deps.authorize(b.object);
+	const options = b.options ?? {};
+	if (!options || typeof options !== "object" || Array.isArray(options)) bad("options", "INVALID_TYPE");
+	only(options as Body, ["sheet"]);
+	const inp = readInput({ ...b, mapping: { columns: [] }, options }, false);
+	let grid: Grid;
+	try {
+		grid = await (deps.parse ?? parseFile)(inp.format, inp.file, inp.options.sheet ?? undefined);
+	} catch (failure) {
+		if (failure instanceof FileError) throw fileFault(failure);
+		throw failure;
+	}
+	return { data: {
+		object: inp.object,
+		format: inp.format,
+		file: { name: inp.filename, sha256: inp.fileSha, bytes: inp.file.length },
+		limits: { ...IMPORT_LIMITS },
+		headers: grid.headers,
+		total_rows: grid.rows.length,
+		sheet: inp.format === "xlsx" ? inp.options.sheet ?? 1 : null,
+		samples: grid.rows.slice(0, 3).map((cells, index) => ({
+			row: grid.rowNumbers[index],
+			cells: cells.map((cell) => cell instanceof Date ? cell.toISOString() : cell),
+		})),
+	} };
+}
+
 // ---- commit --------------------------------------------------------------------------------------------------------------------
 async function bulk(
 	db: Db,
@@ -1183,6 +1217,7 @@ async function fields(db: Db, ctx: Context, objectParam: string | null) {
 		data: {
 			object,
 			limits: { ...IMPORT_LIMITS },
+			sensitive_mapping: both,
 			formats: ["csv", "xlsx"],
 			duplicate_modes: ["skip", "update", "create"],
 			error_policies: ["skip", "abort"],
@@ -1261,12 +1296,14 @@ export async function importRequest(
 	const isId = (s?: string) =>
 		!!s &&
 		/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
-	let op: "fields" | "preview" | "commit" | "list" | "job" | "rows" | null =
+	let op: "fields" | "inspect" | "preview" | "commit" | "list" | "job" | "rows" | null =
 		null;
 	if (segs.length === 0)
 		op = method === "POST" ? "commit" : method === "GET" ? "list" : null;
 	else if (segs.length === 1 && a === "fields" && method === "GET")
 		op = "fields";
+	else if (segs.length === 1 && a === "inspect" && method === "POST")
+		op = "inspect";
 	else if (segs.length === 1 && a === "preview" && method === "POST")
 		op = "preview";
 	else if (segs.length === 1 && isId(a) && method === "GET") op = "job";
@@ -1275,6 +1312,7 @@ export async function importRequest(
 	if (!op) throw new Fault(404, "NOT_FOUND");
 	return transaction(ctx, async (db) => {
 		if (op === "fields") return fields(db, ctx, query.get("object"));
+		if (op === "inspect") return inspectImport(b, { authorize: (object) => gate(db, ctx, object) });
 		if (op === "preview") return preview(db, ctx, b);
 		if (op === "commit") return commit(db, ctx, b, request);
 		if (op === "list") return list(db, ctx, query);

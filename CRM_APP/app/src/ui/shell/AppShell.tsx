@@ -1,48 +1,17 @@
-import { type MouseEvent, type ReactNode, useState, useSyncExternalStore } from "react";
-import { href, navigate, ROUTES, type RoutePath } from "../../router.ts";
-import { Bdi, type MessageKey, personLabel, useI18n } from "../i18n/index.ts";
-import { Icon, type IconName } from "../icons/index.ts";
+import { type MouseEvent, type ReactNode, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { href, navigate, type RoutePath } from "../../router.ts";
+import { Bdi, personLabel, useI18n } from "../i18n/index.ts";
+import { Icon } from "../icons/index.ts";
 import { Dialog, MenuButton } from "../overlays/index.ts";
 import { type RecordCrumb, RecordCrumbContext } from "./RecordCrumb.tsx";
 import { useTheme } from "../theme/index.ts";
+import { Badge } from "../primitives/Badge.tsx";
+import { filterNavigation, linkedLeaves, NAV_TREE, navigationTrail, type NavLink, type NavNode, splitMobileNav } from "./navigation.ts";
+export { ALL_ROUTES_ACCOUNTED_FOR, ALL_ROUTES_HAVE_NAV, MOBILE_PRIMARY_KEYS, NAV, NAV_ROUTES, splitMobileNav } from "./navigation.ts";
+import { disclosureStorageKey, expandActiveBranch, restoreDisclosures, type Disclosures } from "./disclosures.ts";
+import { readPref, writePref } from "../storage.ts";
+import { WorkspaceControl, type WorkspaceControls, WorkspaceSwitchDialog } from "./WorkspaceSwitcher.tsx";
 import "./shell.css";
-
-type NavItem = {
-	key: string;
-	label: MessageKey;
-	/** Short label for the 5-tab mobile bottom bar (UX-R3-05); falls back to `label`. */
-	tab?: MessageKey;
-	icon: IconName;
-	route: RoutePath;
-	also?: RoutePath;
-	/** `settings` items sit under their own sidebar heading and can be hidden per user (`hiddenNavKeys`). */
-	section?: "settings";
-};
-
-// Only screens that exist. Email/Call/Import have no MVP backend, so they are not shown at all (no fake affordances).
-export const NAV: readonly NavItem[] = [
-	{ key: "dashboard", label: "nav.dashboard", icon: "home", route: "/dashboard", also: "/" },
-	{ key: "leads", label: "nav.leads", tab: "nav.tab.leads", icon: "leads", route: "/leads" },
-	{ key: "contacts", label: "nav.contacts", tab: "nav.tab.contacts", icon: "contacts", route: "/contacts" },
-	{ key: "deals", label: "nav.deals", tab: "nav.tab.deals", icon: "deals", route: "/deals" },
-	{ key: "pipeline", label: "nav.pipeline", icon: "route", route: "/pipeline" },
-	{ key: "tasks", label: "nav.tasks", tab: "nav.tab.tasks", icon: "tasks", route: "/tasks" },
-	{ key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting", also: "/reporting-v2" },
-	{ key: "properties", label: "nav.properties", icon: "settings", route: "/settings/properties", section: "settings" },
-];
-
-// Every nav route must exist in the router (guards drift).
-export const NAV_ROUTES: readonly RoutePath[] = NAV.flatMap((n) => (n.also ? [n.route, n.also] : [n.route]));
-export const ALL_ROUTES_HAVE_NAV = ROUTES.every((r) => r === "/" || NAV_ROUTES.includes(r));
-
-/** Mobile bottom bar: 4 screens + More (UX-24, max 5 tabs). The rest live in the More sheet. */
-export const MOBILE_PRIMARY_KEYS: readonly string[] = ["leads", "contacts", "deals", "tasks"];
-export function splitMobileNav(items: readonly NavItem[] = NAV): { primary: NavItem[]; overflow: NavItem[] } {
-	return {
-		primary: MOBILE_PRIMARY_KEYS.flatMap((k) => items.filter((n) => n.key === k)),
-		overflow: items.filter((n) => !MOBILE_PRIMARY_KEYS.includes(n.key)),
-	};
-}
 
 /** Up to two initials from a display name (first letter of the first and last word). */
 export function initials(name: string): string {
@@ -67,7 +36,7 @@ function useIsMobile(): boolean {
 	);
 }
 
-export type AppShellProps = {
+export type AppShellProps = WorkspaceControls & {
 	route: RoutePath | null;
 	/** null = not connected: no navigation, no actor. */
 	actor: string | null;
@@ -85,18 +54,78 @@ function plainClick(e: MouseEvent): boolean {
 	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 }
 
-export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hiddenNavKeys = [], children }: AppShellProps) {
+type NavigationTreeProps = {
+	nodes: readonly NavNode[];
+	route: RoutePath | null;
+	link: (item: NavLink, className: string) => ReactNode;
+	disclosures: Disclosures;
+	onToggle: (key: string) => void;
+};
+
+function NavigationTree({ nodes, route, link, disclosures, onToggle }: NavigationTreeProps) {
+	return <>{nodes.map((node) => <NavigationBranch key={node.key} node={node} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />)}</>;
+}
+
+function NavigationBranch({ node, route, link, disclosures, onToggle }: Omit<NavigationTreeProps, "nodes"> & { node: NavNode }) {
+	const { t } = useI18n();
+	const expanded = disclosures[node.key] === true;
+	if (node.kind === "upcoming") return (
+		<div className="sy-nav sy-nav--upcoming" data-testid={`nav-${node.key}`}>
+			<Icon name={node.icon} size={17} />
+			<span className="sy-nav__label">{t(node.label)}</span>
+			<Badge>{t("nav.comingSoon")}</Badge>
+		</div>
+	);
+	const children = node.children ?? [];
+	if (!children.length && node.kind === "link") return link(node, "sy-nav sy-nav--route");
+	const childId = `nav-children-${node.key}`;
+	const disclosure = (
+		<button type="button" className={`sy-nav sy-nav--disclosure${node.kind === "link" ? " sy-nav--toggle" : ""}`}
+			aria-expanded={expanded} aria-controls={childId}
+			aria-label={node.kind === "link" ? t("nav.pipeline") : undefined}
+			data-testid={`nav-disclosure-${node.key}`} onClick={() => onToggle(node.key)}>
+			{node.kind === "group" ? <><Icon name={node.icon} size={17} /><span className="sy-nav__label">{t(node.label)}</span></> : null}
+			<Icon name={expanded ? "chevronDown" : "chevronRight"} size={14} />
+		</button>
+	);
+	return (
+		<div className={`sy-nav-branch sy-nav-branch--${node.kind}`}>
+			<div className="sy-nav-branch__row">{node.kind === "link" ? link(node, "sy-nav sy-nav--route") : null}{disclosure}</div>
+			<div id={childId} className="sy-nav-branch__children" hidden={!expanded}>
+				<NavigationTree nodes={children} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />
+			</div>
+		</div>
+	);
+}
+
+export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hiddenNavKeys = [], workspace, knownWorkspaceCount = 0, loadWorkspaces, switchWorkspace, children }: AppShellProps) {
 	const { t, toggleLocale, dir } = useI18n();
 	const { mode, toggleMode } = useTheme();
 	const mobile = useIsMobile();
 	const [moreOpen, setMoreOpen] = useState(false);
+	const moreTrigger = useRef<HTMLButtonElement>(null);
+	const workspaceTrigger = useRef<HTMLElement>(null);
+	const [workspaceOpen, setWorkspaceOpen] = useState(false);
 	const [recordCrumb, setRecordCrumb] = useState<RecordCrumb | null>(null);
 	const connected = actor !== null;
-	const activeItem = NAV.find((n) => n.route === route || n.also === route);
+	const visibleTree = filterNavigation(NAV_TREE, hiddenNavKeys);
+	const visibleNav = linkedLeaves(visibleTree);
+	const activeItem = visibleNav.find((n) => n.route === route || n.also === route);
+	const trail = navigationTrail(visibleTree, route);
 	const name = personLabel(actorName, t);
-	const visibleNav = NAV.filter((n) => !hiddenNavKeys.includes(n.key));
-	const crmNav = visibleNav.filter((n) => n.section !== "settings");
-	const settingsNav = visibleNav.filter((n) => n.section === "settings");
+	const disclosureKey = actor ? disclosureStorageKey(actor, workspace?.tenantId ?? "", workspace?.grantId) : null;
+	const [disclosures, setDisclosures] = useState(() => expandActiveBranch(restoreDisclosures(disclosureKey ? readPref(disclosureKey) : null, NAV_TREE, null), visibleTree, route));
+	useEffect(() => {
+		setDisclosures((current) => expandActiveBranch(current, filterNavigation(NAV_TREE, hiddenNavKeys), route));
+	}, [route, hiddenNavKeys]);
+	useEffect(() => {
+		if (disclosureKey) writePref(disclosureKey, JSON.stringify(disclosures));
+	}, [disclosureKey, disclosures]);
+	const onToggle = (key: string) => setDisclosures((current) => ({ ...current, [key]: !current[key] }));
+	const workspaceControl = workspace ? <WorkspaceControl workspace={workspace} canSwitch={knownWorkspaceCount > 1 && Boolean(loadWorkspaces && switchWorkspace)} onOpen={() => {
+		workspaceTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		setWorkspaceOpen(true);
+	}} /> : null;
 	const { primary, overflow } = splitMobileNav(visibleNav);
 	const moreActive = activeItem !== undefined && overflow.includes(activeItem);
 
@@ -106,7 +135,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 		navigate("/dashboard");
 	};
 
-	const link = (item: NavItem, className: string, afterNavigate?: () => void, shortLabel = false) => (
+	const link = (item: NavLink, className: string, afterNavigate?: () => void, shortLabel = false) => (
 		<a
 			key={item.key}
 			href={href(item.route)}
@@ -176,17 +205,9 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 					)}
 					{connected ? (
 						<>
+							{workspaceControl}
 							<nav className="sy-primary-nav" aria-label={t("nav.primary")}>
-								<div className="sy-nav-section" aria-hidden="true">
-									{t("nav.crmSection")}
-								</div>
-								{crmNav.map((item) => link(item, "sy-nav sy-nav--route"))}
-								{settingsNav.length > 0 ? (
-									<div className="sy-nav-section" aria-hidden="true">
-										{t("nav.settings")}
-									</div>
-								) : null}
-								{settingsNav.map((item) => link(item, "sy-nav sy-nav--route"))}
+								<NavigationTree nodes={visibleTree} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />
 							</nav>
 							<div className="sy-sidebar__foot">{actorBlock}</div>
 						</>
@@ -198,16 +219,16 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 					{connected ? (
 						<nav className="sy-crumbs" aria-label={t("shell.breadcrumb")}>
 							<ol className="sy-crumbs__list">
-								<li className="sy-crumbs__item">
-									<a
-										className="sy-crumbs__link"
-										href={href("/dashboard")}
-										data-testid="breadcrumb-crm"
-										onClick={(e) => goDashboard(e)}
-									>
-										{t("nav.crmSection")}
-									</a>
-								</li>
+								{trail.slice(0, -1).map((node, index) => (
+									<li className="sy-crumbs__item" key={node.key}>
+										{index > 0 ? <Icon name="chevronRight" size={14} className="sy-crumbs__icon" /> : null}
+										{node.kind === "link" ? <a className="sy-crumbs__link" href={href(node.route)} onClick={(e) => {
+											if (!plainClick(e)) return;
+											e.preventDefault();
+											navigate(node.route);
+										}}>{t(node.label)}</a> : <span>{t(node.label)}</span>}
+									</li>
+								))}
 								{activeItem ? (
 									<li
 										className={`sy-crumbs__item${recordCrumb ? "" : " sy-crumbs__item--current"}`}
@@ -245,6 +266,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 					) : (
 						<span className="sy-topbar__brand">THE SYSTRONIC</span>
 					)}
+					{mobile && connected ? <div className="sy-topbar__workspace">{workspaceControl}</div> : null}
 					<div className="sy-topbar__tools">
 						{mobile && connected ? actorBlock : null}
 						<MenuButton
@@ -290,6 +312,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 						<button
 							type="button"
 							className="sy-nav sy-nav--route sy-nav--more"
+							ref={moreTrigger}
 							aria-haspopup="dialog"
 							aria-expanded={moreOpen}
 							aria-current={moreActive ? "page" : undefined}
@@ -304,15 +327,20 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 						open={moreOpen}
 						onClose={() => setMoreOpen(false)}
 						title={t("nav.moreTitle")}
-						placement="sheet"
+						placement="side"
+						dock="right"
+						returnFocusRef={moreTrigger}
 						testId="more-sheet"
 					>
+						{workspaceControl}
 						<nav className="sy-sheet-nav" aria-label={t("nav.moreTitle")}>
-							{overflow.map((item) => link(item, "sy-nav sy-nav--route sy-nav--sheet", () => setMoreOpen(false)))}
+							<NavigationTree nodes={visibleTree} route={route} link={(item, className) => link(item, `${className} sy-nav--sheet`, () => setMoreOpen(false))} disclosures={disclosures} onToggle={onToggle} />
 						</nav>
 					</Dialog>
 				</>
 			) : null}
+			{workspace && loadWorkspaces && switchWorkspace ? <WorkspaceSwitchDialog open={workspaceOpen} onClose={() => setWorkspaceOpen(false)} workspace={workspace}
+				loadWorkspaces={loadWorkspaces} switchWorkspace={switchWorkspace} returnFocusRef={workspaceTrigger} /> : null}
 		</div>
 		</RecordCrumbContext.Provider>
 	);

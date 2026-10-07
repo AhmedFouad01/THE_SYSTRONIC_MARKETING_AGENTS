@@ -285,40 +285,68 @@ a.sy-brand {
 	display: none;
 }
 
-@media (max-width: 1180px) {
-	.sy-sidebar {
-		padding-inline: var(--sy-space-10);
-	}
+.sy-shell {
+	/* Nested labels remain visible on desktop instead of shrinking to an icon rail. */
+	grid-template-columns: 228px minmax(0, 1fr);
+}
 
-	.sy-brand__copy,
-	.sy-nav__label,
-	.sy-nav-section {
-		display: none;
-	}
+.sy-sidebar {
+	position: sticky;
+	top: 0;
+	block-size: 100vh;
+	min-block-size: 0;
+}
 
-	.sy-brand {
-		justify-content: center;
-	}
+.sy-primary-nav {
+	display: block;
+	min-block-size: 0;
+	overflow-y: auto;
+}
 
-	.sy-nav {
-		justify-content: center;
-		padding-inline: 0;
-	}
+.sy-nav-branch__row {
+	display: flex;
+	align-items: center;
+}
 
-	/* collapsed rail: avatar only, the name stays available to assistive tech and text extraction */
-	.sy-actor {
-		justify-content: center;
-		padding-inline: 0;
-	}
+.sy-nav-branch__row > .sy-nav {
+	flex: 1;
+}
 
-	.sy-actor__copy {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-	}
+.sy-nav-branch__row > .sy-nav--toggle {
+	flex: none;
+	inline-size: 34px;
+	justify-content: center;
+}
+
+.sy-nav--disclosure {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.sy-nav--disclosure > .sy-icon:last-child {
+	margin-inline-start: auto;
+}
+
+.sy-nav-branch__children {
+	padding-inline-start: var(--sy-space-12);
+}
+
+.sy-nav--upcoming {
+	height: auto;
+	min-block-size: 38px;
+	flex-wrap: wrap;
+	padding-block: var(--sy-space-4);
+	color: var(--sy-text-3);
+}
+
+.sy-nav--upcoming .sy-badge {
+	margin-inline-start: auto;
+	font-size: 10px;
+}
+
+.sy-nav--upcoming .sy-nav__label {
+	white-space: normal;
+	overflow-wrap: anywhere;
 }
 
 @media (max-width: 720px) {
@@ -403,4 +431,87 @@ a.sy-brand {
 	.sy-nav--sheet .sy-nav__label {
 		display: block;
 	}
+}
+
+.sy-workspace {
+	display: grid;
+	gap: var(--sy-space-4);
+	min-inline-size: 0;
+	padding: var(--sy-space-8);
+	border-block-end: 1px solid var(--sy-border);
+}
+
+.sy-workspace__label,
+.sy-workspace__hint {
+	font-size: 11px;
+	color: var(--sy-text-3);
+}
+
+.sy-workspace__name {
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: var(--sy-type-data-size);
+}
+
+.sy-workspace-options {
+	display: grid;
+	gap: var(--sy-space-8);
+}
+
+.sy-workspace-option {
+	height: auto;
+	min-block-size: 44px;
+	flex-wrap: wrap;
+	padding-block: var(--sy-space-8);
+	overflow-wrap: anywhere;
+	cursor: pointer;
+}
+
+.sy-workspace-option:disabled {
+	cursor: default;
+}
+
+@media (max-width: 720px) {
+	.sy-topbar {
+		flex-wrap: wrap;
+		block-size: auto;
+		padding-block: var(--sy-space-8);
+	}
+
+	.sy-topbar__workspace {
+		order: 3;
+		flex-basis: 100%;
+		min-inline-size: 0;
+	}
+
+	.sy-topbar__workspace .sy-workspace {
+		grid-template-columns: minmax(0, 1fr) auto;
+		padding: 0;
+		border: 0;
+	}
+
+	.sy-topbar__workspace .sy-workspace__name {
+		grid-column: 1;
+	}
+
+	.sy-topbar__workspace .sy-workspace .sy-btn {
+		grid-column: 2;
+		grid-row: 1 / span 3;
+		align-self: center;
+	}
+
+	.sy-crumbs__list {
+		flex-wrap: wrap;
+	}
+}
+
+.sy-workspace-announcement {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }

@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { ALL_ROUTES_HAVE_NAV, initials, MOBILE_PRIMARY_KEYS, NAV, splitMobileNav } from "./AppShell.tsx";
+import { ALL_ROUTES_ACCOUNTED_FOR, ALL_ROUTES_HAVE_NAV, initials, MOBILE_PRIMARY_KEYS, NAV, splitMobileNav } from "./AppShell.tsx";
 
 describe("shell navigation model", () => {
-	it("lists only real screens: no Email/Call/Import entries (UX_RULES #8)", () => {
+	it("linked leaves cover every live route; inert upcoming entries never become routes", () => {
 		const keys = NAV.map((n) => n.key);
-		for (const dead of ["email", "call", "import"]) expect(keys).not.toContain(dead);
+		for (const dead of ["email", "call", "segments", "journeys", "integrations", "users", "security"]) expect(keys).not.toContain(dead);
 		expect(NAV.every((n) => typeof n.route === "string")).toBe(true);
-		expect(ALL_ROUTES_HAVE_NAV).toBe(true);
+		expect(ALL_ROUTES_HAVE_NAV).toBe(true); // Complete gated /imports now has a live leaf.
+		expect(ALL_ROUTES_ACCOUNTED_FOR).toBe(true);
 	});
 	it("mobile bar: at most 5 tabs (4 screens + More); the remainder goes to the More sheet; nothing is lost", () => {
 		const { primary, overflow } = splitMobileNav();

@@ -158,3 +158,12 @@ describe("api client envelope and errors", () => {
 		expect(JSON.stringify({ ...e, message: e.message })).not.toContain("t-synthetic");
 	});
 });
+
+
+describe("numeric pagination envelope", () => {
+	it("retains explicit next_after without changing endpoints that omit it", async () => {
+		for (const after of [null, 200]) { const result = await client(mockFetch(200, { data: [], next_after: after })).get("imports/id/rows"); expect(result.nextAfter).toBe(after); }
+		expect(await client(mockFetch(200, { data: [] })).get("contacts")).not.toHaveProperty("nextAfter");
+		expect((await client(mockFetch(200, { data: [], next_after: -1 })).get("imports/id/rows")).nextAfter).toBeUndefined();
+	});
+});
