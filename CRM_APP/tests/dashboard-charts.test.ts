@@ -269,6 +269,103 @@ test("deals-outcomes: won/lost per bucket, tenant timezone, week buckets, rep sc
 	assert.equal(b.buckets.reduce((n: number, x: { won: { count: number } }) => n + x.won.count, 0), 1);
 });
 
+// Independent calendar fixtures: no server bucket expression is duplicated here.
+const calendarDays = (date: string, days: number) => iso(new Date(Date.parse(`${date}T00:00:00Z`) + days * 86400_000));
+const saturdayOf = (date: Date) => {
+	const x = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+	x.setUTCDate(x.getUTCDate() - ((x.getUTCDay() + 1) % 7));
+	return iso(x);
+};
+type ActivityBucket = { start: string; end: string; contacts_created: number; leads_created: number; deals_created: number; tasks_created: number; tasks_completed: number };
+async function weeklyFixtures(at: Date, owner: string = f.ids.manager) {
+	await admin.query("INSERT INTO crm.contact(tenant_id,id,display_name,owner_id,created_at) VALUES($1,$2,'boundary',$3,$4)", [f.ids.a, randomUUID(), owner, at.toISOString()]);
+	await lead(f.ids.a, owner, "boundary", "open", at);
+	const id = await deal(f.ids.a, f.ids.won, owner, 100, "EGP", at);
+	await transitionInto(f.ids.a, id, f.ids.won, at);
+	await task(f.ids.a, owner, at, "completed", at, at);
+}
+async function assertSaturdayBuckets(tz: string, start: string, expected: number[], who = mgr) {
+	const query = `?bucket=week&periods=104&tz=${encodeURIComponent(tz)}&week_start=saturday`;
+	const activity = await get(who, `/v1/dashboard/activity${query}`);
+	const outcomes = await get(who, `/v1/dashboard/deals-outcomes${query}`);
+	for (const data of [activity, outcomes]) {
+		assert.equal(data.week_start, "saturday");
+		assert.equal(data.tz, tz);
+		assert.equal(data.buckets.length, 104);
+		assert.equal(data.from, data.buckets[0].start);
+		assert.equal(data.to, data.buckets[103].end);
+		for (let i = 0; i < data.buckets.length; i++) {
+			const b = data.buckets[i];
+			assert.equal(new Date(`${b.start}T00:00:00Z`).getUTCDay(), 6);
+			assert.equal(b.end, calendarDays(b.start, 7));
+			if (i > 0) assert.equal(b.start, data.buckets[i - 1].end);
+		}
+	}
+	for (const [i, count] of expected.entries()) {
+		const date = calendarDays(start, (i - 1) * 7);
+		const a = activity.buckets.find((b: ActivityBucket) => b.start === date);
+		assert.ok(a, `activity includes ${date}`);
+		assert.deepEqual(a, { start: date, end: calendarDays(date, 7), contacts_created: count, leads_created: count, deals_created: count, tasks_created: count, tasks_completed: count });
+		const d = outcomes.buckets.find((b: { start: string }) => b.start === date);
+		assert.ok(d, `outcomes includes ${date}`);
+		assert.deepEqual(d.won, { count, totals: count ? [{ currency: "EGP", amount_minor: String(count * 100) }] : [] });
+		assert.deepEqual(d.lost, { count: 0, totals: [] });
+	}
+	assert.deepEqual(activity.buckets[0], { start: activity.from, end: calendarDays(activity.from, 7), contacts_created: 0, leads_created: 0, deals_created: 0, tasks_created: 0, tasks_completed: 0 }, "old empty week zero-filled");
+	assert.deepEqual(outcomes.buckets[0].won, { count: 0, totals: [] });
+}
+
+test("Saturday UTC boundaries are half-open for both series; Monday and month stay compatible", async () => {
+	await fresh();
+	await outcomeStages();
+	const start = calendarDays(saturdayOf(now), -21);
+	const boundary = Date.parse(`${start}T00:00:00Z`);
+	await weeklyFixtures(new Date(boundary - 1));
+	await weeklyFixtures(new Date(boundary), repId);
+	await weeklyFixtures(new Date(boundary + 7 * 86400_000));
+	await assertSaturdayBuckets("UTC", start, [1, 1, 1]);
+	await assertSaturdayBuckets("UTC", start, [0, 1, 0], rep);
+	for (const endpoint of ["deals-outcomes", "activity"]) {
+		const query = `/v1/dashboard/${endpoint}?bucket=week&periods=104`;
+		const implicit = await get(mgr, query);
+		const explicit = await get(mgr, `${query}&week_start=monday`);
+		assert.equal(implicit.week_start, "monday");
+		assert.deepEqual({ ...implicit, as_of: null }, { ...explicit, as_of: null });
+		for (const b of implicit.buckets) assert.equal(new Date(`${b.start}T00:00:00Z`).getUTCDay(), 1);
+		const containing = implicit.buckets.find((b: { start: string }) => b.start === mondayOf(new Date(boundary)));
+		assert.equal(endpoint === "activity" ? containing.contacts_created : containing.won.count, 2, "Friday and Saturday share the original Monday bucket");
+		const month = await get(mgr, `/v1/dashboard/${endpoint}`);
+		assert.equal(month.bucket, "month");
+		assert.equal("week_start" in month, false, "monthly response shape unchanged");
+	}
+});
+
+test("Saturday Cairo buckets span both DST transitions with local midnight boundaries", async () => {
+	// Egypt changes clocks on the last Friday of April/October. Pick the most recent occurrence
+	// of each within the 104-week window, independently of PostgreSQL date_trunc.
+	for (const [month, utcHour, length] of [[3, 21, 167], [9, 22, 169]] as const) {
+		let year = Y;
+		const lastFriday = (y: number) => {
+			const d = new Date(Date.UTC(y, month + 1, 0));
+			d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 2) % 7));
+			return d;
+		};
+		if (lastFriday(year).getTime() + 8 * 86400_000 > now.getTime()) year--;
+		const friday = lastFriday(year);
+		const end = calendarDays(iso(friday), 1);
+		const start = calendarDays(end, -7);
+		const hi = Date.UTC(year, month, friday.getUTCDate(), utcHour);
+		const lo = hi - length * 3600_000;
+		await fresh();
+		await outcomeStages();
+		await weeklyFixtures(new Date(lo - 1));
+		await weeklyFixtures(new Date(lo));
+		await weeklyFixtures(new Date(hi - 1));
+		await weeklyFixtures(new Date(hi));
+		await assertSaturdayBuckets("Africa/Cairo", start, [1, 2, 1]);
+	}
+});
+
 test("tasks-due: overdue / next 24h / 7 local days / later partition open tasks; timezone moves today", async () => {
 	await fresh();
 	const A = f.ids.a;
@@ -384,6 +481,15 @@ test("permission denial, tenant mismatch and validation", async () => {
 		"/v1/dashboard/deals-outcomes?tz=EST5EDT%27%3B--",
 		"/v1/dashboard/deals-outcomes?unknown=1",
 		"/v1/dashboard/deals-outcomes?bucket=week&bucket=month",
+		... ["deals-outcomes", "activity"].flatMap((endpoint) => [
+			`/v1/dashboard/${endpoint}?bucket=week&week_start=sunday`,
+			`/v1/dashboard/${endpoint}?bucket=week&week_start=Saturday`,
+			`/v1/dashboard/${endpoint}?bucket=week&week_start=`,
+			`/v1/dashboard/${endpoint}?bucket=week&week_start=saturday&week_start=monday`,
+			`/v1/dashboard/${endpoint}?bucket=week&week_start=saturday%27%3B--`,
+			`/v1/dashboard/${endpoint}?bucket=month&week_start=saturday`,
+			`/v1/dashboard/${endpoint}?week_start=monday`,
+		]),
 		"/v1/dashboard/activity?periods=abc",
 		"/v1/dashboard/activity?tz=Not/AZone",
 		"/v1/dashboard/tasks-due?tz=Mars/Base",

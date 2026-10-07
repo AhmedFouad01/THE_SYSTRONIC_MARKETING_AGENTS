@@ -176,3 +176,9 @@
 		min-height: 44px;
 	}
 }
+
+.sy-dash__charts { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--sy-space-16); min-inline-size: 0; }
+.sy-dash__chart { grid-column: span 6; }
+@media (max-width: 720px) { .sy-dash__chart { grid-column: 1 / -1; } }
+
+.sy-dash__chart--wide { grid-column: 1 / -1; }

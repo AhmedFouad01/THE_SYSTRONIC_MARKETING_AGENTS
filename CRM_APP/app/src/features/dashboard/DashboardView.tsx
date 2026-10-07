@@ -21,7 +21,6 @@ import {
 } from "../../ui/index.ts";
 import { formatMoneyMinor } from "../../ui/i18n/format.ts";
 import { NewLeadDialog } from "../leads/NewLeadDialog.tsx";
-import { cappedCount, formatCapped } from "../capped.ts";
 import { listFetcher } from "../listApi.ts";
 import { fetchCampaignReport } from "../reporting/api.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
@@ -52,6 +51,14 @@ import {
 import { type Load, useLoad } from "./useLoad.ts";
 import "../reporting/reporting.css";
 import "./dashboard.css";
+import { PipelineWidget } from "./PipelineWidget.tsx";
+import { LeadsWidget } from "./LeadsWidget.tsx";
+import { OutcomesWidget } from "./OutcomesWidget.tsx";
+import { TasksWidget } from "./TasksWidget.tsx";
+import { ActivityWidget } from "./ActivityWidget.tsx";
+import { dashboardChartOrder } from "./composition.ts";
+import { fetchTasksDue, tasksDueState } from "./tasksDue.ts";
+import { browserTimezone } from "./outcomes.ts";
 
 const NARROW = "(max-width: 720px)";
 
@@ -100,7 +107,11 @@ export function DashboardView() {
 	const tenantId = sessionStore.getCredentials()?.tenantId ?? "";
 	const now = useNow();
 
-	// W1/W2 are server counts (`total_count`), not a count of one loaded page.
+	// One exact aggregate snapshot feeds W1/W2 and C4; list requests remain for actionable rows.
+	const credentials = sessionStore.getCredentials();
+	const taskKey = JSON.stringify([tenantId, sessionStore.getState().info?.actor, credentials?.grantId, browserTimezone()]);
+	const taskAggregate = useLoad(async (signal) => ({ key: taskKey, data: await fetchTasksDue(browserTimezone(), signal) }), taskKey);
+	const taskState = tasksDueState(taskAggregate.state, taskKey);
 	const overdue = useLoad(loadTasks({ due: "overdue" }), tenantId);
 	const soon = useLoad((signal) => {
 		const from = new Date();
@@ -121,6 +132,7 @@ export function DashboardView() {
 		tenantId,
 	);
 	const reloadTasks = () => {
+		taskAggregate.reload();
 		overdue.reload();
 		soon.reload();
 	};
@@ -153,21 +165,13 @@ export function DashboardView() {
 		[report.state],
 	);
 
-	const overdueC =
-		overdue.state.status === "ready"
-			? cappedCount(overdue.state.data.total?.value ?? overdue.state.data.items.length, overdue.state.data.total?.exact === false)
-			: null;
-	const soonC =
-		soon.state.status === "ready"
-			? cappedCount(soon.state.data.total?.value ?? soon.state.data.items.length, soon.state.data.total?.exact === false)
-			: null;
+	const overdueC = taskState.status === "ready" ? taskState.data.overdue : null;
+	const soonC = taskState.status === "ready" ? taskState.data.next_24h : null;
 	const emph = emphasis({
-		overdue: overdueC?.count ?? null,
+		overdue: overdueC,
 		revenue: marketing && !marketing.empty ? marketing.kpis.revenue : null,
 		stale: marketing?.stale ?? true,
 	});
-
-	const capHint = (n: number) => t("dash.capped", { count: formatNumber(n) });
 
 	// ---- KPI cards ----------------------------------------------------------------------------------------
 
@@ -176,7 +180,7 @@ export function DashboardView() {
 		label: string,
 		load: Load<unknown>,
 		reload: () => void,
-		c: ReturnType<typeof cappedCount> | null,
+		c: number | null,
 		sub: string,
 		none: string,
 		tone: "neutral" | "navy",
@@ -188,14 +192,14 @@ export function DashboardView() {
 			) : (
 				<KpiCard testId={testId} label={label} value="—" sub={<RetryLink onClick={reload} />} />
 			);
-		const count = c ?? { count: 0, capped: false };
+		const count = c ?? 0;
 		return (
 			<KpiCard
 				testId={testId}
 				label={label}
 				tone={tone}
-				value={formatCapped(count, formatNumber)}
-				sub={count.capped ? capHint(count.count) : count.count === 0 ? none : sub}
+				value={formatNumber(count)}
+				sub={count === 0 ? none : sub}
 			/>
 		);
 	};
@@ -237,9 +241,9 @@ export function DashboardView() {
 		<section className="sy-dash__kpis" aria-label={t("dash.kpis")} data-testid="dash-kpis">
 			{taskCard(
 				"kpi-overdue",
-				t("dash.overdue.label"),
-				overdue.state,
-				overdue.reload,
+				t(taskState.status === "ready" && taskState.data.scope === "assigned" ? "charts.tasks.overdueMine" : "dash.overdue.label"),
+				taskState,
+				taskAggregate.reload,
 				overdueC,
 				t("dash.overdue.sub"),
 				t("dash.overdue.none"),
@@ -247,9 +251,9 @@ export function DashboardView() {
 			)}
 			{taskCard(
 				"kpi-next24h",
-				t("dash.next.label"),
-				soon.state,
-				soon.reload,
+				t(taskState.status === "ready" && taskState.data.scope === "assigned" ? "charts.tasks.nextMine" : "dash.next.label"),
+				taskState,
+				taskAggregate.reload,
 				soonC,
 				t("dash.next.sub"),
 				t("dash.next.none"),
@@ -587,6 +591,16 @@ export function DashboardView() {
 					{topCampaigns}
 				</Panel>
 			</div>
+			<div className="sy-dash__charts">{dashboardChartOrder(taskState.status === "ready" ? taskState.data.scope : undefined).map((widget) => {
+				switch (widget) {
+					case "pipeline": return <PipelineWidget key={widget} />;
+					case "leads": return <LeadsWidget key={widget} />;
+					case "outcomes": return <OutcomesWidget key={widget} />;
+					case "tasks": return <TasksWidget key={`${widget}:${taskKey}`} state={taskState} onRetry={taskAggregate.reload} />;
+					case "activity": return <ActivityWidget key={widget} />;
+				}
+				return null;
+			})}</div>
 			<NewTaskDialog
 				open={taskOpen}
 				onClose={() => setTaskOpen(false)}
