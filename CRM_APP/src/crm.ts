@@ -210,7 +210,7 @@ function canonical(v: unknown): string {
 			.join(",")}}`;
 	return JSON.stringify(v);
 }
-async function durable(
+export async function durable(
 	db: pg.PoolClient,
 	ctx: Context,
 	operation: string,

@@ -7,6 +7,8 @@ export class Fault extends Error {
 	constructor(
 		public status: number,
 		public code: string,
+		// Optional machine-readable per-field issues, surfaced as `errors` in the error envelope (schema API).
+		public details?: { field: string; code: string }[],
 	) {
 		super(code);
 	}

@@ -10,6 +10,8 @@ import {
 	assertIdentifierConfiguration,
 } from "./db.js";
 import { crmRequest, type Body } from "./crm.js";
+import { isSchema, schemaRequest } from "./schema.js";
+import { PAYLOAD_LIMIT as SCHEMA_PAYLOAD_LIMIT } from "./schemarules.js";
 import { transition, type Command } from "./transition.js";
 import {
 	collect,
@@ -214,7 +216,10 @@ export function server() {
 					let raw = "";
 					for await (const chunk of req) {
 						raw += chunk;
-						if (Buffer.byteLength(raw) > 16384)
+						if (
+							Buffer.byteLength(raw) >
+							(isSchema(url.pathname) ? SCHEMA_PAYLOAD_LIMIT : 16384)
+						)
 							throw new Fault(413, "PAYLOAD_TOO_LARGE");
 					}
 					try {
@@ -225,7 +230,17 @@ export function server() {
 					if (!body || typeof body !== "object" || Array.isArray(body))
 						throw new Fault(422, "VALIDATION_FAILED");
 				}
-				const response = isJourney(url.pathname)
+				const response = isSchema(url.pathname)
+					? await schemaRequest(
+							ctx,
+							req.method ?? "GET",
+							url.pathname,
+							url.searchParams,
+							body,
+							key,
+							requestId,
+						)
+					: isJourney(url.pathname)
 					? await journeyRequest(
 							ctx,
 							req.method ?? "GET",
@@ -267,6 +282,7 @@ export function server() {
 					safe_message: error.code,
 					request_id: requestId,
 					retryable: error.status >= 500,
+					...(error.details ? { errors: error.details } : {}),
 				}),
 			);
 		}
