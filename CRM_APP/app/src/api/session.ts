@@ -10,6 +10,9 @@ export type SessionInfo = {
 	configure: boolean;
 	merge: boolean;
 	audit: boolean;
+	/** P1b B3: schema.read / property.manage as the server resolves them. Absent on an older server: callers fall back to a probe / `configure`. */
+	schema_read?: boolean;
+	property_manage?: boolean;
 };
 
 export type SessionState = {

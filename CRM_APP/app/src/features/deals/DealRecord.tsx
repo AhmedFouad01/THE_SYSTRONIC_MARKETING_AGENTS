@@ -25,6 +25,7 @@ import {
 	StageFeedback,
 	useStageMove,
 } from "./DealDetail.tsx";
+import { CustomFieldsRead, useCustomFields } from "../properties/index.ts";
 import { LostReasonDialog } from "./LostReasonDialog.tsx";
 import {
 	allowedTargets,
@@ -247,6 +248,7 @@ export function DealRecord({
 }) {
 	const { t, formatMoney } = useI18n();
 	const isAdmin = useIsAdmin();
+	const cf = useCustomFields("deal", "deals", deal.id, deal.version);
 	const [tab, setTab] = useState<TabId>("overview");
 	const [editing, setEditing] = useState(false);
 	const [lost, setLost] = useState<Stage | null>(null);
@@ -382,6 +384,7 @@ export function DealRecord({
 											deal={deal}
 											assignees={assignees}
 											currencies={currencies}
+											cf={cf}
 											onUpdated={onUpdated}
 											onDone={() => setEditing(false)}
 										/>
@@ -420,6 +423,7 @@ export function DealRecord({
 										) : null}
 									</dl>
 								)}
+								{editing ? null : <CustomFieldsRead cf={cf} />}
 								{isAdmin ? (
 								<RecordDetails
 									rows={[

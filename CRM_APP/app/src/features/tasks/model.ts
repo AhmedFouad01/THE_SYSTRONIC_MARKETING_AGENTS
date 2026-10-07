@@ -238,8 +238,9 @@ export function keyFor(
 	prev: KeyMemo | null,
 	input: NewTaskInput,
 	newKey: () => string,
+	extra?: unknown,
 ): KeyMemo {
-	const fingerprint = JSON.stringify(buildCreateBody(input, ""));
+	const fingerprint = JSON.stringify([buildCreateBody(input, ""), extra ?? null]);
 	return prev !== null && prev.fingerprint === fingerprint
 		? prev
 		: { fingerprint, key: newKey() };

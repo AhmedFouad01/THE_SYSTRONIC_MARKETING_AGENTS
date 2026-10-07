@@ -18,6 +18,7 @@ import {
 	useToast,
 } from "../../ui/index.ts";
 import { type Assignee, fetchTask, patchTask } from "./api.ts";
+import { type CustomFields, CustomFieldsEdit, CustomFieldsRead, useCustomDraft, useCustomFields, withProperties } from "../properties/index.ts";
 import { DueLabel } from "./DueLabel.tsx";
 import {
 	buildPatchBody,
@@ -50,6 +51,7 @@ export function writeErrorKind(e: unknown): Exclude<EditError, null> {
 type EditorProps = {
 	task: TaskRow;
 	assignees: readonly Assignee[];
+	cf: CustomFields;
 	onUpdated: (task: Task) => void;
 	/** Edit mode: the form is shown; otherwise only banners and the Complete action. */
 	editing: boolean;
@@ -57,7 +59,7 @@ type EditorProps = {
 };
 
 /** Keyed by task id + version by the parent: a reload (new version) remounts it with a fresh draft. */
-function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps) {
+function TaskEditor({ task, assignees, cf, onUpdated, editing, onDone }: EditorProps) {
 	const { t } = useI18n();
 	const toast = useToast();
 	const [draft, setDraft] = useState(() => draftOf(task));
@@ -67,7 +69,8 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 	const [error, setError] = useState<EditError>(null);
 	const [issues, setIssues] = useState<EditIssue>({});
 
-	const dirty = buildPatchBody(task, draft, "x") !== null;
+	const custom = useCustomDraft(cf, "edit");
+	const dirty = buildPatchBody(task, draft, "x") !== null || custom.dirty;
 	const ownerOptions = assignees.some((a) => a.id === task.owner_id)
 		? assignees
 		: [...assignees, { id: task.owner_id, name: task.ownerName }];
@@ -86,7 +89,10 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 		const found = validateEdit(draft);
 		setIssues(found);
 		if (Object.keys(found).length > 0) return;
-		const body = buildPatchBody(task, draft, crypto.randomUUID());
+		const c = custom.prepare();
+		if (!c.ok) return;
+		const id = crypto.randomUUID();
+		const body = withProperties(buildPatchBody(task, draft, id), c.patch, { commandId: id, version: task.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -95,7 +101,7 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 			toast.notify(t("tasks.edit.saved"), "success");
 			onDone();
 		} catch (e) {
-			fail(e);
+			if (!custom.fail(e)) fail(e);
 		} finally {
 			setSaving(false);
 		}
@@ -214,6 +220,7 @@ function TaskEditor({ task, assignees, onUpdated, editing, onDone }: EditorProps
 						</option>
 					))}
 				</Select>
+				<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 				<RecordEditFooter
 					dirty={dirty}
 					saving={saving}
@@ -249,6 +256,7 @@ export function TaskDetail({
 	const isAdmin = useIsAdmin();
 	const [editing, setEditing] = useState(false);
 	const taskId = task?.id ?? null;
+	const cf = useCustomFields("task", "tasks", taskId, task?.version ?? null);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: leaving edit mode when another task is opened
 	useEffect(() => setEditing(false), [taskId]);
 	if (task === null)
@@ -310,6 +318,7 @@ export function TaskDetail({
 					key={`${task.id}:${task.version}`}
 					task={task}
 					assignees={assignees}
+					cf={cf}
 					onUpdated={onUpdated}
 					editing={isEditing}
 					onDone={() => setEditing(false)}
@@ -327,6 +336,8 @@ export function TaskDetail({
 					]
 					: undefined
 			}
-		/>
+		>
+			<CustomFieldsRead cf={cf} />
+		</RecordPanel>
 	);
 }

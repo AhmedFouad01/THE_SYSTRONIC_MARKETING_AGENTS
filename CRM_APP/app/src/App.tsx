@@ -23,7 +23,7 @@ function Routed() {
 
 	const connected = session.status === "connected" && session.info !== null;
 	const actorId = connected ? (session.info?.actor ?? null) : null;
-	const canReadSchema = useSchemaRead(actorId);
+	const canReadSchema = useSchemaRead(actorId, connected ? session.info?.schema_read : undefined);
 	const [actorName, setActorName] = useState<string | null>(null);
 	useEffect(() => {
 		setActorName(null);

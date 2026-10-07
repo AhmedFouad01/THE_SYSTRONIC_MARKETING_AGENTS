@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../../router.ts";
 import { AddTaskButton } from "../tasks/index.ts";
 import { dealContextSearch } from "../deals/model.ts";
+import { type CustomFields, CustomFieldsEdit, CustomFieldsRead, useCustomDraft, useCustomFields, withProperties } from "../properties/index.ts";
 import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
 import {
 	Badge,
@@ -54,11 +55,13 @@ type TabId = "overview" | "journey" | "duplicates";
 function ContactEditor({
 	contact,
 	assignees,
+	cf,
 	onUpdated,
 	onDone,
 }: {
 	contact: ContactRow;
 	assignees: readonly Assignee[];
+	cf: CustomFields;
 	onUpdated: (c: Contact) => void;
 	onDone: () => void;
 }) {
@@ -70,7 +73,8 @@ function ContactEditor({
 	const [error, setError] = useState<EditError>(null);
 	const [touched, setTouched] = useState(false);
 
-	const dirty = buildPatchBody(contact, draft, "x") !== null;
+	const custom = useCustomDraft(cf, "edit");
+	const dirty = buildPatchBody(contact, draft, "x") !== null || custom.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === contact.owner_id) || !contact.owner_id
 			? assignees
@@ -79,7 +83,10 @@ function ContactEditor({
 	const save = async () => {
 		setTouched(true);
 		if (draft.name.trim() === "") return;
-		const body = buildPatchBody(contact, draft, crypto.randomUUID());
+		const c = custom.prepare();
+		if (!c.ok) return;
+		const id = crypto.randomUUID();
+		const body = withProperties(buildPatchBody(contact, draft, id), c.patch, { commandId: id, version: contact.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -88,6 +95,7 @@ function ContactEditor({
 			toast.notify(t("contacts.edit.saved"), "success");
 			onDone();
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setError(
 				isVersionConflict(e)
 					? "conflict"
@@ -184,6 +192,7 @@ function ContactEditor({
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
@@ -558,6 +567,7 @@ export function ContactDetail({
 }) {
 	const { t } = useI18n();
 	const isAdmin = useIsAdmin();
+	const cf = useCustomFields("contact", "contacts", contact?.id ?? null, contact?.version ?? null);
 	if (contact === null)
 		return (
 			<PreviewPanel
@@ -618,6 +628,7 @@ export function ContactDetail({
 					key={`${contact.id}:${contact.version}`}
 					contact={contact}
 					assignees={assignees}
+					cf={cf}
 					onUpdated={onUpdated}
 					onDone={done}
 				/>
@@ -635,6 +646,7 @@ export function ContactDetail({
 					: undefined
 			}
 		>
+			<CustomFieldsRead cf={cf} />
 			<ContactBody
 				key={contact.id}
 				contact={contact}

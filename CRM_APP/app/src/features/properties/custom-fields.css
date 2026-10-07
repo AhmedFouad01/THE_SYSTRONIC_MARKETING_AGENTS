@@ -1,0 +1,117 @@
+.sy-cf {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-10);
+	min-width: 0;
+	padding-block-start: var(--sy-space-12);
+	border-block-start: 1px solid var(--sy-border);
+}
+.sy-cf__title {
+	margin: 0;
+	font-size: var(--sy-type-section-title-size);
+	color: var(--sy-text);
+}
+.sy-cf__group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-8);
+	min-width: 0;
+}
+.sy-cf__group-title {
+	margin: 0;
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+	color: var(--sy-text-3);
+}
+.sy-cf__fields {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-10);
+	min-width: 0;
+}
+.sy-cf__field,
+.sy-cf__set {
+	min-width: 0;
+}
+.sy-cf__set {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.sy-cf__fact--wide {
+	grid-column: 1 / -1;
+}
+.sy-cf__empty {
+	color: var(--sy-text-3);
+	font-weight: 400;
+}
+.sy-cf__multiline {
+	display: block;
+	white-space: pre-wrap;
+	font-weight: 400;
+	overflow-wrap: anywhere;
+}
+.sy-cf__link {
+	color: var(--sy-link, var(--sy-info-fg));
+	overflow-wrap: anywhere;
+}
+.sy-cf__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-4);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.sy-cf__chip {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sy-space-4);
+	max-width: 100%;
+	padding: 2px var(--sy-space-8);
+	border-radius: var(--sy-radius-pill);
+	background: var(--sy-surface-3);
+	color: var(--sy-text-2);
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+}
+.sy-cf__dot {
+	flex: none;
+	inline-size: 10px;
+	block-size: 10px;
+	border-radius: var(--sy-radius-pill);
+}
+.sy-cf__tag {
+	margin-inline-start: var(--sy-space-8);
+	padding: 0 var(--sy-space-6, 6px);
+	border-radius: var(--sy-radius-6);
+	background: var(--sy-surface-3);
+	color: var(--sy-text-3);
+	font-size: 11px;
+	font-weight: 600;
+}
+.sy-cf__options {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-6, 6px);
+}
+.sy-cf__check {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sy-space-8);
+	min-block-size: 32px;
+	cursor: pointer;
+}
+.sy-cf__ro .sy-cf__rovalue {
+	min-block-size: 36px;
+	display: flex;
+	align-items: center;
+	color: var(--sy-text-2);
+}
+.sy-cf__banner {
+	margin: 0;
+	padding: var(--sy-space-10);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-danger-bg);
+	color: var(--sy-danger-fg);
+}

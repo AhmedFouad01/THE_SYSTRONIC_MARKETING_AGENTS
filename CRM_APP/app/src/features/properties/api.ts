@@ -45,3 +45,22 @@ export const patchGroup = (o: ObjectKey, key: string, body: Record<string, unkno
 export const archiveGroup = (o: ObjectKey, key: string, body: Record<string, unknown>) =>
 	send(`${base(o)}/groups/${key}/archive`, body);
 export const orderGroups = (o: ObjectKey, body: Record<string, unknown>) => send(`${base(o)}/groups/order`, body);
+
+/** GET /v1/schema/{object} (active properties; archived OPTIONS stay listed, flagged, so stored values keep a label): the schema of a record form. */
+export async function fetchRecordSchema(object: ObjectKey, signal?: AbortSignal): Promise<ObjectSchema> {
+	return (await apiClient.get<ObjectSchema>(base(object), signal ? { signal } : {})).data;
+}
+
+export type RecordProperties = { version: number | null; properties: Record<string, unknown> };
+
+/** GET /v1/{contacts|leads|deals|tasks}/{id}: the record's `properties` (custom values the caller may read) and its version. */
+export async function fetchRecordProperties(path: RecordPath, id: string, signal?: AbortSignal): Promise<RecordProperties> {
+	const r = await apiClient.get<{ version?: unknown; properties?: unknown }>(`${path}/${id}`, signal ? { signal } : {});
+	const p = r.data.properties;
+	return {
+		version: typeof r.data.version === "number" ? r.data.version : null,
+		properties: typeof p === "object" && p !== null && !Array.isArray(p) ? (p as Record<string, unknown>) : {},
+	};
+}
+
+export type RecordPath = "contacts" | "leads" | "deals" | "tasks";

@@ -9,6 +9,7 @@ import {
 	useI18n,
 } from "../../ui/index.ts";
 import { classifyCreateError, type CreateErrorKind } from "../leads/model.ts";
+import { CustomFieldsEdit, useCustomDraft, useCustomFields, withCreateProperties } from "../properties/index.ts";
 import { type Assignee, type ContactRef, createTask } from "./api.ts";
 import {
 	buildCreateBody,
@@ -68,6 +69,8 @@ function NewTaskForm({
 	}));
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateErrorKind | null>(null);
+	const cf = useCustomFields("task", "tasks", null, null);
+	const custom = useCustomDraft(cf, "create");
 	const memo = useRef<KeyMemo | null>(null);
 	const errors: NewTaskErrors = touched ? validateNewTask(input) : {};
 	const err = (f: NewTaskField) =>
@@ -80,13 +83,17 @@ function NewTaskForm({
 	const submit = async () => {
 		setTouched(true);
 		if (Object.keys(validateNewTask(input)).length > 0) return;
-		memo.current = keyFor(memo.current, input, () => crypto.randomUUID());
+		if (cf.status === "loading") return;
+		const c = custom.prepare();
+		if (!c.ok) return;
+		memo.current = keyFor(memo.current, input, () => crypto.randomUUID(), c.patch);
 		const key = memo.current.key;
 		onBusy(true);
 		setServerError(null);
 		try {
-			onCreated(await createTask(buildCreateBody(input, key), key));
+			onCreated(await createTask(withCreateProperties(buildCreateBody(input, key), c.patch), key));
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setServerError(classifyCreateError(e));
 		} finally {
 			onBusy(false);
@@ -165,6 +172,7 @@ function NewTaskForm({
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="create" />
 		</form>
 	);
 }

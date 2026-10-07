@@ -8,6 +8,7 @@ import {
 	useI18n,
 	type MessageKey,
 } from "../../ui/index.ts";
+import { CustomFieldsEdit, useCustomDraft, useCustomFields, withCreateProperties } from "../properties/index.ts";
 import { createLead } from "./api.ts";
 import {
 	type Assignee,
@@ -55,6 +56,8 @@ function NewLeadForm({
 	const [input, setInput] = useState<NewLeadInput>(EMPTY_NEW_LEAD);
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateErrorKind | null>(null);
+	const cf = useCustomFields("lead", "leads", null, null);
+	const custom = useCustomDraft(cf, "create");
 	const memo = useRef<KeyMemo | null>(null);
 	const errors: NewLeadErrors = touched ? validateNewLead(input) : {};
 	const set = (patch: Partial<NewLeadInput>) => {
@@ -67,13 +70,17 @@ function NewLeadForm({
 	const submit = async () => {
 		setTouched(true);
 		if (Object.keys(validateNewLead(input)).length > 0) return;
-		memo.current = keyFor(memo.current, input, () => crypto.randomUUID());
+		if (cf.status === "loading") return;
+		const c = custom.prepare();
+		if (!c.ok) return;
+		memo.current = keyFor(memo.current, input, () => crypto.randomUUID(), c.patch);
 		const key = memo.current.key;
 		onBusy(true);
 		setServerError(null);
 		try {
-			onCreated(await createLead(buildCreateBody(input, key), key));
+			onCreated(await createLead(withCreateProperties(buildCreateBody(input, key), c.patch), key));
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setServerError(classifyCreateError(e));
 		} finally {
 			onBusy(false);
@@ -161,6 +168,7 @@ function NewLeadForm({
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="create" />
 		</form>
 	);
 }

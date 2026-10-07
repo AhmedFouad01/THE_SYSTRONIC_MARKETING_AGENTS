@@ -7,6 +7,7 @@ import {
 	Select,
 	useI18n,
 } from "../../ui/index.ts";
+import { CustomFieldsEdit, useCustomDraft, useCustomFields, withCreateProperties } from "../properties/index.ts";
 import { createDeal } from "./api.ts";
 import { AmountField, CurrencySelect } from "./DealDetail.tsx";
 import {
@@ -82,6 +83,8 @@ function NewDealForm({
 	});
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateErrorKind | null>(null);
+	const cf = useCustomFields("deal", "deals", null, null);
+	const custom = useCustomDraft(cf, "create");
 	const memo = useRef<KeyMemo | null>(null);
 	const leadId = prefill?.leadId ?? null;
 	const locked = prefill !== null;
@@ -101,15 +104,17 @@ function NewDealForm({
 	const submit = async () => {
 		setTouched(true);
 		if (Object.keys(validateNewDeal(input)).length > 0) return;
-		memo.current = keyFor(memo.current, input, leadId, () =>
-			crypto.randomUUID(),
-		);
+		if (cf.status === "loading") return;
+		const c = custom.prepare();
+		if (!c.ok) return;
+		memo.current = keyFor(memo.current, input, leadId, () => crypto.randomUUID(), c.patch);
 		const key = memo.current.key;
 		onBusy(true);
 		setServerError(null);
 		try {
-			onCreated(await createDeal(buildCreateBody(input, leadId, key), key));
+			onCreated(await createDeal(withCreateProperties(buildCreateBody(input, leadId, key), c.patch), key));
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setServerError(classifyCreateError(e));
 		} finally {
 			onBusy(false);
@@ -226,6 +231,8 @@ function NewDealForm({
 					</option>
 				))}
 			</Select>
+
+			<CustomFieldsEdit cf={cf} draft={custom} mode="create" />
 		</form>
 	);
 }

@@ -7,6 +7,7 @@ import {
 	Select,
 	useI18n,
 } from "../../ui/index.ts";
+import { CustomFieldsEdit, useCustomDraft, useCustomFields, withCreateProperties } from "../properties/index.ts";
 import { createContact } from "./api.ts";
 import {
 	type Assignee,
@@ -43,6 +44,8 @@ function NewContactForm({
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateContactError | null>(null);
 	// One idempotency key per distinct payload: a retry after a network failure replays, an edit starts afresh.
+	const cf = useCustomFields("contact", "contacts", null, null);
+	const custom = useCustomDraft(cf, "create");
 	const memo = useRef<{ fingerprint: string; key: string } | null>(null);
 	const errors = touched ? validateNewContact(input) : {};
 	const set = (patch: Partial<NewContactInput>) => {
@@ -53,15 +56,19 @@ function NewContactForm({
 	const submit = async () => {
 		setTouched(true);
 		if (Object.keys(validateNewContact(input)).length > 0) return;
-		const fingerprint = JSON.stringify(buildCreateContactBody(input, ""));
+		if (cf.status === "loading") return;
+		const c = custom.prepare();
+		if (!c.ok) return;
+		const fingerprint = JSON.stringify([buildCreateContactBody(input, ""), c.patch]);
 		if (memo.current?.fingerprint !== fingerprint)
 			memo.current = { fingerprint, key: crypto.randomUUID() };
 		const key = memo.current.key;
 		onBusy(true);
 		setServerError(null);
 		try {
-			onCreated(await createContact(buildCreateContactBody(input, key), key));
+			onCreated(await createContact(withCreateProperties(buildCreateContactBody(input, key), c.patch), key));
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setServerError(classifyCreateContactError(e));
 		} finally {
 			onBusy(false);
@@ -126,6 +133,7 @@ function NewContactForm({
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="create" />
 		</form>
 	);
 }

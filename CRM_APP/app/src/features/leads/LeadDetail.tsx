@@ -18,6 +18,7 @@ import {
 } from "../../ui/index.ts";
 import { navigate } from "../../router.ts";
 import { dealContextSearch } from "../deals/model.ts";
+import { type CustomFields, CustomFieldsEdit, CustomFieldsRead, useCustomDraft, useCustomFields, withProperties } from "../properties/index.ts";
 import { AddTaskButton } from "../tasks/index.ts";
 import { fetchLead, patchLead } from "./api.ts";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
@@ -36,12 +37,13 @@ type EditError = null | "conflict" | "forbidden" | "other";
 type EditorProps = {
 	lead: LeadRow;
 	assignees: readonly Assignee[];
+	cf: CustomFields;
 	onUpdated: (lead: Lead) => void;
 	onDone: () => void;
 };
 
 /** Keyed by lead id + version by the parent: a reload (new version) remounts it with a fresh draft. */
-function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
+function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 	const { t } = useI18n();
 	const toast = useToast();
 	const [draft, setDraft] = useState(() => draftOf(lead));
@@ -50,7 +52,8 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 	const [error, setError] = useState<EditError>(null);
 	const [titleIssue, setTitleIssue] = useState(false);
 
-	const dirty = buildPatchBody(lead, draft, "x") !== null;
+	const custom = useCustomDraft(cf, "edit");
+	const dirty = buildPatchBody(lead, draft, "x") !== null || custom.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === lead.owner_id) || !lead.owner_id
 			? assignees
@@ -61,7 +64,10 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 			setTitleIssue(true);
 			return;
 		}
-		const body = buildPatchBody(lead, draft, crypto.randomUUID());
+		const c = custom.prepare();
+		if (!c.ok) return;
+		const id = crypto.randomUUID();
+		const body = withProperties(buildPatchBody(lead, draft, id), c.patch, { commandId: id, version: lead.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -71,6 +77,7 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 			toast.notify(t("leads.edit.saved"), "success");
 			onDone();
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setError(
 				isVersionConflict(e)
 					? "conflict"
@@ -181,6 +188,7 @@ function LeadEditor({ lead, assignees, onUpdated, onDone }: EditorProps) {
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}
@@ -209,6 +217,7 @@ export function LeadDetail({
 }) {
 	const { t, formatDateTime } = useI18n();
 	const isAdmin = useIsAdmin();
+	const cf = useCustomFields("lead", "leads", lead?.id ?? null, lead?.version ?? null);
 	if (lead === null)
 		return (
 			<PreviewPanel
@@ -282,6 +291,7 @@ export function LeadDetail({
 					key={`${lead.id}:${lead.version}`}
 					lead={lead}
 					assignees={assignees}
+					cf={cf}
 					onUpdated={onUpdated}
 					onDone={done}
 				/>
@@ -298,6 +308,8 @@ export function LeadDetail({
 					]
 					: undefined
 			}
-		/>
+		>
+			<CustomFieldsRead cf={cf} />
+		</RecordPanel>
 	);
 }

@@ -323,7 +323,7 @@ function Body({
 export function PropertiesView() {
 	const { t } = useI18n();
 	const session = useSession();
-	const manage = session.info?.configure === true;
+	const manage = session.info?.property_manage ?? session.info?.configure === true;
 	const [object, setObject] = useState<ObjectKey>("contact");
 	const { state, reload } = useSchema(object);
 

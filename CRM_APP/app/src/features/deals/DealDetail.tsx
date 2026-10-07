@@ -14,6 +14,7 @@ import {
 	useI18n,
 	useToast,
 } from "../../ui/index.ts";
+import { type CustomFields, CustomFieldsEdit, useCustomDraft, withProperties } from "../properties/index.ts";
 import { fetchDeal, fetchHistory, patchDeal, transitionDeal } from "./api.ts";
 import {
 	type Assignee,
@@ -181,10 +182,12 @@ export function DealEditor({
 	deal,
 	assignees,
 	currencies,
+	cf,
 	onUpdated,
 	onDone,
 }: {
 	deal: DealRow;
+	cf: CustomFields;
 	assignees: readonly Assignee[];
 	currencies: readonly string[];
 	onUpdated: (d: Deal) => void;
@@ -199,7 +202,8 @@ export function DealEditor({
 	const [error, setError] = useState<EditError>(null);
 	const [touched, setTouched] = useState(false);
 	const issues = touched ? validateEdit(draft) : {};
-	const dirty = isDirty(deal, draft);
+	const custom = useCustomDraft(cf, "edit");
+	const dirty = isDirty(deal, draft) || custom.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === deal.owner_id) || !deal.owner_id
 			? assignees
@@ -208,7 +212,10 @@ export function DealEditor({
 	const save = async () => {
 		setTouched(true);
 		if (Object.keys(validateEdit(draft)).length > 0) return;
-		const body = buildPatchBody(deal, draft, crypto.randomUUID());
+		const c = custom.prepare();
+		if (!c.ok) return;
+		const id = crypto.randomUUID();
+		const body = withProperties(buildPatchBody(deal, draft, id), c.patch, { commandId: id, version: deal.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -217,6 +224,7 @@ export function DealEditor({
 			toast.notify(t("deals.edit.saved"), "success");
 			onDone();
 		} catch (e) {
+			if (custom.fail(e)) return;
 			setError(
 				isVersionConflict(e)
 					? "conflict"
@@ -320,6 +328,7 @@ export function DealEditor({
 					</option>
 				))}
 			</Select>
+			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}
 				saving={saving}

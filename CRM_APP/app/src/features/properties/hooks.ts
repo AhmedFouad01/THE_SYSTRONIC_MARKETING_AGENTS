@@ -36,11 +36,14 @@ export function useSchema(object: ObjectKey): { state: SchemaState; reload: () =
 	return { state, reload: () => run(true) };
 }
 
-/** true = the caller has schema.read, false = 403, null = unknown yet / not connected / failed (nav stays hidden). */
-export function useSchemaRead(actor: string | null): boolean | null {
+/**
+ * true = the caller has schema.read, false = 403, null = unknown yet / not connected / failed (nav stays hidden).
+ * `flag` is the session's `schema_read` (P1b B3 server): when the server sends it the probe is skipped; an older server falls back to the probe.
+ */
+export function useSchemaRead(actor: string | null, flag?: boolean): boolean | null {
 	const [answer, setAnswer] = useState<{ actor: string; ok: boolean } | null>(null);
 	useEffect(() => {
-		if (actor === null) return;
+		if (actor === null || flag !== undefined) return;
 		const c = new AbortController();
 		probeSchemaRead(c.signal)
 			.then(() => setAnswer({ actor, ok: true }))
@@ -48,6 +51,7 @@ export function useSchemaRead(actor: string | null): boolean | null {
 				if (isApiError(e) && e.kind === "forbidden") setAnswer({ actor, ok: false });
 			});
 		return () => c.abort();
-	}, [actor]);
+	}, [actor, flag]);
+	if (actor !== null && flag !== undefined) return flag;
 	return actor !== null && answer?.actor === actor ? answer.ok : null;
 }
