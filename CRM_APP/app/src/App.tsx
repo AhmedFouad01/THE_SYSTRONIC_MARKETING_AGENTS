@@ -4,6 +4,8 @@ import { fetchAssignees } from "./features/leads/api.ts";
 import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, PropertiesView, ReportingView, TasksView, useSchemaRead } from "./features/index.ts";
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
+import { ImportWizard } from "./features/imports/ImportWizard.tsx";
+import { importDraftStore } from "./features/imports/draft.ts";
 import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
@@ -61,7 +63,7 @@ function Routed() {
 			actor={actorId}
 			actorName={actorName}
 			actorRole={connected ? roleLabel(session.info?.configure || session.info?.merge ? "manager" : null, t) : null}
-			onDisconnect={() => sessionStore.disconnect()}
+			onDisconnect={() => { importDraftStore.clear(); sessionStore.disconnect(); }}
 			hiddenNavKeys={[
 				...(canReadSchema === true ? [] : ["properties"]),
 				...upcomingHiddenKeys(Boolean(session.info?.configure || session.info?.merge), Boolean(sessionStore.getCredentials()?.grantId)),
@@ -80,7 +82,9 @@ function Routed() {
 /** A successful scope change remounts every feature: selections, records and future import drafts are tenant-bound. */
 function WorkspaceContent({ route }: { route: ReturnType<typeof useRoute> }) {
 	return (
-		route === "/leads" ? (
+		route === "/imports" ? (
+			<ImportWizard />
+		) : route === "/leads" ? (
 			<LeadsView />
 		) : route === "/contacts" ? (
 			<ContactsView />

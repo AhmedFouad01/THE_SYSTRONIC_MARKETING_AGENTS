@@ -12,11 +12,17 @@ grants get 403 on every route. Everything is tenant-scoped under RLS.
 | Method + path | Purpose |
 |---|---|
 | `GET /v1/imports/fields?object=contact\|lead` | Mapping targets (fixed + the tenant's active, writable custom properties, with select options) and the hard limits |
+| `POST /v1/imports/inspect` | Authorized upload structure and first three raw sample rows. **Writes nothing.** |
 | `POST /v1/imports/preview` | Parse + validate + duplicate-check. **Writes nothing.** |
 | `POST /v1/imports` | Run the import (one transaction). 201 new job, 200 `replayed: true` |
 | `GET /v1/imports?cursor=` | Jobs, 50 per page (`next_cursor`) |
 | `GET /v1/imports/:id` | One job |
 | `GET /v1/imports/:id/rows?outcome=&after=` | Per-row outcome ledger, 200 per page (`next_after`) |
+
+## Upload inspection (I1 UI)
+`POST /v1/imports/inspect`: `{object,format,filename,file_base64,options?:{sheet}}` with the same file/name/format/sheet validation and guarded parser limits as preview. Unknown keys, mapping and other options are rejected. The existing no-agency `crm.import` + `crm.write` gate runs before file decoding/parsing; raw samples come exclusively from the caller's uploaded file, never CRM rows or inferred property targets.
+Response `data`: `{object,format,file{name,sha256,bytes},limits,headers,total_rows,sheet,samples:[{row,cells}]}`. At most three data rows; original spreadsheet row numbers; at most 100 columns; dates serialize as ISO strings; formula-like values remain plain text. Default XLSX sheet is 1; CSV sheet is null. No duplicate checks, identifier lookup, registry matching or writes occur.
+`/fields` additionally returns `sensitive_mapping` (read + write rights on the selected object). Its existing target list remains compatible; clients hide email/phone and sensitive custom targets when this flag is absent/false. Older servers cannot enable sensitive mapping in the staged UI until they expose this authority flag.
 
 ## Request body (preview and commit)
 ```json

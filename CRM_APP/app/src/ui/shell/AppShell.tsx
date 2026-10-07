@@ -7,7 +7,7 @@ import { type RecordCrumb, RecordCrumbContext } from "./RecordCrumb.tsx";
 import { useTheme } from "../theme/index.ts";
 import { Badge } from "../primitives/Badge.tsx";
 import { filterNavigation, linkedLeaves, NAV_TREE, navigationTrail, type NavLink, type NavNode, splitMobileNav } from "./navigation.ts";
-export { ALL_ROUTES_HAVE_NAV, MOBILE_PRIMARY_KEYS, NAV, NAV_ROUTES, splitMobileNav } from "./navigation.ts";
+export { ALL_ROUTES_ACCOUNTED_FOR, ALL_ROUTES_HAVE_NAV, MOBILE_PRIMARY_KEYS, NAV, NAV_ROUTES, splitMobileNav } from "./navigation.ts";
 import { disclosureStorageKey, expandActiveBranch, restoreDisclosures, type Disclosures } from "./disclosures.ts";
 import { readPref, writePref } from "../storage.ts";
 import { WorkspaceControl, type WorkspaceControls, WorkspaceSwitchDialog } from "./WorkspaceSwitcher.tsx";

@@ -1,4 +1,4 @@
-import { ROUTES, type RoutePath } from "../../router.ts";
+import { ROUTES, STAGED_ROUTES, type RoutePath } from "../../router.ts";
 import type { MessageKey } from "../i18n/index.ts";
 import type { IconName } from "../icons/index.ts";
 
@@ -59,6 +59,7 @@ export function linkedLeaves(nodes: readonly NavNode[]): NavLink[] {
 export const NAV = linkedLeaves(NAV_TREE);
 export const NAV_ROUTES: readonly RoutePath[] = NAV.flatMap((n) => n.also ? [n.route, n.also] : [n.route]);
 export const ALL_ROUTES_HAVE_NAV = ROUTES.every((route) => NAV_ROUTES.includes(route));
+export const ALL_ROUTES_ACCOUNTED_FOR = ROUTES.every((route) => STAGED_ROUTES.includes(route) || NAV_ROUTES.includes(route));
 
 /** Use the same denied keys for desktop, mobile and breadcrumbs; prune empty disclosures. */
 export function filterNavigation(nodes: readonly NavNode[], hiddenKeys: readonly string[]): NavNode[] {

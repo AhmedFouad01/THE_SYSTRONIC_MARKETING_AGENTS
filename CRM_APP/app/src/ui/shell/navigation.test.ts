@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ROUTES, toRoute } from "../../router.ts";
+import { ROUTES, STAGED_ROUTES, toRoute } from "../../router.ts";
 import { ar } from "../i18n/ar.ts";
 import { en } from "../i18n/en.ts";
 import { filterNavigation, linkedLeaves, NAV_TREE, navigationTrail, NAV_ROUTES, type NavNode, splitMobileNav, upcomingHiddenKeys } from "./navigation.ts";
@@ -10,7 +10,7 @@ function allNodes(nodes: readonly NavNode[]): NavNode[] {
 
 describe("hierarchical navigation", () => {
 	it("retains the exact live route set including dashboard and reporting aliases", () => {
-		expect([...NAV_ROUTES].sort()).toEqual([...ROUTES].sort());
+		expect([...NAV_ROUTES].sort()).toEqual(ROUTES.filter((route) => !STAGED_ROUTES.includes(route)).sort());
 		expect(navigationTrail(NAV_TREE, "/").map((n) => n.key)).toEqual(["overview", "dashboard"]);
 		expect(navigationTrail(NAV_TREE, "/reporting-v2").map((n) => n.key)).toEqual(["insights", "reporting"]);
 	});
@@ -25,7 +25,9 @@ describe("hierarchical navigation", () => {
 		const upcoming = allNodes(NAV_TREE).filter((n) => n.kind === "upcoming");
 		expect(upcoming.map((n) => n.key)).toEqual(["segments", "import", "journeys", "integrations", "users", "security"]);
 		for (const node of upcoming) expect(node).not.toHaveProperty("route");
-		for (const route of ["/imports", "/segments", "/journeys", "/settings/integrations", "/settings/users", "/settings/security"]) expect(toRoute(`/app${route}`)).toBeNull();
+		expect(toRoute("/app/imports")).toBe("/imports");
+		expect(NAV_ROUTES).not.toContain("/imports");
+		for (const route of ["/segments", "/journeys", "/settings/integrations", "/settings/users", "/settings/security"]) expect(toRoute(`/app${route}`)).toBeNull();
 	});
 	it("removes denied live leaves from the hierarchy, aliases and mobile shortcuts", () => {
 		const hidden = ["properties", "leads", "reporting", "journeys", ...upcomingHiddenKeys(false, false)];

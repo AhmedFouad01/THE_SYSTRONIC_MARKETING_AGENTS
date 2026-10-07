@@ -13,8 +13,11 @@ export const ROUTES = [
 	"/reporting",
 	"/reporting-v2",
 	"/settings/properties",
+	"/imports",
 ] as const;
 export type RoutePath = (typeof ROUTES)[number];
+/** Direct gated stages remain absent from live navigation until their complete workflow ships. */
+export const STAGED_ROUTES: readonly RoutePath[] = ["/imports"];
 
 export function toRoute(pathname: string): RoutePath | null {
 	if (pathname !== BASE && !pathname.startsWith(`${BASE}/`)) return null;
