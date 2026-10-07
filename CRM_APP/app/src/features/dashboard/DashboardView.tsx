@@ -53,6 +53,7 @@ import { type Load, useLoad } from "./useLoad.ts";
 import "../reporting/reporting.css";
 import "./dashboard.css";
 import { PipelineWidget } from "./PipelineWidget.tsx";
+import { LeadsWidget } from "./LeadsWidget.tsx";
 
 const NARROW = "(max-width: 720px)";
 
@@ -588,7 +589,7 @@ export function DashboardView() {
 					{topCampaigns}
 				</Panel>
 			</div>
-			<div className="sy-dash__charts"><PipelineWidget /></div>
+			<div className="sy-dash__charts"><PipelineWidget /><LeadsWidget /></div>
 			<NewTaskDialog
 				open={taskOpen}
 				onClose={() => setTaskOpen(false)}

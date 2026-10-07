@@ -12,7 +12,7 @@ export type ChartColumn = {
 	key: string; label: string; kind: "count" | "money"; currency?: string;
 	plot?: boolean; type?: ChartKind; color?: "success" | "danger";
 };
-export type ChartRow = { key: string; label: string; tone?: "success" | "danger"; values: Record<string, ChartValue> };
+export type ChartRow = { key: string; label: string; tone?: "success" | "danger" | "muted"; values: Record<string, ChartValue> };
 /** Both canvas and table consume these rows. Money stays a decimal minor-unit string. */
 export type ChartModel = {
 	scope: ChartScope; rowLabel: string; columns: ChartColumn[]; rows: ChartRow[];
@@ -65,11 +65,11 @@ export function plotValue(value: ChartValue, column: ChartColumn): number | null
 	return Number(big) / (column.kind === "money" ? 10 ** currencyExponent(column.currency ?? "EGP") : 1);
 }
 export const isolateCanvas = (value: string) => `\u2068${value}\u2069`;
-export type ChartTheme = { text: string; grid: string; surface: string; success: string; danger: string; font: string; palette: string[] };
+export type ChartTheme = { text: string; grid: string; surface: string; success: string; danger: string; muted: string; font: string; palette: string[] };
 export function resolveChartTheme(read: (name: string) => string): ChartTheme {
 	return {
 		text: read("--sy-text"), grid: read("--sy-border"), surface: read("--sy-surface"),
-		success: read("--sy-success-fg"), danger: read("--sy-danger-fg"), font: read("--sy-font-data"),
+		success: read("--sy-success-fg"), danger: read("--sy-danger-fg"), muted: read("--sy-text-3"), font: read("--sy-font-data"),
 		palette: Array.from({ length: 8 }, (_, i) => read(`--sy-chart-${i + 1}`)),
 	};
 }

@@ -14,3 +14,8 @@
 
 .sy-chart__controls { display: flex; flex-wrap: wrap; gap: var(--sy-space-12); }
 .sy-chart__controls .sy-field { min-inline-size: 8rem; flex: 1 1 8rem; }
+
+.sy-chart__kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sy-space-12); margin-block: var(--sy-space-12); }
+.sy-chart__kpis dt { color: var(--sy-text-2); }
+.sy-chart__kpis dd { margin: 0; color: var(--sy-text); font-size: var(--sy-type-section-title-size); font-weight: var(--sy-type-section-title-weight); }
+@media (max-width: 720px) { .sy-chart__kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
