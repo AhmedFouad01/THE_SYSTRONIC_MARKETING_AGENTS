@@ -55,6 +55,8 @@ import { PipelineWidget } from "./PipelineWidget.tsx";
 import { LeadsWidget } from "./LeadsWidget.tsx";
 import { OutcomesWidget } from "./OutcomesWidget.tsx";
 import { TasksWidget } from "./TasksWidget.tsx";
+import { ActivityWidget } from "./ActivityWidget.tsx";
+import { dashboardChartOrder } from "./composition.ts";
 import { fetchTasksDue, tasksDueState } from "./tasksDue.ts";
 import { browserTimezone } from "./outcomes.ts";
 
@@ -589,7 +591,16 @@ export function DashboardView() {
 					{topCampaigns}
 				</Panel>
 			</div>
-			<div className="sy-dash__charts"><PipelineWidget /><LeadsWidget /><OutcomesWidget /><TasksWidget key={taskKey} state={taskState} onRetry={taskAggregate.reload} /></div>
+			<div className="sy-dash__charts">{dashboardChartOrder(taskState.status === "ready" ? taskState.data.scope : undefined).map((widget) => {
+				switch (widget) {
+					case "pipeline": return <PipelineWidget key={widget} />;
+					case "leads": return <LeadsWidget key={widget} />;
+					case "outcomes": return <OutcomesWidget key={widget} />;
+					case "tasks": return <TasksWidget key={`${widget}:${taskKey}`} state={taskState} onRetry={taskAggregate.reload} />;
+					case "activity": return <ActivityWidget key={widget} />;
+				}
+				return null;
+			})}</div>
 			<NewTaskDialog
 				open={taskOpen}
 				onClose={() => setTaskOpen(false)}

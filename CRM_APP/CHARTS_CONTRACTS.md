@@ -1,6 +1,6 @@
 # CHARTS_CONTRACTS — dashboard aggregate endpoints (roadmap v2 item 4, server half)
 
-Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline, C2 leads, C3 outcomes and C4 tasks widgets live in the dashboard; C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
+Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline, C2 leads, C3 outcomes, C4 tasks and C5 activity widgets live in the dashboard. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
 No migration or SECURITY DEFINER function. Approved exact dependencies Chart.js 4.5.1 + react-chartjs-2 5.3.1 are installed for the UI round. The shared typed row model drives canvas data, exact bigint money tooltips and accessible tables; unsafe numeric plots are omitted and explained alongside their exact table values.
 
 ## 1. Common rules
@@ -79,6 +79,7 @@ Activity over time = records created per bucket plus tasks completed.
   "buckets": [ { "start": "2026-10-05", "end": "2026-10-12", "contacts_created": 4, "leads_created": 9,
                  "deals_created": 2, "tasks_created": 11, "tasks_completed": 8 } ] }
 ```
+- Live C5 requests 12 Saturday weeks in the browser timezone, uses five separately labelled marker/dash line series and spans the full chart grid. Composition uses server scope: assigned C4,C1,C2,C3,C5; tenant C1,C2,C3,C4,C5. Until scope resolves, the default order is tenant; session capabilities do not expose membership role.
 - Merged contacts are excluded from `contacts_created`.
 - Deliberately not the audit log: that stream needs `audit.read` (managers only); the dashboard is a `crm.read` surface and reps must get their own activity.
 - Caveat: `created_at` of rows that existed before migration 008 and have no `*.created` audit row equals the migration time (documented in 008). Irrelevant for new tenants.
