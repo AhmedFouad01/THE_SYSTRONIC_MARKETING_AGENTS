@@ -1,0 +1,224 @@
+npm notice run systronic-crm@0.1.0 npx
+npm notice run tsx --env-file=.env spike/p1.ts
+--- migration created tables
+[
+ "user",
+ "session",
+ "account",
+ "verification",
+ "organization",
+ "member",
+ "invitation",
+ "twoFactor",
+ "rateLimit"
+]
+--- U3 id-ish columns
+[
+ "account.accountId:text",
+ "account.id:uuid",
+ "account.providerId:text",
+ "account.userId:uuid",
+ "invitation.id:uuid",
+ "invitation.inviterId:uuid",
+ "invitation.organizationId:uuid",
+ "member.id:uuid",
+ "member.organizationId:uuid",
+ "member.userId:uuid",
+ "organization.id:uuid",
+ "rateLimit.id:uuid",
+ "session.activeOrganizationId:text",
+ "session.id:uuid",
+ "session.userId:uuid",
+ "twoFactor.id:uuid",
+ "twoFactor.userId:uuid",
+ "user.id:uuid",
+ "verification.id:uuid"
+]
+--- auth.session columns
+[
+ "id:uuid",
+ "expiresAt:timestamp with time zone",
+ "token:text",
+ "createdAt:timestamp with time zone",
+ "updatedAt:timestamp with time zone",
+ "ipAddress:text",
+ "userAgent:text",
+ "userId:uuid",
+ "activeOrganizationId:text"
+]
+--- U4 public tables created
+0
+--- U4 spike role privileges
+{
+ "pub_usage": true,
+ "pub_create": false,
+ "auth_usage": true
+}
+--- sign-up status/body
+{
+ "status": 200,
+ "user": "24c7cde0-1963-48c4-acc9-a2415b45d6bc",
+ "token": null
+}
+PASS  U2/D1 hash called on sign-up via A1: 1
+--- D1 stored credential hash prefix
+scrypt$v1$dev$131072$8
+PASS  D1 stored hash is A1 format
+--- U2 unknown-email sign-in
+{
+ "status": 401,
+ "body": {
+  "message": "Invalid email or password",
+  "code": "INVALID_EMAIL_OR_PASSWORD"
+ },
+ "hashCalls": 1
+}
+--- U2 wrong-password sign-in
+{
+ "status": 401,
+ "body": {
+  "message": "Invalid email or password",
+  "code": "INVALID_EMAIL_OR_PASSWORD"
+ }
+}
+PASS  unknown vs wrong body identical
+--- sign-in
+{
+ "status": 200,
+ "tokenInBody": true,
+ "setCookie": [
+  "better-auth.session_token=<v>; Max-Age=604800; Path=/; HttpOnly; SameSite=Lax"
+ ]
+}
+--- D1 verify args
+{
+ "calls": 1,
+ "keys": [
+  "hash",
+  "password"
+ ],
+ "hashArgPrefix": "scrypt$v1$dev$1310"
+}
+--- U1 session row token vs body token
+{
+ "rowToken": "yHYtWx...",
+ "bodyEquals": true,
+ "len": 32,
+ "sha256ofBodyTokenEqualsRow": false
+}
+--- U1 cookie value shape
+{
+ "startsWithRawToken": true,
+ "cookieNames": [
+  "better-auth.session_token"
+ ]
+}
+PASS  get-session via cookie
+--- U1 raw token as unsigned cookie accepted?
+{
+ "status": 200,
+ "body": null
+}
+--- Bearer w/o bearer plugin
+{
+ "status": 200,
+ "body": null
+}
+--- U9 session created 400d ago, expires in 1m, then get-session
+{
+ "status": 200,
+ "createdAt": "2025-09-02T13:48:18.918Z",
+ "expiresAt": "2026-10-14T13:48:18.922Z",
+ "now": "2026-10-07T13:48:18.924Z"
+}
+--- U10 sign-out deletes row
+{
+ "resp": {
+  "success": true
+ },
+ "before": 1,
+ "after": 1
+}
+--- U10 revoke-sessions
+{
+ "status": 200,
+ "remaining": 0
+}
+--- U8 12 wrong attempts from 12 IPs then correct
+{
+ "statuses": [
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401,
+  401
+ ],
+ "goodStatus": 200
+}
+--- T1 same-IP sign-in rate limit
+[
+ 401,
+ 401,
+ 401,
+ 429,
+ 429,
+ 429
+]
+--- rateLimit rows
+[
+ {
+  "key": "198.51.100.7|/sign-up/email",
+  "count": 1
+ },
+ {
+  "key": "198.51.100.7|/sign-in/email",
+  "count": 3
+ },
+ {
+  "key": "198.51.100.7|/get-session",
+  "count": 4
+ },
+ {
+  "key": "198.51.100.7|/sign-out",
+  "count": 1
+ },
+ {
+  "key": "198.51.100.7|/revoke-sessions",
+  "count": 1
+ }
+]
+--- log lines mentioning schema/validate
+[
+ "debug: PostgreSQL migration: Using schema 'auth' (from database.schemaName)",
+ "debug: Schema 'auth' does not exist yet. The migration creates it before creating tables.",
+ "debug: Found 0 table(s) in schema 'auth': (none)",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password"
+]
+--- warn/error logs (first 12)
+[
+ "warn: User not found",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password",
+ "warn: Invalid password"
+]

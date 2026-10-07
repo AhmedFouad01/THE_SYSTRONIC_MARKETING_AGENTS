@@ -1,0 +1,182 @@
+npm notice run systronic-crm@0.1.0 npx
+npm notice run tsx --env-file=.env spike/p2.ts
+--- U5 enable
+{
+ "status": 200,
+ "hasUri": true,
+ "backup": 10,
+ "flagBeforeVerify": false
+}
+--- U5 verify-totp (enrolment)
+{
+ "status": 200,
+ "flagAfterVerify": true
+}
+--- U5 2FA user sign-in
+{
+ "status": 200,
+ "body": {
+  "twoFactorRedirect": true,
+  "twoFactorMethods": [
+   "totp"
+  ]
+ },
+ "cookies": [
+  "better-auth.session_token=; Max-Age=<v>; Path=/; HttpOnly; SameSite=La",
+  "better-auth.session_data=; Max-Age=<v>; Path=/; HttpOnly; SameSite=Lax",
+  "better-auth.two_factor=<v>; Max-Age=600; Path=/; HttpOnly; SameSite=La"
+ ],
+ "sessionRowsForUser": 0,
+ "sessionEvents": [
+  "session.create d93c53",
+  "session.delete d93c53"
+ ]
+}
+--- U5 get-session between steps
+{
+ "status": 200,
+ "body": null
+}
+--- U5 verify-totp trustDevice:true (no hook)
+{
+ "status": 200,
+ "trustCookieSet": true
+}
+--- U5 sign-in presenting trust cookie, NO second factor
+{
+ "status": 200,
+ "twoFactorRedirect": false,
+ "tokenIssued": true
+}
+[2m2026-10-07T13:51:01.925Z[0m [31mERROR[0m [1m[Better Auth]:[0m trustDevice refused
+--- U5 hook refusal
+{
+ "status": 400,
+ "body": {
+  "message": "trustDevice refused"
+ },
+ "trustCookieSet": false
+}
+--- U5 same challenge without trustDevice after refusal
+{
+ "status": 200
+}
+--- U5 backup code use then reuse
+{
+ "first": 200,
+ "second": 401
+}
+--- U8 2FA wrong codes x12 (fresh challenge each)
+[
+ 401,
+ 401,
+ 401,
+ 401,
+ 401,
+ 401,
+ 401,
+ 401,
+ 401,
+ 429,
+ 429,
+ 429
+]
+--- U7 server createOrganization({userId}) with allowUserToCreateOrganization=false
+{
+ "orgId": "848437e1-176e-4bb8-bcca-08015925a06c",
+ "members": [
+  {
+   "role": "manager",
+   "oid": "848437e1-176e-4bb8-bcca-08015925a06c"
+  }
+ ]
+}
+--- U7 HTTP organization/create by user
+{
+ "status": 403,
+ "body": {
+  "message": "You are not allowed to create a new organization",
+  "code": "YOU_ARE_NOT_ALLOWED_TO_CREATE_A_NEW_ORGANIZATION"
+ }
+}
+--- U7 invite-member roles as manager (custom roles manager/rep/reader)
+{
+ "rep": {
+  "status": 200,
+  "msg": "rep"
+ },
+ "reader": {
+  "status": 200,
+  "msg": "reader"
+ },
+ "owner": {
+  "status": 200,
+  "msg": "owner"
+ },
+ "admin": {
+  "status": 200,
+  "msg": "admin"
+ },
+ "member": {
+  "status": 200,
+  "msg": "member"
+ },
+ "bogus": {
+  "status": 400,
+  "msg": "ROLE_NOT_FOUND: bogus"
+ }
+}
+--- U7 invitation rows
+[
+ {
+  "email": "admin@example.com",
+  "role": "admin",
+  "status": "pending"
+ },
+ {
+  "email": "member@example.com",
+  "role": "member",
+  "status": "pending"
+ },
+ {
+  "email": "owner@example.com",
+  "role": "owner",
+  "status": "pending"
+ },
+ {
+  "email": "reader@example.com",
+  "role": "reader",
+  "status": "pending"
+ },
+ {
+  "email": "rep@example.com",
+  "role": "rep",
+  "status": "pending"
+ }
+]
+--- U7 sole manager leaves org
+{
+ "status": 400,
+ "body": {
+  "message": "You cannot leave the organization as the only owner",
+  "code": "YOU_CANNOT_LEAVE_THE_ORGANIZATION_AS_THE_ONLY_OWNER"
+ },
+ "memberRows": 1
+}
+--- U4 schema-validation logs
+[]
+--- U4 validateSchema with a drifted table
+[
+ "error: Database schema mismatch\n\n  Missing columns\n    user.image\n\n  help: Run `npx auth migrate` to add the missing tables and columns."
+]
+--- tables
+[
+ "user",
+ "session",
+ "account",
+ "verification",
+ "organization",
+ "member",
+ "invitation",
+ "twoFactor"
+]
