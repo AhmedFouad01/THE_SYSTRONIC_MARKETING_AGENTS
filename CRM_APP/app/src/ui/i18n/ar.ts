@@ -3,6 +3,18 @@
 import type { MessageKey } from "./en.ts";
 
 export const ar: Record<MessageKey, string> = {
+	"charts.pipeline.title": "مسار المبيعات حسب المرحلة",
+	"charts.pipeline.stage": "المرحلة",
+	"charts.pipeline.count": "الصفقات",
+	"charts.pipeline.value": "القيمة",
+	"charts.pipeline.won": "رابحة",
+	"charts.pipeline.lost": "خاسرة",
+	"charts.pipeline.archived": "مؤرشفة",
+	"charts.pipeline.selector": "مسار المبيعات",
+	"charts.pipeline.currency": "عملة القيمة",
+	"charts.pipeline.noPipelines": "لا توجد مسارات مبيعات",
+	"charts.pipeline.noCurrency": "لا توجد إجماليات عملة",
+	"charts.pipeline.open": "عرض مسار المبيعات",
 	"charts.mine": "الخاصة بي",
 	"charts.tenant": "مساحة العمل",
 	"charts.scopedTitle": "{title} — البيانات {scope}",

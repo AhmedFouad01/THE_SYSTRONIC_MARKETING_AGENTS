@@ -1,6 +1,6 @@
 # CHARTS_CONTRACTS — dashboard aggregate endpoints (roadmap v2 item 4, server half)
 
-Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, individual C1–C5 widgets pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
+Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline widget live in the dashboard; C2–C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
 No migration or SECURITY DEFINER function. Approved exact dependencies Chart.js 4.5.1 + react-chartjs-2 5.3.1 are installed for the UI round. The shared typed row model drives canvas data, exact bigint money tooltips and accessible tables; unsafe numeric plots are omitted and explained alongside their exact table values.
 
 ## 1. Common rules
@@ -35,7 +35,8 @@ Deals per stage: count and value. Max 100 pipelines (same cap as `/v1/pipelines`
                   "deal_count": 12, "totals": [ { "currency": "EGP", "amount_minor": "1500000" } ] } ] } ] }
 ```
 - Stages ordered by `position`; zero-deal stages are included with `deal_count: 0, totals: []`. Archived stages appear only while they still hold deals.
-- `outcome` is `"won"`, `"lost"` or `null`; the UI decides whether to show terminal stages in the funnel.
+- `outcome` is `"won"`, `"lost"` or `null`; C1 includes and labels both terminal outcomes.
+- The aggregate and session contracts supply no configured primary currency. C1 selects one currency independently, defaults to currency-code order, and never derives a tenant primary from unrelated report amounts. Pipeline and currency changes reuse the same authorized payload; money remains an exact decimal string in the table and secondary tooltip.
 
 ### 2.2 `GET /v1/dashboard/leads-breakdown`
 Leads by source and status.

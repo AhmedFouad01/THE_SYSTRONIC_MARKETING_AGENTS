@@ -12,7 +12,7 @@ export type ChartColumn = {
 	key: string; label: string; kind: "count" | "money"; currency?: string;
 	plot?: boolean; type?: ChartKind; color?: "success" | "danger";
 };
-export type ChartRow = { key: string; label: string; values: Record<string, ChartValue> };
+export type ChartRow = { key: string; label: string; tone?: "success" | "danger"; values: Record<string, ChartValue> };
 /** Both canvas and table consume these rows. Money stays a decimal minor-unit string. */
 export type ChartModel = {
 	scope: ChartScope; rowLabel: string; columns: ChartColumn[]; rows: ChartRow[];
@@ -81,7 +81,7 @@ export function chartData(model: ChartModel, theme: ChartTheme): ChartData<Chart
 		datasets: model.columns.filter((col) => col.plot !== false).map((col, i) => ({
 			label: isolateCanvas(col.label), type: col.type ?? model.type ?? "bar",
 			data: model.rows.map((row) => plotValue(row.values[col.key], col)),
-			backgroundColor: col.color ? theme[col.color] : theme.palette[i % theme.palette.length],
+			backgroundColor: model.rows.some((row) => row.tone) ? model.rows.map((row) => row.tone ? theme[row.tone] : (col.color ? theme[col.color] : theme.palette[i % theme.palette.length])) : (col.color ? theme[col.color] : theme.palette[i % theme.palette.length]),
 			borderColor: col.color ? theme[col.color] : theme.palette[i % theme.palette.length],
 			borderWidth: 2, pointStyle: markers[i % markers.length], borderDash: dashes[i % dashes.length],
 			pointRadius: 3, tension: 0.2, spanGaps: false,
@@ -105,12 +105,12 @@ export function chartOptions(model: ChartModel, locale: Locale, reduced: boolean
 				callbacks: { label: (item) => {
 					const col = plotted[item.datasetIndex];
 					const row = model.rows[item.dataIndex];
-					return isolateCanvas(`${col.label}: ${formatChartValue(row.values[col.key], col, locale)}`);
+					return [col, ...model.columns.filter((extra) => extra.plot === false)].map((column) => isolateCanvas(`${column.label}: ${formatChartValue(row.values[column.key], column, locale)}`));
 				} },
 			},
 		},
 		scales: {
-			x: { reverse: Boolean(model.horizontal && rtl), stacked: model.stacked, grid: { color: theme.grid }, ticks: { color: theme.text, ...(model.horizontal ? { callback: (v) => formatCount(Number(v), locale) } : {}) } },
+			x: { beginAtZero: true, reverse: Boolean(model.horizontal && rtl), stacked: model.stacked, grid: { color: theme.grid }, ticks: { color: theme.text, ...(model.horizontal ? { callback: (v) => formatCount(Number(v), locale) } : {}) } },
 			y: { beginAtZero: true, stacked: model.stacked, grid: { color: theme.grid }, ticks: { color: theme.text, ...(!model.horizontal ? { callback: (v) => formatCount(Number(v), locale) } : {}) } },
 			...(plotted.some((col) => col.kind === "money") && !model.horizontal ? {
 				money: { type: "linear" as const, position: rtl ? "left" as const : "right" as const, beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { color: theme.text } },

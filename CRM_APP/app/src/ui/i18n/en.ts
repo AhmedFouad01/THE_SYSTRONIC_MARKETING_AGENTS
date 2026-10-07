@@ -2,6 +2,18 @@
 // NAV) where present. Keys marked `// new` have no prototype string and are S1 additions.
 // Placeholders use {name}. AR (ar.ts) must define exactly the same keys (enforced by i18n.test.ts + types).
 export const en = {
+	"charts.pipeline.title": "Pipeline by stage",
+	"charts.pipeline.stage": "Stage",
+	"charts.pipeline.count": "Deals",
+	"charts.pipeline.value": "Value",
+	"charts.pipeline.won": "Won",
+	"charts.pipeline.lost": "Lost",
+	"charts.pipeline.archived": "Archived",
+	"charts.pipeline.selector": "Pipeline",
+	"charts.pipeline.currency": "Value currency",
+	"charts.pipeline.noPipelines": "No pipelines",
+	"charts.pipeline.noCurrency": "No currency totals",
+	"charts.pipeline.open": "View pipeline",
 	"charts.mine": "Mine",
 	"charts.tenant": "Workspace",
 	"charts.scopedTitle": "{title} — {scope}",

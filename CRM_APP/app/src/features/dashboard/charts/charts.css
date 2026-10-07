@@ -11,3 +11,6 @@
 .sy-chart__table thead { background: var(--sy-surface-2); }
 .sy-chart__status { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
 @media (max-width: 720px) { .sy-chart__canvas { block-size: 18rem; } }
+
+.sy-chart__controls { display: flex; flex-wrap: wrap; gap: var(--sy-space-12); }
+.sy-chart__controls .sy-field { min-inline-size: 8rem; flex: 1 1 8rem; }
