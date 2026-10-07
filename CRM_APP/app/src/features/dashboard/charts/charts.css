@@ -1,0 +1,13 @@
+.sy-chart { min-inline-size: 0; }
+.sy-chart__canvas { position: relative; block-size: 20rem; min-inline-size: 0; }
+.sy-chart__meta { display: flex; flex-wrap: wrap; gap: var(--sy-space-12); color: var(--sy-text-2); }
+.sy-chart__details { margin-block-start: var(--sy-space-12); }
+.sy-chart__details summary { cursor: pointer; color: var(--sy-interactive); padding-block: var(--sy-space-8); }
+.sy-chart__details summary:focus-visible, .sy-chart__table:focus-visible { outline: var(--sy-focus-width) solid var(--sy-focus); outline-offset: var(--sy-focus-offset); }
+.sy-chart__table { overflow: auto; max-inline-size: 100%; }
+.sy-chart__table table { border-collapse: collapse; inline-size: 100%; color: var(--sy-text); font-family: var(--sy-font-data); }
+.sy-chart__table caption { text-align: start; color: var(--sy-text-2); padding-block: var(--sy-space-8); }
+.sy-chart__table th, .sy-chart__table td { text-align: start; padding: var(--sy-space-8); border-block-end: 1px solid var(--sy-border); }
+.sy-chart__table thead { background: var(--sy-surface-2); }
+.sy-chart__status { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 720px) { .sy-chart__canvas { block-size: 18rem; } }

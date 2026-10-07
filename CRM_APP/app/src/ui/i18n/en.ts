@@ -2,6 +2,23 @@
 // NAV) where present. Keys marked `// new` have no prototype string and are S1 additions.
 // Placeholders use {name}. AR (ar.ts) must define exactly the same keys (enforced by i18n.test.ts + types).
 export const en = {
+	"charts.mine": "Mine",
+	"charts.tenant": "Workspace",
+	"charts.scopedTitle": "{title} — {scope}",
+	"charts.empty": "No data for this period",
+	"charts.emptyMine": "No records assigned to you",
+	"charts.error": "Could not load this chart",
+	"charts.forbidden": "You do not have permission to view this chart",
+	"charts.loading": "Loading {title}",
+	"charts.ready": "Chart data loaded",
+	"charts.period": "{from} to {to} (end exclusive)",
+	"charts.current": "Current records",
+	"charts.description": "{title}; {scope}; {period}; {timezone}; {measure}",
+	"charts.asOf": "As of {date}",
+	"charts.showTable": "Show data table",
+	"charts.table": "Chart data table",
+	"charts.tableFallback": "The same data is available in the adjacent data table.",
+	"charts.largeValues": "Some amounts are too large to plot safely. Exact values are shown in the data table.",
 	"app.name": "Systronic CRM", // brand name: not translated (existing shell test expects it in AR too)
 	"nav.primary": "Primary navigation",
 	"nav.workspace": "CRM Workspace",

@@ -3,6 +3,23 @@
 import type { MessageKey } from "./en.ts";
 
 export const ar: Record<MessageKey, string> = {
+	"charts.mine": "الخاصة بي",
+	"charts.tenant": "مساحة العمل",
+	"charts.scopedTitle": "{title} — البيانات {scope}",
+	"charts.empty": "لا توجد بيانات لهذه الفترة",
+	"charts.emptyMine": "لا توجد سجلات مسندة إليك",
+	"charts.error": "تعذّر تحميل هذا الرسم البياني",
+	"charts.forbidden": "ليس لديك إذن لعرض هذا الرسم البياني",
+	"charts.loading": "جارٍ تحميل {title}",
+	"charts.ready": "تم تحميل بيانات الرسم البياني",
+	"charts.period": "من {from} إلى {to} (النهاية غير مشمولة)",
+	"charts.current": "السجلات الحالية",
+	"charts.description": "الرسم: {title}؛ النطاق: {scope}؛ الفترة: {period}؛ التوقيت: {timezone}؛ القياس: {measure}",
+	"charts.asOf": "آخر تحديث: {date}",
+	"charts.showTable": "عرض جدول البيانات",
+	"charts.table": "جدول بيانات الرسم البياني",
+	"charts.tableFallback": "تتوفر البيانات نفسها في جدول البيانات المجاور.",
+	"charts.largeValues": "بعض المبالغ أكبر من أن تُعرض بدقة في الرسم. تظهر القيم الدقيقة في جدول البيانات.",
 	"app.name": "Systronic CRM",
 	"nav.primary": "التنقل الرئيسي",
 	"nav.workspace": "مساحة عمل CRM",
