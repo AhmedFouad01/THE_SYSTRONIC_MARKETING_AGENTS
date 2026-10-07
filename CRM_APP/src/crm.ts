@@ -2,6 +2,12 @@ import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
 import { type Context, Fault, transaction } from "./db.js";
 import { contactSources, listRecords } from "./list.js";
+import {
+	attachProperties,
+	mergeCustom,
+	prepareCustom,
+	sensitiveRead,
+} from "./properties.js";
 import { type Kind, projection } from "./query.js";
 export type Body = Record<string, unknown>;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -77,6 +83,18 @@ export async function record(
 	}
 	if (kind === "deal") r.amount_minor = Number(r.amount_minor);
 	return r;
+}
+// P1b B3: `properties` on a single record read = active custom values only; sensitive ones only for a caller who may read them on THIS record.
+async function withProperties(
+	db: pg.PoolClient,
+	ctx: Context,
+	kind: Kind,
+	r: Record<string, unknown>,
+) {
+	await attachProperties(db, ctx, kind, [r], {
+		keys: null,
+		sensitive: await sensitiveRead(db, ctx, kind, r.id as string),
+	});
 }
 async function assignment(db: pg.PoolClient, _ctx: Context, owner: unknown) {
 	const {
@@ -182,14 +200,17 @@ async function contactCreate(
 ) {
 	const object = randomUUID(),
 		owner = await assignment(db, ctx, b.owner_id);
+	const props = await prepareCustom(db, ctx, "contact", null, b.properties);
 	await db.query(
-		"INSERT INTO crm.contact(tenant_id,id,display_name,owner_id,source) VALUES($1,$2,$3,$4,$5)",
+		"INSERT INTO crm.contact(tenant_id,id,display_name,owner_id,source,custom,custom_search) VALUES($1,$2,$3,$4,$5,$6::jsonb,$7)",
 		[
 			ctx.tenant,
 			object,
 			text(b.display_name, 160),
 			owner,
 			text(b.source ?? "manual", 100),
+			props?.custom ?? "{}",
+			props?.search ?? "",
 		],
 	);
 	await identifiers(db, ctx, object, b.identifiers);
@@ -198,6 +219,7 @@ async function contactCreate(
 		"owner_id",
 		"source",
 		...(b.identifiers ? ["identifiers"] : []),
+		...(props?.changed.map((k) => `custom:${k}`) ?? []),
 	]);
 	return object;
 }
@@ -293,7 +315,7 @@ export async function crmRequest(
 			return {
 				data: (
 					await db.query(
-						"SELECT crm.actor() actor,crm.can_object('pipeline.manage','pipeline',NULL) configure,crm.can_object('crm.merge','contact',NULL) merge,crm.can_object('audit.read','audit',NULL) audit",
+						"SELECT crm.actor() actor,crm.can_object('pipeline.manage','pipeline',NULL) configure,crm.can_object('crm.merge','contact',NULL) merge,crm.can_object('audit.read','audit',NULL) audit,crm.can_object('schema.read','property',NULL) schema_read,crm.can_object('property.manage','property',NULL) property_manage",
 					)
 				).rows[0],
 			};
@@ -525,7 +547,9 @@ export async function crmRequest(
 			);
 			const s = await record(db, ctx, "contact", source, "crm.merge"),
 				t = await record(db, ctx, "contact", target, "crm.merge");
-			if (object === "merge-previews")
+			if (object === "merge-previews") {
+				// P1b B3: custom values follow the same rule as display_name: the target wins per key; keys only the source holds are filled in.
+				const mc = await mergeCustom(db, ctx, source, target);
 				return {
 					data: {
 						source_id: source,
@@ -536,6 +560,7 @@ export async function crmRequest(
 							s.display_name === t.display_name
 								? []
 								: ["display_name: target retained"],
+						custom: { fill: mc.fill, conflicts: mc.conflicts, fits: mc.fits },
 						affected: (
 							await db.query(
 								"SELECT (SELECT count(*)::int FROM crm.lead WHERE tenant_id=$1 AND contact_id=$2) leads,(SELECT count(*)::int FROM crm.deal WHERE tenant_id=$1 AND contact_id=$2) deals,(SELECT count(*)::int FROM crm.task WHERE tenant_id=$1 AND contact_id=$2) tasks,(SELECT count(*)::int FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2) identifiers",
@@ -544,6 +569,7 @@ export async function crmRequest(
 						).rows[0],
 					},
 				};
+			}
 			const result = await durable(
 				db,
 				ctx,
@@ -567,10 +593,18 @@ export async function crmRequest(
 						"UPDATE crm.contact SET merged_into_id=$3,version=version+1 WHERE tenant_id=$1 AND id=$2",
 						[ctx.tenant, source, target],
 					);
-					await db.query(
-						"UPDATE crm.contact SET version=version+1 WHERE tenant_id=$1 AND id=$2",
-						[ctx.tenant, target],
-					);
+					const mc = await mergeCustom(db, ctx, source, target);
+					if (!mc.fits) throw new Fault(422, "PROPERTIES_TOO_LARGE");
+					if (mc.fill.length)
+						await db.query(
+							"UPDATE crm.contact SET version=version+1,custom=$3::jsonb,custom_search=$4 WHERE tenant_id=$1 AND id=$2",
+							[ctx.tenant, target, JSON.stringify(mc.custom), mc.search],
+						);
+					else
+						await db.query(
+							"UPDATE crm.contact SET version=version+1 WHERE tenant_id=$1 AND id=$2",
+							[ctx.tenant, target],
+						);
 					const job = randomUUID();
 					await db.query(
 						"INSERT INTO crm.merge_job(tenant_id,id,source_id,target_id,source_version,target_version,actor_id) VALUES($1,$2,$3,$4,$5,$6,crm.actor())",
@@ -592,7 +626,11 @@ export async function crmRequest(
 						target,
 						"contact.merge_received",
 						request,
-						["identifiers", "references"],
+						[
+							"identifiers",
+							"references",
+							...mc.fill.map((k) => `custom:${k}`),
+						],
 					);
 					return { kind: "merge", id: job };
 				},
@@ -648,6 +686,7 @@ export async function crmRequest(
 					};
 				}
 				if (sub) throw new Fault(404, "NOT_FOUND");
+				await withProperties(db, ctx, kind as Kind, r);
 				return { data: r };
 			}
 			await permit(db, ctx, "crm.read", kind);
@@ -699,6 +738,7 @@ export async function crmRequest(
 			"command_id",
 			...(object ? ["expected_version"] : []),
 			...allowed,
+			"properties",
 		]);
 		if (
 			object &&
@@ -784,6 +824,21 @@ export async function crmRequest(
 								? "completed_at=now()"
 								: "completed_at=NULL",
 						);
+					// P1b B3: one validator (properties.ts) decides; the merged blob and the rebuilt search text are written with the row.
+					const props = await prepareCustom(
+						db,
+						ctx,
+						kind as Kind,
+						object,
+						b.properties,
+					);
+					if (props) {
+						values.push(props.custom, props.search);
+						sets.push(
+							`custom=$${values.length - 1}::jsonb`,
+							`custom_search=$${values.length}`,
+						);
+					}
 					sets.push("version=version+1");
 					await db.query(
 						`UPDATE crm.${kind} SET ${sets.join(",")} WHERE tenant_id=$1 AND id=$2`,
@@ -798,9 +853,13 @@ export async function crmRequest(
 						object,
 						`${kind}.updated`,
 						request,
-						Object.keys(b).filter(
-							(k) => !["command_id", "expected_version"].includes(k),
-						),
+						[
+							...Object.keys(b).filter(
+								(k) =>
+									!["command_id", "expected_version", "properties"].includes(k),
+							),
+							...(props?.changed.map((k) => `custom:${k}`) ?? []),
+						],
 					);
 					return { kind, id: object };
 				}
@@ -813,7 +872,12 @@ export async function crmRequest(
 					if (contact) throw new Fault(422, "VALIDATION_FAILED");
 					if (typeof b.contact !== "object" || Array.isArray(b.contact))
 						throw new Fault(422, "VALIDATION_FAILED");
-					fields(b.contact as Body, ["display_name", "identifiers", "source"]);
+					fields(b.contact as Body, [
+						"display_name",
+						"identifiers",
+						"source",
+						"properties",
+					]);
 					contact = await contactCreate(
 						db,
 						ctx,
@@ -834,9 +898,17 @@ export async function crmRequest(
 				}
 				if (kind !== "task" && !contact)
 					throw new Fault(422, "VALIDATION_FAILED");
+				const props = await prepareCustom(
+					db,
+					ctx,
+					kind as Kind,
+					null,
+					b.properties,
+				);
+				const cv = [props?.custom ?? "{}", props?.search ?? ""];
 				if (kind === "lead")
 					await db.query(
-						"INSERT INTO crm.lead(tenant_id,id,contact_id,owner_id,title,source,source_evidence) VALUES($1,$2,$3,$4,$5,'manual',$6)",
+						"INSERT INTO crm.lead(tenant_id,id,contact_id,owner_id,title,source,source_evidence,custom,custom_search) VALUES($1,$2,$3,$4,$5,'manual',$6,$7::jsonb,$8)",
 						[
 							ctx.tenant,
 							objectId,
@@ -844,6 +916,7 @@ export async function crmRequest(
 							owner,
 							text(b.title, 160),
 							text(b.source_evidence, 500),
+							...cv,
 						],
 					);
 				if (kind === "deal") {
@@ -868,7 +941,7 @@ export async function crmRequest(
 					if (!/^[A-Z]{3}$/.test(currency))
 						throw new Fault(422, "VALIDATION_FAILED");
 					await db.query(
-						"INSERT INTO crm.deal(tenant_id,id,contact_id,owner_id,title,lead_id,pipeline_id,stage_id,amount_minor,currency) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+						"INSERT INTO crm.deal(tenant_id,id,contact_id,owner_id,title,lead_id,pipeline_id,stage_id,amount_minor,currency,custom,custom_search) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12)",
 						[
 							ctx.tenant,
 							objectId,
@@ -880,6 +953,7 @@ export async function crmRequest(
 							stage,
 							integer(b.amount_minor ?? 0),
 							currency,
+							...cv,
 						],
 					);
 				}
@@ -893,7 +967,7 @@ export async function crmRequest(
 						contact = d.contact_id;
 					}
 					await db.query(
-						"INSERT INTO crm.task(tenant_id,id,contact_id,deal_id,owner_id,title,due_at) VALUES($1,$2,$3,$4,$5,$6,$7)",
+						"INSERT INTO crm.task(tenant_id,id,contact_id,deal_id,owner_id,title,due_at,custom,custom_search) VALUES($1,$2,$3,$4,$5,$6,$7,$8::jsonb,$9)",
 						[
 							ctx.tenant,
 							objectId,
@@ -902,6 +976,7 @@ export async function crmRequest(
 							owner,
 							text(b.title, 160),
 							date(b.due_at),
+							...cv,
 						],
 					);
 				}
@@ -912,7 +987,12 @@ export async function crmRequest(
 					objectId,
 					`${kind}.created`,
 					request,
-					Object.keys(b).filter((k) => k !== "command_id"),
+					[
+						...Object.keys(b).filter(
+							(k) => !["command_id", "properties"].includes(k),
+						),
+						...(props?.changed.map((k) => `custom:${k}`) ?? []),
+					],
 				);
 				return { kind, id: objectId };
 			},
@@ -921,12 +1001,11 @@ export async function crmRequest(
 		if (kind === "task" && object && "deal_id" in b && b.deal_id !== null)
 			await record(db, ctx, "deal", id(b.deal_id), "crm.write");
 		await record(db, ctx, kind, result.id, "crm.write");
+		const written = await record(db, ctx, kind, result.id);
+		await withProperties(db, ctx, kind as Kind, written);
 		return {
 			status: object ? 200 : 201,
-			data: {
-				...(await record(db, ctx, kind, result.id)),
-				replayed: result.replayed,
-			},
+			data: { ...written, replayed: result.replayed },
 		};
 	});
 }

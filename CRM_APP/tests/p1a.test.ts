@@ -163,7 +163,8 @@ test("P1A-S1 get/list return exactly the projected columns; a column added later
 		for (const k of KINDS) {
 			const got = (await request(`${k}/${ids[k]}`)).data;
 			assert.deepEqual(
-				keys(got).filter((x) => x !== "identifiers" && x !== "replayed"),
+				// P1b B3: a single record read adds `properties` (active custom values), never the `custom` blob itself.
+				keys(got).filter((x) => x !== "identifiers" && x !== "replayed" && x !== "properties"),
 				[...S1_COLUMNS[k], ...TS].sort(),
 				`${k} get`,
 			);

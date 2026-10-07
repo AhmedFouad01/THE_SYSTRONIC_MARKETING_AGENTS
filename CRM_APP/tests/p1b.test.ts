@@ -842,12 +842,14 @@ test("P1B-B1 custom/custom_search: defaults, no backfill, shape/size CHECKs vali
 		);
 		assert.equal(col.c, "jsonb:NO:'{}'::jsonb", t);
 		assert.equal(col.s, "text:NO:''::text", t);
-		// no backfill: every pre-existing row still holds the defaults (the migration touched no row)
+		// no backfill: every row written without `properties` still holds the defaults (B3 writes custom only through the API, so
+		// the fixture tenants of this test are checked; other tenants of a persistent dev DB may hold B3 test data)
 		assert.equal(
 			Number(
 				(
 					await one(
-						`SELECT count(*) n FROM crm.${t} WHERE custom<>'{}'::jsonb OR custom_search<>''`,
+						`SELECT count(*) n FROM crm.${t} WHERE tenant_id=ANY($1::uuid[]) AND (custom<>'{}'::jsonb OR custom_search<>'')`,
+						[[f.ids.a, f.ids.b]],
 					)
 				).n,
 			),

@@ -71,3 +71,33 @@ Limits are also enforced by the 010 DB triggers (backstop; the API pre-checks an
 
 ### Migration 011 (additive; forward-fix only)
 Permission rows above; `property_group.version` + `.archived` (+ `GRANT UPDATE(version,archived)`); `check_object_reference()` accepts `property` and `property_group` (still SECURITY DEFINER, `REVOKE ALL FROM PUBLIC`). Rollback = remove the routes; registry rows stay inert.
+
+## B3 Record write path: custom property values — server half (no migration; uses 010 columns + 011 permissions)
+
+Implemented in `src/properties.ts` (the ONE validator `validateProperties(registry, object, patch, actor, {mode, current})`, pure and unit-tested, plus the DB helpers) with thin call sites in `crm.ts`, `list.ts`, and one predicate in `listquery.ts` (`q`). Skills applied (UNVALIDATED): TSST-DEV-SK-005, -006, -011.
+
+### Write: `properties` on POST/PATCH of `/v1/{contacts|leads|deals|tasks}` (and on the inline `contact` object of a lead create)
+- Body: `properties: {key: value|null}` next to the existing fields (+ `command_id`, and `expected_version` on PATCH). PATCH is a partial update: absent keys are untouched; `null`, `""` (text) and `[]` (multi-select) clear (the key is removed, nulls are never stored). Body limit stays 16 KB.
+- Values: text/long_text string (NFC, trimmed; no control/bidi-override chars; newline only in long_text; `max_length` counted in code points, defaults 2000/20000); number finite, |v| <= 1e15, `min/max`; currency = integer minor units (safe integer) in the property's fixed currency; date `YYYY-MM-DD` (real calendar date); datetime ISO 8601 with `Z` or offset, stored/returned as UTC instant `...T..:..:..sssZ`; checkbox boolean; single_select = option `value` (active); multi_select = string[] of active option values, unique, <= `max_selected` (<= 50); user = principal id (uuid, must pass `crm.assignment_ok`). An option archived after it was chosen stays valid while unchanged; it cannot be newly chosen. Types url/email/phone do not exist in the registry type list, so they are not implemented.
+- Rules: unknown key (also a system column such as `source`, `__proto__`, malformed key) -> 422 `UNKNOWN_PROPERTY`; archived property -> `PROPERTY_ARCHIVED`; `read_only` -> `READ_ONLY` (even to clear); `required` -> `REQUIRED` on create (missing/null/empty) and when clearing; a required property added later does not block edits that do not touch it. Merged `custom` > 24,000 JSON bytes -> 422 `PROPERTIES_TOO_LARGE` (010 CHECK is the backstop, mapped to the same code). > 100 keys / non-object `properties` -> 422 `VALIDATION_FAILED`.
+- Sensitive: a sensitive property needs `sensitive.write` to write and `sensitive.read` to read, checked on THE record (rep: assigned only; agency grants: never). A caller without `sensitive.read` gets `UNKNOWN_PROPERTY` for it (no existence oracle); a caller who may read but not write gets 403. A required sensitive property the caller cannot see is skipped on create.
+- Errors: `{code, safe_message, request_id, retryable, errors:[{field:"properties.<key>", property:"<key>", code}]}`, ALL violations in one response; top-level `code` = `UNKNOWN_PROPERTY` if any key is unknown, else `VALIDATION_FAILED`. Per-property codes: `UNKNOWN_PROPERTY, PROPERTY_ARCHIVED, READ_ONLY, REQUIRED, INVALID_TYPE, INVALID_VALUE, MAX_LENGTH, MIN_VALUE, MAX_VALUE, MAX_SELECTED, OPTION_UNKNOWN, OPTION_ARCHIVED, DUPLICATE_OPTION, USER_INVALID, TOO_MANY_PROPERTIES`. Stale `expected_version` -> 409 `VERSION_CONFLICT` (record level, nothing written).
+- Atomicity: the registry slice is read in the record's transaction under `FOR KEY SHARE` on the `object_type` row (B2 schema writes hold it `FOR UPDATE`, so a definition change and a record write serialise); the record row is locked `FOR UPDATE`; value validation, merge, `custom_search` rebuild, `version+1`, audit/event/outbox and the `durable()` receipt commit or roll back together. Replay (same command/key/body) returns `replayed:true`, applied once; same command with a different body -> 409 `IDEMPOTENCY_CONFLICT`.
+- Evidence: `changed_fields` = standard field names + `custom:<key>` for keys whose value actually changed, keys only, never values (not for sensitive ones either); `properties` itself is never listed.
+
+### Storage
+`custom` = merged JSON of only keys that hold a value. `custom_search` = `crm.normalize_search()` of the searchable + active + non-sensitive text/long_text values (registry order, joined with U+001F), truncated to 8192 bytes on a UTF-8 boundary, rebuilt on every write that carries `properties` (and on merge). No backfill (decision 10); rows never written keep `custom='{}'`, `custom_search=''`.
+
+### Read
+- `GET /v1/{kind}/{id}` and every write response add `properties:{key:value}`: only active custom properties that hold a value; sensitive ones only with `sensitive.read` on that record. `version` and standard fields unchanged; the `custom` blob is never returned.
+- Lists: no `properties` by default (P1A-S1 projection unchanged). `?props=key1,key2` (max 20, unique) adds `properties` with only those keys to each row; unknown / archived / unreadable-sensitive key -> 422 `UNKNOWN_PROPERTY`; `props=` (empty) -> `{}`. Chosen over the ADR's generic `fields=` because P1a never implemented `fields=` and plan row B4 already names `props=`.
+- `q` also matches `custom_search` (folded both sides; sensitive and non-searchable values are never in it).
+
+### Contact merge (`/v1/contacts/merge-previews`, `/merges`)
+Target wins per key; keys only the source has (or whose target value is empty) are filled in. Preview adds `custom:{fill:[keys], conflicts:[keys where both differ, target kept], fits:boolean}` (existing `conflicts` array unchanged). Commit applies the fill and rebuilds the target's `custom_search`, lists `custom:<key>` for filled keys in the target's `contact.merge_received` audit row, leaves the source's own values untouched, and refuses with 422 `PROPERTIES_TOO_LARGE` (nothing applied) when the merged blob would exceed the cap. Sensitive keys are listed/filled only for a caller with sensitive read+write.
+
+### Session
+`GET /v1/session` adds `schema_read` and `property_manage` (booleans, from `crm.can_object('schema.read'|'property.manage','property',NULL)`): manager true/true, rep and reader true/false.
+
+### Known limits (follow-ups)
+`custom_search` is not rebuilt when a property's `searchable`/`sensitive` flag changes or it is archived (no backfill); rows keep stale search text until their next write (a q hit/no-hit oracle, never a value): needs a bounded rebuild job (B4/B6). A list `props=` sensitive check is per request (tenant level), exact because rep lists are already assigned-only.

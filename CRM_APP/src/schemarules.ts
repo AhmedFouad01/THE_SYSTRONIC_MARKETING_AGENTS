@@ -103,8 +103,8 @@ export const RESERVED_KEYS = new Set([
 const CURRENCIES = new Set(Intl.supportedValuesOf("currency"));
 // C0/C1 controls and the bidi override/embedding/isolate controls (trojan-source class). LRM/RLM/ALM stay legal.
 // biome-ignore lint/suspicious/noControlCharactersInRegex: this IS the control-character guard.
-const BAD_TEXT = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/u;
-const BAD_TEXT_MULTILINE =
+export const BAD_TEXT = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/u;
+export const BAD_TEXT_MULTILINE =
 	// biome-ignore lint/suspicious/noControlCharactersInRegex: this IS the control-character guard.
 	/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f‪-‮⁦-⁩]/u;
 

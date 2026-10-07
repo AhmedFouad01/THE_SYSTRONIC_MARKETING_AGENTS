@@ -373,7 +373,7 @@ export function planList(
 	if (q) {
 		const pattern = `crm.normalize_search(${bind(`%${likeEscape(q)}%`)}::text)`;
 		where.push(
-			`(search_normalized LIKE ${pattern} ESCAPE '\\'${kind === "contact" ? "" : ` OR related_search LIKE ${pattern} ESCAPE '\\'`})`,
+			`(search_normalized LIKE ${pattern} ESCAPE '\\' OR custom_search LIKE ${pattern} ESCAPE '\\'${kind === "contact" ? "" : ` OR related_search LIKE ${pattern} ESCAPE '\\'`})`,
 		);
 	}
 	let canon: unknown = null;

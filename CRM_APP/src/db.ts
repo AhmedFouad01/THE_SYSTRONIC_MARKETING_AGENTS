@@ -8,7 +8,7 @@ export class Fault extends Error {
 		public status: number,
 		public code: string,
 		// Optional machine-readable per-field issues, surfaced as `errors` in the error envelope (schema API).
-		public details?: { field: string; code: string }[],
+		public details?: { field: string; code: string; property?: string }[],
 	) {
 		super(code);
 	}
@@ -47,6 +47,14 @@ export async function transaction<T>(
 		await db.query("ROLLBACK");
 		if ((error as { code?: string }).code === "PCK01")
 			throw new Fault(503, "PROTECTED_KEY_UNAVAILABLE");
+		// P1b B3 backstop: the 010 CHECKs on custom / custom_search (the validator caps the merged blob below them first).
+		if (
+			(error as { code?: string }).code === "23514" &&
+			/_custom_(shape|search_size)$/.test(
+				(error as { constraint?: string }).constraint ?? "",
+			)
+		)
+			throw new Fault(422, "PROPERTIES_TOO_LARGE");
 		throw error;
 	} finally {
 		db.release();

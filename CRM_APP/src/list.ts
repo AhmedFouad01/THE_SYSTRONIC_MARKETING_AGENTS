@@ -3,6 +3,7 @@
 import type pg from "pg";
 import { type Context, Fault } from "./db.js";
 import { encodeCursor, LIMITS, planList } from "./listquery.js";
+import { attachProperties, listKeys, sensitiveRead } from "./properties.js";
 import type { Kind } from "./query.js";
 
 export async function listRecords(
@@ -18,6 +19,12 @@ export async function listRecords(
 	]);
 	if (!scope) throw new Fault(403, "FORBIDDEN");
 	const plan = planList(kind, query, ctx.tenant, scope);
+	// P1b B3: custom values only when asked for (`props=key1,key2`), never the whole blob. Sensitive keys need sensitive.read; the
+	// list scope already limits a rep to assigned records, so one tenant-level check per request is exact (a grant never passes it).
+	const sensitive = query.has("props")
+		? await sensitiveRead(db, ctx, kind, null)
+		: false;
+	const props = await listKeys(db, ctx, kind, query.get("props"), sensitive);
 	// Also bound opt-in count/expansion on a legacy list; plain legacy calls keep their prior behavior.
 	if (!plan.legacy || plan.includeTotal || plan.expand.length)
 		await db.query("SELECT set_config('statement_timeout','5000',true)");
@@ -35,6 +42,7 @@ export async function listRecords(
 		if ("amount_minor" in o) o.amount_minor = Number(o.amount_minor);
 		return o;
 	});
+	if (props) await attachProperties(db, ctx, kind, data, { keys: props, sensitive });
 	if (plan.expand.includes("owner")) {
 		const ids = [
 			...new Set(data.map((r) => r.owner_id as string | null)),
