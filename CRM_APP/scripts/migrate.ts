@@ -21,6 +21,8 @@ try {
 		[10, "010_property_registry.sql"],
 		[11, "011_schema_api.sql"],
 		[12, "012_search_rebuild.sql"],
+		[13, "013_auth_schema_roles.sql"],
+		[14, "014_auth_org_2fa.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
 			"SELECT 1 FROM public.crm_migrations WHERE version=$1",
@@ -63,8 +65,33 @@ try {
 	if (!/^[a-zA-Z0-9]{24,}$/.test(password))
 		throw new Error("Use generated alphanumeric runtime password");
 	await db.query(`ALTER ROLE crm_runtime PASSWORD '${password}'`);
+	// AUTH_PLAN B1: re-assert the auth/crm privilege split on every run (idempotent repair block).
+	await db.query(`
+		REVOKE USAGE ON SCHEMA public FROM PUBLIC;
+		GRANT USAGE ON SCHEMA public TO crm_runtime;
+		REVOKE ALL ON SCHEMA auth FROM PUBLIC;
+		REVOKE ALL ON SCHEMA auth FROM crm_runtime;
+		GRANT USAGE ON SCHEMA auth TO crm_auth;
+		REVOKE ALL ON ALL TABLES IN SCHEMA auth FROM PUBLIC, crm_runtime;
+		GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA auth TO crm_auth;
+		REVOKE ALL ON ALL FUNCTIONS IN SCHEMA auth FROM PUBLIC;
+		REVOKE ALL ON SCHEMA crm FROM crm_auth;
+		REVOKE ALL ON ALL TABLES IN SCHEMA crm FROM crm_auth;
+		REVOKE ALL ON ALL FUNCTIONS IN SCHEMA crm FROM crm_auth;
+		REVOKE ALL ON SCHEMA public FROM crm_auth`);
+	// crm_auth is the Better Auth pool role. Its password comes from AUTH_DATABASE_URL; without it the role
+	// stays password-less (cannot log in), which is safe for installs that do not run sign-in yet.
+	if (process.env.AUTH_DATABASE_URL) {
+		const authPassword = new URL(process.env.AUTH_DATABASE_URL).password;
+		if (!/^[a-zA-Z0-9]{24,}$/.test(authPassword))
+			throw new Error("Use generated alphanumeric auth password");
+		if (authPassword === password)
+			throw new Error("crm_auth and crm_runtime must not share a password");
+		await db.query(`ALTER ROLE crm_auth PASSWORD '${authPassword}'`);
+	} else
+		console.warn("AUTH_DATABASE_URL not set: crm_auth password left unchanged");
 	await db.query("COMMIT");
-	console.log("Migrations 001–012 applied/verified");
+	console.log("Migrations 001–014 applied/verified");
 } catch (e) {
 	await db.query("ROLLBACK");
 	throw e;
