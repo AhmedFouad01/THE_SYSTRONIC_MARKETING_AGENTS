@@ -33,6 +33,13 @@ Adobe After Effects official keyframe/animation principles + professional motion
 - motion too fast to read Arabic
 - constant movement that competes with the focal point
 
+## References (distilled from GEM-CR-002, 2026-10-08; unvalidated)
+
+- `ref/principles.md` — 12 principles for motion graphics/UI, duration tokens, productive vs expressive, reduced motion, Arabic reading time.
+- `ref/easing.md` — master easing table (CSS/GSAP/Motion), spot-test errors, Elastic/Bounce, springs.
+- `ref/web.md` — web motion libraries, licences (GSAP, Remotion), performance, Arabic text animation rule.
+- `ref/after-effects.md` — expressions, JS vs Legacy engine, AE-from-bezier method, plugins, Lottie survival.
+
 ## Practical evaluation
 
 Build an 8–12 second branded motion reveal with a clear visual mechanism, readable bilingual type and deliberate easing; inspect rendered key frames and full playback.
