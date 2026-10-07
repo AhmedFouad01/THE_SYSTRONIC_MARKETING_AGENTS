@@ -34,7 +34,7 @@ export const NAV_TREE: readonly NavNode[] = [
 		] },
 		{ kind: "link", key: "tasks", label: "nav.tasks", tab: "nav.tab.tasks", icon: "tasks", route: "/tasks" },
 		{ kind: "upcoming", key: "segments", label: "nav.segments", icon: "contacts" },
-		{ kind: "upcoming", key: "import", label: "nav.import", icon: "more" },
+		{ kind: "link", key: "import", label: "nav.import", icon: "more", route: "/imports" },
 	] },
 	{ kind: "group", key: "insights", label: "nav.insights", icon: "report", expanded: true, children: [
 		{ kind: "link", key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting", also: "/reporting-v2" },
@@ -90,5 +90,5 @@ export function splitMobileNav(items: readonly NavLink[] = NAV): { primary: NavL
 
 /** Role defaults affect inert badges only. Screen authority remains server enforced. */
 export function upcomingHiddenKeys(manager: boolean, agencyGrant: boolean): string[] {
-	return manager && !agencyGrant ? [] : ["import", "integrations", "users", "security"];
+	return manager && !agencyGrant ? [] : ["integrations", "users", "security"];
 }

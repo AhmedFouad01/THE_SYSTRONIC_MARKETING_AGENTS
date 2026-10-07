@@ -12,6 +12,8 @@ export type ListTotal = { value: number; exact: boolean };
 export type ApiResult<T> = {
 	data: T;
 	nextCursor: string | null;
+	/** Numeric row-ledger pagination, present only for endpoints that return next_after. */
+	nextAfter?: number | null;
 	requestId: string | null;
 	/** List envelope `has_more` (null when the endpoint does not send it). */
 	hasMore: boolean | null;
@@ -123,6 +125,7 @@ export function createApiClient(options: ApiClientOptions) {
 		return {
 			data: env.data as T,
 			nextCursor: typeof env.next_cursor === "string" ? env.next_cursor : null,
+			...(Object.hasOwn(env, "next_after") ? { nextAfter: env.next_after === null ? null : typeof env.next_after === "number" && Number.isSafeInteger(env.next_after) && env.next_after >= 0 ? env.next_after : undefined } : {}),
 			requestId: typeof env.request_id === "string" ? env.request_id : null,
 			hasMore: typeof env.has_more === "boolean" ? env.has_more : null,
 			total,

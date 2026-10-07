@@ -1,3 +1,4 @@
+import { useImportAccess } from "./features/imports/access.ts";
 import { useEffect, useRef, useState } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
 import { fetchAssignees } from "./features/leads/api.ts";
@@ -39,6 +40,7 @@ function Routed() {
 		}
 		previousScope.current = scope;
 	}, [connected, scope, session.workspace?.tenantId]);
+	const canImport = useImportAccess(connected, scope, session.info, Boolean(session.workspace?.grantId));
 	const canReadSchema = useSchemaRead(actorId, connected ? session.info?.schema_read : undefined, scope);
 	const [actorName, setActorName] = useState<string | null>(null);
 	useEffect(() => {
@@ -65,6 +67,7 @@ function Routed() {
 			actorRole={connected ? roleLabel(session.info?.configure || session.info?.merge ? "manager" : null, t) : null}
 			onDisconnect={() => { importDraftStore.clear(); sessionStore.disconnect(); }}
 			hiddenNavKeys={[
+				...(canImport ? [] : ["import"]),
 				...(canReadSchema === true ? [] : ["properties"]),
 				...upcomingHiddenKeys(Boolean(session.info?.configure || session.info?.merge), Boolean(sessionStore.getCredentials()?.grantId)),
 			]}

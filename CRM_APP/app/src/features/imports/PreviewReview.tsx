@@ -17,8 +17,8 @@ export function rowErrorKey(code: string, field = ""): MessageKey | null {
 	}
 	return ROW_ERRORS[code] ?? null;
 }
-export function PreviewReview({ draft, busy, issues, onChange, onPreview, onBack, onPolicy }: {
-	draft: ImportDraft; busy: boolean; issues: string[]; onChange: (options: ImportOptions) => void; onPreview: () => void; onBack: () => void; onPolicy: () => void;
+export function PreviewReview({ draft, busy, issues, onChange, onPreview, onBack, onPolicy, onCommit }: {
+	draft: ImportDraft; busy: boolean; issues: string[]; onChange: (options: ImportOptions) => void; onPreview: () => void; onBack: () => void; onPolicy: () => void; onCommit: () => void;
 }) {
 	const { t, tx, formatCount } = useI18n();
 	const data = draft.preview?.data;
@@ -39,7 +39,7 @@ export function PreviewReview({ draft, busy, issues, onChange, onPreview, onBack
 		</tbody></table></div>
 	);
 	return <div className="sy-import__form">
-		<p>{t("import.previewReadOnly")}</p>
+		<p><Bdi>{draft.inspection?.file.name}</Bdi></p><p>{t("import.previewReadOnly")}</p>
 		<p>{t(draft.object === "contact" ? "import.match.contact" : "import.match.lead")}</p>
 		<p>{t("import.match.file")}</p><p>{t("import.blankPreserves")}</p><p>{t("import.formulaWarning")}</p>
 		{draft.step === "policy" ? <>
@@ -69,6 +69,6 @@ export function PreviewReview({ draft, busy, issues, onChange, onPreview, onBack
 			{data.already_imported ? <p>{t("import.priorJob")}: <Bdi>{data.already_imported.job_id}</Bdi></p> : null}
 			{gate === "abort" ? <p role="alert">{t("import.abortBlocked")}</p> : gate === "empty" || gate === "invalid" ? <p role="alert">{t("import.noValidRows")}</p> : <p role="status">{t("import.reviewReady")}</p>}
 		</> : null}
-		<div className="sy-import__actions"><Button onClick={onBack}>{t("import.backMapping")}</Button>{draft.step === "preview" ? <Button disabled={!data || busy} onClick={onPolicy}>{t("import.nextPolicy")}</Button> : <Button disabled>{t("import.commitUnavailable")}</Button>}</div>
+		<div className="sy-import__actions"><Button onClick={onBack}>{t("import.backMapping")}</Button>{draft.step === "preview" ? <Button disabled={!data || busy} onClick={onPolicy}>{t("import.nextPolicy")}</Button> : <Button variant="primary" disabled={gate !== "ready" || busy || issues.length > 0} onClick={onCommit}>{tx("import.confirm", { count: formatCount((data?.summary.create ?? 0) + (data?.summary.update ?? 0) + (data?.summary.skip ?? 0)) })}</Button>}</div>
 	</div>;
 }

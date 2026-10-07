@@ -8,8 +8,11 @@ import { fetchAssignees } from "../leads/api.ts";
 import type { Assignee } from "../leads/model.ts";
 import { bytesToBase64, fetchImportFields, inspectUpload, previewImport } from "./api.ts";
 import { importDraftStore } from "./draft.ts";
-import { changeDraft, cleanFilename, fileFormat, fileIssue, type ImportDraft, type ImportFields, type ImportObject, mappingIssues, optionIssues, sampleText, setColumn, sheetOption, type Target } from "./model.ts";
+import { changeDraft, newDraft, cleanFilename, fileFormat, fileIssue, type ImportDraft, type ImportFields, type ImportObject, mappingIssues, optionIssues, sampleText, setColumn, sheetOption, type Target } from "./model.ts";
 import { createPreviewGate } from "./preview.ts";
+import { importCommitController } from "./commit.ts";
+import { importAccess } from "./access.ts";
+import { ImportResults } from "./ImportResults.tsx";
 import { PreviewReview } from "./PreviewReview.tsx";
 import type { ApiError } from "../../api/errors.ts";
 import "./imports.css";
@@ -32,6 +35,7 @@ export function ImportWizard() {
 	const actor = session.info?.actor ?? "";
 	const workspace = session.workspace;
 	const scope = workspace ? workspaceKey(actor, workspace) : "";
+	const deny = useCallback(() => { importAccess.deny(scope); setGate("denied"); }, [scope]);
 	const [draft, setDraft] = useState(() => importDraftStore.open(scope));
 	const [fields, setFields] = useState<ImportFields | null>(null);
 	const [gate, setGate] = useState<"loading" | "ready" | "denied" | "error">("loading");
@@ -48,6 +52,8 @@ export function ImportWizard() {
 	const uploadController = useRef<AbortController | null>(null);
 	const uploadAttempt = useRef(0);
 	const errorSummary = useRef<HTMLDivElement>(null);
+	useEffect(() => importDraftStore.subscribe(() => { const next = importDraftStore.peek(scope); if (next) { draftRef.current = next; setDraft(next); } }), [scope]);
+	useEffect(() => { if (draft.commit.failure?.status === 403) deny(); }, [draft.commit.failure?.status, deny]);
 	const update = (change: Partial<ImportDraft>) => {
 		const next = changeDraft(draftRef.current, change);
 		if (next.revision !== draftRef.current.revision) {
@@ -73,9 +79,9 @@ export function ImportWizard() {
 			setGate("ready");
 			return fetchAssignees(signal).then((available) => { if (!controller.signal.aborted) setOwners(available); }).catch(() => undefined);
 		}).catch((failure: unknown) => {
-			if (!controller.signal.aborted) setGate(isApiError(failure) && failure.kind === "forbidden" ? "denied" : "error");
+			if (!controller.signal.aborted) { setGate(isApiError(failure) && failure.kind === "forbidden" ? "denied" : "error"); if (isApiError(failure) && failure.kind === "forbidden") importAccess.deny(scope); }
 		});
-	}, [draft.object]);
+	}, [draft.object, scope]);
 	useEffect(() => {
 		loadFields();
 		return () => fieldsController.current?.abort();
@@ -123,7 +129,7 @@ export function ImportWizard() {
 			setError(isApiError(failure) ? failure.code : "INVALID_IMPORT_RESPONSE");
 			setRequestId(isApiError(failure) ? failure.requestId : null);
 			setApiFailure(isApiError(failure) ? failure : null);
-			if (isApiError(failure) && failure.kind === "forbidden") setGate("denied");
+			if (isApiError(failure) && failure.kind === "forbidden") deny();
 		} finally {
 			if (attempt === uploadAttempt.current && !controller.signal.aborted) setProcessing(false);
 		}
@@ -147,7 +153,7 @@ export function ImportWizard() {
 			setError(isApiError(failure) ? failure.code : "INVALID_IMPORT_RESPONSE");
 			setRequestId(isApiError(failure) ? failure.requestId : null);
 			setApiFailure(isApiError(failure) ? failure : null);
-			if (isApiError(failure) && failure.kind === "forbidden") setGate("denied");
+			if (isApiError(failure) && failure.kind === "forbidden") deny();
 		} finally {
 			if (previewGate.current.accepts(ticket, draftRef.current.revision)) setPreviewing(false);
 		}
@@ -168,10 +174,11 @@ export function ImportWizard() {
 	);
 	return (
 		<div className="sy-import" data-testid="import-wizard">
-			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : 4), total: formatCount(5) })} />
+			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : draft.step === "policy" ? 4 : 5), total: formatCount(5) })} />
+			{draft.step !== "result" ? <Button onClick={() => update({ step: "result" })}>{t("import.history")}</Button> : null}
 			<p className="sy-import__workspace">{t("workspace.label")}: <Bdi>{workspace.tenantId}</Bdi></p>
 			{error ? <div ref={errorSummary} tabIndex={-1} className="sy-import__error" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
-			{draft.step === "upload" ? <Panel title={t("import.step.upload")}>
+			{draft.step === "result" ? <Panel title={t("import.step.result")}><ImportResults commit={draft.commit} onRetry={() => void importCommitController.submit(scope, gate === "ready", issues)} onNew={() => resetInspection({ ...newDraft() })} onEdit={() => update({ step: "mapping" })} onDenied={deny} /></Panel> : draft.step === "upload" ? <Panel title={t("import.step.upload")}>
 				<div className="sy-import__form">
 					<Select label={t("import.object")} value={draft.object} disabled={processing} onChange={(event) => {
 						resetInspection({ ...newUpload(event.target.value as ImportObject), options: { ...draft.options, sheet: "1" } });
@@ -216,7 +223,7 @@ export function ImportWizard() {
 				{!issues.length ? <p role="status">{t("import.mappingReady")}</p> : null}
 				<div className="sy-import__actions"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button variant="primary" disabled={issues.length > 0} loading={previewing} onClick={() => void runPreview()}>{t("import.runPreview")}</Button></div>
 			</Panel> : <Panel title={t(draft.step === "policy" ? "import.step.policy" : "import.step.preview")}>
-				<PreviewReview draft={draft} busy={previewing} issues={issues} onChange={(options) => update({ options })} onPreview={() => void runPreview()} onBack={() => { cancelPreview(); setError(null); update({ step: "mapping" }); }} onPolicy={() => update({ step: "policy" })} />
+				<PreviewReview draft={draft} busy={previewing} issues={issues} onChange={(options) => update({ options })} onPreview={() => void runPreview()} onBack={() => { cancelPreview(); setError(null); update({ step: "mapping" }); }} onPolicy={() => update({ step: "policy" })} onCommit={() => void importCommitController.submit(scope, gate === "ready", issues)} />
 			</Panel>}
 		</div>
 	);

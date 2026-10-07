@@ -1,3 +1,4 @@
+import { emptyCommit, type CommitState } from "./jobs.ts";
 import type { PreviewSnapshot } from "./preview.ts";
 export type ImportObject = "contact" | "lead";
 export type ImportFormat = "csv" | "xlsx";
@@ -17,9 +18,9 @@ export type Inspection = {
 	samples: { row: number; cells: (string | number | boolean | null)[] }[];
 };
 export type ImportOptions = { sheet: string; default_country_code: string; owner_id: string; duplicate_mode: "skip" | "update" | "create"; error_policy: "skip" | "abort" };
-export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping" | "preview" | "policy"; preview: PreviewSnapshot | null; revision: number };
+export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping" | "preview" | "policy" | "result"; commit: CommitState; preview: PreviewSnapshot | null; revision: number };
 export function newDraft(): ImportDraft {
-	return { object: "contact", file: null, file_base64: null, inspection: null, mapping: [], options: { sheet: "1", default_country_code: "", owner_id: "", duplicate_mode: "skip", error_policy: "skip" }, step: "upload", preview: null, revision: 0 };
+	return { object: "contact", file: null, file_base64: null, inspection: null, mapping: [], options: { sheet: "1", default_country_code: "", owner_id: "", duplicate_mode: "skip", error_policy: "skip" }, step: "upload", commit: emptyCommit(), preview: null, revision: 0 };
 }
 const objectRecord = (value: unknown): Record<string, unknown> => {
 	if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("INVALID_IMPORT_RESPONSE");
@@ -121,5 +122,5 @@ export function sampleText(value: string | number | boolean | null): string { re
 /** Step navigation preserves review; any source/mapping/options change requires a new server preview. */
 export function changeDraft(current: ImportDraft, change: Partial<ImportDraft>): ImportDraft {
 	const invalidates = ["object", "file", "file_base64", "inspection", "mapping", "options"].some((key) => Object.hasOwn(change, key));
-	return { ...current, ...change, preview: invalidates ? null : change.preview === undefined ? current.preview : change.preview, revision: current.revision + (invalidates ? 1 : 0) };
+	return { ...current, ...change, commit: invalidates ? emptyCommit() : change.commit ?? current.commit, preview: invalidates ? null : change.preview === undefined ? current.preview : change.preview, revision: current.revision + (invalidates ? 1 : 0) };
 }
