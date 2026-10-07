@@ -2,8 +2,13 @@
 // scope is resolved once via crm.object_scope and applied in SQL, so no cursor or filter can widen it.
 import type pg from "pg";
 import { type Context, Fault } from "./db.js";
-import { encodeCursor, LIMITS, planList } from "./listquery.js";
-import { attachProperties, listKeys, sensitiveRead } from "./properties.js";
+import { customKeys, encodeCursor, LIMITS, planList } from "./listquery.js";
+import {
+	attachProperties,
+	listKeys,
+	loadListProps,
+	sensitiveRead,
+} from "./properties.js";
 import type { Kind } from "./query.js";
 
 export async function listRecords(
@@ -18,12 +23,19 @@ export async function listRecords(
 		ctx.grant ?? null,
 	]);
 	if (!scope) throw new Fault(403, "FORBIDDEN");
-	const plan = planList(kind, query, ctx.tenant, scope);
 	// P1b B3: custom values only when asked for (`props=key1,key2`), never the whole blob. Sensitive keys need sensitive.read; the
 	// list scope already limits a rep to assigned records, so one tenant-level check per request is exact (a grant never passes it).
-	const sensitive = query.has("props")
-		? await sensitiveRead(db, ctx, kind, null)
-		: false;
+	// P1b B4: custom keys named in filter/sort are resolved against the registry first (the allow-list: archived, unknown and
+	// unreadable sensitive keys are absent from it, so planList answers 422 UNKNOWN_PROPERTY). A filter is a read oracle: same gate.
+	const named = customKeys(query);
+	const sensitive =
+		query.has("props") || named.length
+			? await sensitiveRead(db, ctx, kind, null)
+			: false;
+	const registry = named.length
+		? await loadListProps(db, ctx, kind, named, sensitive)
+		: undefined;
+	const plan = planList(kind, query, ctx.tenant, scope, registry);
 	const props = await listKeys(db, ctx, kind, query.get("props"), sensitive);
 	// Also bound opt-in count/expansion on a legacy list; plain legacy calls keep their prior behavior.
 	if (!plan.legacy || plan.includeTotal || plan.expand.length)

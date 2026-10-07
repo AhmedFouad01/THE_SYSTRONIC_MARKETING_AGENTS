@@ -7,6 +7,8 @@ import { isDeepStrictEqual } from "node:util";
 import type pg from "pg";
 import { durable, evidence, permit, type Body } from "./crm.js";
 import { type Context, Fault, transaction } from "./db.js";
+import { rebuildInline, requestSearchRebuild } from "./searchrebuild.js";
+import type { Kind } from "./query.js";
 import {
 	KEY_RE,
 	LIMITS,
@@ -526,7 +528,16 @@ async function updateProperty(
 	);
 	await bump(db, ctx, object);
 	await evidence(db, ctx, "property", p.id, "property.updated", request, changed);
+	// B4: a searchable/sensitive flip changes which values belong in custom_search of every existing row
+	if (changed.includes("searchable") || changed.includes("sensitive"))
+		await rebuildSearch(db, ctx, object);
 	return { kind: "property", id: p.id };
+}
+// Queue + capped inline pass (the worker drains the rest). Only the four record objects have a custom_search column.
+async function rebuildSearch(db: Db, ctx: Context, object: string) {
+	if (!["contact", "lead", "deal", "task"].includes(object)) return;
+	await requestSearchRebuild(db, ctx, object as Kind);
+	await rebuildInline(db, ctx, object as Kind);
 }
 
 async function archiveProperty(
@@ -547,6 +558,7 @@ async function archiveProperty(
 	await evidence(db, ctx, "property", p.id, "property.archived", request, [
 		"archived_at",
 	]);
+	if (p.searchable) await rebuildSearch(db, ctx, object);
 	return { kind: "property", id: p.id };
 }
 

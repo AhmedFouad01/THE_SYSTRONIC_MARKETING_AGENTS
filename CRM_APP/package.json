@@ -18,8 +18,8 @@
 		"test:unit": "vitest run",
 		"typecheck": "tsc --noEmit && tsc --noEmit -p app/tsconfig.json",
 		"build": "tsc && npm run app:build && tsx scripts/build-assets.ts",
-		"test:db": "tsx --env-file=.env --test --test-concurrency=1 tests/foundation.test.ts tests/m1.test.ts tests/m1-remediation.test.ts tests/m2.test.ts tests/p1a.test.ts tests/p1b.test.ts tests/p1b-b2.test.ts tests/p1b-b3.test.ts",
-		"test:p1a": "tsx --env-file=.env --test --test-concurrency=1 tests/p1a.test.ts tests/p1b.test.ts tests/p1b-b2.test.ts tests/p1b-b3.test.ts",
+		"test:db": "tsx --env-file=.env --test --test-concurrency=1 tests/foundation.test.ts tests/m1.test.ts tests/m1-remediation.test.ts tests/m2.test.ts tests/p1a.test.ts tests/p1b.test.ts tests/p1b-b2.test.ts tests/p1b-b3.test.ts tests/p1b-b4.test.ts",
+		"test:p1a": "tsx --env-file=.env --test --test-concurrency=1 tests/p1a.test.ts tests/p1b.test.ts tests/p1b-b2.test.ts tests/p1b-b3.test.ts tests/p1b-b4.test.ts",
 		"test:ui": "npm run app:build && playwright test",
 		"test:bootstrap": "tsx --test tests/native-bootstrap.test.ts",
 		"test": "npm run test:db && npm run test:bootstrap && npm run test:ui"

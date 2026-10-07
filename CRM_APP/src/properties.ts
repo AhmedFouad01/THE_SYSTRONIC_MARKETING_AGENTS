@@ -38,6 +38,11 @@ export type Actor = {
 	// uuids among the patch's `user` values that crm.assignment_ok accepts (resolved by the caller before validating)
 	assignable: ReadonlySet<string>;
 };
+// B4: the custom properties a list request names (filter / sort), resolved against the registry for ONE tenant and object. Only
+// active properties the caller may read are present, so a missing key is "unknown" for every reason (archived, sensitive, absent).
+// `options` = every option value (archived included: records may still hold one) in position order, for select types.
+export type ListProp = { key: string; type: PropType; options: string[] };
+export type PropRegistry = { rev: number; defs: Map<string, ListProp> };
 export type Opts = { mode?: "create" | "update"; current?: Row };
 export type Validated = { custom: Row; changed: string[] };
 
@@ -70,11 +75,11 @@ function calendar(y: number, m: number, d: number) {
 	t.setUTCMonth(m - 1, d);
 	return t.getUTCMonth() === m - 1 && t.getUTCDate() === d;
 }
-function isoDate(s: string): string | null {
+export function isoDate(s: string): string | null {
 	const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
 	return m && calendar(+m[1], +m[2], +m[3]) ? s : null;
 }
-function isoDateTime(s: string): string | null {
+export function isoDateTime(s: string): string | null {
 	const m =
 		/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,9}))?)?(Z|[+-](\d{2}):(\d{2}))$/.exec(
 			s,
@@ -404,6 +409,30 @@ export async function attachProperties(
 }
 export const sensitiveRead = (db: Db, ctx: Context, kind: string, object: string | null) =>
 	can(db, ctx, "sensitive.read", kind, object);
+
+// B4: registry slice for the custom keys a list filter/sort names (listquery.customKeys). One statement => `rev` (schema_rev) and
+// the definitions are one snapshot. Archived and (without sensitive.read) sensitive properties are left out on purpose.
+export async function loadListProps(
+	db: Db,
+	ctx: Context,
+	kind: Kind,
+	keys: string[],
+	sensitive: boolean,
+): Promise<PropRegistry> {
+	const {
+		rows: [r],
+	} = await db.query(
+		`SELECT o.schema_rev, coalesce((SELECT jsonb_agg(jsonb_build_object('key',d.key,'type',d.type,'options',
+   coalesce((SELECT jsonb_agg(p.value ORDER BY p.position,p.value) FROM crm.property_option p WHERE p.tenant_id=d.tenant_id AND p.property_id=d.id),'[]'::jsonb)))
+  FROM crm.property_definition d WHERE d.tenant_id=o.tenant_id AND d.object_type=o.key AND d.storage='custom' AND NOT d.is_system
+   AND d.archived_at IS NULL AND ($4::boolean OR NOT d.sensitive) AND d.key=ANY($3::text[])),'[]'::jsonb) defs
+ FROM crm.object_type o WHERE o.tenant_id=$1 AND o.key=$2`,
+		[ctx.tenant, kind, keys, sensitive],
+	);
+	const defs = new Map<string, ListProp>();
+	for (const d of (r?.defs ?? []) as ListProp[]) defs.set(d.key, d);
+	return { rev: (r?.schema_rev as number) ?? 0, defs };
+}
 
 // `props=a,b` on a list: validated against the registry (an archived, unknown or unreadable-sensitive key is the same 422).
 export async function listKeys(
