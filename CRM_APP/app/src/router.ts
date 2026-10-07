@@ -12,6 +12,7 @@ export const ROUTES = [
 	"/dashboard",
 	"/reporting",
 	"/reporting-v2",
+	"/settings/properties",
 ] as const;
 export type RoutePath = (typeof ROUTES)[number];
 

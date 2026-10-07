@@ -13,6 +13,7 @@ const appRoutes = [
 	"/dashboard",
 	"/reporting",
 	"/reporting-v2",
+	"/settings/properties",
 ];
 
 const types: Record<string, string> = {

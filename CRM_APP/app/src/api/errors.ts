@@ -15,8 +15,12 @@ export type ErrorEnvelope = {
 	retryable: boolean;
 };
 
+/** One violation of a 422 body: `field` is a dotted path (`label.en`, `options[1].value`), `code` a stable machine code. */
+export type FieldIssue = { field: string; code: string };
+
 export class ApiError extends Error {
 	readonly status: number;
+	readonly issues: readonly FieldIssue[];
 	readonly code: string;
 	readonly safeMessage: string;
 	readonly requestId: string | null;
@@ -29,8 +33,10 @@ export class ApiError extends Error {
 		safeMessage: string;
 		requestId: string | null;
 		retryable: boolean;
+		issues?: readonly FieldIssue[];
 	}) {
 		super(init.safeMessage || init.code);
+		this.issues = init.issues ?? [];
 		this.name = "ApiError";
 		this.status = init.status;
 		this.code = init.code;
@@ -70,6 +76,16 @@ export function errorFromResponse(status: number, body: unknown): ApiError {
 		safeMessage: str(b.safe_message) ?? "",
 		requestId: str(b.request_id),
 		retryable: b.retryable === true,
+		issues: issuesOf(b.errors),
+	});
+}
+
+/** `errors[]` of a 422 envelope; anything that is not a {field, code} pair of strings is dropped. */
+export function issuesOf(raw: unknown): FieldIssue[] {
+	if (!Array.isArray(raw)) return [];
+	return raw.flatMap((e): FieldIssue[] => {
+		const o = typeof e === "object" && e !== null ? (e as Record<string, unknown>) : {};
+		return typeof o.field === "string" && typeof o.code === "string" ? [{ field: o.field, code: o.code }] : [];
 	});
 }
 

@@ -15,6 +15,8 @@ type NavItem = {
 	icon: IconName;
 	route: RoutePath;
 	also?: RoutePath;
+	/** `settings` items sit under their own sidebar heading and can be hidden per user (`hiddenNavKeys`). */
+	section?: "settings";
 };
 
 // Only screens that exist. Email/Call/Import have no MVP backend, so they are not shown at all (no fake affordances).
@@ -26,6 +28,7 @@ export const NAV: readonly NavItem[] = [
 	{ key: "pipeline", label: "nav.pipeline", icon: "route", route: "/pipeline" },
 	{ key: "tasks", label: "nav.tasks", tab: "nav.tab.tasks", icon: "tasks", route: "/tasks" },
 	{ key: "reporting", label: "nav.reporting", icon: "report", route: "/reporting", also: "/reporting-v2" },
+	{ key: "properties", label: "nav.properties", icon: "settings", route: "/settings/properties", section: "settings" },
 ];
 
 // Every nav route must exist in the router (guards drift).
@@ -73,6 +76,8 @@ export type AppShellProps = {
 	/** Already-localised role label shown under the name. */
 	actorRole?: string | null;
 	onDisconnect?: () => void;
+	/** Nav items the user may not open (e.g. `properties` without schema.read); they stay out of the sidebar and the More sheet. */
+	hiddenNavKeys?: readonly string[];
 	children: ReactNode;
 };
 
@@ -80,7 +85,7 @@ function plainClick(e: MouseEvent): boolean {
 	return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 }
 
-export function AppShell({ route, actor, actorName, actorRole, onDisconnect, children }: AppShellProps) {
+export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hiddenNavKeys = [], children }: AppShellProps) {
 	const { t, toggleLocale, dir } = useI18n();
 	const { mode, toggleMode } = useTheme();
 	const mobile = useIsMobile();
@@ -89,7 +94,10 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 	const connected = actor !== null;
 	const activeItem = NAV.find((n) => n.route === route || n.also === route);
 	const name = personLabel(actorName, t);
-	const { primary, overflow } = splitMobileNav();
+	const visibleNav = NAV.filter((n) => !hiddenNavKeys.includes(n.key));
+	const crmNav = visibleNav.filter((n) => n.section !== "settings");
+	const settingsNav = visibleNav.filter((n) => n.section === "settings");
+	const { primary, overflow } = splitMobileNav(visibleNav);
 	const moreActive = activeItem !== undefined && overflow.includes(activeItem);
 
 	const goDashboard = (e: MouseEvent) => {
@@ -172,7 +180,13 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, chi
 								<div className="sy-nav-section" aria-hidden="true">
 									{t("nav.crmSection")}
 								</div>
-								{NAV.map((item) => link(item, "sy-nav sy-nav--route"))}
+								{crmNav.map((item) => link(item, "sy-nav sy-nav--route"))}
+								{settingsNav.length > 0 ? (
+									<div className="sy-nav-section" aria-hidden="true">
+										{t("nav.settings")}
+									</div>
+								) : null}
+								{settingsNav.map((item) => link(item, "sy-nav sy-nav--route"))}
 							</nav>
 							<div className="sy-sidebar__foot">{actorBlock}</div>
 						</>

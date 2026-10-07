@@ -27,6 +27,7 @@ export default defineConfig({
 		"mvp-preview-tasks.spec.ts",
 		"mvp-preview-reporting.spec.ts",
 		"mvp-bidi-user-content.spec.ts",
+		"mvp-properties.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

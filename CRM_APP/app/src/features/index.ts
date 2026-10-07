@@ -5,4 +5,5 @@ export { DealsView } from "./deals/index.ts";
 export { ContactsView } from "./contacts/index.ts";
 export { PipelineView } from "./pipeline/index.ts";
 export { TasksView } from "./tasks/index.ts";
+export { PropertiesView, useSchemaRead } from "./properties/index.ts";
 export { ReportingView } from "./reporting/index.ts";

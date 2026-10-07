@@ -1,0 +1,291 @@
+.sy-props {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-12);
+	min-width: 0;
+}
+.sy-props__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-12);
+	min-width: 0;
+}
+.sy-props__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--sy-space-12);
+}
+.sy-props__toolbar .sy-field {
+	flex: 1 1 240px;
+	max-width: 360px;
+}
+.sy-props__tools {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-8);
+}
+.sy-props__muted {
+	margin: 0;
+	color: var(--sy-text-3);
+}
+.sy-props__note,
+.sy-props__banner {
+	margin: 0;
+	padding: var(--sy-space-10);
+	border-radius: var(--sy-radius-8);
+	background: var(--sy-warning-bg);
+	color: var(--sy-warning-fg);
+}
+.sy-props__note {
+	background: var(--sy-info-bg);
+	color: var(--sy-info-fg);
+}
+.sy-props__banner--error {
+	background: var(--sy-danger-bg);
+	color: var(--sy-danger-fg);
+}
+.sy-props__banner p {
+	margin: 0 0 var(--sy-space-8);
+}
+.sy-props__group {
+	margin-block-end: var(--sy-space-16);
+}
+.sy-props__grouphead {
+	display: flex;
+	align-items: baseline;
+	gap: var(--sy-space-8);
+	margin: 0 0 var(--sy-space-8);
+	font-size: var(--sy-type-section-title-size);
+}
+.sy-props__count {
+	font-size: var(--sy-type-data-size);
+	font-weight: 500;
+	color: var(--sy-text-3);
+}
+.sy-props__rows,
+.sy-props__optlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--sy-border);
+	border-radius: var(--sy-radius-12);
+	background: var(--sy-surface);
+	overflow: hidden;
+}
+.sy-props__row,
+.sy-props__opt {
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) 120px minmax(0, 1.3fr) 290px;
+	align-items: center;
+	gap: var(--sy-space-10);
+	padding: var(--sy-space-10) var(--sy-space-12);
+	border-block-end: 1px solid var(--sy-border);
+	min-width: 0;
+}
+.sy-props__row:last-child,
+.sy-props__opt:last-child {
+	border-block-end: 0;
+}
+.sy-props__row--archived,
+.sy-props__opt--archived {
+	opacity: 0.7;
+}
+.sy-props__main {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-4);
+	min-width: 0;
+}
+.sy-props__name {
+	font-weight: 600;
+	color: var(--sy-text);
+	min-width: 0;
+}
+.sy-props__code {
+	font-size: var(--sy-type-data-size);
+	color: var(--sy-text-3);
+	overflow-wrap: anywhere;
+}
+.sy-props__type {
+	color: var(--sy-text-2);
+}
+.sy-props__badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-4);
+}
+.sy-props__actions,
+.sy-props__optactions {
+	justify-content: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--sy-space-6);
+}
+.sy-props__move {
+	display: inline-flex;
+	gap: var(--sy-space-2);
+}
+.sy-props__tag {
+	font-size: var(--sy-type-data-size);
+	color: var(--sy-text-3);
+}
+
+/* dialogs */
+.sy-dialog[data-testid="property-dialog"],
+.sy-dialog[data-testid="options-dialog"],
+.sy-dialog[data-testid="groups-dialog"] {
+	width: 680px;
+	max-height: 92vh;
+}
+.sy-props__form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-12);
+}
+.sy-props__flags,
+.sy-props__options,
+.sy-props__colors {
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-8);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+}
+.sy-props__options {
+	margin-block-start: var(--sy-space-12);
+}
+.sy-props__legend {
+	padding: 0;
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+	color: var(--sy-text);
+}
+.sy-props__check {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--sy-space-8);
+	cursor: pointer;
+	min-height: 28px;
+}
+.sy-props__check--disabled {
+	cursor: not-allowed;
+	color: var(--sy-text-disabled);
+}
+.sy-props__check input {
+	inline-size: 16px;
+	block-size: 16px;
+	accent-color: var(--sy-primary);
+}
+.sy-props__optlist {
+	border-radius: var(--sy-radius-8);
+}
+.sy-props__options .sy-props__optlist,
+.sy-props__optlist .sy-props__opt {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+.sy-props__optname {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--sy-space-8);
+	min-width: 0;
+}
+.sy-props__optno {
+	font-weight: 600;
+	color: var(--sy-text-2);
+}
+.sy-props__options > .sy-props__optlist {
+	border: 0;
+}
+.sy-props__optlist > li.sy-props__opt {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+ol.sy-props__optlist > li.sy-props__opt {
+	grid-template-columns: minmax(0, 1fr);
+	padding: var(--sy-space-10);
+}
+.sy-props__optedit {
+	grid-column: 1 / -1;
+	display: flex;
+	flex-direction: column;
+	gap: var(--sy-space-8);
+}
+.sy-props__swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--sy-space-6);
+}
+.sy-props__swatch {
+	position: relative;
+	display: inline-flex;
+	cursor: pointer;
+}
+.sy-props__swatch input {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	margin: 0;
+	cursor: pointer;
+}
+.sy-props__dot {
+	display: inline-block;
+	inline-size: 24px;
+	block-size: 24px;
+	border-radius: var(--sy-radius-pill);
+	border: 2px solid transparent;
+	box-shadow: 0 0 0 1px var(--sy-border-strong);
+}
+.sy-props__dot--sm {
+	inline-size: 12px;
+	block-size: 12px;
+	border-width: 0;
+	box-shadow: none;
+	flex: none;
+}
+.sy-props__dot--none {
+	background: var(--sy-surface);
+	background-image: linear-gradient(135deg, transparent 45%, var(--sy-text-3) 45% 55%, transparent 55%);
+}
+.sy-props__swatch input:checked + .sy-props__dot {
+	border-color: var(--sy-surface);
+	box-shadow: 0 0 0 2px var(--sy-text);
+}
+.sy-props__swatch input:focus-visible + .sy-props__dot {
+	outline: 2px solid var(--sy-focus);
+	outline-offset: 3px;
+}
+
+@media (max-width: 960px) {
+	.sy-props__row {
+		grid-template-columns: minmax(0, 1fr) auto;
+	}
+	.sy-props__badges,
+	.sy-props__actions {
+		grid-column: 1 / -1;
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 720px) {
+	.sy-props__row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--sy-space-6);
+	}
+	.sy-props__toolbar .sy-field {
+		max-width: none;
+	}
+	.sy-props__optlist > li.sy-props__opt {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+/* LTR identifiers sit at the inline-start edge of their cell in both directions */
+.sy-props__main .sy-props__code {
+	align-self: flex-start;
+}

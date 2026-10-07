@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
 import { fetchAssignees } from "./features/leads/api.ts";
-import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, ReportingView, TasksView } from "./features/index.ts";
+import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, PropertiesView, ReportingView, TasksView, useSchemaRead } from "./features/index.ts";
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
@@ -23,6 +23,7 @@ function Routed() {
 
 	const connected = session.status === "connected" && session.info !== null;
 	const actorId = connected ? (session.info?.actor ?? null) : null;
+	const canReadSchema = useSchemaRead(actorId);
 	const [actorName, setActorName] = useState<string | null>(null);
 	useEffect(() => {
 		setActorName(null);
@@ -40,6 +41,7 @@ function Routed() {
 			actorName={actorName}
 			actorRole={connected ? roleLabel(session.info?.configure || session.info?.merge ? "manager" : null, t) : null}
 			onDisconnect={() => sessionStore.disconnect()}
+			hiddenNavKeys={canReadSchema === true ? [] : ["properties"]}
 		>
 			{connected ? (
 				route === "/leads" ? (
@@ -52,6 +54,8 @@ function Routed() {
 					<PipelineView />
 				) : route === "/reporting" || route === "/reporting-v2" ? (
 					<ReportingView />
+				) : route === "/settings/properties" ? (
+					<PropertiesView />
 				) : route === "/tasks" ? (
 					<TasksView />
 				) : route === "/dashboard" || route === "/" ? (

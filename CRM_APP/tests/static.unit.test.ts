@@ -68,6 +68,7 @@ describe("isAppRoute", () => {
 			"/app/dashboard",
 			"/app/reporting",
 			"/app/reporting-v2",
+			"/app/settings/properties",
 		])
 			expect(isAppRoute(r)).toBe(true);
 	});
