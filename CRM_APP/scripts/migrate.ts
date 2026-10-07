@@ -21,6 +21,7 @@ try {
 		[10, "010_property_registry.sql"],
 		[11, "011_schema_api.sql"],
 		[12, "012_search_rebuild.sql"],
+		[18, "018_import.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
 			"SELECT 1 FROM public.crm_migrations WHERE version=$1",

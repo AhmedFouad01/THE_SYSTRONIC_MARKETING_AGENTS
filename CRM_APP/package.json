@@ -25,7 +25,8 @@
 		"test": "npm run test:db && npm run test:bootstrap && npm run test:ui"
 	},
 	"dependencies": {
-		"pg": "8.23.1"
+		"pg": "8.23.1",
+		"read-excel-file": "9.3.10"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
