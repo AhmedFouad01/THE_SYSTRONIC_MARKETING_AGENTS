@@ -1,138 +1,184 @@
-# AUTH_PLAN — Roadmap v2 item 2 "Real sign-in" (plan only, no code)
+# AUTH_PLAN v2 — Roadmap v2 item 2 "Real sign-in" on Better Auth, used headless (plan only, no code)
 
-Status: PROPOSED. Decisions D1–D13 adopted as Lead-provisional (2026-10-07 night run) — user to confirm in the morning; D1 (mandatory in-house TOTP for managers) and D2 (scrypt cost) most need confirmation. Author: tsst-dev (SK-002/003/007/008, all UNVALIDATED). Revision: `feat/crm-mvp-ui` @ 0641b45. Requirements: user, `NIGHT_RUN.md` §5 item 2 and §6.
-No new dependency (SES adapter is code-only, slice A12). Not deployed, not pushed.
+**Decision record (user, 2026-10-07):** real sign-in is built on **Better Auth** (self-hosted, our Postgres, MIT). Not Cognito, not from scratch. **A1 (2df5e7b, scrypt/pepper helpers) is kept for now, not reverted;** keep/drop is open decision D1 below.
+Status: PROPOSED v2 (supersedes v1 = A1-A12 / D1-D13 of b268076). Author: tsst-dev (SK-007/003/006, all UNVALIDATED). Base revision: `feat/crm-mvp-ui` @ 2df5e7b. Nothing installed, nothing migrated, not deployed, not pushed.
+Verified read-only on 2026-10-07 (`npm view`): `better-auth` **1.7.7**, dist-tag `latest`, published 2026-09-30, license **MIT**, ESM only, peer deps all optional (`pg ^8.0.0` matches our `pg 8.23.1`). Direct deps: zod, defu, jose, kysely, nanostores, better-call, @noble/hashes, @noble/ciphers, @better-fetch/fetch, plus `@better-auth/{core,utils,telemetry,kysely,drizzle,prisma,mongo,memory}-adapter` pinned to 1.7.7 (more transitive weight than v1's "no dependency" plan; installing needs the user's exact-pin approval, see §9).
 
-## 1. Current state (read from source)
+Docs relied on (v1.7 line; every page has a `.md` mirror; cite without the suffix):
+- Postgres adapter and `schemaName`: https://better-auth.com/docs/adapters/postgresql
+- Database, core schema, `generateId: "uuid"`, `auth generate`/`migrate`, schema validation, database hooks: https://better-auth.com/docs/concepts/database
+- Organization plugin (roles, access control, invitations, members, hooks, options): https://better-auth.com/docs/plugins/organization
+- Two-factor plugin (TOTP, backup codes, trusted device, account lockout, schema): https://better-auth.com/docs/plugins/2fa
+- Rate limit (IP+path, `storage: "database"`, `trustedProxies`/`ipAddressHeaders`, custom rules): https://better-auth.com/docs/concepts/rate-limit
+- Email and password (custom `password.hash/verify`, reset flow, `revokeSessionsOnPasswordReset`, enumeration protection): https://better-auth.com/docs/authentication/email-password
+- Session management (`expiresIn`, `updateAge`, `freshAge`, revoke, `cookieCache`): https://better-auth.com/docs/concepts/session-management
+- Cookies (names, attributes, `useSecureCookies`): https://better-auth.com/docs/concepts/cookies
+- Options (`secret`/`secrets`, `trustedOrigins`, `advanced.database`, `telemetry`, `verification.storeIdentifier`): https://better-auth.com/docs/reference/options
+- Security reference (password hashing, CSRF/origin/Fetch-Metadata): https://better-auth.com/docs/reference/security
+- Hooks: https://better-auth.com/docs/concepts/hooks · Node handler (`toNodeHandler` from `better-auth/node`, shown on the Express page): https://better-auth.com/docs/integrations/express · CLI (`generate` emits reviewable SQL): https://better-auth.com/docs/concepts/cli
 
-- `src/api.ts:45` `context()`: tenant from `X-Tenant-ID`, token from `Authorization: Bearer`, optional `X-Grant-ID`. Only UUID shape is checked there.
-- `src/db.ts:31` `transaction()`: `set_config('crm.tenant', ...)` and `set_config('crm.token', ...)` with `is_local=true`, then `crm.actor()` -> 401 and `crm.tenant_access()` -> 403.
-- `crm.actor()` (001): `SECURITY DEFINER`, fixed `search_path`; looks up `crm.session` by `sha256(token)` hex and `expires_at>now()`. No `revoked_at`, no idle expiry, no origin of the session recorded.
-- `crm.session(token_hash, principal_id, expires_at, mfa_verified)` is not RLS'd. `crm_runtime` has no grant on it. Only definer functions and seed scripts touch it. `scripts/seed.ts:49` and `scripts/spike/b0-setup.ts:136` mint test sessions with `mfa_verified=true`.
-- `crm.principal(id, name)` has no email or credential. `crm.membership(tenant_id, id, principal_id, role, active)` has `UNIQUE(tenant_id, principal_id)`, so one principal can belong to many tenants.
-- `crm.mfa_ok(p, t)` (002/003): a principal who is an active `manager` in tenant t needs a session with `mfa_verified=true`. **A password-only session would lock every manager out of `can_object` and `object_scope` paths. This drives decision D1.**
-- Tenant RLS (008+): `tenant_id = (SELECT crm.context_tenant_if_allowed())`. P1A review (`audits/2026-10-07/P1A_SECURITY_REVIEW.md`): MAJOR finding = definer functions lacked an explicit `REVOKE ... FROM PUBLIC`; fixed in 008 plus a repair in `scripts/migrate.ts:57`; ACL catalog test `tests/p1a.test.ts:27`.
-- The web client keeps pasted token and tenant in `sessionStorage` (`app/src/api/session.ts`, `ConnectGate.tsx`). The worker (`src/worker.ts`, `jobs.ts`) calls the DB directly with a session token and a `worker` membership; it does not use HTTP.
-- No CORS is emitted except `/v1/collect/events`. Every non-GET API call already needs `Idempotency-Key` and a JSON body.
+## 1. Current state (facts from v1, compressed)
 
-## 2. Design summary
+- `src/api.ts` `context()`: tenant from `X-Tenant-ID`, token from `Authorization: Bearer`, optional `X-Grant-ID`. `src/db.ts` `transaction()`: `set_config('crm.tenant'|'crm.token', ..., true)`, then `crm.actor()` (401) and `crm.tenant_access()` (403).
+- `crm.actor()` (001): definer, fixed `search_path`, looks up `crm.session` by `sha256(token)`; `crm.session` is not readable by `crm_runtime`. `crm.mfa_ok(p,t)` (002/003): an active `manager` (directly, or via agency grant) needs a session with `mfa_verified`. Tenant RLS: `tenant_id = (SELECT crm.context_tenant_if_allowed())` (008), FORCE RLS on tenant tables. Roles in `crm.role_permission` (manager, rep, reader, worker). One principal may belong to many tenants (`UNIQUE(tenant_id, principal_id)`).
+- `crm.tenant(id,name)`, `crm.principal(id,name)`, `crm.membership(tenant_id,id,principal_id,role,active)` are plain tables read through definer functions. Latest migration is 012. DB roles: `crm_runtime` (LOGIN, NOBYPASSRLS) and the migrator (`ADMIN_DATABASE_URL`).
+- A1 shipped: `src/auth/password.ts` (scrypt N=2^17,r=8,p=1, pepper keyring, policy, 2-slot semaphore), `common-passwords.ts`, `tokens.ts`. No DB or API change yet.
+- The web client pastes a token into `sessionStorage` (dev gate). The worker uses a service session, not HTTP.
 
-1. **Identity** is global: `crm.principal` + new `crm.credential` (email, scrypt hash). **Roles** stay per tenant in `crm.membership.role`. No new role names except invite and admin actions added to `crm.role_permission`.
-2. **Session** = 32 random bytes (CSPRNG), cookie value is the raw token, DB stores `sha256` hex in the existing `crm.session.token_hash`. Reuses `crm.actor()`, `mfa_ok()`, RLS and every existing function. The cookie path and the dev Bearer path feed the same `Context.token`, so no authorization code changes.
-3. **Auth DB access** goes through definer functions granted to `crm_runtime` (same pattern as 001/008). No new DB role (D6).
-4. **Dev Bearer path** stays, gated by `CRM_DEV_BEARER=1`; the API refuses to boot with it when `NODE_ENV=production`; in production the `Authorization` header is ignored. The worker and service sessions keep `kind='service'` and are minted by script only (never over HTTP).
-5. **Tenant selection** stays the `X-Tenant-ID` header, always checked by `tenant_access()` against active membership. The cookie carries identity only.
-6. **No open signup.** A bootstrap script (A5) creates a tenant plus first manager invite and prints a one-time link to stdout. Everyone else enters by invite (D8).
+## 2. Architecture: Better Auth is the identity engine; our model stays the authority for tenant data
 
-## 3. Threat model (SK-008; hypotheses are labelled, evidenced items cite source)
+Principle: **Better Auth proves who the caller is. Our database still decides what they may see.** The business request path (`context()` -> `transaction()` -> `crm.actor()` -> `tenant_access()` -> RLS) keeps its shape; only what `crm.actor()` looks up changes.
 
-Assets: credentials and hashes, session tokens, reset and invite tokens, tenant data behind RLS. Actors: anonymous internet caller, authenticated member of tenant A, manager, invited person, mail-box thief, insider with log access. Boundaries: browser -> API (new cookie boundary), API -> `crm_runtime` (unchanged), API -> mail (stub).
+### 2.1 Mapping
 
-| # | Threat | Path | Mitigation | Test (slice) |
-|---|---|---|---|---|
-| T1 | Credential stuffing / brute force | Bot replays leaked pairs against `/v1/auth/login` | Three DB throttles (account, IP, IP+account) with backoff; scrypt concurrency cap; generic 401; 12-char minimum + in-house common-password blocklist; auth_event audit rows. Residual: distributed low-rate attack (no CAPTCHA, no breached-password API: D11) | A3, A4 |
-| T2 | Session fixation | Attacker plants a known cookie before login | Server never accepts a client-chosen session id; login always mints a new token and expires any presented cookie; password change/reset revokes all sessions of the principal | A4, A6 |
-| T3 | CSRF (state change and login CSRF) | Third-party page auto-submits to the API with the victim's cookie | `SameSite=Lax` cookie; `Origin` must equal `CRM_PUBLIC_ORIGIN` for every non-GET (also pre-auth POSTs); per-session synchronizer token in `X-CSRF-Token` (hash in `crm.session.csrf_hash`, constant-time compare); JSON-only (415 otherwise); no CORS on these routes; existing `Idempotency-Key` requirement stays. No GET mutates | A4 |
-| T4 | User enumeration | Differences in login, reset, invite-accept responses, timing or status | One error code `INVALID_CREDENTIALS` for unknown email, wrong password, no active membership and throttled-unknown; reset request always `202` with the same body, work done after the response; invite accept errors collapsed to `INVITE_INVALID`. Managers may see "already a member" (authenticated, tenant-scoped) | A4, A5, A6 |
-| T5 | Timing | Hash-compare short-circuit or unknown-email fast path | Unknown email runs a full scrypt against a startup-computed dummy hash with the current params; compare with `timingSafeEqual`; token lookups are by hash (equality on a SHA-256 of a 256-bit secret, not timing-exploitable) | A1, A4 |
-| T6 | Reset-token replay / theft | Reused, guessed or leaked reset link | 256-bit token, only `sha256` stored, single use (`used_at` set in the same transaction as the password write, `UPDATE ... WHERE used_at IS NULL`), 60 min expiry, new request invalidates earlier tokens, success revokes all sessions, token carried in the URL fragment so it never reaches server logs or Referer, `Referrer-Policy: no-referrer`, link host from `CRM_PUBLIC_ORIGIN` (never `Host`: reset poisoning) | A6, A10 |
-| T7 | Invite takeover | Guess or intercept an invite; invite for an existing account used to hijack it; role escalation | 256-bit hashed single-use token bound to `email_norm`, 7-day expiry, revocable; new email: accepter sets a password; existing account: acceptance requires an active login as that same email (token alone never attaches a membership to an existing account); invitable roles allow-list `manager`/`rep`/`reader` (never `worker`); inviter needs `user.invite`; tenant comes from the invite row, never the request | A5 |
-| T8 | Dev Bearer left on in production | Static seeded token works on the internet | Env gate plus boot refusal; header ignored in prod; deploy runbook check `SELECT count(*) FROM crm.session WHERE kind='dev'` must be 0 | A4, A12 |
-| T9 | Cookie theft (XSS) / session hijack | Script reads token | `HttpOnly`; token never in JS or storage; CSP delivered by nginx (note for `DEPLOY_EC2.md`); client stops using `sessionStorage` in cookie mode | A9 |
-| T10 | Privilege and lifecycle | Removed or demoted user keeps access; last manager removed; a worker/service session used as login | `tenant_access()` already re-checks `membership.active` per request; role change/deactivate via definer functions with a last-manager guard; `kind` separates dev/service/cookie sessions | A5 |
-| T11 | scrypt DoS | Many concurrent logins exhaust memory (about 128 MiB each at N=2^17) | Semaphore (max 2 concurrent hashes), 429/503 beyond it, password length cap 128 before hashing, throttle before hash | A1, A3 |
-| T12 | Secrets in logs | Tokens, passwords, links in log lines or error bodies | Central redactor; stub mailer logs message id and a recipient hash only; link printed only when `CRM_MAIL_STUB_SHOW_LINK=1` and not production (D10); auth_event stores no token | A6, gate |
-| T13 | Clickjacking | Framed login page | `X-Frame-Options: DENY` plus CSP `frame-ancestors 'none'` on HTML responses (small `api.ts` change in A4) | A4 |
-
-## 4. Data model and migrations (013 onward; each ends with explicit `REVOKE ... FROM PUBLIC`)
-
-Rules for every migration: `SECURITY DEFINER SET search_path=pg_catalog,crm`; `REVOKE EXECUTE ... FROM PUBLIC` then `GRANT ... TO crm_runtime` named per function; `REVOKE ALL` on new tables from PUBLIC and `crm_runtime`; add the new function names to the idempotent repair block in `scripts/migrate.ts`; extend the catalog test to assert "no `crm` SECURITY DEFINER function has PUBLIC EXECUTE" generically (not just a name list). Tables without `tenant_id` get `ENABLE ROW LEVEL SECURITY` with no policy (deny-all for non-owners, defence in depth; not `FORCE`, so definer functions owned by the migrator still work). Tenant-scoped tables use the standard `tenant_boundary` policy on `context_tenant_if_allowed()` plus `FORCE`.
-
-**013_auth_credentials_sessions.sql**
-- `crm.credential(principal_id uuid PK -> principal, email_norm text NOT NULL UNIQUE CHECK(email_norm = lower(email_norm) AND length <= 254), password_hash text NOT NULL, password_changed_at timestamptz, created_at)`. Email is normalised in app code (trim, lower-case, single `@`); no NFKC on email.
-- `ALTER crm.session ADD kind text NOT NULL DEFAULT 'dev' CHECK(kind IN ('dev','service','cookie')), created_at, last_seen_at, absolute_expires_at, revoked_at, csrf_hash text, ua_hash text`. Backfill all rows `kind='dev'`.
-- `CREATE OR REPLACE crm.actor()` and `crm.mfa_ok()`: add `revoked_at IS NULL AND (absolute_expires_at IS NULL OR absolute_expires_at>now())`. Same signature and grants, so every policy keeps working.
-- Definer functions (runtime-callable): `auth_credential(email_norm)` returns `principal_id, password_hash` only for a principal with at least one active membership; `auth_session_create(principal, token_hash, csrf_hash, ua_hash, idle, absolute)`; `auth_session_info()` (principal, csrf_hash, memberships list; bound to the current token); `auth_session_touch()` (update `last_seen_at`/`expires_at` at most every 5 min); `auth_session_revoke(all boolean)`; `auth_password_set(principal, hash)` (also revokes sessions).
-- `auth_event(id, at, principal_id null, tenant_id null, event text, ip_hash, request_id)`: append-only audit, insert through `auth_log()` definer only.
-
-**014_auth_throttle.sql**: `crm.auth_throttle(key_hash text PK, window_start, count, blocked_until)`; `crm.auth_throttle_hit(key_hash, window_secs, limit)` returns `(allowed, retry_after_secs)` via atomic `INSERT ... ON CONFLICT DO UPDATE`; opportunistic purge of rows older than 1 day. Keys are `sha256(scope || ':' || value)` so emails and IPs are not stored in clear.
-
-**015_auth_invites_members.sql**: `crm.invite(tenant_id, id, email_norm, role CHECK(role IN ('manager','rep','reader')), token_hash UNIQUE, invited_by, expires_at, accepted_at, revoked_at)`, RLS `tenant_boundary` + FORCE, no direct runtime DML. New `role_permission` rows for `manager`: `user.read`, `user.invite`, `user.manage`. Definers: `invite_create`, `invite_revoke`, `invite_list`, `invite_accept(token_hash, ...)` (the only function usable before login; takes the token hash and does all checks inside one transaction with `FOR UPDATE`), `member_list`, `member_set_role`, `member_deactivate` (refuse if it would remove the last active manager).
-
-**016_auth_password_reset.sql**: `crm.password_reset(principal_id, token_hash UNIQUE, expires_at, used_at, issued_by null)`; definers `reset_request(email_norm, token_hash)` (no-op row if unknown email), `reset_consume(token_hash, new_hash)` (single transaction, `used_at` guard, revoke sessions), `reset_issue_for_member(principal)` (manager-issued link, needs `user.manage`).
-
-**017_auth_totp.sql** (only if D1 = yes): `crm.credential_totp(principal_id PK, secret_enc bytea, nonce, enabled_at, last_step bigint)`, `crm.recovery_code(principal_id, code_hash, used_at)`, definer `auth_session_mark_mfa()`.
-
-## 5. Cryptography and parameters
-
-- **Hash**: `crypto.scrypt` (async, thread-pool), `N=2^17, r=8, p=1`, 32-byte key, 16-byte random salt, `maxmem=256 MiB` (Node default 32 MiB would throw). Stored as `scrypt$v1$kid$N$r$p$salt_b64$hash_b64`; verify reads params from the string; `timingSafeEqual`; on successful login rehash when params or pepper id are not current. Target 100-250 ms on the EC2 size; A1 ships a bench script; fallback `N=2^16, r=8, p=2` (OWASP-equivalent) if memory is short (D2).
-- **Pepper**: `HMAC-SHA256(pepper, NFKC(password))` before scrypt. Env placeholders only: `CRM_AUTH_PEPPER_1` (32+ bytes, base64), `CRM_AUTH_PEPPER_ACTIVE=1`; older ids stay for verification during rotation. Missing or short pepper in production = refuse to start; never in DB, repo, logs or `.env.example` values (placeholder text only).
-- **Tokens** (session, invite, reset, CSRF): `randomBytes(32)`, base64url, only SHA-256 stored. No custom crypto: only `node:crypto` primitives.
-- **Password policy**: NFKC-normalise, 12-128 characters, not equal to email, not in the shipped top-common list; no composition rules.
-- **Cookie** `__Host-crm_sid` (production; plain `crm_sid` when `CRM_COOKIE_SECURE=0` for http dev because `__Host-` requires `Secure`): `HttpOnly; Secure; SameSite=Lax; Path=/`, no `Domain`, `Max-Age` = absolute lifetime. Logout and revocation send `Max-Age=0`. Idle 8 h sliding, absolute 14 days (D4). `Cache-Control: no-store` already global.
-- **Proxy**: API listens on 127.0.0.1 behind nginx. Client IP and `https` are read from `X-Forwarded-For`/`-Proto` only when `CRM_TRUST_PROXY=1`, taking the right-most value added by nginx; otherwise the socket address.
-
-## 6. Rate-limit store: recommendation = in-database
-
-| Option | For | Against |
+| Better Auth | Ours | How they are tied |
 |---|---|---|
-| In-memory Map | zero latency, no migration | resets on restart (deploys, crashes), per-process, lost on a second process; weak for stuffing |
-| **In-DB `crm.auth_throttle`** | survives restart, atomic upsert, shared by API and any future second process, auditable, no dependency | one small write per auth attempt (login volume is low); needs periodic purge |
-| Redis | standard | new service and dependency: rejected |
+| `user` | `crm.principal` | Same uuid: `advanced.database.generateId: "uuid"` so `auth.user.id = crm.principal.id`. An AFTER INSERT/UPDATE trigger (definer, migrator-owned) upserts `crm.principal(id,name)`. Users are never hard-deleted (`deleteUser` stays off; trigger refuses DELETE). |
+| `organization` | `crm.tenant` | Same uuid, trigger upserts `crm.tenant(id,name)`. Orgs are created only by the operator bootstrap script (`allowUserToCreateOrganization: false`, `disableOrganizationDeletion: true`). An existing seeded tenant can be adopted by creating an org with the same id. |
+| `member` (+ `role`) | `crm.membership` (+ `role`, `active`) | `crm.membership.id = auth.member.id`. Trigger maps `member.role` to `crm.membership.role` and rejects anything not in `{manager, rep, reader}` (`owner` only as creator role, mapped to `manager`, see U7). Member removal sets `active=false` (never DELETE: `agency_grant` and audit rows reference membership). `worker` memberships stay script-created in `crm.membership` and are never touched by Better Auth. |
+| role names in the organization plugin's access control | `crm.role_permission` | Better Auth's AC (`createAccessControl`, custom roles named `manager`/`rep`/`reader`) only guards Better Auth's own org endpoints (who may invite or change roles). **It is not the authority for CRM data;** `crm.role_permission` is, unchanged. Migration 016 adds `user.read`, `user.invite`, `user.manage` for `manager`. Both layers must agree (our route checks `crm.can_action` first, Better Auth's AC second). |
+| `invitation` | invite flow | Better Auth stores and expires invites (`invitationExpiresIn` 7 days, v1's choice). Acceptance by a person with no account goes through our gated sign-up (2.5). |
+| `session` | request context | See 2.2. |
+| `twoFactor` + `user.twoFactorEnabled` | `crm.mfa_ok()` | See 2.4. |
+| `verification` | reset tokens | `verification.storeIdentifier: "hashed"`. |
+| `rateLimit` | IP throttle | `rateLimit.storage: "database"` (table in schema `auth`). |
 
-Limits (initial, tunable by env): login per account 5 fails / 15 min with doubling `blocked_until` up to 15 min; per IP 30 / 15 min; per IP+account 10 / 15 min; reset request per email 3 / h and per IP 10 / h; invite accept per IP 20 / h. Throttle is checked before any scrypt. Success clears the account counter only. Throttle rows exist for unknown emails too (no enumeration). Response `429 RATE_LIMITED` with `Retry-After`.
+Authority rule (single writer per fact): identity, credentials, sessions, membership and role changes are **written by Better Auth** (through our server-side routes); `crm.principal/tenant/membership` are **projections maintained by DB triggers**, atomic with Better Auth's own write, with no application code path to forget. Business code never writes either side directly. Invariant test: every `auth.member` row has a `crm.membership` row with the same role, and no manager/rep/reader `crm.membership` exists without an `auth.member` (seeded and service rows excepted).
 
-## 7. Endpoints (all under `/v1/auth`, JSON only, handled before `context()` where no tenant is needed)
+### 2.2 Session -> request context -> tenant GUC -> RLS
 
-`POST login` (email, password) -> sets cookie, returns `{csrf_token, principal, tenants:[{id, role}]}`. `POST logout`. `GET session` (cookie only; returns csrf token and tenants; also returns 401 cleanly). `POST password/change`. `POST password/reset-request`, `POST password/reset-confirm`. `POST invites/accept`. Tenant-scoped (normal `context()` + CSRF): `GET/POST /v1/users`, `POST /v1/invites`, `DELETE /v1/invites/:id`, `PATCH /v1/users/:id`, `POST /v1/users/:id/reset-link`. Existing business routes only change in how the token reaches `Context` (cookie or dev Bearer) and in the new CSRF/Origin check for cookie-authenticated non-GETs.
+1. Browser sends the Better Auth session cookie (`HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/`, no `Domain`; production name overridden to a `__Host-` form via `advanced.cookies.session_token.name`, `useSecureCookies: true`).
+2. `context()` (cookie requests): `auth.api.getSession({ headers })` validates cookie signature and expiry and returns the session; we take the **raw session token** from it into `Context.token`. Tenant stays the `X-Tenant-ID` header; we deliberately ignore Better Auth's `activeOrganizationId` (session-global and mutable; the header is per request and works across tabs). The dev Bearer path feeds the same field.
+3. `transaction()` is unchanged: `set_config('crm.tenant')`, `set_config('crm.token')` (is_local), then `crm.actor()` and `crm.tenant_access()`.
+4. Migration 016 replaces `crm.actor()`: returns the principal from `crm.session` (dev/service, hashed lookup as today) **or** `auth.session."userId"` where `token = crm.token`, `expiresAt > now()` and (D3) `createdAt > now() - absolute lifetime`. The **database re-validates the Better Auth session on every request**: a forged or stale `crm.token` from Node cannot create an actor, and a revoked session (row deleted by Better Auth, U10) is a 401 at once even if `cookieCache` were on (we keep it off).
+5. `tenant_access()`, `context_tenant_if_allowed()`, every `tenant_boundary` policy and FORCE RLS stay as they are. A user of tenant A sending tenant B's id gets 403 from `tenant_access()`; direct SQL as `crm_runtime` still returns zero rows from B.
+6. Migration 016 also replaces `crm.mfa_ok()`, keeping the 003 logic (direct manager or agency path) and swapping only the final clause (2.4).
 
-## 8. Slices (server first, then plain UI; each = one agent round; commit only after the Lead's gate)
+### 2.3 Schema and DB-role placement (SK-006)
 
-| Slice | Scope | Acceptance checks | Tests |
+- **Separate schema `auth`**, owned by the migrator. Tables are created by **our reviewed migrations** (013-014), not by `auth migrate` at runtime: `auth generate` (Kysely adapter emits SQL) is run once with the final plugin set, then reviewed and edited (uuid ids, FKs, CHECKs, `REVOKE ALL ... FROM PUBLIC`). The CLI is never run unpinned (`npx auth@latest` is a supply-chain hole); `validateSchema` stays on so drift between code and tables is reported at boot. Better Auth is pointed at the schema with `database.schemaName: "auth"` (documented).
+- **New DB role `crm_auth`** (`LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS`, small `CONNECTION LIMIT`). Grants: `USAGE` on schema `auth` and DML on `auth.*` tables only. **No privilege on schema `crm`.** The API holds a second small `pg.Pool` (placeholder `AUTH_DATABASE_URL`; password set by `scripts/migrate.ts` like `crm_runtime`'s). Result: a Better Auth bug or injection cannot read tenant data, and the business pool cannot read credentials.
+- **`crm_runtime` gets no grant on `auth`.** It reaches identity only through definer functions (`crm.actor()`, `mfa_ok()`, `tenant_access()`) that run as the owner. v1 rules stay for every new definer: fixed `search_path`, `REVOKE EXECUTE ... FROM PUBLIC`, named grants, entry in the idempotent repair block of `scripts/migrate.ts`, generic catalog test ("no definer with PUBLIC EXECUTE").
+- **RLS on `auth` tables:** they are global (user, session, account) or cross-tenant by nature (Better Auth lists a user's orgs, finds invitations by email), so **tenant RLS does not apply and is not used**; isolation is by schema, role and grants. Defence in depth: `ENABLE ROW LEVEL SECURITY` on every `auth` table with one permissive policy `TO crm_auth` and none for anyone else, so an accidental future grant to another role reads nothing. **Not `FORCE`:** the migrator-owned definer and trigger functions must read `auth.*`. All `crm` tenant tables keep ENABLE+FORCE and `tenant_boundary` untouched, and Better Auth never connects as a role that can reach them. The cross-tenant exposure that remains is inside Better Auth's own org endpoints (e.g. member lists); we remove it by **not exposing them** (next point).
+- **Narrow HTTP surface:** the Better Auth handler (`toNodeHandler`, `basePath: "/v1/auth"`, mounted before any body reading) answers only an allow-list: `sign-in/email`, `sign-out`, `get-session`, `change-password`, `request-password-reset`, `reset-password`, `two-factor/*`, `sign-up/email` (gated, 2.5), `accept-invitation`. Everything else (organization CRUD, member lists, admin-like routes) is 404 at our router. Membership administration is our own `/v1/users*` and `/v1/invites*` routes: they authorize with `crm.can_action('user.*')` inside the tenant transaction and then call `auth.api.*` server-side, so the tenant check is ours and Better Auth's AC is a second check.
+
+### 2.4 Roles, MFA and the `mfa_ok` bridge
+
+- `crm.mfa_ok()` for an active manager currently needs `session.mfa_verified`. Better Auth has no per-session MFA flag; it has `user.twoFactorEnabled`, and (docs) a 2FA-enabled user gets **no session until the second factor is verified**. New rule: manager scope requires `auth."user"."twoFactorEnabled"` for the session's user, evaluated live (disabling 2FA drops manager scope on the next request). A manager without TOTP can sign in, has no manager scope (403 on manager actions) and can enrol. This keeps v1 decision D1 without an in-house TOTP implementation.
+- Hole to close: Better Auth's **trusted device** (`trustDevice`, 30 days) lets a 2FA user skip the second factor. We refuse `trustDevice: true` in a `before` hook and test that a sign-in of a 2FA user never yields a session without a verified factor (U5). Backup codes count as the factor.
+- Legacy `crm.session` rows (`kind` = `dev`/`service`, new column in 016, default `dev`) keep working for the worker and tests with their own `mfa_verified`.
+
+### 2.5 Closed sign-up, invites, bootstrap, passwords, mail
+
+- No open registration. `POST sign-up/email` is reachable but gated by a Better Auth `before` hook (or `databaseHooks.user.create.before`): it succeeds only when the request carries a valid pending invitation id for exactly that email (checked against `auth.invitation`). Accepting the invitation then adds the member (Better Auth) and the trigger projects the membership.
+- An existing account invited to another tenant must sign in as the same email, then accept (Better Auth requires session email = invitation email).
+- Bootstrap script creates org + first-manager invitation as the migrator (direct SQL into `auth.*`; triggers project into `crm.*`) and prints a one-time link to stdout. No Better Auth organization endpoint is used for creation.
+- Passwords: Better Auth's default scrypt is replaced by A1 through `emailAndPassword.password.{hash,verify}` if D1 = keep. `minPasswordLength: 12`, `maxPasswordLength: 128`; the common-password list runs in a `before` hook on sign-up, reset and change-password (not inside `hash`, which Better Auth may also call for unknown users on sign-in, U2).
+- Mail: `sendResetPassword` and `sendInvitationEmail` call our `Mailer` interface. Links are built by us (host from config, token in the URL **fragment**), not Better Auth's callback URLs, so tokens do not reach server logs or `Referer`.
+
+### 2.6 UI (ours, headless)
+
+All sign-in, 2FA, invite-accept, forgot/reset, users-admin and security-settings screens are ours: AR/EN, complete RTL (logical properties, motion from the right), mixed AR/EN text isolated with `dir="auto"`/`<bdi>` for emails, names and codes, EN equally first-class. No Better Auth UI kit. The UI talks to `/v1/auth/*` through a thin typed `fetch` wrapper (about 8 endpoints; `better-auth/client` is optional and not needed). Better Auth's English `message` strings are never shown: error **codes** map to i18n keys. `credentials: 'same-origin'`; no token in `sessionStorage` in cookie mode; `ConnectGate` stays only when `VITE_DEV_BEARER` is set.
+
+## 3. Migrations (from 013; 001-012 exist; each ends with explicit REVOKE/GRANT and a repair-block entry)
+
+| # | File | Content |
+|---|---|---|
+| 013 | `013_auth_schema_roles.sql` | role `crm_auth`; schema `auth`; core tables `user`, `session`, `account`, `verification`, `rateLimit` from reviewed generate output (uuid ids); ENABLE RLS + `crm_auth` policy; grants; `REVOKE ALL FROM PUBLIC` |
+| 014 | `014_auth_org_2fa.sql` | `organization`, `member`, `invitation`, `twoFactor`; `user.twoFactorEnabled`; `session.activeOrganizationId` (unused but required by the plugin schema); CHECKs on `member.role`/`invitation.role`; unique `(organizationId,userId)` |
+| 015 | `015_auth_projection.sql` | definer trigger functions: `auth.user` -> `crm.principal`, `auth.organization` -> `crm.tenant`, `auth.member` -> `crm.membership` (upsert; removal -> `active=false`; role mapping; refuse worker); last-active-manager guard (refuse the change that would leave a tenant with zero active managers) |
+| 016 | `016_auth_bridge.sql` | `ALTER crm.session ADD kind`; `CREATE OR REPLACE crm.actor()` and `crm.mfa_ok()` (same signatures and grants); `role_permission` rows `user.read/invite/manage` for manager |
+| 017 | `017_auth_audit.sql` (only if U8 shows no per-account password lockout) | `auth.login_throttle` and append-only `auth_event`, written through a definer |
+
+`scripts/migrate.ts` (in B1): add the files, create/alter `crm_auth` password from `AUTH_DATABASE_URL` (same alphanumeric check), extend the repair block and the generic definer-ACL catalog test. No expand/contract is needed: the tables are new and `actor()`/`mfa_ok()` are replaced in one migration with identical signatures; `kind` has a default. A down-migration is not recovery: rollback = revert the app build and leave `auth.*` in place; dev/service sessions keep working throughout.
+
+## 4. Threat model T1-T13 re-marked, plus new rows (SK-007)
+
+Legend: **BA** covered by Better Auth (config + our test); **OURS** we build/keep; **CHG** mitigation changed.
+
+| # | Threat | Status | Now |
 |---|---|---|---|
-| **A1** Password primitives | `src/auth/password.ts` (hash/verify/rehash flag/pepper keyring/dummy verify/policy/semaphore), `src/auth/tokens.ts`, `scripts/bench-scrypt.ts` | N, r, p, maxmem as in §5; no import outside `node:crypto`; missing pepper fails in prod mode; bench output recorded | unit: round-trip, wrong pw, param-upgrade rehash, pepper rotation, malformed hash fails closed, 129-char rejected, dummy verify cost within 30% of real, policy list, token length/uniqueness |
-| **A2** Migration 013 | credential, session hardening, `actor()`/`mfa_ok()` update, session and event definers, seed marks `kind='dev'` | all existing suites green (`test:db`); `actor()` honours `revoked_at`/absolute expiry; runtime cannot SELECT credential/session | db: revoked and expired sessions = 401; credential unreadable by runtime; cross-principal `auth_session_info`; generic catalog test: no definer with PUBLIC EXECUTE; dev session still works |
-| **A3** Migration 014 + throttle | `auth_throttle` table and function, `src/auth/throttle.ts` | atomic under concurrency; keys hashed; purge works | db: limit hit/blocked/backoff/expiry, 20 parallel hits count exactly, unknown email throttled the same |
-| **A4** Login, logout, session, cookie, CSRF, dev-Bearer gate | `src/auth/http.ts`, `api.ts` wiring (cookie parse, `context()` change, Origin and CSRF check, 415, frame headers, boot guard) | cookie flags exact; new token each login; Bearer ignored unless `CRM_DEV_BEARER=1`; boot refuses Bearer in production; generic errors | http+db: happy login; wrong pw / unknown email / no membership give identical body and similar timing shape; fixation (old cookie rejected, new minted); logout revokes server-side; CSRF missing/wrong/foreign Origin = 403 and no write; GET with cookie has no side effect; throttle 429; idle and absolute expiry; revoked principal membership = 403 |
-| **A5** Migration 015: invites + members + bootstrap | invite and member definers, `src/auth/users.ts`, routes, `scripts/create-tenant-admin.ts` | RLS on `invite`; role allow-list; last-manager guard; link returned to the inviting manager | db/http: reader/rep cannot invite (403); tenant B manager cannot see or revoke A invites; token replay, expired, revoked, wrong email, role `worker` rejected; existing-account accept needs matching login; last-manager deactivate refused; demoted user loses scope on next request |
-| **A6** Migration 016: password reset + mailer stub | reset definers, `src/auth/mailer.ts` (interface + stub; logs id and recipient hash; link only under `CRM_MAIL_STUB_SHOW_LINK=1` and non-production), manager-issued reset link | same body and timing shape for unknown/known email; single use; sessions revoked | db/http: replay fails, expiry, newer request voids older, concurrent double-consume (one wins), password policy enforced, old sessions 401, log capture contains no token/password |
-| **A7** TOTP (if D1 = yes), migration 017 | RFC 6238 over `node:crypto` HMAC, AES-256-GCM secret encryption with `CRM_AUTH_TOTP_KEY` (placeholder), enrol/verify, 8 recovery codes, login step-up marks `mfa_verified` | manager session without TOTP gets no manager scope; ±1 step window; step reuse refused | unit: RFC test vectors; db/http: enrol, wrong code throttled, replay of same step, recovery code single use, `mfa_ok` end-to-end |
-| **A8** Server hardening + review prep | session list and revoke-all, `password/change`, throttle purge job, redactor, update `P1A_THREAT_MODEL.md`-style notes into `AUTH_THREAT_MODEL.md`, negative-test sweep | every row of §3 has a passing test or a labelled hypothesis | full `lint`, `typecheck`, `test:unit`, `test:db`, `test:bootstrap` output captured |
-| **GATE S1** | `tsst-dev` SK-007/008 security review of A1-A8 (source plus tests), written to `audits/<date>/AUTH_SECURITY_REVIEW.md` | no open BLOCKER or MAJOR; Lead verifies, then commits | review re-runs T1-T13 against the diff |
-| **A9** Plain UI: sign-in | login page, cookie bootstrap through `GET /v1/auth/session`, CSRF header and `credentials:'same-origin'` in `app/src/api/client.ts`, logout, `ConnectGate` kept only when `VITE_DEV_BEARER` is set; AR/EN, RTL | no credential in `sessionStorage` in cookie mode; 401 returns to login | vitest client headers; Playwright login/logout, wrong password message, AR and EN |
-| **A10** Plain UI: invite accept, forgot/reset | pages reading the token from the URL fragment, `Referrer-Policy: no-referrer` | token never sent in a query string | Playwright: accept flow, reset flow, expired/used link message, fragment cleared after read |
-| **A11** Plain UI: users admin | members table, invite form (copy link), change role, deactivate, revoke invite, issue reset link, my sessions, change password; TOTP enrol if A7 | controls hidden for non-managers **and** server returns 403 | Playwright manager vs rep; API 403 asserted directly |
-| **A12** SES adapter (code only) + ops notes | `src/auth/mailer-ses.ts` behind the interface, lazy `import()`; env placeholders `CRM_MAIL_MODE`, `CRM_MAIL_FROM`; add `@aws-sdk/client-sesv2` exact pin only at this slice (approved §6) then lint/typecheck/build; deploy-runbook checks (dev-session count, pepper set, `CRM_TRUST_PROXY`) | no AWS call in tests (client mocked); nothing runs without `CRM_MAIL_MODE=ses` | unit with mock client; build passes |
-| **GATE S2** | delta review of A9-A12 (client token handling, link handling, CSP note, SES adapter) | no open BLOCKER/MAJOR | Lead verifies, then commits |
+| T1 | Credential stuffing / brute force | **CHG, BA + OURS** | BA rate limit is per IP+path (sign-in 3 per 10 s by default), stored in DB, IPv6 /64 aware; 2FA verification has per-account lockout. A per-account **password** lockout is not in the docs read -> OURS if U8 confirms (017). Common-password list = A1, OURS. Residual: distributed low-rate attack (no CAPTCHA, no breached-password API) |
+| T2 | Session fixation | **BA** | server mints a new token on sign-in; `revokeSessionsOnPasswordReset: true`; change-password with `revokeOtherSessions: true`. Our test: a planted cookie is never accepted |
+| T3 | CSRF | **CHG** | BA covers its endpoints (origin + Fetch-Metadata checks, JSON, SameSite). Business routes now accept the cookie, so OURS: `Origin` must equal the public origin on every non-GET; requests already need `X-Tenant-ID`, `Idempotency-Key` and JSON (non-simple, no CORS emitted). v1's synchronizer token is **dropped** as redundant. `disableCSRFCheck`/`disableOriginCheck` are never set |
+| T4 | User enumeration | **BA + OURS** | BA: generic sign-in error, reset-request response, sign-up protection when `autoSignIn: false`. OURS: invite-accept errors collapse to one code; `/v1/users` messages; diff test |
+| T5 | Timing | **CHG** | BA hashes on the unknown-user path (U2 to confirm); with A1 the dummy cost equals the real cost; token lookups are equality on 256-bit secrets. v1's startup dummy-hash code is not needed if U2 holds |
+| T6 | Reset-token replay / theft | **BA + OURS** | BA: token in `verification` (hashed), expiry (`resetPasswordTokenExpiresIn`), single use (U11), sessions revoked. OURS: link format with token in the **fragment**, `Referrer-Policy: no-referrer`, host from config, never from `Host` |
+| T7 | Invite takeover | **CHG, BA + OURS** | BA: invitation id is the secret, accept needs a session whose email equals the invite, expiry, cancel. Changed from v1: id stored **plain** (not hashed). OURS: role allow-list (no `worker`, no `owner`), inviter needs `user.invite` and BA AC, closed sign-up gate (2.5), tenant from the invitation row only |
+| T8 | Dev Bearer left on in production | **OURS** | unchanged: `CRM_DEV_BEARER=1` gate, boot refusal in production, header ignored, deploy check `crm.session kind='dev'` count = 0 |
+| T9 | Cookie theft (XSS) | **BA + OURS** | BA: HttpOnly, Secure, signed cookie; we set `useSecureCookies`, `__Host-` name, `cookieCache` off. OURS: CSP via nginx (deploy-doc note), no token in JS storage |
+| T10 | Privilege and lifecycle | **CHG, OURS** | `tenant_access()` re-checks `membership.active` per request; removal goes through the projection trigger. Last-manager guard is a DB trigger (Better Auth does not know our rule). `kind` separates dev/service from human sessions |
+| T11 | scrypt DoS | **BA + OURS** | BA IP rate limit applies before hashing; A1 semaphore (max 2) and 128-char cap stay if D1 = keep; the small `crm_auth` pool bounds auth load |
+| T12 | Secrets in logs | **OURS** | Better Auth logger redacted; mailer callbacks receive tokens, so they log id + recipient hash only; `telemetry` explicitly off (docs: default false); `BETTER_AUTH_SECRET(S)` placeholders only, rotation via `secrets` |
+| T13 | Clickjacking | **OURS** | `X-Frame-Options: DENY` + CSP `frame-ancestors 'none'` on HTML (Better Auth does not set them) |
+| T14 | Dependency / supply chain (new) | **OURS** | exact pin 1.7.7, lockfile review, license scan of the new tree, `npm audit`, no unpinned CLI, telemetry off; upgrade policy: pinned, read changelog and diff generated schema before any bump |
+| T15 | Better Auth endpoint exposure / confused deputy (new) | **OURS** | allow-list router; `crm_auth` has no `crm` grants; org/member endpoints only server-side behind `crm.can_action` |
+| T16 | MFA bypass via trusted device / session before factor (new) | **OURS** | `trustDevice` refused; `mfa_ok` reads live `twoFactorEnabled`; test that no session exists between password step and factor step |
+| T17 | Projection drift auth -> crm (new) | **OURS** | triggers in the same transaction; invariant test plus a consistency query |
+| T18 | Session tokens readable in `auth.session` (new) | **OURS, residual** | v1 stored only sha256; Better Auth keeps the cookie token as the row key (U1 to confirm). Mitigated by schema/role isolation and RLS deny-by-default; DB read access remains a session-hijack path, so backups are secrets |
+| T19 | Sign-up gate bypass (new) | **OURS** | hook test: sign-up without a valid invitation id for that email fails with the same error as other failures; registering before the invitee is blocked by requiring the invitation id |
 
-Critical path to a sellable sign-in: A1-A6, A7 (if D1 yes), A8, S1, A9-A11, S2. A12 can slip until the user supplies SES.
+## 5. Increments (each = one agent round; commit only after the Lead's gate; server first)
 
-## 9. Security-review gate (before any commit)
+A1 is done (2df5e7b) and is reused in B3 if D1 = keep. Gone versus v1: A3 throttle, A4 session/CSRF plumbing, A5 invite/member definers, A6 reset definers, A7 in-house TOTP, most of A8, and A9-A11 collapsed into two UI rounds.
 
-For both gates: bind repo and revision; trace each §3 row to code and a passing test; confirm negative tests (unauthenticated, cross-tenant, expired, revoked, replayed token, wrong Origin, no CSRF token); grep logs and fixtures for token or password leakage; confirm every new definer has fixed `search_path` and `REVOKE ... FROM PUBLIC` in catalog output; confirm dev-Bearer production refusal; confirm `.env` and `local-fixture.json` untouched. Output is a review file with findings and residual risk; the Lead commits only after "no unresolved BLOCKER or MAJOR". Using the skills does not validate them; readiness stays `NOT_READY`.
-
-## 10. Decisions needed (recommended answer first)
-
-| # | Decision | Recommendation |
+| Inc | Scope | Verifiable acceptance |
 |---|---|---|
-| D1 | Managers need `mfa_verified` (`mfa_ok`). Password-only sessions would lock out all managers. | Build in-house TOTP (A7) and make it mandatory for managers. Rejected: weakening `mfa_ok` for password sessions (silent security downgrade). |
-| D2 | scrypt cost vs EC2 size | `N=2^17, r=8, p=1`, 2 concurrent hashes; benchmark in A1; drop to `N=2^16, p=2` only if the instance has under 2 GB RAM. |
-| D3 | Pepper | Yes: env keyring with id, HMAC pre-hash, refuse to start without it in production; the user stores the value (Secrets Manager or a root-only env file). |
-| D4 | Session lifetime | Idle 8 h sliding, absolute 14 days, revoke-all on password change/reset. |
-| D5 | Rate-limit store | In-DB (`crm.auth_throttle`), not in-memory. |
-| D6 | DB access for auth | Definer functions granted to `crm_runtime` (matches 001/008), not a second DB role. |
-| D7 | SameSite | `Lax` plus Origin check plus synchronizer CSRF token; `__Host-` prefix only in production. |
-| D8 | Tenant onboarding | No open signup; bootstrap script creates tenant and first-manager invite. |
-| D9 | One account in several tenants | Yes (schema already allows it); tenant chosen per request, verified by membership. |
-| D10 | Mail before SES exists | Stub logs only; invite and manager-issued reset links are shown to the manager for copy-paste in the UI, so the product works without email. Production reset-by-email stays disabled until A12 plus SES setup. |
-| D11 | Breached-password check (HIBP) | Defer (needs an outbound call); ship the in-house common-password list now. |
-| D12 | Dev Bearer | Keep behind `CRM_DEV_BEARER=1`, boot refusal in production, `kind='dev'` rows must be zero at deploy. |
-| D13 | Service/worker sessions | Keep `kind='service'`, long-lived, minted by script, rotated manually; never accepted over HTTP in production. |
+| **B0** Spike + approval | After the user approves the exact pin: install `better-auth@1.7.7` on a **scratch** branch/dir only, run against a throwaway DB in schema `auth`; answer U1-U11 below with observed output in `audits/<date>/BA_SPIKE.md`; record `npm ls --all` size and licenses | each U answered by an observed test; no non-permissive license in the tree; continue/stop decision recorded |
+| **B1** Migrations 013-014 + `crm_auth` | reviewed SQL from `auth generate`, roles, grants, RLS-enable, `migrate.ts` password handling | `test:db` green; `crm_runtime` cannot SELECT any `auth.*`; `crm_auth` cannot SELECT any `crm.*`; no PUBLIC grants; `validateSchema` clean on the migrated DB |
+| **B2** Migrations 015-016 (projection + bridge) | triggers, `actor()`/`mfa_ok()` replacement, `role_permission` rows | all existing suites green; SQL-seeded Better-Auth-shaped user/org/member/session: valid -> actor, deleted/expired -> 401, other tenant -> 403, manager without `twoFactorEnabled` -> no manager scope, member removal -> inactive, last-manager guard, FORCE RLS tests unchanged and green; generic definer-ACL catalog test |
+| **B3** Server: Better Auth config + cookie sign-in | `src/auth/ba.ts`, `toNodeHandler` mount with allow-list, `context()` cookie path, Origin check, dev-Bearer gate and boot guards, A1 as `password.hash/verify` (if D1), DB rate limit, `ipAddressHeaders`/`trustedProxies`, frame headers | http+db: sign-in/out, cookie flags exact, fixation, unknown-email vs wrong-password identical body, 429 with `Retry-After`, non-allow-listed route = 404, foreign Origin = 403, GET has no side effect, idle/absolute expiry, revoke = immediate 401, Bearer ignored unless `CRM_DEV_BEARER=1` |
+| **B4** Server: bootstrap, invites, users admin | `scripts/create-tenant-admin.ts`, gated sign-up, `/v1/invites*`, `/v1/users*`, role allow-list, last-manager guard | reader/rep get 403; tenant B manager cannot see/revoke A invites; replay, expired, wrong email, `worker`/`owner` role rejected; sign-up without invitation fails; existing-account accept needs matching login; demoted user loses scope on the next request |
+| **B5** Server: reset + mailer stub | `sendResetPassword`/`sendInvitationEmail` -> `Mailer` (stub logs id + recipient hash; link shown only under `CRM_MAIL_STUB_SHOW_LINK=1` and non-production), fragment links, `storeIdentifier: "hashed"`, `revokeSessionsOnPasswordReset` | replay fails, expiry, newer request voids older (U11), sessions revoked, same response for unknown email, log capture contains no token/password |
+| **B6** Server: TOTP via `twoFactor` | plugin config (issuer, backup codes), `trustDevice` refusal, enrol/verify, `mfa_ok` end-to-end | manager without TOTP has no manager scope; enrol -> scope; wrong code locked out (429); backup code works once; disabling 2FA drops scope at once; no session between steps |
+| **GATE S1** | `tsst-dev` SK-007 review of B1-B6 (source + tests) -> `audits/<date>/AUTH_SECURITY_REVIEW.md`; re-run T1-T19 against the diff; full `lint`, `typecheck`, `test:unit`, `test:db`, `test:bootstrap` captured | no open BLOCKER/MAJOR; Lead verifies, then commits |
+| **B7** UI: sign-in, 2FA step, session bootstrap | login page, TOTP/backup step, `get-session` bootstrap, logout, 401 -> login, error code -> i18n | Playwright AR+EN x light/dark x 1440/375; no credential in `sessionStorage`; vitest client headers; mixed AR/EN email never breaks layout |
+| **B8** UI: invite accept, forgot/reset, users admin, security settings | fragment-token pages, members table, invite (copy link per D4), role change, deactivate, my sessions, change password, TOTP enrol | Playwright manager vs rep; controls hidden **and** API 403 asserted directly; token never in a query string; fragment cleared after read |
+| **GATE S2** | delta review of B7-B8 (client token handling, link handling, CSP note) | no open BLOCKER/MAJOR; Lead verifies, then commits |
+| **B9** SES adapter (code only) | `src/auth/mailer-ses.ts` behind `Mailer`, lazy import, `@aws-sdk/client-sesv2` exact pin (approved, NIGHT_RUN §6), no AWS call in tests | unit with mock client; lint/typecheck/build green; can slip until SES exists |
 
-## 11. Risks and open items
+Critical path to a sellable sign-in: B0 -> B1 -> B2 -> B3 -> B4 -> B5 -> B6 -> S1 -> B7 -> B8 -> S2. B9 and the EC2 deploy checks (dev-session count 0, pepper set, `CRM_TRUST_PROXY`, `BETTER_AUTH_SECRET` set) come after.
 
-- `crm.actor()` and `mfa_ok()` are replaced in A2: highest regression risk; the full `test:db` suite is the guard.
-- All existing definers outside this work were not re-audited (same limit as the P1A review).
-- scrypt memory use and Node `maxmem` behaviour must be confirmed on the target instance (A1 bench).
-- Multi-process deployment later needs nothing extra for throttle (in-DB), but the semaphore is per process.
-- Not covered: SSO/OIDC, CAPTCHA, device management, email verification beyond invite/reset token possession.
+### Spike questions (B0), each with its fallback
+
+| U | Question | If the answer is bad |
+|---|---|---|
+| U1 | Is `session.token` stored raw or hashed? | accept raw (T18) or hash it in a database hook; escalate if the bridge cannot look sessions up |
+| U2 | Does the unknown-email sign-in path call the configured `password.hash`? | add an explicit dummy verify in a `before` hook |
+| U3 | Does `generateId: "uuid"` yield uuid columns for every table, including the org and 2FA plugins? | custom `generateId` returning `false` per model so Postgres defaults generate them |
+| U4 | Does `schemaName: "auth"` work with `crm_auth` (no `public` grants, `validateSchema` clean)? | set the role's `search_path` instead (documented alternative) |
+| U5 | Is a session ever created before the second factor? Can `trustDevice` be refused cleanly? | hook-level rejection; if impossible, block the trusted-device path at our router |
+| U6 | Can an invited new user sign up through our gate without opening registration? | gate in `databaseHooks.user.create.before` |
+| U7 | With `creatorRole` limited to `owner`/`admin`, can we run custom roles only and map `owner` -> `manager`? | create orgs and first member by SQL only (already the plan) and forbid `owner` elsewhere |
+| U8 | Is there a per-account password lockout? | build the 017 throttle + hook |
+| U9 | Is there an absolute session lifetime? | enforce in `crm.actor()` via `createdAt` (D3) |
+| U10 | Are revoked sessions deleted, so the bridge sees revocation at once? | add a revoked marker column and check it in `actor()` |
+| U11 | Are reset/verification tokens single-use and replaced on re-request? | delete them in a hook |
+
+## 6. Settled by this plan (reversible, change on request)
+
+DB role `crm_auth` and schema `auth`; our migrations instead of runtime `migrate`; projection by triggers; tenant from `X-Tenant-ID`, not `activeOrganizationId`; rate limit stored in DB; narrow endpoint allow-list; `cookieCache` off; one user in many tenants (schema already allows it); dev Bearer behind `CRM_DEV_BEARER=1`; worker/service sessions stay `kind='service'`, script-minted, never accepted over HTTP in production; breached-password API deferred (needs an outbound call).
+
+## 7. Open decisions for the user (recommendation first)
+
+| # | Decision | Options | Recommendation |
+|---|---|---|---|
+| **D1** | **Keep or drop A1** (scrypt N=2^17 + pepper + policy) | (a) Keep: plug A1 into `password.hash/verify`, pepper from an env keyring. (b) Drop: use Better Auth's default scrypt, no pepper, delete `password.ts` | **(a) Keep**, on condition B0 confirms U2 and that `verify` receives the stored string. Reason: the pepper protects against a DB-only leak, A1 is built and tested, and changing hash format after real users exist forces a rehash migration. `tokens.ts` becomes unused (Better Auth makes its own tokens) and is deleted in B3 |
+| **D2** | **MFA for managers** | (a) Mandatory TOTP for managers (today's `mfa_ok`). (b) Optional, relax `mfa_ok`. (c) Mandatory for everyone | **(a)**. Reason: keeps the existing DB invariant, and Better Auth now provides the TOTP so the cost fell; (b) is a silent security downgrade |
+| **D3** | **Session lifetime** | (a) Better Auth sliding only (`expiresIn` default 7 days, no absolute cap). (b) Sliding idle 8 h plus **absolute 14 days** enforced in `crm.actor()`. (c) Short fixed lifetime | **(b)**. Reason: matches v1 D4; Better Auth appears to lack an absolute cap (U9) and the bridge is the right place to add it |
+| **D4** | **Mail and email proof before SES exists** | (a) Stub mailer; manager copies invite/reset links in the UI (email ownership not proven, the manager vouches); reset-by-email stays off in production until B9 + SES. (b) Block sign-up until SES is live. (c) Another SMTP provider | **(a)**. Reason: the product can be sold now; (b) delays the sale, (c) adds a vendor. Set `requireEmailVerificationOnInvitation` false until SES, true after |
+| **D5** | **Tenant onboarding** | (a) Invite-only plus operator bootstrap script. (b) Self-service "create my workspace" through Better Auth | **(a)**. Reason: v1 D8, smallest attack surface, no abuse/quota/billing questions yet; (b) can be added later without rework |
+
+## 8. Security-review gate (before any commit)
+
+For S1 and S2: bind repo and revision; trace each §4 row to code and a passing test; confirm negative tests (unauthenticated, cross-tenant, expired, revoked, replayed token, wrong Origin, non-allow-listed Better Auth route, sign-up without invitation, trusted-device skip); grep logs and fixtures for token or password leakage; confirm every new definer has a fixed `search_path` and `REVOKE ... FROM PUBLIC` in catalog output; confirm `crm_runtime` cannot read `auth.*` and `crm_auth` cannot read `crm.*`; confirm dev-Bearer production refusal; confirm `.env` and `local-fixture.json` untouched. Output is a review file with findings and residual risk; the Lead commits only after "no unresolved BLOCKER or MAJOR". Using the skills does not validate them; readiness stays `NOT_READY`.
+
+## 9. Risks and open items
+
+- Dependency approval: Better Auth is not on the NIGHT_RUN §6 approved list; B0 needs the user's explicit exact-pin approval (1.7.7), then lint/typecheck/build and the affected tests after install.
+- `crm.actor()`/`mfa_ok()` are replaced in 016: highest regression risk; the full `test:db` suite and the B2 shaped-data tests are the guard.
+- Most Better Auth behaviour above comes from the docs, not from source or runs. Every item U1-U11 is unverified until B0.
+- A plaintext session token in `auth.session` (T18) is a real downgrade from v1's hashed storage unless U1 shows otherwise.
+- Better Auth upgrades can change its schema; migrations are ours, so each bump needs a regenerated-schema diff first.
+- Existing definers outside this work were not re-audited (same limit as the P1A review).
+- Not covered: SSO/OIDC, CAPTCHA, device management, passkeys, email verification beyond invite/reset token possession.
