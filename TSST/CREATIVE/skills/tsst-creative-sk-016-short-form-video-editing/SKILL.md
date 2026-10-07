@@ -33,6 +33,11 @@ Adobe Premiere official editing/export workflow + TikTok official vertical/nativ
 - text too dense for viewing time
 - cross-platform watermarks and unsafe UI placement
 
+## References (distilled from GEM-CR-004, 2026-10-08; unvalidated)
+
+- `ref/cuts-rhythm.md` - cut types, shot-length norms (unconfirmed), BPM-to-frames table, Murch rule of six, finishing order with gates.
+- `ref/shot-grammar.md` - shot sizes, angles, camera moves, sequencing, 180 deg rule, LENS beat to shot-list row.
+
 ## Practical evaluation
 
 Edit a 15–20s short from mixed footage/stills into a native vertical story with a distinct first-3-second hook and final rendered video.

@@ -49,6 +49,11 @@ Creative writes one recipe per image for a user-run tool (ChatGPT image edit, Ma
 - copying a reference brand rather than abstracting principles
 - using generated documentary-looking scenes as proof of real operations
 
+## References (distilled from GEM-CR-004 + s06-stonewall pilot, 2026-10-08; unvalidated)
+
+- `ref/ai-video-pipeline.md` - raw material is reference only, per-shot pipeline, shot-list row, camera wording, s06 worked example with credits, cost rule.
+- `ref/models.md` - Magnific video catalog table (fetched 2026-10-08), measured costs, pick rule.
+
 ## Practical evaluation
 
 Create three source-image options from a constrained reference brief; reject defective generations and deliver one compositable, provenance-labeled result.

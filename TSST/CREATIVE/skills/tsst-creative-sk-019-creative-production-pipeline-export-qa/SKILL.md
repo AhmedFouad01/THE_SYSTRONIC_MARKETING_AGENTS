@@ -38,6 +38,10 @@ Per asset, one folder with: numbered layer PNGs (`01_photo`, `02_tone`, `03_logo
 - unclear version filenames
 - final marked complete without render inspection
 
+## References (distilled from GEM-CR-004, 2026-10-08; unvalidated)
+
+- `ref/post-finishing.md` - AI-footage post passes, tool split, export spec, ffmpeg frame-strip QA, rights/AI-label checks.
+
 ## Practical evaluation
 
 Take a mixed still/video mini-campaign through manifest → production states → final exports → QA log with zero format/naming omissions.

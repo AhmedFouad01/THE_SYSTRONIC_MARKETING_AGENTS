@@ -456,6 +456,18 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Status: `UNVALIDATED`
 
 
+### TSST-LENS-SK-016 — Short-Form Video Storytelling
+
+
+- Objective: Hook, structure, beat sheet, text/sound plan and brand moment for 6-60 s vertical video; story first, hand-off to CREATIVE shot list
+- Priority / stage: High / Content planning
+- Source: [Google ABCDs of effective video ads](https://business.google.com/us/resources/articles/abcds-of-effective-video-ads/) + [TikTok creative best practices](https://ads.tiktok.com/help/article/creative-best-practices) — Official checkpoints; Gemini GEM-CR-004 Part 1 numbers not confirmed
+- Practical evaluation: أعد بناء ريل شقة العلمين الجديدة كقصة 15 ثانية مع beat sheet جاهز لـCREATIVE
+- Guardrail: القصة قبل اللقطات؛ صور/فيديو العميل مرجع فقط؛ لا نص يخلط عربي وإنجليزي في سطر؛ لا أرقام منصات بدون رابط رسمي
+- Package: installed — `LENS/skills/tsst-lens-sk-016-short-form-video-storytelling/SKILL.md`
+- Status: `UNVALIDATED`
+
+
 ## SPARK_AG — Performance Ads
 
 
