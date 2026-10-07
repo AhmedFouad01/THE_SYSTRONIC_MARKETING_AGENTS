@@ -65,3 +65,12 @@ CREATIVE now has **30 registered / 29 installed** skills; SK-007 remains backlog
 
 
 Product-specific execution plan: `CRM_MVP_UIUX_EXECUTION_PLAN_v0.1.md`.
+
+## Live training on VILL — 2026-10-07
+
+User direction: the **main goal is developing CREATIVE_AG's execution**; VILL Studio work is the live training ground (deliver real work AND train the team).
+Every VILL creative round must close with (1) the deliverable and (2) its lesson written back into the team (skill/standard/gate update + example).
+Evidence so far: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/` (DIRECTION_SHEET, post-01 layered carousel, RETOUCH_REQUESTS).
+Image production bridge: manual via the user (ChatGPT image edit, Magnific); Blender deferred to a later phase.
+2026-10-07 close: dresser-01 track PAUSED by the user after studio round 2 ("the rules are what matter"). The round-3 single-chat edit script is ready in the pilot RECIPES.md but was not run.
+Rules installed this day (all UNVALIDATED): INTAKE_GATE, FINAL_ASSET_GATE (open-before-rule, crop limits, scored review), SK-006 v0.2, SK-008 v0.2, SK-010 v0.3, SK-011 v0.2, SK-014 v0.7, SK-019 v0.2, examples EX-001/002, tools contrast / phone_preview / geometry_compare, `TSST/context/request-role.md`.

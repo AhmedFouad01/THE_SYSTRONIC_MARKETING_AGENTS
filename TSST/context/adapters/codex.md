@@ -2,6 +2,8 @@
 
 Entry: root `AGENTS.md` (Universal task routing) → `TSST/context/boot.md`.
 
+Request role: every request to Codex states ROLE A (team runtime) or ROLE B (external tool) — `TSST/context/request-role.md`. Codex is ROLE A only for a claimed bus task; ad-hoc use is ROLE B.
+
 Bus runtime id: `codex`. Run locally on this working tree (a cloud sandbox sees only
 pushed commits, not the bus). First bus task is its cold-start probe (`REVIEW-001`).
 Near a usage limit: `release` with a resume note, then `limit codex --until <UTC>`.

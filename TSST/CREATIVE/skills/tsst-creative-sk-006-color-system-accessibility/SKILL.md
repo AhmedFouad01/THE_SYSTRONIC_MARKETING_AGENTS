@@ -1,6 +1,7 @@
 ---
 name: tsst-creative-sk-006-color-system-accessibility
 description: Build semantic, theme-aware color systems and verify text, interface, and data-visualization contrast without relying on color alone.
+version: 0.2
 ---
 
 # TSST-CREATIVE-SK-006 Color System & Accessibility
@@ -44,6 +45,12 @@ Use when defining or auditing palettes, semantic color tokens, themes, state col
 - data-visualization guidance;
 - exceptions, remediation, and QA record.
 
+## Naming and matching rules (v0.2, VILL lesson 2026-10-07)
+- Name colour tokens by MEASURED hue (compute HSV hue from the hex), never by memory or by an old token name. Example: #01304A is petrol (hue 201), not navy; old navy #040136 is hue 243.
+- When a palette changes, rename the old tokens in every file at once (sheet, assets yaml, examples, boards), then grep for the old names.
+- Before saying an object "matches the brand", compare its measured hue/hex numerically with the files in the brand's `assets/final/`. A navy object (hue ~220) is not petrol (201).
+- Contrast ratios: run `TSST/CREATIVE/tools/contrast.py "#fg" "#bg"` instead of hand formulas.
+
 ## Guardrails
 
 - Do not use Primer's palette as the target brand palette.
@@ -79,3 +86,6 @@ Build a light/dark semantic palette for a fictional brand, document role tokens,
 - [Primer color considerations](https://primer.style/accessibility/design-guidance/color-considerations/)
 
 Source use: semantic-token and accessibility method reference, not palette copying.
+
+## Changelog
+- 0.2 (2026-10-07): added naming/matching rules after the Lead called petrol #01304A "navy"; points to tools/contrast.py. Status unchanged.

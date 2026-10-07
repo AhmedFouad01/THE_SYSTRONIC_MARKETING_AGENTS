@@ -1,0 +1,28 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "source": "photo #10 crop (0, 0, 1086, 1357) (place + sea, scale 0.99)"
+    },
+    {
+      "order": 2,
+      "file": "02_tone.png",
+      "blend": "normal",
+      "opacity": 1.0
+    },
+    {
+      "order": 3,
+      "file": "03_logo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "source": "Wordmark Dark Transparent.png"
+    }
+  ]
+}

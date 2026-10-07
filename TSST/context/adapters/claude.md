@@ -3,7 +3,9 @@
 Entry: root `AGENTS.md` / `CLAUDE.md` → `TSST/context/boot.md`. This file only maps
 runtime mechanics; the operating method lives in boot.md.
 
-Bus runtime id: `claude` (lead). Near a usage limit: `release` open claims with a resume
+Bus runtime id: `claude` (lead).
+Requests the Lead sends to other tools/runtimes carry a ROLE block: `TSST/context/request-role.md`.
+Near a usage limit: `release` open claims with a resume
 note and `limit claude --until <UTC>` (`TSST/context/bus.md`).
 
 ## Plan: Claude Pro — roster → runtime agent (ADR-003/004)

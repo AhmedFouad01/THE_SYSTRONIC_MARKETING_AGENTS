@@ -1,0 +1,28 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "source": "photo #8 crop (222, 0, 1086, 1080) (lit stone wall + pendant, scale 1.25)"
+    },
+    {
+      "order": 2,
+      "file": "02_tone.png",
+      "blend": "normal",
+      "opacity": 1.0
+    },
+    {
+      "order": 3,
+      "file": "03_logo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "source": "none (empty by design: logo on slide 1 only)"
+    }
+  ]
+}

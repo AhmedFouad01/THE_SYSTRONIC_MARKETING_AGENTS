@@ -1,6 +1,7 @@
 ---
 name: tsst-creative-sk-008-creative-art-direction
 description: Translate approved positioning into distinct, ownable visual directions and execute a selected direction consistently across real channel compositions. Use for art direction, key visuals, photography, composition, lighting, imagery systems, and cross-channel creative—not for brand-governance documentation alone.
+version: 0.2
 ---
 
 # TSST-CREATIVE-SK-008 Creative Art Direction
@@ -55,6 +56,13 @@ Review the actual renders for:
 - realistic production behavior, including mobile reflow and slide legibility;
 - accidental text/image artifacts, unsupported claims, or imitation of a reference brand.
 
+## References to style sheet (L3)
+
+1. Open every reference; list what was NOT opened.
+2. Take: set, light direction and hardness, camera height/angle, framing, negative space, one-subject rule, collection-by-colour.
+3. Never copy: layouts, products, typography, their logo.
+4. Output a style section including a CAN/CANNOT gap block: the user's real assets vs the benchmark.
+
 ## Guardrails
 
 - Art direction is more than an image-generation prompt or a moodboard.
@@ -66,3 +74,6 @@ Review the actual renders for:
 ## Practical evaluation
 
 Given one fictional bilingual brand brief, create three distinct directions, select one with rationale, and render it as a social ad, executive slide, and responsive web hero. Score the actual visuals for hierarchy, originality, coherence, cross-channel consistency, readability, production realism, and whether the work is generic or genuinely art-directed.
+
+## Changelog
+- 0.2 (2026-10-07): Reference-to-style-sheet method (L3). Status unchanged.

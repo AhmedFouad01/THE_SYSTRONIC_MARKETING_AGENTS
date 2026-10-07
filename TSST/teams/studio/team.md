@@ -5,7 +5,7 @@ video · motion · creative QA · final asset QA · product UI design fidelity.
 
 Agent: `TSST/CREATIVE/AGENT.md` (internal workers DESIGNER_AG, MOTION_AG).
 Mandatory for final assets: `TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md`,
-`TSST/CREATIVE/FINAL_ASSET_GATE.md`. HTML/prompts/storyboards = PREVIS.
+`TSST/CREATIVE/FINAL_ASSET_GATE.md`, `TSST/CREATIVE/INTAKE_GATE.md` (no render before it). HTML/prompts/storyboards = PREVIS.
 
 ## Skill map — `TSST/CREATIVE/skills/tsst-creative-sk-<id>-…`
 | need | ids |

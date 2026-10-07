@@ -1,6 +1,6 @@
 # CREATIVE Production Standard
 
-Version: 1.0 — 2026-09-24
+Version: 1.1 — 2026-10-07
 
 ## Objective
 
@@ -8,7 +8,9 @@ Define what “professional creative execution” means inside TSST. This standa
 
 ## Production ladder
 
-`STRATEGY → ART DIRECTION → KEY VISUAL → FORMAT SYSTEM → PRODUCTION → FINISHING → RENDER QA → USER REVIEW`
+`0 INTAKE → STRATEGY → ART DIRECTION → KEY VISUAL → FORMAT SYSTEM → PRODUCTION → FINISHING → RENDER QA → USER REVIEW`
+
+Stage 0 INTAKE: no render until `TSST/CREATIVE/INTAKE_GATE.md` BLOCKING fields are filled or answered by the user.
 
 Skipping the key-visual or render-QA stages is not allowed for a production request.
 

@@ -4,6 +4,8 @@ ChatGPT does **not** auto-load repository files. The portable core must be suppl
 through **Project Instructions** and/or **connected sources** (Google Drive connector /
 Project Sources).
 
+Request role: every request to ChatGPT states ROLE A (team runtime) or ROLE B (external tool) — `TSST/context/request-role.md`. A TSST ChatGPT Project is ROLE A; a plain chat or image edit is ROLE B.
+
 ## Required setup (user-performed)
 1. Project Instructions: paste the short block below.
 2. Connect sources: `TSST/context/boot.md`, `TSST/context/router.yaml`,

@@ -4,6 +4,8 @@ TSD-018 (2026-10-06). Gemini Desktop is an **external tool**, not a TSST runtime
 It is not Antigravity (retired, ADR-004) and there is no GEMINI_AG. No roster, routing or
 governance change.
 
+Request role: every request to this tool states ROLE A (team runtime) or ROLE B (external tool) — `TSST/context/request-role.md`.
+
 Setup (Gem + Real Memory link): `REAL_MEMORY/TSST_REAL_MEMORY/06_HANDOFF/GEMINI_GEM_INSTRUCTIONS.md`.
 
 ## When
@@ -22,6 +24,7 @@ video) or deep web research. The recommendation goes in the agent's return packe
 ## Handoff template
 ```
 GEMINI REQUEST <REQ-ID> · brand · project · from <agent> · <date>
+ROLE:            EXTERNAL TOOL — <one job>; write only <REQ-ID>_out.md (block: TSST/context/request-role.md)
 OBJECTIVE:       one sentence
 CONTEXT:         minimum memory/facts needed (no other brands)
 FILES/ASSETS:    paths to attach (exact approved logo files where identity matters)

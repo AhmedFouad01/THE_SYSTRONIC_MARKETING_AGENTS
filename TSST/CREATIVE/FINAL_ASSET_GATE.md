@@ -42,6 +42,21 @@ All required conditions below pass.
 - final video was reviewed at phone size and at least three representative frames were inspected;
 - rights for music/footage/talent are confirmed or the asset remains a draft.
 
+## Open before you write a rule (L2)
+
+Sample or open every asset file before writing usage rules about it; never infer from names. (VILL logo matrix was inferred from names: "Dark/Light" named the background theme, so navy marks landed on dark photos.)
+
+## Real-photo crop limits (L5)
+
+- Maximum upscale 1.25x. If the subject needs more: wider crop, or raise a retouch/upscale request.
+- 3:4 sources survive a 4:5 crop; check 9:16 per photo. Report softness honestly.
+- `python TSST/CREATIVE/tools/phone_preview.py` warns on layers above 1.25x.
+
+## Scored self-review before handover (L7)
+
+Score 0-3 each: 1 thumb-stop at 300-360 px; 2 message/focal point in 1 s; 3 subject realism and image quality; 4 safe zones clean; 5 CTA visible and specific (n/a for organic brand posts); 6 hierarchy and legibility, AR/EN correct; 7 native to placement (recomposed, not stretched); 8 real variation, one named dimension per variant.
+A score <=2 on 1, 2, 3 or 8 blocks handover unless explained with a fix path. Total >=18/24 (proportional when an item is n/a). Contrast checks: `tools/contrast.py`.
+
 ## Automatic downgrade to PREVIS
 
 - HTML/browser preview used as final social post;
