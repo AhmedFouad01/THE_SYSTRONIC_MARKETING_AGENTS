@@ -3,7 +3,13 @@
 // `validateProperties`); this file only turns a spreadsheet cell into the JSON value that validator expects.
 import { Fault } from "./db.js";
 import type { Cell } from "./importfile.js";
-import { type Actor, type Def, type Registry, type Row, validateProperties } from "./properties.js";
+import {
+	type Actor,
+	type Def,
+	type Registry,
+	type Row,
+	validateProperties,
+} from "./properties.js";
 import { BAD_TEXT, KEY_RE } from "./schemarules.js";
 
 export type ImportObject = "contact" | "lead";
@@ -19,7 +25,10 @@ export type ImportOptions = {
 };
 
 // Fixed (non-custom) targets per object. `property:<key>` is added dynamically from the tenant's registry.
-export const FIXED_TARGETS: Record<ImportObject, { target: string; required: boolean; label: string }[]> = {
+export const FIXED_TARGETS: Record<
+	ImportObject,
+	{ target: string; required: boolean; label: string }[]
+> = {
 	contact: [
 		{ target: "display_name", required: true, label: "Display name" },
 		{ target: "email", required: false, label: "Email" },
@@ -40,13 +49,20 @@ const EVIDENCE_MAX = 500;
 // ---- cell helpers ------------------------------------------------------------------------------------------------------------
 const ARABIC_INDIC = /[٠-٩۰-۹]/g;
 export const foldDigits = (s: string) =>
-	s.replace(ARABIC_INDIC, (c) => String(c.charCodeAt(0) >= 0x06f0 ? c.charCodeAt(0) - 0x06f0 : c.charCodeAt(0) - 0x0660));
+	s.replace(ARABIC_INDIC, (c) =>
+		String(
+			c.charCodeAt(0) >= 0x06f0
+				? c.charCodeAt(0) - 0x06f0
+				: c.charCodeAt(0) - 0x0660,
+		),
+	);
 const LONE_SURROGATE = /[\ud800-\udfff]/u;
 function cellText(c: Cell): string | undefined {
 	if (c === null) return undefined;
 	let s: string;
 	if (typeof c === "string") s = c;
-	else if (typeof c === "number") s = Number.isInteger(c) ? c.toFixed(0) : String(c);
+	else if (typeof c === "number")
+		s = Number.isInteger(c) ? c.toFixed(0) : String(c);
 	else if (typeof c === "boolean") s = c ? "true" : "false";
 	else s = c.toISOString();
 	s = s.normalize("NFC").trim();
@@ -62,10 +78,17 @@ export function formulaLike(c: Cell): boolean {
 
 export function normalizeEmail(raw: string): string | null {
 	const v = raw.toLowerCase();
-	return v.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && !BAD_TEXT.test(v) ? v : null;
+	return v.length <= 254 &&
+		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) &&
+		!BAD_TEXT.test(v)
+		? v
+		: null;
 }
-export function normalizePhone(raw: string, defaultCc: string | null): string | null {
-	let s = foldDigits(raw).replace(/[\s().\-]/g, "");
+export function normalizePhone(
+	raw: string,
+	defaultCc: string | null,
+): string | null {
+	let s = foldDigits(raw).replace(/[\s().-]/g, "");
 	if (s.startsWith("00")) s = `+${s.slice(2)}`;
 	if (!s.startsWith("+")) {
 		const cc = defaultCc ? defaultCc.replace(/^\+/, "") : null;
@@ -79,7 +102,9 @@ function parseNumber(c: Cell): number | null {
 	if (typeof c === "number") return Number.isFinite(c) ? c : null;
 	const t = cellText(c);
 	if (t === undefined) return null;
-	const s = foldDigits(t).replace(/٫/g, ".").replace(/[٬,\s]/g, "");
+	const s = foldDigits(t)
+		.replace(/٫/g, ".")
+		.replace(/[٬,\s]/g, "");
 	return /^[+-]?\d+(\.\d+)?$/.test(s) ? Number(s) : null;
 }
 const TRUE = new Set(["true", "yes", "y", "1", "نعم"]);
@@ -120,32 +145,63 @@ export function coerceCell(d: Def, c: Cell): unknown {
 
 // ---- mapping validation ------------------------------------------------------------------------------------------------------
 /** `props` = the properties this caller may map (active, writable, sensitive only when readable+writable), by key. */
-export function validateMapping(object: ImportObject, raw: unknown, width: number, props: ReadonlyMap<string, Def>): MappingColumn[] {
+export function validateMapping(
+	object: ImportObject,
+	raw: unknown,
+	width: number,
+	props: ReadonlyMap<string, Def>,
+): MappingColumn[] {
 	const issues: Issue[] = [];
 	const cols: MappingColumn[] = [];
-	if (!Array.isArray(raw)) throw new Fault(422, "VALIDATION_FAILED", [{ field: "mapping.columns", code: "INVALID_TYPE" }]);
+	if (!Array.isArray(raw))
+		throw new Fault(422, "VALIDATION_FAILED", [
+			{ field: "mapping.columns", code: "INVALID_TYPE" },
+		]);
 	if (raw.length === 0 || raw.length > MAX_MAPPING_COLUMNS)
-		throw new Fault(422, "VALIDATION_FAILED", [{ field: "mapping.columns", code: raw.length ? "TOO_MANY_COLUMNS" : "REQUIRED" }]);
+		throw new Fault(422, "VALIDATION_FAILED", [
+			{
+				field: "mapping.columns",
+				code: raw.length ? "TOO_MANY_COLUMNS" : "REQUIRED",
+			},
+		]);
 	const fixed = new Set(FIXED_TARGETS[object].map((t) => t.target));
 	const seen = new Set<string>();
 	raw.forEach((m, i) => {
 		const f = `mapping.columns[${i}]`;
-		if (!m || typeof m !== "object" || Array.isArray(m)) return void issues.push({ field: f, code: "INVALID_TYPE" });
+		if (!m || typeof m !== "object" || Array.isArray(m)) {
+			issues.push({ field: f, code: "INVALID_TYPE" });
+			return;
+		}
 		const { column, target, ...extra } = m as Record<string, unknown>;
-		if (Object.keys(extra).length) issues.push({ field: f, code: "FIELD_NOT_WRITABLE" });
-		if (!Number.isInteger(column) || (column as number) < 0 || (column as number) >= width)
+		if (Object.keys(extra).length)
+			issues.push({ field: f, code: "FIELD_NOT_WRITABLE" });
+		if (
+			!Number.isInteger(column) ||
+			(column as number) < 0 ||
+			(column as number) >= width
+		)
 			issues.push({ field: `${f}.column`, code: "COLUMN_OUT_OF_RANGE" });
-		if (typeof target !== "string") return void issues.push({ field: `${f}.target`, code: "INVALID_TYPE" });
-		if (seen.has(target)) issues.push({ field: `${f}.target`, code: "DUPLICATE_TARGET" });
+		if (typeof target !== "string") {
+			issues.push({ field: `${f}.target`, code: "INVALID_TYPE" });
+			return;
+		}
+		if (seen.has(target))
+			issues.push({ field: `${f}.target`, code: "DUPLICATE_TARGET" });
 		seen.add(target);
 		if (target.startsWith("property:")) {
 			const key = target.slice(9);
-			if (!KEY_RE.test(key) || !props.has(key)) issues.push({ field: `${f}.target`, code: "UNKNOWN_PROPERTY" });
-		} else if (!fixed.has(target)) issues.push({ field: `${f}.target`, code: "UNKNOWN_TARGET" });
+			if (!KEY_RE.test(key) || !props.has(key))
+				issues.push({ field: `${f}.target`, code: "UNKNOWN_PROPERTY" });
+		} else if (!fixed.has(target))
+			issues.push({ field: `${f}.target`, code: "UNKNOWN_TARGET" });
 		cols.push({ column: column as number, target });
 	});
 	for (const t of FIXED_TARGETS[object])
-		if (t.required && !seen.has(t.target)) issues.push({ field: "mapping.columns", code: `REQUIRED_TARGET_${t.target.toUpperCase()}` });
+		if (t.required && !seen.has(t.target))
+			issues.push({
+				field: "mapping.columns",
+				code: `REQUIRED_TARGET_${t.target.toUpperCase()}`,
+			});
 	if (issues.length) throw new Fault(422, "MAPPING_INVALID", issues);
 	return cols;
 }
@@ -159,12 +215,20 @@ export type RowValue = {
 	sourceEvidence?: string;
 	patch: Row; // coerced custom property patch (keys with a non-blank cell only); validated by checkProps once the target is known
 };
-export type RowResult = { ok: true; value: RowValue; warnings: string[] } | { ok: false; errors: Issue[] };
+export type RowResult =
+	| { ok: true; value: RowValue; warnings: string[] }
+	| { ok: false; errors: Issue[] };
 
-function nameField(raw: Cell, max: number, field: string, errors: Issue[]): string | undefined {
+function nameField(
+	raw: Cell,
+	max: number,
+	field: string,
+	errors: Issue[],
+): string | undefined {
 	const t = cellText(raw);
 	if (t === undefined) return undefined;
-	if (LONE_SURROGATE.test(t) || BAD_TEXT.test(t)) errors.push({ field, code: "INVALID_VALUE" });
+	if (LONE_SURROGATE.test(t) || BAD_TEXT.test(t))
+		errors.push({ field, code: "INVALID_VALUE" });
 	else if ([...t].length > max) errors.push({ field, code: "MAX_LENGTH" });
 	return t;
 }
@@ -181,9 +245,12 @@ export function buildRow(
 	for (const { column, target } of cols) {
 		const cell = cells[column] ?? null;
 		if (formulaLike(cell)) warnings.push(`FORMULA_LIKE:${target}`);
-		if (target === "display_name" || target === "contact_name") v.displayName = nameField(cell, NAME_MAX, target, errors);
-		else if (target === "title") v.title = nameField(cell, NAME_MAX, target, errors);
-		else if (target === "source_evidence") v.sourceEvidence = nameField(cell, EVIDENCE_MAX, target, errors);
+		if (target === "display_name" || target === "contact_name")
+			v.displayName = nameField(cell, NAME_MAX, target, errors);
+		else if (target === "title")
+			v.title = nameField(cell, NAME_MAX, target, errors);
+		else if (target === "source_evidence")
+			v.sourceEvidence = nameField(cell, EVIDENCE_MAX, target, errors);
 		else if (target === "email") {
 			const t = cellText(cell);
 			if (t !== undefined) {
@@ -206,13 +273,29 @@ export function buildRow(
 			if (val !== undefined) v.patch[key] = val;
 		}
 	}
-	if (object === "contact" && v.displayName === undefined && !errors.some((e) => e.field === "display_name"))
+	if (
+		object === "contact" &&
+		v.displayName === undefined &&
+		!errors.some((e) => e.field === "display_name")
+	)
 		errors.push({ field: "display_name", code: "REQUIRED" });
-	if (object === "lead" && v.title === undefined && !errors.some((e) => e.field === "title"))
+	if (
+		object === "lead" &&
+		v.title === undefined &&
+		!errors.some((e) => e.field === "title")
+	)
 		errors.push({ field: "title", code: "REQUIRED" });
-	if (object === "lead" && v.displayName === undefined && !v.email && !v.phone && !errors.length)
+	if (
+		object === "lead" &&
+		v.displayName === undefined &&
+		!v.email &&
+		!v.phone &&
+		!errors.length
+	)
 		errors.push({ field: "contact_name", code: "CONTACT_REQUIRED" });
-	return errors.length ? { ok: false, errors } : { ok: true, value: v, warnings };
+	return errors.length
+		? { ok: false, errors }
+		: { ok: true, value: v, warnings };
 }
 
 /** The single property validator on one row's patch: create semantics for a new record, update semantics (blank = leave alone) against the stored blob. */
@@ -223,13 +306,23 @@ export function checkProps(
 	actor: Actor,
 	mode: "create" | "update",
 	current: Row = {},
-): { ok: true; custom: Row; changed: string[] } | { ok: false; errors: Issue[] } {
+):
+	| { ok: true; custom: Row; changed: string[] }
+	| { ok: false; errors: Issue[] } {
 	try {
-		const r = validateProperties(registry, object, patch, actor, { mode, current });
+		const r = validateProperties(registry, object, patch, actor, {
+			mode,
+			current,
+		});
 		return { ok: true, custom: r.custom, changed: r.changed };
 	} catch (e) {
-		if (e instanceof Fault && e.details) return { ok: false, errors: e.details.map((d) => ({ field: d.field, code: d.code })) };
-		if (e instanceof Fault) return { ok: false, errors: [{ field: "properties", code: e.code }] };
+		if (e instanceof Fault && e.details)
+			return {
+				ok: false,
+				errors: e.details.map((d) => ({ field: d.field, code: d.code })),
+			};
+		if (e instanceof Fault)
+			return { ok: false, errors: [{ field: "properties", code: e.code }] };
 		throw e;
 	}
 }

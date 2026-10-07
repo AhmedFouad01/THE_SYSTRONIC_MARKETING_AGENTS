@@ -11,6 +11,7 @@ import {
 } from "./db.js";
 import { crmRequest, type Body } from "./crm.js";
 import { isSchema, schemaRequest } from "./schema.js";
+import { IMPORT_BODY_LIMIT, importRequest, isImport } from "./import.js";
 import { PAYLOAD_LIMIT as SCHEMA_PAYLOAD_LIMIT } from "./schemarules.js";
 import { transition, type Command } from "./transition.js";
 import {
@@ -213,15 +214,20 @@ export function server() {
 					)
 						throw new Fault(422, "VALIDATION_FAILED");
 					key = header;
-					let raw = "";
+					const limit = isSchema(url.pathname)
+						? SCHEMA_PAYLOAD_LIMIT
+						: isImport(url.pathname)
+							? IMPORT_BODY_LIMIT
+							: 16384;
+					// Buffers are concatenated before decoding: a multi-byte character (Arabic file name) may span two chunks.
+					const parts: Buffer[] = [];
+					let size = 0;
 					for await (const chunk of req) {
-						raw += chunk;
-						if (
-							Buffer.byteLength(raw) >
-							(isSchema(url.pathname) ? SCHEMA_PAYLOAD_LIMIT : 16384)
-						)
-							throw new Fault(413, "PAYLOAD_TOO_LARGE");
+						size += chunk.length;
+						if (size > limit) throw new Fault(413, "PAYLOAD_TOO_LARGE");
+						parts.push(chunk);
 					}
+					const raw = Buffer.concat(parts).toString("utf8");
 					try {
 						body = JSON.parse(raw);
 					} catch {
@@ -230,7 +236,17 @@ export function server() {
 					if (!body || typeof body !== "object" || Array.isArray(body))
 						throw new Fault(422, "VALIDATION_FAILED");
 				}
-				const response = isSchema(url.pathname)
+				const response = isImport(url.pathname)
+					? await importRequest(
+							ctx,
+							req.method ?? "GET",
+							url.pathname,
+							url.searchParams,
+							body,
+							key,
+							requestId,
+						)
+					: isSchema(url.pathname)
 					? await schemaRequest(
 							ctx,
 							req.method ?? "GET",
