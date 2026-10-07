@@ -1,5 +1,8 @@
 import type { Credentials } from "./client.ts";
-import { type ApiError, isApiError } from "./errors.ts";
+import { ApiError, isApiError } from "./errors.ts";
+
+import { type Workspace, readWorkspaceHistory, rememberWorkspace, sameWorkspace, WORKSPACE_HISTORY_KEY, workspaceCredentials } from "./workspaces.ts";
+export type { Workspace } from "./workspaces.ts";
 
 // Session store: credentials live in sessionStorage only (tab-scoped, cleared on close), never localStorage.
 // Tokens are never logged. Validity is always confirmed by GET /v1/session before "connected".
@@ -19,13 +22,19 @@ export type SessionState = {
 	status: "disconnected" | "checking" | "connected";
 	info: SessionInfo | null;
 	error: ApiError | null;
+	workspace: Workspace | null;
+	knownWorkspaceCount: number;
+	switching: boolean;
+	workspaceError: ApiError | null;
 };
 
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 
 export type SessionStoreDeps = {
 	storage: StorageLike | null;
-	fetchSession: (c: Credentials) => Promise<SessionInfo>;
+	fetchSession: (c: Credentials, signal?: AbortSignal) => Promise<SessionInfo>;
+	/** Runs before a changed context is published so URL-bound record/selection state cannot cross tenants. */
+	onWorkspaceChange?: () => void;
 };
 
 export function safeSessionStorage(): StorageLike | null {
@@ -54,7 +63,11 @@ function parseCredentials(raw: string | null): Credentials | null {
 
 export function createSessionStore(deps: SessionStoreDeps) {
 	let credentials: Credentials | null = null;
-	let state: SessionState = { status: "disconnected", info: null, error: null };
+	const emptyState = (): SessionState => ({ status: "disconnected", info: null, error: null, workspace: null, knownWorkspaceCount: 0, switching: false, workspaceError: null });
+	let state: SessionState = emptyState();
+	let historyActor: string | null = null;
+	let history: Workspace[] = [];
+	let lastScope: { actor: string; workspace: Workspace } | null = null;
 	const listeners = new Set<() => void>();
 	let attempt = 0; // guards against out-of-order validation results
 
@@ -71,15 +84,45 @@ export function createSessionStore(deps: SessionStoreDeps) {
 		}
 	};
 
+	function loadHistory(actor: string) {
+		if (historyActor === actor) return;
+		historyActor = actor;
+		try {
+			history = readWorkspaceHistory(deps.storage?.getItem(WORKSPACE_HISTORY_KEY) ?? null, actor);
+		} catch {
+			history = [];
+		}
+	}
+	function persistHistory() {
+		try {
+			deps.storage?.setItem(WORKSPACE_HISTORY_KEY, JSON.stringify({ actor: historyActor, contexts: history }));
+		} catch {
+			// History is optional; switching still works in memory.
+		}
+	}
+	function forbiddenWorkspace(): ApiError {
+		return new ApiError({ status: 403, code: "FORBIDDEN", safeMessage: "", requestId: null, retryable: false });
+	}
+	function removeWorkspace(workspace: Workspace) {
+		history = history.filter((item) => !sameWorkspace(item, workspace));
+		persistHistory();
+	}
+
 	async function validate(c: Credentials, keepOnFailure: boolean): Promise<boolean> {
 		const mine = ++attempt;
-		set({ status: "checking", info: null, error: null });
+		set({ ...emptyState(), status: "checking" });
 		try {
-			const info = await deps.fetchSession(c);
+			const info = await deps.fetchSession(c, AbortSignal.timeout(10_000));
 			if (mine !== attempt) return false;
+			loadHistory(info.actor);
+			const workspace: Workspace = { tenantId: c.tenantId, ...(c.grantId ? { grantId: c.grantId } : {}) };
+			history = rememberWorkspace(history, workspace);
+			persistHistory();
+			if (lastScope && (lastScope.actor !== info.actor || !sameWorkspace(lastScope.workspace, workspace))) deps.onWorkspaceChange?.();
+			lastScope = { actor: info.actor, workspace };
 			credentials = c;
 			persist(c);
-			set({ status: "connected", info, error: null });
+			set({ ...emptyState(), status: "connected", info, workspace, knownWorkspaceCount: history.length });
 			return true;
 		} catch (e) {
 			if (mine !== attempt) return false;
@@ -88,6 +131,7 @@ export function createSessionStore(deps: SessionStoreDeps) {
 				persist(null);
 			}
 			set({
+				...emptyState(),
 				status: "disconnected",
 				info: null,
 				error: isApiError(e) ? e : null,
@@ -112,6 +156,68 @@ export function createSessionStore(deps: SessionStoreDeps) {
 			};
 			return validate(clean, false);
 		},
+		/** Recheck every remembered context before it becomes a selectable option. */
+		async listWorkspaces(signal?: AbortSignal): Promise<Workspace[]> {
+			const current = credentials;
+			const actor = state.info?.actor;
+			const mine = attempt;
+			if (!current || !actor || state.status !== "connected") return [];
+			const available: Workspace[] = [];
+			const timeout = AbortSignal.timeout(10_000);
+			const listSignal = signal ? AbortSignal.any([signal, timeout]) : timeout;
+			for (const workspace of [...history]) {
+				listSignal.throwIfAborted();
+				try {
+					const info = await deps.fetchSession(workspaceCredentials(current.token, workspace), listSignal);
+					if (mine !== attempt || actor !== state.info?.actor) return [];
+					if (info.actor !== actor) throw forbiddenWorkspace();
+					available.push(workspace);
+				} catch (error) {
+					if (mine !== attempt) return [];
+					if (isApiError(error) && (error.kind === "forbidden" || error.kind === "unauthenticated")) {
+						removeWorkspace(workspace);
+						if (state.workspace && sameWorkspace(state.workspace, workspace)) {
+							attempt++;
+							credentials = null;
+							persist(null);
+							set({ ...emptyState(), error });
+							return [];
+						}
+						continue;
+					}
+					throw error;
+				}
+			}
+			if (mine === attempt) set({ ...state, knownWorkspaceCount: history.length });
+			return available;
+		},
+		/** A known target is revalidated with its exact grant tuple; failure retains the current workspace. */
+		async switchWorkspace(workspace: Workspace): Promise<boolean> {
+			const current = credentials;
+			const actor = state.info?.actor;
+			if (!current || !actor || state.status !== "connected" || !history.some((item) => sameWorkspace(item, workspace))) return false;
+			const mine = ++attempt;
+			set({ ...state, switching: true, workspaceError: null });
+			try {
+				const next = workspaceCredentials(current.token, workspace);
+				const info = await deps.fetchSession(next, AbortSignal.timeout(10_000));
+				if (mine !== attempt) return false;
+				if (info.actor !== actor) throw forbiddenWorkspace();
+				if (!state.workspace || !sameWorkspace(state.workspace, workspace)) deps.onWorkspaceChange?.();
+				lastScope = { actor: info.actor, workspace: { ...workspace } };
+				credentials = next;
+				persist(next);
+				history = rememberWorkspace(history, workspace);
+				persistHistory();
+				set({ ...emptyState(), status: "connected", info, workspace: { ...workspace }, knownWorkspaceCount: history.length });
+				return true;
+			} catch (error) {
+				if (mine !== attempt) return false;
+				if (isApiError(error) && (error.kind === "forbidden" || error.kind === "unauthenticated")) removeWorkspace(workspace);
+				set({ ...state, switching: false, workspaceError: isApiError(error) ? error : null, knownWorkspaceCount: history.length });
+				return false;
+			}
+		},
 		/** Reads sessionStorage and re-validates; resolves false if nothing stored/invalid. */
 		async restore() {
 			let raw: string | null = null;
@@ -131,14 +237,14 @@ export function createSessionStore(deps: SessionStoreDeps) {
 			attempt++;
 			credentials = null;
 			persist(null);
-			set({ status: "disconnected", info: null, error: null });
+			set(emptyState());
 		},
 		/** Called when an authenticated call returns 401 (revoked/expired). */
 		invalidate(error?: ApiError) {
 			attempt++;
 			credentials = null;
 			persist(null);
-			set({ status: "disconnected", info: null, error: error ?? null });
+			set({ ...emptyState(), error: error ?? null });
 		},
 	};
 }

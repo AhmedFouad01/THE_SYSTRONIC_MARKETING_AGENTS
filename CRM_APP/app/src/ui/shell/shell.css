@@ -432,3 +432,86 @@ a.sy-brand {
 		display: block;
 	}
 }
+
+.sy-workspace {
+	display: grid;
+	gap: var(--sy-space-4);
+	min-inline-size: 0;
+	padding: var(--sy-space-8);
+	border-block-end: 1px solid var(--sy-border);
+}
+
+.sy-workspace__label,
+.sy-workspace__hint {
+	font-size: 11px;
+	color: var(--sy-text-3);
+}
+
+.sy-workspace__name {
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: var(--sy-type-data-size);
+}
+
+.sy-workspace-options {
+	display: grid;
+	gap: var(--sy-space-8);
+}
+
+.sy-workspace-option {
+	height: auto;
+	min-block-size: 44px;
+	flex-wrap: wrap;
+	padding-block: var(--sy-space-8);
+	overflow-wrap: anywhere;
+	cursor: pointer;
+}
+
+.sy-workspace-option:disabled {
+	cursor: default;
+}
+
+@media (max-width: 720px) {
+	.sy-topbar {
+		flex-wrap: wrap;
+		block-size: auto;
+		padding-block: var(--sy-space-8);
+	}
+
+	.sy-topbar__workspace {
+		order: 3;
+		flex-basis: 100%;
+		min-inline-size: 0;
+	}
+
+	.sy-topbar__workspace .sy-workspace {
+		grid-template-columns: minmax(0, 1fr) auto;
+		padding: 0;
+		border: 0;
+	}
+
+	.sy-topbar__workspace .sy-workspace__name {
+		grid-column: 1;
+	}
+
+	.sy-topbar__workspace .sy-workspace .sy-btn {
+		grid-column: 2;
+		grid-row: 1 / span 3;
+		align-self: center;
+	}
+
+	.sy-crumbs__list {
+		flex-wrap: wrap;
+	}
+}
+
+.sy-workspace-announcement {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

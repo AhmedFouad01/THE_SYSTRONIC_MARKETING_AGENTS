@@ -23,6 +23,14 @@ export const en = {
 	"nav.users": "Users & roles",
 	"nav.security": "Security",
 	"nav.comingSoon": "Coming soon",
+	"workspace.label": "Workspace",
+	"workspace.switch": "Switch client",
+	"workspace.restricted": "Limited grant access",
+	"workspace.knownOnly": "Workspaces previously connected in this browser tab. Access is checked before each switch.",
+	"workspace.checking": "Checking workspace access…",
+	"workspace.none": "No other available workspaces.",
+	"workspace.switchFailed": "The workspace could not be opened. Your current workspace is unchanged.",
+	"workspace.changed": "Workspace changed: {name}",
 	"nav.settings": "Settings",
 	"locale.switchTo": "العربية", // label = the language you switch to (prototype)
 	"locale.label": "Language", // new

@@ -1,4 +1,4 @@
-import { type MouseEvent, type ReactNode, useState, useSyncExternalStore } from "react";
+import { type MouseEvent, type ReactNode, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { href, navigate, type RoutePath } from "../../router.ts";
 import { Bdi, personLabel, useI18n } from "../i18n/index.ts";
 import { Icon } from "../icons/index.ts";
@@ -8,6 +8,9 @@ import { useTheme } from "../theme/index.ts";
 import { Badge } from "../primitives/Badge.tsx";
 import { filterNavigation, linkedLeaves, NAV_TREE, navigationTrail, type NavLink, type NavNode, splitMobileNav } from "./navigation.ts";
 export { ALL_ROUTES_HAVE_NAV, MOBILE_PRIMARY_KEYS, NAV, NAV_ROUTES, splitMobileNav } from "./navigation.ts";
+import { disclosureStorageKey, expandActiveBranch, restoreDisclosures, type Disclosures } from "./disclosures.ts";
+import { readPref, writePref } from "../storage.ts";
+import { WorkspaceControl, type WorkspaceControls, WorkspaceSwitchDialog } from "./WorkspaceSwitcher.tsx";
 import "./shell.css";
 
 /** Up to two initials from a display name (first letter of the first and last word). */
@@ -33,7 +36,7 @@ function useIsMobile(): boolean {
 	);
 }
 
-export type AppShellProps = {
+export type AppShellProps = WorkspaceControls & {
 	route: RoutePath | null;
 	/** null = not connected: no navigation, no actor. */
 	actor: string | null;
@@ -55,17 +58,17 @@ type NavigationTreeProps = {
 	nodes: readonly NavNode[];
 	route: RoutePath | null;
 	link: (item: NavLink, className: string) => ReactNode;
+	disclosures: Disclosures;
+	onToggle: (key: string) => void;
 };
 
-function NavigationTree({ nodes, route, link }: NavigationTreeProps) {
-	return <>{nodes.map((node) => <NavigationBranch key={node.key} node={node} route={route} link={link} />)}</>;
+function NavigationTree({ nodes, route, link, disclosures, onToggle }: NavigationTreeProps) {
+	return <>{nodes.map((node) => <NavigationBranch key={node.key} node={node} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />)}</>;
 }
 
-function NavigationBranch({ node, route, link }: Omit<NavigationTreeProps, "nodes"> & { node: NavNode }) {
+function NavigationBranch({ node, route, link, disclosures, onToggle }: Omit<NavigationTreeProps, "nodes"> & { node: NavNode }) {
 	const { t } = useI18n();
-	const [expanded, setExpanded] = useState(() =>
-		(node.kind === "group" && node.expanded === true) || navigationTrail(node.children ?? [], route).length > 0,
-	);
+	const expanded = disclosures[node.key] === true;
 	if (node.kind === "upcoming") return (
 		<div className="sy-nav sy-nav--upcoming" data-testid={`nav-${node.key}`}>
 			<Icon name={node.icon} size={17} />
@@ -80,7 +83,7 @@ function NavigationBranch({ node, route, link }: Omit<NavigationTreeProps, "node
 		<button type="button" className={`sy-nav sy-nav--disclosure${node.kind === "link" ? " sy-nav--toggle" : ""}`}
 			aria-expanded={expanded} aria-controls={childId}
 			aria-label={node.kind === "link" ? t("nav.pipeline") : undefined}
-			data-testid={`nav-disclosure-${node.key}`} onClick={() => setExpanded((value) => !value)}>
+			data-testid={`nav-disclosure-${node.key}`} onClick={() => onToggle(node.key)}>
 			{node.kind === "group" ? <><Icon name={node.icon} size={17} /><span className="sy-nav__label">{t(node.label)}</span></> : null}
 			<Icon name={expanded ? "chevronDown" : "chevronRight"} size={14} />
 		</button>
@@ -89,17 +92,20 @@ function NavigationBranch({ node, route, link }: Omit<NavigationTreeProps, "node
 		<div className={`sy-nav-branch sy-nav-branch--${node.kind}`}>
 			<div className="sy-nav-branch__row">{node.kind === "link" ? link(node, "sy-nav sy-nav--route") : null}{disclosure}</div>
 			<div id={childId} className="sy-nav-branch__children" hidden={!expanded}>
-				<NavigationTree nodes={children} route={route} link={link} />
+				<NavigationTree nodes={children} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />
 			</div>
 		</div>
 	);
 }
 
-export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hiddenNavKeys = [], children }: AppShellProps) {
+export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hiddenNavKeys = [], workspace, knownWorkspaceCount = 0, loadWorkspaces, switchWorkspace, children }: AppShellProps) {
 	const { t, toggleLocale, dir } = useI18n();
 	const { mode, toggleMode } = useTheme();
 	const mobile = useIsMobile();
 	const [moreOpen, setMoreOpen] = useState(false);
+	const moreTrigger = useRef<HTMLButtonElement>(null);
+	const workspaceTrigger = useRef<HTMLElement>(null);
+	const [workspaceOpen, setWorkspaceOpen] = useState(false);
 	const [recordCrumb, setRecordCrumb] = useState<RecordCrumb | null>(null);
 	const connected = actor !== null;
 	const visibleTree = filterNavigation(NAV_TREE, hiddenNavKeys);
@@ -107,6 +113,19 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 	const activeItem = visibleNav.find((n) => n.route === route || n.also === route);
 	const trail = navigationTrail(visibleTree, route);
 	const name = personLabel(actorName, t);
+	const disclosureKey = actor ? disclosureStorageKey(actor, workspace?.tenantId ?? "", workspace?.grantId) : null;
+	const [disclosures, setDisclosures] = useState(() => expandActiveBranch(restoreDisclosures(disclosureKey ? readPref(disclosureKey) : null, NAV_TREE, null), visibleTree, route));
+	useEffect(() => {
+		setDisclosures((current) => expandActiveBranch(current, filterNavigation(NAV_TREE, hiddenNavKeys), route));
+	}, [route, hiddenNavKeys]);
+	useEffect(() => {
+		if (disclosureKey) writePref(disclosureKey, JSON.stringify(disclosures));
+	}, [disclosureKey, disclosures]);
+	const onToggle = (key: string) => setDisclosures((current) => ({ ...current, [key]: !current[key] }));
+	const workspaceControl = workspace ? <WorkspaceControl workspace={workspace} canSwitch={knownWorkspaceCount > 1 && Boolean(loadWorkspaces && switchWorkspace)} onOpen={() => {
+		workspaceTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		setWorkspaceOpen(true);
+	}} /> : null;
 	const { primary, overflow } = splitMobileNav(visibleNav);
 	const moreActive = activeItem !== undefined && overflow.includes(activeItem);
 
@@ -186,8 +205,9 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 					)}
 					{connected ? (
 						<>
+							{workspaceControl}
 							<nav className="sy-primary-nav" aria-label={t("nav.primary")}>
-								<NavigationTree nodes={visibleTree} route={route} link={link} />
+								<NavigationTree nodes={visibleTree} route={route} link={link} disclosures={disclosures} onToggle={onToggle} />
 							</nav>
 							<div className="sy-sidebar__foot">{actorBlock}</div>
 						</>
@@ -246,6 +266,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 					) : (
 						<span className="sy-topbar__brand">THE SYSTRONIC</span>
 					)}
+					{mobile && connected ? <div className="sy-topbar__workspace">{workspaceControl}</div> : null}
 					<div className="sy-topbar__tools">
 						{mobile && connected ? actorBlock : null}
 						<MenuButton
@@ -291,6 +312,7 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 						<button
 							type="button"
 							className="sy-nav sy-nav--route sy-nav--more"
+							ref={moreTrigger}
 							aria-haspopup="dialog"
 							aria-expanded={moreOpen}
 							aria-current={moreActive ? "page" : undefined}
@@ -305,15 +327,20 @@ export function AppShell({ route, actor, actorName, actorRole, onDisconnect, hid
 						open={moreOpen}
 						onClose={() => setMoreOpen(false)}
 						title={t("nav.moreTitle")}
-						placement="sheet"
+						placement="side"
+						dock="right"
+						returnFocusRef={moreTrigger}
 						testId="more-sheet"
 					>
+						{workspaceControl}
 						<nav className="sy-sheet-nav" aria-label={t("nav.moreTitle")}>
-							<NavigationTree nodes={visibleTree} route={route} link={(item, className) => link(item, `${className} sy-nav--sheet`, () => setMoreOpen(false))} />
+							<NavigationTree nodes={visibleTree} route={route} link={(item, className) => link(item, `${className} sy-nav--sheet`, () => setMoreOpen(false))} disclosures={disclosures} onToggle={onToggle} />
 						</nav>
 					</Dialog>
 				</>
 			) : null}
+			{workspace && loadWorkspaces && switchWorkspace ? <WorkspaceSwitchDialog open={workspaceOpen} onClose={() => setWorkspaceOpen(false)} workspace={workspace}
+				loadWorkspaces={loadWorkspaces} switchWorkspace={switchWorkspace} returnFocusRef={workspaceTrigger} /> : null}
 		</div>
 		</RecordCrumbContext.Provider>
 	);

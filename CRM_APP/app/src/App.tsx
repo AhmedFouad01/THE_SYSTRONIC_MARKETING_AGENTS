@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sessionStore, useSession } from "./api/index.ts";
 import { fetchAssignees } from "./features/leads/api.ts";
 import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, PropertiesView, ReportingView, TasksView, useSchemaRead } from "./features/index.ts";
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
+import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
 
@@ -14,7 +15,7 @@ function NotFound() {
 }
 
 function Routed() {
-	const { t } = useI18n();
+	const { t, tx } = useI18n();
 	const route = useRoute();
 	const session = useSession();
 
@@ -24,19 +25,38 @@ function Routed() {
 
 	const connected = session.status === "connected" && session.info !== null;
 	const actorId = connected ? (session.info?.actor ?? null) : null;
-	const canReadSchema = useSchemaRead(actorId, connected ? session.info?.schema_read : undefined);
+	const scope = actorId && session.workspace ? workspaceKey(actorId, session.workspace) : "disconnected";
+	const previousScope = useRef<string | null>(null);
+	const [announcedWorkspace, setAnnouncedWorkspace] = useState<string | null>(null);
+	useEffect(() => {
+		if (!connected) return;
+		if (previousScope.current && previousScope.current !== scope) {
+			const target = document.querySelector<HTMLElement>('[data-testid="workspace-switch"]') ?? document.getElementById("sy-main");
+			target?.focus();
+			setAnnouncedWorkspace(session.workspace?.tenantId ?? null);
+		}
+		previousScope.current = scope;
+	}, [connected, scope, session.workspace?.tenantId]);
+	const canReadSchema = useSchemaRead(actorId, connected ? session.info?.schema_read : undefined, scope);
 	const [actorName, setActorName] = useState<string | null>(null);
 	useEffect(() => {
 		setActorName(null);
-		if (actorId === null) return;
+		if (actorId === null || scope === "disconnected") return;
 		const ctrl = new AbortController();
 		fetchAssignees(ctrl.signal)
 			.then((list) => setActorName(list.find((a) => a.id === actorId)?.name ?? null))
 			.catch(() => undefined); // name is cosmetic: the shell falls back to a neutral label
 		return () => ctrl.abort();
-	}, [actorId]);
+	}, [actorId, scope]);
 	return (
+		<>
+		<div className="sy-workspace-announcement" role="status" aria-live="polite" aria-atomic="true">{announcedWorkspace && connected ? tx("workspace.changed", { name: announcedWorkspace }) : null}</div>
 		<AppShell
+			key={scope}
+			workspace={session.workspace}
+			knownWorkspaceCount={session.knownWorkspaceCount}
+			loadWorkspaces={sessionStore.listWorkspaces}
+			switchWorkspace={sessionStore.switchWorkspace}
 			route={route}
 			actor={actorId}
 			actorName={actorName}
@@ -48,29 +68,37 @@ function Routed() {
 			]}
 		>
 			{connected ? (
-				route === "/leads" ? (
-					<LeadsView />
-				) : route === "/contacts" ? (
-					<ContactsView />
-				) : route === "/deals" ? (
-					<DealsView />
-				) : route === "/pipeline" ? (
-					<PipelineView />
-				) : route === "/reporting" || route === "/reporting-v2" ? (
-					<ReportingView />
-				) : route === "/settings/properties" ? (
-					<PropertiesView />
-				) : route === "/tasks" ? (
-					<TasksView />
-				) : route === "/dashboard" || route === "/" ? (
-					<DashboardView />
-				) : (
-					<NotFound />
-				)
+				<WorkspaceContent key={scope} route={route} />
 			) : (
 				<ConnectGate error={session.error} checking={session.status === "checking"} />
 			)}
 		</AppShell>
+		</>
+	);
+}
+
+/** A successful scope change remounts every feature: selections, records and future import drafts are tenant-bound. */
+function WorkspaceContent({ route }: { route: ReturnType<typeof useRoute> }) {
+	return (
+		route === "/leads" ? (
+			<LeadsView />
+		) : route === "/contacts" ? (
+			<ContactsView />
+		) : route === "/deals" ? (
+			<DealsView />
+		) : route === "/pipeline" ? (
+			<PipelineView />
+		) : route === "/reporting" || route === "/reporting-v2" ? (
+			<ReportingView />
+		) : route === "/settings/properties" ? (
+			<PropertiesView />
+		) : route === "/tasks" ? (
+			<TasksView />
+		) : route === "/dashboard" || route === "/" ? (
+			<DashboardView />
+		) : (
+			<NotFound />
+		)
 	);
 }
 

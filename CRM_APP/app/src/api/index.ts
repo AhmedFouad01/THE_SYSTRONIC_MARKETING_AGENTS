@@ -19,8 +19,12 @@ export const apiClient = createApiClient({
 
 export const sessionStore = createSessionStore({
 	storage: safeSessionStorage(),
-	fetchSession: async (credentials) =>
-		(await apiClient.get<SessionInfo>("session", { credentials })).data,
+	fetchSession: async (credentials, signal) =>
+		(await apiClient.get<SessionInfo>("session", { credentials, signal })).data,
+	onWorkspaceChange: () => {
+		// Drop record/query handoffs before the new tenant mounts and reads location.
+		if (typeof window !== "undefined") window.history.replaceState(null, "", window.location.pathname);
+	},
 });
 
 export function useSession(): SessionState {
