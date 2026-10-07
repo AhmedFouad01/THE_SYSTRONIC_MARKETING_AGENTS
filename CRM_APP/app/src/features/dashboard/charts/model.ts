@@ -1,6 +1,6 @@
 import type { ChartData, ChartOptions, PointStyle } from "chart.js";
 import { isApiError, isForbidden } from "../../../api/errors.ts";
-import { currencyExponent, formatCount, INTL_LOCALE } from "../../../ui/i18n/format.ts";
+import { currencyExponent, formatCount, formatNumber, INTL_LOCALE } from "../../../ui/i18n/format.ts";
 import type { Locale } from "../../../ui/tokens/scales.ts";
 import { toBig } from "../../reporting/model.ts";
 import type { Load } from "../useLoad.ts";
@@ -80,6 +80,7 @@ export function chartData(model: ChartModel, theme: ChartTheme): ChartData<Chart
 		labels: model.rows.map((row) => isolateCanvas(row.label)),
 		datasets: model.columns.filter((col) => col.plot !== false).map((col, i) => ({
 			label: isolateCanvas(col.label), type: col.type ?? model.type ?? "bar",
+			order: (col.type ?? model.type) === "line" ? 0 : 1,
 			data: model.rows.map((row) => plotValue(row.values[col.key], col)),
 			backgroundColor: model.rows.some((row) => row.tone) ? model.rows.map((row) => row.tone ? theme[row.tone] : (col.color ? theme[col.color] : theme.palette[i % theme.palette.length])) : (col.color ? theme[col.color] : theme.palette[i % theme.palette.length]),
 			borderColor: col.color ? theme[col.color] : theme.palette[i % theme.palette.length],
@@ -113,7 +114,7 @@ export function chartOptions(model: ChartModel, locale: Locale, reduced: boolean
 			x: { beginAtZero: true, reverse: Boolean(model.horizontal && rtl), stacked: model.stacked, grid: { color: theme.grid }, ticks: { color: theme.text, ...(model.horizontal ? { callback: (v) => formatCount(Number(v), locale) } : {}) } },
 			y: { beginAtZero: true, stacked: model.stacked, grid: { color: theme.grid }, ticks: { color: theme.text, ...(!model.horizontal ? { callback: (v) => formatCount(Number(v), locale) } : {}) } },
 			...(plotted.some((col) => col.kind === "money") && !model.horizontal ? {
-				money: { type: "linear" as const, position: rtl ? "left" as const : "right" as const, beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { color: theme.text } },
+				money: { type: "linear" as const, position: rtl ? "left" as const : "right" as const, beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { color: theme.text, callback: (value: string | number) => formatNumber(Number(value), locale) } },
 			} : {}),
 		},
 	};

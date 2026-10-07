@@ -1,6 +1,6 @@
 # CHARTS_CONTRACTS — dashboard aggregate endpoints (roadmap v2 item 4, server half)
 
-Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline and C2 leads widgets live in the dashboard; C3–C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
+Status: server implemented and DB-tested; shared chart surface implemented in `app/src/features/dashboard/charts`, C1 pipeline, C2 leads and C3 outcomes widgets live in the dashboard; C4–C5 pending. Source: `src/charts.ts`, tests `tests/dashboard-charts.test.ts`.
 No migration or SECURITY DEFINER function. Approved exact dependencies Chart.js 4.5.1 + react-chartjs-2 5.3.1 are installed for the UI round. The shared typed row model drives canvas data, exact bigint money tooltips and accessible tables; unsafe numeric plots are omitted and explained alongside their exact table values.
 
 ## 1. Common rules
