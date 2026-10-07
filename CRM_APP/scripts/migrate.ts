@@ -25,6 +25,7 @@ try {
 		[14, "014_auth_org_2fa.sql"],
 		[15, "015_auth_projection.sql"],
 		[16, "016_auth_bridge.sql"],
+		[17, "017_auth_audit.sql"],
 		[18, "018_import.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
@@ -77,7 +78,9 @@ try {
 		GRANT USAGE ON SCHEMA auth TO crm_auth;
 		REVOKE ALL ON ALL TABLES IN SCHEMA auth FROM PUBLIC, crm_runtime;
 		GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA auth TO crm_auth;
+		REVOKE ALL ON auth.login_throttle, auth.auth_event FROM PUBLIC, crm_auth, crm_runtime;
 		REVOKE ALL ON ALL FUNCTIONS IN SCHEMA auth FROM PUBLIC;
+		GRANT EXECUTE ON FUNCTION auth.login_gate(text), auth.login_failed(text), auth.login_succeeded(text) TO crm_auth;
 		REVOKE ALL ON crm.platform_flag FROM PUBLIC, crm_runtime;
 		REVOKE EXECUTE ON FUNCTION crm.actor(), crm.mfa_ok(uuid,uuid) FROM PUBLIC;
 		REVOKE ALL ON SCHEMA crm FROM crm_auth;
@@ -96,7 +99,7 @@ try {
 	} else
 		console.warn("AUTH_DATABASE_URL not set: crm_auth password left unchanged");
 	await db.query("COMMIT");
-	console.log("Migrations 001–016, 018 applied/verified");
+	console.log("Migrations 001–018 applied/verified");
 } catch (e) {
 	await db.query("ROLLBACK");
 	throw e;

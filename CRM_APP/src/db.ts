@@ -13,6 +13,18 @@ export class Fault extends Error {
 		super(code);
 	}
 }
+/**
+ * SQLSTATE 23514 (check_violation) -> a Fault, or null when the error is not one we classify.
+ * Trigger invariants (015) raise 23514 without a constraint name, so the message text is the only handle;
+ * those texts are ours and pinned by tests/auth-b2.test.ts. Stable public codes: see src/auth/errors.ts.
+ */
+export function faultFromDbError(error: unknown): Fault | null {
+	const err = error as { code?: string; message?: string };
+	if (err?.code !== "23514") return null;
+	if (/would be left without an active manager/.test(err.message ?? ""))
+		return new Fault(409, "LAST_MANAGER_REQUIRED");
+	return new Fault(422, "CONSTRAINT_VIOLATION");
+}
 export type Context = { tenant: string; token: string; grant?: string };
 export async function assertIdentifierConfiguration() {
 	try {
@@ -55,7 +67,7 @@ export async function transaction<T>(
 			)
 		)
 			throw new Fault(422, "PROPERTIES_TOO_LARGE");
-		throw error;
+		throw faultFromDbError(error) ?? error;
 	} finally {
 		db.release();
 	}
