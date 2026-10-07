@@ -243,13 +243,10 @@ test("B3 get-session returns the user without any token; sign-out revokes the se
 });
 
 test("B3 only the allow-list is reachable: everything else under /v1/auth is 404", async () => {
-	assert.deepEqual([...ALLOWED_ENDPOINTS].sort(), ["GET /get-session", "POST /organization/accept-invitation", "POST /sign-in/email", "POST /sign-out", "POST /sign-up/email"]);
+	assert.deepEqual([...ALLOWED_ENDPOINTS].sort(), ["GET /get-session", "GET /list-sessions", "POST /change-password", "POST /organization/accept-invitation", "POST /reset-password", "POST /revoke-other-sessions", "POST /revoke-session", "POST /revoke-sessions", "POST /sign-in/email", "POST /sign-out", "POST /sign-up/email"]);
 	const probes: [string, string][] = [
 		["GET", "/v1/auth/ok"],
 		["GET", "/v1/auth/reference"],
-		["GET", "/v1/auth/list-sessions"],
-		["POST", "/v1/auth/revoke-sessions"],
-		["POST", "/v1/auth/change-password"],
 		["POST", "/v1/auth/request-password-reset"],
 		["GET", "/v1/auth/organization/list"],
 		["POST", "/v1/auth/organization/create"],

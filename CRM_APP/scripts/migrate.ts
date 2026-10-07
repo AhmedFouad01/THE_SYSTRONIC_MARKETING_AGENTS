@@ -27,6 +27,7 @@ try {
 		[16, "016_auth_bridge.sql"],
 		[17, "017_auth_audit.sql"],
 		[18, "018_import.sql"],
+		[19, "019_auth_password_reset.sql"],
 	] as const) {
 		const { rowCount } = await db.query(
 			"SELECT 1 FROM public.crm_migrations WHERE version=$1",
@@ -99,7 +100,7 @@ try {
 	} else
 		console.warn("AUTH_DATABASE_URL not set: crm_auth password left unchanged");
 	await db.query("COMMIT");
-	console.log("Migrations 001–018 applied/verified");
+	console.log("Migrations 001–019 applied/verified");
 } catch (e) {
 	await db.query("ROLLBACK");
 	throw e;

@@ -187,7 +187,10 @@ for (const mode of ["missing", "invalid", "wrong"] as const)
 					env: { ...process.env, PORT: "0" },
 					encoding: "utf8",
 					windowsHide: true,
-					timeout: 10000,
+					// Repeated lane runs retain identifiers; the all-tenant startup scan alone
+					// measured 9.1s at 35k rows. Keep startup failure bounded without
+					// racing the scan against the former 10s child-process limit.
+					timeout: 30000,
 				});
 				assert.equal(child.status, 1);
 				assert.ok(child.stdout === "", "Unexpected startup output");

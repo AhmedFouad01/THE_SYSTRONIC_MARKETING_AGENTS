@@ -1,5 +1,8 @@
 import { createHash, randomBytes } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { authLink, createStubMailer, type Mailer } from "./mailer.js";
+import { resetIdentifier, resetRegistry } from "./reset.js";
 import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { fromNodeHeaders, toNodeHandler } from "better-auth/node";
@@ -50,6 +53,15 @@ const ALLOW: Readonly<
 	},
 	"POST /sign-out": { write: true, bodyKeys: [] },
 	"GET /get-session": { write: false },
+	"POST /reset-password": { write: true, bodyKeys: ["token", "newPassword"] },
+	"POST /change-password": {
+		write: true,
+		bodyKeys: ["currentPassword", "newPassword"],
+	},
+	"GET /list-sessions": { write: false },
+	"POST /revoke-session": { write: true, bodyKeys: ["sessionId"] },
+	"POST /revoke-sessions": { write: true, bodyKeys: [] },
+	"POST /revoke-other-sessions": { write: true, bodyKeys: [] },
 	"POST /sign-up/email": {
 		write: true,
 		bodyKeys: ["email", "password", "name", "invitationId"],
@@ -177,6 +189,7 @@ function clientIp(req: IncomingMessage, trustProxy: boolean): string {
 export interface AuthRuntimeOptions {
 	config: AuthConfig;
 	passwords?: PasswordService;
+	mailer?: Mailer;
 	/** Tests may inject the pool; otherwise one small pool is created from config.databaseUrl. */
 	pool?: pg.Pool;
 }
@@ -231,6 +244,11 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 	const host = config.production ? "__Host-" : "";
 	const cookieName = `${host}crm_session`;
 	const trusted = new Set(config.trustedOrigins);
+	const mailer =
+		opts.mailer ?? createStubMailer({ production: config.production });
+	const registry = resetRegistry(pool);
+	const resetCopy = new AsyncLocalStorage<{ user: string; link?: string }>();
+	const resetConsumed = new AsyncLocalStorage<{ identifier: string }>();
 
 	const logger = {
 		level: "error" as const,
@@ -298,6 +316,29 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 			requireEmailVerification: false,
 			autoSignIn: false,
 			revokeSessionsOnPasswordReset: true,
+			resetPasswordTokenExpiresIn: 60 * 60,
+			sendResetPassword: async ({ user, token }) => {
+				const link = authLink(config.publicOrigin, "password-reset", token);
+				await registry.replace(user.id, token);
+				await mailer.send({
+					kind: "password-reset",
+					recipient: user.email,
+					link,
+				});
+				const copy = resetCopy.getStore();
+				if (copy?.user === user.id) copy.link = link;
+			},
+			onPasswordReset: async ({ user }) => {
+				const consumed = resetConsumed.getStore();
+				if (consumed) {
+					try {
+						await registry.clear(user.id, consumed.identifier);
+					} catch {
+						logger.log("error", "AUTH_RESET_CLEANUP_FAILED");
+					}
+				}
+				// Metadata cleanup never prevents Better Auth from revoking all sessions next.
+			},
 			password: {
 				hash: (password: string) => wrapHash(() => passwords.hash(password)),
 				verify: ({ hash, password }: { hash: string; password: string }) =>
@@ -314,7 +355,13 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 				requireEmailVerificationOnInvitation: false,
 				invitationExpiresIn: 7 * 24 * 60 * 60,
 				// D4: delivery is copy-link through our manager route; no email transport yet.
-				sendInvitationEmail: async () => {},
+				sendInvitationEmail: async ({ id, email }) => {
+					await mailer.send({
+						kind: "invitation",
+						recipient: email,
+						link: authLink(config.publicOrigin, "invitation", id),
+					});
+				},
 			}),
 		],
 		databaseHooks: {
@@ -329,6 +376,7 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 				},
 			},
 		},
+		verification: { storeIdentifier: "hashed" },
 		session: {
 			expiresIn: SESSION_EXPIRES_IN,
 			updateAge: SESSION_UPDATE_AGE,
@@ -360,6 +408,56 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 		hooks: {
 			// Per-account password lockout (017): refuse a locked key before any password work.
 			before: createAuthMiddleware(async (ctx) => {
+				if (ctx.path === "/reset-password") {
+					const token = ctx.body?.token;
+					if (typeof token !== "string" || !/^[A-Za-z0-9_-]{24}$/.test(token))
+						throw new APIError("BAD_REQUEST", {
+							code: "AUTH_RESET_INVALID",
+							message: "reset invalid",
+						});
+					const {
+						rows: [user],
+					} = await pool.query(
+						`SELECT u.email FROM auth.verification v JOIN auth."user" u ON u.id::text=v.value
+						JOIN auth.password_reset_latest l ON l.user_id=u.id AND l.identifier=v.identifier
+						WHERE v.identifier=$1 AND v."expiresAt">now()`,
+						[resetIdentifier(token)],
+					);
+					if (!user)
+						throw new APIError("BAD_REQUEST", {
+							code: "AUTH_RESET_INVALID",
+							message: "reset invalid",
+						});
+					if (
+						typeof ctx.body?.newPassword !== "string" ||
+						checkPasswordPolicy(ctx.body.newPassword, user.email)
+					)
+						throw new APIError("UNPROCESSABLE_ENTITY", {
+							code: "AUTH_PASSWORD_POLICY",
+							message: "password policy",
+						});
+					return;
+				}
+				if (ctx.path === "/change-password") {
+					const session = await auth.api.getSession({
+						headers: ctx.headers ?? new Headers(),
+					});
+					if (!session)
+						throw new APIError("UNAUTHORIZED", {
+							code: "UNAUTHENTICATED",
+							message: "sign in",
+						});
+					if (
+						typeof ctx.body?.newPassword !== "string" ||
+						checkPasswordPolicy(ctx.body.newPassword, session.user.email)
+					)
+						throw new APIError("UNPROCESSABLE_ENTITY", {
+							code: "AUTH_PASSWORD_POLICY",
+							message: "password policy",
+						});
+					ctx.body.revokeOtherSessions = true;
+					return;
+				}
 				if (
 					ctx.path === "/organization/accept-invitation" &&
 					(typeof ctx.body?.invitationId !== "string" ||
@@ -524,9 +622,30 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 				// T3: every state-changing auth call must come from a trusted origin (no ambient-cookie CSRF, no origin-less POST).
 				if (!originAllowed(req.headers.origin))
 					throw new Fault(403, "AUTH_ORIGIN_NOT_ALLOWED");
-				const body = await readJson(req);
+				let body = await readJson(req);
 				if (body && Object.keys(body).some((k) => !route.bodyKeys?.includes(k)))
 					throw new Fault(422, "VALIDATION_FAILED");
+				if (rel === "/revoke-session") {
+					const session = await auth.api.getSession({
+						headers: fromNodeHeaders(req.headers),
+					});
+					if (!session) throw new Fault(401, "UNAUTHENTICATED");
+					if (
+						typeof body?.sessionId !== "string" ||
+						!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+							body.sessionId,
+						)
+					)
+						throw new Fault(422, "VALIDATION_FAILED");
+					const {
+						rows: [target],
+					} = await pool.query(
+						`SELECT token FROM auth.session WHERE id=$1 AND "userId"=$2`,
+						[body.sessionId, session.user.id],
+					);
+					if (!target) throw new Fault(404, "NOT_FOUND");
+					body = { token: target.token }; // server-only translation; raw token never reaches page JS
+				}
 				// The stream is consumed: hand the parsed body to the adapter (it re-serialises it).
 				(req as IncomingMessage & { body?: unknown }).body = body;
 				delete req.headers["content-length"];
@@ -535,7 +654,15 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 			req.url = url.pathname; // query strings (disableRefresh, callbackURL, ...) never reach Better Auth
 			req.headers[IP_HEADER] = clientIp(req, config.trustProxy);
 			currentRequestId = requestId;
-			await node(req, res);
+			const requestBody = (
+				req as IncomingMessage & { body?: { token?: unknown } }
+			).body;
+			if (rel === "/reset-password" && typeof requestBody?.token === "string")
+				await resetConsumed.run(
+					{ identifier: resetIdentifier(requestBody.token) },
+					() => node(req, res),
+				);
+			else await node(req, res);
 		},
 		async session(req, res) {
 			if (!req.headers.cookie) return "";
@@ -565,18 +692,22 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 				const invites =
 					path === "/v1/invites" || path.startsWith("/v1/invites/");
 				const collection = path === (invites ? "/v1/invites" : "/v1/users");
+				const reset = /^\/v1\/users\/([0-9a-f-]+)\/reset-password$/i.exec(path);
+				const targetId = reset?.[1] ?? path.split("/").pop() ?? "";
 				if (
 					!collection &&
 					!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-						path.split("/").pop() ?? "",
+						targetId,
 					)
 				)
 					throw new Fault(404, "NOT_FOUND");
 				if (
 					!(
+						(reset && method === "POST") ||
 						(method === "GET" && collection) ||
 						(invites && method === "POST" && collection) ||
 						(!collection &&
+							!reset &&
 							(method === "DELETE" || (!invites && method === "PATCH")))
 					)
 				)
@@ -602,14 +733,14 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 				);
 				if (!rowCount) throw new Fault(403, "FORBIDDEN");
 				const allowed =
-					method === "POST"
+					method === "POST" && invites
 						? ["email", "role"]
 						: method === "PATCH"
 							? ["role"]
 							: [];
 				if (Object.keys(body).some((k) => !allowed.includes(k)))
 					throw new Fault(422, "VALIDATION_FAILED");
-				if (method === "POST" || method === "PATCH") {
+				if ((method === "POST" && invites) || method === "PATCH") {
 					if (
 						typeof body.role !== "string" ||
 						!["manager", "rep", "reader"].includes(body.role)
@@ -663,24 +794,41 @@ export function createAuthRuntime(opts: AuthRuntimeOptions): AuthRuntime {
 								organizationId: ctx.tenant,
 							},
 						});
-						const link = new URL("/app/invite", config.publicOrigin);
-						link.hash = new URLSearchParams({
-							invitationId: invite.id,
-						}).toString();
+						const link = authLink(config.publicOrigin, "invitation", invite.id);
 						return {
-							data: { invitation: invite, link: link.toString() },
+							data: { invitation: invite, link },
 							status: 201,
 						};
 					}
-					const id = path.split("/").pop() as string;
+					const id = targetId;
 					// Never pass a global object id to Better Auth until it is bound to our tenant.
 					const found = await pool.query(
 						invites
 							? `SELECT id FROM auth.invitation WHERE id=$1 AND "organizationId"=$2`
-							: `SELECT id FROM auth.member WHERE id=$1 AND "organizationId"=$2`,
+							: `SELECT id,"userId" FROM auth.member WHERE id=$1 AND "organizationId"=$2`,
 						[id, ctx.tenant],
 					);
 					if (!found.rowCount) throw new Fault(404, "NOT_FOUND");
+					if (reset) {
+						const user = (
+							await pool.query(`SELECT email FROM auth."user" WHERE id=$1`, [
+								found.rows[0].userId,
+							])
+						).rows[0];
+						if (!user) throw new Fault(404, "NOT_FOUND");
+						const delivery = {
+							user: found.rows[0].userId,
+							link: undefined as string | undefined,
+						};
+						await resetCopy.run(delivery, () =>
+							auth.api.requestPasswordReset({
+								headers,
+								body: { email: user.email },
+							}),
+						);
+						if (!delivery.link) throw new Fault(503, "AUTH_UNAVAILABLE");
+						return { data: { status: true, link: delivery.link } };
+					}
 					const data = invites
 						? await auth.api.cancelInvitation({
 								headers,

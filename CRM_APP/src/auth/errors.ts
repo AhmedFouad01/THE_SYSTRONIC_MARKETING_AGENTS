@@ -24,6 +24,12 @@ const e = (
 
 /** Stable public error codes of the auth surface and of the DB-invariant mapping. Adding a code is cheap; renaming one is a breaking change. */
 export const AUTH_ERROR_CATALOG = {
+	AUTH_RESET_INVALID: e(
+		400,
+		"reset_invalid",
+		"This reset link is invalid or expired.",
+		"رابط إعادة تعيين كلمة المرور غير صالح أو منتهي.",
+	),
 	AUTH_INVITATION_INVALID: e(
 		403,
 		"invitation_invalid",
@@ -145,6 +151,9 @@ const BA_CODES: Record<string, AuthErrorCode> = {
 	AUTH_TOO_MANY_ATTEMPTS: "AUTH_TOO_MANY_ATTEMPTS",
 	AUTH_BUSY: "AUTH_BUSY",
 	AUTH_INVITATION_INVALID: "AUTH_INVITATION_INVALID",
+	AUTH_RESET_INVALID: "AUTH_RESET_INVALID",
+	INVALID_TOKEN: "AUTH_RESET_INVALID",
+	SESSION_NOT_FRESH: "UNAUTHENTICATED",
 	AUTH_PASSWORD_POLICY: "AUTH_PASSWORD_POLICY",
 	INVITATION_NOT_FOUND: "AUTH_INVITATION_INVALID",
 	INVITATION_EXPIRED: "AUTH_INVITATION_INVALID",
