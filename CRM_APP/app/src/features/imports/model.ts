@@ -1,3 +1,4 @@
+import type { PreviewSnapshot } from "./preview.ts";
 export type ImportObject = "contact" | "lead";
 export type ImportFormat = "csv" | "xlsx";
 export type MappingColumn = { column: number; target: string };
@@ -15,10 +16,10 @@ export type Inspection = {
 	sheet: number | string | null;
 	samples: { row: number; cells: (string | number | boolean | null)[] }[];
 };
-export type ImportOptions = { sheet: string; default_country_code: string; owner_id: string };
-export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping"; revision: number };
+export type ImportOptions = { sheet: string; default_country_code: string; owner_id: string; duplicate_mode: "skip" | "update" | "create"; error_policy: "skip" | "abort" };
+export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping" | "preview" | "policy"; preview: PreviewSnapshot | null; revision: number };
 export function newDraft(): ImportDraft {
-	return { object: "contact", file: null, file_base64: null, inspection: null, mapping: [], options: { sheet: "1", default_country_code: "", owner_id: "" }, step: "upload", revision: 0 };
+	return { object: "contact", file: null, file_base64: null, inspection: null, mapping: [], options: { sheet: "1", default_country_code: "", owner_id: "", duplicate_mode: "skip", error_policy: "skip" }, step: "upload", preview: null, revision: 0 };
 }
 const objectRecord = (value: unknown): Record<string, unknown> => {
 	if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("INVALID_IMPORT_RESPONSE");
@@ -94,6 +95,7 @@ export function sheetOption(value: string): number | string {
 }
 export function optionIssues(options: ImportOptions, ownerIds: readonly string[]): string[] {
 	const issues: string[] = [];
+	if (!["skip", "update", "create"].includes(options.duplicate_mode) || !["skip", "abort"].includes(options.error_policy)) issues.push("INVALID_POLICY");
 	const country = foldDigits(options.default_country_code.trim());
 	if (country && !/^\+?[1-9]\d{0,3}$/.test(country)) issues.push("INVALID_COUNTRY");
 	if (options.owner_id && !ownerIds.includes(options.owner_id)) issues.push("INVALID_OWNER");
@@ -115,3 +117,9 @@ export function setColumn(mapping: readonly MappingColumn[], column: number, tar
 	return [...mapping.filter((item) => item.column !== column), ...(target ? [{ column, target }] : [])].sort((a, b) => a.column - b.column);
 }
 export function sampleText(value: string | number | boolean | null): string { return value === null ? "" : String(value); }
+
+/** Step navigation preserves review; any source/mapping/options change requires a new server preview. */
+export function changeDraft(current: ImportDraft, change: Partial<ImportDraft>): ImportDraft {
+	const invalidates = ["object", "file", "file_base64", "inspection", "mapping", "options"].some((key) => Object.hasOwn(change, key));
+	return { ...current, ...change, preview: invalidates ? null : change.preview === undefined ? current.preview : change.preview, revision: current.revision + (invalidates ? 1 : 0) };
+}

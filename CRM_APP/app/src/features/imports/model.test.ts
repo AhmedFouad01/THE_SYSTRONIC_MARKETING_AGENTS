@@ -48,7 +48,7 @@ describe("import mapping and limits", () => {
 	});
 	it("defaults to first sheet/caller/no country and accepts Arabic-Indic option input", () => {
 		const options = newDraft().options;
-		expect(options).toEqual({ sheet: "1", owner_id: "", default_country_code: "" });
+		expect(options).toEqual({ sheet: "1", owner_id: "", default_country_code: "", duplicate_mode: "skip", error_policy: "skip" });
 		expect(sheetOption("٢")).toBe(2);
 		expect(sheetOption("Sales")).toBe("Sales");
 		expect(() => sheetOption("٠")).toThrow("INVALID_SHEET");

@@ -6,9 +6,12 @@ import { Bdi, type MessageKey, useI18n } from "../../ui/i18n/index.ts";
 import { Button, Input, LoadingState, PageHeader, Panel, Select } from "../../ui/primitives/index.ts";
 import { fetchAssignees } from "../leads/api.ts";
 import type { Assignee } from "../leads/model.ts";
-import { bytesToBase64, fetchImportFields, inspectUpload } from "./api.ts";
+import { bytesToBase64, fetchImportFields, inspectUpload, previewImport } from "./api.ts";
 import { importDraftStore } from "./draft.ts";
-import { cleanFilename, fileFormat, fileIssue, type ImportDraft, type ImportFields, type ImportObject, mappingIssues, optionIssues, sampleText, setColumn, sheetOption, type Target } from "./model.ts";
+import { changeDraft, cleanFilename, fileFormat, fileIssue, type ImportDraft, type ImportFields, type ImportObject, mappingIssues, optionIssues, sampleText, setColumn, sheetOption, type Target } from "./model.ts";
+import { createPreviewGate } from "./preview.ts";
+import { PreviewReview } from "./PreviewReview.tsx";
+import type { ApiError } from "../../api/errors.ts";
 import "./imports.css";
 
 const FIXED_LABELS: Record<string, MessageKey> = {
@@ -20,7 +23,7 @@ const ERRORS: Record<string, MessageKey> = {
 	CELL_TOO_LONG: "import.error.cell", FORMAT_MISMATCH: "import.error.format", CSV_MALFORMED: "import.error.csv", INVALID_ENCODING: "import.error.encoding",
 	UNSUPPORTED_ENCODING: "import.error.encoding", NOT_TEXT: "import.error.encoding", NOT_XLSX: "import.error.xlsx", SHEET_NOT_FOUND: "import.error.sheet",
 	INVALID_SHEET: "import.error.sheet", DUPLICATE_TARGET: "import.error.duplicate", UNKNOWN_TARGET: "import.error.target", REQUIRED_TARGET: "import.error.required",
-	COLUMN_OUT_OF_RANGE: "import.error.columnRange", INVALID_COUNTRY: "import.error.country", INVALID_OWNER: "import.error.owner", HEADER_MISSING: "import.error.header",
+	COLUMN_OUT_OF_RANGE: "import.error.columnRange", INVALID_COUNTRY: "import.error.country", INVALID_OWNER: "import.error.owner", HEADER_MISSING: "import.error.header", INVALID_POLICY: "import.error.policy", UNKNOWN_PROPERTY: "import.error.target", FIELD_NOT_WRITABLE: "import.error.target",
 };
 
 export function ImportWizard() {
@@ -36,15 +39,26 @@ export function ImportWizard() {
 	const [error, setError] = useState<string | null>(null);
 	const [requestId, setRequestId] = useState<string | null>(null);
 	const [processing, setProcessing] = useState(false);
+	const [previewing, setPreviewing] = useState(false);
+	const [apiFailure, setApiFailure] = useState<ApiError | null>(null);
+	const draftRef = useRef(draft);
+	const previewGate = useRef(createPreviewGate());
+	const previewController = useRef<AbortController | null>(null);
 	const fieldsController = useRef<AbortController | null>(null);
 	const uploadController = useRef<AbortController | null>(null);
 	const uploadAttempt = useRef(0);
 	const errorSummary = useRef<HTMLDivElement>(null);
-	const update = (change: Partial<ImportDraft>) => setDraft((current) => {
-		const next = { ...current, ...change, revision: current.revision + 1 };
+	const update = (change: Partial<ImportDraft>) => {
+		const next = changeDraft(draftRef.current, change);
+		if (next.revision !== draftRef.current.revision) {
+			previewGate.current.invalidate();
+			previewController.current?.abort();
+			setPreviewing(false);
+		}
+		draftRef.current = next;
 		importDraftStore.save(scope, next);
-		return next;
-	});
+		setDraft(next);
+	};
 	const loadFields = useCallback(() => {
 		fieldsController.current?.abort();
 		const controller = new AbortController();
@@ -66,7 +80,7 @@ export function ImportWizard() {
 		loadFields();
 		return () => fieldsController.current?.abort();
 	}, [loadFields]);
-	useEffect(() => () => { uploadAttempt.current++; uploadController.current?.abort(); }, []);
+	useEffect(() => () => { uploadAttempt.current++; uploadController.current?.abort(); previewGate.current.invalidate(); previewController.current?.abort(); }, []);
 	useEffect(() => { if (error) errorSummary.current?.focus(); }, [error]);
 	const resetInspection = (change: Partial<ImportDraft>) => {
 		uploadAttempt.current++;
@@ -74,6 +88,7 @@ export function ImportWizard() {
 		setProcessing(false);
 		setError(null);
 		setRequestId(null);
+		setApiFailure(null);
 		update({ ...change, inspection: null, mapping: [], step: "upload" });
 	};
 	const chooseFile = (file: File | undefined) => {
@@ -95,6 +110,7 @@ export function ImportWizard() {
 		setProcessing(true);
 		setError(null);
 		setRequestId(null);
+		setApiFailure(null);
 		try {
 			const encoded = draft.file_base64 ?? bytesToBase64(new Uint8Array(await draft.file.arrayBuffer()));
 			if (attempt !== uploadAttempt.current || controller.signal.aborted) return;
@@ -106,12 +122,38 @@ export function ImportWizard() {
 			if (attempt !== uploadAttempt.current || controller.signal.aborted) return;
 			setError(isApiError(failure) ? failure.code : "INVALID_IMPORT_RESPONSE");
 			setRequestId(isApiError(failure) ? failure.requestId : null);
+			setApiFailure(isApiError(failure) ? failure : null);
+			if (isApiError(failure) && failure.kind === "forbidden") setGate("denied");
 		} finally {
 			if (attempt === uploadAttempt.current && !controller.signal.aborted) setProcessing(false);
 		}
 	};
+	const cancelPreview = () => { previewGate.current.invalidate(); previewController.current?.abort(); setPreviewing(false); };
+	const runPreview = async () => {
+		if (!fields || previewing || !draftRef.current.inspection) return;
+		const current = draftRef.current;
+		if (mappingIssues(current.mapping, current.inspection?.headers.length ?? 0, fields).length || optionIssues(current.options, owners.map((owner) => owner.id)).length) return;
+		const ticket = previewGate.current.begin(current.revision);
+		const controller = new AbortController();
+		previewController.current?.abort();
+		previewController.current = controller;
+		update({ preview: null, step: current.step === "policy" ? "policy" : "preview" });
+		setPreviewing(true); setError(null); setRequestId(null); setApiFailure(null);
+		try {
+			const preview = await previewImport(current, fields, AbortSignal.any([controller.signal, AbortSignal.timeout(30_000)]));
+			if (!controller.signal.aborted && previewGate.current.accepts(ticket, draftRef.current.revision)) update({ preview });
+		} catch (failure) {
+			if (controller.signal.aborted || !previewGate.current.accepts(ticket, draftRef.current.revision)) return;
+			setError(isApiError(failure) ? failure.code : "INVALID_IMPORT_RESPONSE");
+			setRequestId(isApiError(failure) ? failure.requestId : null);
+			setApiFailure(isApiError(failure) ? failure : null);
+			if (isApiError(failure) && failure.kind === "forbidden") setGate("denied");
+		} finally {
+			if (previewGate.current.accepts(ticket, draftRef.current.revision)) setPreviewing(false);
+		}
+	};
 	const targetLabel = (target: Target): string => FIXED_LABELS[target.target] ? t(FIXED_LABELS[target.target]) : typeof target.label === "string" ? target.label : target.label[locale] ?? target.label.en ?? target.label.ar ?? target.target;
-	const errorText = (code: string): string => t(ERRORS[code] ?? (code.startsWith("ZIP_") || code === "XML_DTD_FORBIDDEN" ? "import.error.archive" : "error.generic"));
+	const errorText = (code: string): string => t(ERRORS[code] ?? (code.startsWith("REQUIRED_TARGET_") ? "import.error.required" : code.startsWith("ZIP_") || code === "XML_DTD_FORBIDDEN" ? "import.error.archive" : "error.generic"));
 	const ownerIds = owners.map((owner) => owner.id);
 	const inspection = draft.inspection;
 	const issues = fields && inspection ? [...mappingIssues(draft.mapping, inspection.headers.length, fields), ...optionIssues(draft.options, ownerIds)] : [];
@@ -126,9 +168,9 @@ export function ImportWizard() {
 	);
 	return (
 		<div className="sy-import" data-testid="import-wizard">
-			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : 2), total: formatCount(5) })} />
+			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : 4), total: formatCount(5) })} />
 			<p className="sy-import__workspace">{t("workspace.label")}: <Bdi>{workspace.tenantId}</Bdi></p>
-			{error ? <div ref={errorSummary} tabIndex={-1} className="sy-import__error" role="alert"><p>{errorText(error)}</p>{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
+			{error ? <div ref={errorSummary} tabIndex={-1} className="sy-import__error" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
 			{draft.step === "upload" ? <Panel title={t("import.step.upload")}>
 				<div className="sy-import__form">
 					<Select label={t("import.object")} value={draft.object} disabled={processing} onChange={(event) => {
@@ -152,7 +194,7 @@ export function ImportWizard() {
 					<div className="sy-import__actions"><Button disabled={!draft.file} loading={processing} onClick={() => void inspect()}>{t("import.inspect")}</Button><Button variant="primary" disabled={!inspection || processing || optionIssues(draft.options, ownerIds).length > 0} onClick={() => update({ step: "mapping" })}>{t("import.nextMapping")}</Button></div>
 					{optionIssues(draft.options, ownerIds).map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
 				</div>
-			</Panel> : inspection ? <Panel title={t("import.step.mapping")}>
+			</Panel> : draft.step === "mapping" && inspection ? <Panel title={t("import.step.mapping")}>
 				<p><Bdi>{inspection.file.name}</Bdi></p>
 				<p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p>
 				<p>{t("import.sampleHint")}</p>
@@ -172,9 +214,10 @@ export function ImportWizard() {
 				</tbody></table></div>
 				{issues.map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
 				{!issues.length ? <p role="status">{t("import.mappingReady")}</p> : null}
-				<p>{t("import.previewUnavailable")}</p>
-				<div className="sy-import__actions"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button disabled>{t("import.step.preview")}</Button></div>
-			</Panel> : null}
+				<div className="sy-import__actions"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button variant="primary" disabled={issues.length > 0} loading={previewing} onClick={() => void runPreview()}>{t("import.runPreview")}</Button></div>
+			</Panel> : <Panel title={t(draft.step === "policy" ? "import.step.policy" : "import.step.preview")}>
+				<PreviewReview draft={draft} busy={previewing} issues={issues} onChange={(options) => update({ options })} onPreview={() => void runPreview()} onBack={() => { cancelPreview(); setError(null); update({ step: "mapping" }); }} onPolicy={() => update({ step: "policy" })} />
+			</Panel>}
 		</div>
 	);
 }

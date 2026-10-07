@@ -14,3 +14,8 @@
 	.sy-import__table tr { display: grid; padding-block: var(--sy-space-8); border-block-end: 1px solid var(--sy-border); }
 	.sy-import__table th, .sy-import__table td { display: block; border: 0; min-inline-size: 0; }
 }
+
+.sy-import__counts { display: flex; flex-wrap: wrap; gap: var(--sy-space-16); }
+.sy-import__counts dd { margin-inline-start: 0; font-weight: 600; }
+.sy-import__review-summary { border: 1px solid var(--sy-border); border-radius: var(--sy-radius-8); padding: var(--sy-space-12); }
+.sy-import__table tr:target { outline: 2px solid var(--sy-border-strong); outline-offset: -2px; }

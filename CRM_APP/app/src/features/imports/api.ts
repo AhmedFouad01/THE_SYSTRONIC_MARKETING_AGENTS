@@ -1,3 +1,4 @@
+import { buildImportBody, parsePreview, type PreviewSnapshot } from "./preview.ts";
 import { apiClient } from "../../api/index.ts";
 import { type ImportDraft, type ImportFields, type ImportObject, parseFields, parseInspection, fileFormat, sheetOption } from "./model.ts";
 
@@ -18,4 +19,10 @@ export function bytesToBase64(bytes: Uint8Array): string {
 	let text = "";
 	for (let offset = 0; offset < bytes.length; offset += 8192) text += String.fromCharCode(...bytes.subarray(offset, offset + 8192));
 	return btoa(text);
+}
+
+export async function previewImport(draft: ImportDraft, fields: ImportFields, signal?: AbortSignal): Promise<PreviewSnapshot> {
+	const body = buildImportBody(draft);
+	const response = await apiClient.post<unknown>("imports/preview", { ...body, preview_rows: 100 }, { signal });
+	return { revision: draft.revision, body, data: parsePreview(response.data, draft, fields) };
 }
