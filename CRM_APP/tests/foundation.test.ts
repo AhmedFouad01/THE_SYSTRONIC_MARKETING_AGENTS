@@ -41,7 +41,7 @@ test("01 runtime is non-owner/non-bypass; all business tables FORCE RLS", async 
 	);
 	assert.deepEqual(role, { rolsuper: false, rolbypassrls: false });
 	const { rows } = await admin.query(
-		"SELECT relname,relrowsecurity,relforcerowsecurity,pg_get_userbyid(relowner) owner FROM pg_class JOIN pg_namespace n ON n.oid=relnamespace WHERE n.nspname='crm' AND relkind='r' AND relname NOT IN ('tenant','principal','role_permission','session')",
+		"SELECT relname,relrowsecurity,relforcerowsecurity,pg_get_userbyid(relowner) owner FROM pg_class JOIN pg_namespace n ON n.oid=relnamespace WHERE n.nspname='crm' AND relkind='r' AND relname NOT IN ('tenant','principal','role_permission','session','platform_flag')",
 	);
 	assert.ok(rows.length >= 14);
 	for (const r of rows) {

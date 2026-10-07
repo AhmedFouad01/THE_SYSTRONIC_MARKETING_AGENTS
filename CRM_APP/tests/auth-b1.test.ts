@@ -249,6 +249,8 @@ test("B1 foreign keys: activeOrganizationId is a uuid FK (set null on org delete
 		await admin.query("DELETE FROM auth.organization WHERE id=$1", [o]);
 		assert.equal((await one("SELECT \"activeOrganizationId\" a FROM auth.session WHERE token='t4'")).a, null, "SET NULL");
 		assert.equal((await one(`SELECT count(*)::int n FROM auth.member WHERE "userId"=$1`, [u])).n, 0, "member cascades from organization");
+		await denied("23514", `DELETE FROM auth."user" WHERE id=$1`, [u]); // 015: users are never hard-deleted
+		await admin.query(`ALTER TABLE auth."user" DISABLE TRIGGER refuse_user_delete`); // rolled back with the transaction
 		await admin.query(`DELETE FROM auth."user" WHERE id=$1`, [u]);
 		assert.equal((await one(`SELECT (SELECT count(*) FROM auth.session WHERE "userId"=$1)+(SELECT count(*) FROM auth."twoFactor" WHERE "userId"=$1) n`, [u])).n, "0");
 	});
