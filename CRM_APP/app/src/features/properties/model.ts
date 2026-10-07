@@ -66,6 +66,12 @@ export type ObjectSchema = {
 	properties: PropertyDef[];
 };
 
+/** Plural message key for a count (CLDR categories via Intl.PluralRules: Arabic has zero/one/two/few/many/other, English one/other). */
+export function countKey(count: number, locale: "en" | "ar"): MessageKey {
+	if (count === 0) return "props.count.zero";
+	return `props.count.${new Intl.PluralRules(locale).select(count)}` as MessageKey;
+}
+
 /** Label for the UI language, falling back to the other language, then to the key. */
 export function pickLabel(label: Lang | undefined, locale: "en" | "ar", fallback = ""): string {
 	const other = locale === "ar" ? "en" : "ar";

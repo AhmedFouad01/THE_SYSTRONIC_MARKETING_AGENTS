@@ -6,6 +6,7 @@ import {
 	buildPatchBody,
 	classifyWriteError,
 	commandFor,
+	countKey,
 	deriveKey,
 	deriveOptionValue,
 	draftOf,
@@ -176,6 +177,16 @@ describe("server errors", () => {
 		expect(r.maxLength).toBe("VALIDATION_INVALID");
 		expect(r.optionRows).toEqual({ 1: "OPTION_VALUE_INVALID" });
 		expect(r.form).toBe("X");
+	});
+});
+
+describe("plural forms", () => {
+	it("Arabic: zero, one, two, few (3-10), many (11-99), other (100)", () => {
+		const k = (n: number) => countKey(n, "ar").replace("props.count.", "");
+		expect([0, 1, 2, 3, 10, 11, 99, 100].map(k)).toEqual(["zero", "one", "two", "few", "few", "many", "many", "other"]);
+	});
+	it("English: one / other", () => {
+		expect([0, 1, 2, 5].map((n) => countKey(n, "en").replace("props.count.", ""))).toEqual(["zero", "one", "other", "other"]);
 	});
 });
 

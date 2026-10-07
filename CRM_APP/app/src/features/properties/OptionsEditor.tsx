@@ -18,7 +18,7 @@ export function OptionsEditor({
 	serverRows: Record<number, string>;
 	listError?: string | undefined;
 }) {
-	const { t } = useI18n();
+	const { t, formatCount } = useI18n();
 	const patch = (id: string, p: Partial<OptionDraft>) => onChange(options.map((o) => (o.id === id ? { ...o, ...p } : o)));
 	const issueText = (o: OptionDraft, i: number): string | undefined => {
 		const c = errors[o.id];
@@ -39,7 +39,7 @@ export function OptionsEditor({
 			<ol className="sy-props__optlist">
 				{options.map((o, i) => (
 					<li key={o.id} className="sy-props__opt" data-testid="option-row">
-						<span className="sy-props__optno">{t("props.opt.rowLabel", { index: i + 1 })}</span>
+						<span className="sy-props__optno">{t("props.opt.rowLabel", { index: formatCount(i + 1) })}</span>
 						<div className="sy-form-row">
 							<Input
 								label={t("props.opt.labelEn")}

@@ -65,6 +65,8 @@ for (const language of ["en", "ar"] as const) {
 			const f = await fixture();
 			await open(page, f, language);
 			await expect(page.getByTestId("property-new")).toBeVisible();
+			// counts use the locale digits and the language's plural form (AR: 3-10 plural noun)
+			await expect(page.getByTestId("property-group").first().locator(".sy-props__count")).toHaveText(language === "ar" ? "٥ خصائص" : "5 properties");
 
 			// text property: both labels, key derived from the English label
 			await page.getByTestId("property-new").click();
@@ -88,6 +90,7 @@ for (const language of ["en", "ar"] as const) {
 			await dialog.getByTestId("option-add").click();
 			const rows = dialog.getByTestId("option-row");
 			await expect(rows).toHaveCount(2);
+			await expect(rows.nth(0).locator(".sy-props__optno")).toHaveText(language === "ar" ? "الخيار ١" : "Option 1");
 			await rows.nth(0).getByTestId("option-en").fill("Basic");
 			await rows.nth(0).getByTestId("option-ar").fill("أساسية");
 			await rows.nth(1).getByTestId("option-en").fill("Pro");
@@ -99,6 +102,15 @@ for (const language of ["en", "ar"] as const) {
 			await expect(dialog).toHaveCount(0);
 			await expect(row(page, "plan")).toBeVisible();
 			await expect(row(page, "plan").getByTestId("property-type")).toHaveText(T[language].single);
+			await expect(page.getByTestId("property-group").first().locator(".sy-props__count")).toHaveText(language === "ar" ? "٧ خصائص" : "7 properties");
+			// action slots are reserved: Edit / up / down line up between a system row, a text row and a select row
+			const x = async (r: string, id: string) => Math.round((await row(page, r).getByTestId(id).boundingBox())?.x ?? -1);
+			for (const id of ["edit", "up", "down"]) {
+				const sel = id === "edit" ? "property-edit" : `prop-%K-${id}`;
+				const at = (r: string) => x(r, sel.replace("%K", r));
+				expect(await at("source")).toBe(await at("lead_tier"));
+				expect(await at("source")).toBe(await at("plan"));
+			}
 
 			// the server stored the options in the chosen order
 			const got = await (await page.request.get("/v1/schema/contact/properties/plan", { headers: auth(f) })).json();

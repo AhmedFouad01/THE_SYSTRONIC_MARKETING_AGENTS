@@ -9,7 +9,7 @@ import {
 	ErrorState,
 	ForbiddenState,
 	IconButton,
-	Input,
+	Icon,
 	type MessageKey,
 	PageHeader,
 	SkeletonRows,
@@ -24,6 +24,7 @@ import { useSchema } from "./hooks.ts";
 import { ManageOptionsDialog } from "./ManageOptionsDialog.tsx";
 import {
 	classifyWriteError,
+	countKey,
 	groupProperties,
 	isSelectType,
 	moveProperty,
@@ -97,6 +98,13 @@ function PropertyRow({
 			</span>
 			{manage && !p.archived ? (
 				<span className="sy-props__actions">
+					{isSelectType(p.type) ? (
+						<Button size="sm" data-testid="property-options" aria-label={`${t("props.action.options")}: ${name}`} onClick={onOptions}>
+							{t("props.action.options")}
+						</Button>
+					) : (
+						<span />
+					)}
 					<MoveButtons
 						idPrefix={`prop-${p.key}`}
 						upLabel={t("props.action.up")}
@@ -110,12 +118,9 @@ function PropertyRow({
 					<Button size="sm" icon="edit" data-testid="property-edit" aria-label={`${t("props.action.edit")}: ${name}`} onClick={onEdit}>
 						{t("props.action.edit")}
 					</Button>
-					{isSelectType(p.type) ? (
-						<Button size="sm" data-testid="property-options" aria-label={`${t("props.action.options")}: ${name}`} onClick={onOptions}>
-							{t("props.action.options")}
-						</Button>
-					) : null}
-					{p.is_system ? null : (
+					{p.is_system ? (
+						<span />
+					) : (
 						<IconButton icon="delete" size="sm" aria-label={`${t("props.action.archive")}: ${name}`} data-testid="property-archive" onClick={onArchive} />
 					)}
 				</span>
@@ -135,7 +140,7 @@ function Body({
 	manage: boolean;
 	reload: () => Promise<void>;
 }) {
-	const { t, locale } = useI18n();
+	const { t, locale, dir, formatCount } = useI18n();
 	const toast = useToast();
 	const command = useCommand();
 	const [query, setQuery] = useState("");
@@ -205,14 +210,20 @@ function Body({
 	return (
 		<div className="sy-props__body">
 			<div className="sy-props__toolbar">
-				<Input
-					label={t("props.search")}
-					type="search"
-					name="q"
-					value={query}
-					data-testid="props-search"
-					onChange={(e) => setQuery(e.target.value)}
-				/>
+				<div className="sy-grid__searchbox sy-props__search">
+					<Icon name="search" size={16} />
+					<input
+						type="search"
+						name="q"
+						dir={query ? "auto" : dir}
+						className="sy-grid__search"
+						aria-label={t("props.search")}
+						placeholder={t("grid.searchPlaceholder")}
+						value={query}
+						data-testid="props-search"
+						onChange={(e) => setQuery(e.target.value)}
+					/>
+				</div>
 				<Check label={t("props.showArchived")} checked={showArchived} onChange={setShowArchived} testId="show-archived" />
 			</div>
 			{notice ? (
@@ -246,7 +257,7 @@ function Body({
 					<section key={group.key} className="sy-props__group" aria-label={pickLabel(group.label, locale, group.key)} data-testid="property-group">
 						<h2 className="sy-props__grouphead">
 							<BidiText>{pickLabel(group.label, locale, group.key)}</BidiText>
-							<span className="sy-props__count">{t("props.count", { count: properties.length })}</span>
+							<span className="sy-props__count">{t(countKey(properties.length, locale), { count: formatCount(properties.length) })}</span>
 						</h2>
 						{properties.length === 0 ? (
 							<p className="sy-props__muted">{t("props.emptyGroup")}</p>

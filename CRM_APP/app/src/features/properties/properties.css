@@ -16,7 +16,7 @@
 	align-items: flex-end;
 	gap: var(--sy-space-12);
 }
-.sy-props__toolbar .sy-field {
+.sy-props__search {
 	flex: 1 1 240px;
 	max-width: 360px;
 }
@@ -78,7 +78,7 @@
 .sy-props__row,
 .sy-props__opt {
 	display: grid;
-	grid-template-columns: minmax(0, 2fr) 120px minmax(0, 1.3fr) 290px;
+	grid-template-columns: minmax(0, 2fr) 120px minmax(0, 1.3fr) 320px;
 	align-items: center;
 	gap: var(--sy-space-10);
 	padding: var(--sy-space-10) var(--sy-space-12);
@@ -117,17 +117,26 @@
 	flex-wrap: wrap;
 	gap: var(--sy-space-4);
 }
-.sy-props__actions,
+.sy-props__actions {
+	/* reserved slots: Options | up | down | Edit | archive, so rows line up whichever buttons they have */
+	display: grid;
+	grid-template-columns: 96px 32px 32px 92px 32px;
+	gap: var(--sy-space-6);
+	justify-content: end;
+	align-items: center;
+}
+.sy-props__actions .sy-btn:not(.sy-btn--icon) {
+	inline-size: 100%;
+	justify-content: center;
+}
 .sy-props__optactions {
-	justify-content: flex-end;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: var(--sy-space-6);
 }
 .sy-props__move {
-	display: inline-flex;
-	gap: var(--sy-space-2);
+	display: contents;
 }
 .sy-props__tag {
 	font-size: var(--sy-type-data-size);
@@ -268,7 +277,9 @@ ol.sy-props__optlist > li.sy-props__opt {
 	.sy-props__badges,
 	.sy-props__actions {
 		grid-column: 1 / -1;
-		justify-content: flex-start;
+	}
+	.sy-props__actions {
+		justify-content: start;
 	}
 }
 
@@ -277,7 +288,7 @@ ol.sy-props__optlist > li.sy-props__opt {
 		grid-template-columns: minmax(0, 1fr);
 		gap: var(--sy-space-6);
 	}
-	.sy-props__toolbar .sy-field {
+	.sy-props__search {
 		max-width: none;
 	}
 	.sy-props__optlist > li.sy-props__opt {
