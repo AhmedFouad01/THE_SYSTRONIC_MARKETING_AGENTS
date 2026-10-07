@@ -10,7 +10,12 @@ export type CatalogEntry = {
 	ar: string;
 };
 
-const e = (status: number, key: string, en: string, ar: string): CatalogEntry => ({
+const e = (
+	status: number,
+	key: string,
+	en: string,
+	ar: string,
+): CatalogEntry => ({
 	status,
 	i18nKey: `auth.error.${key}`,
 	en,
@@ -19,6 +24,18 @@ const e = (status: number, key: string, en: string, ar: string): CatalogEntry =>
 
 /** Stable public error codes of the auth surface and of the DB-invariant mapping. Adding a code is cheap; renaming one is a breaking change. */
 export const AUTH_ERROR_CATALOG = {
+	AUTH_INVITATION_INVALID: e(
+		403,
+		"invitation_invalid",
+		"This invitation is not valid.",
+		"هذه الدعوة غير صالحة.",
+	),
+	AUTH_PASSWORD_POLICY: e(
+		422,
+		"password_policy",
+		"Choose a stronger password.",
+		"اختر كلمة مرور أقوى.",
+	),
 	AUTH_INVALID_CREDENTIALS: e(
 		401,
 		"invalid_credentials",
@@ -127,6 +144,13 @@ const BA_CODES: Record<string, AuthErrorCode> = {
 	// Our own codes, thrown from hooks / the password adapter, pass through.
 	AUTH_TOO_MANY_ATTEMPTS: "AUTH_TOO_MANY_ATTEMPTS",
 	AUTH_BUSY: "AUTH_BUSY",
+	AUTH_INVITATION_INVALID: "AUTH_INVITATION_INVALID",
+	AUTH_PASSWORD_POLICY: "AUTH_PASSWORD_POLICY",
+	INVITATION_NOT_FOUND: "AUTH_INVITATION_INVALID",
+	INVITATION_EXPIRED: "AUTH_INVITATION_INVALID",
+	YOU_ARE_NOT_THE_RECIPIENT_OF_THE_INVITATION: "AUTH_INVITATION_INVALID",
+	YOU_CANNOT_LEAVE_THE_ORGANIZATION_AS_THE_ONLY_OWNER: "LAST_MANAGER_REQUIRED",
+	YOU_CANNOT_LEAVE_THE_ORGANIZATION_WITHOUT_AN_OWNER: "LAST_MANAGER_REQUIRED",
 	AUTH_INVALID_CREDENTIALS: "AUTH_INVALID_CREDENTIALS",
 };
 

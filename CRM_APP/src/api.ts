@@ -275,7 +275,13 @@ export function server(options: { auth?: AuthRuntime | null } = {}) {
 					if (!body || typeof body !== "object" || Array.isArray(body))
 						throw new Fault(422, "VALIDATION_FAILED");
 				}
-				const response = isCharts(url.pathname)
+				const response = (url.pathname === "/v1/invites" || url.pathname.startsWith("/v1/invites/")
+					|| url.pathname === "/v1/users" || url.pathname.startsWith("/v1/users/"))
+					? await (() => {
+						if (!auth) throw new Fault(503, "AUTH_UNAVAILABLE");
+						return auth.directory(ctx, req.method ?? "GET", url.pathname, body, req.headers, url.searchParams);
+					})()
+					: isCharts(url.pathname)
 					? await chartsRequest(
 							ctx,
 							req.method ?? "GET",
