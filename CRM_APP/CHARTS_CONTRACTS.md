@@ -105,3 +105,7 @@ UI requirements carried from NIGHT_RUN §5 item 4 (not done here):
 ## 5. Performance and indexes
 - Task queries use `task_due(tenant_id,status,due_at,owner_id)`; `activity` and the created-based counts use the `*_tenant_created` and `*_tenant_owner_created` indexes. Pipeline, leads and closed-deal aggregates scan the tenant's deals/leads (no covering index).
 - **No index migration was added** (migration 019 is not used). The 1M-row measurement is deferred; if it shows these three scans over budget, the candidates are `deal(tenant_id, stage_id) INCLUDE (owner_id, amount_minor, currency)`, `lead(tenant_id, source, status) INCLUDE (owner_id)` and `stage_transition(tenant_id, deal_id, to_stage, occurred_at)`. The 5 s statement timeout bounds the risk until then.
+
+## 6. User decisions (Ahmed, 2026-10-07)
+- **Week start = Saturday.** The UI round passes/derives Saturday-start week buckets (server currently ISO Monday — adjust `bucket=week` to accept a week-start or shift in SQL).
+- **Timezone = browser.** The UI sends the browser's IANA zone as `tz`. No stored tenant timezone for now (no migration).
