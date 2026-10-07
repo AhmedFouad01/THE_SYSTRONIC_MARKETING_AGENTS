@@ -1,7 +1,7 @@
 # AUTH_PLAN v2 — Roadmap v2 item 2 "Real sign-in" on Better Auth, used headless (plan only, no code)
 
 **Decision record (user, 2026-10-07):** real sign-in is built on **Better Auth** (self-hosted, our Postgres, MIT). Not Cognito, not from scratch. **A1 (2df5e7b, scrypt/pepper helpers) is kept for now, not reverted;** keep/drop is open decision D1 below.
-Status: PROPOSED v2 (supersedes v1 = A1-A12 / D1-D13 of b268076). Author: tsst-dev (SK-007/003/006, all UNVALIDATED). Base revision: `feat/crm-mvp-ui` @ 2df5e7b. Nothing installed, nothing migrated, not deployed, not pushed.
+Status: PROPOSED v2; **D1-D5 DECIDED by Ahmed on 2026-10-07 (section 7); `better-auth` exact pin 1.7.7 APPROVED the same day** (supersedes v1 = A1-A12 / D1-D13 of b268076). Author: tsst-dev (SK-007/003/006, all UNVALIDATED). Base revision: `feat/crm-mvp-ui` @ 2df5e7b. Nothing installed, nothing migrated, not deployed, not pushed.
 Verified read-only on 2026-10-07 (`npm view`): `better-auth` **1.7.7**, dist-tag `latest`, published 2026-09-30, license **MIT**, ESM only, peer deps all optional (`pg ^8.0.0` matches our `pg 8.23.1`). Direct deps: zod, defu, jose, kysely, nanostores, better-call, @noble/hashes, @noble/ciphers, @better-fetch/fetch, plus `@better-auth/{core,utils,telemetry,kysely,drizzle,prisma,mongo,memory}-adapter` pinned to 1.7.7 (more transitive weight than v1's "no dependency" plan; installing needs the user's exact-pin approval, see §9).
 
 Docs relied on (v1.7 line; every page has a `.md` mirror; cite without the suffix):
@@ -159,15 +159,15 @@ Critical path to a sellable sign-in: B0 -> B1 -> B2 -> B3 -> B4 -> B5 -> B6 -> S
 
 DB role `crm_auth` and schema `auth`; our migrations instead of runtime `migrate`; projection by triggers; tenant from `X-Tenant-ID`, not `activeOrganizationId`; rate limit stored in DB; narrow endpoint allow-list; `cookieCache` off; one user in many tenants (schema already allows it); dev Bearer behind `CRM_DEV_BEARER=1`; worker/service sessions stay `kind='service'`, script-minted, never accepted over HTTP in production; breached-password API deferred (needs an outbound call).
 
-## 7. Open decisions for the user (recommendation first)
+## 7. Decisions (D1-D5 DECIDED by Ahmed on 2026-10-07: all recommendations approved)
 
 | # | Decision | Options | Recommendation |
 |---|---|---|---|
-| **D1** | **Keep or drop A1** (scrypt N=2^17 + pepper + policy) | (a) Keep: plug A1 into `password.hash/verify`, pepper from an env keyring. (b) Drop: use Better Auth's default scrypt, no pepper, delete `password.ts` | **(a) Keep**, on condition B0 confirms U2 and that `verify` receives the stored string. Reason: the pepper protects against a DB-only leak, A1 is built and tested, and changing hash format after real users exist forces a rehash migration. `tokens.ts` becomes unused (Better Auth makes its own tokens) and is deleted in B3 |
-| **D2** | **MFA for managers** | (a) Mandatory TOTP for managers (today's `mfa_ok`). (b) Optional, relax `mfa_ok`. (c) Mandatory for everyone | **(a)**. Reason: keeps the existing DB invariant, and Better Auth now provides the TOTP so the cost fell; (b) is a silent security downgrade |
-| **D3** | **Session lifetime** | (a) Better Auth sliding only (`expiresIn` default 7 days, no absolute cap). (b) Sliding idle 8 h plus **absolute 14 days** enforced in `crm.actor()`. (c) Short fixed lifetime | **(b)**. Reason: matches v1 D4; Better Auth appears to lack an absolute cap (U9) and the bridge is the right place to add it |
-| **D4** | **Mail and email proof before SES exists** | (a) Stub mailer; manager copies invite/reset links in the UI (email ownership not proven, the manager vouches); reset-by-email stays off in production until B9 + SES. (b) Block sign-up until SES is live. (c) Another SMTP provider | **(a)**. Reason: the product can be sold now; (b) delays the sale, (c) adds a vendor. Set `requireEmailVerificationOnInvitation` false until SES, true after |
-| **D5** | **Tenant onboarding** | (a) Invite-only plus operator bootstrap script. (b) Self-service "create my workspace" through Better Auth | **(a)**. Reason: v1 D8, smallest attack surface, no abuse/quota/billing questions yet; (b) can be added later without rework |
+| **D1** | **DECIDED (a) Keep A1.** **Keep or drop A1** (scrypt N=2^17 + pepper + policy) | (a) Keep: plug A1 into `password.hash/verify`, pepper from an env keyring. (b) Drop: use Better Auth's default scrypt, no pepper, delete `password.ts` | **(a) Keep**, on condition B0 confirms U2 and that `verify` receives the stored string. Reason: the pepper protects against a DB-only leak, A1 is built and tested, and changing hash format after real users exist forces a rehash migration. `tokens.ts` becomes unused (Better Auth makes its own tokens) and is deleted in B3 |
+| **D2** | **DECIDED (a) Mandatory TOTP for managers.** **MFA for managers** | (a) Mandatory TOTP for managers (today's `mfa_ok`). (b) Optional, relax `mfa_ok`. (c) Mandatory for everyone | **(a)**. Reason: keeps the existing DB invariant, and Better Auth now provides the TOTP so the cost fell; (b) is a silent security downgrade |
+| **D3** | **DECIDED (b) Idle 8 h + absolute 14 days in `crm.actor()`.** **Session lifetime** | (a) Better Auth sliding only (`expiresIn` default 7 days, no absolute cap). (b) Sliding idle 8 h plus **absolute 14 days** enforced in `crm.actor()`. (c) Short fixed lifetime | **(b)**. Reason: matches v1 D4; Better Auth appears to lack an absolute cap (U9) and the bridge is the right place to add it |
+| **D4** | **DECIDED (a) Stub mailer + copy-link; reset-by-email off until SES.** **Mail and email proof before SES exists** | (a) Stub mailer; manager copies invite/reset links in the UI (email ownership not proven, the manager vouches); reset-by-email stays off in production until B9 + SES. (b) Block sign-up until SES is live. (c) Another SMTP provider | **(a)**. Reason: the product can be sold now; (b) delays the sale, (c) adds a vendor. Set `requireEmailVerificationOnInvitation` false until SES, true after |
+| **D5** | **DECIDED (a) Invite-only + operator bootstrap script.** **Tenant onboarding** | (a) Invite-only plus operator bootstrap script. (b) Self-service "create my workspace" through Better Auth | **(a)**. Reason: v1 D8, smallest attack surface, no abuse/quota/billing questions yet; (b) can be added later without rework |
 
 ## 8. Security-review gate (before any commit)
 
@@ -175,7 +175,7 @@ For S1 and S2: bind repo and revision; trace each §4 row to code and a passing 
 
 ## 9. Risks and open items
 
-- Dependency approval: Better Auth is not on the NIGHT_RUN §6 approved list; B0 needs the user's explicit exact-pin approval (1.7.7), then lint/typecheck/build and the affected tests after install.
+- Dependency approval: **APPROVED by Ahmed on 2026-10-07: `better-auth` exact pin 1.7.7** (install with `--save-exact`; after install run lint/typecheck/build and the affected tests). Approved-dependency list for this plan: `better-auth@1.7.7` (new), `@aws-sdk/client-sesv2` (NIGHT_RUN §6, B9). The NIGHT_RUN.md §6 list lives in the Drive repo and is updated by the Lead, not here. B0 approved to start the same day (spike on scratch branch `spike/better-auth-b0` only).
 - `crm.actor()`/`mfa_ok()` are replaced in 016: highest regression risk; the full `test:db` suite and the B2 shaped-data tests are the guard.
 - Most Better Auth behaviour above comes from the docs, not from source or runs. Every item U1-U11 is unverified until B0.
 - A plaintext session token in `auth.session` (T18) is a real downgrade from v1's hashed storage unless U1 shows otherwise.
