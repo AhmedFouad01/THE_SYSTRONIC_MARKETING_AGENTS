@@ -60,11 +60,11 @@ test("B1 crm_auth role attributes: login, no superuser/createdb/createrole/bypas
 
 test("B1 table shapes: all nine Better Auth tables exist in schema auth, nothing in public, ids and FKs are uuid", async () => {
 	const t = await admin.query("SELECT table_name FROM information_schema.tables WHERE table_schema='auth' ORDER BY 1");
-	assert.deepEqual(t.rows.map((x) => x.table_name).sort(), [...TABLES].sort());
+	assert.deepEqual(t.rows.map((x) => x.table_name).sort(), [...TABLES, "login_throttle", "auth_event"].sort()); // + 017
 	const pub = await one("SELECT count(*)::int n FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('user','session','account','verification','organization','member','invitation','twoFactor','rateLimit')");
 	assert.equal(pub.n, 0);
 	const cols = await admin.query(
-		`SELECT table_name||'.'||column_name c, data_type FROM information_schema.columns WHERE table_schema='auth'
+		`SELECT table_name||'.'||column_name c, data_type FROM information_schema.columns WHERE table_schema='auth' AND table_name<>'auth_event' -- 017 audit table keys on a bigint identity
 		 AND (column_name='id' OR column_name IN ('userId','organizationId','inviterId','activeOrganizationId'))`,
 	);
 	assert.ok(cols.rows.length >= 15);
@@ -93,7 +93,7 @@ test("B1 no PUBLIC grants on schema auth, its tables or functions; no definer fu
 		`SELECT c.relname,(SELECT count(*)::int FROM aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a WHERE a.grantee=0) pub
 		 FROM pg_class c WHERE c.relnamespace='auth'::regnamespace AND c.relkind='r'`,
 	);
-	assert.equal(t.rows.length, TABLES.length);
+	assert.equal(t.rows.length, TABLES.length + 2); // + 017 tables
 	for (const r of t.rows) assert.equal(r.pub, 0, `PUBLIC privilege on auth.${r.relname}`);
 	const f = await one(
 		`SELECT count(*)::int n FROM pg_proc p WHERE p.pronamespace='auth'::regnamespace

@@ -460,9 +460,11 @@ test("B2 catalog: every definer in auth and crm has a fixed search_path and no P
 	const authFns = await admin.query(`SELECT p.oid::regprocedure::text fn, p.prosecdef, has_function_privilege('crm_runtime',p.oid,'EXECUTE') rt, has_function_privilege('crm_auth',p.oid,'EXECUTE') ba FROM pg_proc p WHERE p.pronamespace='auth'::regnamespace`);
 	assert.deepEqual(
 		authFns.rows.map((x) => x.fn).sort(),
-		["auth.assert_tenant_has_manager(uuid)", "auth.live_session_user()", "auth.project_member()", "auth.project_organization()", "auth.project_user()", "auth.refuse_user_delete()"],
+		["auth.assert_tenant_has_manager(uuid)", "auth.auth_event_append_only()", "auth.live_session_user()", "auth.login_failed(text)", "auth.login_gate(text)", "auth.login_succeeded(text)", "auth.project_member()", "auth.project_organization()", "auth.project_user()", "auth.refuse_user_delete()"],
 	);
-	for (const f of authFns.rows) assert.deepEqual([f.prosecdef, f.rt, f.ba], [true, false, false], f.fn);
+	// 017: the three login throttle functions are the only auth functions crm_auth may execute.
+	const baOk = new Set(["auth.login_gate(text)", "auth.login_failed(text)", "auth.login_succeeded(text)"]);
+	for (const f of authFns.rows) assert.deepEqual([f.prosecdef, f.rt, f.ba], [true, false, baOk.has(f.fn)], f.fn);
 	for (const sig of ["crm.actor()", "crm.mfa_ok(uuid,uuid)"]) {
 		const r = await one(`SELECT p.prosecdef, has_function_privilege('crm_auth',p.oid,'EXECUTE') ba FROM pg_proc p WHERE p.oid=$1::regprocedure`, [sig]);
 		assert.deepEqual([r.prosecdef, r.ba], [true, false], sig);

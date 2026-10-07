@@ -67,7 +67,7 @@ export async function transaction<T>(
 			)
 		)
 			throw new Fault(422, "PROPERTIES_TOO_LARGE");
-		throw faultFromDbError(error) ?? error;
+		throw error; // raw DB errors keep their SQLSTATE for callers; the HTTP layer maps 23514 with faultFromDbError (src/api.ts)
 	} finally {
 		db.release();
 	}

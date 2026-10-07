@@ -1,4 +1,8 @@
-import { createServer, type IncomingMessage } from "node:http";
+import {
+	createServer,
+	type IncomingMessage,
+	type ServerResponse,
+} from "node:http";
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -8,7 +12,15 @@ import {
 	Fault,
 	pool,
 	assertIdentifierConfiguration,
+	faultFromDbError,
 } from "./db.js";
+import {
+	type AuthRuntime,
+	assertAuthEnvironment,
+	closeSharedAuth,
+	devBearerEnabled,
+	sharedAuth,
+} from "./auth/ba.js";
 import { crmRequest, type Body } from "./crm.js";
 import { chartsRequest, isCharts } from "./charts.js";
 import { isSchema, schemaRequest } from "./schema.js";
@@ -44,7 +56,11 @@ async function readClient(rel: (root: string) => string | null) {
 	return null;
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-function context(req: IncomingMessage): Context {
+async function context(
+	req: IncomingMessage,
+	res: ServerResponse,
+	auth: AuthRuntime | null,
+): Promise<Context> {
 	const tenant = req.headers["x-tenant-id"],
 		grant = req.headers["x-grant-id"];
 	if (
@@ -53,11 +69,22 @@ function context(req: IncomingMessage): Context {
 		(grant !== undefined && (typeof grant !== "string" || !uuid.test(grant)))
 	)
 		throw new Fault(422, "VALIDATION_FAILED");
-	return {
-		tenant,
-		token: req.headers.authorization?.replace(/^Bearer /, "") ?? "",
-		grant,
-	};
+	let token = "";
+	const bearer = req.headers.authorization;
+	// Dev Bearer (seeded crm.session tokens): only while CRM_DEV_BEARER allows it, never in production (T8).
+	if (typeof bearer === "string" && devBearerEnabled())
+		token = bearer.replace(/^Bearer /, "");
+	else if (auth) {
+		token = await auth.session(req, res);
+		// T3: an ambient cookie must not authorise a cross-origin state change.
+		if (
+			token &&
+			!["GET", "HEAD", "OPTIONS"].includes(req.method ?? "GET") &&
+			!auth.originAllowed(req.headers.origin)
+		)
+			throw new Fault(403, "AUTH_ORIGIN_NOT_ALLOWED");
+	}
+	return { tenant, token, grant };
 }
 async function command(req: IncomingMessage): Promise<Command> {
 	let body = "";
@@ -91,13 +118,24 @@ async function command(req: IncomingMessage): Promise<Command> {
 		throw new Fault(422, "VALIDATION_FAILED");
 	return c;
 }
-export function server() {
+export function server(options: { auth?: AuthRuntime | null } = {}) {
 	return createServer(async (req, res) => {
 		const requestId = randomUUID();
+		const auth = options.auth === undefined ? sharedAuth() : options.auth;
 		res.setHeader("X-Request-ID", requestId);
 		res.setHeader("Cache-Control", "no-store");
 		res.setHeader("X-Content-Type-Options", "nosniff");
+		res.setHeader("X-Frame-Options", "DENY");
+		res.setHeader("Content-Security-Policy", "frame-ancestors 'none'");
+		res.setHeader("Referrer-Policy", "no-referrer");
 		try {
+			// Better Auth is mounted first and answers an allow-list only (AUTH_PLAN 2.3); the rest of /v1/auth is a 404.
+			const authPath = (req.url ?? "/").split(/[?#]/, 1)[0];
+			if (authPath === "/v1/auth" || authPath.startsWith("/v1/auth/")) {
+				if (!auth) throw new Fault(503, "AUTH_UNAVAILABLE");
+				await auth.handle(req, res, requestId);
+				return;
+			}
 			if (
 				req.method === "GET" &&
 				["/", "/foundation", "/reporting"].includes(req.url ?? "")
@@ -186,7 +224,7 @@ export function server() {
 				res.end(JSON.stringify({ data, request_id: requestId }));
 				return;
 			}
-			const ctx = context(req);
+			const ctx = await context(req, res, auth);
 			const match = /^\/v1\/deals\/([0-9a-f-]+)\/transitions$/i.exec(
 				url.pathname,
 			);
@@ -297,7 +335,10 @@ export function server() {
 				JSON.stringify({ data: result, ...extra, request_id: requestId }),
 			);
 		} catch (e) {
-			const error = e instanceof Fault ? e : new Fault(500, "INTERNAL_ERROR");
+			const error =
+				e instanceof Fault
+					? e
+					: (faultFromDbError(e) ?? new Fault(500, "INTERNAL_ERROR"));
 			res.statusCode = error.status;
 			res.setHeader("Content-Type", "application/json");
 			res.end(
@@ -314,6 +355,13 @@ export function server() {
 }
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
 	try {
+		assertAuthEnvironment();
+		sharedAuth();
+	} catch (e) {
+		console.error((e as { code?: string }).code ?? "AUTH_CONFIG", (e as Error).message);
+		process.exit(1);
+	}
+	try {
 		await assertIdentifierConfiguration();
 	} catch {
 		console.error("PROTECTED_KEY_UNAVAILABLE");
@@ -323,6 +371,7 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
 	const app = server().listen(Number(process.env.PORT ?? 4317), "127.0.0.1");
 	process.on("SIGTERM", () =>
 		app.close(() => {
+			void closeSharedAuth();
 			void pool.end();
 		}),
 	);

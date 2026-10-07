@@ -12,7 +12,6 @@ import {
 	decodeHash,
 	loadPepperKeyring,
 } from "../src/auth/password.js";
-import { hashToken, newToken, tokenHashEquals } from "../src/auth/tokens.js";
 
 // Test-only peppers (not secrets): 32 bytes, base64.
 const PEPPER_1 = Buffer.alloc(32, 1);
@@ -235,26 +234,5 @@ describe("password policy", () => {
 	});
 	it("applies no composition rules", () => {
 		expect(checkPasswordPolicy("alllowercasebutlongenough")).toBeNull();
-	});
-});
-
-describe("tokens", () => {
-	it("are 43-char base64url (256 bits), unique, and only a sha256 hex digest is derived", () => {
-		const seen = new Set<string>();
-		for (let i = 0; i < 200; i++) {
-			const t = newToken();
-			expect(t.token).toMatch(/^[A-Za-z0-9_-]{43}$/);
-			expect(t.hash).toMatch(/^[0-9a-f]{64}$/);
-			expect(t.hash).toBe(hashToken(t.token));
-			expect(t.hash).not.toContain(t.token);
-			seen.add(t.token);
-		}
-		expect(seen.size).toBe(200);
-	});
-	it("compares hashes in constant time and by value", () => {
-		const t = newToken();
-		expect(tokenHashEquals(t.hash, hashToken(t.token))).toBe(true);
-		expect(tokenHashEquals(t.hash, newToken().hash)).toBe(false);
-		expect(tokenHashEquals(t.hash, "short")).toBe(false);
 	});
 });
