@@ -1,4 +1,4 @@
-export { DataGrid, type DataGridProps, type GridColumn, type GridSample } from "./DataGrid.tsx";
+export { DataGrid, type DataGridProps, type GridColumn, type GridExtension, type GridSample } from "./DataGrid.tsx";
 export * from "./gridModel.ts";
 export * from "./savedViews.ts";
 export * from "./serverQuery.ts";

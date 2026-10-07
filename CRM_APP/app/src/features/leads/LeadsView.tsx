@@ -35,6 +35,7 @@ import {
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import { fetchAssignees, patchLead } from "./api.ts";
+import { rowProps, useCustomColumns } from "../properties/CustomColumns.tsx";
 import { countRecords, fetchExpanded, listFetcher } from "../listApi.ts";
 import { carryExpand } from "../expand.ts";
 import { toRoute } from "../../router.ts";
@@ -157,13 +158,16 @@ export function LeadsView() {
 		[ownerByName],
 	);
 	const viewNodes = useMemo(() => builtInViewNodes(view, actor), [view, actor]);
+	const cc = useCustomColumns<LeadRow>({ object: "lead", gridId: "leads", baseSpec: spec, getProps: rowProps });
+	const listExtra = useMemo(() => [...viewNodes, ...cc.extra], [viewNodes, cc.extra]);
 	const leads = useServerList<Lead>({
 		fetchPage: fetchLeads,
 		getId: getLeadIdRaw,
-		spec,
+		spec: cc.spec,
+		props: cc.props,
 		initial: INITIAL_VIEW,
 		initialPageSize: INITIAL_VIEW.pageSize,
-		extra: viewNodes,
+		extra: listExtra,
 		expand: "contact,owner",
 		resetKey: tenantId,
 	});
@@ -553,6 +557,8 @@ export function LeadsView() {
 		toast.notify(t("leads.new.created"), "success");
 	};
 
+	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
+
 	return (
 		<div className="sy-leads" data-testid="leads-view">
 			<PageHeader
@@ -622,7 +628,8 @@ export function LeadsView() {
 							gridId="leads"
 							label={t("leads.grid")}
 							rows={rows}
-							columns={columns}
+							columns={gridColumns}
+							extension={cc.extension}
 							getRowId={getLeadId}
 							status={leads.status}
 							onRetry={leads.reload}

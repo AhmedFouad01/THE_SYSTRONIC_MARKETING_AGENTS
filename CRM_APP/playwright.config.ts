@@ -29,6 +29,7 @@ export default defineConfig({
 		"mvp-bidi-user-content.spec.ts",
 		"mvp-properties.spec.ts",
 		"mvp-record-properties.spec.ts",
+		"mvp-custom-columns.spec.ts",
 	],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4317", browserName: "chromium" },

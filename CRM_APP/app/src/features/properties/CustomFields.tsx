@@ -34,6 +34,7 @@ import {
 	draftFromValue,
 	flatten,
 	type Issue,
+	type ReadCtx,
 	type ReadValue,
 	readValue,
 	serverIssueSuffix,
@@ -191,7 +192,7 @@ export function useCustomDraft(cf: CustomFields, mode: "edit" | "create"): Custo
 
 // ---- read ----------------------------------------------------------------------------------------------------------
 
-function ReadValueView({ v }: { v: ReadValue }) {
+export function ReadValueView({ v }: { v: ReadValue }) {
 	const { t } = useI18n();
 	switch (v.kind) {
 		case "empty":
@@ -235,18 +236,21 @@ function ReadValueView({ v }: { v: ReadValue }) {
 	}
 }
 
-function useReadCtx(users: ReadonlyMap<string, string>) {
+export function useReadCtx(users: ReadonlyMap<string, string>): ReadCtx {
 	const { t, locale, formatNumber, formatDate, formatDateTime } = useI18n();
-	return {
-		locale,
-		number: (n: number) => formatNumber(n, { maximumFractionDigits: 6 }),
-		moneyMinor: (minor: number, currency: string) => formatMoneyMinor(minor, locale, currency),
-		date: (d: Date) => formatDate(d),
-		dateTime: (iso: string) => formatDateTime(iso),
-		yes: t("cf.yes"),
-		no: t("cf.no"),
-		userName: (id: string) => users.get(id) ?? t("common.unknownUser"),
-	};
+	return useMemo(
+		(): ReadCtx => ({
+			locale,
+			number: (n: number) => formatNumber(n, { maximumFractionDigits: 6 }),
+			moneyMinor: (minor: number, currency: string) => formatMoneyMinor(minor, locale, currency),
+			date: (d: Date) => formatDate(d),
+			dateTime: (iso: string) => formatDateTime(iso),
+			yes: t("cf.yes"),
+			no: t("cf.no"),
+			userName: (id: string) => users.get(id) ?? t("common.unknownUser"),
+		}),
+		[t, locale, formatNumber, formatDate, formatDateTime, users],
+	);
 }
 
 function Heading({ children, id }: { children: ReactNode; id?: string }) {

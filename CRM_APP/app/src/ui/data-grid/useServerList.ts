@@ -23,6 +23,8 @@ export type ServerPage<T> = {
 export type ServerPageRequest = {
 	params: ListParams;
 	expand: string | undefined;
+	/** `props=` (custom field keys to project), undefined = none. */
+	props?: string | undefined;
 	limit: number;
 	cursor: string | null;
 	includeTotal: boolean;
@@ -139,6 +141,8 @@ export type ServerListOptions<T> = {
 	/** Legacy `?due=` task window. */
 	due?: string;
 	expand?: string;
+	/** Custom field keys the list returns values for (`props=a,b`); a change reloads the first page. */
+	props?: string;
 	/** Change to reset and reload (tenant). */
 	resetKey?: string;
 	/** Hold the first request until the screen can express its query (e.g. stage ids resolved). Default true. */
@@ -181,9 +185,11 @@ export function useServerList<T>(opts: ServerListOptions<T>): ServerList<T> {
 
 	const params = buildListParams(opts.spec, view, opts.extra ?? [], opts.due);
 	paramsRef.current = params;
-	const key = `${opts.resetKey ?? ""}|${paramsKey(params, opts.expand)}`;
+	const key = `${opts.resetKey ?? ""}|${paramsKey(params, opts.expand)}|${opts.props ?? ""}`;
 	const expandRef = useRef(opts.expand);
 	expandRef.current = opts.expand;
+	const propsRef = useRef(opts.props);
+	propsRef.current = opts.props;
 
 	const run = useCallback((cursor: string | null, more: boolean) => {
 		abortRef.current?.abort();
@@ -196,6 +202,7 @@ export function useServerList<T>(opts: ServerListOptions<T>): ServerList<T> {
 			.current({
 				params: paramsRef.current,
 				expand: expandRef.current,
+				props: propsRef.current,
 				limit: pageLimit(pageSizeRef.current),
 				cursor,
 				includeTotal: !more,

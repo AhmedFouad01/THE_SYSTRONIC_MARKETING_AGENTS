@@ -62,7 +62,7 @@ test("grid + record panel en 1440: active-only sort icon, numbered pager, row cl
 	await expect(page.getByTestId("sort-created").getByTestId("sort-mark")).toHaveCount(1);
 	await page.getByTestId("sort-lead").click();
 	await expect(page.getByTestId("sort-mark")).toHaveCount(1);
-	await expect(page.getByTestId("sort-lead").getByTestId("sort-mark")).toHaveText("▲");
+	await expect(page.getByTestId("sort-lead").getByTestId("sort-mark")).toHaveAttribute("data-dir", "asc");
 	await expect(page.getByTestId("sort-created").getByTestId("sort-mark")).toHaveCount(0);
 
 	// UX-08: one footer row, range at the start, numbered pager; the current page is aria-current.

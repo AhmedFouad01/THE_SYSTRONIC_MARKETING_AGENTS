@@ -31,6 +31,7 @@ import {
 } from "../../ui/index.ts";
 import { useCrumbReturn, useRecordCrumb } from "../../ui/shell/index.ts";
 import { fetchAssignees } from "./api.ts";
+import { rowProps, useCustomColumns } from "../properties/CustomColumns.tsx";
 import { fetchExpanded, listFetcher } from "../listApi.ts";
 import { carryExpand } from "../expand.ts";
 import { toRoute } from "../../router.ts";
@@ -137,13 +138,16 @@ export function ContactsView() {
 		[ownerByName],
 	);
 	const viewNodes = useMemo(() => builtInViewNodes(view, actor), [view, actor]);
+	const cc = useCustomColumns<ContactRow>({ object: "contact", gridId: "contacts", baseSpec: spec, getProps: rowProps });
+	const listExtra = useMemo(() => [...viewNodes, ...cc.extra], [viewNodes, cc.extra]);
 	const contacts = useServerList<Contact>({
 		fetchPage: fetchContacts,
 		getId: getRawId,
-		spec,
+		spec: cc.spec,
+		props: cc.props,
 		initial: INITIAL_VIEW,
 		initialPageSize: INITIAL_VIEW.pageSize,
-		extra: viewNodes,
+		extra: listExtra,
 		expand: "owner",
 		resetKey: tenantId,
 	});
@@ -357,6 +361,8 @@ export function ContactsView() {
 		toast.notify(t("contacts.new.created"), "success");
 	};
 
+	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
+
 	return (
 		<div className="sy-contacts" data-testid="contacts-view">
 			<PageHeader
@@ -392,7 +398,8 @@ export function ContactsView() {
 							gridId="contacts"
 							label={t("contacts.grid")}
 							rows={rows}
-							columns={columns}
+							columns={gridColumns}
+							extension={cc.extension}
 							getRowId={getRowId}
 							status={contacts.status}
 							onRetry={contacts.reload}

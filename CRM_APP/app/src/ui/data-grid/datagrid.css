@@ -288,6 +288,13 @@
 	white-space: nowrap;
 }
 
+/* Cell direction follows the UI direction, like the header (M1): base.css gives td `unicode-bidi: plaintext`, which resolves a cell
+   whose content is atomic (chip, time, number isolate: no strong character) to LTR and pushed it to the physical left in AR.
+   User text is isolated by BidiText (own dir=auto), so mixed AR/EN values still resolve per value. */
+.sy-grid__table td:not(.sy-ltr) {
+	unicode-bidi: normal;
+}
+
 .sy-grid__table td {
 	padding: var(--sy-space-6) var(--sy-space-10);
 	border-block-end: 1px solid var(--sy-divider);
@@ -379,16 +386,25 @@
 }
 
 /* Arrow only on the active sort column; other sortable headers reveal a ghost arrow on hover (UX-06). */
+.sy-grid__sortmark,
+.sy-grid__sortghost {
+	display: inline-flex;
+	align-items: center;
+	line-height: 0;
+}
+
 .sy-grid__sortmark {
-	font-size: 10px;
 	color: var(--sy-text);
 }
 
-.sy-grid__sort:not([data-active]):hover::after,
-.sy-grid__sort:not([data-active]):focus-visible::after {
-	content: "↕";
-	font-size: 10px;
+.sy-grid__sortghost {
 	color: var(--sy-icon-muted);
+	opacity: 0;
+}
+
+.sy-grid__sort:hover .sy-grid__sortghost,
+.sy-grid__sort:focus-visible .sy-grid__sortghost {
+	opacity: 1;
 }
 
 .sy-grid__sr {

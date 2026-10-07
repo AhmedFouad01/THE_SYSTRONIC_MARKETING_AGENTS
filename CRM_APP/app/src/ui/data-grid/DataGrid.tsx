@@ -67,6 +67,20 @@ export type GridColumn<T> = ModelColumn<T> & {
 	titleText?: (row: T) => string | undefined;
 };
 
+/**
+ * Optional pieces a feature hosts in the grid without owning its state (P1b B4: custom-field columns and typed filters).
+ * The grid renders them: picker in the toolbar (desktop) and `columnList` in the phone sheet; `filterPanel` in the filters
+ * panel/sheet; `chips` (`<li>`s) beside the column-filter chips. `filterCount` adds to the Filters badge; `onClear` runs with Clear filters.
+ */
+export type GridExtension = {
+	columnPicker: ReactNode;
+	columnList: ReactNode;
+	filterPanel: ReactNode;
+	filterCount: number;
+	chips: ReactNode;
+	onClear: () => void;
+};
+
 export type GridSample = {
 	loaded: number;
 	/** next_cursor remains: loaded rows are a sample. */
@@ -109,6 +123,7 @@ export type DataGridProps<T> = {
 	/** Primary next step in the zero-data empty state (UX-23). Not shown for filtered-empty. */
 	emptyAction?: ReactNode;
 	toolbarExtra?: ReactNode;
+	extension?: GridExtension;
 	/**
 	 * Keep this row visible: switch to the grid page that holds it and scroll it into view (`block: "nearest"`, never
 	 * horizontal-first). Used by the preview slide-over for Prev/Next and deep links. Off when undefined/null.
@@ -312,7 +327,14 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	};
 	const optionLabel = (c: GridColumn<T>, v: string) =>
 		c.filter?.options.find((o) => o.value === v)?.label ?? v;
-	const filtersActive = state.filters.length > 0 || state.query.trim() !== "";
+	const ext = props.extension;
+	const extCount = ext?.filterCount ?? 0;
+	const hasFilterUi = filterCols.length > 0 || ext !== undefined;
+	const filtersActive = state.filters.length > 0 || state.query.trim() !== "" || extCount > 0;
+	const clearAll = () => {
+		dispatch({ type: "clearFilters" });
+		ext?.onClear();
+	};
 	// UX-25: at phone width the toolbar is one row (search + Filters); filters, saved views, columns and
 	// density live in a sheet so the first card is not pushed down by three toolbar rows.
 	const compact = useMediaQuery("(max-width: 768px)");
@@ -352,7 +374,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					action={
 						<Button
 							size="sm"
-							onClick={() => dispatch({ type: "clearFilters" })}
+							onClick={clearAll}
 						>
 							{t("common.clearFilters")}
 						</Button>
@@ -418,10 +440,15 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 														aria-hidden="true"
 														className="sy-grid__sortmark"
 														data-testid="sort-mark"
+														data-dir={dir === "ascending" ? "asc" : "desc"}
 													>
-														{dir === "ascending" ? "▲" : "▼"}
+														<Icon name={dir === "ascending" ? "chevronUp" : "chevronDown"} size={14} />
 													</span>
-												) : null}
+												) : (
+													<span aria-hidden="true" className="sy-grid__sortghost">
+														<Icon name="chevronDown" size={14} />
+													</span>
+												)}
 											</button>
 										) : c.headerHidden ? (
 											<span className="sy-grid__sr">{c.header}</span>
@@ -589,11 +616,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					))}
 				</Select>
 			))}
-			<Button
-				size="sm"
-				onClick={() => dispatch({ type: "clearFilters" })}
-				disabled={!filtersActive}
-			>
+			{ext?.filterPanel}
+			<Button size="sm" onClick={clearAll} disabled={!filtersActive}>
 				{t("common.clearFilters")}
 			</Button>
 		</div>
@@ -617,7 +641,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		>
 			<div className="sy-grid__sheet">
 				{viewsEl}
-				{filterCols.length > 0 ? filtersPanel : null}
+				{hasFilterUi ? filtersPanel : null}
 				<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
 				{columns.map((c) => (
 					<label key={c.id} className="sy-grid__colopt">
@@ -630,6 +654,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						<span>{c.header}</span>
 					</label>
 				))}
+				{ext?.columnList}
 				<Button
 					size="sm"
 					aria-pressed={state.density === "compact"}
@@ -677,13 +702,13 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							onClick={() => setFiltersOpen((v) => !v)}
 							data-testid="grid-filters"
 						>
-							{state.filters.length > 0 ? formatNumber(state.filters.length) : null}
+							{state.filters.length + extCount > 0 ? formatNumber(state.filters.length + extCount) : null}
 						</Button>
 					) : (
 						<>
 							{viewsEl}
 							<div className="sy-grid__tools">
-								{filterCols.length > 0 ? (
+								{hasFilterUi ? (
 									<Button
 										size="sm"
 										icon="filter"
@@ -691,9 +716,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										onClick={() => setFiltersOpen((v) => !v)}
 										data-testid="grid-filters"
 									>
-										{state.filters.length > 0
+										{state.filters.length + extCount > 0
 											? tx("grid.filtersCount", {
-													count: formatNumber(state.filters.length),
+													count: formatNumber(state.filters.length + extCount),
 												})
 											: t("common.filters")}
 									</Button>
@@ -722,6 +747,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										</label>
 									))}
 								</Popover>
+								{ext?.columnPicker}
 								<Button
 									size="sm"
 									aria-pressed={state.density === "compact"}
@@ -772,8 +798,8 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				) : null}
 			</div>
 
-			{!compact && filtersOpen && filterCols.length > 0 ? filtersPanel : null}
-			{state.filters.length > 0 ? (
+			{!compact && filtersOpen && hasFilterUi ? filtersPanel : null}
+			{state.filters.length > 0 || extCount > 0 ? (
 				<ul className="sy-grid__chips" aria-label={t("common.filters")}>
 					{state.filters.flatMap((f) => {
 						const c = columns.find((x) => x.id === f.key);
@@ -800,6 +826,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							</li>,
 						];
 					})}
+					{ext?.chips}
 				</ul>
 			) : null}
 

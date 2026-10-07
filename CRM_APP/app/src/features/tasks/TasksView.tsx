@@ -42,6 +42,7 @@ import {
 	fetchContactRefsPage,
 	patchTask,
 } from "./api.ts";
+import { rowProps, useCustomColumns } from "../properties/CustomColumns.tsx";
 import { fetchExpanded, listFetcher } from "../listApi.ts";
 import { useDealTitles } from "./useDealTitles.ts";
 import { DueLabel } from "./DueLabel.tsx";
@@ -172,13 +173,16 @@ export function TasksView() {
 		}),
 		[ownerByName],
 	);
+	const cc = useCustomColumns<TaskRow>({ object: "task", gridId: "tasks", baseSpec: spec, getProps: rowProps });
+	const listExtra = useMemo(() => [...tabQ.nodes, ...cc.extra], [tabQ.nodes, cc.extra]);
 	const tasks = useServerList<Task>({
 		fetchPage: fetchTasks,
 		getId: getTaskId,
-		spec,
+		spec: cc.spec,
+		props: cc.props,
 		initial: INITIAL_VIEW,
 		initialPageSize: INITIAL_VIEW.pageSize,
-		extra: tabQ.nodes,
+		extra: listExtra,
 		...(tabQ.due ? { due: tabQ.due } : {}),
 		expand: "contact,owner",
 		resetKey: tenantId,
@@ -546,6 +550,8 @@ export function TasksView() {
 		toast.notify(t("tasks.new.created"), "success");
 	};
 
+	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
+
 	return (
 		<div className="sy-tasks" data-testid="tasks-view">
 			<PageHeader
@@ -593,7 +599,8 @@ export function TasksView() {
 							gridId="tasks"
 							label={t("tasks.grid")}
 							rows={rows}
-							columns={columns}
+							columns={gridColumns}
+							extension={cc.extension}
 							getRowId={getRowId}
 							status={tasks.status}
 							onRetry={tasks.reload}

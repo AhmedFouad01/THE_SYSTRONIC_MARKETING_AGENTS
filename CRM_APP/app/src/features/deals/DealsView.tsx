@@ -41,6 +41,7 @@ import {
 	patchDeal,
 	transitionDeal,
 } from "./api.ts";
+import { rowProps, useCustomColumns } from "../properties/CustomColumns.tsx";
 import { fetchExpanded, listFetcher } from "../listApi.ts";
 import { BulkChoiceDialog } from "../BulkChoiceDialog.tsx";
 import { bulkMessage, GENERIC_BULK_KEYS, runBulkOps } from "../bulk.ts";
@@ -258,12 +259,15 @@ export function DealsView() {
 		() => builtInViewNodes(view, actor, pipelines.items),
 		[view, actor, pipelines.items],
 	);
+	const cc = useCustomColumns<DealRow>({ object: "deal", gridId: "deals", baseSpec: spec, getProps: rowProps });
+	const listExtra = useMemo(() => [...viewNodes, ...cc.extra], [viewNodes, cc.extra]);
 	const deals = useServerList<Deal>({
 		fetchPage: fetchDeals,
 		getId: getDealIdRaw,
-		spec,
+		spec: cc.spec,
+		props: cc.props,
 		initial: DEALS_VIEW,
-		extra: viewNodes,
+		extra: listExtra,
 		expand: "contact,owner",
 		resetKey: tenantId,
 		// "Open deals" and stage names need the pipelines directory first.
@@ -543,6 +547,8 @@ export function DealsView() {
 			? (allRows.find((r) => r.id === ctx.dealId)?.title ?? null)
 			: null;
 
+	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
+
 	return (
 		<div className="sy-deals" data-testid="deals-view">
 			{page && active ? (
@@ -626,7 +632,8 @@ export function DealsView() {
 							gridId="deals"
 							label={t("deals.grid")}
 							rows={rows}
-							columns={columns}
+							columns={gridColumns}
+							extension={cc.extension}
 							getRowId={getDealId}
 							status={deals.status}
 							onRetry={deals.reload}

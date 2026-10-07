@@ -11,7 +11,7 @@ export type ListPath = "contacts" | "leads" | "deals" | "tasks";
 /** GET /v1/{path}?q&filter&sort&limit&cursor&include_total&expand (P1A_CONTRACTS S4). */
 export const listFetcher =
 	<T>(path: ListPath): FetchServerPage<T> =>
-	async ({ params, expand, limit, cursor, includeTotal, signal }) => {
+	async ({ params, expand, props, limit, cursor, includeTotal, signal }) => {
 		const r = await apiClient.get<T[]>(path, {
 			query: {
 				q: params.q,
@@ -22,6 +22,7 @@ export const listFetcher =
 				cursor: cursor ?? undefined,
 				include_total: includeTotal ? 1 : undefined,
 				expand,
+				props,
 			},
 			signal,
 		});
