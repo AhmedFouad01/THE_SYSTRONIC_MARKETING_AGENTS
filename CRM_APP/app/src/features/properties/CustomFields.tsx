@@ -200,7 +200,7 @@ function ReadValueView({ v }: { v: ReadValue }) {
 			return <BidiText wrap>{v.text}</BidiText>;
 		case "multiline":
 			return (
-				<span className="sy-cf__multiline" dir="auto">
+				<span className="sy-cf__multiline">
 					{v.text}
 				</span>
 			);

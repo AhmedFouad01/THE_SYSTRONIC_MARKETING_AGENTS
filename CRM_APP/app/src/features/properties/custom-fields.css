@@ -8,8 +8,9 @@
 }
 .sy-cf__title {
 	margin: 0;
-	font-size: var(--sy-type-section-title-size);
-	color: var(--sy-text);
+	font-size: var(--sy-type-data-size);
+	font-weight: 600;
+	color: var(--sy-text-2);
 }
 .sy-cf__group {
 	display: flex;
@@ -47,6 +48,8 @@
 }
 .sy-cf__multiline {
 	display: block;
+	text-align: start;
+	unicode-bidi: plaintext;
 	white-space: pre-wrap;
 	font-weight: 400;
 	overflow-wrap: anywhere;
