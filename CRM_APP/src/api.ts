@@ -10,6 +10,7 @@ import {
 	assertIdentifierConfiguration,
 } from "./db.js";
 import { crmRequest, type Body } from "./crm.js";
+import { chartsRequest, isCharts } from "./charts.js";
 import { isSchema, schemaRequest } from "./schema.js";
 import { PAYLOAD_LIMIT as SCHEMA_PAYLOAD_LIMIT } from "./schemarules.js";
 import { transition, type Command } from "./transition.js";
@@ -230,7 +231,14 @@ export function server() {
 					if (!body || typeof body !== "object" || Array.isArray(body))
 						throw new Fault(422, "VALIDATION_FAILED");
 				}
-				const response = isSchema(url.pathname)
+				const response = isCharts(url.pathname)
+					? await chartsRequest(
+							ctx,
+							req.method ?? "GET",
+							url.pathname,
+							url.searchParams,
+						)
+					: isSchema(url.pathname)
 					? await schemaRequest(
 							ctx,
 							req.method ?? "GET",
