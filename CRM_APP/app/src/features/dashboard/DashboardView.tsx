@@ -182,7 +182,7 @@ export function DashboardView() {
 		c: number | null,
 		sub: string,
 		none: string,
-		tone: "neutral" | "navy",
+		tone: "neutral",
 	) => {
 		if (load.status === "loading") return <KpiCard testId={testId} label={label} value="" loading />;
 		if (load.status === "error")
@@ -246,7 +246,7 @@ export function DashboardView() {
 				overdueC,
 				t("dash.overdue.sub"),
 				t("dash.overdue.none"),
-				emph.overdue === "navy" ? "navy" : "neutral",
+				"neutral",
 			)}
 			{taskCard(
 				"kpi-next24h",

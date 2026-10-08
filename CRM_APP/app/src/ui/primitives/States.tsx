@@ -1,3 +1,4 @@
+import { Identity } from "./Identity.tsx";
 import type { ReactNode } from "react";
 import { Icon, type IconName } from "../icons/index.ts";
 import { useI18n } from "../i18n/index.ts";
@@ -129,7 +130,7 @@ export function ErrorState({
 		>
 			{requestId ? (
 				<p className="sy-state__ref sy-ltr m-0 text-data text-text-3">
-					{t("error.requestId", { id: requestId })}
+					<Identity value={requestId} label={t("record.technical")} />
 				</p>
 			) : null}
 			{onRetry ? (

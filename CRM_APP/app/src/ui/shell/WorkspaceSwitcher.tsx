@@ -13,6 +13,8 @@ import { isApiError } from "../../api/errors.ts";
 import { Bdi, useI18n } from "../i18n/index.ts";
 import { Dialog } from "../overlays/index.ts";
 import { Button } from "../primitives/Button.tsx";
+import { Identity } from "../primitives/Identity.tsx";
+import { workspaceName } from "./workspaceName.ts";
 import { describeError } from "./ConnectGate.tsx";
 
 export type WorkspaceControls = {
@@ -38,7 +40,7 @@ export function WorkspaceControl({
 				{t("workspace.label")}
 			</span>
 			<span className={shellClass("sy-workspace__name")}>
-				<Bdi>{workspace.tenantId}</Bdi>
+				<Identity value={workspace.tenantId} label={workspaceName(workspace, t("nav.workspace"))} />
 			</span>
 			{workspace.grantId ? (
 				<span className={shellClass("sy-workspace__hint")}>
@@ -69,7 +71,7 @@ export function WorkspaceSwitchDialog({
 	switchWorkspace: (workspace: Workspace) => Promise<boolean>;
 	returnFocusRef: RefObject<HTMLElement | null>;
 }) {
-	const { t } = useI18n();
+	const { t, formatCount } = useI18n();
 	const [options, setOptions] = useState<Workspace[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [pending, setPending] = useState(false);
@@ -151,16 +153,17 @@ export function WorkspaceSwitchDialog({
 				className={shellClass("sy-workspace-options")}
 				aria-busy={loading || pending}
 			>
-				{options.map((option) => (
+				{options.map((option, index) => (
 					<AriaButton
 						key={JSON.stringify([option.tenantId, option.grantId ?? ""])}
 						type="button"
+						render={(domProps) => <button {...domProps} title={option.tenantId} />}
 						className={shellClass("sy-nav sy-workspace-option")}
 						isDisabled={pending || sameWorkspace(option, workspace)}
 						aria-current={sameWorkspace(option, workspace) ? "true" : undefined}
 						onPress={() => void choose(option)}
 					>
-						<Bdi>{option.tenantId}</Bdi>
+						<Bdi>{workspaceName(option, `${t("nav.workspace")} ${formatCount(index + 1)}`)}</Bdi>
 						{option.grantId ? <span>{t("workspace.restricted")}</span> : null}
 					</AriaButton>
 				))}

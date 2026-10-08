@@ -1,5 +1,6 @@
 import { Button as AriaButton } from "react-aria-components";
 import { type ReactNode, useState } from "react";
+import { Identity, isUuid } from "./Identity.tsx";
 import { Ltr, useI18n } from "../i18n/index.ts";
 
 export type RecordDetailsRow = {
@@ -42,7 +43,7 @@ export function RecordDetails({
 					<div key={r.label} className="sy-record-details__row grid grid-cols-[auto_minmax(0,1fr)] gap-10 [&_dd]:flex [&_dd]:items-center [&_dd]:flex-wrap [&_dd]:gap-8 [&_dd]:m-0 [&_dd]:[overflow-wrap:anywhere] [&_dd]:text-start">
 						<dt>{r.label}</dt>
 						<dd data-testid={r.testId}>
-							<Ltr>{r.value}</Ltr>
+							{isUuid(r.value) ? <Identity value={r.value} label={r.label} /> : <Ltr>{r.value}</Ltr>}
 							{r.copyable ? (
 								<AriaButton
 									type="button"

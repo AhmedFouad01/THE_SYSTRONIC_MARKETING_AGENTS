@@ -318,10 +318,10 @@ export function mergeLatest(
 
 export type LeadStrip = Record<LeadStatus, CappedCount>;
 
-/** Qualified is the one emphasised card, and only when there is something qualified. Others stay neutral. */
+/** Lead KPI tiles use the neutral surface for every status. */
 export function leadStripTone(
-	status: LeadStatus,
-	c: CappedCount,
-): "navy" | "neutral" {
-	return status === "qualified" && c.count > 0 ? "navy" : "neutral";
+	_status: LeadStatus,
+	_c: CappedCount,
+): "neutral" {
+	return "neutral";
 }

@@ -13,7 +13,7 @@ import { Icon } from "../icons/index.ts";
 import { Dialog, MenuButton } from "../overlays/index.ts";
 import { type RecordCrumb, RecordCrumbContext } from "./RecordCrumb.tsx";
 import { useTheme } from "../theme/index.ts";
-import { Badge } from "../primitives/Badge.tsx";
+import { Focusable, Tooltip, TooltipTrigger } from "react-aria-components";
 import {
 	filterNavigation,
 	linkedLeaves,
@@ -118,6 +118,21 @@ function NavigationTree({
 	);
 }
 
+/** Inert, focusable unavailable link: TooltipTrigger supplies pointer/focus/Escape behavior without navigation. */
+export function UpcomingNavItem({ node }: { node: NavNode }) {
+ const { t } = useI18n();
+ return <TooltipTrigger delay={300}>
+  <Focusable>
+  {/* biome-ignore lint/a11y/useSemanticElements: unavailable navigation has no valid href; keep a focusable, disabled link for its explanatory tooltip */}
+  <span role="link" aria-disabled="true" tabIndex={0} title={t("nav.comingSoon")} className={shellClass("sy-nav sy-nav--upcoming")} data-testid={`nav-${node.key}`}>
+   <Icon name={node.icon} size={17} />
+   <span className={shellClass("sy-nav__label")}>{t(node.label)}</span>
+   <span aria-hidden="true" className="sy-nav__upcoming-dot ms-auto shrink-0 h-6 w-6 rounded-pill bg-warning-icon" />
+  </span></Focusable>
+  <Tooltip placement="top" className="z-[1200] rounded-8 border border-solid border-border bg-raised px-10 py-8 text-data text-text shadow-menu">{t("nav.comingSoon")}</Tooltip>
+ </TooltipTrigger>;
+}
+
 function NavigationBranch({
 	node,
 	route,
@@ -127,17 +142,7 @@ function NavigationBranch({
 }: Omit<NavigationTreeProps, "nodes"> & { node: NavNode }) {
 	const { t } = useI18n();
 	const expanded = disclosures[node.key] === true;
-	if (node.kind === "upcoming")
-		return (
-			<div
-				className={shellClass("sy-nav sy-nav--upcoming")}
-				data-testid={`nav-${node.key}`}
-			>
-				<Icon name={node.icon} size={17} />
-				<span className={shellClass("sy-nav__label")}>{t(node.label)}</span>
-				<Badge>{t("nav.comingSoon")}</Badge>
-			</div>
-		);
+	if (node.kind === "upcoming") return <UpcomingNavItem node={node} />;
 	const children = node.children ?? [];
 	if (!children.length && node.kind === "link")
 		return link(node, "sy-nav sy-nav--route");

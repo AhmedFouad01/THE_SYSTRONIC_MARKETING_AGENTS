@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import "./page-header.css";
 
 export type PageHeaderProps = {
 	title: ReactNode;

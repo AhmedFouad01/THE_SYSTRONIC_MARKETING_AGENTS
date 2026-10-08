@@ -98,6 +98,16 @@ describe("activity aggregate and composition", () => {
 	});
 });
 function luminance(color: string) {
+ const oklch = /^oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)$/.exec(color);
+ if (oklch) {
+  const L = Number(oklch[1]); const C = Number(oklch[2]); const h = Number(oklch[3]) * Math.PI / 180;
+  const a = C * Math.cos(h); const b = C * Math.sin(h);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const ss = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  const channels = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * ss, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * ss, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * ss].map((v) => Math.max(0, Math.min(1, v)));
+  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+ }
 	const rgb = [1, 3, 5].map((start) => Number.parseInt(color.slice(start, start + 2), 16) / 255).map((v) => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
 	return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
 }

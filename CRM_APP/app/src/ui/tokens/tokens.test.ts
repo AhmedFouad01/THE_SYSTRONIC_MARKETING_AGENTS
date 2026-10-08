@@ -1,9 +1,10 @@
+import { Color } from "@kurkle/color";
 import { describe, expect, it } from "vitest";
-import { darkColors, lightColors } from "./colors.ts";
+import { darkColors, lightColors, extendedPalette, paletteAnchors } from "./colors.ts";
 import { buildTokensCss, cssVar, kebab, varName } from "./css.ts";
 import { elevation, spacing, typeScale } from "./scales.ts";
 
-const COLOR_VALUE = /^(#[0-9A-F]{6}|rgba\(\d{1,3},\d{1,3},\d{1,3},\.\d+\))$/;
+const COLOR_VALUE = /^(#[0-9A-F]{6}|rgba\(\d{1,3},\d{1,3},\d{1,3},\.\d+\)|oklch\([\d.]+ [\d.]+ [\d.]+\))$/;
 
 describe("tokens: light/dark parity", () => {
 	it("light and dark color sets have identical key sets", () => {
@@ -18,7 +19,7 @@ describe("tokens: light/dark parity", () => {
 		);
 	});
 
-	it("every color value is a well-formed hex or rgba literal", () => {
+	it("every color value is a well-formed hex, rgba or OKLCH literal", () => {
 		for (const [mode, set] of [
 			["light", lightColors],
 			["dark", darkColors],
@@ -92,4 +93,35 @@ describe("tokens: css emission", () => {
 		expect(varName("focus")).toBe("--sy-focus");
 		expect(cssVar("text2")).toBe("var(--sy-text-2)");
 	});
+});
+
+describe("R03 extended palette", () => {
+ it("hue rotations share the cyan anchor lightness/chroma in each mode", () => {
+  for (const mode of ["light", "dark"] as const) {
+   const values = Object.values(extendedPalette(mode)).map((v) => v.match(/oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)/)?.slice(1).map(Number));
+   expect(values).toHaveLength(8);
+   expect(new Set(values.map((v) => v?.[2])).size).toBe(8);
+   for (const value of values) {
+    expect(value?.[0]).toBe(paletteAnchors[mode].lightness);
+    expect(value?.[1]).toBe(paletteAnchors[mode].chroma);
+   }
+  }
+ });
+ it("removes the unapproved tone and original pigment from both modes", () => {
+  for (const colors of [lightColors, darkColors]) {
+   expect(Object.keys(colors).some((key) => /navy/i.test(key))).toBe(false);
+   expect(Object.values(colors)).not.toContain("#181D36");
+  }
+ });
+});
+
+it("all chart aliases support Chart.js hover and tooltip colour parsing", () => {
+ for (const colors of [lightColors, darkColors]) {
+  for (const [key, value] of Object.entries(colors)) {
+   if (!key.startsWith("chart")) continue;
+   const parsed = new Color(value);
+   expect(parsed.valid).toBe(true);
+   expect(parsed.saturate(0.5).darken(0.1).rgbString()).toMatch(/^rgb/);
+  }
+ }
 });

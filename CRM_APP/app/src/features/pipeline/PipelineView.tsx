@@ -543,7 +543,7 @@ export function PipelineView() {
 							<Select
 								label={t("pipeline.select")}
 								name="pipeline"
-								className="sy-pipe__select min-w-[200px] [&_.sy-field__label]:sr-only"
+								className="sy-pipe__select min-w-[200px]"
 								value={pipeline.id}
 								onChange={(e) => choosePipeline(e.target.value)}
 								data-testid="pipeline-select"

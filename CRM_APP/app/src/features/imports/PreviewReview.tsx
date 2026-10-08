@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Bdi, type MessageKey, useI18n } from "../../ui/i18n/index.ts";
-import { Button, Select } from "../../ui/primitives/index.ts";
+import { Button, Identity, Select } from "../../ui/primitives/index.ts";
 import { serverIssueSuffix } from "../properties/values.ts";
 import type { ImportDraft, ImportOptions } from "./model.ts";
 import { reviewGate, type PreviewIssue, type PreviewRow } from "./preview.ts";
@@ -66,7 +66,7 @@ export function PreviewReview({ draft, busy, issues, onChange, onPreview, onBack
 			<p>{tx("import.errorSample", { shown: formatCount(data.error_rows.length), total: formatCount(data.summary.error) })}</p>
 			{data.error_rows_truncated ? <p role="status">{t("import.errorsTruncated")}</p> : null}
 			{data.error_rows.length ? rowTable(data.error_rows, true) : null}
-			{data.already_imported ? <p>{t("import.priorJob")}: <Bdi>{data.already_imported.job_id}</Bdi></p> : null}
+			{data.already_imported ? <p>{t("import.priorJob")}: <Identity value={data.already_imported.job_id} label={t("import.priorJob")} /></p> : null}
 			{gate === "abort" ? <p role="alert">{t("import.abortBlocked")}</p> : gate === "empty" || gate === "invalid" ? <p role="alert">{t("import.noValidRows")}</p> : <p role="status">{t("import.reviewReady")}</p>}
 		</> : null}
 		<div className="flex flex-wrap gap-8 mt-12"><Button onClick={onBack}>{t("import.backMapping")}</Button>{draft.step === "preview" ? <Button disabled={!data || busy} onClick={onPolicy}>{t("import.nextPolicy")}</Button> : <Button variant="primary" disabled={gate !== "ready" || busy || issues.length > 0} onClick={onCommit}>{tx("import.confirm", { count: formatCount((data?.summary.create ?? 0) + (data?.summary.update ?? 0) + (data?.summary.skip ?? 0)) })}</Button>}</div>

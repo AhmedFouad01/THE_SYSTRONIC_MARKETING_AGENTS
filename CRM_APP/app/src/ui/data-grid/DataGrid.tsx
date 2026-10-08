@@ -1,3 +1,4 @@
+import { Identity, isUuid } from "../primitives/Identity.tsx";
 import {
 	type KeyboardEvent,
 	type MouseEvent,
@@ -517,7 +518,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 											>
 												{c.cell ? (
 													c.cell(row)
-												) : typeof plain === "string" && !c.ltr ? (
+												) : isUuid(plain) ? (
+ <Identity value={plain} label={c.header} />
+ ) : typeof plain === "string" && !c.ltr ? (
 													<BidiText>{plain}</BidiText>
 												) : (
 													(plain ?? "")

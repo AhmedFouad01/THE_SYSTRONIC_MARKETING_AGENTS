@@ -53,7 +53,7 @@ const styles: Record<string, string> = {
 		"cursor-pointer font-[600] [&>.sy-icon:last-child]:ms-auto",
 	"sy-nav-branch__children": "ps-12",
 	"sy-nav--upcoming":
-		"h-auto min-h-[38px] flex-wrap py-4 text-text-3! [&_.sy-badge]:ms-auto [&_.sy-badge]:text-[10px] [&_.sy-nav__label]:whitespace-normal [&_.sy-nav__label]:[overflow-wrap:anywhere]",
+		"h-[38px] cursor-not-allowed text-text-3!",
 	"sy-sheet-nav": "grid gap-4",
 	"sy-nav--sheet":
 		"justify-start px-10 flex-row h-[44px] text-body! [&_.sy-nav__label]:block",

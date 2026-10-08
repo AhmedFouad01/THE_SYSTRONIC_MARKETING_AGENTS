@@ -253,7 +253,7 @@ describe("mergeLatest", () => {
 
 describe("leads KPI strip", () => {
 	it("only qualified > 0 is emphasised", () => {
-		expect(leadStripTone("qualified", { count: 1, capped: false })).toBe("navy");
+		expect(leadStripTone("qualified", { count: 1, capped: false })).toBe("neutral");
 		expect(leadStripTone("open", { count: 5, capped: false })).toBe("neutral");
 		expect(leadStripTone("closed", { count: 5, capped: true })).toBe("neutral");
 		expect(leadStripTone("qualified", { count: 0, capped: false })).toBe("neutral");

@@ -1,3 +1,4 @@
+import { isUuid } from "../../ui/primitives/Identity.tsx";
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { PreviewPanel, previewStep, useI18n } from "../../ui/index.ts";
 
@@ -31,7 +32,7 @@ export function ReportPreview({ label, heading, activeId, ids, partial, onChange
 	return (
 		<PreviewPanel
 			label={label}
-			heading={heading}
+			heading={isUuid(heading) ? label : heading}
 			testId="report-detail"
 			onClose={() => onChange(null)}
 			returnFocus={() =>

@@ -41,5 +41,8 @@ export {
 	useWideLayout,
 } from "./useMediaQuery.ts";
 
+export { Identity } from "./Identity.tsx";
 export { Checkbox, type CheckboxProps } from "./Checkbox.tsx";
 export { ComboBox, type ComboBoxProps } from "./ComboBox.tsx";
+
+export { FileDropZone, type FileDropZoneProps } from "./FileDropZone.tsx";

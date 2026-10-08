@@ -1,3 +1,4 @@
+import { Identity, isUuid } from "../../ui/primitives/Identity.tsx";
 import { useEffect, useMemo, useState } from "react";
 import { isApiError, isForbidden } from "../../api/index.ts";
 import {
@@ -358,7 +359,7 @@ function OrderDetailView({ order, resetKey }: { order: Order; resetKey: string }
 			{(o) => (
 				<div className="details" data-testid="detail-body">
 					<p className="sy-rep__ptitle">
-						<Ltr>{order.external_id}</Ltr>
+						{isUuid(order.external_id) ? <Identity value={order.external_id} label={t("rep.col.id")} /> : <Ltr>{order.external_id}</Ltr>}
 					</p>
 					<p className="sy-rep__muted">
 						{order.source} · {f.label(order.order_status)} ·{" "}
