@@ -1,8 +1,8 @@
-import { useId, useRef } from "react";
-import { IconButton, type MessageKey, useI18n } from "../../ui/index.ts";
+import { Radio, RadioGroup } from "react-aria-components";
+import { Checkbox, IconButton, type MessageKey, useI18n } from "../../ui/index.ts";
 import { COLOR_VAR, type OptionColor } from "./model.ts";
 
-/** Plain labelled checkbox (the page has no checkbox primitive; the grid's selection boxes are native too). */
+/** Controlled property flag using the shared accessible choice primitive. */
 export function Check({
 	label,
 	checked,
@@ -16,18 +16,7 @@ export function Check({
 	disabled?: boolean;
 	testId?: string;
 }) {
-	return (
-		<label className={`sy-props__check${disabled ? " sy-props__check--disabled" : ""}`}>
-			<input
-				type="checkbox"
-				checked={checked}
-				disabled={disabled}
-				data-testid={testId}
-				onChange={(e) => onChange(e.target.checked)}
-			/>
-			<span>{label}</span>
-		</label>
-	);
+	return <Checkbox label={label} checked={checked} disabled={disabled} data-testid={testId} onChange={onChange} />;
 }
 
 /** The fixed 8-colour palette as a radio group (+ "no colour"). Colour is never the only cue: every swatch has its name. */
@@ -45,38 +34,25 @@ export function ColorPicker({
 	testId?: string;
 }) {
 	const { t } = useI18n();
-	const name = useId();
 	const items = ["", ...colors];
-	const refs = useRef<Array<HTMLInputElement | null>>([]);
 	return (
 		<fieldset className="sy-props__colors" data-testid={testId}>
 			<legend className="sy-props__legend">{label}</legend>
-			<div className="sy-props__swatches" role="radiogroup" aria-label={label}>
-				{items.map((c, i) => {
+			<RadioGroup className="sy-props__swatches" aria-label={label} value={value} onChange={onChange}>
+				{items.map((c) => {
 					const text = c === "" ? t("props.opt.colorNone") : t(`props.color.${c}` as MessageKey);
 					return (
-						<label key={c || "none"} className="sy-props__swatch" title={text}>
-							<input
-								ref={(el) => {
-									refs.current[i] = el;
-								}}
-								type="radio"
-								name={name}
-								value={c}
-								checked={value === c}
-								aria-label={text}
-								data-testid={`color-${c || "none"}`}
-								onChange={() => onChange(c)}
-							/>
+						<Radio key={c || "none"} value={c} className="sy-props__swatch" aria-label={text} data-testid={`color-${c || "none"}`}>
 							<span
+								title={text}
 								className={`sy-props__dot${c === "" ? " sy-props__dot--none" : ""}`}
 								style={c === "" ? undefined : { background: COLOR_VAR[c as OptionColor] }}
 								aria-hidden="true"
 							/>
-						</label>
+						</Radio>
 					);
 				})}
-			</div>
+			</RadioGroup>
 		</fieldset>
 	);
 }

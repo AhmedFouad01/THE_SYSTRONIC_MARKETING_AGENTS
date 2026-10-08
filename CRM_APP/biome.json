@@ -4,7 +4,9 @@
 		{
 			"includes": [
 				"app/src/ui/tokens/tailwind.css",
-				"app/src/ui/data-grid/grid-kit.css"
+				"app/src/ui/data-grid/grid-kit.css",
+				"app/src/features/properties/properties-kit.css",
+				"app/src/features/reporting/reporting-kit.css"
 			],
 			"css": {
 				"parser": {

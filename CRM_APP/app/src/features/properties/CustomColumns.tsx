@@ -1,12 +1,14 @@
 // P1b B4 UI: custom fields as list columns, typed filter rows and sort on the column header (Leads, Contacts, Deals, Tasks).
 // One hook per list screen; it feeds the existing DataGrid (extra columns, ServerSpec sort map, `extra` filter nodes, `props=`) and
 // returns the toolbar/filter-panel pieces the grid hosts through its `extension` prop. Plain in-house controls, no new dependency.
+import { Button as AriaButton } from "react-aria-components";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isForbidden, sessionStore, useSession } from "../../api/index.ts";
 import {
 	BidiText,
 	Button,
 	DatePicker,
+	Checkbox,
 	type GridColumn,
 	type GridExtension,
 	IconButton,
@@ -45,7 +47,7 @@ import {
 } from "./customColumns.ts";
 import { type ObjectKey, pickLabel, type PropertyDef } from "./model.ts";
 import { type ReadCtx, readValue } from "./values.ts";
-import "./custom-columns.css";
+import "./properties-kit.css";
 
 export type CustomColumns<T> = {
 	/** Sort map + the screen's own spec: custom keys sort by their own name. */
@@ -272,18 +274,7 @@ function ColumnList({ defs, shown, onToggle }: { defs: readonly PropertyDef[]; s
 			{defs.map((p) => {
 				const on = shown.includes(p.key);
 				return (
-					<label key={p.key} className="sy-grid__colopt">
-						<input
-							type="checkbox"
-							checked={on}
-							disabled={!on && full}
-							data-testid={`cc-col-${p.key}`}
-							onChange={() => onToggle(p.key)}
-						/>
-						<span>
-							<BidiText>{pickLabel(p.label, locale, p.key)}</BidiText>
-						</span>
-					</label>
+					<Checkbox key={p.key} checked={on} disabled={!on && full} data-testid={`cc-col-${p.key}`} onChange={() => onToggle(p.key)} label={<BidiText>{pickLabel(p.label, locale, p.key)}</BidiText>} />
 				);
 			})}
 			{full ? <p className="sy-cc__hint">{t("cc.limit", { max: formatNumber(MAX_COLUMNS) })}</p> : null}
@@ -463,21 +454,7 @@ function ListControl({ def, draft, onPatch }: { def: PropertyDef; draft: FilterD
 			{listChoices(def)
 				.filter((c) => !c.archived || draft.list.includes(c.value))
 				.map((c) => (
-					<label key={c.value} className="sy-grid__colopt">
-						<input
-							type="checkbox"
-							checked={draft.list.includes(c.value)}
-							data-testid={`cc-opt-${c.value}`}
-							onChange={(e) =>
-								onPatch(draft.id, {
-									list: e.target.checked ? [...draft.list, c.value] : draft.list.filter((v) => v !== c.value),
-								})
-							}
-						/>
-						<span>
-							<BidiText>{label(c.value)}</BidiText>
-						</span>
-					</label>
+					<Checkbox key={c.value} checked={draft.list.includes(c.value)} data-testid={`cc-opt-${c.value}`} onChange={(checked) => onPatch(draft.id, {list: checked ? [...draft.list, c.value] : draft.list.filter((v) => v !== c.value)})} label={<BidiText>{label(c.value)}</BidiText>} />
 				))}
 		</fieldset>
 	);
@@ -524,14 +501,14 @@ function Chips({
 							<bdi>{value}</bdi>
 						</>
 					) : null}
-					<button
+					<AriaButton
 						type="button"
 						className="sy-grid__chipx"
 						aria-label={t("grid.removeFilter", { name })}
 						onClick={() => onRemove(d.id)}
 					>
 						<Icon name="close" size={12} />
-					</button>
+					</AriaButton>
 				</span>
 			</li>,
 		);

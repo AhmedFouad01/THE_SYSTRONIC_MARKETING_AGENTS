@@ -1,3 +1,4 @@
+import { TextField, Input as AriaInput } from "react-aria-components";
 import { useEffect, useRef, useState } from "react";
 import { useSession } from "../../api/index.ts";
 import {
@@ -37,7 +38,7 @@ import {
 } from "./model.ts";
 import { PropertyDialog } from "./PropertyDialog.tsx";
 import { useCommand } from "./useCommand.ts";
-import "./properties.css";
+import "./properties-kit.css";
 
 type Dialogs = { kind: "create" } | { kind: "edit"; key: string } | { kind: "options"; key: string } | { kind: "groups" } | { kind: "archive"; key: string } | null;
 
@@ -210,9 +211,9 @@ function Body({
 	return (
 		<div className="sy-props__body">
 			<div className="sy-props__toolbar">
-				<div className="sy-grid__searchbox sy-props__search">
+				<TextField className="sy-grid__searchbox sy-props__search" aria-label={t("props.search")}>
 					<Icon name="search" size={16} />
-					<input
+					<AriaInput
 						type="search"
 						name="q"
 						dir={query ? "auto" : dir}
@@ -223,7 +224,7 @@ function Body({
 						data-testid="props-search"
 						onChange={(e) => setQuery(e.target.value)}
 					/>
-				</div>
+				</TextField>
 				<Check label={t("props.showArchived")} checked={showArchived} onChange={setShowArchived} testId="show-archived" />
 			</div>
 			{notice ? (

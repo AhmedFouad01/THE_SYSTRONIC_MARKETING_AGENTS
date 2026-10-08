@@ -49,7 +49,7 @@ import {
 	summarizeReport,
 } from "./model.ts";
 import { type Load, useLoad } from "./useLoad.ts";
-import "../reporting/reporting.css";
+import "../reporting/reporting-kit.css";
 import { PipelineWidget } from "./PipelineWidget.tsx";
 import { LeadsWidget } from "./LeadsWidget.tsx";
 import { OutcomesWidget } from "./OutcomesWidget.tsx";

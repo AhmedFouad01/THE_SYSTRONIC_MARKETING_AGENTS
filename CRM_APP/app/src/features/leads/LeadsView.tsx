@@ -41,7 +41,7 @@ import { carryExpand } from "../expand.ts";
 import { toRoute } from "../../router.ts";
 import { cappedCount, formatCapped } from "../capped.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
-import "../reporting/reporting.css";
+import "../reporting/reporting-kit.css";
 import { LeadDetail } from "./LeadDetail.tsx";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {

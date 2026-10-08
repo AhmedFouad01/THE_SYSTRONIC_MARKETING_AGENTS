@@ -1,10 +1,12 @@
 // P1b B3 UI: custom fields on records (Leads, Contacts, Deals, Tasks). One read section, one edit section (used inside each
 // record's existing edit form and create dialog), and the two hooks that feed them. Plain in-house controls, no new dependency.
+import { Radio, RadioGroup } from "react-aria-components";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { isApiError, isForbidden, useSession } from "../../api/index.ts";
 import {
 	BidiText,
 	DatePicker,
+	Checkbox,
 	formatMoneyMinor,
 	Input,
 	type MessageKey,
@@ -42,7 +44,7 @@ import {
 	type Values,
 	visibleInRead,
 } from "./values.ts";
-import "./custom-fields.css";
+import "./properties-kit.css";
 
 // ---- data -----------------------------------------------------------------------------------------------------------
 
@@ -424,10 +426,10 @@ function FieldInput({
 			if (p.display === "radio")
 				return (
 					<FieldFrame p={p} label={label} error={error}>
-						<div className="sy-cf__options" role="radiogroup" aria-label={label}>
+						<RadioGroup className="sy-cf__options" aria-label={label} name={name} value={text} onChange={onChange}>
 							{(p.required ? choices : [{ value: "", label: {}, color: null, position: -1, archived: false }, ...choices]).map((o) => (
-								<label key={o.value || "none"} className="sy-cf__check">
-									<input type="radio" name={name} checked={text === o.value} onChange={() => onChange(o.value)} data-testid={`${testId}-${o.value || "none"}`} />
+								<Radio key={o.value || "none"} value={o.value} data-testid={`${testId}-${o.value || "none"}`} className="sy-cf__check rounded-6 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-2">
+									{({isSelected}) => <><span aria-hidden="true" className={`inline-block shrink-0 w-[16px] h-[16px] border border-solid rounded-pill ${isSelected ? "border-primary bg-primary shadow-[inset_0_0_0_3px_var(--sy-surface)]" : "border-border-strong bg-surface"}`} />
 									<span>
 										<bdi>
 											{o.value === ""
@@ -437,9 +439,10 @@ function FieldInput({
 													: pickLabel(o.label, locale, o.value)}
 										</bdi>
 									</span>
-								</label>
+								</> }
+								</Radio>
 							))}
-						</div>
+						</RadioGroup>
 					</FieldFrame>
 				);
 			return (
@@ -460,17 +463,7 @@ function FieldInput({
 				<FieldFrame p={p} label={label} error={error}>
 					<div className="sy-cf__options" data-testid={testId}>
 						{choices.map((o) => (
-							<label key={o.value} className="sy-cf__check">
-								<input
-									type="checkbox"
-									checked={picked.includes(o.value)}
-									data-testid={`${testId}-${o.value}`}
-									onChange={(e) => onChange(e.target.checked ? [...picked, o.value] : picked.filter((x) => x !== o.value))}
-								/>
-								<span>
-									<bdi>{o.archived ? t("cf.archived", { label: pickLabel(o.label, locale, o.value) }) : pickLabel(o.label, locale, o.value)}</bdi>
-								</span>
-							</label>
+							<Checkbox key={o.value} checked={picked.includes(o.value)} data-testid={`${testId}-${o.value}`} onChange={(checked) => onChange(checked ? [...picked, o.value] : picked.filter((x) => x !== o.value))} label={o.archived ? t("cf.archived", { label: pickLabel(o.label, locale, o.value) }) : pickLabel(o.label, locale, o.value)} />
 						))}
 					</div>
 				</FieldFrame>
@@ -479,10 +472,7 @@ function FieldInput({
 		case "checkbox":
 			return (
 				<FieldFrame p={p} label={label} error={error}>
-					<label className="sy-cf__check">
-						<input type="checkbox" checked={value === true} data-testid={testId} onChange={(e) => onChange(e.target.checked)} />
-						<span>{t("cf.yes")}</span>
-					</label>
+					<Checkbox checked={value === true} data-testid={testId} onChange={onChange} label={t("cf.yes")} />
 				</FieldFrame>
 			);
 		case "user": {
