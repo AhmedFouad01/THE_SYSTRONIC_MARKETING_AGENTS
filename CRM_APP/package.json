@@ -10,6 +10,7 @@
 		"api": "tsx --env-file=.env src/api.ts",
 		"worker": "tsx --env-file=.env src/worker.ts",
 		"migrate": "tsx --env-file=.env scripts/migrate.ts",
+		"auth:local": "tsx scripts/enable-local-auth.ts",
 		"seed": "tsx --env-file=.env scripts/seed.ts",
 		"seed:demo": "tsx scripts/seed-demo.ts",
 		"lint": "biome lint src scripts tests app vitest.config.ts",
