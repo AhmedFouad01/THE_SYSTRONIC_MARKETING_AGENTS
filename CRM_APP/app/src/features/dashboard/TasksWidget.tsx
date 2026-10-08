@@ -12,7 +12,7 @@ export function TasksWidget({ state, onRetry }: { state: Load<TasksDuePayload>; 
 		<dl className="sy-chart__kpis" aria-label={t("charts.tasks.total")}><div><dt>{t("charts.tasks.total")}</dt><dd><Bdi>{formatCount(tasksDueKpis(data).openTotal)}</Bdi></dd></div></dl>
 		<p className="sy-chart__meta">{t("charts.tasks.overlap")}</p>
 	</> : null;
-	return <ChartSurface title={t("charts.tasks.title")} className="sy-dash__chart" summary={summary}
+	return <ChartSurface title={t("charts.tasks.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" summary={summary}
 		state={chartState(state, (payload) => tasksDueChart(payload, locale, t))} onRetry={onRetry}
 		emptyAction={<a href={href("/tasks")} onClick={(event) => { event.preventDefault(); navigate("/tasks"); }}>{t("dash.follow.link")}</a>} />;
 }

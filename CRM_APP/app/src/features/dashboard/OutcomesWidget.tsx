@@ -33,7 +33,7 @@ function OutcomesLoad({ loadKey, bucket, onBucket, currency, onCurrency, tz }: {
 			{outcomesCurrencies(data).map((code) => <option key={code} value={code}>{code}</option>)}
 		</Select> : null}
 	</div>;
-	return <ChartSurface title={t("charts.outcomes.title")} className="sy-dash__chart" actions={controls}
+	return <ChartSurface title={t("charts.outcomes.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" actions={controls}
 		state={chartState(load.state, (payload) => outcomesChart(payload, currency, locale, t))} onRetry={load.reload}
 		emptyAction={<a href={href("/deals")} onClick={(event) => { event.preventDefault(); navigate("/deals"); }}>{t("charts.outcomes.view")}</a>} />;
 }

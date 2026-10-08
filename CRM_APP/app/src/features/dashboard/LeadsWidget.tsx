@@ -20,6 +20,6 @@ function LeadsWidgetLoad({ identity }: { identity: string }) {
 			<dt>{t(`charts.leads.${key}`)}</dt><dd><Bdi>{formatCount(value)}</Bdi></dd>
 		</div>)}
 	</dl> : null;
-	return <ChartSurface title={t("charts.leads.title")} className="sy-dash__chart" state={chartState(load.state, (payload) => leadsChart(payload, locale, t))}
+	return <ChartSurface title={t("charts.leads.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" state={chartState(load.state, (payload) => leadsChart(payload, locale, t))}
 		onRetry={load.reload} summary={summary} emptyAction={<a href={href("/leads")} onClick={(event) => { event.preventDefault(); navigate("/leads"); }}>{t("charts.leads.view")}</a>} />;
 }

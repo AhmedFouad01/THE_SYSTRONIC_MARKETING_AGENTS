@@ -32,6 +32,6 @@ function PipelineWidgetLoad({ identity }: { identity: string }) {
 			{selected?.currencies.map((code) => <option key={code} value={code}>{code}</option>)}
 		</Select>
 	</div> : null;
-	return <ChartSurface title={t("charts.pipeline.title")} className="sy-dash__chart" state={chartState(load.state, (payload) => pipelineChart(payload, pipelineId, currency, t))}
+	return <ChartSurface title={t("charts.pipeline.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" state={chartState(load.state, (payload) => pipelineChart(payload, pipelineId, currency, t))}
 		onRetry={load.reload} actions={controls} emptyAction={<a href={href("/pipeline")} onClick={(event) => { event.preventDefault(); navigate("/pipeline"); }}>{t("charts.pipeline.open")}</a>} />;
 }
