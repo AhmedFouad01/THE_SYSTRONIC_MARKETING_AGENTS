@@ -62,8 +62,8 @@ describe("RecordEditFooter (UI_R4_SPEC D)", () => {
 				<RecordEditFooter dirty saving={false} onCancel={() => undefined} saveLabel="Save" saveTestId="x-save" />
 			</I18nProvider>,
 		);
-		expect(html).not.toMatch(/data-testid="x-save"[^>]*disabled/);
-		expect(html).not.toMatch(/disabled=""[^>]*data-testid="x-save"/);
+		expect(html).not.toMatch(/data-testid="x-save"[^>]* disabled=""/);
+		expect(html).not.toMatch(/ disabled=""[^>]*data-testid="x-save"/);
 	});
 });
 

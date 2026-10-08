@@ -51,9 +51,10 @@ export function Button({
 }: ButtonProps) {
 	return (
 		<AriaButton
-			{...rest}
+			{...rest as AriaButtonProps}
 			ref={ref}
-			// RAC types focus as Element; its rendered button preserves our HTMLButtonElement event contract.
+			render={(domProps) => <button {...domProps} title={rest.title} aria-busy={loading || rest["aria-busy"]} />}
+			// This adapter always renders a native button: retain native event/currentTarget contracts.
 			onFocus={onFocus as AriaButtonProps["onFocus"]}
 			onBlur={onBlur as AriaButtonProps["onBlur"]}
 			type={type}
@@ -101,9 +102,10 @@ export function IconButton({
 }: IconButtonProps) {
 	return (
 		<AriaButton
-			{...rest}
+			{...rest as AriaButtonProps}
 			ref={ref}
-			// RAC types focus as Element; its rendered button preserves our HTMLButtonElement event contract.
+			render={(domProps) => <button {...domProps} title={rest.title} aria-busy={loading || rest["aria-busy"]} />}
+			// This adapter always renders a native button: retain native event/currentTarget contracts.
 			onFocus={onFocus as AriaButtonProps["onFocus"]}
 			onBlur={onBlur as AriaButtonProps["onBlur"]}
 			type={type}

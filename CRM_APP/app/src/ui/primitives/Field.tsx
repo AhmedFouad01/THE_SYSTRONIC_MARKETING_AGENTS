@@ -3,6 +3,7 @@ import {
 	type FormEvent,
 	type InputHTMLAttributes,
 	type ReactNode,
+	type Ref,
 	type TextareaHTMLAttributes,
 	useId,
 	useState,
@@ -89,7 +90,7 @@ export function FieldShell({
 	);
 }
 
-export type InputProps = Shared & InputHTMLAttributes<HTMLInputElement>;
+export type InputProps = Shared & InputHTMLAttributes<HTMLInputElement> & { ref?: Ref<HTMLInputElement> };
 export function Input({
 	label,
 	hint,
@@ -125,7 +126,7 @@ export function Input({
 }
 
 export type TextareaProps = Shared &
-	TextareaHTMLAttributes<HTMLTextAreaElement>;
+	TextareaHTMLAttributes<HTMLTextAreaElement> & { ref?: Ref<HTMLTextAreaElement> };
 export function Textarea({
 	label,
 	hint,
