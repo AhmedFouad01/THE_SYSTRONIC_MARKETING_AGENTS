@@ -138,7 +138,7 @@ function TaskEditor({ task, assignees, cf, onUpdated, editing, onDone }: EditorP
 		<>
 			{error === "conflict" ? (
 				<div
-					className="sy-tasks__banner"
+					className="sy-tasks__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 					role="alert"
 					data-testid="task-conflict"
 				>
@@ -164,7 +164,7 @@ function TaskEditor({ task, assignees, cf, onUpdated, editing, onDone }: EditorP
 				</div>
 			) : null}
 			{task.status === "open" && !editing ? (
-				<div className="sy-tasks__actions">
+				<div className="sy-tasks__actions flex flex-wrap gap-8 my-10">
 					<Button
 						size="sm"
 						variant="primary"
@@ -180,7 +180,7 @@ function TaskEditor({ task, assignees, cf, onUpdated, editing, onDone }: EditorP
 			) : null}
 			{editing ? (
 			<form
-				className="sy-tasks__form"
+				className="sy-tasks__form flex flex-col gap-10"
 				onSubmit={(e) => {
 					e.preventDefault();
 					void save();

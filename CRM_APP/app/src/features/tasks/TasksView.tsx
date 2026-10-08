@@ -61,7 +61,6 @@ import {
 import { NewTaskDialog } from "./NewTaskDialog.tsx";
 import { RelatedLink } from "./RelatedLink.tsx";
 import { SOURCE_KEY, TaskDetail } from "./TaskDetail.tsx";
-import "./tasks.css";
 
 const TAB_LABEL: Record<TaskTab, MessageKey> = {
 	open: "tasks.tab.open",
@@ -460,7 +459,7 @@ export function TasksView() {
 					r.status === "open" ? (
 						<Button
 							size="sm"
-							className="sy-tasks__complete"
+							className="sy-tasks__complete w-[32px] px-0! [&_.sy-btn__label]:sr-only max-[769px]:w-auto max-[769px]:px-10! max-[769px]:[&_.sy-btn__label]:not-sr-only max-[769px]:[&_.sy-btn__label]:whitespace-nowrap"
 							icon="success"
 							title={t("tasks.action.complete")}
 							loading={completingId === r.id}
@@ -553,7 +552,7 @@ export function TasksView() {
 	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
 
 	return (
-		<div className="sy-tasks" data-testid="tasks-view">
+		<div className="sy-tasks flex flex-col gap-12 min-w-0" data-testid="tasks-view">
 			<PageHeader
 				title={t("nav.tasks")}
 				actions={
@@ -574,16 +573,16 @@ export function TasksView() {
 				tabs={TASK_TABS.map((v) => ({ id: v, label: t(TAB_LABEL[v]) }))}
 			/>
 			{ownersFailed ? (
-				<p className="sy-tasks__muted" role="status">
+				<p className="sy-tasks__muted m-0 mt-4 text-text-3" role="status">
 					{t("tasks.ownersFailed")}
 				</p>
 			) : null}
-			<div className="sy-tasks__body">
-				<div className="sy-tasks__main">
+			<div className="sy-tasks__body min-w-0">
+				<div className="sy-tasks__main min-w-0 flex flex-col gap-8">
 					{bulk ? (
 						<p
 							role="status"
-							className="sy-tasks__muted"
+							className="sy-tasks__muted m-0 mt-4 text-text-3"
 							data-testid="bulk-progress"
 						>
 							{t("tasks.bulk.progress", {

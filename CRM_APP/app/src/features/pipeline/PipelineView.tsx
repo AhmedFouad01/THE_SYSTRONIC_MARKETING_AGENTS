@@ -1,3 +1,4 @@
+import { Button as AriaButton } from "react-aria-components";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { isApiError, isForbidden, sessionStore } from "../../api/index.ts";
 import { navigate } from "../../router.ts";
@@ -56,8 +57,6 @@ import {
 	pickPipeline,
 	type StageColumn,
 } from "./model.ts";
-import "../deals/deals.css";
-import "./pipeline.css";
 
 const lastPipelineKey = (tenantId: string) => `sy.pipeline.last.${tenantId}`;
 const getDealId = (d: Deal) => d.id;
@@ -95,26 +94,26 @@ function DealCard({
 	const targets = allowedTargets(pipeline, deal.stage_id);
 	return (
 		<li
-			className="sy-pipe__card"
+			className="sy-pipe__card relative border border-solid border-border rounded-8 bg-surface text-text min-w-0"
 			data-testid="pipeline-card"
 			data-deal-id={deal.id}
 			aria-busy={moving || undefined}
 		>
-			<button
+			<AriaButton
 				type="button"
-				className="sy-pipe__open"
+				className="sy-pipe__open flex flex-col items-start gap-4 w-full p-10 pe-[calc(var(--sy-space-10)+40px)] border-0 [border-radius:inherit] bg-transparent text-inherit [font:inherit] text-start cursor-pointer min-w-0 hover:bg-hover data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-2 [&_.sy-pipe__meta]:max-w-full [&_.sy-pipe__meta]:overflow-hidden [&_.sy-pipe__meta]:text-ellipsis [&_.sy-pipe__meta]:whitespace-nowrap"
 				data-testid="pipeline-card-open"
 				onClick={() => navigate("/deals", `?select=${deal.id}`)}
 			>
-				<b className="sy-pipe__title" title={deal.title}>
+				<b className="sy-pipe__title font-[600] max-w-full overflow-hidden text-ellipsis whitespace-nowrap" title={deal.title}>
 					<BidiText>{deal.title}</BidiText>
 				</b>
-				<span className="sy-pipe__meta" title={contactName}>
+				<span className="sy-pipe__meta text-text-3 [overflow-wrap:anywhere]" title={contactName}>
 					<BidiText>{contactName}</BidiText>
 				</span>
-				<span className="sy-pipe__foot">
+				<span className="sy-pipe__foot flex items-center justify-between gap-8 w-full mt-4">
 					<span
-						className={`sy-pipe__avatar${assigned ? "" : " sy-pipe__avatar--none"}`}
+						className={`sy-pipe__avatar inline-grid place-items-center w-[24px] h-[24px] rounded-pill bg-selected text-text-2 text-[11px] font-[600] flex-none [&.sy-pipe__avatar--none]:bg-transparent [&.sy-pipe__avatar--none]:border [&.sy-pipe__avatar--none]:border-dashed [&.sy-pipe__avatar--none]:border-border-strong${assigned ? "" : " sy-pipe__avatar--none"}`}
 						role="img"
 						aria-label={ownerName}
 						title={ownerName}
@@ -122,14 +121,14 @@ function DealCard({
 					>
 						{assigned ? initialsOf(ownerName) : ""}
 					</span>
-					<span className="sy-pipe__value">
+					<span className="sy-pipe__value font-[700] ms-auto">
 						<Money>{dealValueText(deal, formatMoney)}</Money>
 					</span>
 				</span>
-			</button>
-			<div className="sy-pipe__move">
+			</AriaButton>
+			<div className="sy-pipe__move absolute top-6 end-6">
 				{moving ? (
-					<span className="sy-pipe__meta" role="status">
+					<span className="sy-pipe__meta text-text-3 [overflow-wrap:anywhere]" role="status">
 						{t("common.working")}
 					</span>
 				) : targets.length > 0 ? (
@@ -145,7 +144,7 @@ function DealCard({
 						}))}
 					/>
 				) : (
-					<span className="sy-sr-only" data-testid="pipeline-final">
+					<span className="sy-sr-only sr-only" data-testid="pipeline-final">
 						{t("pipeline.noMoves")}
 					</span>
 				)}
@@ -177,14 +176,14 @@ function Column({
 	const kind = columnKind(col.stage);
 	return (
 		<section
-			className={`sy-pipe__col sy-pipe__col--${kind}`}
+			className={`sy-pipe__col sy-pipe__col--${kind} flex-[1_0_260px] min-w-[260px] flex flex-col gap-8 p-10 border border-solid border-border rounded-10 bg-surface-2 snap-start max-mobile:basis-[min(82%,300px)] [&.sy-pipe__col--won]:border-success-icon [&.sy-pipe__col--won]:bg-success-bg [&.sy-pipe__col--won]:text-success-fg [&.sy-pipe__col--lost]:border-danger-icon [&.sy-pipe__col--lost]:bg-danger-bg [&.sy-pipe__col--lost]:text-danger-fg [&.sy-pipe__col--won_.sy-pipe__total_.sy-pipe__meta]:text-inherit [&.sy-pipe__col--lost_.sy-pipe__total_.sy-pipe__meta]:text-inherit [&.sy-pipe__col--won_.sy-pipe__empty]:text-inherit [&.sy-pipe__col--lost_.sy-pipe__empty]:text-inherit`}
 			aria-labelledby={headId}
 			data-testid="pipeline-column"
 			data-stage-id={col.stage.id}
 			data-kind={kind}
 		>
-			<header className="sy-pipe__head">
-				<h2 className="sy-pipe__stage" id={headId}>
+			<header className="sy-pipe__head flex flex-wrap items-center gap-y-6 gap-x-8">
+				<h2 className="sy-pipe__stage m-0 text-[1rem] [overflow-wrap:anywhere]" id={headId}>
 					<bdi>{col.stage.name}</bdi>
 				</h2>
 				<Badge
@@ -200,18 +199,18 @@ function Column({
 					</span>
 				</Badge>
 				{kind !== "open" ? (
-					<span className="sy-pipe__kind">
+					<span className="sy-pipe__kind text-[0.75rem] font-[600]">
 						{t(kind === "won" ? "pipeline.kind.won" : "pipeline.kind.lost")}
 					</span>
 				) : null}
-				<p className="sy-pipe__total" data-testid="column-total">
-					<span className="sy-pipe__total-label">{t("pipeline.total")}</span>{" "}
+				<p className="sy-pipe__total basis-full m-0 flex flex-wrap gap-y-4 gap-x-8 text-text-2" data-testid="column-total">
+					<span className="sy-pipe__total-label text-inherit">{t("pipeline.total")}</span>{" "}
 					{col.totals.length === 0 ? (
 						<Money>{formatMoney(0)}</Money>
 					) : (
 						col.totals.map((x) => (
 							<Money key={x.currency}>
-								<span className="sy-pipe__amount">
+								<span className="sy-pipe__amount font-[600]">
 									{formatMoney(minorToMajorUnits(x.minor, x.currency), { currency: x.currency })}
 								</span>
 							</Money>
@@ -220,11 +219,11 @@ function Column({
 				</p>
 			</header>
 			{col.deals.length === 0 ? (
-				<p className="sy-pipe__empty" data-testid="column-empty">
+				<p className="sy-pipe__empty m-0 p-10 border border-dashed border-border-strong rounded-8 text-center text-text-3" data-testid="column-empty">
 					{t("pipeline.emptyColumn")}
 				</p>
 			) : (
-				<ul className="sy-pipe__list">
+				<ul className="sy-pipe__list list-none m-0 p-0 flex flex-col gap-8">
 					{col.deals.map((d) => (
 						<DealCard
 							key={d.id}
@@ -494,7 +493,7 @@ export function PipelineView() {
 				) : null}
 				{deals.hasMore ? (
 					<div
-						className="sy-pipe__sample"
+						className="sy-pipe__sample flex flex-wrap items-center gap-8 text-text-3"
 						role="status"
 						data-testid="pipeline-sample"
 					>
@@ -516,7 +515,7 @@ export function PipelineView() {
 						</Button>
 					</div>
 				) : null}
-				<div className="sy-pipe__board" data-testid="pipeline-board">
+				<div className="sy-pipe__board flex items-start gap-12 min-w-0 min-h-[18rem] pb-12 overflow-x-auto overscroll-x-contain snap-x snap-proximity max-mobile:snap-mandatory max-mobile:gap-8" data-testid="pipeline-board">
 					{columns.map((c) => (
 						<Column
 							key={c.stage.id}
@@ -535,7 +534,7 @@ export function PipelineView() {
 	}
 
 	return (
-		<div className="sy-deals sy-pipe" data-testid="pipeline-view">
+		<div className="sy-deals sy-pipe flex flex-col gap-12 min-w-0" data-testid="pipeline-view">
 			<PageHeader
 				title={t("nav.pipeline")}
 				actions={
@@ -544,7 +543,7 @@ export function PipelineView() {
 							<Select
 								label={t("pipeline.select")}
 								name="pipeline"
-								className="sy-pipe__select"
+								className="sy-pipe__select min-w-[200px] [&_.sy-field__label]:sr-only"
 								value={pipeline.id}
 								onChange={(e) => choosePipeline(e.target.value)}
 								data-testid="pipeline-select"
@@ -578,7 +577,7 @@ export function PipelineView() {
 					/>
 				) : (
 					<div
-						className="sy-deals__banner"
+						className="sy-deals__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 						role="alert"
 						data-testid="pipeline-error"
 					>

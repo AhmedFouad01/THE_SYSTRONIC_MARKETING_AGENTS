@@ -124,7 +124,7 @@ function NewDealForm({
 	return (
 		<form
 			id={formId}
-			className="sy-deals__form"
+			className="sy-deals__form flex flex-col gap-10"
 			noValidate
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -133,7 +133,7 @@ function NewDealForm({
 		>
 			{serverError ? (
 				<p
-					className="sy-deals__banner"
+					className="sy-deals__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 					role="alert"
 					data-testid="new-deal-error"
 				>
@@ -203,7 +203,7 @@ function NewDealForm({
 					</option>
 				))}
 			</Select>
-			<div className="sy-deals__pair">
+			<div className="sy-deals__pair grid grid-cols-[minmax(0,1fr)_minmax(96px,140px)] gap-10 items-start">
 				<AmountField
 					label={t("deals.field.amount")}
 					value={input.amount}

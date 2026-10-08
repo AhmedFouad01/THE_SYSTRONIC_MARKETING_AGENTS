@@ -81,7 +81,7 @@ export function ConflictBanner({
 }) {
 	const { t } = useI18n();
 	return (
-		<div className="sy-deals__banner" role="alert" data-testid={testId}>
+		<div className="sy-deals__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8" role="alert" data-testid={testId}>
 			<b>{t("deals.conflict.title")}</b>
 			<p>{t(body ?? "deals.conflict.body")}</p>
 			<Button
@@ -258,7 +258,7 @@ export function DealEditor({
 
 	return (
 		<form
-			className="sy-deals__form"
+			className="sy-deals__form flex flex-col gap-10"
 			noValidate
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -292,7 +292,7 @@ export function DealEditor({
 					setDraft({ ...draft, title: e.target.value });
 				}}
 			/>
-			<div className="sy-deals__pair">
+			<div className="sy-deals__pair grid grid-cols-[minmax(0,1fr)_minmax(96px,140px)] gap-10 items-start">
 				<AmountField
 					label={t("deals.field.amount")}
 					value={draft.amount}
@@ -409,7 +409,7 @@ export function StageFeedback({ move }: { move: StageMove }) {
 			/>
 		);
 	return (
-		<p className="sy-deals__banner" role="alert" data-testid="stage-error">
+		<p className="sy-deals__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8" role="alert" data-testid="stage-error">
 			{t(TRANSITION_ERR[move.error])}
 		</p>
 	);
@@ -437,7 +437,7 @@ export function StageActions({
 		moves.won === null && moves.lost === null && moves.others.length === 0;
 	if (none)
 		return (
-			<span className="sy-deals__muted" data-testid="stage-none">
+			<span className="sy-deals__muted m-0 mt-4 text-text-3" data-testid="stage-none">
 				{t("deals.stage.none")}
 			</span>
 		);
@@ -525,7 +525,7 @@ export function HistoryList({
 		pipeline?.stages.find((s) => s.id === id)?.name ?? t("deals.unknownStage");
 	if (state.s === "loading")
 		return (
-			<p className="sy-deals__muted" role="status">
+			<p className="sy-deals__muted m-0 mt-4 text-text-3" role="status">
 				{t("deals.history.loading")}
 			</p>
 		);
@@ -533,21 +533,21 @@ export function HistoryList({
 		return <p role="alert">{t("deals.history.failed")}</p>;
 	if (state.items.length === 0)
 		return (
-			<p className="sy-deals__muted" data-testid="history-empty">
+			<p className="sy-deals__muted m-0 mt-4 text-text-3" data-testid="history-empty">
 				{t("deals.history.empty")}
 			</p>
 		);
 	return (
-		<ol className="sy-deals__history" data-testid="deal-history">
+		<ol className="sy-deals__history list-none m-0 p-0 flex flex-col gap-10" data-testid="deal-history">
 			{[...state.items].reverse().map((h) => (
-				<li key={h.id} className="sy-deals__item" data-testid="history-item">
+				<li key={h.id} className="sy-deals__item flex flex-col gap-4 min-w-0 [overflow-wrap:anywhere]" data-testid="history-item">
 					<b>
 						{tx("deals.history.entry", {
 							from: name(h.from_stage),
 							to: name(h.to_stage),
 						})}
 					</b>
-					<span className="sy-deals__muted">
+					<span className="sy-deals__muted m-0 mt-4 text-text-3">
 						<Bdi>{formatDateTime(h.occurred_at)}</Bdi>
 						{" · "}
 						<Bdi>{actors.get(h.actor_id) ?? t("common.unknownUser")}</Bdi>
