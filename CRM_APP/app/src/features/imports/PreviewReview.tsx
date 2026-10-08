@@ -1,3 +1,4 @@
+import "./imports.css";
 import { useEffect, useRef } from "react";
 import { Bdi, type MessageKey, useI18n } from "../../ui/i18n/index.ts";
 import { Button, Select } from "../../ui/primitives/index.ts";
