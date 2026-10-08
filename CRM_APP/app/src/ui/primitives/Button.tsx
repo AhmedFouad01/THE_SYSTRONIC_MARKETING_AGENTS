@@ -11,8 +11,8 @@ const variants: Record<ButtonVariant, string> = {
  danger: "bg-danger-bg text-danger-fg border-danger-icon data-[hovered]:bg-danger-hover data-[pressed]:bg-danger-pressed",
  success: "bg-success-bg text-success-fg border-success-icon data-[hovered]:shadow-[inset_0_0_0_1px_var(--sy-success-icon)]",
 };
-const sizes: Record<ButtonSize, string> = { sm: "h-[32px] px-10 text-data", md: "h-[36px] px-12", lg: "h-[44px] px-16" };
-const iconSizes: Record<ButtonSize, string> = { sm: "w-[32px]", md: "w-[36px]", lg: "w-[44px]" };
+const sizes: Record<ButtonSize, string> = { sm: "h-control-h px-10 text-data", md: "h-control-h px-12", lg: "h-control-h px-16" };
+const iconSizes: Record<ButtonSize, string> = { sm: "w-control-h", md: "w-control-h", lg: "w-control-h" };
 
 export type ButtonVariant =
 	| "primary"

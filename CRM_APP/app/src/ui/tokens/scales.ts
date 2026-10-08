@@ -52,7 +52,7 @@ export const layout = {
 	pageMax: "1440px",
 	topbarH: "56px",
 	controlH: "36px",
-	controlHSm: "32px",
+	controlHSm: "36px",
 	rowH: "44px",
 	gutter: { wide: "24px", mid: "16px", narrow: "12px" },
 	sidebarW: { wide: "228px", mid: "76px" },

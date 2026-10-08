@@ -81,7 +81,7 @@ export function Select({
 	name,
 	value,
 	onChange,
-	size = "md",
+	size: _size = "md",
 	children,
 	"data-testid": testId,
 }: SelectProps) {
@@ -123,7 +123,7 @@ export function Select({
 						data-testid={testId}
 						data-name={name}
 						data-value={value}
-						className={`${choiceTrigger} ${size === "sm" ? "h-[32px]" : "h-[36px]"}`}
+						className={`sy-select__trigger ${choiceTrigger} h-control-h`}
 					>
 						<SelectValue className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
 							{({ selectedText }) => <bdi>{selectedText || " "}</bdi>}

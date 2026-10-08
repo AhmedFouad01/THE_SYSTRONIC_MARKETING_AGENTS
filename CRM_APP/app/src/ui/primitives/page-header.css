@@ -59,3 +59,25 @@
 		line-height: 32px;
 	}
 }
+
+/* Header fields are compact controls: preserve the accessible label without adding a label row. */
+.sy-page-header__actions .sy-field {
+ position: relative;
+ gap: 0;
+}
+
+.sy-page-header__actions .sy-field__label {
+ position: absolute;
+ inline-size: 1px;
+ block-size: 1px;
+ padding: 0;
+ margin: -1px;
+ overflow: hidden;
+ clip-path: inset(50%);
+ white-space: nowrap;
+ border: 0;
+}
+
+.sy-page-header__actions :is(.sy-btn, .sy-select__trigger, .sy-date__trigger, .sy-field__control) {
+ height: var(--sy-control-h);
+}

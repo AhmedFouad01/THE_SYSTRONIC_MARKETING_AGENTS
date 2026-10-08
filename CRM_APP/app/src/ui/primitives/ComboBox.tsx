@@ -79,7 +79,7 @@ export function ComboBox({
 				{label}
 				{required ? " *" : ""}
 			</Label>
-			<div className={`${choiceTrigger} h-[36px]`}>
+			<div className={`${choiceTrigger} h-control-h`}>
 				<Input
 					data-testid={testId}
 					dir={(inputValue ?? text).length ? "auto" : dir}
