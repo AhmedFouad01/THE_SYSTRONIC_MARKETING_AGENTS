@@ -379,6 +379,29 @@ export function createSessionStore(deps: SessionStoreDeps) {
 				return false;
 			}
 		},
+		/** Confirm a rotated/revoked cookie without unmounting a connected recovery screen. */
+  async recheck() {
+   const current = credentials;
+   if (!current || state.status !== "connected") return false;
+   const mine = attempt;
+   try {
+    const info = await deps.fetchSession(current, AbortSignal.timeout(10_000));
+    if (mine !== attempt) return false;
+    if (info.actor !== state.info?.actor) {
+     attempt++; credentials = null; persist(null); set(emptyState());
+     return false;
+    }
+    set({ ...state, info });
+    return true;
+   } catch (e) {
+    if (mine !== attempt) return false;
+    if (isApiError(e) && e.status === 401) {
+     attempt++; credentials = null; persist(null); set({ ...emptyState(), error: e });
+     return false;
+    }
+    throw e;
+   }
+  },
 		async logout() {
 			if (state.switching) return false;
 			if (deps.cookieAuth) {

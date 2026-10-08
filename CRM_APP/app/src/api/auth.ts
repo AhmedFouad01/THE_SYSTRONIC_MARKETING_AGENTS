@@ -1,5 +1,14 @@
 import { errorFromResponse, networkError } from "./errors.ts";
 
+export type AuthSession = {
+ id: string;
+ createdAt: string;
+ updatedAt: string;
+ expiresAt: string;
+ ipAddress?: string | null;
+ userAgent?: string | null;
+};
+
 /** Accepted B3/B5 headless surface; no automatic retry of password mutations. */
 export function createAuthClient(fetchImpl: typeof fetch = fetch) {
 	async function request<T>(
@@ -50,5 +59,11 @@ export function createAuthClient(fetchImpl: typeof fetch = fetch) {
 			request("reset-password", { token, newPassword }),
 		getSession: () => request<{ user: { id: string } } | null>("get-session"),
 		signOut: () => request("sign-out", {}),
+  listSessions: () => request<AuthSession[]>("list-sessions"),
+  revokeSession: (sessionId: string) => request("revoke-session", { sessionId }),
+  revokeOtherSessions: () => request("revoke-other-sessions", {}),
+  revokeSessions: () => request("revoke-sessions", {}),
+  changePassword: (currentPassword: string, newPassword: string) =>
+   request("change-password", { currentPassword, newPassword }),
 	};
 }

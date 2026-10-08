@@ -3,6 +3,22 @@
 import type { MessageKey } from "./en.ts";
 
 export const ar: Record<MessageKey, string> = {
+	"security.intro": "إدارة جلسات تسجيل الدخول وكلمة المرور.",
+	"security.sessions": "جلساتي",
+	"security.refresh": "تحديث الجلسات",
+	"security.revoke": "إلغاء الجلسة",
+	"security.others": "إلغاء الجلسات الأخرى",
+	"security.all": "إلغاء كل الجلسات",
+	"security.confirm": "يجب تسجيل الدخول مجددًا للجلسات الملغاة. هل تريد المتابعة؟",
+	"security.empty": "لا توجد جلسات نشطة.",
+	"security.password": "تغيير كلمة المرور",
+	"security.current": "كلمة المرور الحالية",
+	"security.updated": "تم تحديث إعدادات الأمان.",
+	"security.changed": "تم تغيير كلمة المرور وإلغاء الجلسات الأخرى.",
+	"security.reconcile": "حدّث الجلسات لتأكيد الحالة الحالية قبل إجراء آخر.",
+	"security.totp": "التسجيل في التحقق بخطوتين غير متاح بعد.",
+	"security.expires": "تنتهي",
+
 	"users.intro": "إدارة أعضاء مساحة العمل والدعوات.",
 	"users.refresh": "تحديث",
 	"users.reconcile": "حدّث القوائم قبل محاولة إجراء تغيير آخر.",

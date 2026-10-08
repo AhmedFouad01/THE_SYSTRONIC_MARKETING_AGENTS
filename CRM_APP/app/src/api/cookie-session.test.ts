@@ -31,6 +31,29 @@ function setup(actor = "actor") {
 	};
 }
 describe("cookie session lifecycle", () => {
+ it("rechecks rotated cookies while keeping the recovery screen connected, then clears revoked cookies", async () => {
+  const { store, fetchSession } = setup();
+  await store.signIn("a@example.test", "synthetic", { tenantId: "tenant" });
+  const states: string[] = [];
+  store.subscribe(() => states.push(store.getState().status));
+  expect(await store.recheck()).toBe(true);
+  expect(states).toEqual(["connected"]);
+  fetchSession.mockRejectedValueOnce(new ApiError({status:401,code:"UNAUTHENTICATED",safeMessage:"",requestId:null,retryable:false}));
+  expect(await store.recheck()).toBe(false);
+  expect(store.getState().status).toBe("disconnected");
+  expect(store.getCredentials()).toBeNull();
+ });
+ it("rejects stale recovery checks after invalidation", async () => {
+  const { store, fetchSession } = setup();
+  await store.signIn("a@example.test", "synthetic", { tenantId: "tenant" });
+  let resolve!: (value: typeof info) => void;
+  fetchSession.mockImplementationOnce(() => new Promise(done => { resolve = done; }));
+  const checking = store.recheck();
+  store.invalidate(); resolve(info);
+  expect(await checking).toBe(false);
+  expect(store.getState().status).toBe("disconnected");
+ });
+
 	it("signs in without persisted credentials and only after server tenant validation", async () => {
 		const { store, values, fetchSession } = setup();
 		expect(

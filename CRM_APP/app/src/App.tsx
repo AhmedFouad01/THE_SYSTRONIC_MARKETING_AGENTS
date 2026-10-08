@@ -10,6 +10,7 @@ import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
 
+import { SecurityView } from "./features/auth/SecurityView.tsx";
 import { UsersView } from "./features/auth/UsersView.tsx";
 import { AuthLinkPage } from "./features/auth/AuthLinkPage.tsx";
 import type { AuthLink } from "./features/auth/link.ts";
@@ -73,6 +74,7 @@ function Routed() {
 			actorRole={connected ? roleLabel(session.info?.configure || session.info?.merge ? "manager" : null, t) : null}
 			onDisconnect={() => { void sessionStore.logout(); }}
 			hiddenNavKeys={[
+				...(DEV_BEARER ? ["security"] : []),
 				...(canImport ? [] : ["import"]),
 				...(canReadSchema === true ? [] : ["properties"]),
 				...upcomingHiddenKeys(Boolean(session.info?.configure || session.info?.merge), Boolean(sessionStore.getCredentials()?.grantId)),
@@ -92,7 +94,9 @@ function Routed() {
 /** A successful scope change remounts every feature: selections, records and future import drafts are tenant-bound. */
 function WorkspaceContent({ route, usersEnabled }: { route: ReturnType<typeof useRoute>; usersEnabled: boolean }) {
 	return (
-		route === "/settings/users" ? (
+		route === "/settings/security" ? (
+			<SecurityView enabled={!DEV_BEARER} />
+		) : route === "/settings/users" ? (
 			<UsersView enabled={usersEnabled} />
 		) : route === "/imports" ? (
 			<ImportWizard />

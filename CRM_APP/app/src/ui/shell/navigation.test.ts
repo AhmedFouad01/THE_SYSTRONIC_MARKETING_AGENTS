@@ -23,21 +23,21 @@ describe("hierarchical navigation", () => {
 	});
 	it("reserves future screens as inert text without a navigable route", () => {
 		const upcoming = allNodes(NAV_TREE).filter((n) => n.kind === "upcoming");
-		expect(upcoming.map((n) => n.key)).toEqual(["segments", "journeys", "integrations", "security"]);
+		expect(upcoming.map((n) => n.key)).toEqual(["segments", "journeys", "integrations"]);
 		for (const node of upcoming) expect(node).not.toHaveProperty("route");
 		expect(toRoute("/app/imports")).toBe("/imports");
 		expect(NAV_ROUTES).toContain("/imports");
 		expect(toRoute("/app/settings/users")).toBe("/settings/users");
 		expect(navigationTrail(NAV_TREE, "/settings/users").map(n => n.key)).toEqual(["administration", "users"]);
-		for (const route of ["/segments", "/journeys", "/settings/integrations", "/settings/security"]) expect(toRoute(`/app${route}`)).toBeNull();
+		for (const route of ["/segments", "/journeys", "/settings/integrations"]) expect(toRoute(`/app${route}`)).toBeNull();
 	});
 	it("removes denied live leaves from the hierarchy, aliases and mobile shortcuts", () => {
 		const hidden = ["properties", "leads", "reporting", "journeys", ...upcomingHiddenKeys(false, false)];
 		const tree = filterNavigation(NAV_TREE, hidden);
 		const keys = allNodes(tree).map((n) => n.key);
 		for (const key of hidden) expect(keys).not.toContain(key);
-		expect(keys).not.toContain("settings");
-		expect(keys).not.toContain("administration");
+		expect(keys).toContain("settings");
+		expect(keys).toContain("administration");
 		expect(keys).not.toContain("insights");
 		const mobile = splitMobileNav(linkedLeaves(tree));
 		expect(mobile.primary.map((n) => n.key)).toEqual(["contacts", "deals", "tasks"]);
@@ -51,7 +51,7 @@ describe("hierarchical navigation", () => {
 	it("keeps read-only upcoming leaves while removing manager badges for reps/readers and agency grants", () => {
 		for (const [manager, agency] of [[false, false], [true, true], [false, true]]) {
 			const keys = allNodes(filterNavigation(NAV_TREE, upcomingHiddenKeys(manager, agency))).map((n) => n.key);
-			for (const key of ["integrations", "users", "security"]) expect(keys).not.toContain(key);
+			for (const key of ["integrations", "users"]) expect(keys).not.toContain(key);
 			for (const key of ["segments", "journeys"]) expect(keys).toContain(key);
 		}
 		expect(upcomingHiddenKeys(true, false)).toEqual([]);

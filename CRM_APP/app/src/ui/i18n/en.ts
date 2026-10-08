@@ -2,6 +2,23 @@
 // NAV) where present. Keys marked `// new` have no prototype string and are S1 additions.
 // Placeholders use {name}. AR (ar.ts) must define exactly the same keys (enforced by i18n.test.ts + types).
 export const en = {
+	"security.intro": "Manage your sign-in sessions and password.",
+	"security.sessions": "My sessions",
+	"security.refresh": "Refresh sessions",
+	"security.revoke": "Revoke session",
+	"security.others": "Revoke other sessions",
+	"security.all": "Revoke all sessions",
+	"security.confirm": "Revoked sessions must sign in again. Continue?",
+	"security.empty": "No active sessions.",
+	"security.password": "Change password",
+	"security.current": "Current password",
+	"security.updated": "Security settings updated.",
+	"security.changed": "Password changed. Other sessions were revoked.",
+	"security.reconcile": "Refresh to confirm the current session state before another action.",
+	"security.totp": "Two-step verification enrolment is not yet available.",
+	"security.expires": "Expires",
+
+
 	"users.intro": "Manage members and invitations for this workspace.",
 	"users.refresh": "Refresh",
 	"users.reconcile": "Refresh the lists before trying another change.",

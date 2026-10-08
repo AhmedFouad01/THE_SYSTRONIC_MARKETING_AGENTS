@@ -122,3 +122,34 @@ describe("B8 link auth contracts", () => {
 		}
 	});
 });
+
+describe("B8 security contracts", () => {
+ it("sends stable session IDs and strict password bodies without replay", async () => {
+  const f = vi.fn<typeof fetch>(async () => new Response(JSON.stringify([])));
+  const auth = createAuthClient(f);
+  await auth.listSessions();
+  await auth.revokeSession("stable-session-id");
+  await auth.revokeOtherSessions();
+  await auth.revokeSessions();
+  await auth.changePassword("synthetic-current", "synthetic-new");
+  expect(f.mock.calls.map(c => [c[0], c[1]?.body ? JSON.parse(String(c[1].body)) : undefined])).toEqual([
+   ["/v1/auth/list-sessions", undefined],
+   ["/v1/auth/revoke-session", {sessionId: "stable-session-id"}],
+   ["/v1/auth/revoke-other-sessions", {}],
+   ["/v1/auth/revoke-sessions", {}],
+   ["/v1/auth/change-password", {currentPassword:"synthetic-current",newPassword:"synthetic-new"}],
+  ]);
+  for (const [, options] of f.mock.calls) {
+   expect(options?.credentials).toBe("same-origin");
+   expect(options?.headers).not.toHaveProperty("Authorization");
+   expect(options?.headers).not.toHaveProperty("X-Tenant-ID");
+  }
+ });
+ it("never automatically retries an uncertain password or revocation outcome", async () => {
+  const f = vi.fn<typeof fetch>(async () => { throw new TypeError("network"); });
+  const auth = createAuthClient(f);
+  await expect(auth.changePassword("synthetic", "synthetic-new")).rejects.toMatchObject({code:"NETWORK"});
+  await expect(auth.revokeSession("stable-id")).rejects.toMatchObject({code:"NETWORK"});
+  expect(f).toHaveBeenCalledTimes(2);
+ });
+});

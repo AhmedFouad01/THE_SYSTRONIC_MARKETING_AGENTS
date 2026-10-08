@@ -4,7 +4,7 @@ import { ALL_ROUTES_ACCOUNTED_FOR, ALL_ROUTES_HAVE_NAV, initials, MOBILE_PRIMARY
 describe("shell navigation model", () => {
 	it("linked leaves cover every live route; inert upcoming entries never become routes", () => {
 		const keys = NAV.map((n) => n.key);
-		for (const dead of ["email", "call", "segments", "journeys", "integrations", "security"]) expect(keys).not.toContain(dead);
+		for (const dead of ["email", "call", "segments", "journeys", "integrations"]) expect(keys).not.toContain(dead);
 		expect(NAV.every((n) => typeof n.route === "string")).toBe(true);
 		expect(ALL_ROUTES_HAVE_NAV).toBe(true); // Complete gated /imports now has a live leaf.
 		expect(ALL_ROUTES_ACCOUNTED_FOR).toBe(true);

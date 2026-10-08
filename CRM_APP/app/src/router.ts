@@ -14,6 +14,7 @@ export const ROUTES = [
 	"/reporting-v2",
 	"/settings/properties",
 	"/settings/users",
+	"/settings/security",
 	"/imports",
 ] as const;
 export const PUBLIC_ROUTES = ["/invite", "/reset"] as const;

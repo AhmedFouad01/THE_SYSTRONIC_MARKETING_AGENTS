@@ -45,7 +45,7 @@ export const NAV_TREE: readonly NavNode[] = [
 		{ kind: "link", key: "users", label: "nav.users", icon: "contacts", route: "/settings/users" },
 		{ kind: "group", key: "settings", label: "nav.settings", icon: "settings", children: [
 			{ kind: "link", key: "properties", label: "nav.properties", icon: "settings", route: "/settings/properties" },
-			{ kind: "upcoming", key: "security", label: "nav.security", icon: "lock" },
+			{ kind: "link", key: "security", label: "nav.security", icon: "lock", route: "/settings/security" },
 		] },
 	] },
 ];
@@ -90,5 +90,5 @@ export function splitMobileNav(items: readonly NavLink[] = NAV): { primary: NavL
 
 /** Role defaults affect inert badges only. Screen authority remains server enforced. */
 export function upcomingHiddenKeys(manager: boolean, agencyGrant: boolean): string[] {
-	return manager && !agencyGrant ? [] : ["integrations", "users", "security"];
+	return manager && !agencyGrant ? [] : ["integrations", "users"];
 }
