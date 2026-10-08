@@ -5,3 +5,4 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 
 | date | team | skill_id | friction | task |
 |------|------|----------|----------|------|
+| 2026-10-09 | build | TSST-DEV-SK-015 | no guidance for verifying files under concurrent edit by another session | validate_spine fixes |

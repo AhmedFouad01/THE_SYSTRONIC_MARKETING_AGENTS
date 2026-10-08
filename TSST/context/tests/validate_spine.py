@@ -26,6 +26,7 @@ def drive_only(tok):
     return NO_DRIVE and (tok.endswith(".gdoc") or (tok.startswith("REAL_MEMORY/") and tok.endswith("/")))
 
 
+WARNINGS = []  # non-failing warnings (printed)
 NOTES = []  # informational lines (expected-absent Drive stubs); printed, never failures
 
 
@@ -215,9 +216,13 @@ def structural(portfolio):
         for line in txt.splitlines():
             parent_dir = None
             for m in re.finditer(r"`([^`\n]+)`", line):
+                # Marker convention: a path span directly followed by `(planned)`, `(to be created)`,
+                # `(pattern)` (placeholder name) or `(branch-only)` (only in the app worktree/branch) need not exist.
+                marked = re.match(r"\s*\((?:planned|to be created|pattern|branch-only)\)", line[m.end():]) is not None
                 for tok in m.group(1).split():
                     tok = tok.strip(",;()").lstrip("/") if tok.startswith("/") else tok.strip(",;()")
                     tok = tok.split("#", 1)[0]
+                    tok = re.sub(r":\d+(?:-\d+)?$", "", tok)  # `path:12` / `path:12-20` line refs
                     if any(c in tok for c in "<*…{") or tok.startswith("drive:"):
                         continue
                     if tok.startswith("CRM_") and "/" not in tok and "." in tok:
@@ -226,17 +231,18 @@ def structural(portfolio):
                         parent_dir = os.path.dirname(tok.rstrip("/"))
                         n_checked += 1
                         # Drive-native stubs: `X.md` may exist only as `X.md.gdoc` (documented)
-                        if not (os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)
+                        if not (marked or os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)
                                 or gdoc_expected_absent(tok)):
                             broken.append(f"{rel(f)} -> {tok}")
                     elif parent_dir and re.fullmatch(r"[A-Za-z0-9_.\-]+", tok) and "/" not in tok \
-                            and "." not in tok and tok.startswith(("tsst-",)):
-                        # bare sibling skill names following a prefixed path in the same row
+                            and "." not in tok and tok.startswith(("tsst-",)) and "-sk-" in tok:
+                        # bare sibling skill names (`tsst-<team>-sk-NNN-...`) after a prefixed path in the
+                        # same row; agent names like `tsst-dev` are not siblings
                         n_checked += 1
                         if not os.path.exists(P(f"{parent_dir}/{tok}")):
                             broken.append(f"{rel(f)} -> {parent_dir}/{tok}")
     check("structural", f"backticked repo paths exist ({n_checked} checked)", not broken,
-          "; ".join(broken[:6]))
+          "; ".join(broken[:40]))
 
     # skill ids in studio / build maps
     def ids_for(team_file, section_dir_glob, prefix):
@@ -274,13 +280,24 @@ NEUTRAL_PATTERNS = [
 ]
 
 
+# Report/brief material may name tools and models (external-tool briefs, run reports, benchmark results).
+# Exempt: any `/codex/` or `/reports/` folder, the local-ai-bench results folder, and external-tool brief
+# files (basename `BRIEF_*.md` or `*_BRIEF_*.md`). Spine files (status.md, rules.md, memory/, project.md...) stay strict.
+BENCH_DIR = "TSST/brands/t-sag/projects/tsst-ai/local-ai-bench/"
+
+
+def neutrality_exempt(rp):
+    return ("/codex/" in rp or "/reports/" in rp or rp.startswith(BENCH_DIR)
+            or re.search(r"(^|_)BRIEF_[^/]*$", rp.rsplit("/", 1)[-1]) is not None)
+
+
 def neutrality():
     targets = [P("TSST/context/boot.md"), P("TSST/context/router.yaml"), P("TSST/context/models.yaml"),
                P("TSST/context/bus.md"), P("TSST/context/bridge.md")]
     targets += files_under("TSST/core") + files_under("TSST/teams") + files_under("TSST/brands")
     hits = []
     for f in targets:
-        if not is_text_spine(f):
+        if not is_text_spine(f) or neutrality_exempt(rel(f)):
             continue
         txt = open(f, encoding="utf-8").read()
         for name, pat in NEUTRAL_PATTERNS:
@@ -313,10 +330,27 @@ def isolation():
             dup.append(rel(f) + " (same filename as RM file)")
     check("isolation", "t-sag/memory has no copied Real Memory files", not dup, ", ".join(dup))
 
-    # brand material (assets/) is media on Drive, not spine text
-    total = sum(os.path.getsize(f) for f in files_under("TSST/brands")
-                if "/assets/" not in f.replace(os.sep, "/"))
-    check("isolation", f"TSST/brands < 60 KB ({total} bytes)", total < 60 * 1024)
+    # Size budget = the boot/spine files the router loads at task start (see resolve() below):
+    # per brand status.md, memory/source.md, rules.md and each projects/*/project.md. Project work docs
+    # (handoffs, briefs, reports, specs) and assets/ are NOT counted: they load only on demand.
+    spine = []
+    for bdir in glob.glob(P("TSST/brands/*/")):
+        for sub in ("status.md", "rules.md", "memory/source.md"):
+            f = os.path.join(bdir, *sub.split("/"))
+            if os.path.isfile(f):
+                spine.append(f)
+        spine += glob.glob(os.path.join(bdir, "projects", "*", "project.md"))
+    spine.append(P("TSST/core/portfolio.yaml"))
+    total = sum(os.path.getsize(f) for f in spine)
+    check("isolation", f"brand spine (router-loaded boot files, {len(spine)} files) < 60 KB ({total} bytes)",
+          total < 60 * 1024)
+
+    # WARNING (printed, not failing): media/binary files under TSST/brands outside assets/ belong in assets/.
+    media = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".mp4", ".mov", ".webm", ".mp3", ".wav",
+             ".zip", ".pdf", ".ttf", ".otf", ".woff", ".woff2", ".psd", ".ai", ".docx", ".xlsx", ".pptx")
+    for f in files_under("TSST/brands"):
+        if os.path.splitext(f)[1].lower() in media and "/assets/" not in f.replace(os.sep, "/"):
+            WARNINGS.append(f"media/binary outside assets/: {rel(f)}")
 
 
 # ---------------------------------------------------------------- 4. router simulation
@@ -610,6 +644,12 @@ def main():
             print(f"{r['label']:4} {r['brand']:13} {str(r['project']):14} {str(r['team']):10} "
                   f"{r['tier']:5} {r['n']:5} {r['bytes']:6} {r['ratio']:.0f}x")
     print(f"naive baseline: {base_n} files, {base_b} bytes")
+    if WARNINGS:
+        print(f"\nWARNING: {len(WARNINGS)} item(s) (not failing)")
+        for w_ in WARNINGS[:10]:
+            print(f"  warn: {w_}")
+        if len(WARNINGS) > 10:
+            print(f"  warn: ... +{len(WARNINGS) - 10} more")
     if NOTES:
         print(f"\nNOTE:{len(NOTES)} Drive-native .gdoc stub(s) absent in this runtime; repo-native export present")
         for n in sorted(set(NOTES))[:5]:
