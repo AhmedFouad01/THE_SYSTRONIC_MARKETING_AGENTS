@@ -6,6 +6,18 @@ description: Define readable Arabic and Latin typography systems with role-based
 # TSST-CREATIVE-SK-005 Typography System
 
 Status: `UNVALIDATED`
+Version: 0.2 (2026-10-08)
+
+Changelog: v0.2 adds "Typography craft" (ref/hierarchy.md, lockups.md, pairing-bilingual.md, checklist.md) from GEM-CR-006 after Lead review, plus measured Inter/Alexandria numbers (fonts/METRICS.md, tools/font_metrics.py) and a first lockup test (fonts/lockup-tests/). v0.1 = type-system skill only.
+
+## Typography craft (v0.2, UNVALIDATED)
+
+Text must look designed, not placed. Load before setting any on-image text:
+- ref/hierarchy.md: px size ladder for 1080x1350, tracking, leading, breaks, optical alignment.
+- ref/lockups.md: script+bold (starting point to test), script accent word, serif-italic, Thin+Black, stacked blocks; premium vs cheap tells.
+- ref/pairing-bilingual.md: Inter (EN) / Alexandria (AR) measured size, weight and leading matches, bidi, numerals.
+- ref/checklist.md: pre-export checklist and exercises.
+Test evidence: TSST/CREATIVE/fonts/lockup-tests/NOTES.md. Best so far: script accent word inside an Inter line.
 
 ## Objective
 

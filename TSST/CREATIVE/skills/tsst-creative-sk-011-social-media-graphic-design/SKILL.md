@@ -1,7 +1,7 @@
 ---
 name: tsst-creative-sk-011-social-media-graphic-design
 description: Produce professional feed, Story, carousel and ad-static compositions with a strong focal hierarchy and brand-specific craft.
-version: 0.2
+version: 0.3
 ---
 
 # TSST-CREATIVE-SK-011 — Social Media Graphic Design
@@ -47,6 +47,16 @@ Professional editorial/advertising composition principles + platform format requ
 
 Self-review: `FINAL_ASSET_GATE.md` (L7). Worked example: `TSST/CREATIVE/examples/EX-001_real-photo-layered-carousel.md`.
 
+## Project showcase grammar (v0.3, UNVALIDATED; source: GEM-CR-003 patterns + owner rejection of v1, 2026-10-08)
+- Cover = the best After photo, full-bleed. No colour overlay, band, haze or vignette on project photos, ever.
+- Text on 3-4 slides max, <=6 words, placed in the photo's own empty plane (ceiling, wall). Measure the plane first (`tools/contrast.py` on the p5/p50/p95 pixels under the box); if it fails, move the text or flip text colour, never add a layer. Photos shot in warm low light often have mid-dark ceilings: expect white text there, dark text only on genuinely light planes.
+- Small BEFORE/AFTER corner labels, same corner on every slide that carries one (label face, tracked caps, no stamp).
+- Logo small on the cover and the last slide only, never on every slide; pick the variant by the measured background; never on the hero stone/feature.
+- Layout variety: at least 3 layout types per carousel (full-bleed / framed on a solid field / detail crop / type-only). Before = framed "document", After = full-bleed.
+- Brand colour as SOLID fields only (type-only slide, passe-partout). Type grounds use dark petrol #011C2C as a solid.
+- Real-photo retouch that touches built elements (sockets, signs) needs the owner's OK; keep an unretouched alternate.
+Worked example: `TSST/CREATIVE/examples/EX-003_project-showcase-carousel.md` (v1 rejected, v2).
+
 ## Failure patterns
 
 - logo + headline + line only
@@ -64,3 +74,4 @@ Package installation and study do not validate the skill. Validation requires ac
 
 ## Changelog
 - 0.2 (2026-10-07): Crop limits (L5), logo-on-photo (L6), social types table + carousel grammar (L7), EX-001 pointer. Status unchanged.
+- 0.3 (2026-10-08): Project showcase grammar (UNVALIDATED), from GEM-CR-003 + owner rejection of v1. Status unchanged.

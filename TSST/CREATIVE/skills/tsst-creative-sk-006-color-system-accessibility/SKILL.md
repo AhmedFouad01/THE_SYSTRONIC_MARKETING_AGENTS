@@ -1,7 +1,7 @@
 ---
 name: tsst-creative-sk-006-color-system-accessibility
 description: Build semantic, theme-aware color systems and verify text, interface, and data-visualization contrast without relying on color alone.
-version: 0.2
+version: 0.3
 ---
 
 # TSST-CREATIVE-SK-006 Color System & Accessibility
@@ -51,6 +51,9 @@ Use when defining or auditing palettes, semantic color tokens, themes, state col
 - Before saying an object "matches the brand", compare its measured hue/hex numerically with the files in the brand's `assets/final/`. A navy object (hue ~220) is not petrol (201).
 - Contrast ratios: run `TSST/CREATIVE/tools/contrast.py "#fg" "#bg"` instead of hand formulas.
 
+## Partial-alpha brand colour lesson (v0.3, VILL v1 rejection, measured 2026-10-08)
+A brand colour at partial alpha over a warm photo is not that brand colour: petrol #01304A (L15) at 74-84% over a warm photo measured #3A484A (L26, hue 188 deg) behind the logo and #28363C elsewhere, a grey-teal haze, lighter and colder than the brand. Rules: use brand colour only as a SOLID field; type grounds use dark petrol #011C2C as a solid; measure the rendered pixels behind every text/logo box, not the intended token. v2 fixed it by deleting the layers: zero alpha layers over photos.
+
 ## Guardrails
 
 - Do not use Primer's palette as the target brand palette.
@@ -89,3 +92,4 @@ Source use: semantic-token and accessibility method reference, not palette copyi
 
 ## Changelog
 - 0.2 (2026-10-07): added naming/matching rules after the Lead called petrol #01304A "navy"; points to tools/contrast.py. Status unchanged.
+- 0.3 (2026-10-08): Partial-alpha brand colour lesson with numbers (VILL v1). Status unchanged.

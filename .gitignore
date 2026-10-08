@@ -23,3 +23,6 @@ TSST/brands/*/assets/**/*.pdf
 TSST/brands/*/assets/**/*.mp4
 TSST/brands/*/assets/**/*.mov
 TSST/brands/*/assets/**/*.zip
+
+# Creative reference library: third-party books/guides live on Drive, not in git
+TSST/CREATIVE/library/**/*.pdf

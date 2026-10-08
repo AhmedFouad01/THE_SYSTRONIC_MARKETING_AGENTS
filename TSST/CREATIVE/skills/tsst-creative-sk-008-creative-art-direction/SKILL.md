@@ -1,7 +1,7 @@
 ---
 name: tsst-creative-sk-008-creative-art-direction
 description: Translate approved positioning into distinct, ownable visual directions and execute a selected direction consistently across real channel compositions. Use for art direction, key visuals, photography, composition, lighting, imagery systems, and cross-channel creative—not for brand-governance documentation alone.
-version: 0.2
+version: 0.3
 ---
 
 # TSST-CREATIVE-SK-008 Creative Art Direction
@@ -34,6 +34,9 @@ Turn an approved brand brief into a distinctive visual idea that governs imagery
 ## Art-direction standard
 
 A direction must contain an organizing idea that is recognizable without its color palette. Typography, image crop, geometry, material/texture, and negative space should reinforce that idea. Avoid generic centered headline plus gradient, interchangeable stock imagery, ornamental technology grids, and channel layouts that are merely resized.
+
+## Light leads the eye (v0.3, UNVALIDATED; VILL direction B, owner v1 critique 2026-10-08)
+When the photo's own light is the story (warm cove light, sun on stone), never dull it. No overlay, haze, vignette or tint over real photography to "help" type or logo. Legibility comes from crop and placement (empty plane, dark/quiet area), and from choosing the type colour against the measured pixels. If a layout needs a layer to read, change the layout.
 
 ## Cross-channel requirements
 
@@ -77,3 +80,4 @@ Given one fictional bilingual brand brief, create three distinct directions, sel
 
 ## Changelog
 - 0.2 (2026-10-07): Reference-to-style-sheet method (L3). Status unchanged.
+- 0.3 (2026-10-08): 'Light leads the eye' rule: no legibility overlays on photos. Status unchanged.

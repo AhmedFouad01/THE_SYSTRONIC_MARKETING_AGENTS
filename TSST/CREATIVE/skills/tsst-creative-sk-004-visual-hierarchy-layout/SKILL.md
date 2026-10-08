@@ -1,5 +1,6 @@
 ---
 name: tsst-creative-sk-004-visual-hierarchy-layout
+version: 0.2
 description: Design or review visual hierarchy and layout using reading order, grid, spacing, alignment, rhythm, responsive behavior, and task-focused composition.
 ---
 
@@ -34,6 +35,14 @@ Use for layout design, hierarchy critique, grid definition, spacing systems, res
 6. Adapt for target breakpoints, aspect ratios, and Arabic/Latin directionality.
 7. Review at actual output size and with realistic content lengths.
 8. Document issues by severity, rule, evidence, and correction.
+
+## Photo composition & layout for social (v0.2, UNVALIDATED; source GEM-CR-005, Lead overrides applied)
+
+Use when a photo carries type or must be cropped to a social format. Read only what you need:
+- `ref/composition.md` - principles + interior specifics, each with a measurable test.
+- `ref/cropping-layout.md` - crop priority, finding text space, layout types, grid, carousel rhythm. No overlays on project photos; upscale <= 1.25x; safe zones from `TOOLCHAIN.md`.
+- `ref/critique.md` - scored sheet (points to FINAL_ASSET_GATE, no duplication) + 10 exercises.
+- Tool: `python TSST/CREATIVE/tools/text_space.py --slide DIR | --photo P --box WxH [--subject x0,y0,x1,y1] --out OUT` ranks the 3 quietest text planes with brand text colour + contrast. Ranking is quietness only; judge reading order and light yourself.
 
 ## Output contract
 
@@ -79,3 +88,6 @@ Review three intentionally flawed creatives across social, deck, and web. Identi
 - [Primer layout foundations](https://primer.style/product/getting-started/foundations/layout/)
 
 Source use: design-system and layout principles, not visual imitation.
+
+## Changelog
+- 0.2 (2026-10-08): Photo composition and layout section, ref/ (composition, cropping-layout, critique), tools/text_space.py; from GEM-CR-005 with Lead overrides. Status unchanged (UNVALIDATED).
