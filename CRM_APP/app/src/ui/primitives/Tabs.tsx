@@ -1,7 +1,11 @@
-import { type KeyboardEvent, type ReactNode, useId, useRef } from "react";
-import { useI18n } from "../i18n/index.ts";
-import "./tabs.css";
-
+import type { ReactNode } from "react";
+import {
+	Tabs as AriaTabs,
+	TabList,
+	Tab,
+	TabPanel,
+} from "react-aria-components";
+import { choiceFocus } from "./choices.ts";
 export type TabItem = {
 	id: string;
 	label: ReactNode;
@@ -48,67 +52,37 @@ export type TabsProps = {
 };
 
 export function Tabs({ tabs, value, onChange, label }: TabsProps) {
-	const { dir } = useI18n();
-	const base = useId();
-	const refs = useRef<Array<HTMLButtonElement | null>>([]);
-	const active = Math.max(
-		0,
-		tabs.findIndex((t) => t.id === value),
-	);
-
-	const onKeyDown = (e: KeyboardEvent, index: number) => {
-		const next = nextTabIndex(
-			e.key,
-			index,
-			tabs.length,
-			dir,
-			tabs.map((t) => Boolean(t.disabled)),
-		);
-		if (next === null) return;
-		e.preventDefault();
-		const target = tabs[next];
-		if (!target) return;
-		onChange(target.id);
-		refs.current[next]?.focus();
-	};
-
-	const current = tabs[active];
 	return (
-		<div className="sy-tabs-wrap">
-			<div className="sy-tabs" role="tablist" aria-label={label}>
-				{tabs.map((t, i) => (
-					<button
+		<AriaTabs
+			selectedKey={value}
+			onSelectionChange={(key) => onChange(String(key))}
+			keyboardActivation="automatic"
+			className="sy-tabs-wrap min-w-0"
+		>
+			<TabList
+				aria-label={label}
+				className="sy-tabs flex gap-4 p-4 border-b border-border overflow-x-auto max-[640px]:[scrollbar-width:none] max-[640px]:[mask-image:linear-gradient(to_right,transparent,var(--sy-surface)_12px,var(--sy-surface)_calc(100%_-_28px),transparent)] rtl:max-[640px]:[mask-image:linear-gradient(to_left,transparent,var(--sy-surface)_12px,var(--sy-surface)_calc(100%_-_28px),transparent)]"
+			>
+				{tabs.map((t) => (
+					<Tab
 						key={t.id}
-						ref={(el) => {
-							refs.current[i] = el;
-						}}
-						type="button"
-						role="tab"
-						id={`${base}-tab-${t.id}`}
-						aria-selected={i === active}
-						aria-controls={`${base}-panel-${t.id}`}
-						tabIndex={i === active ? 0 : -1}
-						disabled={t.disabled}
-						className="sy-tab"
-						onClick={() => onChange(t.id)}
-						onKeyDown={(e) => onKeyDown(e, i)}
+						id={t.id}
+						isDisabled={t.disabled}
+						className={`sy-tab flex shrink-0 items-center justify-center h-[38px] px-12 border-0 border-b-2 border-transparent bg-transparent text-text-2 font-[600] cursor-pointer data-[hovered]:bg-hover data-[selected]:text-text data-[selected]:border-focus data-[disabled]:text-text-disabled data-[disabled]:cursor-not-allowed ${choiceFocus}`}
 					>
 						{t.label}
-					</button>
+					</Tab>
 				))}
-			</div>
-			{current ? (
-				<div
-					role="tabpanel"
-					id={`${base}-panel-${current.id}`}
-					aria-labelledby={`${base}-tab-${current.id}`}
-					// biome-ignore lint/a11y/noNoninteractiveTabindex: WAI-ARIA tabs pattern - panel without focusable content must be reachable
-					tabIndex={0}
-					className="sy-tabpanel"
+			</TabList>
+			{tabs.map((t) => (
+				<TabPanel
+					key={t.id}
+					id={t.id}
+					className={`sy-tabpanel pt-12 ${choiceFocus}`}
 				>
-					{current.panel}
-				</div>
-			) : null}
-		</div>
+					{t.panel}
+				</TabPanel>
+			))}
+		</AriaTabs>
 	);
 }
