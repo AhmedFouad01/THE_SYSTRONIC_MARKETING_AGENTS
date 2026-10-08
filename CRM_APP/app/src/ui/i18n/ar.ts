@@ -3,6 +3,26 @@
 import type { MessageKey } from "./en.ts";
 
 export const ar: Record<MessageKey, string> = {
+	"auth.title": "تسجيل الدخول",
+	"auth.intro": "سجل الدخول إلى مساحة عملك.",
+	"auth.email": "البريد الإلكتروني",
+	"auth.password": "كلمة المرور",
+	"auth.workspace": "معرّف مساحة العمل",
+	"auth.workspaceHint": "استخدم معرّف مساحة العمل الذي قدمه لك المسؤول.",
+	"auth.submit": "تسجيل الدخول",
+	"auth.checking": "جارٍ تسجيل الدخول…",
+	"auth.required": "هذا الحقل مطلوب.",
+	"auth.workspaceInvalid": "أدخل معرّف مساحة عمل صالحاً.",
+	"auth.emailInvalid": "أدخل بريداً إلكترونياً صالحاً.",
+	"auth.error.invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+	"auth.error.too_many_attempts": "محاولات فاشلة كثيرة. حاول مرة أخرى لاحقاً.",
+	"auth.error.rate_limited": "طلبات كثيرة. حاول مرة أخرى بعد قليل.",
+	"auth.error.origin_not_allowed": "هذا الطلب جاء من مصدر غير مسموح به.",
+	"auth.error.unavailable": "تسجيل الدخول غير متاح حالياً.",
+	"auth.error.busy": "تسجيل الدخول مشغول. حاول مرة أخرى بعد قليل.",
+	"auth.error.request_rejected": "لم يتم قبول طلب تسجيل الدخول.",
+	"auth.error.unauthenticated": "يرجى تسجيل الدخول.",
+
 	"charts.pipeline.title": "مسار المبيعات حسب المرحلة",
 	"charts.pipeline.stage": "المرحلة",
 	"charts.pipeline.count": "الصفقات",

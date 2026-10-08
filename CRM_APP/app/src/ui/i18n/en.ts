@@ -2,6 +2,26 @@
 // NAV) where present. Keys marked `// new` have no prototype string and are S1 additions.
 // Placeholders use {name}. AR (ar.ts) must define exactly the same keys (enforced by i18n.test.ts + types).
 export const en = {
+	"auth.title": "Sign in",
+	"auth.intro": "Sign in to your workspace.",
+	"auth.email": "Email",
+	"auth.password": "Password",
+	"auth.workspace": "Workspace ID",
+	"auth.workspaceHint": "Use the workspace ID provided by your administrator.",
+	"auth.submit": "Sign in",
+	"auth.checking": "Signing in…",
+	"auth.required": "This field is required.",
+	"auth.workspaceInvalid": "Enter a valid workspace ID.",
+	"auth.emailInvalid": "Enter a valid email.",
+	"auth.error.invalid_credentials": "The email or password is not correct.",
+	"auth.error.too_many_attempts": "Too many failed attempts. Try again later.",
+	"auth.error.rate_limited": "Too many requests. Try again in a moment.",
+	"auth.error.origin_not_allowed": "This request came from an origin that is not allowed.",
+	"auth.error.unavailable": "Sign-in is not available right now.",
+	"auth.error.busy": "Sign-in is busy. Try again in a moment.",
+	"auth.error.request_rejected": "The sign-in request was not accepted.",
+	"auth.error.unauthenticated": "Please sign in.",
+
 	"charts.pipeline.title": "Pipeline by stage",
 	"charts.pipeline.stage": "Stage",
 	"charts.pipeline.count": "Deals",
