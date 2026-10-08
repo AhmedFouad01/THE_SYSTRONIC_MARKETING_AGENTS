@@ -32,7 +32,7 @@ import {
 	OBJECTS,
 	type ObjectKey,
 	type ObjectSchema,
-	pickLabel,
+	contentLabel,
 	type PropertyDef,
 	type WriteErrorKind,
 } from "./model.ts";
@@ -40,7 +40,8 @@ import { PropertyDialog } from "./PropertyDialog.tsx";
 import { useCommand } from "./useCommand.ts";
 import "./properties-kit.css";
 
-type Dialogs = { kind: "create" } | { kind: "edit"; key: string } | { kind: "options"; key: string } | { kind: "groups" } | { kind: "archive"; key: string } | null;
+type Dialogs =
+	| { kind: "create" } | { kind: "edit"; key: string } | { kind: "options"; key: string } | { kind: "groups" } | { kind: "archive"; key: string } | null;
 
 const PAGE_ERRORS: Record<WriteErrorKind, MessageKey> = {
 	validation: "props.err.validation",
@@ -76,7 +77,7 @@ function PropertyRow({
 	onMove: (dir: -1 | 1) => void;
 }) {
 	const { t, locale } = useI18n();
-	const name = pickLabel(p.label, locale, p.key);
+	const name = contentLabel(p, locale, t, p.key);
 	return (
 		<li className={`sy-props__row${p.archived ? " sy-props__row--archived" : ""}`} data-testid="property-row" data-key={p.key}>
 			<div className="sy-props__main">
@@ -91,11 +92,17 @@ function PropertyRow({
 				{t(`props.type.${p.type}` as MessageKey)}
 			</span>
 			<span className="sy-props__badges">
-				{p.is_system ? <Badge tone="info">{t("props.badge.system")}</Badge> : null}
-				{p.archived ? <Badge tone="warning">{t("props.badge.archived")}</Badge> : null}
+				{p.is_system ? (
+					<Badge tone="info">{t("props.badge.system")}</Badge>
+				) : null}
+				{p.archived ? (
+					<Badge tone="warning">{t("props.badge.archived")}</Badge>
+				) : null}
 				{p.required ? <Badge>{t("props.badge.required")}</Badge> : null}
 				{p.read_only ? <Badge>{t("props.badge.readOnly")}</Badge> : null}
-				{p.sensitive ? <Badge tone="danger">{t("props.badge.sensitive")}</Badge> : null}
+				{p.sensitive ? (
+					<Badge tone="danger">{t("props.badge.sensitive")}</Badge>
+				) : null}
 			</span>
 			{manage && !p.archived ? (
 				<span className="sy-props__actions">
@@ -253,11 +260,13 @@ function Body({
 				</div>
 			) : null}
 			<div data-testid="properties-list">
-				{total === 0 && query.trim() !== "" ? <EmptyState title={t("props.empty")} /> : null}
+				{total === 0 && query.trim() !== "" ? (
+					<EmptyState title={t("props.empty")} />
+				) : null}
 				{groups.map(({ group, properties }) => (
-					<section key={group.key} className="sy-props__group" aria-label={pickLabel(group.label, locale, group.key)} data-testid="property-group">
+					<section key={group.key} className="sy-props__group" aria-label={contentLabel(group, locale, t, group.key)} data-testid="property-group">
 						<h2 className="sy-props__grouphead">
-							<BidiText>{pickLabel(group.label, locale, group.key)}</BidiText>
+							<BidiText>{contentLabel(group, locale, t, group.key)}</BidiText>
 							<span className="sy-props__count">{t(countKey(properties.length, locale), { count: formatCount(properties.length) })}</span>
 						</h2>
 						{properties.length === 0 ? (
@@ -312,7 +321,7 @@ function Body({
 			>
 				{archiving ? (
 					<p>
-						<BidiText>{pickLabel(archiving.label, locale, archiving.key)}</BidiText>
+						<BidiText>{contentLabel(archiving, locale, t, archiving.key)}</BidiText>
 					</p>
 				) : null}
 			</Dialog>
@@ -331,8 +340,12 @@ export function PropertiesView() {
 	let content: React.ReactNode;
 	if (state.status === "loading") content = <SkeletonRows count={5} />;
 	else if (state.status === "forbidden") content = <ForbiddenState />;
-	else if (state.status === "error") content = <ErrorState title={t("props.loadError")} onRetry={() => void reload()} />;
-	else content = <Body key={object} object={object} schema={state.schema} manage={manage} reload={reload} />;
+	else if (state.status === "error") content = (
+			<ErrorState title={t("props.loadError")} onRetry={() => void reload()} />
+		);
+	else content = (
+			<Body key={object} object={object} schema={state.schema} manage={manage} reload={reload} />
+		);
 
 	return (
 		<div className="sy-props" data-testid="properties-page">

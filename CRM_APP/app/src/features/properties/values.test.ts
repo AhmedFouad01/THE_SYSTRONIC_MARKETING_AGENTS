@@ -27,7 +27,7 @@ import {
 
 const def = (key: string, type: PropertyDef["type"], over: Partial<PropertyDef> = {}): PropertyDef => ({
 	key,
-	label: { en: key },
+	label: key,
 	type,
 	display: "default",
 	group: "general",
@@ -48,7 +48,7 @@ const def = (key: string, type: PropertyDef["type"], over: Partial<PropertyDef> 
 });
 const opt = (value: string, over: Partial<PropertyDef["options"][number]> = {}) => ({
 	value,
-	label: { en: value.toUpperCase(), ar: `${value}-ar` },
+	label: value.toUpperCase(),
 	color: null,
 	position: 1,
 	archived: false,
@@ -261,7 +261,7 @@ describe("read formatting", () => {
 	});
 	it("selects become chips with the option label in the UI language and colour", () => {
 		expect(readValue(tier, "gold", ctx("en"))).toEqual({ kind: "chips", chips: [{ value: "gold", label: "GOLD", color: "amber", archived: false }] });
-		expect(readValue(tier, "gold", ctx("ar"))).toMatchObject({ chips: [{ label: "gold-ar" }] });
+		expect(readValue(tier, "gold", ctx("ar"))).toMatchObject({ chips: [{ label: "GOLD" }] });
 		expect(readValue(tier, "old", ctx("en"))).toMatchObject({ chips: [{ archived: true }] });
 		expect(readValue(tags, ["a", "b"], ctx("en"))).toMatchObject({ kind: "chips", chips: [{ value: "a" }, { value: "b" }] });
 		expect(readValue(tags, ["ghost"], ctx("en"))).toMatchObject({ chips: [{ value: "ghost", label: "ghost", archived: true }] });
@@ -285,8 +285,8 @@ describe("grouping", () => {
 		types: [],
 		option_colors: [],
 		groups: [
-			{ key: "general", label: { en: "General" }, position: 1, version: 1, archived: false },
-			{ key: "extra", label: { en: "Extra" }, position: 2, version: 1, archived: false },
+			{ key: "general", label: "General", position: 1, version: 1, archived: false },
+			{ key: "extra", label: "Extra", position: 2, version: 1, archived: false },
 		],
 		properties: [
 			def("title", "text", { is_system: true }),

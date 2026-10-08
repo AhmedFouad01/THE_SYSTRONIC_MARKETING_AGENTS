@@ -30,7 +30,7 @@ const ERRORS: Record<string, MessageKey> = {
 };
 
 export function ImportWizard() {
-	const { t, tx, locale, formatCount, formatNumber } = useI18n();
+	const { t, tx, formatCount, formatNumber } = useI18n();
 	const session = useSession();
 	const actor = session.info?.actor ?? "";
 	const workspace = session.workspace;
@@ -158,7 +158,7 @@ export function ImportWizard() {
 			if (previewGate.current.accepts(ticket, draftRef.current.revision)) setPreviewing(false);
 		}
 	};
-	const targetLabel = (target: Target): string => FIXED_LABELS[target.target] ? t(FIXED_LABELS[target.target]) : typeof target.label === "string" ? target.label : target.label[locale] ?? target.label.en ?? target.label.ar ?? target.target;
+	const targetLabel = (target: Target): string => FIXED_LABELS[target.target] ? t(FIXED_LABELS[target.target]) : target.label || target.target;
 	const errorText = (code: string): string => t(ERRORS[code] ?? (code.startsWith("REQUIRED_TARGET_") ? "import.error.required" : code.startsWith("ZIP_") || code === "XML_DTD_FORBIDDEN" ? "import.error.archive" : "error.generic"));
 	const ownerIds = owners.map((owner) => owner.id);
 	const inspection = draft.inspection;
@@ -168,17 +168,34 @@ export function ImportWizard() {
 	if (gate !== "ready" || !fields || !workspace || workspace.grantId) return (
 		<Panel title={t("nav.import")}>
 			<p role="alert">{t(gate === "denied" || workspace?.grantId ? "import.denied" : "import.fieldsFailed")}</p>
-			{gate === "error" ? <Button onClick={loadFields}>{t("state.retry")}</Button> : null}
+			{gate === "error" ? (
+					<Button onClick={loadFields}>{t("state.retry")}</Button>
+				) : null}
 			<Button onClick={() => navigate("/contacts")}>{t("import.returnCrm")}</Button>
 		</Panel>
 	);
 	return (
 		<div className="grid gap-16 min-w-0" data-testid="import-wizard">
 			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : draft.step === "policy" ? 4 : 5), total: formatCount(5) })} />
-			{draft.step !== "result" ? <Button onClick={() => update({ step: "result" })}>{t("import.history")}</Button> : null}
-			<p className="sy-import__workspace">{t("workspace.label")}: <Identity value={workspace.tenantId} label={workspaceName(workspace, t("nav.workspace"))} /></p>
-			{error ? <div ref={errorSummary} tabIndex={-1} className="border border-solid border-danger-icon bg-danger-field-bg text-danger-fg rounded-8 p-12" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Identity value={requestId} label={t("import.errorDetails")} /></details> : null}</div> : null}
-			{draft.step === "result" ? <Panel title={t("import.step.result")}><ImportResults commit={draft.commit} onRetry={() => void importCommitController.submit(scope, gate === "ready", issues)} onNew={() => resetInspection({ ...newDraft() })} onEdit={() => update({ step: "mapping" })} onDenied={deny} /></Panel> : draft.step === "upload" ? <Panel title={t("import.step.upload")}>
+			{draft.step !== "result" ? (
+				<Button onClick={() => update({ step: "result" })}>{t("import.history")}</Button>
+			) : null}
+			<p className="sy-import__workspace">{t("workspace.label")}:{" "}
+				<Identity value={workspace.tenantId} label={workspaceName(workspace, t("nav.workspace"))} /></p>
+			{error ? (
+				<div ref={errorSummary} tabIndex={-1} className="border border-solid border-danger-icon bg-danger-field-bg text-danger-fg rounded-8 p-12" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? (
+						<p><Bdi>{apiFailure.safeMessage}</Bdi></p>
+					) : null}{apiFailure ? (
+						<p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p>
+					) : null}{apiFailure?.issues.map((issue) => (
+						<p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>))}{requestId ? (
+						<details><summary>{t("import.errorDetails")}</summary><Identity value={requestId} label={t("import.errorDetails")} /></details>
+					) : null}</div>
+			) : null}
+			{draft.step === "result" ? (
+				<Panel title={t("import.step.result")}><ImportResults commit={draft.commit} onRetry={() => void importCommitController.submit(scope, gate === "ready", issues)} onNew={() => resetInspection({ ...newDraft() })} onEdit={() => update({ step: "mapping" })} onDenied={deny} /></Panel>
+			) : draft.step === "upload" ? (
+				<Panel title={t("import.step.upload")}>
 				<div className="grid gap-12 min-w-0">
 					<Select label={t("import.object")} value={draft.object} disabled={processing} onChange={(event) => {
 						resetInspection({ ...newUpload(event.target.value as ImportObject), options: { ...draft.options, sheet: "1" } });
@@ -189,17 +206,26 @@ export function ImportWizard() {
 					<FileDropZone label={t("import.chooseFile")} acceptedFileTypes={fields.formats.map((format) => `.${format}`)} disabled={processing}
       file={draft.file ? { name: inspection?.file.name ?? cleanFilename(draft.file.name), size: draft.file.size } : null}
       onSelect={chooseFile} onRemove={() => resetInspection({ file: null, file_base64: null, options: { ...draft.options, sheet: "1" } })} />
-					{draft.file && fileFormat(draft.file.name) === "xlsx" ? <Input label={t("import.sheet")} hint={t("import.sheetHint")} value={draft.options.sheet} disabled={processing} onChange={(event) => resetInspection({ options: { ...draft.options, sheet: event.target.value } })} /> : null}
+					{draft.file && fileFormat(draft.file.name) === "xlsx" ? (
+							<Input label={t("import.sheet")} hint={t("import.sheetHint")} value={draft.options.sheet} disabled={processing} onChange={(event) => resetInspection({ options: { ...draft.options, sheet: event.target.value } })} />
+						) : null}
 					<Input label={t("import.country")} hint={t("import.countryHint")} value={draft.options.default_country_code} disabled={processing} dir="ltr" onChange={(event) => update({ options: { ...draft.options, default_country_code: event.target.value } })} />
 					<Select label={t("common.owner")} value={draft.options.owner_id} disabled={processing} onChange={(event) => update({ options: { ...draft.options, owner_id: event.target.value } })}>
-						<option value="">{t("import.ownerDefault")}</option>{owners.map((owner) => <option key={owner.id} value={owner.id}>{owner.name}</option>)}
+						<option value="">{t("import.ownerDefault")}</option>{owners.map((owner) => (
+								<option key={owner.id} value={owner.id}>{owner.name}</option>
+							))}
 					</Select>
 					{processing ? <p role="status">{t("import.loading")}</p> : null}
-					{inspection ? <p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p> : null}
+					{inspection ? (
+							<p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p>
+						) : null}
 					<div className="flex flex-wrap gap-8 mt-12"><Button disabled={!draft.file} loading={processing} onClick={() => void inspect()}>{t("import.inspect")}</Button><Button variant="primary" disabled={!inspection || processing || optionIssues(draft.options, ownerIds).length > 0} onClick={() => update({ step: "mapping" })}>{t("import.nextMapping")}</Button></div>
-					{optionIssues(draft.options, ownerIds).map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
+					{optionIssues(draft.options, ownerIds).map((issue) => (
+							<p key={issue} role="alert">{errorText(issue)}</p>))}
 				</div>
-			</Panel> : draft.step === "mapping" && inspection ? <Panel title={t("import.step.mapping")}>
+			</Panel>
+			) : draft.step === "mapping" && inspection ? (
+				<Panel title={t("import.step.mapping")}>
 				<p><Bdi>{inspection.file.name}</Bdi></p>
 				<p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p>
 				<p>{t("import.sampleHint")}</p>
@@ -207,26 +233,48 @@ export function ImportWizard() {
 					{columns.map(({ header, column }) => {
 						const selected = draft.mapping.find((item) => item.column === column)?.target ?? "";
 						const target = fields.targets.find((item) => item.target === selected);
-						return <tr key={column}><th scope="row">{formatCount(column + 1)} · <Bdi>{header}</Bdi></th><td>{inspection.samples.map((sample) => <p key={sample.row}><Bdi>{sampleText(sample.cells[column] ?? null).slice(0, 120)}</Bdi></p>)}</td><td>
+						return (
+										<tr key={column}><th scope="row">{formatCount(column + 1)} · <Bdi>{header}</Bdi></th><td>{inspection.samples.map((sample) => (
+													<p key={sample.row}><Bdi>{sampleText(sample.cells[column] ?? null).slice(0, 120)}</Bdi></p>
+												))}</td><td>
 							<Select label={`${t("import.column")} ${formatCount(column + 1)}`} value={selected} onChange={(event) => update({ mapping: setColumn(draft.mapping, column, event.target.value) })}>
-								<option value="">{t("import.ignore")}</option>{fields.targets.map((field) => <option key={field.target} value={field.target} disabled={draft.mapping.some((item) => item.target === field.target && item.column !== column)}>{targetLabel(field)}{field.required ? ` (${t("import.required")})` : ""}</option>)}
+								<option value="">{t("import.ignore")}</option>{fields.targets.map((field) => (
+														<option key={field.target} value={field.target} disabled={draft.mapping.some((item) => item.target === field.target && item.column !== column)}>{targetLabel(field)}{field.required ? ` (${t("import.required")})` : ""}</option>))}
 							</Select>
-							{target?.property_required ? <p>{t("import.propertyRequired")}</p> : null}
-							{target?.type ? <p>{t(typeHint(target.type))}</p> : null}
-							{target?.options?.length ? <p>{t("import.allowedOptions")}: {target.options.map((option) => <span key={option}><Bdi>{option}</Bdi>{" "}</span>)}</p> : null}
-						</td></tr>;
+							{target?.property_required ? (
+													<p>{t("import.propertyRequired")}</p>
+												) : null}
+							{target?.type ? (
+													<p>{t(typeHint(target.type))}</p>
+												) : null}
+							{target?.options?.length ? (
+													<p>{t("import.allowedOptions")}:{" "}
+														{target.options.map((option) => (
+															<span key={option}><Bdi>{option}</Bdi>{" "}</span>))}</p>
+												) : null}
+						</td></tr>
+									);
 					})}
 				</tbody></table></div>
-				{issues.map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
-				{!issues.length ? <p role="status">{t("import.mappingReady")}</p> : null}
+				{issues.map((issue) => (
+						<p key={issue} role="alert">{errorText(issue)}</p>))}
+				{!issues.length ? (
+						<p role="status">{t("import.mappingReady")}</p>
+					) : null}
 				<div className="flex flex-wrap gap-8 mt-12"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button variant="primary" disabled={issues.length > 0} loading={previewing} onClick={() => void runPreview()}>{t("import.runPreview")}</Button></div>
-			</Panel> : <Panel title={t(draft.step === "policy" ? "import.step.policy" : "import.step.preview")}>
+			</Panel>
+			) : (
+				<Panel title={t(draft.step === "policy" ? "import.step.policy" : "import.step.preview")}>
 				<PreviewReview draft={draft} busy={previewing} issues={issues} onChange={(options) => update({ options })} onPreview={() => void runPreview()} onBack={() => { cancelPreview(); setError(null); update({ step: "mapping" }); }} onPolicy={() => update({ step: "policy" })} onCommit={() => void importCommitController.submit(scope, gate === "ready", issues)} />
-			</Panel>}
+			</Panel>
+			)}
 		</div>
 	);
 }
 function newUpload(object: ImportObject): Partial<ImportDraft> { return { object, file: null, file_base64: null }; }
 function typeHint(type: string): MessageKey {
-	return ({ currency: "import.hint.currency", date: "import.hint.date", datetime: "import.hint.datetime", checkbox: "import.hint.checkbox", multi_select: "import.hint.multiSelect", number: "import.hint.number" } as Record<string, MessageKey>)[type] ?? "import.hint.text";
+	return (
+		(
+			{ currency: "import.hint.currency", date: "import.hint.date", datetime: "import.hint.datetime", checkbox: "import.hint.checkbox", multi_select: "import.hint.multiSelect", number: "import.hint.number" } as Record<string, MessageKey>)[type] ?? "import.hint.text"
+	);
 }

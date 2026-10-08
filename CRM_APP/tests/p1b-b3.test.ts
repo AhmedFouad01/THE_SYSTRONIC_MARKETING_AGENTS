@@ -77,7 +77,7 @@ async function call(
 	return { status: r.status, body: (await r.json()) as Record<string, any> };
 }
 const cmd = () => ({ command_id: randomUUID() });
-const L = (en: string) => ({ en, ar: `${en} ع` });
+const L = (label: string) => label;
 const errs = (r: Res) =>
 	(r.body.errors ?? []).map((e: { property?: string; code: string }) => `${e.property ?? ""}:${e.code}`);
 const one = async (sql: string, args: unknown[] = []) => (await admin.query(sql, args)).rows[0];
@@ -131,7 +131,8 @@ const get = (who: Who, kind: string, id: string) => call(who, "GET", `/v1/${kind
 async function contactWith(properties?: Record<string, unknown>, name = "B3 contact", who: Who = mgr) {
 	const r = await newContact(who, name, properties);
 	assert.equal(r.status, 201, JSON.stringify(r.body));
-	return r.body.data as { id: string; version: number; properties: Record<string, unknown> };
+	return r.body.data as { id: string; version: number; properties: Record<string, unknown>;
+	};
 }
 const lastAudit = async (id: string) =>
 	(await one("SELECT action,changed_fields FROM crm.audit_log WHERE object_id=$1 ORDER BY occurred_at DESC,id DESC LIMIT 1", [id])) as {

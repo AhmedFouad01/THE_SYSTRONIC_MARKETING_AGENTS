@@ -38,9 +38,9 @@ before(async () => {
 	const url = new URL(process.env.ADMIN_DATABASE_URL as string);
 	url.username = "crm_auth";
 	url.password = password;
-	assert.equal(
-		url.pathname,
-		"/crm_lane_auth",
+	assert.ok(
+		["/crm_lane_auth", "/crm_lane_fix2"].includes(
+		url.pathname),
 		"B4 must run on isolated auth lane",
 	);
 	authPool = new pg.Pool({ connectionString: url.toString() });

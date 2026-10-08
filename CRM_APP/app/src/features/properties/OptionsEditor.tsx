@@ -2,7 +2,7 @@ import { Button, IconButton, Input, type MessageKey, useI18n } from "../../ui/in
 import { ColorPicker, MoveButtons } from "./controls.tsx";
 import { type DraftErrors, issueMessageKey, moveItem, type OptionColor, type OptionDraft, OPTIONS_MAX } from "./model.ts";
 
-/** Draft options of a property being CREATED: add, rename (EN + AR), colour, move up/down, remove. Values are derived on submit. */
+/** Draft options of a property being CREATED: add, rename, colour, move up/down, remove. Values are derived on submit. */
 export function OptionsEditor({
 	options,
 	colors,
@@ -35,26 +35,22 @@ export function OptionsEditor({
 					{listError}
 				</p>
 			) : null}
-			{options.length === 0 ? <p className="sy-props__muted">{t("props.opt.empty")}</p> : null}
+			{options.length === 0 ? (
+				<p className="sy-props__muted">{t("props.opt.empty")}</p>
+			) : null}
 			<ol className="sy-props__optlist">
 				{options.map((o, i) => (
 					<li key={o.id} className="sy-props__opt" data-testid="option-row">
 						<span className="sy-props__optno">{t("props.opt.rowLabel", { index: formatCount(i + 1) })}</span>
 						<div className="sy-form-row">
 							<Input
-								label={t("props.opt.labelEn")}
-								value={o.en}
+								label={t("props.opt.label")}
+								dir="auto"
+								value={o.label}
 								maxLength={80}
-								data-testid="option-en"
+								data-testid="option-label"
 								error={issueText(o, i)}
-								onChange={(e) => patch(o.id, { en: e.target.value })}
-							/>
-							<Input
-								label={t("props.opt.labelAr")}
-								value={o.ar}
-								maxLength={80}
-								data-testid="option-ar"
-								onChange={(e) => patch(o.id, { ar: e.target.value })}
+								onChange={(e) => patch(o.id, { label: e.target.value })}
 							/>
 						</div>
 						<ColorPicker
@@ -88,7 +84,7 @@ export function OptionsEditor({
 				icon="plus"
 				disabled={options.length >= OPTIONS_MAX}
 				data-testid="option-add"
-				onClick={() => onChange([...options, { id: crypto.randomUUID(), en: "", ar: "", color: "" }])}
+				onClick={() => onChange([...options, { id: crypto.randomUUID(), label: "", color: "" }])}
 			>
 				{t("props.opt.add")}
 			</Button>

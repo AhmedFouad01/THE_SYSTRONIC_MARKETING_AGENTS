@@ -45,7 +45,8 @@ import {
 	toConditions,
 	toggleShown,
 } from "./customColumns.ts";
-import { type ObjectKey, pickLabel, type PropertyDef } from "./model.ts";
+import { type ObjectKey,
+	contentLabel, pickLabel, type PropertyDef } from "./model.ts";
 import { type ReadCtx, readValue } from "./values.ts";
 import "./properties-kit.css";
 
@@ -149,7 +150,9 @@ export function useCustomColumns<T>(o: Opts<T>): CustomColumns<T> {
 		if (!first) return;
 		seq.current += 1;
 		const id = `f${seq.current}`;
-		setDrafts((d) => (d.length >= MAX_FILTERS ? d : [...d, newDraft(first, id)]));
+		setDrafts((d) =>
+			d.length >= MAX_FILTERS ? d : [...d, newDraft(first, id)],
+		);
 	}, [defs]);
 	const patchDraft = useCallback(
 		(id: string, patch: Partial<FilterDraft>) => setDrafts((d) => d.map((x) => (x.id === id ? { ...x, ...patch } : x))),
@@ -179,7 +182,7 @@ export function useCustomColumns<T>(o: Opts<T>): CustomColumns<T> {
 	const columns = useMemo<ReadonlyArray<GridColumn<T>>>(
 		() =>
 			shownDefs.map((p): GridColumn<T> => {
-				const label = pickLabel(p.label, locale, p.key);
+				const label = contentLabel(p, locale, t, p.key);
 				return {
 					id: cfId(p.key),
 					header: isolate(label),
@@ -191,18 +194,18 @@ export function useCustomColumns<T>(o: Opts<T>): CustomColumns<T> {
 					searchable: false,
 					width: "176px",
 					mobile: "meta",
-					cell: (r) => <CellValue p={p} label={label} raw={getProps(r)[p.key]} ctx={ctx} />,
+					cell: (r) => (
+						<CellValue p={p} label={label} raw={getProps(r)[p.key]} ctx={ctx} />
+					),
 					titleText: (r) => textOf(p, getProps(r)[p.key], ctx),
 				};
 			}),
-		[shownDefs, locale, getProps, ctx],
+		[shownDefs, locale, getProps, ctx, t],
 	);
 
 	const extension = useMemo<GridExtension | undefined>(() => {
 		if (defs.length === 0) return undefined;
-		const list = (
-			<ColumnList defs={defs} shown={shown} onToggle={toggle} />
-		);
+		const list = <ColumnList defs={defs} shown={shown} onToggle={toggle} />;
 		return {
 			columnPicker: (
 				<Popover
@@ -227,7 +230,9 @@ export function useCustomColumns<T>(o: Opts<T>): CustomColumns<T> {
 				/>
 			),
 			filterCount: conds.length,
-			chips: <Chips defs={byKey} drafts={drafts} ctx={ctx} users={users} onRemove={removeDraft} />,
+			chips: (
+				<Chips defs={byKey} drafts={drafts} ctx={ctx} users={users} onRemove={removeDraft} />
+			),
 			onClear: () => setDrafts([]),
 		};
 	}, [defs, shown, shownDefs.length, drafts, users, ctx, conds.length, byKey, t, tx, formatNumber, toggle, addDraft, patchDraft, changeField, removeDraft]);
@@ -249,7 +254,8 @@ function textOf(p: PropertyDef, raw: unknown, ctx: ReadCtx): string | undefined 
 	}
 }
 
-function CellValue({ p, label, raw, ctx }: { p: PropertyDef; label: string; raw: unknown; ctx: ReadCtx }) {
+function CellValue({ p, label, raw, ctx }: { p: PropertyDef; label: string; raw: unknown; ctx: ReadCtx;
+}) {
 	const v = readValue(p, raw, ctx);
 	const empty = v.kind === "empty";
 	return (
@@ -258,14 +264,19 @@ function CellValue({ p, label, raw, ctx }: { p: PropertyDef; label: string; raw:
 				<bdi>{label}</bdi>
 				{": "}
 			</span>
-			{empty ? <span className="sy-cf__empty">—</span> : <ReadValueView v={v} />}
+			{empty ? (
+				<span className="sy-cf__empty">—</span>
+			) : (
+				<ReadValueView v={v} />
+			)}
 		</span>
 	);
 }
 
 // ---- column picker -------------------------------------------------------------------------------------------------------
 
-function ColumnList({ defs, shown, onToggle }: { defs: readonly PropertyDef[]; shown: readonly string[]; onToggle: (key: string) => void }) {
+function ColumnList({ defs, shown, onToggle }: { defs: readonly PropertyDef[]; shown: readonly string[]; onToggle: (key: string) => void;
+}) {
 	const { t, locale, formatNumber } = useI18n();
 	const full = shown.length >= MAX_COLUMNS;
 	return (
@@ -274,10 +285,12 @@ function ColumnList({ defs, shown, onToggle }: { defs: readonly PropertyDef[]; s
 			{defs.map((p) => {
 				const on = shown.includes(p.key);
 				return (
-					<Checkbox key={p.key} checked={on} disabled={!on && full} data-testid={`cc-col-${p.key}`} onChange={() => onToggle(p.key)} label={<BidiText>{pickLabel(p.label, locale, p.key)}</BidiText>} />
+					<Checkbox key={p.key} checked={on} disabled={!on && full} data-testid={`cc-col-${p.key}`} onChange={() => onToggle(p.key)} label={<BidiText>{contentLabel(p, locale, t, p.key)}</BidiText>} />
 				);
 			})}
-			{full ? <p className="sy-cc__hint">{t("cc.limit", { max: formatNumber(MAX_COLUMNS) })}</p> : null}
+			{full ? (
+				<p className="sy-cc__hint">{t("cc.limit", { max: formatNumber(MAX_COLUMNS) })}</p>
+			) : null}
 		</div>
 	);
 }
@@ -297,13 +310,16 @@ function FilterRows({
 	ctx,
 	onAdd,
 	...api
-}: { defs: readonly PropertyDef[]; drafts: readonly FilterDraft[]; users: ReadonlyMap<string, string>; ctx: ReadCtx; onAdd: () => void } & RowApi) {
+}: { defs: readonly PropertyDef[]; drafts: readonly FilterDraft[]; users: ReadonlyMap<string, string>; ctx: ReadCtx; onAdd: () => void;
+} & RowApi) {
 	const { t } = useI18n();
 	return (
 		<div className="sy-cc__filters" data-testid="cc-filters">
 			{drafts.map((d) => {
 				const p = defs.find((x) => x.key === d.key);
-				return p ? <FilterRow key={d.id} def={p} defs={defs} draft={d} users={users} ctx={ctx} {...api} /> : null;
+				return p ? (
+					<FilterRow key={d.id} def={p} defs={defs} draft={d} users={users} ctx={ctx} {...api} />
+				) : null;
 			})}
 			<div>
 				<Button size="sm" icon="plus" onClick={onAdd} disabled={drafts.length >= MAX_FILTERS} data-testid="cc-add-filter">
@@ -327,7 +343,8 @@ function FilterRow({
 	onPatch,
 	onField,
 	onRemove,
-}: { def: PropertyDef; defs: readonly PropertyDef[]; draft: FilterDraft; users: ReadonlyMap<string, string>; ctx: ReadCtx } & RowApi) {
+}: { def: PropertyDef; defs: readonly PropertyDef[]; draft: FilterDraft; users: ReadonlyMap<string, string>; ctx: ReadCtx;
+} & RowApi) {
 	const { t, locale } = useI18n();
 	const shape = shapeOf(draft.op);
 	return (
@@ -335,7 +352,7 @@ function FilterRow({
 			<Select label={t("cc.field")} size="sm" value={draft.key} data-testid="cc-field" onChange={(e) => onField(draft.id, e.target.value)}>
 				{defs.map((p) => (
 					<option key={p.key} value={p.key}>
-						{pickLabel(p.label, locale, p.key)}
+						{contentLabel(p, locale, t, p.key)}
 					</option>
 				))}
 			</Select>
@@ -385,7 +402,8 @@ function ValueControl({
 	value,
 	testId,
 	onChange,
-}: { def: PropertyDef; users: ReadonlyMap<string, string>; label: string; value: string; testId: string; onChange: (v: string) => void }) {
+}: { def: PropertyDef; users: ReadonlyMap<string, string>; label: string; value: string; testId: string; onChange: (v: string) => void;
+}) {
 	const { t, locale } = useI18n();
 	switch (def.type) {
 		case "date":
@@ -438,11 +456,14 @@ function ValueControl({
 				/>
 			);
 		default:
-			return <Input label={label} type="text" value={value} maxLength={100} data-testid={testId} onChange={(e) => onChange(e.target.value)} />;
+			return (
+				<Input label={label} type="text" value={value} maxLength={100} data-testid={testId} onChange={(e) => onChange(e.target.value)} />
+			);
 	}
 }
 
-function ListControl({ def, draft, onPatch }: { def: PropertyDef; draft: FilterDraft; onPatch: RowApi["onPatch"] }) {
+function ListControl({ def, draft, onPatch }: { def: PropertyDef; draft: FilterDraft; onPatch: RowApi["onPatch"];
+}) {
 	const { t, locale } = useI18n();
 	const label = (value: string) => {
 		const o = def.options.find((x) => x.value === value);
@@ -480,14 +501,15 @@ function Chips({
 	ctx,
 	users,
 	onRemove,
-}: { defs: ReadonlyMap<string, PropertyDef>; drafts: readonly FilterDraft[]; ctx: ReadCtx; users: ReadonlyMap<string, string>; onRemove: (id: string) => void }) {
+}: { defs: ReadonlyMap<string, PropertyDef>; drafts: readonly FilterDraft[]; ctx: ReadCtx; users: ReadonlyMap<string, string>; onRemove: (id: string) => void;
+}) {
 	const { t, locale } = useI18n();
 	const items: ReactNode[] = [];
 	for (const d of drafts) {
 		const p = defs.get(d.key);
 		const c = p ? toCondition(p, d) : null;
 		if (!p || c === null) continue;
-		const label = pickLabel(p.label, locale, p.key);
+		const label = contentLabel(p, locale, t, p.key);
 		const op = t(opKey(d.op, p));
 		const value = chipValue(p, c, ctx, users, t("cc.sep"));
 		const name = `${isolate(label)} ${op} ${value ? isolate(value) : ""}`.trim();

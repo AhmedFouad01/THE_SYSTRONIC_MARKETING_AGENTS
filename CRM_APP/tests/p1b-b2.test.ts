@@ -1,5 +1,6 @@
 // ADR-002 P1b B2 (migration 011 + src/schema.ts): schema API over the real HTTP server and real PostgreSQL (crm_runtime, RLS).
 import { test, before, after } from "node:test";
+import { readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import pg from "pg";
@@ -77,7 +78,7 @@ async function api(
 	return { status: r.status, body: (await r.json()) as Record<string, any> };
 }
 const cmd = () => ({ command_id: randomUUID() });
-const L = (en: string, ar = `${en} ع`) => ({ en, ar });
+const L = (label: string, _alternate?: string) => label;
 const mk = (who: Who, o: string, b: Record<string, unknown>) =>
 	api(who, "POST", `/${o}/properties`, { ...cmd(), ...b });
 const prop = async (who: Who, o: string, k: string, q = "") =>
@@ -148,7 +149,7 @@ test("B2 two-tenant isolation through the API (read, patch, archive, options, gr
 	assert.equal((await mk(mgrB, "contact", { key: "only_a", type: "text", label: L("B copy") })).status, 201);
 	assert.equal((await prop(mgr, "contact", "only_a")).type, "single_select");
 	assert.equal((await prop(mgrB, "contact", "only_a")).type, "text");
-	assert.equal((await prop(mgr, "contact", "only_a")).label.en, "Only A");
+	assert.equal((await prop(mgr, "contact", "only_a")).label, "Only A");
 	// A's own state was not touched by B's attempts
 	assert.equal((await prop(mgr, "contact", "only_a")).version, 0);
 });
@@ -165,11 +166,14 @@ test("B2 validation: one rule per case, all violations reported, nothing written
 		["key reserved id", { ...base, key: "id" }, "VALIDATION_FAILED", "KEY_RESERVED"],
 		["type unknown", { ...base, type: "money" }, "VALIDATION_FAILED", "TYPE_INVALID"],
 		["label missing", { key: "v1", type: "text" }, "VALIDATION_FAILED", "LABEL_REQUIRED"],
-		["label both empty", { ...base, label: { en: " ", ar: "" } }, "VALIDATION_FAILED", "LABEL_REQUIRED"],
-		["label lang", { ...base, label: { en: "x", fr: "y" } }, "VALIDATION_FAILED", "LABEL_LANG_UNSUPPORTED"],
-		["label too long", { ...base, label: { en: "x".repeat(121) } }, "VALIDATION_FAILED", "LABEL_INVALID"],
-		["label bidi override", { ...base, label: { en: "ab‮cd" } }, "VALIDATION_FAILED", "LABEL_INVALID"],
-		["label control char", { ...base, label: { en: "ab\u0007" } }, "VALIDATION_FAILED", "LABEL_INVALID"],
+		["label both empty", { ...base, label: " " }, "VALIDATION_FAILED", "LABEL_REQUIRED"],
+		[
+			"legacy label pair rejected", { ...base, label: { en: "x", ar: "س" } }, "VALIDATION_FAILED",
+			"LABEL_INVALID",
+		],
+		["label too long", { ...base, label: "x".repeat(121) }, "VALIDATION_FAILED", "LABEL_INVALID"],
+		["label bidi override", { ...base, label: "ab‮cd" }, "VALIDATION_FAILED", "LABEL_INVALID"],
+		["label control char", { ...base, label: "ab\u0007" }, "VALIDATION_FAILED", "LABEL_INVALID"],
 		["label not string", { ...base, label: { en: 5 } }, "VALIDATION_FAILED", "LABEL_INVALID"],
 		["currency missing", { ...base, type: "currency" }, "VALIDATION_FAILED", "CURRENCY_REQUIRED"],
 		["currency lowercase", { ...base, type: "currency", currency: "egp" }, "VALIDATION_FAILED", "CURRENCY_INVALID"],
@@ -205,7 +209,7 @@ test("B2 validation: one rule per case, all violations reported, nothing written
 		assert.ok(r.body.request_id);
 	}
 	// several violations are all reported in one response
-	const multi = await mk(mgr, "contact", { key: "BAD", type: "nope", label: {} });
+	const multi = await mk(mgr, "contact", { key: "BAD", type: "nope", label: "" });
 	assert.deepEqual(codes(multi).sort(), ["KEY_INVALID", "LABEL_REQUIRED", "TYPE_INVALID"]);
 	// missing command_id, unknown object, bad route
 	assert.equal((await api(mgr, "POST", "/contact/properties", { key: "k1", type: "text", label: L("k") })).status, 422);
@@ -216,14 +220,16 @@ test("B2 validation: one rule per case, all violations reported, nothing written
 	// nothing leaked into the registry
 	assert.equal((await one("SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1 AND NOT is_system", [f.ids.a])).n, "0");
 	// valid edge: Arabic-only label, mixed bidi label, every type accepted
-	assert.equal((await mk(mgr, "contact", { key: "ar_only", type: "text", label: { ar: "الاسم الكامل" } })).status, 201);
-	assert.equal((await mk(mgr, "contact", { key: "mixed", type: "text", label: { en: "Contract ‏رقم 12", ar: "رقم العقد A-12" } })).status, 201);
+	assert.equal((await mk(mgr, "contact", { key: "ar_only", type: "text", label: "الاسم الكامل",
+			})).status, 201);
+	assert.equal((await mk(mgr, "contact", { key: "mixed", type: "text", label: "Contract ‏رقم 12",
+			})).status, 201);
 	for (const t of ["long_text", "number", "date", "datetime", "checkbox", "user", "multi_select", "single_select"])
 		assert.equal((await mk(mgr, "contact", { key: `t_${t}`, type: t, label: L(t) })).status, 201, t);
 	const cur = await mk(mgr, "contact", { key: "t_cur", type: "currency", currency: "EGP", validation: { min: 0 }, label: L("Cur") });
 	assert.equal(cur.status, 201);
 	assert.equal(cur.body.data.property.currency, "EGP");
-	assert.equal((await prop(mgr, "contact", "mixed")).label.ar, "رقم العقد A-12");
+	assert.equal((await prop(mgr, "contact", "mixed")).label, "Contract ‏رقم 12");
 });
 
 test("B2 system properties: label/group/position only; key, type, storage immutable; no archive; no option add", async () => {
@@ -238,16 +244,16 @@ test("B2 system properties: label/group/position only; key, type, storage immuta
 		assert.equal(r.status, 422, field);
 		assert.equal(r.body.code, "FIELD_NOT_WRITABLE", field);
 	}
-	for (const b of [{ required: false }, { read_only: true }, { sensitive: true }, { display: "default" }, { description: { en: "x" } }, { validation: {} }, { searchable: false }, { show_default: false }]) {
+	for (const b of [{ required: false }, { read_only: true }, { sensitive: true }, { display: "default" }, { description: "x" }, { validation: {} }, { searchable: false }, { show_default: false }]) {
 		const r = await patch(b);
 		assert.equal(r.status, 422, JSON.stringify(b));
 		assert.equal(r.body.code, "SYSTEM_PROPERTY_IMMUTABLE");
 	}
 	assert.equal((await api(mgr, "POST", "/contact/properties/display_name/archive", { ...cmd(), expected_version: t.version })).body.code, "SYSTEM_PROPERTY_IMMUTABLE");
 	// the allowed edits work
-	const ok = await patch({ label: { en: "Full name", ar: "الاسم الكامل" }, position: 5 });
+	const ok = await patch({ label: "Full name", position: 5 });
 	assert.equal(ok.status, 200);
-	assert.equal(ok.body.data.property.label.en, "Full name");
+	assert.equal(ok.body.data.property.label, "Full name");
 	assert.equal(ok.body.data.property.position, 5);
 	assert.equal(ok.body.data.property.version, t.version + 1);
 	assert.equal((await api(mgr, "POST", "/contact/groups", { ...cmd(), key: "extra", label: L("Extra") })).status, 201);
@@ -310,13 +316,13 @@ test("B2 optimistic concurrency, schema_rev, idempotent retry, no-op", async () 
 	assert.equal(stale.body.code, "VERSION_CONFLICT");
 	assert.equal(stale.body.retryable, false);
 	assert.equal(await rev(), rBefore, "failed write does not bump");
-	assert.equal((await prop(mgr, "contact", "idem")).label.en, "One");
+	assert.equal((await prop(mgr, "contact", "idem")).label, "One");
 	// replay of the successful update after it was superseded still returns the receipt, applies nothing
 	assert.equal((await upd(1, "Three")).status, 200);
 	const rep1 = await upd(0, "One", k2, c2);
 	assert.equal(rep1.status, 200);
 	assert.equal(rep1.body.data.replayed, true);
-	assert.equal((await prop(mgr, "contact", "idem")).label.en, "Three");
+	assert.equal((await prop(mgr, "contact", "idem")).label, "Three");
 	// missing expected_version
 	assert.equal((await api(mgr, "PATCH", "/contact/properties/idem", { ...cmd(), label: L("x") })).status, 422);
 	// no-op: same values -> no version bump, no schema_rev bump, no evidence
@@ -415,7 +421,7 @@ test("B2 options: stable values, add/edit/archive/reactivate, reorder, 200 limit
 	const ren = await opt("PATCH", "/a", { label: L("Alpha"), color: null });
 	assert.equal(ren.status, 200);
 	const a = ren.body.data.property.options.find((o: { value: string }) => o.value === "a");
-	assert.deepEqual([a.value, a.label.en, a.color], ["a", "Alpha", null], "value is stable, label changes");
+	assert.deepEqual([a.value, a.label, a.color], ["a", "Alpha", null], "value is stable, label changes");
 	const arch = await opt("PATCH", "/b", { archived: true });
 	assert.equal(arch.body.data.property.options.find((o: { value: string }) => o.value === "b").archived, true);
 	assert.equal(arch.body.data.property.option_count, 2);
@@ -547,4 +553,111 @@ test("B2 limits: 100 active custom properties per object; archived free a slot; 
 		),
 		/PROPERTY_LIMIT_EXCEEDED/,
 	);
+});
+// R08 upgrade regressions: the migration and subsequent system seeds share this normalizer.
+// Real PostgreSQL, canonical scalar API contracts, and tenant RLS are exercised together.
+test("R08 single content: tenant language, empty fallback, alternate audit, seed replay and response isolation", async () => {
+	await fresh();
+	for (const language of ["en", "ar"] as const) {
+		await admin.query("UPDATE crm.tenant SET primary_language=$2 WHERE id=$1", [
+			f.ids.a,
+			language,
+		]);
+		for (const [suffix, original, expected] of [
+			[
+				"both",
+				{ en: "English", ar: "عربي" },
+				language === "ar" ? "عربي" : "English",
+			],
+			[
+				"fallback",
+				language === "ar"
+					? { en: "Fallback", ar: "  " }
+					: { en: "  ", ar: "بديل" },
+				language === "ar" ? "Fallback" : "بديل",
+			],
+			["one", { ar: "عربي فقط" }, "عربي فقط"],
+		] as const) {
+			const key = `r08_${language}_${suffix}`;
+			await admin.query(
+				"INSERT INTO crm.property_definition(tenant_id,id,object_type,key,type,label) VALUES($1,$2,'contact',$3,'text',$4::jsonb)",
+				[f.ids.a, randomUUID(), key, JSON.stringify(original)],
+			);
+			const row = await one(
+				"SELECT label,label_legacy,content_audit_note FROM crm.property_definition WHERE tenant_id=$1 AND key=$2",
+				[f.ids.a, key],
+			);
+			assert.equal(row.label, expected);
+			assert.deepEqual(row.label_legacy, original);
+			if (suffix === "both") {
+				assert.equal(
+					row.content_audit_note.alternate_label,
+					language === "ar" ? "English" : "عربي",
+				);
+				assert.equal(row.content_audit_note.primary_language, language);
+			}
+			const response = await prop(mgr, "contact", key);
+			assert.equal(response.label, expected);
+			assert.equal("label_legacy" in response, false);
+			assert.equal("content_audit_note" in response, false);
+			assert.equal(await prop(mgrB, "contact", key), undefined);
+		}
+	}
+	const counts = await one(
+		"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1",
+		[f.ids.a],
+	);
+	await admin.query("SELECT crm.seed_system_properties($1)", [f.ids.a]);
+	await admin.query("SELECT crm.seed_system_properties($1)", [f.ids.a]);
+	assert.deepEqual(
+		await one(
+			"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1",
+			[f.ids.a],
+		),
+		counts,
+	);
+	assert.equal(
+		(await prop(mgr, "contact", "display_name")).label_key,
+		"props.system.display_name",
+	);
+	for (const fn of [
+		"crm.normalize_single_content()",
+		"crm.single_content_value(jsonb,text)",
+	])
+		assert.equal(
+			(
+				await one("SELECT has_function_privilege('public',$1,'EXECUTE') x", [
+					fn,
+				])
+			).x,
+			false,
+		);
+	const rls = await one(
+		"SELECT bool_and(relrowsecurity AND relforcerowsecurity) ok FROM pg_class WHERE oid IN ('crm.object_type'::regclass,'crm.property_group'::regclass,'crm.property_definition'::regclass,'crm.property_option'::regclass)",
+	);
+	assert.equal(rls.ok, true);
+});
+
+// Execute the actual upgrade SQL on populated pre-027 tables in a rollback-only schema.
+test("R08 migration 027 preserves populated registry counts and originals", async () => {
+ await admin.query("BEGIN");
+ try {
+  await admin.query("CREATE SCHEMA r08_rehearsal");
+  await admin.query("CREATE TABLE r08_rehearsal.tenant(id uuid PRIMARY KEY,name text)");
+  const tenant = randomUUID();
+  await admin.query("INSERT INTO r08_rehearsal.tenant VALUES($1,'Upgrade fixture')", [tenant]);
+  for (const table of ["object_type","property_group","property_definition","property_option"]) {
+   const description = table === "property_definition" ? ", description jsonb CHECK(description IS NULL OR jsonb_typeof(description)='object')" : "";
+   await admin.query(`CREATE TABLE r08_rehearsal.${table}(tenant_id uuid,label jsonb CHECK(jsonb_typeof(label)='object')${description})`);
+   await admin.query(`INSERT INTO r08_rehearsal.${table}(tenant_id,label) VALUES($1,'{"en":"English","ar":"عربي"}'),($1,'{"en":" ","ar":"بديل"}')`, [tenant]);
+  }
+  const sql = (await readFile(new URL("../migrations/027_single_content_names.sql", import.meta.url),"utf8")).replaceAll("crm.","r08_rehearsal.").replaceAll(",crm",",r08_rehearsal");
+  await admin.query(sql);
+  for (const table of ["object_type","property_group","property_definition","property_option"]) {
+   const rows = (await admin.query(`SELECT label,label_legacy,content_audit_note FROM r08_rehearsal.${table} ORDER BY label`)).rows;
+   assert.equal(rows.length,2);
+   assert.ok(rows.some(row => row.label === "English" && row.label_legacy.ar === "عربي" && row.content_audit_note.alternate_label === "عربي"));
+   assert.ok(rows.some(row => row.label === "بديل" && row.label_legacy.en === " "));
+  }
+ } finally { await admin.query("ROLLBACK"); }
 });

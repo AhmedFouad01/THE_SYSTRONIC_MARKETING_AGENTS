@@ -19,7 +19,7 @@ import type { PropertyDef, PropType } from "./model.ts";
 
 const def = (key: string, type: PropType, extra: Partial<PropertyDef> = {}): PropertyDef => ({
 	key,
-	label: { en: key },
+	label: key,
 	type,
 	display: "default",
 	group: "g",

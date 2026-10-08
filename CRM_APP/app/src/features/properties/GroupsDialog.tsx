@@ -9,11 +9,10 @@ import {
 	deriveKey,
 	issueMessageKey,
 	KEY_RE,
-	type Lang,
 	moveItem,
 	type ObjectKey,
 	type ObjectSchema,
-	pickLabel,
+	contentLabel,
 	type SchemaGroup,
 	type WriteErrorKind,
 } from "./model.ts";
@@ -30,7 +29,6 @@ const BANNER: Record<WriteErrorKind, MessageKey> = {
 	system: "props.err.system",
 	other: "props.err.other",
 };
-const lang = (en: string, ar: string): Lang => ({ ...(en.trim() ? { en: en.trim() } : {}), ...(ar.trim() ? { ar: ar.trim() } : {}) });
 
 /** Create, rename, archive and reorder the groups of one object. The seeded `general` group cannot be archived (it always holds system properties). */
 export function GroupsDialog({
@@ -51,10 +49,11 @@ export function GroupsDialog({
 	const command = useCommand();
 	const groups = activeGroups(schema);
 	const [busy, setBusy] = useState(false);
-	const [error, setError] = useState<{ kind: WriteErrorKind; code?: string } | null>(null);
+	const [error, setError] = useState<{ kind: WriteErrorKind; code?: string;
+	} | null>(null);
 	const [editing, setEditing] = useState<string | null>(null);
-	const [draft, setDraft] = useState({ en: "", ar: "" });
-	const [add, setAdd] = useState({ en: "", ar: "", key: "", keyTouched: false });
+	const [draft, setDraft] = useState({ label: "" });
+	const [add, setAdd] = useState({ label: "", key: "", keyTouched: false });
 	const [confirm, setConfirm] = useState<SchemaGroup | null>(null);
 
 	const run = async (call: () => Promise<void>): Promise<boolean> => {
@@ -77,15 +76,15 @@ export function GroupsDialog({
 		void run(() => orderGroups(object, command("order", { keys: next.map((g) => g.key), expected_schema_rev: schema.schema_rev })));
 	};
 	const saveEdit = async (g: SchemaGroup) => {
-		if (!draft.en.trim() && !draft.ar.trim()) return setError({ kind: "validation", code: "LABEL_REQUIRED" });
-		const ok = await run(() => patchGroup(object, g.key, command(`edit:${g.key}`, { expected_version: g.version, label: lang(draft.en, draft.ar) })));
+		if (!draft.label.trim()) return setError({ kind: "validation", code: "LABEL_REQUIRED" });
+		const ok = await run(() => patchGroup(object, g.key, command(`edit:${g.key}`, { expected_version: g.version, label: draft.label.normalize("NFC").trim() })));
 		if (ok) setEditing(null);
 	};
 	const addGroup = async () => {
-		if (!add.en.trim() && !add.ar.trim()) return setError({ kind: "validation", code: "LABEL_REQUIRED" });
+		if (!add.label.trim()) return setError({ kind: "validation", code: "LABEL_REQUIRED" });
 		if (!KEY_RE.test(add.key)) return setError({ kind: "validation", code: "KEY_INVALID" });
-		const ok = await run(() => createGroup(object, command("add", { key: add.key, label: lang(add.en, add.ar) })));
-		if (ok) setAdd({ en: "", ar: "", key: "", keyTouched: false });
+		const ok = await run(() => createGroup(object, command("add", { key: add.key, label: add.label.normalize("NFC").trim() })));
+		if (ok) setAdd({ label: "", key: "", keyTouched: false });
 	};
 	const archive = async (g: SchemaGroup) => {
 		await run(() => archiveGroup(object, g.key, command(`arch:${g.key}`, { expected_version: g.version })));
@@ -121,8 +120,10 @@ export function GroupsDialog({
 						{editing === g.key ? (
 							<div className="sy-props__optedit">
 								<div className="sy-form-row">
-									<Input label={t("props.grp.labelEn")} value={draft.en} maxLength={80} data-testid="edit-group-en" onChange={(e) => setDraft({ ...draft, en: e.target.value })} />
-									<Input label={t("props.grp.labelAr")} value={draft.ar} maxLength={80} data-testid="edit-group-ar" onChange={(e) => setDraft({ ...draft, ar: e.target.value })} />
+									<Input label={t("props.grp.label")}
+										dir="auto"
+										value={draft.label} maxLength={80} data-testid="edit-group-label"
+										onChange={(e) => setDraft({ ...draft, label: e.target.value })} />
 								</div>
 								<div className="sy-props__optactions">
 									<Button variant="primary" loading={busy} data-testid="edit-group-save" onClick={() => void saveEdit(g)}>
@@ -136,7 +137,7 @@ export function GroupsDialog({
 						) : (
 							<>
 								<span className="sy-props__optname">
-									<BidiText>{pickLabel(g.label, locale, g.key)}</BidiText>
+									<BidiText>{contentLabel(g, locale, t, g.key)}</BidiText>
 									<code className="sy-props__code sy-ltr">{g.key}</code>
 								</span>
 								<span className="sy-props__optactions">
@@ -158,7 +159,7 @@ export function GroupsDialog({
 										data-testid="group-edit"
 										onClick={() => {
 											setEditing(g.key);
-											setDraft({ en: g.label.en ?? "", ar: g.label.ar ?? "" });
+											setDraft({ label: g.label });
 										}}
 									/>
 									{g.key === "general" ? null : (
@@ -176,13 +177,14 @@ export function GroupsDialog({
 				<legend className="sy-props__legend">{t("props.grp.add")}</legend>
 				<div className="sy-form-row">
 					<Input
-						label={t("props.grp.labelEn")}
-						value={add.en}
+						label={t("props.grp.label")}
+						dir="auto"
+						value={add.label}
 						maxLength={80}
-						data-testid="add-group-en"
-						onChange={(e) => setAdd({ ...add, en: e.target.value, key: add.keyTouched ? add.key : deriveKey(e.target.value) })}
-					/>
-					<Input label={t("props.grp.labelAr")} value={add.ar} maxLength={80} data-testid="add-group-ar" onChange={(e) => setAdd({ ...add, ar: e.target.value })} />
+						data-testid="add-group-label"
+						onChange={(e) => setAdd({ ...add,
+								label: e.target.value, key: add.keyTouched ? add.key : deriveKey(e.target.value),
+							})} />
 				</div>
 				<Input
 					label={t("props.grp.key")}
@@ -207,7 +209,7 @@ export function GroupsDialog({
 			>
 				{confirm ? (
 					<p>
-						<BidiText>{pickLabel(confirm.label, locale, confirm.key)}</BidiText>
+						<BidiText>{contentLabel(confirm, locale, t, confirm.key)}</BidiText>
 					</p>
 				) : null}
 			</Dialog>

@@ -3,7 +3,7 @@ import { HARD_LIMITS, cleanFilename, effectiveLimits, fileIssue, mappingIssues, 
 
 const fields = (sensitive = true) => ({ object: "contact", limits: HARD_LIMITS, formats: ["csv", "xlsx"], sensitive_mapping: sensitive, targets: [
 	{ target: "display_name", required: true, label: "Display name" }, { target: "email", required: false, label: "Email" }, { target: "phone", required: false, label: "Phone" },
-	{ target: "property:region", required: false, label: { en: "Region", ar: "المنطقة" }, type: "single_select", options: ["cairo", "giza"] },
+	{ target: "property:region", required: false, label: "Region", type: "single_select", options: ["cairo", "giza"] },
 	{ target: "property:private", required: false, label: "Private", sensitive: true, type: "text" },
 ] });
 const inspection = () => ({ object: "contact", format: "csv", file: { name: "clients.csv", sha256: "a".repeat(64), bytes: 50 }, limits: HARD_LIMITS, headers: ["Name", "Region"], total_rows: 4, sheet: null, samples: [{ row: 2, cells: ["Mona", "cairo"] }] });

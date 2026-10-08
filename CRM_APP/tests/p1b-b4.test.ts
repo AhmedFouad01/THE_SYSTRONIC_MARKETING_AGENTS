@@ -59,7 +59,7 @@ async function call(who: Who, method: string, url: string, body?: Record<string,
 	return { status: r.status, body: (await r.json()) as Record<string, any> };
 }
 const cmd = () => ({ command_id: randomUUID() });
-const L = (en: string) => ({ en, ar: `${en} ع` });
+const L = (label: string) => label;
 const j = JSON.stringify;
 async function prop(who: Who, object: string, key: string, type: string, extra: Record<string, unknown> = {}) {
 	const r = await call(who, "POST", `/v1/schema/${object}/properties`, { ...cmd(), key, type, label: L(key), ...extra });

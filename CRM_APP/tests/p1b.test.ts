@@ -224,7 +224,7 @@ test("P1B-B1 seed is idempotent, never overwrites edits, re-adds missing rows; o
 	await admin.query("SELECT crm.seed_system_properties($1)", [f.ids.a]);
 	assert.deepEqual(await counts(), before);
 	const kept = await one(
-		"SELECT label->>'en' en,show_default FROM crm.property_definition WHERE tenant_id=$1 AND object_type='contact' AND key='source'",
+		"SELECT label#>>'{}' en,show_default FROM crm.property_definition WHERE tenant_id=$1 AND object_type='contact' AND key='source'",
 		[f.ids.a],
 	);
 	assert.deepEqual(kept, { en: "Edited", show_default: false });
@@ -500,7 +500,7 @@ test("P1B-B1 isolation: two tenants, per new table (read, insert, update, cross-
 		Number(
 			(
 				await one(
-					"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1 AND label->>'en'='hijack'",
+					"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1 AND label#>>'{}'='hijack'",
 					[f.ids.b],
 				)
 			).n,

@@ -72,7 +72,7 @@ async function call(
 	// biome-ignore lint/suspicious/noExplicitAny: loosely typed JSON in a test helper
 	return { status: r.status, body: (await r.json()) as Record<string, any> };
 }
-const L = (en: string) => ({ en, ar: `${en} ع` });
+const L = (label: string) => label;
 const csv = (s: string) => Buffer.from(`﻿${s}`, "utf8");
 const req = (
 	file: Buffer,

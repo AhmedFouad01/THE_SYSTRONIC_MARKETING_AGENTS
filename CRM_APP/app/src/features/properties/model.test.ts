@@ -7,6 +7,7 @@ import {
 	classifyWriteError,
 	commandFor,
 	countKey,
+	contentLabel,
 	deriveKey,
 	deriveOptionValue,
 	draftOf,
@@ -21,13 +22,13 @@ import {
 	type PropertyDef,
 	serverFieldErrors,
 	validateDraft,
-	withLabelEn,
+	withLabel,
 	withType,
 } from "./model.ts";
 
 const prop = (key: string, position: number, over: Partial<PropertyDef> = {}): PropertyDef => ({
 	key,
-	label: { en: key },
+	label: key,
 	type: "text",
 	display: "default",
 	group: "general",
@@ -53,8 +54,8 @@ const schema = (properties: PropertyDef[]): ObjectSchema => ({
 	types: [],
 	option_colors: ["gray", "blue", "teal", "green", "amber", "orange", "red", "purple"],
 	groups: [
-		{ key: "general", label: { en: "General", ar: "عام" }, position: 0, version: 0, archived: false },
-		{ key: "extra", label: { en: "Extra" }, position: 10, version: 0, archived: false },
+		{ key: "general", label: "General", position: 0, version: 0, archived: false },
+		{ key: "extra", label: "Extra", position: 10, version: 0, archived: false },
 	],
 	properties,
 });
@@ -69,14 +70,14 @@ describe("keys", () => {
 		for (const l of ["Lead Score", "2nd phone", "A", "a-b-c"]) expect(KEY_RE.test(deriveKey(l))).toBe(true);
 	});
 	it("auto-derives until the key is edited by hand", () => {
-		let d = withLabelEn(EMPTY_DRAFT, "Plan Tier", true);
+		let d = withLabel(EMPTY_DRAFT, "Plan Tier", true);
 		expect(d.key).toBe("plan_tier");
 		d = { ...d, key: "tier", keyTouched: true };
-		expect(withLabelEn(d, "Plan Tier 2", true).key).toBe("tier");
-		expect(withLabelEn({ ...d, key: "locked" }, "Other", false).key).toBe("locked");
+		expect(withLabel(d, "Plan Tier 2", true).key).toBe("tier");
+		expect(withLabel({ ...d, key: "locked" }, "Other", false).key).toBe("locked");
 	});
 	it("option values are stable, unique and valid", () => {
-		expect(optionValues([{ id: "1", en: "Gold", ar: "", color: "" }, { id: "2", en: "gold", ar: "", color: "" }, { id: "3", en: "", ar: "فضي", color: "" }])).toEqual(["gold", "gold_2", "option_3"]);
+		expect(optionValues([{ id: "1", label: "Gold", color: "" }, { id: "2", label: "gold", color: "" }, { id: "3", label: "", color: "" }])).toEqual(["gold", "gold_2", "option_3"]);
 		expect(deriveOptionValue("A B", new Set(["a_b"]), 0)).toBe("a_b_2");
 	});
 });
@@ -86,12 +87,13 @@ describe("validation mirrors the contract", () => {
 		const e = validateDraft({ ...EMPTY_DRAFT, key: "Bad Key" }, true);
 		expect(e.label).toBe("labelRequired");
 		expect(e.key).toBe("keyInvalid");
-		expect(validateDraft({ ...EMPTY_DRAFT, labelAr: "اسم", key: "ok" }, true).label).toBeUndefined();
-		expect(validateDraft({ ...withType(EMPTY_DRAFT, "currency"), labelEn: "A", key: "a" }, true).currency).toBe("currencyRequired");
-		expect(validateDraft({ ...withType(EMPTY_DRAFT, "currency"), labelEn: "A", key: "a", currency: "egp" }, true).currency).toBe("currencyInvalid");
+		expect(validateDraft({ ...EMPTY_DRAFT, label: "عربي", key: "ok" }, true).label).toBeUndefined();
+		expect(validateDraft({ ...withType(EMPTY_DRAFT, "currency"), label: "A", key: "a" }, true).currency).toBe("currencyRequired");
+		expect(validateDraft({ ...withType(EMPTY_DRAFT, "currency"),
+					label: "A", key: "a", currency: "egp" }, true).currency).toBe("currencyInvalid");
 	});
 	it("flag rules and ranges", () => {
-		const base = { ...EMPTY_DRAFT, labelEn: "A", key: "a" };
+		const base = { ...EMPTY_DRAFT, label: "A", key: "a" };
 		expect(validateDraft({ ...base, required: true, read_only: true }, true).flags).toBe("requiredReadOnly");
 		expect(validateDraft({ ...base, sensitive: true, searchable: true }, true).flags).toBe("sensitiveSearchable");
 		expect(validateDraft({ ...base, maxLength: "2001" }, true).maxLength).toBe("range");
@@ -101,14 +103,15 @@ describe("validation mirrors the contract", () => {
 		expect(validateDraft({ ...withType(base, "multi_select"), maxSelected: "51" }, true).maxSelected).toBe("range");
 	});
 	it("option labels need one language", () => {
-		const d = { ...withType(EMPTY_DRAFT, "single_select"), labelEn: "A", key: "a", options: [{ id: "x", en: "", ar: "", color: "" }] };
+		const d = { ...withType(EMPTY_DRAFT, "single_select"),
+			label: "A", key: "a", options: [{ id: "x", label: "", color: "" }] };
 		expect(validateDraft(d, true).option).toEqual({ x: "optionLabelRequired" });
 	});
 	it("a system property validates label only", () => {
-		expect(validateDraft({ ...EMPTY_DRAFT, labelEn: "A", required: true, read_only: true }, false, true).flags).toBeUndefined();
+		expect(validateDraft({ ...EMPTY_DRAFT, label: "A", required: true, read_only: true }, false, true).flags).toBeUndefined();
 	});
 	it("changing type clears what no longer applies", () => {
-		const d = withType({ ...withType(EMPTY_DRAFT, "single_select"), options: [{ id: "x", en: "A", ar: "", color: "" }], searchable: true }, "text");
+		const d = withType({ ...withType(EMPTY_DRAFT, "single_select"), options: [{ id: "x", label: "A", color: "" }], searchable: true }, "text");
 		expect(d.options).toEqual([]);
 		expect(withType({ ...EMPTY_DRAFT, searchable: true }, "number").searchable).toBe(false);
 	});
@@ -116,23 +119,24 @@ describe("validation mirrors the contract", () => {
 
 describe("bodies", () => {
 	it("create body: EN + AR labels, select options with derived values and colours", () => {
-		const d = { ...withType(EMPTY_DRAFT, "single_select"), labelEn: "Tier", labelAr: "الفئة", key: "tier", options: [{ id: "1", en: "Gold", ar: "ذهبي", color: "amber" }, { id: "2", en: "", ar: "فضي", color: "" }] };
+		const d = { ...withType(EMPTY_DRAFT, "single_select"),
+			label: "Tier", key: "tier", options: [{ id: "1", label: "Gold", color: "amber" }, { id: "2", label: "فضي", color: "" }] };
 		const b = buildCreateBody(d, "cmd-1");
-		expect(b).toMatchObject({ command_id: "cmd-1", key: "tier", type: "single_select", label: { en: "Tier", ar: "الفئة" }, group: "general" });
+		expect(b).toMatchObject({ command_id: "cmd-1", key: "tier", type: "single_select", label: "Tier", group: "general" });
 		expect(b.options).toEqual([
-			{ value: "gold", label: { en: "Gold", ar: "ذهبي" }, color: "amber", position: 10 },
-			{ value: "option_2", label: { ar: "فضي" }, color: null, position: 20 },
+			{ value: "gold", label: "Gold", color: "amber", position: 10 },
+			{ value: "option_2", label: "فضي", color: null, position: 20 },
 		]);
 		expect(b).not.toHaveProperty("currency");
 	});
 	it("patch body: only changes, version attached, null when unchanged", () => {
-		const p = prop("a", 10, { label: { en: "A", ar: "ا" } });
+		const p = prop("a", 10, { label: "A" });
 		expect(buildPatchBody(p, draftOf(p), "c")).toBeNull();
-		expect(buildPatchBody(p, { ...draftOf(p), labelEn: "B", required: true }, "c")).toEqual({ command_id: "c", expected_version: 3, label: { en: "B", ar: "ا" }, required: true });
+		expect(buildPatchBody(p, { ...draftOf(p), label: "B", required: true }, "c")).toEqual({ command_id: "c", expected_version: 3, label: "B", required: true });
 	});
 	it("system property patch carries label/group only", () => {
 		const p = prop("title", 10, { is_system: true });
-		const b = buildPatchBody(p, { ...draftOf(p), labelEn: "T", required: true, group: "extra" }, "c");
+		const b = buildPatchBody(p, { ...draftOf(p), label: "T", required: true, group: "extra" }, "c");
 		expect(Object.keys(b ?? {}).sort()).toEqual(["command_id", "expected_version", "group", "label"]);
 	});
 });
@@ -191,7 +195,7 @@ describe("plural forms", () => {
 });
 
 describe("listing and ordering", () => {
-	const s = schema([prop("c", 30), prop("a", 10), prop("b", 20, { group: "extra" }), prop("z", 40, { archived: true }), prop("d", 50, { group: "extra", label: { ar: "اسم" } })]);
+	const s = schema([prop("c", 30), prop("a", 10), prop("b", 20, { group: "extra" }), prop("z", 40, { archived: true }), prop("d", 50, { group: "extra", label: "اسم" })]);
 	it("groups by group, hides archived unless asked, searches EN/AR/key", () => {
 		const g = groupProperties(s, { query: "", showArchived: false, locale: "en" });
 		expect(g.map((x) => x.properties.map((p) => p.key))).toEqual([["a", "c"], ["b", "d"]]);
@@ -214,8 +218,29 @@ describe("listing and ordering", () => {
 		expect(moveItem([1, 2, 3], 2, 1)).toBeNull();
 	});
 	it("pickLabel falls back to the other language, then the key", () => {
-		expect(pickLabel({ en: "A" }, "ar")).toBe("A");
-		expect(pickLabel({ ar: "ب" }, "en")).toBe("ب");
-		expect(pickLabel({}, "en", "k")).toBe("k");
+		expect(pickLabel("A", "ar")).toBe("A");
+		expect(pickLabel("ب", "en")).toBe("ب");
+		expect(pickLabel("", "en", "k")).toBe("k");
+	});
+});
+
+describe("R08 canonical content", () => {
+	it("keeps Arabic and mixed names unchanged when chrome locale changes", () => {
+		for (const locale of ["en", "ar"] as const)
+			expect(pickLabel("Acme شركة", locale)).toBe("Acme شركة");
+	});
+	it("translates untouched system chrome and keeps renamed system labels verbatim", () => {
+		const translate = (key: string) =>
+			key === "props.system.display_name" ? "الاسم" : key;
+		expect(
+			contentLabel(
+				{ label: "Name", label_key: "props.system.display_name" },
+				"ar",
+				translate,
+			),
+		).toBe("الاسم");
+		expect(contentLabel({ label: "Customer الاسم" }, "ar", translate)).toBe(
+			"Customer الاسم",
+		);
 	});
 });

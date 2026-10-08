@@ -68,22 +68,20 @@ for (const language of ["en", "ar"] as const) {
 			// counts use the locale digits and the language's plural form (AR: 3-10 plural noun)
 			await expect(page.getByTestId("property-group").first().locator(".sy-props__count")).toHaveText(language === "ar" ? "٥ خصائص" : "5 properties");
 
-			// text property: both labels, key derived from the English label
+			// text property: one label, key derived from Latin content
 			await page.getByTestId("property-new").click();
 			const dialog = page.getByTestId("property-dialog");
 			await expect(dialog).toBeVisible();
-			await dialog.getByTestId("label-en").fill("Lead tier");
+			await dialog.getByTestId("label").fill("Lead tier");
 			await expect(dialog.getByTestId("key")).toHaveValue("lead_tier");
-			await dialog.getByTestId("label-ar").fill("فئة العميل");
 			await dialog.getByTestId("property-submit").click();
 			await expect(dialog).toHaveCount(0);
 			await expect(row(page, "lead_tier")).toBeVisible();
-			await expect(row(page, "lead_tier").getByTestId("property-label")).toContainText(language === "ar" ? "فئة العميل" : "Lead tier");
+			await expect(row(page, "lead_tier").getByTestId("property-label")).toContainText("Lead tier");
 
-			// single-select with two options (EN + AR labels, colour, reorder with the buttons)
+			// single-select with two single-label options, colour and reorder buttons
 			await page.getByTestId("property-new").click();
-			await dialog.getByTestId("label-en").fill("Plan");
-			await dialog.getByTestId("label-ar").fill("الباقة");
+			await dialog.getByTestId("label").fill("Plan");
 			await pickLabel(dialog.getByTestId("type"), T[language].single);
 			await expect(dialog.getByTestId("options-editor")).toBeVisible();
 			await dialog.getByTestId("option-add").click();
@@ -91,13 +89,11 @@ for (const language of ["en", "ar"] as const) {
 			const rows = dialog.getByTestId("option-row");
 			await expect(rows).toHaveCount(2);
 			await expect(rows.nth(0).locator(".sy-props__optno")).toHaveText(language === "ar" ? "الخيار ١" : "Option 1");
-			await rows.nth(0).getByTestId("option-en").fill("Basic");
-			await rows.nth(0).getByTestId("option-ar").fill("أساسية");
-			await rows.nth(1).getByTestId("option-en").fill("Pro");
-			await rows.nth(1).getByTestId("option-ar").fill("احترافية");
+			await rows.nth(0).getByTestId("option-label").fill("Basic");
+			await rows.nth(1).getByTestId("option-label").fill("Pro");
 			await rows.nth(1).getByTestId("color-blue").locator("input").check({ force: true });
 			await dialog.getByTestId("option-1-up").click();
-			await expect(rows.nth(0).getByTestId("option-en")).toHaveValue("Pro");
+			await expect(rows.nth(0).getByTestId("option-label")).toHaveValue("Pro");
 			await dialog.getByTestId("property-submit").click();
 			await expect(dialog).toHaveCount(0);
 			await expect(row(page, "plan")).toBeVisible();
@@ -122,10 +118,10 @@ for (const language of ["en", "ar"] as const) {
 			await row(page, "lead_tier").getByTestId("property-edit").click();
 			await expect(dialog.getByTestId("key")).toBeDisabled();
 			await expect(dialog.getByTestId("type")).toBeDisabled();
-			await dialog.getByTestId("label-en").fill("Customer tier");
+			await dialog.getByTestId("label").fill("Customer tier");
 			await dialog.getByTestId("property-submit").click();
 			await expect(dialog).toHaveCount(0);
-			await expect(row(page, "lead_tier").getByTestId("property-label")).toContainText(language === "ar" ? "فئة العميل" : "Customer tier");
+			await expect(row(page, "lead_tier").getByTestId("property-label")).toContainText("Customer tier");
 
 			// reorder: lead_tier is before plan; move plan up
 			const before = (await keys(page)).filter((k) => k === "lead_tier" || k === "plan");
@@ -137,8 +133,7 @@ for (const language of ["en", "ar"] as const) {
 			// options dialog: add and reorder on an existing property
 			await row(page, "plan").getByTestId("property-options").click();
 			const od = page.getByTestId("options-dialog");
-			await od.getByTestId("add-option-en").fill("Team");
-			await od.getByTestId("add-option-ar").fill("فريق");
+			await od.getByTestId("add-option-label").fill("Team");
 			await od.getByTestId("add-option-submit").click();
 			await expect(od.getByTestId("manage-option")).toHaveCount(3);
 			await od.getByTestId("options-done").click();
@@ -161,7 +156,7 @@ for (const language of ["en", "ar"] as const) {
 			await open(page, f, language);
 			await page.getByTestId("property-new").click();
 			const dialog = page.getByTestId("property-dialog");
-			await dialog.getByTestId("label-en").fill("Identifier");
+			await dialog.getByTestId("label").fill("Identifier");
 			await dialog.getByTestId("key").fill("id"); // valid shape, reserved by the server
 			await dialog.getByTestId("property-submit").click();
 			const keyField = dialog.locator(".sy-field:has([data-testid=key])");
@@ -186,7 +181,7 @@ for (const language of ["en", "ar"] as const) {
 			// the server agrees
 			const r = await page.request.post("/v1/schema/contact/properties", {
 				headers: { ...auth(f, "rep"), "Idempotency-Key": randomUUID() },
-				data: { command_id: randomUUID(), key: "x", type: "text", label: { en: "X" } },
+				data: { command_id: randomUUID(), key: "x", type: "text", label: "X" },
 			});
 			expect(r.status()).toBe(403);
 		});
@@ -204,7 +199,7 @@ for (const language of ["en", "ar"] as const) {
 			await expect(dialog.getByTestId("type")).toBeDisabled();
 			await expect(dialog.getByTestId("flag-required").locator("input")).toBeDisabled();
 			await expect(dialog.getByTestId("flag-sensitive").locator("input")).toBeDisabled();
-			await expect(dialog.getByTestId("label-en")).toBeEnabled();
+			await expect(dialog.getByTestId("label")).toBeEnabled();
 			await expect(dialog.getByTestId("group")).toBeEnabled();
 		});
 
@@ -218,15 +213,15 @@ for (const language of ["en", "ar"] as const) {
 			const command_id = randomUUID();
 			const r = await page.request.patch("/v1/schema/contact/properties/region", {
 				headers: { ...auth(f), "Idempotency-Key": command_id },
-				data: { command_id, expected_version: p.version, label: { en: "Region 2", ar: "المنطقة ٢" } },
+				data: { command_id, expected_version: p.version, label: "Region 2" },
 			});
 			expect(r.status()).toBe(200);
-			await dialog.getByTestId("label-en").fill("Region mine");
+			await dialog.getByTestId("label").fill("Region mine");
 			await dialog.getByTestId("property-submit").click();
 			await expect(dialog.getByTestId("property-conflict")).toContainText(T[language].conflict);
 			await dialog.getByTestId("property-reload").click();
 			await expect(dialog).toHaveCount(0);
-			await expect(row(page, "region").getByTestId("property-label")).toContainText(language === "ar" ? "المنطقة ٢" : "Region 2");
+			await expect(row(page, "region").getByTestId("property-label")).toContainText("Region 2");
 		});
 	});
 }

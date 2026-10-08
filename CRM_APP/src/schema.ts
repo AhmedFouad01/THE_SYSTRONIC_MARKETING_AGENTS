@@ -284,16 +284,17 @@ async function readObject(
 	db: Db,
 	ctx: Context,
 	object: string,
-	o: { archived: boolean; options: boolean; sensitive: boolean; key: string | null },
+	o: { archived: boolean; options: boolean; sensitive: boolean; key: string | null;
+	},
 ): Promise<Row> {
 	const {
 		rows: [r],
 	} = await db.query(
 		`SELECT o.key,o.kind,o.label,o.schema_rev,
- coalesce((SELECT jsonb_agg(jsonb_build_object('key',g.key,'label',g.label,'position',g.position,'version',g.version,'archived',g.archived) ORDER BY g.position,g.key)
+ coalesce((SELECT jsonb_agg(jsonb_build_object('key',g.key,'label',g.label,'label_key',CASE WHEN g.key='general' AND (g.label#>>'{}') IN (g.label_legacy->>'en',g.label_legacy->>'ar') THEN 'props.system.general' END,'position',g.position,'version',g.version,'archived',g.archived) ORDER BY g.position,g.key)
   FROM crm.property_group g WHERE g.tenant_id=o.tenant_id AND g.object_type=o.key AND ($3::boolean OR NOT g.archived)),'[]'::jsonb) groups,
  coalesce((SELECT jsonb_agg(jsonb_build_object(
-   'key',d.key,'label',d.label,'description',d.description,'type',d.type,'display',d.display,'group',g.key,'position',d.position,
+   'key',d.key,'label',d.label,'label_key',CASE WHEN d.is_system AND (d.label#>>'{}') IN (d.label_legacy->>'en',d.label_legacy->>'ar') THEN 'props.system.'||d.key END,'description',d.description,'type',d.type,'display',d.display,'group',g.key,'position',d.position,
    'storage',d.storage,'is_system',d.is_system,'required',d.required,'read_only',d.read_only,'sensitive',d.sensitive,
    'searchable',d.searchable,'indexed',d.indexed,'show_default',d.show_default,'validation',d.validation,'currency',d.currency,
    'version',d.version,'archived',d.archived_at IS NOT NULL,
