@@ -6,12 +6,12 @@ import { Badge, type BadgeTone } from "../primitives/Badge.tsx";
 /** Two-line identity cell: name (600) over a 11px text-3 caption. Both are bidi-correct truncating text (see BidiText). */
 export function IdentityCell({ name, caption }: { name: string; caption?: string | undefined }) {
 	return (
-		<span className="sy-cell-id">
-			<b className="sy-cell-id__name" title={name}>
+		<span className="sy-cell-id flex flex-col min-w-0 leading-[1.25]">
+			<b className="sy-cell-id__name overflow-hidden font-[600] text-ellipsis whitespace-nowrap" title={name}>
 				<BidiText>{name}</BidiText>
 			</b>
 			{caption ? (
-				<span className="sy-cell-id__caption" title={caption}>
+				<span className="sy-cell-id__caption overflow-hidden text-[11px] text-text-3 text-ellipsis whitespace-nowrap" title={caption}>
 					<BidiText>{caption}</BidiText>
 				</span>
 			) : null}

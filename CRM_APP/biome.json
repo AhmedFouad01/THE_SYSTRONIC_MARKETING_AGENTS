@@ -2,8 +2,15 @@
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"overrides": [
 		{
-			"includes": ["app/src/ui/tokens/tailwind.css"],
-			"css": { "parser": { "tailwindDirectives": true } }
+			"includes": [
+				"app/src/ui/tokens/tailwind.css",
+				"app/src/ui/data-grid/grid-kit.css"
+			],
+			"css": {
+				"parser": {
+					"tailwindDirectives": true
+				}
+			}
 		}
 	]
 }
