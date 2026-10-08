@@ -24,7 +24,7 @@ function OutcomesLoad({ loadKey, bucket, onBucket, currency, onCurrency, tz }: {
 	const { t, locale } = useI18n();
 	const load = useLoad((signal) => fetchOutcomes(bucket, tz, signal), loadKey);
 	const data = load.state.status === "ready" ? load.state.data : null;
-	const controls = <div className="sy-chart__controls">
+	const controls = <div className="sy-chart__controls flex flex-wrap gap-12 [&_.sy-field]:min-w-[8rem] [&_.sy-field]:flex-[1_1_8rem]">
 		<Select label={t("charts.outcomes.bucket")} size="sm" value={bucket} onChange={(event) => onBucket(event.target.value === "week" ? "week" : "month")}>
 			<option value="month">{t("charts.outcomes.months")}</option><option value="week">{t("charts.outcomes.weeks")}</option>
 		</Select>

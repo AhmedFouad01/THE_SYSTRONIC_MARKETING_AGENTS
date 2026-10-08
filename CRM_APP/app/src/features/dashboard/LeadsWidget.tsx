@@ -15,7 +15,7 @@ function LeadsWidgetLoad({ identity }: { identity: string }) {
 	const { t, locale, formatCount } = useI18n();
 	const load = useLoad(fetchLeadsAggregate, identity);
 	const data = load.state.status === "ready" ? load.state.data : null;
-	const summary = data ? <dl className="sy-chart__kpis" aria-label={t("charts.leads.statusTotals")}>
+	const summary = data ? <dl className="sy-chart__kpis grid grid-cols-4 gap-12 my-12 max-mobile:grid-cols-2 [&_dt]:text-text-2 [&_dd]:m-0 [&_dd]:text-text [&_dd]:[font-size:var(--sy-type-section-title-size)] [&_dd]:font-weight-section-title" aria-label={t("charts.leads.statusTotals")}>
 		{leadsKpis(data).map(({ key, value }) => <div key={key}>
 			<dt>{t(`charts.leads.${key}`)}</dt><dd><Bdi>{formatCount(value)}</Bdi></dd>
 		</div>)}

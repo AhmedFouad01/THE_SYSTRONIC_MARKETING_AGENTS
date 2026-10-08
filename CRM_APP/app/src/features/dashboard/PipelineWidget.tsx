@@ -20,7 +20,7 @@ function PipelineWidgetLoad({ identity }: { identity: string }) {
 	const [currency, setCurrency] = useState("");
 	const data = load.state.status === "ready" ? load.state.data : null;
 	const selected = data ? pipelineSelection(data, pipelineId, currency) : null;
-	const controls = data ? <div className="sy-chart__controls">
+	const controls = data ? <div className="sy-chart__controls flex flex-wrap gap-12 [&_.sy-field]:min-w-[8rem] [&_.sy-field]:flex-[1_1_8rem]">
 		<Select label={t("charts.pipeline.selector")} size="sm" value={selected?.pipeline?.pipeline_id ?? ""} disabled={data.pipelines.length === 0}
 			onChange={(event) => setPipelineId(event.target.value)}>
 			{data.pipelines.length === 0 ? <option value="">{t("charts.pipeline.noPipelines")}</option> : null}

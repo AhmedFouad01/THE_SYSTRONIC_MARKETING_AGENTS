@@ -18,6 +18,6 @@ function ActivityWidgetLoad({ identity, tz }: { identity: string; tz: string }) 
 	const load = useLoad((signal) => fetchActivity(tz, signal), identity);
 	return <ChartSurface title={t("charts.activity.title")} className="sy-dash__chart sy-dash__chart--wide col-span-full"
 		state={chartState(load.state, (payload) => activityChart(payload, locale, t))} onRetry={load.reload}
-		summary={<p className="sy-chart__meta">{t("charts.activity.records")}</p>}
+		summary={<p className="sy-chart__meta flex flex-wrap gap-12 text-text-2">{t("charts.activity.records")}</p>}
 		emptyAction={<a href={href("/tasks")} onClick={(event) => { event.preventDefault(); navigate("/tasks"); }}>{t("dash.follow.link")}</a>} />;
 }
