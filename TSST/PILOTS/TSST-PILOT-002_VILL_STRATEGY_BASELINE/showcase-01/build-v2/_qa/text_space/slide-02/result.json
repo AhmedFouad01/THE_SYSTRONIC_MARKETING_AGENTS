@@ -1,0 +1,108 @@
+{
+ "canvas": [
+  1080,
+  1350
+ ],
+ "text_box": [
+  274,
+  101
+ ],
+ "plane": [
+  336,
+  124
+ ],
+ "edge_threshold": 24.0,
+ "picks": [
+  {
+   "rank": 1,
+   "text_box_xyxy": [
+    455,
+    135,
+    729,
+    236
+   ],
+   "plane_xyxy": [
+    424,
+    124,
+    760,
+    248
+   ],
+   "edge_pct": 0.0,
+   "lum_std": 9.0,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#C99C74",
+   "text": "#011C2C",
+   "ratio_mean": 7.05,
+   "ratio_worst": 6.08
+  },
+  {
+   "rank": 2,
+   "text_box_xyxy": [
+    131,
+    1167,
+    405,
+    1268
+   ],
+   "plane_xyxy": [
+    100,
+    1156,
+    436,
+    1280
+   ],
+   "edge_pct": 0.0,
+   "lum_std": 10.2,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#442D1B",
+   "text": "#F4F4F4",
+   "ratio_mean": 11.66,
+   "ratio_worst": 8.66
+  },
+  {
+   "rank": 3,
+   "text_box_xyxy": [
+    479,
+    1167,
+    753,
+    1268
+   ],
+   "plane_xyxy": [
+    448,
+    1156,
+    784,
+    1280
+   ],
+   "edge_pct": 0.0,
+   "lum_std": 11.1,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#4A3729",
+   "text": "#F4F4F4",
+   "ratio_mean": 10.21,
+   "ratio_worst": 7.58
+  }
+ ],
+ "v2": {
+  "text_box_xyxy": [
+   471,
+   135,
+   745,
+   236
+  ],
+  "plane_xyxy": [
+   440,
+   124,
+   776,
+   247
+  ],
+  "edge_pct": 0.0,
+  "lum_std": 9.1,
+  "quiet": true,
+  "pct_of_positions_quieter": 0.0,
+  "mean": "#C99C74",
+  "text": "#011C2C",
+  "ratio_mean": 7.05,
+  "ratio_worst": 6.16
+ }
+}

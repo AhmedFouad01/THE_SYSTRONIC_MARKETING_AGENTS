@@ -1,0 +1,50 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.2,
+      "source": "photo #5 crop (186, 0, 1086, 1125) scale 1.2"
+    },
+    {
+      "order": 2,
+      "file": "02_tone.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "petrol #01304A alpha: text band + logo quiet zone + falloff"
+    },
+    {
+      "order": 3,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Cairo 800 80px / Cairo 500 38px; verbatim COPY_DECK.md",
+      "lines": {
+        "h1": [
+          "The ask: everything."
+        ],
+        "sup": [
+          "Finishes, lighting, furniture, all of",
+          "it. One brief, handled by one team."
+        ],
+        "h1px": 80
+      }
+    },
+    {
+      "order": 4,
+      "file": "04_logo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.249,
+      "source": "Wordmark Dark Transparent.png as-is, alpha-bbox trim, 216px wide at (65, 65)"
+    }
+  ]
+}

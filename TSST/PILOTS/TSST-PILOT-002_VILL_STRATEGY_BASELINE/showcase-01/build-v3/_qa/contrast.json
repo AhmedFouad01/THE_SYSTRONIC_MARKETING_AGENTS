@@ -1,0 +1,232 @@
+{
+  "1": {
+    "text": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#6D5540",
+      "bg_p50": "#7D624C",
+      "bg_p95": "#8D694A",
+      "ratio_p5": 6.31,
+      "ratio_p50": 5.13,
+      "ratio_p95": 4.49,
+      "worst": 4.49,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        88,
+        48,
+        432,
+        245
+      ]
+    },
+    "logo": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#694128",
+      "bg_p50": "#985425",
+      "bg_p95": "#CD6F21",
+      "ratio_p5": 8.0,
+      "ratio_p50": 5.26,
+      "ratio_p95": 3.24,
+      "worst": 3.24,
+      "need": 4.5,
+      "ok": false,
+      "box": [
+        902,
+        1256,
+        1024,
+        1313
+      ],
+      "variant": "Wordmark Dark Transparent.png"
+    },
+    "kind": "full-bleed cover",
+    "scale": 1.25
+  },
+  "2": {
+    "text": {
+      "fg": "#011C2C",
+      "bg_p5": "#9F7856",
+      "bg_p50": "#C0936A",
+      "bg_p95": "#D6A77A",
+      "ratio_p5": 4.4,
+      "ratio_p50": 6.33,
+      "ratio_p95": 8.03,
+      "worst": 4.4,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        402,
+        122,
+        850,
+        284
+      ]
+    },
+    "label": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#3F2A1A",
+      "bg_p50": "#493320",
+      "bg_p95": "#593E26",
+      "ratio_p5": 12.26,
+      "ratio_p50": 10.74,
+      "ratio_p95": 8.91,
+      "worst": 8.91,
+      "need": 4.5,
+      "ok": true,
+      "box": [
+        60,
+        1259,
+        192,
+        1290
+      ]
+    },
+    "kind": "full-bleed Before",
+    "scale": 1.142
+  },
+  "3": {
+    "label": {
+      "fg": "#011C2C",
+      "bg_p5": "#EFE6D6",
+      "bg_p50": "#EFE6D6",
+      "bg_p95": "#EFE6D6",
+      "ratio_p5": 14.09,
+      "ratio_p50": 14.09,
+      "ratio_p95": 14.09,
+      "worst": 14.09,
+      "need": 4.5,
+      "ok": true,
+      "box": [
+        104,
+        1259,
+        236,
+        1290
+      ]
+    },
+    "kind": "framed (cream passe-partout) Before",
+    "scale": 0.796
+  },
+  "4": {
+    "text": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#593A24",
+      "bg_p50": "#60422C",
+      "bg_p95": "#724D32",
+      "ratio_p5": 9.29,
+      "ratio_p50": 8.25,
+      "ratio_p95": 6.76,
+      "worst": 6.76,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        63,
+        57,
+        348,
+        211
+      ]
+    },
+    "script": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#674329",
+      "bg_p50": "#6C472D",
+      "bg_p95": "#7A5338",
+      "ratio_p5": 7.92,
+      "ratio_p50": 7.41,
+      "ratio_p95": 6.12,
+      "worst": 6.12,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        57,
+        138,
+        204,
+        211
+      ],
+      "orange_alt": 2.56
+    },
+    "label": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#402312",
+      "bg_p50": "#442614",
+      "bg_p95": "#462917",
+      "ratio_p5": 13.01,
+      "ratio_p50": 12.45,
+      "ratio_p95": 12.01,
+      "worst": 12.01,
+      "need": 4.5,
+      "ok": true,
+      "box": [
+        58,
+        1259,
+        171,
+        1290
+      ]
+    },
+    "kind": "full-bleed After",
+    "scale": 1.095
+  },
+  "5": {
+    "kind": "detail tight crop",
+    "scale": 1.25
+  },
+  "6": {
+    "kind": "full-bleed sea view",
+    "scale": 0.994
+  },
+  "7": {
+    "text": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#011C2C",
+      "bg_p50": "#011C2C",
+      "bg_p95": "#011C2C",
+      "ratio_p5": 15.86,
+      "ratio_p50": 15.86,
+      "ratio_p95": 15.86,
+      "worst": 15.86,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        60,
+        493,
+        663,
+        677
+      ]
+    },
+    "script": {
+      "fg": "#F58021",
+      "bg_p5": "#011C2C",
+      "bg_p50": "#011C2C",
+      "bg_p95": "#011C2C",
+      "ratio_p5": 6.64,
+      "ratio_p50": 6.64,
+      "ratio_p95": 6.64,
+      "worst": 6.64,
+      "need": 3.0,
+      "ok": true,
+      "box": [
+        327,
+        583,
+        651,
+        706
+      ],
+      "orange_alt": 6.64
+    },
+    "logo": {
+      "fg": "#F4F4F4",
+      "bg_p5": "#011C2C",
+      "bg_p50": "#011C2C",
+      "bg_p95": "#011C2C",
+      "ratio_p5": 15.86,
+      "ratio_p50": 15.86,
+      "ratio_p95": 15.86,
+      "worst": 15.86,
+      "need": 4.5,
+      "ok": true,
+      "box": [
+        56,
+        1128,
+        222,
+        1202
+      ],
+      "variant": "Wordmark Dark Transparent.png"
+    },
+    "kind": "type-only solid dark petrol",
+    "scale": 1.0
+  }
+}

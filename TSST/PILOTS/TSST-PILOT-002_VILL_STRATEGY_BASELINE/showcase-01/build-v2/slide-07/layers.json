@@ -1,0 +1,45 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "type-only solid dark petrol",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "solid #011C2C, no photo"
+    },
+    {
+      "order": 2,
+      "file": "02_accent.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "solid orange #F58021 rule 57x5 (solid field, not an overlay)"
+    },
+    {
+      "order": 3,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Cairo 300 76px #F4F4F4; verbatim COPY_DECK v2",
+      "lines": [
+        "One team,",
+        "start to finish."
+      ]
+    },
+    {
+      "order": 4,
+      "file": "04_logo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.173,
+      "source": "Wordmark Dark Transparent.png as-is, alpha-bbox trim, 150px wide at (64, 1136)"
+    }
+  ]
+}

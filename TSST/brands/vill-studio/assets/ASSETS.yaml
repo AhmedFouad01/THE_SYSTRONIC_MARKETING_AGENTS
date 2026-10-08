@@ -30,3 +30,7 @@ final:
 #   rights: own work, user confirmed 2026-10-07. Retouch is disclosed internally; never add/alter built elements.
 # reference/social-direction/{kitchens,furniture}/ : social-media design direction the USER likes for product posts (2026-10-07).
 #   = taste anchor for composition/style/layering: learn the principle, never copy the layout/brand; not VILL brand truth.
+# typography (user, 2026-10-08): Arabic = Alexandria · English (Latin) = Inter. Both are installed on the PC (C:\Windows\Fonts).
+#   NOT Cairo. Cairo/Barlow in PILOT-002 BRAND_GUIDELINES_v1.0.md is WRONG (that draft also still says "navy").
+#   The user named it as "IBM Sans … Alexandria". IBM Plex Sans Arabic is NOT installed; Alexandria is assumed until the user says otherwise.
+# retouch exception (user, 2026-10-08): showcase-01 v2 slide 5 (#9 stone wall): removing the socket/switch plates is APPROVED.

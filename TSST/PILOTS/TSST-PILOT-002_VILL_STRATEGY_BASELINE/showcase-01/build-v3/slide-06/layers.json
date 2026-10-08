@@ -1,0 +1,17 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "full-bleed sea view",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.994,
+      "source": "photo #10 crop (0, 91, 1086, 1448) scale 0.994"
+    }
+  ]
+}

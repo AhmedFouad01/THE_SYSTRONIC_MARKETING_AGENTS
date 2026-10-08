@@ -1,0 +1,37 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "full-bleed After",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.994,
+      "source": "photo #7 crop (0, 60, 1086, 1417) scale 0.994"
+    },
+    {
+      "order": 2,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Cairo 400 48px #F4F4F4; verbatim COPY_DECK v2",
+      "lines": [
+        "Made to",
+        "live in."
+      ]
+    },
+    {
+      "order": 3,
+      "file": "03b_label.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Barlow Condensed Bold 27px tracked #F4F4F4"
+    }
+  ]
+}

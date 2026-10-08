@@ -1,0 +1,25 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "framed (cream passe-partout) Before",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.796,
+      "source": "photo #6 crop (0, 0, 1086, 1448) scale 0.796; framed at (108, 84, 972, 1236) on solid #EFE6D6"
+    },
+    {
+      "order": 2,
+      "file": "03b_label.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Inter 18pt SemiBold 26px caps tracking +4.2px #011C2C"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "full-bleed Before",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.142,
+      "source": "photo #1 crop (140, 0, 1086, 1182) scale 1.142"
+    },
+    {
+      "order": 2,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Inter 28pt SemiBold 72px, tracking -1.2px, leading 1.12, #011C2C; verbatim COPY_DECK v2",
+      "lines": [
+        "We received",
+        "empty rooms."
+      ]
+    },
+    {
+      "order": 3,
+      "file": "03b_label.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Inter 18pt SemiBold 26px caps tracking +4.2px #F4F4F4"
+    }
+  ]
+}

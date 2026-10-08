@@ -1,0 +1,45 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "kind": "full-bleed After",
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.095,
+      "source": "photo #7 crop (0, 0, 986, 1232) scale 1.095"
+    },
+    {
+      "order": 2,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Inter 28pt SemiBold 76px, tracking -1.2px, leading 1.12, #F4F4F4; verbatim COPY_DECK v2",
+      "lines": [
+        "Made to",
+        "live in."
+      ]
+    },
+    {
+      "order": 3,
+      "file": "03c_script.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Alex Brush 122px (1.6x), #F4F4F4, one accent word, shared baseline"
+    },
+    {
+      "order": 4,
+      "file": "03b_label.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Inter 18pt SemiBold 26px caps tracking +4.2px #F4F4F4"
+    }
+  ]
+}

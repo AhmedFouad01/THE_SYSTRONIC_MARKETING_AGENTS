@@ -1,0 +1,50 @@
+{
+  "canvas": [
+    1080,
+    1350
+  ],
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.25,
+      "source": "photo #9 crop (222, 368, 1086, 1448) scale 1.25 + clone-retouch of red wall plates (disclosed internal)"
+    },
+    {
+      "order": 2,
+      "file": "02_tone.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "petrol #01304A alpha: text band + logo quiet zone + falloff"
+    },
+    {
+      "order": 3,
+      "file": "03_text.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 1.0,
+      "source": "Cairo 800 80px / Cairo 500 38px; verbatim COPY_DECK.md",
+      "lines": {
+        "h1": [
+          "Detail, up close."
+        ],
+        "sup": [
+          "Natural stone, softly lit, with a",
+          "bench made by VILL beneath."
+        ],
+        "h1px": 80
+      }
+    },
+    {
+      "order": 4,
+      "file": "04_logo.png",
+      "blend": "normal",
+      "opacity": 1.0,
+      "scale": 0.249,
+      "source": "Wordmark Dark Transparent.png as-is, alpha-bbox trim, 216px wide at (65, 65)"
+    }
+  ]
+}
