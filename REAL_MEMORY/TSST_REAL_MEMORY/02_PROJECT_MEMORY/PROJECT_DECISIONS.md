@@ -151,3 +151,34 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Status: `APPROVED` (user direction in chat 2026-10-07)
 - Decision: The request decides the role, not the tool. Every request to a tool that can read or write files starts with ROLE A (team runtime: boot, write scope, Skills used) or ROLE B (external tool: not a TSST agent, writes only its output file, edits nothing else). This applies to Codex, ChatGPT, Gemini and any future tool. The trigger was GEM-CR-001, where Gemini labelled itself "Lead/SPARK" and edited TOOLCHAIN.md directly; the Lead reviewed it and accepted it partially.
 - Source: `TSST/context/request-role.md`; pointers in the `adapters/` for claude, codex, chatgpt and gemini-desktop.
+
+## TSD-021 — Showcase grammar + typography and composition craft for CREATIVE_AG; VILL fonts corrected
+
+- Date: `2026-10-08`
+- Status: `APPROVED` (user direction and approvals in chat 2026-10-08). All rules are `UNVALIDATED` until owner review of real output.
+- Trigger: the user rejected VILL showcase-01 v1 ("level not acceptable at all"). The petrol overlays read grey and too light, they were overused behind the logo and text, and every slide used the same template. The user said the team is "completely lost" in typography and in photo composition/layout.
+- Decision:
+  - Showcase grammar, SK-011/008/006 v0.3:
+    - No colour overlays, bands, hazes or vignettes on project photos. Legibility comes from crop and placement.
+    - Brand colour as solid fields only. Type grounds use dark petrol `#011C2C`.
+    - On-image text on 3–4 slides at most, placed in the photo's own quiet plane.
+    - Small Before/After labels.
+    - At least 3 layout types per carousel.
+    - Logo small on the cover and the last slide only (the user's middle ground).
+  - Craft skills:
+    - SK-004 v0.2 composition and layout refs (from GEM-CR-005).
+    - SK-005 v0.2 typography craft refs (from GEM-CR-006): hierarchy, lockups, pairing and bilingual, checklist.
+    - Tools: `text_space.py` (quiet-plane finder plus brand text colour and contrast) and `font_metrics.py`.
+    - Script test fonts Allura and Alex Brush (OFL, user-approved download) in `TSST/CREATIVE/fonts/`.
+  - Research handling:
+    - GEM-CR-003 Part 1 (examples) was rejected as evidence. The patterns were adopted as working rules after the user said "let the team make the right call itself".
+    - Gemini requests take the next free GEM number, because parallel sessions collided on GEM-CR-004.
+    - Gemini requests must not run shell commands on the PC.
+    - Third-party guides (the Visme PDF) live in `TSST/CREATIVE/library/` on Drive, gitignored.
+- VILL decisions the same day:
+  - Brand fonts are **Alexandria (Arabic) + Inter (English)**, not Cairo/Barlow. The `BRAND_GUIDELINES_v1.0` draft is stale on fonts and colours.
+  - Lockup is treatment C, a script accent word inside an Inter line, set in Alex Brush.
+  - showcase-01 v2 direction is APPROVED.
+  - The slide-5 socket/switch retouch is APPROVED.
+  - v3 (Inter + Alex Brush) is built and awaits owner review.
+- Source: commits `cb64934`, `d8abbf5`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/REVIEW_v1.md`; Lead review headers in `TSST/CREATIVE/gemini/GEM-CR-003_out.md`, `GEM-CR-005_out.md` and `GEM-CR-006_out.md`; `TSST/brands/vill-studio/assets/ASSETS.yaml`.

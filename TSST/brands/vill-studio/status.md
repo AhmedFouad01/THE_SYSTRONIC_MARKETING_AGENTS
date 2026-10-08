@@ -1,6 +1,6 @@
 # vill-studio — status
 
-updated: 2026-10-07
+updated: 2026-10-08
 
 ## Current
 Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
@@ -24,6 +24,15 @@ Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-1
 - Direction B, "light leads the eye". Benchmark: Lugar Nefertiti set-up. English, minimal text. Logo small. First post: a 4:5 carousel of the place and sea, then details.
 - `DIRECTION_SHEET_v0.1.md` (v0.2 content), post-01 layered carousel (PREVIS; relight requests in `RETOUCH_REQUESTS.md`, not yet run).
 - dresser-01 product track: `products/dresser-01/`. PAUSED by the user after studio round 2. The round-3 single-chat edit script is ready.
+
+## 2026-10-08 — showcase-01 + craft skills (TSD-021)
+- **Brand fonts: Alexandria (AR) + Inter (EN).** Cairo/Barlow in the `BRAND_GUIDELINES_v1.0` draft are wrong; that draft also still says navy. The source of truth is `assets/ASSETS.yaml`.
+- showcase-01 (`TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/`):
+  - v1 REJECTED (overlays, template look).
+  - v2 direction APPROVED: 7 slides, no overlays, logo on the cover and the last slide only.
+  - Slide-5 retouch APPROVED.
+  - v3 is built with Inter and an Alex Brush accent (lockup C, the user's pick) and awaits owner review.
+- Still open: the Lens CHANGED lines, the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
 
 ## Next action
 Lead decides/issues C7-VILL-12 round 2 (fix list in the review); native review of `VERBAL_IDENTITY_v1.0.md` is pending (user). See `projects/strategy-baseline/project.md#Next`.

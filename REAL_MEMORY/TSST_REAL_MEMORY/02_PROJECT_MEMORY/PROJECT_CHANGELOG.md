@@ -73,3 +73,14 @@
 - `PROJECT_DECISIONS.md`: added TSD-019 (CREATIVE_AG training on VILL; rules, skills, tools) and TSD-020 (request role A/B).
 - Repo commit `166b084`: INTAKE_GATE, FINAL_ASSET_GATE, SK-006/008/010/011/014/019 bumps, `TSST/CREATIVE/tools/`, examples, GEM-CR-001 (platform specs = working defaults), `TSST/context/request-role.md`, VILL pilot direction sheet and dresser-01 evidence.
 - Readiness unchanged (`NOT_READY`).
+
+## 2026-10-08 — Showcase grammar, typography and composition craft (user direction in chat 2026-10-08)
+
+- `PROJECT_DECISIONS.md`: added TSD-021.
+- Repo commit `cb64934`:
+  - SK-004/005 v0.2 craft refs and SK-006/008/011 v0.3 showcase grammar.
+  - `text_space.py` and `font_metrics.py`.
+  - Allura and Alex Brush fonts.
+  - GEM-CR-003/005/006 with Lead reviews.
+- Repo commit `d8abbf5`: VILL showcase-01 v1→v3 (copy deck, owner reviews, layered build scripts); ASSETS.yaml fonts are Alexandria + Inter.
+- Readiness unchanged (`NOT_READY`).
