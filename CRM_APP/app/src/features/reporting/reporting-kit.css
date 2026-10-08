@@ -75,12 +75,6 @@
 		opacity: 0.45;
 }
 }
-.sy-kpi--navy {
-	@apply bg-kpi-navy-bg border-kpi-navy-bg text-kpi-navy-fg;
-}
-.sy-kpi--navy .sy-kpi__sub {
-	@apply text-kpi-navy-sub;
-}
 .sy-kpi--magenta {
 	@apply bg-kpi-magenta-bg border-kpi-magenta-bg text-kpi-magenta-fg;
 }

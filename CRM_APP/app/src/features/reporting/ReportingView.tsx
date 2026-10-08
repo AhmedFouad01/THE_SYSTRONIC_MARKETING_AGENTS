@@ -276,7 +276,7 @@ export function ReportingView() {
 								<div className="sy-rep__kpis" data-testid="report-kpis">
 									<KpiCard
 										testId="kpi-roas"
-										tone="navy"
+										tone="neutral"
 										label={t("rep.kpi.roas")}
 										value={formatRoas(kpis.roas, locale)}
 										sub={

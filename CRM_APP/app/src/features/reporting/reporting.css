@@ -92,14 +92,6 @@
 		opacity: 0.45;
 	}
 }
-.sy-kpi--navy {
-	background: var(--sy-kpi-navy-bg);
-	border-color: var(--sy-kpi-navy-bg);
-	color: var(--sy-kpi-navy-fg);
-}
-.sy-kpi--navy .sy-kpi__sub {
-	color: var(--sy-kpi-navy-sub);
-}
 .sy-kpi--magenta {
 	background: var(--sy-kpi-magenta-bg);
 	border-color: var(--sy-kpi-magenta-bg);

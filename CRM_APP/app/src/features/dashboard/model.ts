@@ -12,7 +12,7 @@ import {
 } from "../reporting/model.ts";
 import type { Task } from "../tasks/model.ts";
 
-export type Tone = "neutral" | "navy" | "magenta";
+export type Tone = "neutral" | "magenta";
 
 /** Follow-ups list length (W5) and top-campaigns length (W7). */
 export const FOLLOWUP_LIMIT = 5;
@@ -141,7 +141,7 @@ export function summarizeReport(report: CampaignReport): MarketingSummary {
 export type Emphasis = { overdue: Tone; revenue: Tone };
 
 /**
- * At most two filled cards, never by default. Overdue is navy only when something is overdue; attributed revenue is
+ * At most two filled cards, never by default. Overdue stays neutral; attributed revenue is
  * magenta only when it is positive AND the report is not stale. Every other card is neutral.
  */
 export function emphasis(input: {
@@ -150,7 +150,7 @@ export function emphasis(input: {
 	stale: boolean;
 }): Emphasis {
 	return {
-		overdue: input.overdue !== null && input.overdue > 0 ? "navy" : "neutral",
+		overdue: "neutral",
 		revenue:
 			input.revenue !== null && input.revenue > 0n && !input.stale
 				? "magenta"

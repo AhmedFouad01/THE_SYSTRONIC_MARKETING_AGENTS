@@ -78,8 +78,8 @@ describe("follow-ups (W5)", () => {
 });
 
 describe("emphasis rules", () => {
-	it("overdue is navy only when count > 0", () => {
-		expect(emphasis({ overdue: 2, revenue: null, stale: false }).overdue).toBe("navy");
+	it("overdue remains neutral for every count", () => {
+		expect(emphasis({ overdue: 2, revenue: null, stale: false }).overdue).toBe("neutral");
 		expect(emphasis({ overdue: 0, revenue: null, stale: false }).overdue).toBe("neutral");
 		expect(emphasis({ overdue: null, revenue: null, stale: false }).overdue).toBe("neutral");
 	});
@@ -90,14 +90,14 @@ describe("emphasis rules", () => {
 		expect(emphasis({ overdue: 0, revenue: -5n, stale: false }).revenue).toBe("neutral");
 		expect(emphasis({ overdue: 0, revenue: null, stale: false }).revenue).toBe("neutral");
 	});
-	it("at most two filled cards for every combination, one when only one condition holds", () => {
+	it("only current positive revenue has brand emphasis in every combination", () => {
 		for (const overdue of [0, 4])
 			for (const revenue of [0n, 50n])
 				for (const stale of [true, false]) {
 					const e = emphasis({ overdue, revenue, stale });
 					const filled = Object.values(e).filter((t) => t !== "neutral").length;
-					expect(filled).toBeLessThanOrEqual(2);
-					expect(filled).toBe((overdue > 0 ? 1 : 0) + (revenue > 0n && !stale ? 1 : 0));
+					expect(filled).toBeLessThanOrEqual(1);
+					expect(filled).toBe((revenue > 0n && !stale ? 1 : 0));
 				}
 	});
 });

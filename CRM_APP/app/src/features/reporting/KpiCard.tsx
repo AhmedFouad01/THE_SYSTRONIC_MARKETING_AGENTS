@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { Ltr } from "../../ui/index.ts";
 
-export type KpiTone = "neutral" | "navy" | "magenta";
+export type KpiTone = "neutral" | "magenta";
 
-/** Decision-first KPI card. navy/magenta are scarce emphasis (UX_RULES 5): at most two cards per view. */
+/** Decision-first KPI card. magenta are scarce emphasis (UX_RULES 5): at most two cards per view. */
 export function KpiCard({
 	label,
 	value,
