@@ -133,3 +133,10 @@
 	--breakpoint-stacked: 920px;
 	--breakpoint-compact: 1180px;
 }
+
+/* Preserve the existing loading pulse only when motion is allowed. */
+@keyframes sy-skel-pulse {
+	50% {
+		opacity: 0.45;
+	}
+}
