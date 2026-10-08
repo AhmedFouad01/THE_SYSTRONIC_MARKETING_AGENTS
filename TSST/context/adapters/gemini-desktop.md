@@ -8,6 +8,24 @@ Request role: every request to this tool states ROLE A (team runtime) or ROLE B 
 
 Setup (Gem + Real Memory link): `REAL_MEMORY/TSST_REAL_MEMORY/06_HANDOFF/GEMINI_GEM_INSTRUCTIONS.md`.
 
+## Which surface runs the request (user, 2026-10-08) — write the request for that surface
+The same "Gemini request" behaves very differently depending on where Ahmed runs it:
+
+| | **Gemini app** (Pro, Deep Research) | **Antigravity** (agentic IDE, external tool only, never a TSST runtime per ADR-004) |
+|---|---|---|
+| Local files (G:\, repo paths) | **cannot read them.** Paths in the prompt are dead text. | reads and writes them |
+| GitHub / local CSV / repo index | no; paste the text or upload the file | yes |
+| Shell commands | no | **yes, by default.** It ran URL checks and read boot.md despite "no shell" (GEM-SV-001/003). |
+| Research depth | real Deep Research (many pages, citations) | a handful of quick searches → weak or dead URLs (GEM-CR-003/005/006, GEM-SV-001/003) |
+| Output | stays in the chat; Ahmed exports it to Docs or pastes it into `<REQ-ID>_out.md` | writes `<REQ-ID>_out.md` itself |
+| Chat context | reuses old chats; GEM-CR-007 was read as an "email draft" in a stale chat | per-conversation |
+
+Rules:
+- **Research → Gemini app Deep Research, in a NEW chat.** The prompt must be self-contained and paste-ready: no local paths, no "write file X", no "read the repo". Any file it needs is uploaded by Ahmed (named in the request). The output comes back as text or an export, and Ahmed saves it as `<REQ-ID>_out.md`.
+- **File/repo work → Antigravity**, with ROLE B and an exact read list + one output path. Expect it to run commands; any edit outside the output path is reviewed and reverted (request-role.md rule 2).
+- Every request names its surface on line 2: `SURFACE: Gemini app (Deep Research, new chat)` or `SURFACE: Antigravity`.
+- Whatever the surface, facts that can block a launch (ad policies, legal, platform specs) are verified on the live official page by a team agent or the Lead before use.
+
 ## When
 Any TSST agent may recommend it when it is the best tool for the task — typically
 IMAGE/VIDEO generation (no native path in Claude/Codex), very long inputs (large docs,
