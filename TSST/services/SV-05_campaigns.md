@@ -66,12 +66,18 @@ LENS goes before SPARK on message and order (lesson 2026-10-07). SPARK owns form
   - Outside: dark posts, used for testing many hooks without cluttering the feed.
 - Testing: one variable at a time (TikTok split test ✓ verified page). Set a decision rule before launch.
 - Report: summary vs goal → KPI dashboard → creative winners/losers → audience → next tests. Weekly pacing, monthly strategy.
-- **NOT CONFIRMED (blocks the ANVIL launch until verified on live official pages):**
-  - supplement/health ad rules on Meta, TikTok and Google (18+ targeting, banned claims, before/after rules);
-  - Egyptian Drug Authority pre-approval of supplement ads (both cited EDA links were 404).
+- **Supplement ad rules: VERIFIED by SPARK 2026-10-08 on live official pages** → `TSST/services/verified/SUPPLEMENTS_AD_POLICY.md` (33 rows + checklist). Lead spot-check: the PROMAT site exists (promat.edaegypt.gov.eg login) and the EDA 2026 ads FAQ PDF opens.
+- **Hard gates before any supplement ad (Egypt):**
+  1. Each product is EDA-registered.
+  2. Each creative has EDA prior approval via PROMAT.
+  3. Audience is 18+ for weight/muscle/health claims (Meta, TikTok).
+  4. No cure/treat/prevent claims and no before/after for food supplements (TikTok Egypt group).
+  5. No fat-pinching or exaggerated outcomes or timeframes (Meta).
+  6. Weight-product before/after is treated as prohibited until Meta clarifies.
+- Still NOT CONFIRMED: EDA claim-assessment rules ("white lists"), the legal basis and sanctions, TikTok Shop rules for Egypt.
 
 ## Live job
-**ANVIL SUPPS — campaigns.** Prior work: TSST-PILOT-001 static campaign REVEAL_01 v03, which is in review and awaits user acceptance (`TSST/brands/anvil/projects/switch-pilot/project.md`).
+**ANVIL SUPPS — campaigns.** ANVIL is a retailer/distributor of already EDA-registered supplements and vitamins and makes nothing (Ahmed, 2026-10-08). Open: does retailer advertising need its own PROMAT approval? (see the verified file). Prior work: TSST-PILOT-001 static campaign REVEAL_01 v03, which is in review and awaits user acceptance (`TSST/brands/anvil/projects/switch-pilot/project.md`).
 
 ## Lessons log
 —
