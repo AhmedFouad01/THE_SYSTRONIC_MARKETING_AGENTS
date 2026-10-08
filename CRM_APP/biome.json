@@ -1,0 +1,9 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"overrides": [
+		{
+			"includes": ["app/src/ui/tokens/tailwind.css"],
+			"css": { "parser": { "tailwindDirectives": true } }
+		}
+	]
+}

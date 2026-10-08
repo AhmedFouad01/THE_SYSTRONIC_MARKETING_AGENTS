@@ -11,6 +11,7 @@ import {
 import { readPref, writePref } from "../storage.ts";
 import { buildTokensCss } from "../tokens/css.ts";
 import type { Mode } from "../tokens/scales.ts";
+import "../tokens/tailwind.css";
 import "./base.css";
 
 export const THEME_STORAGE_KEY = "sy.theme";
