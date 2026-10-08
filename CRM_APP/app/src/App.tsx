@@ -10,6 +10,8 @@ import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
 
+import { AuthLinkPage } from "./features/auth/AuthLinkPage.tsx";
+import type { AuthLink } from "./features/auth/link.ts";
 import { SignIn } from "./features/auth/SignIn.tsx";
 import { authErrorKey } from "./features/auth/errors.ts";
 
@@ -113,12 +115,24 @@ function WorkspaceContent({ route }: { route: ReturnType<typeof useRoute> }) {
 	);
 }
 
-export function App() {
+function Screens({ authLink }: { authLink: AuthLink | null }) {
+	const route = useRoute();
+	if (route === "/invite" || route === "/reset") {
+		return <AuthLinkPage key={route} link={
+			authLink?.kind === route.slice(1) ? authLink : {
+				kind: route === "/invite" ? "invite" : "reset", secret: null,
+			}
+		} />;
+	}
+	return <Routed />;
+}
+
+export function App({ authLink = null }: { authLink?: AuthLink | null }) {
 	return (
 		<ThemeProvider>
 			<I18nProvider>
 				<ToastProvider>
-					<Routed />
+					<Screens authLink={authLink} />
 				</ToastProvider>
 			</I18nProvider>
 		</ThemeProvider>

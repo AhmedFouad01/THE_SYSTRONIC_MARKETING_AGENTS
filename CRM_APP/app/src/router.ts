@@ -15,7 +15,8 @@ export const ROUTES = [
 	"/settings/properties",
 	"/imports",
 ] as const;
-export type RoutePath = (typeof ROUTES)[number];
+export const PUBLIC_ROUTES = ["/invite", "/reset"] as const;
+export type RoutePath = (typeof ROUTES)[number] | (typeof PUBLIC_ROUTES)[number];
 /** Direct gated stages remain absent from live navigation until their complete workflow ships. */
 export const STAGED_ROUTES: readonly RoutePath[] = [];
 
@@ -23,7 +24,7 @@ export function toRoute(pathname: string): RoutePath | null {
 	if (pathname !== BASE && !pathname.startsWith(`${BASE}/`)) return null;
 	const rest = pathname.slice(BASE.length) || "/";
 	const clean = rest.length > 1 ? rest.replace(/\/$/, "") : rest;
-	return (ROUTES as readonly string[]).includes(clean)
+	return ([...ROUTES, ...PUBLIC_ROUTES] as readonly string[]).includes(clean)
 		? (clean as RoutePath)
 		: null;
 }

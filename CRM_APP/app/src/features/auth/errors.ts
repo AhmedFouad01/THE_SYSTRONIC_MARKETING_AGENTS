@@ -1,6 +1,10 @@
 import type { ApiError } from "../../api/errors.ts";
 import type { MessageKey } from "../../ui/i18n/en.ts";
+
 const keys: Record<string, MessageKey> = {
+	AUTH_RESET_INVALID: "auth.error.reset_invalid",
+	AUTH_INVITATION_INVALID: "auth.error.invitation_invalid",
+	AUTH_PASSWORD_POLICY: "auth.error.password_policy",
 	AUTH_INVALID_CREDENTIALS: "auth.error.invalid_credentials",
 	AUTH_TOO_MANY_ATTEMPTS: "auth.error.too_many_attempts",
 	AUTH_RATE_LIMITED: "auth.error.rate_limited",

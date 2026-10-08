@@ -20,6 +20,7 @@ export function createAuthClient(fetchImpl: typeof fetch = fetch) {
 				...(body === undefined ? {} : { body: JSON.stringify(body) }),
 				signal,
 				cache: "no-store",
+				referrerPolicy: "no-referrer",
 			});
 			json = await response.json();
 		} catch (error) {
@@ -37,6 +38,16 @@ export function createAuthClient(fetchImpl: typeof fetch = fetch) {
 				email,
 				password,
 			}),
+		signUp: (
+			email: string,
+			password: string,
+			name: string,
+			invitationId: string,
+		) => request("sign-up/email", { email, password, name, invitationId }),
+		acceptInvitation: (invitationId: string) =>
+			request("organization/accept-invitation", { invitationId }),
+		resetPassword: (token: string, newPassword: string) =>
+			request("reset-password", { token, newPassword }),
 		getSession: () => request<{ user: { id: string } } | null>("get-session"),
 		signOut: () => request("sign-out", {}),
 	};

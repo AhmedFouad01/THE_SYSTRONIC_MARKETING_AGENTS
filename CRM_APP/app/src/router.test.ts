@@ -6,6 +6,8 @@ describe("client router", () => {
 		expect(toRoute("/app")).toBe("/");
 		expect(toRoute("/app/")).toBe("/");
 		expect(toRoute("/app/leads")).toBe("/leads");
+	expect(toRoute("/app/invite")).toBe("/invite");
+	expect(toRoute("/app/reset/")).toBe("/reset");
 		expect(toRoute("/app/reporting")).toBe("/reporting");
 		expect(toRoute("/app/reporting/")).toBe("/reporting");
 		expect(toRoute("/app/reporting-v2/")).toBe("/reporting-v2");

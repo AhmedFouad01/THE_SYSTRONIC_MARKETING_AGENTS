@@ -78,3 +78,47 @@ describe("cookie auth contracts", () => {
 		).rejects.toMatchObject({ code: "AUTH_RATE_LIMITED", safeMessage: "" });
 	});
 });
+
+describe("B8 link auth contracts", () => {
+	it("posts strict bodies without URL credentials or retries", async () => {
+		const f = vi.fn<typeof fetch>(
+			async () => new Response(JSON.stringify({ status: true })),
+		);
+		const auth = createAuthClient(f);
+		await auth.signUp(
+			"mixed@example.test",
+			"synthetic-password",
+			"Mixed name",
+			"invite",
+		);
+		await auth.acceptInvitation("invite");
+		await auth.resetPassword("synthetic-token", "synthetic-password");
+		expect(
+			f.mock.calls.map((c) => [c[0], JSON.parse(String(c[1]?.body))]),
+		).toEqual([
+			[
+				"/v1/auth/sign-up/email",
+				{
+					email: "mixed@example.test",
+					password: "synthetic-password",
+					name: "Mixed name",
+					invitationId: "invite",
+				},
+			],
+			["/v1/auth/organization/accept-invitation", { invitationId: "invite" }],
+			[
+				"/v1/auth/reset-password",
+				{ token: "synthetic-token", newPassword: "synthetic-password" },
+			],
+		]);
+		for (const [, options] of f.mock.calls) {
+			expect(options).toMatchObject({
+				credentials: "same-origin",
+				cache: "no-store",
+				referrerPolicy: "no-referrer",
+			});
+			expect(options?.headers).not.toHaveProperty("Authorization");
+			expect(options?.headers).not.toHaveProperty("X-Tenant-ID");
+		}
+	});
+});
