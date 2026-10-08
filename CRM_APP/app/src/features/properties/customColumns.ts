@@ -47,6 +47,9 @@ const ORDERED: Op[] = ["eq", "neq", "gt", "gte", "lt", "lte", "between"];
 const OPS: Record<PropType, Op[]> = {
 	text: ["contains", "starts_with", "eq", "neq", ...NULLS],
 	long_text: ["contains", ...NULLS],
+	email: ["contains", "eq", "neq", ...NULLS],
+	phone: ["contains", "eq", "neq", ...NULLS],
+	url: ["contains", "eq", "neq", ...NULLS],
 	number: [...ORDERED, ...NULLS],
 	currency: [...ORDERED, ...NULLS],
 	date: [...ORDERED, ...NULLS],

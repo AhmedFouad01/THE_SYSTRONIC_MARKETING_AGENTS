@@ -1,3 +1,4 @@
+import { ContactChannels, protectedFacts, ContactFieldsEdit, useContactFieldDraft } from "../contacts/ContactFields.tsx";
 import { useEffect, useState } from "react";
 import { navigate } from "../../router.ts";
 import { AddTaskButton } from "../tasks/index.ts";
@@ -73,8 +74,9 @@ function ContactEditor({
 	const [error, setError] = useState<EditError>(null);
 	const [touched, setTouched] = useState(false);
 
+	const fields = useContactFieldDraft(contact, true);
 	const custom = useCustomDraft(cf, "edit");
-	const dirty = buildPatchBody(contact, draft, "x") !== null || custom.dirty;
+	const dirty = buildPatchBody(contact, draft, "x") !== null || custom.dirty || fields.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === contact.owner_id) || !contact.owner_id
 			? assignees
@@ -83,10 +85,11 @@ function ContactEditor({
 	const save = async () => {
 		setTouched(true);
 		if (draft.name.trim() === "") return;
+		if (fields.errors.length) return;
 		const c = custom.prepare();
 		if (!c.ok) return;
 		const id = crypto.randomUUID();
-		const body = withProperties(buildPatchBody(contact, draft, id), c.patch, { commandId: id, version: contact.version });
+		const body = withProperties(fields.patch(buildPatchBody(contact, draft, id),id), c.patch, { commandId: id, version: contact.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -192,6 +195,7 @@ function ContactEditor({
 					</option>
 				))}
 			</Select>
+			<ContactFieldsEdit fields={fields} masked={contact.sensitive_masked !== false} />
 			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}
@@ -594,6 +598,7 @@ export function ContactDetail({
 			onClose={onClose}
 			actions={
 				<>
+					<ContactChannels record={contact}/>
 					<Button
 						size="sm"
 						variant="primary"
@@ -620,6 +625,7 @@ export function ContactDetail({
 				</>
 			}
 			facts={[
+				...protectedFacts(contact, true, t),
 				{ label: t("common.owner"), value: <Bdi>{contact.ownerName}</Bdi> },
 				{ label: t("common.source"), value: sourceLabel(contact.source, t) },
 			]}

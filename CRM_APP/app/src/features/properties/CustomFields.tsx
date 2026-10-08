@@ -386,6 +386,9 @@ function FieldInput({
 	const text = typeof value === "string" ? value : "";
 	const common = { label, name, error, required: p.required, "data-testid": testId };
 	switch (p.type) {
+  case "email": case "phone": case "url":
+   return <Input {...common} type="text" inputMode={p.type === "phone" ? "tel" : p.type === "email" ? "email" : "url"} dir="auto" value={text} onChange={e=>onChange(e.target.value)} />;
+
 		case "long_text":
 			return (
 				<Textarea

@@ -1,3 +1,4 @@
+import { useSession } from "../../api/index.ts";
 import { useId, useRef, useState } from "react";
 import {
 	Button,
@@ -53,6 +54,8 @@ function NewLeadForm({
 	onBusy: (busy: boolean) => void;
 }) {
 	const { t } = useI18n();
+	const session = useSession();
+	const masked = session.info?.sensitive_read === false || session.info?.sensitive_write === false;
 	const [input, setInput] = useState<NewLeadInput>(EMPTY_NEW_LEAD);
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateErrorKind | null>(null);
@@ -129,6 +132,8 @@ function NewLeadForm({
 			<Input
 				label={t("leads.new.phone")}
 				name="phone"
+				disabled={masked}
+				placeholder={masked ? t("contacts.fields.masked") : undefined}
 				type="tel"
 				dir="ltr"
 				value={input.phone}
@@ -138,6 +143,8 @@ function NewLeadForm({
 			<Input
 				label={t("leads.new.email")}
 				name="email"
+				disabled={masked}
+				placeholder={masked ? t("contacts.fields.masked") : undefined}
 				type="email"
 				dir="ltr"
 				value={input.email}

@@ -17,6 +17,9 @@ export type Lang = string;
 export type PropType =
 	| "text"
 	| "long_text"
+	| "email"
+	| "phone"
+	| "url"
 	| "number"
 	| "currency"
 	| "date"
@@ -45,6 +48,8 @@ export type PropertyDef = {
 	group: string;
 	position: number;
 	is_system: boolean;
+	system_field?: "email" | "phone" | "company" | "job_title" | null;
+	storage?: "column" | "custom" | "record" | "protected";
 	required: boolean;
 	read_only: boolean;
 	sensitive: boolean;

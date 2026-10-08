@@ -384,7 +384,7 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 			...extra,
 		});
 	assert.equal(
-		(await mkProp("company", "text", { searchable: true })).status,
+		(await mkProp("custom_company", "text", { searchable: true })).status,
 		201,
 	);
 	assert.equal((await mkProp("seats", "number")).status, 201);
@@ -397,12 +397,12 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 		"display_name",
 		"email",
 		"phone",
-		"property:company",
+		"property:custom_company",
 		"property:seats",
 	]);
 	const cols = [
 		{ column: 0, target: "display_name" },
-		{ column: 1, target: "property:company" },
+		{ column: 1, target: "property:custom_company" },
 		{ column: 2, target: "property:seats" },
 	];
 	const file = csv(
@@ -418,7 +418,7 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 			[f.ids.a],
 		)
 	).rows[0];
-	assert.deepEqual(ada.custom, { company: "شركة النور", seats: 12 });
+	assert.deepEqual(ada.custom, { custom_company: "شركة النور", seats: 12 });
 	assert.ok(ada.custom_search.length > 0);
 	const bad = await call(
 		mgr,
@@ -613,4 +613,18 @@ test("I8 a file at the row limit (5000 rows) imports in one transaction within a
 	);
 	assert.equal(big.status, 422);
 	assert.equal(big.body.code, "TOO_MANY_ROWS");
+});
+
+test("R09 scalar identifier edits remain dedup/import compatible, masked, and invalid imports roll back",async()=>{
+ await fresh();
+ const c=await call(mgr,"POST","/v1/contacts",{command_id:randomUUID(),display_name:"R09 import",email:" Initial@EXAMPLE.COM ",phone:"01001234567"});assert.equal(c.status,201,JSON.stringify(c.body));
+ const id=c.body.data.id;
+ const patched=await call(mgr,"PATCH",`/v1/contacts/${id}`,{command_id:randomUUID(),expected_version:c.body.data.version,email:"current@example.com"});assert.equal(patched.status,200);
+ for (const email of ["initial@example.com","current@example.com"]) {
+  const result=await call(mgr,"POST","/v1/imports",req(csv(`name,email\nDuplicate,${email}\n`),NAME_EMAIL));assert.equal(result.status,201,JSON.stringify(result.body));assert.equal(result.body.data.job.created,0);assert.equal(result.body.data.job.skipped,1);
+ }
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,id]),3);
+ const before=await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]);
+ const invalid=await call(mgr,"POST","/v1/imports",req(csv("name,email\nNew,new@example.com\nInvalid,bad\n"),NAME_EMAIL,{options:{error_policy:"abort"}}));assert.equal(invalid.status,422);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before);
+ const hidden=await call(reader,"GET",`/v1/contacts/${id}`);assert.equal(hidden.body.data.sensitive_masked,true);assert.equal(hidden.body.data.email,null);assert.equal(hidden.body.data.phone,null);
 });

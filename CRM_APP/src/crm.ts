@@ -1,5 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
+import { attachContactFields, writeContactFields } from "./contactfields.js";
+import { normalizeEmail, normalizePhone } from "./contactformat.js";
 import { type Context, Fault, transaction } from "./db.js";
 import { contactSources, listRecords } from "./list.js";
 import {
@@ -76,11 +78,12 @@ export async function record(
 	await permit(db, ctx, action, kind, object);
 	if (kind === "contact") {
 		const { rows } = await db.query(
-			"SELECT id,kind,crm.identifier_value(id) value,provenance,original_contact_id FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2 AND crm.can_object('sensitive.read','contact',contact_id,$3)",
+			"SELECT id,kind,crm.identifier_value_scoped(id,$3) value,provenance,original_contact_id FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2 AND crm.can_object('sensitive.read','contact',contact_id,$3)",
 			[ctx.tenant, object, ctx.grant ?? null],
 		);
 		r.identifiers = rows;
 	}
+	await attachContactFields(db, ctx, kind as Kind, [r]);
 	if (kind === "deal") r.amount_minor = Number(r.amount_minor);
 	return r;
 }
@@ -166,13 +169,8 @@ async function identifiers(
 			throw new Fault(422, "VALIDATION_FAILED");
 		fields(raw, ["kind", "value", "provenance"]);
 		const kind = raw.kind;
-		let value = text(raw.value, 254).toLowerCase();
-		if (kind === "phone") {
-			value = value.replace(/[ ()-]/g, "");
-			if (!/^\+[1-9]\d{6,14}$/.test(value))
-				throw new Fault(422, "VALIDATION_FAILED");
-		} else if (kind !== "email" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-			throw new Fault(422, "VALIDATION_FAILED");
+		const value = typeof raw.value === "string" ? (kind === "phone" ? normalizePhone(raw.value) : kind === "email" ? normalizeEmail(raw.value) : null) : null;
+		if (!value) throw new Fault(422, "VALIDATION_FAILED");
 		const provenance = text(raw.provenance ?? "manual", 300);
 		// Use only the explicitly provisioned tenant key; never replace missing state.
 		const {
@@ -214,10 +212,12 @@ async function contactCreate(
 		],
 	);
 	await identifiers(db, ctx, object, b.identifiers);
+	await writeContactFields(db, ctx, object, b);
 	await evidence(db, ctx, "contact", object, "contact.created", request, [
 		"display_name",
 		"owner_id",
 		"source",
+		...Object.keys(b).filter(k => ["email","phone","company","job_title"].includes(k)),
 		...(b.identifiers ? ["identifiers"] : []),
 		...(props?.changed.map((k) => `custom:${k}`) ?? []),
 	]);
@@ -315,7 +315,7 @@ export async function crmRequest(
 			return {
 				data: (
 					await db.query(
-						"SELECT crm.actor() actor,crm.can_object('pipeline.manage','pipeline',NULL) configure,crm.can_object('crm.merge','contact',NULL) merge,crm.can_object('audit.read','audit',NULL) audit,crm.can_object('schema.read','property',NULL) schema_read,crm.can_object('property.manage','property',NULL) property_manage",
+						"SELECT crm.actor() actor,crm.can_object('pipeline.manage','pipeline',NULL) configure,crm.can_object('crm.merge','contact',NULL) merge,crm.can_object('audit.read','audit',NULL) audit,crm.can_object('schema.read','property',NULL) schema_read,crm.can_object('property.manage','property',NULL) property_manage,crm.can_object('sensitive.read','contact',NULL) sensitive_read,crm.can_object('sensitive.write','contact',NULL) sensitive_write",
 					)
 				).rows[0],
 			};
@@ -703,9 +703,10 @@ export async function crmRequest(
 		await permit(db, ctx, "crm.write", kind, object ?? null);
 		const allowed =
 			kind === "contact"
-				? ["display_name", "source", "owner_id", "identifiers"]
+				? ["display_name", "source", "owner_id", "identifiers", "email", "phone", "company", "job_title"]
 				: kind === "lead"
 					? [
+							"email", "phone",
 							"contact_id",
 							"contact",
 							"title",
@@ -792,7 +793,7 @@ export async function crmRequest(
 					const values: unknown[] = [ctx.tenant, object],
 						sets: string[] = [];
 					for (const field of allowed) {
-						if (!(field in b) || field === "identifiers") continue;
+						if (!(field in b) || ["identifiers","email","phone","company","job_title"].includes(field)) continue;
 						let value: unknown = b[field];
 						if (field === "owner_id") value = await assignment(db, ctx, value);
 						else if (field === "deal_id")
@@ -846,6 +847,10 @@ export async function crmRequest(
 					);
 					if (kind === "contact")
 						await identifiers(db, ctx, object, b.identifiers);
+					if (kind === "contact" || kind === "lead") {
+						if (kind === "lead" && ("email" in b || "phone" in b)) await permit(db,ctx,"sensitive.write","lead",object);
+						await writeContactFields(db,ctx,kind === "contact" ? object : old.contact_id,b,kind === "lead");
+					}
 					await evidence(
 						db,
 						ctx,
@@ -873,7 +878,7 @@ export async function crmRequest(
 					if (typeof b.contact !== "object" || Array.isArray(b.contact))
 						throw new Fault(422, "VALIDATION_FAILED");
 					fields(b.contact as Body, [
-						"display_name",
+						"display_name", "email", "phone", "company", "job_title",
 						"identifiers",
 						"source",
 						"properties",
@@ -919,6 +924,10 @@ export async function crmRequest(
 							...cv,
 						],
 					);
+				if (kind === "lead" && contact) {
+					if ("email" in b || "phone" in b) await permit(db,ctx,"sensitive.write","lead",objectId);
+					await writeContactFields(db,ctx,contact,b,true);
+				}
 				if (kind === "deal") {
 					const pipeline = id(b.pipeline_id),
 						stage = id(b.stage_id),

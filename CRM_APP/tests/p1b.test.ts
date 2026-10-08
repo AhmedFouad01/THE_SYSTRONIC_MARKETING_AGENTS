@@ -162,14 +162,14 @@ test("P1B-B1 seed: every tenant has the 4 standard objects, general group, syste
 				[t],
 			)
 		).rows;
-		assert.equal(props.length, 26);
+		assert.equal(props.length, 32);
 		for (const p of props) {
 			assert.equal(p.is_system, true);
-			assert.equal(p.storage, "column");
-			assert.equal(p.column_name, p.key);
+			assert.ok(["column","protected"].includes(p.storage));
+			assert.equal(p.column_name, p.storage === "column" ? p.key : null);
 		}
 		// every column-mapped property really is a column of its table (no dangling mapping)
-		for (const p of props)
+		for (const p of props.filter(p=>p.storage === "column"))
 			assert.ok(
 				(
 					await one(
@@ -245,7 +245,7 @@ test("P1B-B1 seed is idempotent, never overwrites edits, re-adds missing rows; o
 				)
 			).n,
 		),
-		26,
+		32,
 	);
 	await assert.rejects(
 		admin.query("SELECT crm.seed_system_properties($1)", [randomUUID()]),
@@ -778,7 +778,7 @@ test("P1B-B1 limits: 100 active custom properties per object, 200 active options
 		),
 		/OPTION_LIMIT_EXCEEDED/,
 	);
-	// system rows are not counted against the 100 (26 system rows exist next to the 100 custom ones)
+	// system rows are not counted against the 100 (32 system rows exist next to the 100 custom ones)
 	assert.equal(
 		Number(
 			(

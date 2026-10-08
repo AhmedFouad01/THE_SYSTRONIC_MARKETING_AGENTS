@@ -379,6 +379,8 @@ export function LeadsView() {
 				width: "130px",
 				cell: (r) => <RelativeTimeCell iso={r.received_at} />,
 			},
+			{id:"email",header:t("common.email"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.email ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.email ?? "—"}</bdi>},
+			{id:"phone",header:t("common.phone"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.phone ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.phone ?? "—"}</bdi>},
 		],
 		[t, ownerOptions],
 	);

@@ -1,3 +1,5 @@
+import { normalizeEmail, normalizePhone } from "../../../../src/contactformat.ts";
+import type { ContactFields } from "../contacts/ContactFields.tsx";
 // Pure leads view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (leads + assignees).
 import { type ApiErrorKind, isApiError } from "../../api/errors.ts";
 import type { CappedCount } from "../capped.ts";
@@ -11,7 +13,7 @@ export const LEAD_STATUSES: readonly LeadStatus[] = [
 	"closed",
 ];
 
-export type Lead = {
+export type Lead = ContactFields & {
 	id: string;
 	contact_id: string;
 	owner_id: string | null;
@@ -181,8 +183,6 @@ export const EMPTY_NEW_LEAD: NewLeadInput = {
 	ownerId: "",
 };
 const MAX = { title: 160, contactName: 160, evidence: 500 } as const;
-const E164 = /^\+[1-9]\d{6,14}$/;
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateNewLead(i: NewLeadInput): NewLeadErrors {
 	const e: NewLeadErrors = {};
@@ -193,8 +193,8 @@ export function validateNewLead(i: NewLeadInput): NewLeadErrors {
 	need("title", i.title);
 	need("contactName", i.contactName);
 	need("evidence", i.evidence);
-	if (i.phone.trim() !== "" && !E164.test(i.phone.trim())) e.phone = "phone";
-	if (i.email.trim() !== "" && !EMAIL.test(i.email.trim())) e.email = "email";
+	if (i.phone.trim() !== "" && !normalizePhone(i.phone)) e.phone = "phone";
+	if (i.email.trim() !== "" && !normalizeEmail(i.email)) e.email = "email";
 	return e;
 }
 
@@ -211,13 +211,13 @@ export function buildCreateBody(
 	if (i.phone.trim() !== "")
 		identifiers.push({
 			kind: "phone",
-			value: i.phone.trim(),
+			value: normalizePhone(i.phone) ?? i.phone.trim(),
 			provenance: "manual_entry",
 		});
 	if (i.email.trim() !== "")
 		identifiers.push({
 			kind: "email",
-			value: i.email.trim(),
+			value: normalizeEmail(i.email) ?? i.email.trim(),
 			provenance: "manual_entry",
 		});
 	return {

@@ -294,15 +294,15 @@ async function readObject(
  coalesce((SELECT jsonb_agg(jsonb_build_object('key',g.key,'label',g.label,'label_key',CASE WHEN g.key='general' AND (g.label#>>'{}') IN (g.label_legacy->>'en',g.label_legacy->>'ar') THEN 'props.system.general' END,'position',g.position,'version',g.version,'archived',g.archived) ORDER BY g.position,g.key)
   FROM crm.property_group g WHERE g.tenant_id=o.tenant_id AND g.object_type=o.key AND ($3::boolean OR NOT g.archived)),'[]'::jsonb) groups,
  coalesce((SELECT jsonb_agg(jsonb_build_object(
-   'key',d.key,'label',d.label,'label_key',CASE WHEN d.is_system AND (d.label#>>'{}') IN (d.label_legacy->>'en',d.label_legacy->>'ar') THEN 'props.system.'||d.key END,'description',d.description,'type',d.type,'display',d.display,'group',g.key,'position',d.position,
-   'storage',d.storage,'is_system',d.is_system,'required',d.required,'read_only',d.read_only,'sensitive',d.sensitive,
+   'key',d.key,'label',d.label,'label_key',CASE WHEN d.is_system AND (d.label#>>'{}') IN (d.label_legacy->>'en',d.label_legacy->>'ar') THEN 'props.system.'||coalesce(d.system_field,d.key) END,'description',d.description,'type',d.type,'display',d.display,'group',g.key,'position',d.position,
+   'system_field',d.system_field,'storage',d.storage,'is_system',d.is_system,'required',d.required,'read_only',d.read_only,'sensitive',d.sensitive,
    'searchable',d.searchable,'indexed',d.indexed,'show_default',d.show_default,'validation',d.validation,'currency',d.currency,
    'version',d.version,'archived',d.archived_at IS NOT NULL,
    'option_count',(SELECT count(*) FROM crm.property_option c WHERE c.tenant_id=d.tenant_id AND c.property_id=d.id AND NOT c.archived),
    'options',CASE WHEN $4::boolean THEN (SELECT coalesce(jsonb_agg(jsonb_build_object('value',p.value,'label',p.label,'color',p.color,'position',p.position,'archived',p.archived) ORDER BY p.position,p.value),'[]'::jsonb)
      FROM crm.property_option p WHERE p.tenant_id=d.tenant_id AND p.property_id=d.id) END) ORDER BY d.position,d.key)
   FROM crm.property_definition d LEFT JOIN crm.property_group g ON (g.tenant_id,g.id)=(d.tenant_id,d.group_id)
-  WHERE d.tenant_id=o.tenant_id AND d.object_type=o.key AND ($3::boolean OR d.archived_at IS NULL) AND ($5::boolean OR NOT d.sensitive) AND ($6::text IS NULL OR d.key=$6)),'[]'::jsonb) properties
+  WHERE d.tenant_id=o.tenant_id AND d.object_type=o.key AND ($3::boolean OR d.archived_at IS NULL) AND ($5::boolean OR NOT d.sensitive OR d.storage='protected') AND ($6::text IS NULL OR d.key=$6)),'[]'::jsonb) properties
  FROM crm.object_type o WHERE o.tenant_id=$1 AND o.key=$2 AND NOT o.archived`,
 		[ctx.tenant, object, o.archived, o.options, o.sensitive, o.key],
 	);

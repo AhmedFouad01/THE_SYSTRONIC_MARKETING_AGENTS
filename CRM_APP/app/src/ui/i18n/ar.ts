@@ -3,6 +3,16 @@
 import type { MessageKey } from "./en.ts";
 
 export const ar: Record<MessageKey, string> = {
+	"cf.err.INVALID_VALUE": "أدخل قيمة صحيحة.",
+	"props.type.url": "رابط",
+	"props.type.phone": "الهاتف",
+	"props.type.email": "البريد الإلكتروني",
+	"props.system.job_title": "المسمى الوظيفي",
+	"props.system.company": "الشركة",
+	"props.system.phone": "الهاتف",
+	"props.system.email": "البريد الإلكتروني",
+	"contacts.whatsapp": "واتساب",
+	"contacts.fields.masked": "•••• (محجوب)",
 	"security.intro": "إدارة جلسات تسجيل الدخول وكلمة المرور.",
 	"security.sessions": "جلساتي",
 	"security.refresh": "تحديث الجلسات",

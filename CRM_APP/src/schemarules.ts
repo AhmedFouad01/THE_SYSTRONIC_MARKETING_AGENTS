@@ -20,6 +20,9 @@ export const LIMITS = {
 export const TYPE_NAMES = [
 	"text",
 	"long_text",
+	"email",
+	"phone",
+	"url",
 	"number",
 	"currency",
 	"date",
@@ -35,6 +38,9 @@ export const TYPES: Record<
 	PropType,
 	{ displays: string[]; validation: string[]; options: boolean }
 > = {
+	email: { displays: ["default"], validation: [], options: false },
+	phone: { displays: ["default"], validation: [], options: false },
+	url: { displays: ["default"], validation: [], options: false },
 	text: { displays: ["default"], validation: ["max_length"], options: false },
 	long_text: {
 		displays: ["default"],

@@ -1,3 +1,4 @@
+import { ContactChannels, protectedFacts, ContactFieldsEdit, useContactFieldDraft } from "../contacts/ContactFields.tsx";
 import { useState } from "react";
 import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
 import {
@@ -52,8 +53,9 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 	const [error, setError] = useState<EditError>(null);
 	const [titleIssue, setTitleIssue] = useState(false);
 
+	const fields = useContactFieldDraft(lead, false);
 	const custom = useCustomDraft(cf, "edit");
-	const dirty = buildPatchBody(lead, draft, "x") !== null || custom.dirty;
+	const dirty = buildPatchBody(lead, draft, "x") !== null || custom.dirty || fields.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === lead.owner_id) || !lead.owner_id
 			? assignees
@@ -64,10 +66,11 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 			setTitleIssue(true);
 			return;
 		}
+		if (fields.errors.length) return;
 		const c = custom.prepare();
 		if (!c.ok) return;
 		const id = crypto.randomUUID();
-		const body = withProperties(buildPatchBody(lead, draft, id), c.patch, { commandId: id, version: lead.version });
+		const body = withProperties(fields.patch(buildPatchBody(lead, draft, id),id), c.patch, { commandId: id, version: lead.version });
 		if (body === null) return;
 		setSaving(true);
 		setError(null);
@@ -188,6 +191,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 					</option>
 				))}
 			</Select>
+			<ContactFieldsEdit fields={fields} masked={lead.sensitive_masked !== false} />
 			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}
@@ -250,6 +254,7 @@ export function LeadDetail({
 			onClose={onClose}
 			actions={
 				<>
+					<ContactChannels record={lead}/>
 					<Button
 						size="sm"
 						variant="primary"
@@ -276,6 +281,7 @@ export function LeadDetail({
 				</>
 			}
 			facts={[
+				...protectedFacts(lead, false, t),
 				{ label: t("leads.field.owner"), value: <Bdi>{lead.ownerName}</Bdi> },
 				{ label: t("common.source"), value: sourceLabel(lead.source, t) },
 				{

@@ -180,6 +180,7 @@ const unknownProperty = (field: string, key: string) =>
 const NUM_MAX = 1e15; // = the write-side bound (properties.ts LIMITS.number)
 // Filter operators per property type (ADR-002 4.4). multi_select has no scalar ordering; checkbox is `is true|false`.
 const PROP_OPS: Record<PropType, string[]> = {
+ email: [...BASE,"contains","starts_with"], phone: [...BASE,"contains","starts_with"], url: [...BASE,"contains","starts_with"],
 	text: [...BASE, "contains", "starts_with"],
 	long_text: ["contains", "is_null", "not_null"],
 	number: [...BASE, ...ORD],
@@ -193,6 +194,7 @@ const PROP_OPS: Record<PropType, string[]> = {
 };
 // Sortable types (ADR 4.4): text, number-like, date-like, select by option position. Not: long_text, multi_select, checkbox, user.
 const PROP_T: Partial<Record<PropType, T>> = {
+ email: "text", phone: "text", url: "text",
 	text: "text",
 	number: "num",
 	currency: "num",
@@ -272,6 +274,9 @@ export function customKeys(query: URLSearchParams): string[] {
 // A filter value for a custom property of this type, validated and normalised exactly like the stored form.
 function cvalue(d: ListProp, v: unknown): string | number | boolean {
 	switch (d.type) {
+		case "email":
+		case "phone":
+		case "url":
 		case "text":
 		case "long_text":
 			return str(v, LIMITS.text).normalize("NFC");

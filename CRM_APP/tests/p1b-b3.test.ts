@@ -1,3 +1,4 @@
+import {readFile} from "node:fs/promises";
 // ADR-002 P1b B3 (src/properties.ts + thin call sites in crm.ts/list.ts/listquery.ts): custom values on records, over the real HTTP
 // server and real PostgreSQL (crm_runtime, RLS). No migration: 010 columns + 011 permissions only.
 import { test, before, after } from "node:test";
@@ -723,7 +724,7 @@ test("B3 session capability flags: schema_read and property_manage", async () =>
 		assert.equal(x.property_manage, false);
 	}
 	// existing flags unchanged
-	assert.deepEqual(Object.keys(m).sort(), ["actor", "audit", "configure", "merge", "property_manage", "schema_read"]);
+	assert.deepEqual(Object.keys(m).sort(), ["actor", "audit", "configure", "merge", "property_manage", "schema_read", "sensitive_read", "sensitive_write"]);
 	assert.equal(m.merge, true);
 	assert.equal((await flags(reader)).merge, false);
 });
@@ -748,4 +749,112 @@ test("B3 writing properties does not weaken a schema write: schema writers and r
 	} finally {
 		await blocker.end();
 	}
+});
+
+// R09 protected system fields: metadata, permissions, encryption, primary selection and atomic rollback.
+test("R09 contact/lead fields are normalized, encrypted, masked and absent from search/filter oracles", async () => {
+ await fresh();
+ const created=await call(mgr,"POST","/v1/contacts",{...cmd(),display_name:"R09 fields",email:" A@EXAMPLE.COM ",phone:"٠١٠٠١٢٣٤٥٦٧",company:"شركة Example",job_title:"مدير"});
+ assert.equal(created.status,201,JSON.stringify(created.body));
+ const c=created.body.data;
+ assert.equal(c.email,"a@example.com"); assert.equal(c.phone,"+201001234567"); assert.equal(c.company,"شركة Example"); assert.equal(c.job_title,"مدير"); assert.equal(c.sensitive_masked,false);
+ assert.deepEqual(c.properties,{});
+ const encrypted=await one("SELECT company_encrypted,job_title_encrypted,custom,custom_search FROM crm.contact WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.id]);
+ assert.ok(Buffer.isBuffer(encrypted.company_encrypted)); assert.ok(!encrypted.company_encrypted.includes(Buffer.from("Example")));
+ assert.deepEqual(encrypted.custom,{}); assert.equal(encrypted.custom_search,"");
+ const lead=await call(mgr,"POST","/v1/leads",{...cmd(),contact_id:c.id,title:"R09 lead",source_evidence:"manual"});
+ assert.equal(lead.status,201,JSON.stringify(lead.body)); assert.equal(lead.body.data.email,c.email);
+ for (const kind of ["contacts","leads"]) {
+  const identifier=kind === "contacts" ? c.id : lead.body.data.id;
+  for (const route of [`/v1/${kind}/${identifier}`,`/v1/${kind}`]) {
+   const result=await call(reader,"GET",route); assert.equal(result.status,200);
+   const row=Array.isArray(result.body.data) ? result.body.data.find((r:{id:string})=>r.id === identifier) : result.body.data;
+   assert.equal(row.sensitive_masked,true);assert.equal(row.email,null);assert.equal(row.phone,null);
+   if (kind === "contacts") {assert.equal(row.company,null);assert.equal(row.job_title,null);}
+   assert.ok(!JSON.stringify(result.body).includes("a@example.com"));
+  }
+  const search=await call(reader,"GET",`/v1/${kind}?q=a%40example.com`);assert.equal(search.body.data.length,0);
+  const filtered=await call(reader,"GET",`/v1/${kind}?filter=${encodeURIComponent(JSON.stringify({field:"email",op:"eq",value:c.email}))}`);assert.equal(filtered.status,422);
+ }
+ const schema=await call(reader,"GET","/v1/schema/contact");
+ for (const field of ["email","phone","company","job_title"]) {
+  const definition=schema.body.data.properties.find((d:{system_field:string})=>d.system_field === field);
+  assert.ok(definition?.is_system && definition.sensitive && definition.show_default);assert.equal(definition.storage,"protected");
+ }
+ const oldCount=Number((await one("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,c.id])).n);
+ const patchGood=await patch(mgr,"contacts",c.id,c.version,{email:"other@example.com"});assert.equal(patchGood.status,200);assert.equal(patchGood.body.data.email,"other@example.com");
+ assert.equal(Number((await one("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,c.id])).n),oldCount+1);
+ const before=await one("SELECT version,company_encrypted FROM crm.contact WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.id]);
+ const bad=await patch(mgr,"contacts",c.id,patchGood.body.data.version,{company:"must roll back",phone:"bad"});assert.equal(bad.status,422);
+ const after=await one("SELECT version,company_encrypted FROM crm.contact WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.id]);assert.deepEqual(after,before);
+ const denied=await patch(reader,"contacts",c.id,patchGood.body.data.version,{email:"hidden@example.com"});assert.equal(denied.status,403);
+ const agency=await call(agencyGrant,"GET",`/v1/contacts/${c.id}`);assert.equal(agency.status,403);
+});
+test("R09 assigned rep sees/writes own fields; both lead and contact permission are required", async () => {
+ await fresh();
+ const session=await call(rep,"GET","/v1/session");assert.equal(session.body.data.sensitive_read,true);assert.equal(session.body.data.sensitive_write,true);
+ const created=await call(rep,"POST","/v1/contacts",{...cmd(),display_name:"Rep own",email:"rep@example.com",company:"Own"});assert.equal(created.status,201,JSON.stringify(created.body));assert.equal(created.body.data.email,"rep@example.com");
+ const c=created.body.data;
+ const changed=await patch(rep,"contacts",c.id,c.version,{phone:"01001234567"});assert.equal(changed.status,200);assert.equal(changed.body.data.phone,"+201001234567");
+ const lead=await call(rep,"POST","/v1/leads",{...cmd(),contact_id:c.id,title:"Rep lead",source_evidence:"manual"});assert.equal(lead.status,201);assert.equal(lead.body.data.email,c.email);
+ const fromLead=await patch(rep,"leads",lead.body.data.id,lead.body.data.version,{email:"lead-primary@example.com"});assert.equal(fromLead.status,200);assert.equal(fromLead.body.data.email,"lead-primary@example.com");
+ assert.equal((await get(rep,"contacts",c.id)).body.data.version,changed.body.data.version+1);
+ lead.body.data=fromLead.body.data;
+ await admin.query("UPDATE crm.contact SET owner_id=$3 WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.id,f.ids.manager]);
+ const hidden=await call(rep,"GET",`/v1/leads/${lead.body.data.id}`);assert.equal(hidden.status,200);assert.equal(hidden.body.data.sensitive_masked,true);assert.equal(hidden.body.data.email,null);
+ const noWrite=await patch(rep,"leads",lead.body.data.id,lead.body.data.version,{email:"forbidden@example.com"});assert.equal(noWrite.status,403);
+});
+test("R09 new property types validate on server, normalize accepted values and reject rollback writes",async()=>{
+ await fresh();
+ for (const type of ["email","phone","url"]) await prop("contact",`typed_${type}`,type);
+ const c=await contactWith({typed_email:" X@EXAMPLE.COM ",typed_phone:"01001234567",typed_url:"https://example.com"});
+ const visible=await get(mgr,"contacts",c.id);assert.deepEqual(visible.body.data.properties,{typed_email:"x@example.com",typed_phone:"+201001234567",typed_url:"https://example.com/"});
+ for (const [key,value] of [["typed_email","invalid"],["typed_phone","abc"],["typed_url","javascript:alert(1)"]]) {
+  const result=await patch(mgr,"contacts",c.id,c.version,{display_name:"Must roll back",properties:{[String(key)]:value}});assert.equal(result.status,422);
+ }
+ const after=await get(mgr,"contacts",c.id);assert.equal(after.body.data.version,c.version);assert.equal(after.body.data.display_name,"B3 contact");
+});
+test("R09 seed/backfill retains colliding custom keys and values and repeats without duplicates",async()=>{
+ await fresh();
+ // Rehearse the exact additive backfill against pre-028 metadata, including legitimate custom keys.
+ await admin.query("DELETE FROM crm.property_definition WHERE tenant_id=$1 AND storage='protected'",[mgr.tenant]);
+ const c=await contactWith();
+ for (const key of ["email","phone","company","job_title","system_email"]) {
+  await prop("contact",key,"text");
+ }
+ const values={email:"custom email",phone:"custom phone",company:"custom company",job_title:"custom title",system_email:"custom alternate"};
+ await admin.query("UPDATE crm.contact SET custom=$3::jsonb WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.id,JSON.stringify(values)]);
+ await admin.query("SELECT crm.seed_contact_system_properties($1)",[mgr.tenant]);
+ const before=(await admin.query("SELECT id,key,system_field FROM crm.property_definition WHERE tenant_id=$1 ORDER BY id",[mgr.tenant])).rows;
+ await admin.query("SELECT crm.seed_system_properties($1)",[mgr.tenant]);
+ assert.deepEqual((await admin.query("SELECT id,key,system_field FROM crm.property_definition WHERE tenant_id=$1 ORDER BY id",[mgr.tenant])).rows,before);
+ assert.deepEqual(await customOf("contact",c.id),values);
+ const defs=(await call(mgr,"GET","/v1/schema/contact")).body.data.properties;
+ assert.equal(defs.find((d:{system_field:string})=>d.system_field === "email").key,"system_email_2");
+ for (const field of ["email","phone","company","job_title"]) {
+  assert.ok(defs.find((d:{key:string;is_system:boolean})=>d.key === field && !d.is_system));
+  assert.ok(defs.find((d:{system_field:string;storage:string})=>d.system_field === field && d.storage === "protected"));
+ }
+ const noPublic=await one("SELECT count(*)::int n FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE n.nspname='crm' AND p.proname IN ('identifier_value_scoped','contact_business_fields','seed_contact_system_properties','seed_system_properties') AND a.grantee=0 AND a.privilege_type='EXECUTE'");assert.equal(noPublic.n,0);
+ const rls=(await admin.query("SELECT relrowsecurity,relforcerowsecurity FROM pg_class WHERE oid IN ('crm.contact'::regclass,'crm.contact_identifier'::regclass,'crm.property_definition'::regclass)")).rows;assert.ok(rls.every(r=>r.relrowsecurity && r.relforcerowsecurity));
+});
+
+test("R09 actual migration 028 preserves populated records and ciphertext, then repeats seeds",async()=>{
+ await fresh();
+ const snapshot=async()=>(await admin.query("SELECT (SELECT count(*) FROM crm.contact) contacts,(SELECT count(*) FROM crm.lead) leads,(SELECT count(*) FROM crm.contact_identifier) identifiers,(SELECT md5(string_agg(encode(encrypted_value,'hex'),'' ORDER BY tenant_id,id)) FROM crm.contact_identifier) ciphertext")).rows[0];
+ const before=await snapshot();
+ await admin.query("BEGIN");
+ try {
+  // Reconstruct only the additive pre-028 surface; the entire populated rehearsal is rolled back.
+  await admin.query("DELETE FROM crm.property_definition WHERE storage='protected'");
+  await admin.query("DROP FUNCTION crm.contact_business_fields(uuid,uuid); DROP FUNCTION crm.identifier_value_scoped(uuid,uuid); DROP FUNCTION crm.seed_contact_system_properties(uuid); DROP FUNCTION crm.seed_system_properties(uuid); ALTER FUNCTION crm.seed_system_properties_pre028(uuid) RENAME TO seed_system_properties");
+  await admin.query("ALTER TABLE crm.contact DROP COLUMN company_encrypted,DROP COLUMN job_title_encrypted; ALTER TABLE crm.contact_identifier DROP COLUMN is_primary; ALTER TABLE crm.property_definition DROP COLUMN system_field, DROP CONSTRAINT registry_types, DROP CONSTRAINT registry_storage, DROP CONSTRAINT registry_column, DROP CONSTRAINT registry_system");
+  await admin.query("ALTER TABLE crm.property_definition ADD CHECK(type IN ('text','long_text','number','currency','date','datetime','single_select','multi_select','checkbox','user')) NOT VALID,ADD CHECK(storage IN ('column','custom','record')),ADD CHECK((storage='column')=(column_name IS NOT NULL)),ADD CHECK(NOT is_system OR storage='column') NOT VALID");
+  await admin.query(await readFile(new URL("../migrations/028_contact_system_properties.sql",import.meta.url),"utf8"));
+  assert.deepEqual(await snapshot(),before);
+  const counts=await one("SELECT (SELECT count(*) FROM crm.tenant)*6 expected,(SELECT count(*) FROM crm.property_definition WHERE storage='protected') actual");assert.equal(counts.actual,counts.expected);
+  const metadata=await one("SELECT count(*)::int n FROM crm.property_definition WHERE tenant_id=$1 AND storage='protected'",[mgr.tenant]);assert.equal(metadata.n,6);
+  await admin.query("SELECT crm.seed_system_properties($1)",[mgr.tenant]);assert.equal((await one("SELECT count(*)::int n FROM crm.property_definition WHERE tenant_id=$1 AND storage='protected'",[mgr.tenant])).n,6);
+ } finally {await admin.query("ROLLBACK");}
+ assert.deepEqual(await snapshot(),before);
 });

@@ -329,6 +329,10 @@ export function ContactsView() {
 				filter: { options: sourceOptions },
 				cell: (r) => sourceLabel(r.source, t),
 			},
+			{id:"email",header:t("common.email"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.email ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.email ?? "—"}</bdi>},
+			{id:"phone",header:t("common.phone"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.phone ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.phone ?? "—"}</bdi>},
+			{id:"company",header:t("props.system.company"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.company ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.company ?? "—"}</bdi>},
+			{id:"job_title",header:t("props.system.job_title"),value:r=>r.sensitive_masked !== false ? t("contacts.fields.masked") : r.job_title ?? "—",searchable:false,sortable:false,width:"180px",mobile:"hide",cell:r=><bdi>{r.sensitive_masked !== false ? t("contacts.fields.masked") : r.job_title ?? "—"}</bdi>},
 		],
 		[t, ownerOptions, sourceOptions],
 	);

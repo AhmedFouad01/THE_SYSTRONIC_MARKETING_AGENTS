@@ -312,3 +312,9 @@ describe("grouping", () => {
 		expect(visibleInRead(def("t", "text"), {})).toBe(true);
 	});
 });
+
+it("R09 client email/phone/url drafts normalize accepted values and reject invalid values",()=>{
+ for(const [type,input,value] of [["email"," A@EXAMPLE.COM ","a@example.com"],["phone","01001234567","+201001234567"],["url","https://example.com","https://example.com/"]] as const){
+  const property={type,validation:{}} as PropertyDef;expect(parseDraft(property,input)).toEqual({ok:true,value});expect(parseDraft(property,"bad")).toEqual({ok:false,issue:{code:"INVALID_VALUE"}});
+ }
+});

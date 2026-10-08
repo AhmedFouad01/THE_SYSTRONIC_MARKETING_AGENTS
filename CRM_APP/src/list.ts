@@ -1,3 +1,4 @@
+import { attachContactFields } from "./contactfields.js";
 // ADR-002 P1a S4: executes a compiled list plan. Authorization (crm.read) is checked by the caller before this runs;
 // scope is resolved once via crm.object_scope and applied in SQL, so no cursor or filter can widen it.
 import type pg from "pg";
@@ -54,6 +55,7 @@ export async function listRecords(
 		if ("amount_minor" in o) o.amount_minor = Number(o.amount_minor);
 		return o;
 	});
+	await attachContactFields(db, ctx, kind, data);
 	if (props) await attachProperties(db, ctx, kind, data, { keys: props, sensitive });
 	if (plan.expand.includes("owner")) {
 		const ids = [

@@ -2,6 +2,16 @@
 // NAV) where present. Keys marked `// new` have no prototype string and are S1 additions.
 // Placeholders use {name}. AR (ar.ts) must define exactly the same keys (enforced by i18n.test.ts + types).
 export const en = {
+	"cf.err.INVALID_VALUE": "Enter a valid value.",
+	"props.type.url": "URL",
+	"props.type.phone": "Phone",
+	"props.type.email": "Email",
+	"props.system.job_title": "Job title",
+	"props.system.company": "Company",
+	"props.system.phone": "Phone",
+	"props.system.email": "Email",
+	"contacts.whatsapp": "WhatsApp",
+	"contacts.fields.masked": "•••• (Hidden)",
 	"security.intro": "Manage your sign-in sessions and password.",
 	"security.sessions": "My sessions",
 	"security.refresh": "Refresh sessions",

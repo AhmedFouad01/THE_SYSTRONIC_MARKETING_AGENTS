@@ -3,6 +3,7 @@
 // is in the small async helpers below; crm.ts only calls them (thin call sites).
 // Storage: `custom` jsonb (absent key = no value; `null` and "" / [] clear) + `custom_search` (folded text of searchable,
 // non-sensitive, active text properties). Old rows that violate a newer rule stay readable; rules apply to new writes only.
+import { normalizeEmail, normalizePhone, normalizeUrl } from "./contactformat.js";
 import { isDeepStrictEqual } from "node:util";
 import type pg from "pg";
 import { type Context, Fault } from "./db.js";
@@ -100,6 +101,13 @@ const bad = (code: string): Coerced => ({ code });
 // it is unchanged, so editing another property of the record never trips over it.
 function coerce(d: Def, raw: unknown, cur: unknown, actor: Actor): Coerced {
 	switch (d.type) {
+		case "email":
+  case "phone":
+  case "url": {
+   if (typeof raw !== "string") return bad("INVALID_TYPE");
+   const value=d.type === "email" ? normalizeEmail(raw) : d.type === "phone" ? normalizePhone(raw) : normalizeUrl(raw);
+   return value ? {value} : bad("INVALID_VALUE");
+  }
 		case "text":
 		case "long_text": {
 			if (typeof raw !== "string") return bad("INVALID_TYPE");
