@@ -1,0 +1,79 @@
+/* Preserve existing desktop/sheet exit and reduced-motion contracts without rebasing fixed child overlays. */
+.sy-preview { animation: sy-preview-in 200ms var(--sy-ease-out, cubic-bezier(0.2, 0.8, 0.2, 1)); }
+:root[dir="rtl"] .sy-preview { animation-name: sy-preview-in-rtl; }
+.sy-preview.sy-ghost { pointer-events: none; animation: sy-preview-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards; }
+:root[dir="rtl"] .sy-preview.sy-ghost { animation-name: sy-preview-out-rtl; }
+.sy-scrim.sy-ghost { pointer-events: none; }
+.sy-scrim.sy-ghost .sy-dialog { animation: sy-sheet-out 180ms cubic-bezier(0.4, 0, 1, 1) forwards; }
+@keyframes sy-preview-out {
+	to {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+}
+
+@keyframes sy-preview-out-rtl {
+	to {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+}
+
+@keyframes sy-sheet-out {
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes sy-preview-in-rtl {
+	from {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes sy-preview-in {
+	from {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sy-preview,
+	:root[dir="rtl"] .sy-preview {
+		animation: sy-preview-fade 120ms linear;
+	}
+
+	.sy-preview.sy-ghost,
+	:root[dir="rtl"] .sy-preview.sy-ghost {
+		animation: sy-preview-fade-out 120ms linear forwards;
+	}
+
+	.sy-scrim.sy-ghost .sy-dialog {
+		animation: sy-preview-fade-out 120ms linear forwards;
+	}
+}
+
+@keyframes sy-preview-fade-out {
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes sy-preview-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

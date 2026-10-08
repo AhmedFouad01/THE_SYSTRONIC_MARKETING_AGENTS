@@ -1,0 +1,153 @@
+@reference "../../ui/tokens/tailwind.css";
+
+.sy-rep {
+	@apply flex flex-col gap-12 min-w-0;
+}
+.sy-rep__muted {
+	@apply text-text-3;
+	margin: var(--sy-space-4) 0 0;
+	overflow-wrap: anywhere;
+}
+.sy-rep__controls {
+	@apply flex flex-wrap items-start gap-10 min-w-0;
+}
+/* UX-18: constrained controls (select 240, number 96) instead of full-width stretching. */
+.sy-rep__controls .sy-field {
+	flex: 0 0 auto;
+}
+.sy-rep__controls .sy-rep__model {
+	width: min(100%, 240px);
+}
+.sy-rep__controls .sy-rep__days {
+	width: min(100%, 360px);
+}
+.sy-rep__controls .sy-rep__days .sy-field__hint {
+	font-size: 12px;
+}
+.sy-rep__controls .sy-rep__days .sy-field__control {
+	width: 96px;
+}
+.sy-rep__controls .sy-rep__btns {
+	@apply flex flex-wrap gap-8 items-center;
+}
+.sy-rep__kpis {
+	@apply grid gap-10 min-w-0;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+	grid-auto-rows: 1fr;
+}
+.sy-kpi {
+	@apply min-w-0 p-14 rounded-12 bg-surface text-text;
+	min-height: 96px;
+	border: 1px solid var(--sy-border);
+}
+.sy-kpi__label,
+.sy-kpi__sub {
+	@apply m-0;
+	font-size: 0.75rem;
+	overflow-wrap: anywhere;
+}
+.sy-kpi__label {
+	@apply font-[600];
+}
+.sy-kpi__sub {
+	@apply mt-4 text-text-2;
+}
+.sy-kpi__value {
+	@apply font-[700];
+	margin: var(--sy-space-6) 0 0;
+	font-size: 1.5rem;
+	line-height: 1.2;
+	overflow-wrap: anywhere;
+}
+.sy-kpi__skeleton {
+	@apply block rounded-8 bg-divider;
+	width: 60%;
+	max-width: 96px;
+	height: 1em;
+}
+@media (prefers-reduced-motion: no-preference) {
+	.sy-kpi--loading .sy-kpi__skeleton {
+		animation: sy-kpi-pulse 1.2s ease-in-out infinite;
+}
+}
+@keyframes sy-kpi-pulse {
+	50% {
+		opacity: 0.45;
+}
+}
+.sy-kpi--navy {
+	@apply bg-kpi-navy-bg border-kpi-navy-bg text-kpi-navy-fg;
+}
+.sy-kpi--navy .sy-kpi__sub {
+	@apply text-kpi-navy-sub;
+}
+.sy-kpi--magenta {
+	@apply bg-kpi-magenta-bg border-kpi-magenta-bg text-kpi-magenta-fg;
+}
+.sy-kpi--magenta .sy-kpi__sub {
+	@apply text-kpi-magenta-sub;
+}
+/* Provenance: collapsed "About this calculation", 12px text-3, 16px margin. */
+.sy-rep__about {
+	@apply mt-16 text-text-3;
+	font-size: 0.75rem;
+}
+.sy-rep__about > summary {
+	@apply cursor-pointer font-[600];
+	width: fit-content;
+}
+.sy-rep__about > summary:focus-visible {
+	outline: 2px solid var(--sy-focus);
+	outline-offset: 2px;
+}
+.sy-rep__meta {
+	@apply flex flex-col gap-4 text-text-3;
+	margin: var(--sy-space-8) 0;
+	font-size: 0.75rem;
+	overflow-wrap: anywhere;
+}
+.sy-rep__main {
+	@apply min-w-0 flex flex-col gap-8;
+}
+/* Row detail inside the preview slide-over (PreviewPanel supplies the surface, header and scroll). */
+.sy-rep__pbody {
+	@apply min-w-0;
+}
+.sy-rep__strong {
+	@apply font-[700];
+}
+.sy-rep__ptitle {
+	@apply m-0 font-[700] text-text;
+	font-size: 18px;
+	line-height: 1.3;
+	overflow-wrap: anywhere;
+}
+.sy-rep__pbody h3 {
+	margin: var(--sy-space-12) 0 var(--sy-space-4);
+	font-size: 1rem;
+}
+.sy-rep__list {
+	@apply m-0 ps-16;
+	overflow-wrap: anywhere;
+}
+.sy-rep__table {
+	@apply w-full border-collapse;
+	font-size: 0.875rem;
+}
+.sy-rep__table th,
+.sy-rep__table td {
+	@apply text-start;
+	padding: var(--sy-space-4) var(--sy-space-6);
+	border-bottom: 1px solid var(--sy-divider);
+	overflow-wrap: anywhere;
+}
+/* Header words never break mid-word (375px sheet): the wrapper scrolls instead if the columns still do not fit. */
+.sy-rep__table th {
+	overflow-wrap: normal;
+}
+.sy-rep__tablewrap {
+	@apply overflow-x-auto max-w-full;
+}
+.sy-rep__meta-line {
+	@apply m-0;
+}

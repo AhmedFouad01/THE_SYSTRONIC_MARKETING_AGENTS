@@ -71,7 +71,6 @@ import {
 	toRows,
 } from "./model.ts";
 import { NewDealDialog, type NewDealPrefill } from "./NewDealDialog.tsx";
-import "./deals.css";
 
 const DEALS_VIEW: ViewState = { ...DEFAULT_VIEW };
 
@@ -117,14 +116,14 @@ function ContextStrip({
 	);
 	return (
 		<nav
-			className="sy-deals__context"
+			className="sy-deals__context py-8 px-12 border border-solid border-border rounded-8 bg-surface min-w-0 [&_ol]:flex [&_ol]:flex-wrap [&_ol]:items-center [&_ol]:gap-y-6 [&_ol]:gap-x-8 [&_ol]:m-0 [&_ol]:p-0 [&_ol]:list-none [&_li]:flex [&_li]:gap-4 [&_li]:items-baseline [&_li]:min-w-0 [&_li]:[overflow-wrap:anywhere] [&_li+li]:before:content-['›'] [&_li+li]:before:text-text-3 [&_li+li]:before:me-4 rtl:[&_li+li]:before:content-['‹']"
 			aria-label={t("deals.context.label")}
 			data-testid="deal-context"
 		>
 			<ol>
 				{ctx.leadId ? (
 					<li data-testid="context-lead">
-						<span className="sy-deals__muted">{t("deals.context.lead")}</span>{" "}
+						<span className="sy-deals__muted m-0 mt-4 text-text-3">{t("deals.context.lead")}</span>{" "}
 						{link(
 							"/leads",
 							ctx.leadId,
@@ -133,7 +132,7 @@ function ContextStrip({
 					</li>
 				) : null}
 				<li data-testid="context-contact">
-					<span className="sy-deals__muted">{t("deals.context.contact")}</span>{" "}
+					<span className="sy-deals__muted m-0 mt-4 text-text-3">{t("deals.context.contact")}</span>{" "}
 					{link(
 						"/contacts",
 						ctx.contactId,
@@ -141,7 +140,7 @@ function ContextStrip({
 					)}
 				</li>
 				<li aria-current="step" data-testid="context-deal">
-					<span className="sy-deals__muted">{t("deals.context.deal")}</span>{" "}
+					<span className="sy-deals__muted m-0 mt-4 text-text-3">{t("deals.context.deal")}</span>{" "}
 					<b>{dealTitle ?? t("deals.context.dealNew")}</b>
 				</li>
 			</ol>
@@ -550,7 +549,7 @@ export function DealsView() {
 	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
 
 	return (
-		<div className="sy-deals" data-testid="deals-view">
+		<div className="sy-deals flex flex-col gap-12 min-w-0" data-testid="deals-view">
 			{page && active ? (
 				<>
 					{ctx !== null ? (
@@ -565,7 +564,7 @@ export function DealsView() {
 				</>
 			) : null}
 			{/* The list stays mounted (hidden) behind the record page so filters, sort and paging survive Back. */}
-			<div className="sy-deals__list" hidden={page && active !== null}>
+			<div className="sy-deals__list flex flex-col gap-12 min-w-0 [&[hidden]]:hidden" hidden={page && active !== null}>
 			<PageHeader
 				title={t("nav.deals")}
 				actions={
@@ -597,13 +596,13 @@ export function DealsView() {
 				tabs={BUILT_IN_VIEWS.map((v) => ({ id: v, label: t(VIEW_LABEL[v]) }))}
 			/>
 			{ownersFailed ? (
-				<p className="sy-deals__muted" role="status">
+				<p className="sy-deals__muted m-0 mt-4 text-text-3" role="status">
 					{t("deals.ownersFailed")}
 				</p>
 			) : null}
 			{pipelines.status === "error" ? (
 				<p
-					className="sy-deals__muted"
+					className="sy-deals__muted m-0 mt-4 text-text-3"
 					role="status"
 					data-testid="pipelines-failed"
 				>
@@ -611,14 +610,14 @@ export function DealsView() {
 				</p>
 			) : null}
 			{pipelines.status === "ready" && pipelines.items.length === 0 ? (
-				<p className="sy-deals__muted" role="status" data-testid="no-pipelines">
+				<p className="sy-deals__muted m-0 mt-4 text-text-3" role="status" data-testid="no-pipelines">
 					{t("deals.noPipelines")}
 				</p>
 			) : null}
-			<div className="sy-deals__body">
-				<div className="sy-deals__main">
+			<div className="sy-deals__body min-w-0">
+				<div className="sy-deals__main min-w-0 flex flex-col gap-8">
 					{bulk ? (
-						<p role="status" className="sy-deals__muted" data-testid="bulk-progress">
+						<p role="status" className="sy-deals__muted m-0 mt-4 text-text-3" data-testid="bulk-progress">
 							{t("bulk.progress", {
 								done: formatNumber(bulk.done),
 								total: formatNumber(bulk.total),

@@ -9,10 +9,10 @@ export function TasksWidget({ state, onRetry }: { state: Load<TasksDuePayload>; 
 	const { t, locale, formatCount } = useI18n();
 	const data = state.status === "ready" ? state.data : null;
 	const summary = data ? <>
-		<dl className="sy-chart__kpis" aria-label={t("charts.tasks.total")}><div><dt>{t("charts.tasks.total")}</dt><dd><Bdi>{formatCount(tasksDueKpis(data).openTotal)}</Bdi></dd></div></dl>
-		<p className="sy-chart__meta">{t("charts.tasks.overlap")}</p>
+		<dl className="sy-chart__kpis grid grid-cols-4 gap-12 my-12 max-mobile:grid-cols-2 [&_dt]:text-text-2 [&_dd]:m-0 [&_dd]:text-text [&_dd]:[font-size:var(--sy-type-section-title-size)] [&_dd]:font-weight-section-title" aria-label={t("charts.tasks.total")}><div><dt>{t("charts.tasks.total")}</dt><dd><Bdi>{formatCount(tasksDueKpis(data).openTotal)}</Bdi></dd></div></dl>
+		<p className="sy-chart__meta flex flex-wrap gap-12 text-text-2">{t("charts.tasks.overlap")}</p>
 	</> : null;
-	return <ChartSurface title={t("charts.tasks.title")} className="sy-dash__chart" summary={summary}
+	return <ChartSurface title={t("charts.tasks.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" summary={summary}
 		state={chartState(state, (payload) => tasksDueChart(payload, locale, t))} onRetry={onRetry}
 		emptyAction={<a href={href("/tasks")} onClick={(event) => { event.preventDefault(); navigate("/tasks"); }}>{t("dash.follow.link")}</a>} />;
 }

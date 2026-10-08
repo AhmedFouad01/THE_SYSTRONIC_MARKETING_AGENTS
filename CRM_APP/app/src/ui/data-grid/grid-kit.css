@@ -1,0 +1,494 @@
+@reference "../tokens/tailwind.css";
+/* Tailwind presentation; retained structural grid contracts remain explicit. */
+.sy-grid {
+	container: sygrid / inline-size;
+	@apply grid gap-10 min-w-0;
+	/* Row density tokens (UX_AUDIT cross-cutting 2). */
+	--sy-row-h-comfortable: 48px;
+	--sy-row-h-compact: 36px;
+	--sy-control-h: 36px;
+}
+/* Preview slide-over open (desktop, docked at the inline end): optional reserve on that side, 0 = pure overlay (decision D7). */
+:root[data-preview-open] .sy-grid {
+	padding-inline-end: var(--sy-preview-reserve);
+}
+/* Toolbar slot: the bulk bar overlays it at the same height instead of pushing the table down (UX-20). */
+.sy-grid__toolwrap {
+	@apply relative;
+}
+.sy-grid__toolbar {
+	@apply flex flex-wrap items-center gap-8;
+	min-height: var(--sy-control-h);
+}
+/* All toolbar controls share one 36px height. */
+.sy-grid__toolbar .sy-btn,
+.sy-grid__toolbar .sy-btn--sm {
+	height: var(--sy-control-h);
+}
+.sy-grid__searchbox {
+	@apply flex items-center gap-8;
+	flex: 1 1 220px;
+	max-width: 340px;
+	height: var(--sy-control-h);
+	@apply px-10;
+	border: 1px solid var(--sy-border-strong);
+	@apply rounded-8 bg-surface text-icon-muted;
+}
+.sy-grid__search {
+	flex: 1;
+	@apply min-w-0 border-0 bg-transparent text-text;
+}
+.sy-grid__search:focus-visible {
+	outline: none;
+ /* the ring is drawn on the wrapper */
+}
+.sy-grid__searchbox:focus-within {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: var(--sy-focus-offset-input);
+}
+.sy-grid__views,
+.sy-grid__tools,
+.sy-grid__pager {
+	@apply flex flex-wrap items-center gap-6;
+}
+/* fieldset reset: the UA border was the stuck-looking grey rectangle (UX-07). */
+.sy-grid__views {
+	@apply min-w-0 m-0 p-0 border-0;
+}
+.sy-grid__count {
+	@apply m-0;
+	margin-inline-start: auto;
+	font-size: var(--sy-type-data-size);
+	@apply text-text-3;
+}
+/* Saved views: borderless segmented tabs; the selected view is a pill fill, outline only on :focus-visible. */
+.sy-grid__view {
+	@apply inline-flex items-center;
+	height: var(--sy-control-h);
+	@apply px-12 border-0 rounded-pill bg-transparent text-text-2;
+	font: inherit;
+	font-size: var(--sy-type-data-size);
+	@apply font-[600] cursor-pointer;
+}
+.sy-grid__view:hover {
+	@apply bg-hover;
+}
+.sy-grid__view[aria-pressed="true"] {
+	@apply bg-selected text-text;
+}
+.sy-grid__view:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 1px;
+}
+.sy-grid__chip {
+	@apply inline-flex items-center gap-4;
+	height: 28px;
+	@apply px-10;
+	border: 1px solid var(--sy-border-strong);
+	@apply rounded-pill bg-surface text-text-2;
+	font-size: var(--sy-type-data-size);
+	@apply cursor-pointer;
+}
+.sy-grid__chip--static {
+	@apply cursor-default pe-4;
+}
+.sy-grid__chipx {
+	@apply grid place-items-center;
+	width: 20px;
+	height: 20px;
+	@apply border-0 rounded-pill bg-transparent text-inherit cursor-pointer;
+}
+.sy-grid__chips {
+	@apply flex flex-wrap gap-6 m-0 p-0;
+	list-style: none;
+}
+.sy-grid__filters {
+	@apply flex flex-wrap items-end gap-8;
+	padding: var(--sy-space-10);
+	border: 1px solid var(--sy-border);
+	@apply rounded-10 bg-surface-2;
+}
+/* Bulk bar: fixed-height overlay of the toolbar slot. */
+.sy-grid__batch {
+	@apply absolute;
+	inset: 0;
+	z-index: 5;
+	@apply flex flex-nowrap items-center gap-8;
+	min-height: var(--sy-control-h);
+	@apply overflow-x-auto px-12;
+	border: 1px solid var(--sy-border);
+	@apply rounded-10 bg-selected;
+	font-size: var(--sy-type-data-size);
+}
+.sy-grid__batch .sy-btn,
+.sy-grid__batch .sy-btn--sm {
+	height: 28px;
+	flex: none;
+}
+.sy-grid__batch > b {
+	flex: none;
+	@apply whitespace-nowrap;
+}
+/* UX-R3-04: on a phone the bar leaves the toolbar slot and wraps onto a second row instead of scrolling
+   sideways, so "Clear" and every action stay on screen. */
+@media (max-width: 768px) {
+	.sy-grid__toolwrap:has(.sy-grid__batch) > .sy-grid__toolbar {
+	@apply hidden;
+}
+	.sy-grid__batch {
+	@apply relative;
+		inset: auto;
+	@apply flex-wrap overflow-visible py-8;
+}
+}
+/* Phone sheet (UX-25): saved views, filters, columns and density live here, not in three toolbar rows. */
+.sy-grid__sheet {
+	@apply flex flex-col items-stretch gap-10;
+}
+.sy-grid__sheet .sy-grid__filters {
+	@apply p-0 border-0 bg-transparent;
+}
+.sy-grid__poptitle {
+	@apply block mb-4;
+	font-size: var(--sy-type-data-size);
+}
+.sy-grid__colopt {
+	@apply flex items-center gap-8;
+	min-height: 32px;
+	@apply px-4;
+	font-size: var(--sy-type-data-size);
+}
+/* Sticky header lives inside the scroll region (needs a bounded height to stick). */
+.sy-grid__scroll {
+	max-block-size: 70vh;
+	@apply overflow-auto;
+	border: 1px solid var(--sy-border);
+	@apply rounded-12 bg-surface;
+}
+.sy-grid__scroll:focus,
+.sy-grid__table:focus {
+	outline: none;
+}
+.sy-grid__table {
+	inline-size: 100%;
+	min-inline-size: 560px;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: var(--sy-type-data-size);
+	--sy-row-h: var(--sy-row-h-comfortable);
+}
+.sy-grid__table[data-density="compact"] {
+	--sy-row-h: var(--sy-row-h-compact);
+}
+.sy-grid__table th {
+	@apply sticky;
+	top: 0;
+	z-index: 2;
+	padding: var(--sy-space-8) var(--sy-space-10);
+	border-block-end: 1px solid var(--sy-border);
+	@apply bg-surface-2 text-text-3;
+	font-size: 11px;
+	@apply font-[600];
+	letter-spacing: 0.04em;
+	@apply text-start;
+	/* Header labels are UI chrome: they follow the UI direction. base.css gives th `unicode-bidi: plaintext`, which resolves a header
+	   that holds only a sort <button> (an atomic inline, no strong character) to LTR and pushed it to the physical left in AR. */
+	unicode-bidi: normal;
+	@apply uppercase whitespace-nowrap;
+}
+/* Cell direction follows the UI direction, like the header (M1): base.css gives td `unicode-bidi: plaintext`, which resolves a cell
+   whose content is atomic (chip, time, number isolate: no strong character) to LTR and pushed it to the physical left in AR.
+   User text is isolated by BidiText (own dir=auto), so mixed AR/EN values still resolve per value. */
+.sy-grid__table td:not(.sy-ltr) {
+	unicode-bidi: normal;
+}
+.sy-grid__table td {
+	padding: var(--sy-space-6) var(--sy-space-10);
+	border-block-end: 1px solid var(--sy-divider);
+	@apply text-text;
+	vertical-align: middle;
+	height: var(--sy-row-h);
+ /* comfortable = 48px (UX-13) */
+}
+/* Single-line cells: ellipsis with a title (UX-17). The flexible column absorbs the remaining width. */
+.sy-grid__cell {
+	@apply overflow-hidden text-ellipsis whitespace-nowrap;
+}
+/* The primary column never collapses below 240px (UX-R2-01); secondary columns with data-collapse drop out first. */
+.sy-grid__cell--flex {
+	max-width: 0;
+	width: auto;
+	min-width: 240px;
+}
+@media (min-width: 769px) {
+	@container sygrid (max-width: 1039px) {
+		.sy-grid__table [data-collapse="1"] {
+	@apply hidden;
+}
+	}
+	@container sygrid (max-width: 879px) {
+		.sy-grid__table [data-collapse="2"] {
+	@apply hidden;
+}
+	}
+}
+.sy-grid__table tbody tr {
+	@apply cursor-pointer;
+}
+.sy-grid__table tbody tr:hover {
+	@apply bg-hover;
+}
+/* Bulk selection = fill; detail (active) row = inline-start bar; keyboard focus = separate 2px ring (UX-26). */
+.sy-grid__table tbody tr[data-selected] {
+	@apply bg-selected;
+}
+.sy-grid__table tbody tr[aria-selected="true"] {
+	@apply bg-selected;
+}
+.sy-grid__table tbody tr[aria-current="true"] td:first-child {
+	box-shadow: inset 3px 0 0 var(--sy-focus);
+}
+:root[dir="rtl"] .sy-grid__table tbody tr[aria-current="true"] td:first-child {
+	box-shadow: inset -3px 0 0 var(--sy-focus);
+}
+.sy-grid__table tbody tr:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: -2px;
+}
+.sy-grid__check {
+	inline-size: 40px;
+	@apply text-center;
+}
+.sy-grid__sort {
+	@apply inline-flex items-center gap-6 p-0 border-0 bg-transparent text-inherit;
+	font: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	@apply cursor-pointer;
+}
+.sy-grid__sort:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 2px;
+}
+/* Arrow only on the active sort column; other sortable headers reveal a ghost arrow on hover (UX-06). */
+.sy-grid__sortmark,
+.sy-grid__sortghost {
+	@apply inline-flex items-center;
+	line-height: 0;
+}
+.sy-grid__sortmark {
+	@apply text-text;
+}
+.sy-grid__sortghost {
+	@apply text-icon-muted;
+	opacity: 0;
+}
+.sy-grid__sort:hover .sy-grid__sortghost,
+.sy-grid__sort:focus-visible .sy-grid__sortghost {
+	opacity: 1;
+}
+.sy-grid__sr {
+	@apply absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	@apply overflow-hidden;
+	clip-path: inset(50%);
+	@apply whitespace-nowrap;
+}
+/* ---- cells ---- */
+/* ---- footer: range (start) - rows - numbered pager (end), one row ---- */
+.sy-grid__footer {
+	@apply flex flex-wrap items-center gap-12;
+	font-size: var(--sy-type-data-size);
+}
+.sy-grid__range {
+	@apply text-text-3;
+}
+.sy-grid__rows {
+	@apply inline-flex items-center gap-8 text-text-3;
+}
+.sy-grid__rows .sy-field__label {
+	@apply absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	@apply overflow-hidden;
+	clip-path: inset(50%);
+	@apply whitespace-nowrap;
+}
+.sy-grid__size {
+	inline-size: 76px;
+}
+.sy-grid__pager {
+	margin-inline-start: auto;
+	@apply gap-4;
+}
+.sy-grid__pg {
+	@apply inline-grid place-items-center;
+	min-width: 32px;
+	height: 32px;
+	@apply px-6;
+	border: 1px solid var(--sy-border);
+	@apply rounded-8 bg-surface text-text-2;
+	font: inherit;
+	@apply font-[600] cursor-pointer;
+}
+.sy-grid__pg:hover:not(:disabled) {
+	@apply bg-hover;
+}
+.sy-grid__pg[aria-current="page"] {
+	border-color: var(--sy-focus);
+	@apply bg-selected text-text;
+}
+.sy-grid__pg:disabled {
+	@apply text-text-disabled cursor-not-allowed;
+}
+.sy-grid__pg:focus-visible {
+	outline: var(--sy-focus-width) solid var(--sy-focus);
+	outline-offset: 1px;
+}
+.sy-grid__pg-gap {
+	@apply px-4 text-text-3;
+}
+.sy-grid__sample {
+	@apply flex flex-wrap items-center gap-8;
+	padding: var(--sy-space-8) var(--sy-space-12);
+	border: 1px solid var(--sy-border);
+	@apply rounded-10 bg-info-bg text-info-fg;
+	font-size: var(--sy-type-data-size);
+}
+/* ---- mobile (<=768px): rows become cards, no clipped columns, no horizontal page scroll (UX-02) ---- */
+@media (max-width: 768px) {
+	/* One toolbar row: search takes the remaining width, Filters is a 36px icon button. */
+	.sy-grid__toolbar {
+	@apply flex-nowrap;
+}
+	.sy-grid__searchbox {
+		flex: 1 1 0;
+	@apply min-w-0;
+		max-width: none;
+}
+	.sy-grid__views {
+		max-width: 100%;
+	@apply flex-nowrap overflow-x-auto;
+}
+	.sy-grid__view {
+		flex: none;
+}
+	.sy-grid__scroll {
+		max-block-size: none;
+	@apply overflow-visible border-0;
+		border-radius: 0;
+	@apply bg-transparent;
+}
+	.sy-grid__table,
+	.sy-grid__table tbody {
+	@apply block;
+		min-inline-size: 0;
+}
+	/* Header row keeps only the select-all checkbox; sort/column headers are not shown on cards. */
+	.sy-grid__table thead,
+	.sy-grid__table thead tr {
+	@apply block;
+}
+	.sy-grid__table th {
+	@apply static hidden;
+}
+	.sy-grid__table th.sy-grid__check {
+	@apply block;
+		inline-size: auto;
+		padding: var(--sy-space-4) var(--sy-space-12);
+	@apply border-0 bg-transparent text-start;
+}
+	.sy-grid__table tbody tr {
+	@apply relative flex flex-wrap items-center;
+		gap: var(--sy-space-4) var(--sy-space-8);
+	@apply mb-8;
+		padding: var(--sy-space-10) var(--sy-space-12);
+		border: 1px solid var(--sy-border);
+	@apply rounded-12 bg-surface;
+}
+	.sy-grid__table tbody tr[aria-current="true"] td:first-child {
+		box-shadow: none;
+}
+	.sy-grid__table tbody tr[aria-current="true"] {
+		border-color: var(--sy-focus);
+}
+	/* Card cells size to their content: the desktop column widths (inline style) must not squeeze them (UX-R2-06). */
+	.sy-grid__table td {
+	@apply block;
+		height: auto;
+	@apply min-w-0 p-0 border-0 text-start;
+}
+	.sy-grid__table td.sy-grid__cell {
+		/* biome-ignore lint/complexity/noImportantStyles: beats the desktop inline column width */
+		width: auto !important;
+		/* biome-ignore lint/complexity/noImportantStyles: beats the desktop inline column width */
+		max-width: 100% !important;
+}
+	.sy-grid__table td[data-mobile="meta"],
+	.sy-grid__table td[data-mobile="action"] {
+	@apply overflow-visible;
+		text-overflow: clip;
+	@apply whitespace-normal;
+}
+	.sy-grid__table td.sy-grid__check {
+		order: 0;
+		flex: none;
+		inline-size: 28px;
+}
+	.sy-grid__table td[data-mobile="title"] {
+		order: 1;
+		flex: 1 1 0;
+	@apply min-w-0;
+		max-width: none;
+		inline-size: auto;
+		font-size: 14px;
+}
+	.sy-grid__table td[data-mobile="chip"] {
+		order: 1;
+		flex: none;
+		max-width: none;
+}
+	/* Row break between the title line and the meta line (orders: 1 = title row, 2 = meta row). */
+	.sy-grid__table tbody tr::after {
+		content: "";
+		order: 1;
+		flex: 0 0 100%;
+		height: 0;
+}
+	.sy-grid__table td[data-mobile="meta"] {
+		order: 2;
+		flex: 0 1 auto;
+		max-width: 100%;
+		inline-size: auto;
+		font-size: 12px;
+	@apply text-text-3;
+}
+	/* Separator between any two visible meta cells (hidden cells in between do not break the run). */
+	.sy-grid__table td[data-mobile="meta"] ~ td[data-mobile="meta"]::before {
+		content: "·";
+	@apply me-8;
+}
+	.sy-grid__table td[data-mobile="action"] {
+		order: 2;
+		flex: none;
+		margin-inline-start: auto;
+}
+	.sy-grid__table td[data-mobile="hide"] {
+	@apply hidden;
+}
+	.sy-grid__table--sel tbody tr::before {
+		content: "";
+		order: 2;
+		flex: 0 0 28px;
+}
+	.sy-grid__footer {
+	@apply justify-between;
+}
+	.sy-grid__pager {
+		margin-inline-start: 0;
+		flex-basis: 100%;
+	@apply justify-center;
+}
+}
+

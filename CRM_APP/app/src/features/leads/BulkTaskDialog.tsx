@@ -56,7 +56,7 @@ export function BulkTaskDialog({
 		>
 			<form
 				id={formId}
-				className="sy-tasks__form"
+				className="sy-tasks__form flex flex-col gap-10"
 				noValidate
 				onSubmit={(e) => {
 					e.preventDefault();

@@ -72,7 +72,7 @@ async function start(page: Page, f: Fixture, language: "en" | "ar", width = 1440
 
 async function showColumn(page: Page, key: string) {
 	await page.getByTestId("cc-picker").click();
-	await page.getByTestId(`cc-col-${key}`).check();
+	await page.getByTestId(`cc-col-${key}`).locator("input").check();
 	await page.keyboard.press("Escape");
 }
 const titles = (page: Page) =>
@@ -88,8 +88,8 @@ for (const language of ["en", "ar"] as const) {
 			await page.getByTestId("cc-picker").click();
 			await expect(page.getByTestId("cc-col-seats")).toBeVisible();
 			await expect(page.getByTestId("cc-col-plan")).toBeVisible();
-			await page.getByTestId("cc-col-seats").check();
-			await page.getByTestId("cc-col-plan").check();
+			await page.getByTestId("cc-col-seats").locator("input").check();
+			await page.getByTestId("cc-col-plan").locator("input").check();
 			await page.keyboard.press("Escape");
 			await expect(page.getByTestId("sort-cf:seats")).toBeVisible();
 			await expect(page.getByTestId("cc-cell-seats")).toHaveCount(3);
@@ -99,7 +99,7 @@ for (const language of ["en", "ar"] as const) {
 			await expect(page.getByTestId("cc-cell-plan").getByTestId("cf-chip").first()).toBeVisible();
 			// toggling off removes the column; the choice survives a reload
 			await page.getByTestId("cc-picker").click();
-			await page.getByTestId("cc-col-plan").uncheck();
+			await page.getByTestId("cc-col-plan").locator("input").uncheck();
 			await page.keyboard.press("Escape");
 			await expect(page.getByTestId("cc-cell-plan")).toHaveCount(0);
 			await page.reload();
@@ -160,7 +160,7 @@ test("at 375px (AR, dark) the custom column, filter row and sheet do not clip or
 	await page.getByTestId("grid-filters").click();
 	const sheet = page.getByTestId("grid-sheet");
 	await expect(sheet).toBeVisible();
-	await sheet.getByTestId("cc-col-seats").check();
+	await sheet.getByTestId("cc-col-seats").locator("input").check();
 	await sheet.getByTestId("cc-add-filter").click();
 	const row = sheet.getByTestId("cc-filter-row").first();
 	await pickValue(row.getByTestId("cc-field"), "seats");
@@ -195,8 +195,8 @@ if (process.env.SHOTS_DIR) {
 			await pickValue(row.getByTestId("cc-op"), "gte");
 			await row.getByTestId("cc-value").fill(s.language === "ar" ? "٢٠٠" : "200");
 			if (mobile) {
-				await scope.getByTestId("cc-col-seats").check();
-				await scope.getByTestId("cc-col-plan").check();
+				await scope.getByTestId("cc-col-seats").locator("input").check();
+				await scope.getByTestId("cc-col-plan").locator("input").check();
 				await page.getByTestId("grid-sheet-done").click();
 			} else {
 				await showColumn(page, "seats");

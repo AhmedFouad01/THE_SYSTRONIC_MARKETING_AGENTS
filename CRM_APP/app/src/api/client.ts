@@ -2,6 +2,8 @@ import { type ApiError, errorFromResponse, networkError } from "./errors.ts";
 
 export type Credentials = {
 	token: string;
+	/** Cookie mode never carries a browser-readable session token. */
+	authMode?: "cookie";
 	tenantId: string;
 	grantId?: string | undefined;
 };
@@ -50,12 +52,12 @@ export function buildHeaders(
 ): Record<string, string> {
 	const headers: Record<string, string> = {
 		Accept: "application/json",
-		Authorization: `Bearer ${creds.token}`,
 		"X-Tenant-ID": creds.tenantId,
 	};
+	if (creds.authMode !== "cookie") headers.Authorization = `Bearer ${creds.token}`;
 	if (creds.grantId) headers["X-Grant-ID"] = creds.grantId;
 	if (opts.body !== undefined) headers["Content-Type"] = "application/json";
-	if (IDEMPOTENT.has(method)) {
+	if (IDEMPOTENT.has(method) || (WRITE.has(method) && opts.idempotencyKey)) {
 		const fromBody =
 			typeof opts.body === "object" && opts.body !== null
 				? (opts.body as Record<string, unknown>).command_id
@@ -99,6 +101,7 @@ export function createApiClient(options: ApiClientOptions) {
 		try {
 			res = await f(buildUrl(base, path, opts.query), {
 				method,
+				credentials: "same-origin",
 				headers,
 				body: opts.body === undefined ? undefined : JSON.stringify(opts.body),
 				signal: opts.signal ?? null,

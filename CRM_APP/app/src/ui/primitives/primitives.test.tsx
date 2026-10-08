@@ -29,7 +29,7 @@ describe("Tabs keyboard model", () => {
 		expect(nextTabIndex("a", 0, 3, "ltr")).toBeNull();
 		expect(nextTabIndex("ArrowRight", 0, 0, "ltr")).toBeNull();
 	});
-	it("renders roving tabindex and aria wiring", () => {
+	it("renders selected panel and aria wiring", () => {
 		const html = renderToString(
 			<I18nProvider>
 				<Tabs
@@ -44,8 +44,11 @@ describe("Tabs keyboard model", () => {
 			</I18nProvider>,
 		);
 		expect(html).toContain('role="tablist"');
-		expect(html.match(/tabindex="0"/g)?.length).toBe(2); // selected tab + focusable panel
-		expect(html.match(/role="tab"[^>]*tabindex="-1"/g)?.length).toBe(1); // unselected tab
+		expect(html.match(/tabindex="0"/g)?.length).toBe(1); // RAC initializes roving tab focus on the client; SSR panel stays focusable
+		expect(
+			html.match(/<div(?=[^>]*role="tab")(?=[^>]*tabindex="-1")[^>]*>/g)
+				?.length,
+		).toBe(2); // no tab is focused during SSR
 		expect(html).toContain('aria-selected="true"');
 		expect(html).toContain("pb");
 		expect(html).not.toContain(">pa<");

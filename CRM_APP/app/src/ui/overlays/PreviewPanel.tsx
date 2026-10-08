@@ -1,10 +1,11 @@
+import { Button as AriaButton } from "react-aria-components";
 import { type KeyboardEvent, type ReactNode, useEffect, useId, useLayoutEffect, useRef } from "react";
 import { useI18n } from "../i18n/index.ts";
 import { Icon } from "../icons/index.ts";
 import { useWideLayout } from "../primitives/useMediaQuery.ts";
 import { Dialog } from "./Dialog.tsx";
 import { isOutsideDismissIgnored, isTypingTarget, stepDirectionOfKey } from "./previewModel.ts";
-import "./preview-panel.css";
+import "./preview-motion.css";
 
 export type PreviewNav = {
 	/** null = no previous record (disabled). */
@@ -194,57 +195,57 @@ function DesktopPreview({ label, heading, testId, onClose, returnFocus, nav, chi
 			role="dialog"
 			aria-modal="false"
 			aria-label={label}
-			className="sy-preview"
+			className="sy-preview fixed top-topbar-h end-0 bottom-0 z-[var(--sy-z-panel)] flex flex-col w-preview-w max-w-[100vw] border-s border-solid border-border bg-surface text-text shadow-panel rtl:shadow-panel-rtl outline-none"
 			data-testid={testId}
 			onKeyDown={onKeyDown}
 		>
-			<div className="sy-preview__head">
-				<h2 id={`${id}-title`} ref={headingRef} tabIndex={-1} className="sy-preview__title" title={shown}>
+			<div className="sy-preview__head flex flex-none items-center gap-4 min-h-[56px] ps-16 pe-10 border-b border-solid border-border bg-surface">
+				<h2 id={`${id}-title`} ref={headingRef} tabIndex={-1} className="sy-preview__title flex-1 min-w-0 m-0 overflow-hidden text-text-3 text-data font-[600] text-ellipsis whitespace-nowrap outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-1 focus-visible:rounded-6" title={shown}>
 					<bdi dir="auto">{shown}</bdi>
 				</h2>
 				{nav ? (
 					<>
 						{nav.position ? (
-							<span className="sy-preview__pos" data-testid="preview-position" aria-live="polite">
+							<span className="sy-preview__pos flex-none me-4 text-text-3 text-[12px] tabular-nums" data-testid="preview-position" aria-live="polite">
 								{nav.busy ? t("preview.loadingMore") : nav.position}
 							</span>
 						) : null}
-						<button
+						<AriaButton
 							type="button"
-							className="sy-preview__btn"
+							className="sy-preview__btn grid flex-none place-items-center w-[32px] h-[32px] border-0 rounded-8 bg-transparent text-text-2 cursor-pointer data-[hovered]:bg-hover data-[hovered]:text-text data-[disabled]:text-text-disabled data-[disabled]:cursor-not-allowed data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-1"
 							aria-label={t("preview.prev")}
-							title={t("preview.prev")}
-							disabled={nav.onPrev === null}
+							render={(domProps) => <button {...domProps} title={t("preview.prev")} />}
+							isDisabled={nav.onPrev === null}
 							onClick={() => nav.onPrev?.()}
 							data-testid="preview-prev"
 						>
 							<Icon name="chevronUp" size={18} />
-						</button>
-						<button
+						</AriaButton>
+						<AriaButton
 							type="button"
-							className="sy-preview__btn"
+							className="sy-preview__btn grid flex-none place-items-center w-[32px] h-[32px] border-0 rounded-8 bg-transparent text-text-2 cursor-pointer data-[hovered]:bg-hover data-[hovered]:text-text data-[disabled]:text-text-disabled data-[disabled]:cursor-not-allowed data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-1"
 							aria-label={t("preview.next")}
-							title={t("preview.next")}
-							disabled={nav.onNext === null || nav.busy === true}
+							render={(domProps) => <button {...domProps} title={t("preview.next")} />}
+							isDisabled={nav.onNext === null || nav.busy === true}
 							onClick={() => nav.onNext?.()}
 							data-testid="preview-next"
 						>
 							<Icon name="chevronDown" size={18} />
-						</button>
+						</AriaButton>
 					</>
 				) : null}
-				<button
+				<AriaButton
 					type="button"
-					className="sy-preview__btn"
+					className="sy-preview__btn grid flex-none place-items-center w-[32px] h-[32px] border-0 rounded-8 bg-transparent text-text-2 cursor-pointer data-[hovered]:bg-hover data-[hovered]:text-text data-[disabled]:text-text-disabled data-[disabled]:cursor-not-allowed data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-1"
 					aria-label={t("preview.close")}
-					title={t("preview.close")}
+					render={(domProps) => <button {...domProps} title={t("preview.close")} />}
 					onClick={onClose}
 					data-testid="preview-close"
 				>
 					<Icon name="close" size={18} />
-				</button>
+				</AriaButton>
 			</div>
-			<div className="sy-preview__body">{children as ReactNode}</div>
+			<div className="sy-preview__body flex-1 min-h-0 p-16 overflow-y-auto overflow-x-hidden">{children as ReactNode}</div>
 		</div>
 	);
 }

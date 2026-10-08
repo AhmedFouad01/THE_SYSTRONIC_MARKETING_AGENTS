@@ -37,7 +37,9 @@ import {
 } from "./gridModel.ts";
 import type { SavedView, SavedViewsStore } from "./savedViews.ts";
 import type { ServerBinding } from "./useServerList.ts";
-import "./datagrid.css";
+import "./grid-kit.css";
+import { Button as AriaButton, Input as AriaInput, TextField } from "react-aria-components";
+import { Checkbox } from "../primitives/Checkbox.tsx";
 
 export type GridColumn<T> = ModelColumn<T> & {
 	header: string;
@@ -400,10 +402,10 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						<tr>
 							{selectable ? (
 								<th scope="col" className="sy-grid__check">
-									<input
-										ref={allRef}
-										type="checkbox"
-										aria-label={t("grid.selectAll")}
+									<Checkbox
+										inputRef={allRef}
+										indeterminate={pageSel === "some"}
+										label={<span className="sr-only">{t("grid.selectAll")}</span>}
 										checked={pageSel === "all"}
 										onChange={() => dispatch({ type: "togglePage", pageIds })}
 										data-testid="grid-select-all"
@@ -426,7 +428,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										data-collapse={c.collapse}
 									>
 										{c.sortable ? (
-											<button
+											<AriaButton
 												type="button"
 												className="sy-grid__sort"
 												aria-label={t("grid.sortBy", { column: c.header })}
@@ -449,7 +451,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 														<Icon name="chevronDown" size={14} />
 													</span>
 												)}
-											</button>
+											</AriaButton>
 										) : c.headerHidden ? (
 											<span className="sy-grid__sr">{c.header}</span>
 										) : (
@@ -484,11 +486,10 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 								>
 									{selectable ? (
 										<td className="sy-grid__check">
-											<input
-												type="checkbox"
-												aria-label={t("grid.selectRow", {
+											<Checkbox
+												label={<span className="sr-only">{t("grid.selectRow", {
 													name: String(cols[0]?.value(row) ?? id),
-												})}
+												})}</span>}
 												checked={checked}
 												onChange={() => dispatch({ type: "toggleRow", id })}
 											/>
@@ -536,7 +537,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 	const viewsEl = views ? (
 			<fieldset className="sy-grid__views">
 				<legend className="sy-grid__sr">{t("grid.views")}</legend>
-				<button
+				<AriaButton
 					type="button"
 					className="sy-grid__view"
 					aria-pressed={viewId === null}
@@ -549,9 +550,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 					}}
 				>
 					{t("common.all")}
-				</button>
+				</AriaButton>
 				{saved.map((v) => (
-					<button
+					<AriaButton
 						key={v.id}
 						type="button"
 						className="sy-grid__view"
@@ -562,7 +563,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						}}
 					>
 						<bdi>{v.name}</bdi>
-					</button>
+					</AriaButton>
 				))}
 				<Button
 					size="sm"
@@ -644,15 +645,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 				{hasFilterUi ? filtersPanel : null}
 				<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
 				{columns.map((c) => (
-					<label key={c.id} className="sy-grid__colopt">
-						<input
-							type="checkbox"
-							checked={c.hideable === false || !state.hidden.includes(c.id)}
-							disabled={c.hideable === false}
-							onChange={() => dispatch({ type: "toggleColumn", id: c.id })}
-						/>
-						<span>{c.header}</span>
-					</label>
+					<div key={c.id} className="sy-grid__colopt"><Checkbox label={c.header} checked={c.hideable === false || !state.hidden.includes(c.id)} disabled={c.hideable === false} onChange={() => dispatch({ type: "toggleColumn", id: c.id })} /></div>
 				))}
 				{ext?.columnList}
 				<Button
@@ -677,9 +670,9 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 		<div className="sy-grid" data-testid="data-grid" aria-busy={server?.refreshing || undefined}>
 			<div className="sy-grid__toolwrap">
 				<search className="sy-grid__toolbar" inert={batchOpen}>
-					<div className="sy-grid__searchbox">
+					<TextField className="sy-grid__searchbox" aria-label={t("grid.search")}>
 						<Icon name="search" size={16} />
-						<input
+						<AriaInput
 							type="search"
 							// UI_R4_SPEC I: the typed query takes its own direction; an empty box keeps the UI direction.
 							dir={state.query ? "auto" : uiDir}
@@ -692,7 +685,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							}
 							data-testid="grid-search"
 						/>
-					</div>
+					</TextField>
 					{compact ? (
 						<Button
 							size="sm"
@@ -732,19 +725,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 								>
 									<b className="sy-grid__poptitle">{t("grid.visibleColumns")}</b>
 									{columns.map((c) => (
-										<label key={c.id} className="sy-grid__colopt">
-											<input
-												type="checkbox"
-												checked={
-													c.hideable === false || !state.hidden.includes(c.id)
-												}
-												disabled={c.hideable === false}
-												onChange={() =>
-													dispatch({ type: "toggleColumn", id: c.id })
-												}
-											/>
-											<span>{c.header}</span>
-										</label>
+										<div key={c.id} className="sy-grid__colopt"><Checkbox label={c.header} checked={c.hideable === false || !state.hidden.includes(c.id)} disabled={c.hideable === false} onChange={() => dispatch({ type: "toggleColumn", id: c.id })} /></div>
 									))}
 								</Popover>
 								{ext?.columnPicker}
@@ -809,7 +790,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 							<li key={f.key}>
 								<span className="sy-grid__chip sy-grid__chip--static">
 									{text}
-									<button
+									<AriaButton
 										type="button"
 										className="sy-grid__chipx"
 										aria-label={t("grid.removeFilter", { name: text })}
@@ -821,7 +802,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 										}
 									>
 										<Icon name="close" size={12} />
-									</button>
+									</AriaButton>
 								</span>
 							</li>,
 						];
@@ -864,11 +845,11 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 						aria-label={t("grid.pager")}
 						data-testid="grid-pager"
 					>
-						<button
+						<AriaButton
 							type="button"
 							className="sy-grid__pg sy-grid__pg--prev"
 							aria-label={t("common.previousPage")}
-							disabled={pageInfo.page <= 1}
+							isDisabled={pageInfo.page <= 1}
 							onClick={() =>
 								dispatch({ type: "page", page: pageInfo.page - 1 })
 							}
@@ -880,7 +861,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 								mirrorInRtl={false}
 								className="sy-back-icon"
 							/>
-						</button>
+						</AriaButton>
 						{pagerItems(pageInfo.page, pageInfo.pageCount).map((it, i) =>
 							it === "gap" ? (
 								<span
@@ -892,7 +873,7 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 									…
 								</span>
 							) : (
-								<button
+								<AriaButton
 									key={it}
 									type="button"
 									className="sy-grid__pg"
@@ -902,21 +883,21 @@ export function DataGrid<T>(props: DataGridProps<T>) {
 									data-testid={`grid-page-${it}`}
 								>
 									{formatNumber(it)}
-								</button>
+								</AriaButton>
 							),
 						)}
-						<button
+						<AriaButton
 							type="button"
 							className="sy-grid__pg sy-grid__pg--next"
 							aria-label={t("common.nextPage")}
-							disabled={pageInfo.page >= pageInfo.pageCount}
+							isDisabled={pageInfo.page >= pageInfo.pageCount}
 							onClick={() =>
 								dispatch({ type: "page", page: pageInfo.page + 1 })
 							}
 							data-testid="grid-next"
 						>
 							<Icon name="chevronRight" size={16} />
-						</button>
+						</AriaButton>
 					</nav>
 				</div>
 			) : null}

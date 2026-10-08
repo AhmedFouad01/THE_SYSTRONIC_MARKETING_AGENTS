@@ -1,0 +1,341 @@
+@reference "../../ui/tokens/tailwind.css";
+
+.sy-props {
+	@apply flex flex-col gap-12 min-w-0;
+}
+.sy-props__body {
+	@apply flex flex-col gap-12 min-w-0;
+}
+.sy-props__toolbar {
+	@apply flex flex-wrap items-end gap-12;
+}
+.sy-props__search {
+	flex: 1 1 240px;
+	max-width: 360px;
+}
+.sy-props__tools {
+	@apply flex flex-wrap gap-8;
+}
+.sy-props__muted {
+	@apply m-0 text-text-3;
+}
+.sy-props__note,
+.sy-props__banner {
+	@apply m-0 p-10 rounded-8 bg-warning-bg text-warning-fg;
+}
+.sy-props__note {
+	@apply bg-info-bg text-info-fg;
+}
+.sy-props__banner--error {
+	@apply bg-danger-bg text-danger-fg;
+}
+.sy-props__banner p {
+	margin: 0 0 var(--sy-space-8);
+}
+.sy-props__group {
+	margin-block-end: var(--sy-space-16);
+}
+.sy-props__grouphead {
+	@apply flex items-baseline gap-8;
+	margin: 0 0 var(--sy-space-8);
+	font-size: var(--sy-type-section-title-size);
+}
+.sy-props__count {
+	@apply font-[500] text-text-3;
+	font-size: var(--sy-type-data-size);
+}
+.sy-props__rows,
+.sy-props__optlist {
+	@apply list-none m-0 p-0 flex flex-col rounded-12 bg-surface overflow-hidden;
+	border: 1px solid var(--sy-border);
+}
+.sy-props__row,
+.sy-props__opt {
+	@apply grid items-center gap-10 min-w-0;
+	grid-template-columns: minmax(0, 2fr) 120px minmax(0, 1.3fr) 320px;
+	padding: var(--sy-space-10) var(--sy-space-12);
+	border-block-end: 1px solid var(--sy-border);
+}
+.sy-props__row:last-child,
+.sy-props__opt:last-child {
+	border-block-end: 0;
+}
+.sy-props__row--archived,
+.sy-props__opt--archived {
+	opacity: 0.7;
+}
+.sy-props__main {
+	@apply flex flex-col gap-4 min-w-0;
+}
+.sy-props__name {
+	@apply font-[600] text-text min-w-0;
+}
+.sy-props__code {
+	@apply text-text-3;
+	font-size: var(--sy-type-data-size);
+	overflow-wrap: anywhere;
+}
+.sy-props__type {
+	@apply text-text-2;
+}
+.sy-props__badges {
+	@apply flex flex-wrap gap-4;
+}
+.sy-props__actions {
+	@apply grid gap-6 justify-end items-center;
+	/* reserved slots: Options | up | down | Edit | archive, so rows line up whichever buttons they have */
+	grid-template-columns: 96px 32px 32px 92px 32px;
+}
+.sy-props__actions .sy-btn:not(.sy-btn--icon) {
+	@apply justify-center;
+	inline-size: 100%;
+}
+.sy-props__optactions {
+	@apply flex flex-wrap items-center gap-6;
+}
+.sy-props__move {
+	@apply contents;
+}
+.sy-props__tag {
+	@apply text-text-3;
+	font-size: var(--sy-type-data-size);
+}
+
+/* dialogs */
+.sy-dialog[data-testid="property-dialog"],
+.sy-dialog[data-testid="options-dialog"],
+.sy-dialog[data-testid="groups-dialog"] {
+	width: 680px;
+	max-height: 92vh;
+}
+.sy-props__form {
+	@apply flex flex-col gap-12;
+}
+.sy-props__flags,
+.sy-props__options,
+.sy-props__colors {
+	@apply flex flex-col gap-8 m-0 p-0 border-0 min-w-0;
+}
+.sy-props__options {
+	@apply mt-12;
+}
+.sy-props__legend {
+	@apply p-0 font-[600] text-text;
+	font-size: var(--sy-type-data-size);
+}
+.sy-props__optlist {
+	@apply rounded-8;
+}
+.sy-props__options .sy-props__optlist,
+.sy-props__optlist .sy-props__opt {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+.sy-props__optname {
+	@apply flex flex-wrap items-center gap-8 min-w-0;
+}
+.sy-props__optno {
+	@apply font-[600] text-text-2;
+}
+.sy-props__options > .sy-props__optlist {
+	@apply border-0;
+}
+.sy-props__optlist > li.sy-props__opt {
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+ol.sy-props__optlist > li.sy-props__opt {
+	@apply p-10;
+	grid-template-columns: minmax(0, 1fr);
+}
+.sy-props__optedit {
+	@apply col-span-full flex flex-col gap-8;
+}
+.sy-props__swatches {
+	@apply flex flex-wrap gap-6;
+}
+.sy-props__swatch {
+	@apply relative inline-flex cursor-pointer;
+}
+.sy-props__dot {
+	@apply inline-block rounded-pill;
+	inline-size: 24px;
+	block-size: 24px;
+	border: 2px solid transparent;
+	box-shadow: 0 0 0 1px var(--sy-border-strong);
+}
+.sy-props__dot--sm {
+	@apply flex-none;
+	inline-size: 12px;
+	block-size: 12px;
+	border-width: 0;
+	box-shadow: none;
+}
+.sy-props__dot--none {
+	@apply bg-surface;
+	background-image: linear-gradient(135deg, transparent 45%, var(--sy-text-3) 45% 55%, transparent 55%);
+}
+.sy-props__swatch[data-selected] .sy-props__dot {
+	@apply border-surface;
+	box-shadow: 0 0 0 2px var(--sy-text);
+}
+.sy-props__swatch[data-focus-visible] .sy-props__dot {
+	outline: 2px solid var(--sy-focus);
+	outline-offset: 3px;
+}
+
+@media (max-width: 960px) {
+	.sy-props__row {
+		grid-template-columns: minmax(0, 1fr) auto;
+}
+	.sy-props__badges,
+	.sy-props__actions {
+	@apply col-span-full;
+}
+	.sy-props__actions {
+	@apply justify-start;
+}
+}
+
+@media (max-width: 720px) {
+	.sy-props__row {
+	@apply gap-6;
+		grid-template-columns: minmax(0, 1fr);
+}
+	.sy-props__search {
+	@apply max-w-none;
+}
+	.sy-props__optlist > li.sy-props__opt {
+		grid-template-columns: minmax(0, 1fr);
+}
+}
+
+/* LTR identifiers sit at the inline-start edge of their cell in both directions */
+.sy-props__main .sy-props__code {
+	@apply self-start;
+}
+
+.sy-cf {
+	@apply flex flex-col gap-10 min-w-0;
+	padding-block-start: var(--sy-space-12);
+	border-block-start: 1px solid var(--sy-border);
+}
+.sy-cf__title {
+	@apply m-0 font-[600] text-text-2;
+	font-size: var(--sy-type-data-size);
+}
+.sy-cf__group {
+	@apply flex flex-col gap-8 min-w-0;
+}
+.sy-cf__group-title {
+	@apply m-0 font-[600] text-text-3;
+	font-size: var(--sy-type-data-size);
+}
+.sy-cf__fields {
+	@apply flex flex-col gap-10 min-w-0;
+}
+.sy-cf__field,
+.sy-cf__set {
+	@apply min-w-0;
+}
+.sy-cf__set {
+	@apply m-0 p-0 border-0;
+}
+.sy-cf__fact--wide {
+	@apply col-span-full;
+}
+.sy-cf__empty {
+	@apply text-text-3 font-[400];
+}
+.sy-cf__multiline {
+	@apply block text-start whitespace-pre-wrap font-[400];
+	unicode-bidi: plaintext;
+	overflow-wrap: anywhere;
+}
+.sy-cf__link {
+	color: var(--sy-link, var(--sy-info-fg));
+	overflow-wrap: anywhere;
+}
+.sy-cf__chips {
+	@apply flex flex-wrap gap-4 m-0 p-0 list-none;
+}
+.sy-cf__chip {
+	@apply inline-flex items-center gap-4 max-w-full rounded-pill bg-surface-3 text-text-2 font-[600];
+	padding: 2px var(--sy-space-8);
+	font-size: var(--sy-type-data-size);
+}
+.sy-cf__dot {
+	@apply flex-none rounded-pill;
+	inline-size: 10px;
+	block-size: 10px;
+}
+.sy-cf__tag {
+	@apply rounded-6 bg-surface-3 text-text-3 font-[600];
+	margin-inline-start: var(--sy-space-8);
+	padding: 0 var(--sy-space-6, 6px);
+	font-size: 11px;
+}
+.sy-cf__options {
+	@apply flex flex-col;
+	gap: var(--sy-space-6, 6px);
+}
+.sy-cf__check {
+	@apply inline-flex items-center gap-8 cursor-pointer;
+	min-block-size: 32px;
+}
+.sy-cf__ro .sy-cf__rovalue {
+	@apply flex items-center text-text-2;
+	min-block-size: 36px;
+}
+.sy-cf__banner {
+	@apply m-0 p-10 rounded-8 bg-danger-bg text-danger-fg;
+}
+
+/* P1b B4: custom-field columns and filter rows inside the data grid. Logical properties only (RTL = mirrored), tokens only (light + dark). */
+.sy-cc__cols {
+	@apply flex flex-col overflow-auto;
+	min-width: 220px;
+	max-block-size: 50vh;
+}
+.sy-cc__hint {
+	@apply text-text-3;
+	margin: var(--sy-space-4) 0 0;
+	font-size: var(--sy-type-data-size);
+}
+.sy-cc__filters {
+	@apply flex flex-col gap-8 min-w-0;
+	inline-size: 100%;
+}
+.sy-cc__row {
+	@apply flex flex-wrap items-end gap-8 min-w-0;
+}
+.sy-cc__row > * {
+	@apply min-w-0;
+}
+.sy-cc__list {
+	@apply m-0 p-0 border-0 overflow-auto;
+	min-width: 160px;
+	max-block-size: 160px;
+}
+.sy-cc__cell {
+	@apply inline-flex items-center gap-4 min-w-0;
+	max-inline-size: 100%;
+}
+.sy-cc__cell .sy-cf__chips {
+	@apply flex-wrap m-0 p-0;
+}
+.sy-cc__mlabel {
+	@apply hidden text-text-3;
+}
+@media (max-width: 768px) {
+	.sy-cc__mlabel {
+	@apply inline;
+}
+	.sy-grid__table td:has(.sy-cc__cell--empty) {
+	@apply hidden;
+}
+	.sy-cc__row {
+	@apply flex-col items-stretch;
+}
+	.sy-cc__row > .sy-btn {
+	@apply self-end;
+}
+}

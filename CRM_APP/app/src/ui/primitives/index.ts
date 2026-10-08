@@ -40,3 +40,6 @@ export {
 	useRecordSheet,
 	useWideLayout,
 } from "./useMediaQuery.ts";
+
+export { Checkbox, type CheckboxProps } from "./Checkbox.tsx";
+export { ComboBox, type ComboBoxProps } from "./ComboBox.tsx";

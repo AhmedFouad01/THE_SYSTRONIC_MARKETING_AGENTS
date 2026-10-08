@@ -1,5 +1,4 @@
 import type { ElementType, HTMLAttributes, ReactNode } from "react";
-import "./panel.css";
 
 export type PanelProps = HTMLAttributes<HTMLElement> & {
 	as?: ElementType;
@@ -17,11 +16,11 @@ export function Panel({
 	...rest
 }: PanelProps) {
 	return (
-		<Tag {...rest} className={`sy-panel${className ? ` ${className}` : ""}`}>
+		<Tag {...rest} className={`sy-panel min-w-0 p-16 border border-solid border-border rounded-12 bg-surface shadow-subtle${className ? ` ${className}` : ""}`}>
 			{title || actions ? (
-				<div className="sy-panel__head">
-					{title ? <h2 className="sy-panel__title">{title}</h2> : <span />}
-					{actions ? <div className="sy-panel__actions">{actions}</div> : null}
+				<div className="sy-panel__head flex items-center justify-between gap-12 mb-12">
+					{title ? <h2 className="sy-panel__title m-0">{title}</h2> : <span />}
+					{actions ? <div className="sy-panel__actions flex flex-wrap gap-8">{actions}</div> : null}
 				</div>
 			) : null}
 			{children}

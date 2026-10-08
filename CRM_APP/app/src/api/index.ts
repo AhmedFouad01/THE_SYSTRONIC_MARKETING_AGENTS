@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { importDraftStore } from "../features/imports/draft.ts";
+import { createAuthClient } from "./auth.ts";
 import { createApiClient } from "./client.ts";
 import {
 	createSessionStore,
@@ -12,6 +13,9 @@ export * from "./client.ts";
 export * from "./errors.ts";
 export * from "./session.ts";
 
+export const DEV_BEARER = import.meta.env.VITE_DEV_BEARER === "1";
+export const authClient = createAuthClient();
+
 // Singletons for the app. Closures reference each other lazily (both are created before first call).
 export const apiClient = createApiClient({
 	getCredentials: () => sessionStore.getCredentials(),
@@ -20,6 +24,7 @@ export const apiClient = createApiClient({
 
 export const sessionStore = createSessionStore({
 	storage: safeSessionStorage(),
+	...(!DEV_BEARER ? { cookieAuth: authClient } : {}),
 	fetchSession: async (credentials, signal) =>
 		(await apiClient.get<SessionInfo>("session", { credentials, signal })).data,
 	onWorkspaceChange: () => {

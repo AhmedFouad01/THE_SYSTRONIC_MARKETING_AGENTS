@@ -95,7 +95,7 @@ for (const language of ["en", "ar"] as const) {
 			await rows.nth(0).getByTestId("option-ar").fill("أساسية");
 			await rows.nth(1).getByTestId("option-en").fill("Pro");
 			await rows.nth(1).getByTestId("option-ar").fill("احترافية");
-			await rows.nth(1).getByTestId("color-blue").check({ force: true });
+			await rows.nth(1).getByTestId("color-blue").locator("input").check({ force: true });
 			await dialog.getByTestId("option-1-up").click();
 			await expect(rows.nth(0).getByTestId("option-en")).toHaveValue("Pro");
 			await dialog.getByTestId("property-submit").click();
@@ -147,7 +147,7 @@ for (const language of ["en", "ar"] as const) {
 			await row(page, "lead_tier").getByTestId("property-archive").click();
 			await page.getByTestId("archive-dialog").getByTestId("dialog-confirm").click();
 			await expect(row(page, "lead_tier")).toHaveCount(0);
-			await page.getByTestId("show-archived").check();
+			await page.getByTestId("show-archived").locator("input").check();
 			await expect(row(page, "lead_tier")).toBeVisible();
 			await expect(row(page, "lead_tier").getByTestId("property-archive")).toHaveCount(0);
 
@@ -202,8 +202,8 @@ for (const language of ["en", "ar"] as const) {
 			await expect(dialog.getByTestId("key")).toBeDisabled();
 			await expect(dialog.getByTestId("key")).toHaveValue("display_name");
 			await expect(dialog.getByTestId("type")).toBeDisabled();
-			await expect(dialog.getByTestId("flag-required")).toBeDisabled();
-			await expect(dialog.getByTestId("flag-sensitive")).toBeDisabled();
+			await expect(dialog.getByTestId("flag-required").locator("input")).toBeDisabled();
+			await expect(dialog.getByTestId("flag-sensitive").locator("input")).toBeDisabled();
 			await expect(dialog.getByTestId("label-en")).toBeEnabled();
 			await expect(dialog.getByTestId("group")).toBeEnabled();
 		});

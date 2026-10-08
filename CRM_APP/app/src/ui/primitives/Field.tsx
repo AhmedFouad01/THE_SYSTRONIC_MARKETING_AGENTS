@@ -1,7 +1,9 @@
+import { Input as AriaInput, TextArea as AriaTextArea } from "react-aria-components";
 import {
 	type FormEvent,
 	type InputHTMLAttributes,
 	type ReactNode,
+	type Ref,
 	type TextareaHTMLAttributes,
 	useId,
 	useState,
@@ -88,7 +90,7 @@ export function FieldShell({
 	);
 }
 
-export type InputProps = Shared & InputHTMLAttributes<HTMLInputElement>;
+export type InputProps = Shared & InputHTMLAttributes<HTMLInputElement> & { ref?: Ref<HTMLInputElement> };
 export function Input({
 	label,
 	hint,
@@ -107,7 +109,7 @@ export function Input({
 			className={className}
 		>
 			{(p) => (
-				<input
+				<AriaInput
 					{...rest}
 					{...p}
 					dir={bidi.dir}
@@ -124,7 +126,7 @@ export function Input({
 }
 
 export type TextareaProps = Shared &
-	TextareaHTMLAttributes<HTMLTextAreaElement>;
+	TextareaHTMLAttributes<HTMLTextAreaElement> & { ref?: Ref<HTMLTextAreaElement> };
 export function Textarea({
 	label,
 	hint,
@@ -143,7 +145,7 @@ export function Textarea({
 			className={className}
 		>
 			{(p) => (
-				<textarea
+				<AriaTextArea
 					{...rest}
 					{...p}
 					dir={bidi.dir}

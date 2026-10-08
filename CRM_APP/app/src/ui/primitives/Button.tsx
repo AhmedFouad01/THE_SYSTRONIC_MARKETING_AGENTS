@@ -1,7 +1,18 @@
 import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { Icon, type IconName } from "../icons/index.ts";
 import { Spinner } from "./Spinner.tsx";
-import "./button.css";
+import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
+
+const base = "inline-flex items-center justify-center gap-6 min-w-0 border border-solid rounded-8 font-[600] leading-[1] cursor-pointer whitespace-nowrap data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-2 data-[disabled]:bg-disabled-bg data-[disabled]:text-text-disabled data-[disabled]:border-border data-[disabled]:cursor-not-allowed";
+const variants: Record<ButtonVariant, string> = {
+ primary: "border-transparent bg-primary text-primary-fg data-[hovered]:bg-primary-hover data-[pressed]:bg-primary-pressed",
+ secondary: "bg-surface text-text border-border-strong data-[hovered]:bg-hover",
+ ghost: "bg-transparent text-text border-transparent data-[hovered]:bg-hover",
+ danger: "bg-danger-bg text-danger-fg border-danger-icon data-[hovered]:bg-danger-hover data-[pressed]:bg-danger-pressed",
+ success: "bg-success-bg text-success-fg border-success-icon data-[hovered]:shadow-[inset_0_0_0_1px_var(--sy-success-icon)]",
+};
+const sizes: Record<ButtonSize, string> = { sm: "h-[32px] px-10 text-data", md: "h-[36px] px-12", lg: "h-[44px] px-16" };
+const iconSizes: Record<ButtonSize, string> = { sm: "w-[32px]", md: "w-[36px]", lg: "w-[44px]" };
 
 export type ButtonVariant =
 	| "primary"
@@ -34,16 +45,22 @@ export function Button({
 	disabled,
 	type = "button",
 	ref,
+	onFocus,
+	onBlur,
 	...rest
 }: ButtonProps) {
 	return (
-		<button
-			{...rest}
+		<AriaButton
+			{...rest as AriaButtonProps}
 			ref={ref}
+			render={(domProps) => <button {...domProps} title={rest.title} aria-busy={loading || rest["aria-busy"]} />}
+			// This adapter always renders a native button: retain native event/currentTarget contracts.
+			onFocus={onFocus as AriaButtonProps["onFocus"]}
+			onBlur={onBlur as AriaButtonProps["onBlur"]}
 			type={type}
-			disabled={disabled || loading}
+			isDisabled={disabled || loading}
 			aria-busy={loading || undefined}
-			className={`sy-btn sy-btn--${variant} sy-btn--${size}${className ? ` ${className}` : ""}`}
+			className={`sy-btn sy-btn--${variant} sy-btn--${size} ${base} ${variants[variant]} ${sizes[size]}${loading ? " cursor-progress" : ""}${className ? ` ${className}` : ""}`}
 		>
 			{loading ? (
 				<Spinner size={16} />
@@ -53,7 +70,7 @@ export function Button({
 			{children !== undefined && children !== null ? (
 				<span className="sy-btn__label">{children}</span>
 			) : null}
-		</button>
+		</AriaButton>
 	);
 }
 
@@ -79,18 +96,24 @@ export function IconButton({
 	disabled,
 	type = "button",
 	ref,
+	onFocus,
+	onBlur,
 	...rest
 }: IconButtonProps) {
 	return (
-		<button
-			{...rest}
+		<AriaButton
+			{...rest as AriaButtonProps}
 			ref={ref}
+			render={(domProps) => <button {...domProps} title={rest.title} aria-busy={loading || rest["aria-busy"]} />}
+			// This adapter always renders a native button: retain native event/currentTarget contracts.
+			onFocus={onFocus as AriaButtonProps["onFocus"]}
+			onBlur={onBlur as AriaButtonProps["onBlur"]}
 			type={type}
-			disabled={disabled || loading}
+			isDisabled={disabled || loading}
 			aria-busy={loading || undefined}
-			className={`sy-btn sy-btn--icon sy-btn--${variant} sy-btn--${size}${className ? ` ${className}` : ""}`}
+			className={`sy-btn sy-btn--icon sy-btn--${variant} sy-btn--${size} ${base} ${variants[variant]} ${sizes[size]} ${iconSizes[size]} px-0${loading ? " cursor-progress" : ""}${className ? ` ${className}` : ""}`}
 		>
 			{loading ? <Spinner size={16} /> : <Icon name={icon} size={18} />}
-		</button>
+		</AriaButton>
 	);
 }

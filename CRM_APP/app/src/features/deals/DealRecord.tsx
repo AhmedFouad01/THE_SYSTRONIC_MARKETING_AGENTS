@@ -77,11 +77,11 @@ function DealStepper({
 	if (steps.length === 0) return null;
 	return (
 		<nav aria-label={t("deals.stepper.label")}>
-			<ol className="sy-deals__stepper" data-testid="deal-stepper" ref={list}>
+			<ol className="sy-deals__stepper flex gap-8 m-0 p-0 list-none overflow-x-auto snap-x snap-proximity max-[641px]:[scrollbar-width:none] max-[641px]:[mask-image:linear-gradient(to_right,transparent_0,var(--sy-surface)_14px,var(--sy-surface)_calc(100%_-_14px),transparent_100%)]" data-testid="deal-stepper" ref={list}>
 				{steps.map(({ stage, state }) => (
 					<li
 						key={stage.id}
-						className="sy-deals__step"
+						className="sy-deals__step snap-center relative flex-1 min-w-[96px] inline-flex items-center justify-center gap-4 py-8 px-10 border border-solid border-border rounded-8 bg-surface-2 text-text-2 text-data font-[600] text-center data-[state=done]:bg-success-bg data-[state=done]:border-success-bg data-[state=done]:text-success-fg data-[state=won]:bg-success-bg data-[state=won]:border-success-bg data-[state=won]:text-success-fg data-[state=current]:bg-info-bg data-[state=current]:border-focus data-[state=current]:text-info-fg data-[state=lost]:bg-danger-bg data-[state=lost]:border-danger-icon data-[state=lost]:text-danger-fg"
 						data-state={state}
 						data-testid="deal-step"
 						aria-current={
@@ -94,7 +94,7 @@ function DealStepper({
 							<Icon name="check" size={14} />
 						) : null}
 						<Bdi>{stage.name}</Bdi>
-						<span className="sy-deals__sr">{t(STEP_KEY[state])}</span>
+						<span className="sy-deals__sr sr-only">{t(STEP_KEY[state])}</span>
 					</li>
 				))}
 			</ol>
@@ -112,9 +112,9 @@ function StatCard({
 	children: ReactNode;
 }) {
 	return (
-		<div className="sy-deals__stat" data-testid={testId}>
-			<p className="sy-deals__statlabel">{label}</p>
-			<p className="sy-deals__statvalue">{children}</p>
+		<div className="sy-deals__stat py-10 px-12 border border-solid border-border rounded-10 bg-surface min-w-0" data-testid={testId}>
+			<p className="sy-deals__statlabel m-0 text-[11px] text-text-3">{label}</p>
+			<p className="sy-deals__statvalue m-0 mt-2 font-[700] text-text [overflow-wrap:anywhere]">{children}</p>
 		</div>
 	);
 }
@@ -157,7 +157,7 @@ function DealTasks({
 	}, [deal.id, refreshKey]);
 	if (state.s === "loading")
 		return (
-			<p className="sy-deals__muted" role="status">
+			<p className="sy-deals__muted m-0 mt-4 text-text-3" role="status">
 				{t("deals.tasks.loading")}
 			</p>
 		);
@@ -165,20 +165,20 @@ function DealTasks({
 		return <p role="alert">{t("deals.tasks.failed")}</p>;
 	if (state.items.length === 0)
 		return (
-			<p className="sy-deals__muted" data-testid="deal-tasks-empty">
+			<p className="sy-deals__muted m-0 mt-4 text-text-3" data-testid="deal-tasks-empty">
 				{t("deals.tasks.empty")}
 			</p>
 		);
 	const now = new Date();
 	return (
-		<ul className="sy-deals__tasks" data-testid="deal-tasks">
+		<ul className="sy-deals__tasks flex flex-col m-0 p-0 list-none" data-testid="deal-tasks">
 			{state.items.map((task) => (
-				<li key={task.id} className="sy-deals__task" data-testid="deal-task">
-					<div className="sy-deals__tasktitle">
+				<li key={task.id} className="sy-deals__task flex flex-wrap items-center gap-y-8 gap-x-12 py-8 border-b border-solid border-border" data-testid="deal-task">
+					<div className="sy-deals__tasktitle flex-[1_1_200px] min-w-0 flex flex-col [overflow-wrap:anywhere]">
 						<b>
 							<Bdi>{task.title}</Bdi>
 						</b>
-						<span className="sy-deals__muted">
+						<span className="sy-deals__muted m-0 mt-4 text-text-3">
 							<Bdi>{actors.get(task.owner_id) ?? t("common.unknownUser")}</Bdi>
 						</span>
 					</div>
@@ -259,13 +259,13 @@ export function DealRecord({
 	const refreshTasks = useCallback(() => setTaskKey((k) => k + 1), []);
 
 	return (
-		<div className="sy-deals__record" data-testid="deal-detail">
+		<div className="sy-deals__record flex flex-col gap-12 min-w-0" data-testid="deal-detail">
 			{onBack ? (
 				<Button
 					variant="ghost"
 					size="sm"
 					icon="chevronRight"
-					className="sy-deals__back"
+					className="sy-deals__back self-start [&_.sy-icon]:[transform:scaleX(-1)]! rtl:[&_.sy-icon[data-mirror-rtl=true]]:[transform:none]!"
 					onClick={onBack}
 					data-testid="deal-back"
 				>
@@ -307,10 +307,10 @@ export function DealRecord({
 					void move.run(stage, reason).then(() => setLost(null));
 				}}
 			/>
-			<div className="sy-deals__card sy-deals__steps">
+			<div className="sy-deals__card sy-deals__steps p-12 border border-solid border-border rounded-12 bg-surface shadow-subtle min-w-0">
 				<DealStepper deal={deal} pipeline={pipeline} />
 			</div>
-			<div className="sy-deals__stats" data-testid="deal-stats">
+			<div className="sy-deals__stats grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-12" data-testid="deal-stats">
 				<StatCard label={t("common.value")} testId="deal-stat-value">
 					<span data-testid="deal-detail-value">
 						<Money>{dealValueText(deal, formatMoney)}</Money>
@@ -390,8 +390,8 @@ export function DealRecord({
 										/>
 									</div>
 								) : (
-									<dl className="sy-record__facts" data-testid="record-facts">
-										<div className="sy-record__fact">
+									<dl className="sy-record__facts grid grid-cols-2 gap-y-12 gap-x-16 m-0" data-testid="record-facts">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.detail.contact")}</dt>
 											<dd>
 												<Link route="/contacts" id={deal.contact_id}>
@@ -399,20 +399,20 @@ export function DealRecord({
 												</Link>
 											</dd>
 										</div>
-										<div className="sy-record__fact">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.detail.pipeline")}</dt>
 											<dd>
 												<Bdi>{deal.pipelineName}</Bdi>
 											</dd>
 										</div>
-										<div className="sy-record__fact">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.field.currency")}</dt>
 											<dd>
 												<bdi dir="ltr">{deal.currency}</bdi>
 											</dd>
 										</div>
 										{deal.lead_id ? (
-											<div className="sy-record__fact">
+											<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 												<dt>{t("deals.context.lead")}</dt>
 												<dd>
 													<Link route="/leads" id={deal.lead_id}>

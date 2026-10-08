@@ -49,8 +49,7 @@ import {
 	summarizeReport,
 } from "./model.ts";
 import { type Load, useLoad } from "./useLoad.ts";
-import "../reporting/reporting.css";
-import "./dashboard.css";
+import "../reporting/reporting-kit.css";
 import { PipelineWidget } from "./PipelineWidget.tsx";
 import { LeadsWidget } from "./LeadsWidget.tsx";
 import { OutcomesWidget } from "./OutcomesWidget.tsx";
@@ -238,7 +237,7 @@ export function DashboardView() {
 		others.length > 0 ? ` · ${t("dash.otherCurrencies", { count: formatNumber(others.length) })}` : "";
 
 	const kpis = (
-		<section className="sy-dash__kpis" aria-label={t("dash.kpis")} data-testid="dash-kpis">
+		<section className="sy-dash__kpis grid grid-cols-4 gap-12 min-w-0 max-mobile:grid-cols-2 max-mobile:gap-10" aria-label={t("dash.kpis")} data-testid="dash-kpis">
 			{taskCard(
 				"kpi-overdue",
 				t(taskState.status === "ready" && taskState.data.scope === "assigned" ? "charts.tasks.overdueMine" : "dash.overdue.label"),
@@ -302,7 +301,7 @@ export function DashboardView() {
 
 	const renderDue = (task: Task) => {
 		if (task.due_at === null || Number.isNaN(Date.parse(task.due_at)))
-			return <span className="sy-dash__muted">{t("tasks.noDue")}</span>;
+			return <span className="sy-dash__muted m-0 text-text-3 [overflow-wrap:anywhere]">{t("tasks.noDue")}</span>;
 		const due = new Date(task.due_at);
 		if (due.getTime() < now.getTime()) {
 			const late = overdueDays(due, now);
@@ -350,15 +349,15 @@ export function DashboardView() {
 				/>
 			);
 		return (
-			<ul className="sy-dash__list" data-testid="dash-followup-list">
+			<ul className="sy-dash__list flex flex-col m-0 p-0 list-none" data-testid="dash-followup-list">
 				{list.map((task) => {
 					const rel = relatedOf(task);
 					const relatedName = rel ? (knownNames.get(relatedKey(rel)) ?? fetchedNames.get(relatedKey(rel)) ?? null) : null;
 					return (
-						<li key={task.id} className="sy-dash__row" data-testid="dash-followup">
-							<div className="sy-dash__row-main">
+						<li key={task.id} className="sy-dash__row flex items-center justify-between gap-12 min-h-[48px] py-8 border-b border-solid border-divider last:border-b-0 max-mobile:flex-wrap" data-testid="dash-followup">
+							<div className="sy-dash__row-main flex flex-col min-w-0 gap-4">
 								<a
-									className="sy-dash__name"
+									className="sy-dash__name m-0 font-[700] text-text [overflow-wrap:anywhere] no-underline hover:underline focus-visible:underline"
 									href={`${href("/tasks")}?select=${task.id}`}
 									onClick={(e) => {
 										e.preventDefault();
@@ -368,7 +367,7 @@ export function DashboardView() {
 									<Bdi>{task.title}</Bdi>
 								</a>
 								{rel && relatedName ? (
-									<span className="sy-dash__muted">
+									<span className="sy-dash__muted m-0 text-text-3 [overflow-wrap:anywhere]">
 										<Bdi>
 											<RelatedLink
 												row={{ relatedKind: rel.kind, relatedId: rel.id, relatedName }}
@@ -377,7 +376,7 @@ export function DashboardView() {
 									</span>
 								) : null}
 							</div>
-							<div className="sy-dash__row-due">{renderDue(task)}</div>
+							<div className="sy-dash__row-due flex-none max-mobile:flex-[1_1_100%]">{renderDue(task)}</div>
 						</li>
 					);
 				})}
@@ -439,7 +438,7 @@ export function DashboardView() {
 		const refundValue = m.refunds.value;
 		return (
 			<>
-				<dl className="sy-dash__kv" data-testid="dash-snapshot">
+				<dl className="sy-dash__kv flex flex-col gap-8 m-0 [&>div]:flex [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-12 [&>div]:min-w-0 [&_dt]:text-text-2 [&_dd]:m-0 [&_dd]:font-[600] [&_dd]:text-end [&_dd]:[overflow-wrap:anywhere]" data-testid="dash-snapshot">
 					<div>
 						<dt>{t("dash.mkt.spend")}</dt>
 						<dd data-testid="dash-spend">{money(m.kpis.spend, cur)}</dd>
@@ -453,7 +452,7 @@ export function DashboardView() {
 					<div>
 						<dt>{t("dash.mkt.refunds")}</dt>
 						<dd data-testid="dash-refunds">
-							{money(refundValue, cur)} <span className="sy-dash__muted">(<Bdi>{formatNumber(m.refunds.count)}</Bdi>)</span>
+							{money(refundValue, cur)} <span className="sy-dash__muted m-0 text-text-3 [overflow-wrap:anywhere]">(<Bdi>{formatNumber(m.refunds.count)}</Bdi>)</span>
 						</dd>
 					</div>
 					<div>
@@ -463,7 +462,7 @@ export function DashboardView() {
 						</dd>
 					</div>
 				</dl>
-				<div className="sy-dash__meta" data-testid="dash-meta">
+				<div className="sy-dash__meta mt-12 pt-10 border-t border-solid border-divider text-text-2 text-[0.875rem] [&_p]:m-0 [&_p]:mb-4 [&_p]:[overflow-wrap:anywhere]" data-testid="dash-meta">
 					<p>
 						{m.stale || data.as_of === null
 							? t("dash.mkt.notCalculated")
@@ -481,15 +480,15 @@ export function DashboardView() {
 			a.campaignId === "unknown" ? t("rep.unknown") : (a.name ?? a.campaignId);
 		const cur = m.kpis.currency;
 		if (m.top.length === 0)
-			return <p className="sy-dash__muted">{t("dash.report.empty")}</p>;
+			return <p className="sy-dash__muted m-0 text-text-3 [overflow-wrap:anywhere]">{t("dash.report.empty")}</p>;
 		return narrow ? (
-			<ul className="sy-dash__list" data-testid="dash-campaign-cards">
+			<ul className="sy-dash__list flex flex-col m-0 p-0 list-none" data-testid="dash-campaign-cards">
 				{m.top.map((a) => (
-					<li key={a.key} className="sy-dash__card" data-testid="dash-campaign-row">
-						<p className="sy-dash__name">
+					<li key={a.key} className="sy-dash__card p-10 border border-solid border-border rounded-10 mb-8 min-h-[48px]" data-testid="dash-campaign-row">
+						<p className="sy-dash__name m-0 font-[700] text-text [overflow-wrap:anywhere] no-underline hover:underline focus-visible:underline">
 							<Bdi>{name(a)}</Bdi>
 						</p>
-						<dl className="sy-dash__kv sy-dash__kv--tight">
+						<dl className="sy-dash__kv sy-dash__kv--tight flex flex-col gap-8 m-0 [&>div]:flex [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-12 [&>div]:min-w-0 [&_dt]:text-text-2 [&_dd]:m-0 [&_dd]:font-[600] [&_dd]:text-end [&_dd]:[overflow-wrap:anywhere] gap-4!">
 							<div>
 								<dt>{t("dash.top.revenue")}</dt>
 								<dd>{money(a.revenue, cur)}</dd>
@@ -511,8 +510,8 @@ export function DashboardView() {
 				))}
 			</ul>
 		) : (
-			<div className="sy-dash__tablewrap">
-				<table className="sy-dash__table" data-testid="dash-campaign-table">
+			<div className="sy-dash__tablewrap max-w-full overflow-x-auto">
+				<table className="sy-dash__table w-full border-collapse [&_th]:py-8 [&_th]:px-6 [&_th]:text-start [&_th]:border-b [&_th]:border-solid [&_th]:border-divider [&_th]:[overflow-wrap:anywhere] [&_td]:py-8 [&_td]:px-6 [&_td]:text-start [&_td]:border-b [&_td]:border-solid [&_td]:border-divider [&_td]:[overflow-wrap:anywhere] [&_thead_th]:text-text-2 [&_thead_th]:font-[600] [&_tbody_th]:font-[700]" data-testid="dash-campaign-table">
 					<thead>
 						<tr>
 							<th scope="col">{t("rep.col.campaign")}</th>
@@ -543,12 +542,12 @@ export function DashboardView() {
 	});
 
 	return (
-		<div className="sy-dash" data-testid="dashboard-view">
+		<div className="sy-dash flex flex-col gap-16 min-w-0 [&_a]:min-h-[24px] max-mobile:[&_a]:inline-flex max-mobile:[&_a]:items-center max-mobile:[&_a]:min-h-[44px] max-mobile:[&_.sy-page-header__actions]:w-full max-mobile:[&_.sy-page-header__actions]:ms-0" data-testid="dashboard-view">
 			<PageHeader
 				title={t("nav.dashboard")}
 				subtitle={t("dash.subtitle")}
 				actions={
-					<div className="sy-dash__actions">
+					<div className="sy-dash__actions flex flex-wrap gap-8 max-mobile:w-full max-mobile:ms-0 max-mobile:[&_.sy-btn]:flex-1 max-mobile:[&_.sy-btn]:min-h-[44px]">
 						<Button variant="primary" icon="plus" onClick={openTask} data-testid="dash-new-task">
 							{t("tasks.action.new")}
 						</Button>
@@ -559,9 +558,9 @@ export function DashboardView() {
 				}
 				kpis={kpis}
 			/>
-			<div className="sy-dash__grid">
+			<div className="sy-dash__grid grid grid-cols-12 gap-16 min-w-0">
 				<Panel
-					className="sy-dash__follow"
+					className="sy-dash__follow col-start-1 col-span-8 max-[1024px]:col-span-full"
 					title={t("dash.follow.title")}
 					actions={
 						<a
@@ -579,11 +578,11 @@ export function DashboardView() {
 				>
 					{followBody()}
 				</Panel>
-				<Panel className="sy-dash__mkt" title={t("dash.mkt.title")} data-testid="dash-marketing">
+				<Panel className="sy-dash__mkt col-start-9 col-span-4 max-[1024px]:col-start-1 max-[1024px]:col-span-full" title={t("dash.mkt.title")} data-testid="dash-marketing">
 					{snapshot}
 				</Panel>
 				<Panel
-					className="sy-dash__top"
+					className="sy-dash__top col-span-full"
 					title={t("dash.top.title")}
 					actions={reportLink("dash-report-link")}
 					data-testid="dash-campaigns"
@@ -591,7 +590,7 @@ export function DashboardView() {
 					{topCampaigns}
 				</Panel>
 			</div>
-			<div className="sy-dash__charts">{dashboardChartOrder(taskState.status === "ready" ? taskState.data.scope : undefined).map((widget) => {
+			<div className="sy-dash__charts grid grid-cols-12 gap-16 min-w-0">{dashboardChartOrder(taskState.status === "ready" ? taskState.data.scope : undefined).map((widget) => {
 				switch (widget) {
 					case "pipeline": return <PipelineWidget key={widget} />;
 					case "leads": return <LeadsWidget key={widget} />;

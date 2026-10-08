@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import "./page-header.css";
 
 export type PageHeaderProps = {
 	title: ReactNode;
@@ -24,24 +23,36 @@ export function PageHeader({
 	titleTestId,
 }: PageHeaderProps) {
 	return (
-		<header className="sy-page-header" data-testid={testId}>
-			<div className="sy-page-header__row">
-				<div className="sy-page-header__titles">
+		<header
+			className="sy-page-header flex flex-col gap-14 min-w-0"
+			data-testid={testId}
+		>
+			<div className="sy-page-header__row flex flex-wrap items-start justify-between gap-12">
+				<div className="sy-page-header__titles min-w-0">
 					{eyebrow ? (
-						<p className="sy-page-header__eyebrow">{eyebrow}</p>
+						<p className="sy-page-header__eyebrow m-0 mb-4 text-[11px] font-[800] tracking-[0.08em] uppercase text-text-3">
+							{eyebrow}
+						</p>
 					) : null}
-					<h1 className="sy-page-header__title" data-testid={titleTestId}>
+					<h1
+						className="sy-page-header__title m-0 text-page-title text-text max-mobile:text-[24px]! max-mobile:leading-[32px]!"
+						data-testid={titleTestId}
+					>
 						{title}
 					</h1>
 					{subtitle ? (
-						<p className="sy-page-header__subtitle">{subtitle}</p>
+						<p className="sy-page-header__subtitle m-0 mt-4 text-body text-text-2">
+							{subtitle}
+						</p>
 					) : null}
 				</div>
 				{actions ? (
-					<div className="sy-page-header__actions">{actions}</div>
+					<div className="sy-page-header__actions flex flex-wrap items-center gap-8 ms-auto">
+						{actions}
+					</div>
 				) : null}
 			</div>
-			{kpis ? <div className="sy-page-header__kpis">{kpis}</div> : null}
+			{kpis ? <div className="sy-page-header__kpis min-w-0">{kpis}</div> : null}
 		</header>
 	);
 }

@@ -20,7 +20,7 @@ function PipelineWidgetLoad({ identity }: { identity: string }) {
 	const [currency, setCurrency] = useState("");
 	const data = load.state.status === "ready" ? load.state.data : null;
 	const selected = data ? pipelineSelection(data, pipelineId, currency) : null;
-	const controls = data ? <div className="sy-chart__controls">
+	const controls = data ? <div className="sy-chart__controls flex flex-wrap gap-12 [&_.sy-field]:min-w-[8rem] [&_.sy-field]:flex-[1_1_8rem]">
 		<Select label={t("charts.pipeline.selector")} size="sm" value={selected?.pipeline?.pipeline_id ?? ""} disabled={data.pipelines.length === 0}
 			onChange={(event) => setPipelineId(event.target.value)}>
 			{data.pipelines.length === 0 ? <option value="">{t("charts.pipeline.noPipelines")}</option> : null}
@@ -32,6 +32,6 @@ function PipelineWidgetLoad({ identity }: { identity: string }) {
 			{selected?.currencies.map((code) => <option key={code} value={code}>{code}</option>)}
 		</Select>
 	</div> : null;
-	return <ChartSurface title={t("charts.pipeline.title")} className="sy-dash__chart" state={chartState(load.state, (payload) => pipelineChart(payload, pipelineId, currency, t))}
+	return <ChartSurface title={t("charts.pipeline.title")} className="sy-dash__chart col-span-6 max-mobile:col-span-full" state={chartState(load.state, (payload) => pipelineChart(payload, pipelineId, currency, t))}
 		onRetry={load.reload} actions={controls} emptyAction={<a href={href("/pipeline")} onClick={(event) => { event.preventDefault(); navigate("/pipeline"); }}>{t("charts.pipeline.open")}</a>} />;
 }

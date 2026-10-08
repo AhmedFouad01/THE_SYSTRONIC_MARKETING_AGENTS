@@ -36,7 +36,7 @@ import {
 	unattributedAlert,
 } from "./model.ts";
 import { useReportFmt } from "./shared.tsx";
-import "./reporting.css";
+import "./reporting-kit.css";
 
 export type ReportTab = "campaigns" | "conversions" | "orders" | "journey";
 const TABS: readonly ReportTab[] = [

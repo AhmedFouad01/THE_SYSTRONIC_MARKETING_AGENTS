@@ -23,7 +23,6 @@ import {
 	type TaskIssue,
 	validateNewTask,
 } from "./model.ts";
-import "./tasks.css";
 
 const ISSUE_KEY: Record<TaskIssue, MessageKey> = {
 	required: "tasks.issue.required",
@@ -103,7 +102,7 @@ function NewTaskForm({
 	return (
 		<form
 			id={formId}
-			className="sy-tasks__form"
+			className="sy-tasks__form flex flex-col gap-10"
 			noValidate
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -112,7 +111,7 @@ function NewTaskForm({
 		>
 			{serverError ? (
 				<p
-					className="sy-tasks__banner"
+					className="sy-tasks__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 					role="alert"
 					data-testid="new-task-error"
 				>
@@ -138,8 +137,8 @@ function NewTaskForm({
 				onChange={(e) => set({ due: e.target.value })}
 			/>
 			{prefill ? (
-				<p className="sy-tasks__related" data-testid="new-task-related">
-					<span className="sy-tasks__muted">{t("tasks.field.related")}: </span>
+				<p className="sy-tasks__related m-0 [overflow-wrap:anywhere]" data-testid="new-task-related">
+					<span className="sy-tasks__muted m-0 mt-4 text-text-3">{t("tasks.field.related")}: </span>
 					<b>{prefill.label}</b>
 				</p>
 			) : (

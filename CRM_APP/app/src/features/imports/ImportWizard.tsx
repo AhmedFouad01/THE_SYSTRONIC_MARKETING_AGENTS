@@ -15,7 +15,6 @@ import { importAccess } from "./access.ts";
 import { ImportResults } from "./ImportResults.tsx";
 import { PreviewReview } from "./PreviewReview.tsx";
 import type { ApiError } from "../../api/errors.ts";
-import "./imports.css";
 
 const FIXED_LABELS: Record<string, MessageKey> = {
 	display_name: "import.target.displayName", title: "import.target.title", contact_name: "import.target.contactName",
@@ -173,20 +172,20 @@ export function ImportWizard() {
 		</Panel>
 	);
 	return (
-		<div className="sy-import" data-testid="import-wizard">
+		<div className="grid gap-16 min-w-0" data-testid="import-wizard">
 			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : draft.step === "policy" ? 4 : 5), total: formatCount(5) })} />
 			{draft.step !== "result" ? <Button onClick={() => update({ step: "result" })}>{t("import.history")}</Button> : null}
 			<p className="sy-import__workspace">{t("workspace.label")}: <Bdi>{workspace.tenantId}</Bdi></p>
-			{error ? <div ref={errorSummary} tabIndex={-1} className="sy-import__error" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
+			{error ? <div ref={errorSummary} tabIndex={-1} className="border border-solid border-danger-icon bg-danger-field-bg text-danger-fg rounded-8 p-12" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
 			{draft.step === "result" ? <Panel title={t("import.step.result")}><ImportResults commit={draft.commit} onRetry={() => void importCommitController.submit(scope, gate === "ready", issues)} onNew={() => resetInspection({ ...newDraft() })} onEdit={() => update({ step: "mapping" })} onDenied={deny} /></Panel> : draft.step === "upload" ? <Panel title={t("import.step.upload")}>
-				<div className="sy-import__form">
+				<div className="grid gap-12 min-w-0">
 					<Select label={t("import.object")} value={draft.object} disabled={processing} onChange={(event) => {
 						resetInspection({ ...newUpload(event.target.value as ImportObject), options: { ...draft.options, sheet: "1" } });
 					}}>
 						<option value="contact">{t("nav.contacts")}</option><option value="lead">{t("nav.leads")}</option>
 					</Select>
 					<p>{tx("import.limits", { mib: formatNumber(fields.limits.fileBytes / 1024 / 1024), rows: formatCount(fields.limits.rows), columns: formatCount(fields.limits.columns) })}</p>
-					<section className="sy-import__drop" aria-label={t("import.drop")} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); if (!processing) chooseFile(event.dataTransfer.files[0]); }}>
+					<section className="border border-dashed border-border-strong rounded-8 p-16" aria-label={t("import.drop")} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); if (!processing) chooseFile(event.dataTransfer.files[0]); }}>
 						<Input label={t("import.chooseFile")} type="file" accept={fields.formats.map((format) => `.${format}`).join(",")} disabled={processing} onChange={(event) => chooseFile(event.target.files?.[0])} />
 						<p>{t("import.drop")}</p>
 					</section>
@@ -198,14 +197,14 @@ export function ImportWizard() {
 					</Select>
 					{processing ? <p role="status">{t("import.loading")}</p> : null}
 					{inspection ? <p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p> : null}
-					<div className="sy-import__actions"><Button disabled={!draft.file} loading={processing} onClick={() => void inspect()}>{t("import.inspect")}</Button><Button variant="primary" disabled={!inspection || processing || optionIssues(draft.options, ownerIds).length > 0} onClick={() => update({ step: "mapping" })}>{t("import.nextMapping")}</Button></div>
+					<div className="flex flex-wrap gap-8 mt-12"><Button disabled={!draft.file} loading={processing} onClick={() => void inspect()}>{t("import.inspect")}</Button><Button variant="primary" disabled={!inspection || processing || optionIssues(draft.options, ownerIds).length > 0} onClick={() => update({ step: "mapping" })}>{t("import.nextMapping")}</Button></div>
 					{optionIssues(draft.options, ownerIds).map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
 				</div>
 			</Panel> : draft.step === "mapping" && inspection ? <Panel title={t("import.step.mapping")}>
 				<p><Bdi>{inspection.file.name}</Bdi></p>
 				<p>{tx("import.sampleCount", { shown: formatCount(inspection.samples.length), total: formatCount(inspection.total_rows) })}</p>
 				<p>{t("import.sampleHint")}</p>
-				<div className="sy-import__table-wrap"><table className="sy-import__table"><caption>{t("import.mappingCaption")}</caption><thead><tr><th>{t("import.column")}</th><th>{t("import.samples")}</th><th>{t("import.target")}</th></tr></thead><tbody>
+				<div className="overflow-x-auto max-w-full"><table className="border-collapse w-full [&_th]:p-10 [&_th]:text-start [&_th]:align-top [&_th]:border-b [&_th]:border-solid [&_th]:border-border [&_td]:p-10 [&_td]:text-start [&_td]:align-top [&_td]:border-b [&_td]:border-solid [&_td]:border-border [&_td]:min-w-[160px] [&_td]:[overflow-wrap:anywhere] [&_caption]:text-start [&_caption]:my-8 [&_caption]:font-[600] max-mobile:block max-mobile:[&_tbody]:block max-mobile:[&_thead]:sr-only max-mobile:[&_tr]:grid max-mobile:[&_tr]:py-8 max-mobile:[&_tr]:border-b max-mobile:[&_tr]:border-solid max-mobile:[&_tr]:border-border max-mobile:[&_th]:block max-mobile:[&_th]:border-0 max-mobile:[&_th]:min-w-0 max-mobile:[&_td]:block max-mobile:[&_td]:border-0 max-mobile:[&_td]:min-w-0 [&_tr:target]:outline-2 [&_tr:target]:outline-border-strong [&_tr:target]:outline-offset-[-2px]"><caption>{t("import.mappingCaption")}</caption><thead><tr><th>{t("import.column")}</th><th>{t("import.samples")}</th><th>{t("import.target")}</th></tr></thead><tbody>
 					{columns.map(({ header, column }) => {
 						const selected = draft.mapping.find((item) => item.column === column)?.target ?? "";
 						const target = fields.targets.find((item) => item.target === selected);
@@ -221,7 +220,7 @@ export function ImportWizard() {
 				</tbody></table></div>
 				{issues.map((issue) => <p key={issue} role="alert">{errorText(issue)}</p>)}
 				{!issues.length ? <p role="status">{t("import.mappingReady")}</p> : null}
-				<div className="sy-import__actions"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button variant="primary" disabled={issues.length > 0} loading={previewing} onClick={() => void runPreview()}>{t("import.runPreview")}</Button></div>
+				<div className="flex flex-wrap gap-8 mt-12"><Button onClick={() => update({ step: "upload" })}>{t("import.backUpload")}</Button><Button variant="primary" disabled={issues.length > 0} loading={previewing} onClick={() => void runPreview()}>{t("import.runPreview")}</Button></div>
 			</Panel> : <Panel title={t(draft.step === "policy" ? "import.step.policy" : "import.step.preview")}>
 				<PreviewReview draft={draft} busy={previewing} issues={issues} onChange={(options) => update({ options })} onPreview={() => void runPreview()} onBack={() => { cancelPreview(); setError(null); update({ step: "mapping" }); }} onPolicy={() => update({ step: "policy" })} onCommit={() => void importCommitController.submit(scope, gate === "ready", issues)} />
 			</Panel>}

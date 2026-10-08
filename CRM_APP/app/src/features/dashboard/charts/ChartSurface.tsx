@@ -4,7 +4,6 @@ import { Chart } from "react-chartjs-2";
 import { Bdi, Panel, EmptyState, ErrorState, ForbiddenState, SkeletonRows, useI18n, useTheme } from "../../../ui/index.ts";
 import { formatDate, formatDateTime } from "../../../ui/i18n/format.ts";
 import { chartData, chartOptions, formatChartValue, resolveChartTheme, scopeKey, type ChartModel, type ChartState } from "./model.ts";
-import "./charts.css";
 
 ChartJS.register(CategoryScale, LinearScale, BarController, BarElement, LineController, LineElement, PointElement, Legend, Tooltip);
 
@@ -35,18 +34,18 @@ function ReadyChart({ title, model, empty, emptyAction }: { title: string; model
 	const data = useMemo(() => theme ? chartData(model, theme) : null, [model, theme]);
 	const unsafe = data?.datasets.some((dataset) => dataset.data.includes(null)) ?? false;
 	return <>
-		{model.tz || model.asOf ? <p className="sy-chart__meta"><Bdi>{model.tz}</Bdi>{model.asOf ? <Bdi>{t("charts.asOf", { date: formatDateTime(model.asOf, locale, { timeZone: model.tz ?? "UTC" }) })}</Bdi> : null}</p> : null}
+		{model.tz || model.asOf ? <p className="sy-chart__meta flex flex-wrap gap-12 text-text-2"><Bdi>{model.tz}</Bdi>{model.asOf ? <Bdi>{t("charts.asOf", { date: formatDateTime(model.asOf, locale, { timeZone: model.tz ?? "UTC" }) })}</Bdi> : null}</p> : null}
 		{empty ? <div role="status"><EmptyState title={t(model.scope === "assigned" ? "charts.emptyMine" : "charts.empty")} action={emptyAction} /></div> : <>
-			<p className="sy-chart__status" role="status" aria-live="polite">{t("charts.ready")}</p>
-			<div className="sy-chart__canvas" dir={dir}>
+			<p className="sy-chart__status sr-only" role="status" aria-live="polite">{t("charts.ready")}</p>
+			<div className="sy-chart__canvas relative h-[20rem] min-w-0 max-mobile:h-[18rem]" dir={dir}>
 				{data && theme ? <ChartCanvas model={model} theme={theme} locale={locale} reducedMotion={reducedMotion} label={label} tableId={tableId} /> : <SkeletonRows count={3} />}
 			</div>
 		</>}
-		{unsafe ? <p className="sy-chart__meta">{t("charts.largeValues")}</p> : null}
-		{model.rows.length > 0 ? <details className="sy-chart__details" open={unsafe || undefined}>
+		{unsafe ? <p className="sy-chart__meta flex flex-wrap gap-12 text-text-2">{t("charts.largeValues")}</p> : null}
+		{model.rows.length > 0 ? <details className="sy-chart__details mt-12 [&_summary]:cursor-pointer [&_summary]:text-interactive [&_summary]:py-8 [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-focus [&_summary:focus-visible]:outline-offset-2" open={unsafe || undefined}>
 			<summary>{t("charts.showTable")}</summary>
 			{/* biome-ignore lint/a11y/noNoninteractiveTabindex: keyboard users must be able to scroll an overflowing data table */}
-			<section className="sy-chart__table" tabIndex={0} aria-label={t("charts.table")}>
+			<section className="sy-chart__table overflow-auto max-w-full focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2 [&_table]:border-collapse [&_table]:w-full [&_table]:text-text [&_table]:font-data [&_caption]:text-start [&_caption]:text-text-2 [&_caption]:py-8 [&_th]:text-start [&_th]:p-8 [&_th]:border-b [&_th]:border-solid [&_th]:border-border [&_td]:text-start [&_td]:p-8 [&_td]:border-b [&_td]:border-solid [&_td]:border-border [&_thead]:bg-surface-2" tabIndex={0} aria-label={t("charts.table")}>
 				<table id={tableId}>
 					<caption>{label}</caption>
 					<thead><tr><th scope="col">{model.rowLabel}</th>{model.columns.map((col) => <th key={col.key} scope="col"><Bdi>{col.label}</Bdi>{col.currency ? <> <Bdi>{col.currency}</Bdi></> : null}</th>)}</tr></thead>
@@ -65,7 +64,7 @@ export function ChartSurface({ title, state, onRetry, actions, summary, emptyAct
 	const id = useId();
 	const model = state.status === "ready" || state.status === "empty" ? state.model : null;
 	const heading = model?.scope === "assigned" ? t("charts.scopedTitle", { title, scope: t("charts.mine") }) : title;
-	return <Panel title={heading} actions={actions} className={`sy-chart${className ? ` ${className}` : ""}`} dir={dir} aria-label={heading}>
+	return <Panel title={heading} actions={actions} className={`sy-chart min-w-0${className ? ` ${className}` : ""}`} dir={dir} aria-label={heading}>
 		{state.status === "loading" ? <SkeletonRows count={3} label={t("charts.loading", { title })} /> : null}
 		{state.status === "forbidden" ? <div role="status"><ForbiddenState title={t("charts.forbidden")} /></div> : null}
 		{state.status === "error" ? <ErrorState title={t("charts.error")} requestId={state.requestId} onRetry={onRetry} /> : null}

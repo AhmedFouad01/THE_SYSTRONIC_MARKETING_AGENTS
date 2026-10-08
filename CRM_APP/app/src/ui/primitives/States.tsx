@@ -3,7 +3,6 @@ import { Icon, type IconName } from "../icons/index.ts";
 import { useI18n } from "../i18n/index.ts";
 import { Button } from "./Button.tsx";
 import { Spinner } from "./Spinner.tsx";
-import "./states.css";
 
 function Block({
 	icon,
@@ -21,10 +20,16 @@ function Block({
 	testId?: string;
 }) {
 	return (
-		<div className="sy-state" role={role} data-testid={testId}>
+		<div
+			className="sy-state grid justify-items-center gap-8 p-22 text-center text-text-2"
+			role={role}
+			data-testid={testId}
+		>
 			{icon ? <Icon name={icon} size={28} /> : null}
-			<p className="sy-state__title">{title}</p>
-			{hint ? <p className="sy-state__hint">{hint}</p> : null}
+			<p className="sy-state__title m-0 font-[600] text-text">{title}</p>
+			{hint ? (
+				<p className="sy-state__hint m-0 text-data text-text-3">{hint}</p>
+			) : null}
 			{children}
 		</div>
 	);
@@ -35,13 +40,13 @@ export function LoadingState({ label }: { label?: string }) {
 	const text = label ?? t("state.loading");
 	return (
 		<div
-			className="sy-state"
+			className="sy-state grid justify-items-center gap-8 p-22 text-center text-text-2"
 			role="status"
 			aria-busy="true"
 			data-testid="state-loading"
 		>
 			<Spinner size={24} />
-			<p className="sy-state__title">{text}</p>
+			<p className="sy-state__title m-0 font-[600] text-text">{text}</p>
 		</div>
 	);
 }
@@ -57,7 +62,7 @@ export function SkeletonRows({
 	const { t } = useI18n();
 	return (
 		<div
-			className="sy-skel"
+			className="sy-skel grid gap-8"
 			role="status"
 			aria-busy="true"
 			aria-label={label ?? t("state.loading")}
@@ -67,13 +72,13 @@ export function SkeletonRows({
 				<div
 					// biome-ignore lint/suspicious/noArrayIndexKey: fixed-length decorative placeholders
 					key={i}
-					className="sy-skel__row"
+					className="sy-skel__row flex items-center gap-16 min-h-[48px] px-12 border border-solid border-border rounded-8 bg-surface"
 					data-testid="skeleton-row"
 					aria-hidden="true"
 				>
-					<span className="sy-skel__bar sy-skel__bar--lg" />
-					<span className="sy-skel__bar sy-skel__bar--md" />
-					<span className="sy-skel__bar sy-skel__bar--sm" />
+					<span className="sy-skel__bar sy-skel__bar--lg block h-12 rounded-8 bg-divider motion-safe:animate-[sy-skel-pulse_1.2s_ease-in-out_infinite] flex-[3_1_0]" />
+					<span className="sy-skel__bar sy-skel__bar--md block h-12 rounded-8 bg-divider motion-safe:animate-[sy-skel-pulse_1.2s_ease-in-out_infinite] flex-[2_1_0]" />
+					<span className="sy-skel__bar sy-skel__bar--sm block h-12 rounded-8 bg-divider motion-safe:animate-[sy-skel-pulse_1.2s_ease-in-out_infinite] flex-[1_1_0]" />
 				</div>
 			))}
 		</div>
@@ -123,7 +128,7 @@ export function ErrorState({
 			testId="state-error"
 		>
 			{requestId ? (
-				<p className="sy-state__ref sy-ltr">
+				<p className="sy-state__ref sy-ltr m-0 text-data text-text-3">
 					{t("error.requestId", { id: requestId })}
 				</p>
 			) : null}

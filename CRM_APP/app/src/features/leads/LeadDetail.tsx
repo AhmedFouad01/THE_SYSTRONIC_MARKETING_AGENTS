@@ -110,7 +110,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 
 	return (
 		<form
-			className="sy-leads__form"
+			className="sy-leads__form flex flex-col gap-10"
 			onSubmit={(e) => {
 				e.preventDefault();
 				void save();
@@ -119,7 +119,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 		>
 			{error === "conflict" ? (
 				<div
-					className="sy-leads__banner"
+					className="sy-leads__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 					role="alert"
 					data-testid="lead-conflict"
 				>
@@ -226,7 +226,7 @@ export function LeadDetail({
 				onClose={onClose}
 				{...(preview.returnFocus ? { returnFocus: preview.returnFocus } : {})}
 			>
-				<p className="sy-record__muted" role="status" data-testid={`lead-detail-${state}`}>
+				<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid={`lead-detail-${state}`}>
 					{state === "loading" ? t("preview.loading") : t("preview.missing")}
 				</p>
 			</PreviewPanel>

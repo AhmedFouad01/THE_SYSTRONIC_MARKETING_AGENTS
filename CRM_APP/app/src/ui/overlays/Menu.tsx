@@ -1,10 +1,12 @@
-import { type KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+	MenuTrigger,
+	Menu as AriaMenu,
+	MenuItem as AriaMenuItem,
+	Popover,
+} from "react-aria-components";
 import { Icon, type IconName } from "../icons/index.ts";
 import { IconButton } from "../primitives/Button.tsx";
-import { rovingIndex, typeaheadIndex } from "./nav.ts";
-import { useOutsideDismiss } from "./useDismiss.ts";
-import "./overlays.css";
-
+import { choiceFocus } from "../primitives/choices.ts";
 export type MenuItem = {
 	id: string;
 	label: string;
@@ -24,116 +26,48 @@ export type MenuButtonProps = {
 	testId?: string;
 };
 
-/**
- * Menu button (COMPONENT_CONTRACTS Menu): focus enters the menu, Up/Down/Home/End (wrapping), typeahead,
- * Escape closes and returns focus to the trigger. The panel is anchored with logical properties, so it
- * opens toward the start edge in both LTR and RTL.
- */
-export function MenuButton({ label, items, icon = "dots", testId }: MenuButtonProps) {
-	const [open, setOpen] = useState(false);
-	const [entry, setEntry] = useState<"first" | "last">("first");
-	const id = useId();
-	const rootRef = useRef<HTMLDivElement>(null);
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
-	const typed = useRef({ text: "", at: 0 });
-
-	const enabled = useCallback(
-		() => itemRefs.current.filter((el): el is HTMLButtonElement => el !== null && !el.disabled),
-		[],
-	);
-	const close = useCallback((returnFocus: boolean) => {
-		setOpen(false);
-		if (returnFocus) triggerRef.current?.focus();
-	}, []);
-	const dismiss = useCallback(() => setOpen(false), []);
-	useOutsideDismiss(open, rootRef, dismiss);
-
-	useEffect(() => {
-		if (!open) return;
-		const list = enabled();
-		(entry === "last" ? list[list.length - 1] : list[0])?.focus();
-	}, [open, entry, enabled]);
-
-	const onTriggerKey = (e: KeyboardEvent) => {
-		if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-			e.preventDefault();
-			setEntry(e.key === "ArrowUp" ? "last" : "first");
-			setOpen(true);
-		}
-	};
-
-	const onMenuKey = (e: KeyboardEvent) => {
-		if (e.key === "Escape") {
-			e.preventDefault();
-			e.stopPropagation();
-			close(true);
-			return;
-		}
-		if (e.key === "Tab") {
-			setOpen(false); // focus continues naturally from the trigger side
-			return;
-		}
-		const list = enabled();
-		const current = list.indexOf(document.activeElement as HTMLButtonElement);
-		let next = rovingIndex(e.key, current, list.length);
-		if (next === null && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-			const now = Date.now();
-			typed.current = { text: now - typed.current.at < 700 ? typed.current.text + e.key : e.key, at: now };
-			next = typeaheadIndex(
-				typed.current.text,
-				list.map((el) => el.textContent ?? ""),
-				current,
-			);
-		}
-		if (next === null) return;
-		e.preventDefault();
-		list[next]?.focus();
-	};
-
+export function MenuButton({
+	label,
+	items,
+	icon = "dots",
+	testId,
+}: MenuButtonProps) {
 	return (
-		<div className="sy-menu-wrap" ref={rootRef}>
+		<MenuTrigger>
 			<IconButton
-				ref={triggerRef}
 				icon={icon}
 				aria-label={label}
 				aria-haspopup="menu"
-				aria-expanded={open}
-				aria-controls={open ? `${id}-menu` : undefined}
 				size="sm"
 				data-testid={testId}
-				onClick={() => {
-					setEntry("first");
-					setOpen((v) => !v);
-				}}
-				onKeyDown={onTriggerKey}
 			/>
-			{open ? (
-				<div id={`${id}-menu`} role="menu" aria-label={label} className="sy-menu" tabIndex={-1} onKeyDown={onMenuKey}>
-					{items.map((item, i) => (
-						<button
+			<Popover
+				placement="bottom end"
+				offset={6}
+				className="z-[1200] min-w-[190px] max-w-[calc(100vw_-_16px)] max-h-[var(--available-height)] overflow-y-auto p-6 border border-solid border-border rounded-10 bg-surface shadow-menu"
+			>
+				<AriaMenu
+					aria-label={label}
+					className="outline-none"
+					disabledKeys={items.filter((i) => i.disabled).map((i) => i.id)}
+				>
+					{items.map((item) => (
+						<AriaMenuItem
 							key={item.id}
-							ref={(el) => {
-								itemRefs.current[i] = el;
-							}}
-							type="button"
-							role="menuitem"
-							tabIndex={-1}
-							disabled={item.disabled}
-							lang={item.lang}
+							id={item.id}
+							textValue={item.label}
+							onAction={item.onSelect}
+							isDisabled={item.disabled}
 							data-testid={item.testId}
-							className="sy-menu__item"
-							onClick={() => {
-								close(true); // focus first: a dialog opened by onSelect must capture the trigger as its opener
-								item.onSelect();
-							}}
+							lang={item.lang}
+							className={`flex items-center gap-8 w-full min-h-[34px] px-10 rounded-8 bg-transparent text-text text-data text-start cursor-pointer data-[focused]:bg-hover data-[disabled]:text-text-disabled data-[disabled]:cursor-not-allowed ${choiceFocus}`}
 						>
 							{item.icon ? <Icon name={item.icon} size={16} /> : null}
-							<span>{item.label}</span>
-						</button>
+							<bdi>{item.label}</bdi>
+						</AriaMenuItem>
 					))}
-				</div>
-			) : null}
-		</div>
+				</AriaMenu>
+			</Popover>
+		</MenuTrigger>
 	);
 }

@@ -1,10 +1,20 @@
-import { type KeyboardEvent, type ReactNode, type RefObject, useEffect, useId, useRef } from "react";
+import {
+	type ReactNode,
+	type RefObject,
+	useEffect,
+	useId,
+	useRef,
+} from "react";
+import {
+	ModalOverlay,
+	Modal,
+	Dialog as AriaDialog,
+} from "react-aria-components";
 import { useI18n } from "../i18n/index.ts";
 import { Icon } from "../icons/index.ts";
 import { Button } from "../primitives/Button.tsx";
-import { focusablesIn, lockScroll, trapIndex } from "./nav.ts";
+import { focusablesIn } from "./nav.ts";
 import "./overlays.css";
-
 export type DialogConfirm = {
 	label: string;
 	onConfirm: () => void;
@@ -33,126 +43,116 @@ export type DialogProps = {
 	dock?: "inline-end" | "right";
 };
 
-/**
- * Modal dialog (COMPONENT_CONTRACTS Dialog): aria-modal, labelled, initial focus, Tab trap, Esc closes,
- * focus returns to the opener, body scroll locked while open. Rendered inline (position: fixed), no portal.
- */
-export function Dialog({
-	open,
+/** RAC owns modal containment, nested dismissal, scroll lock and default focus return. */
+export function Dialog(props: DialogProps) {
+	if (!props.open) return null;
+	const placement = props.placement ?? "center";
+	const dock = props.dock ?? "inline-end";
+	return (
+		<ModalOverlay
+			isOpen
+			onOpenChange={(open) => {
+				if (!open) props.onClose();
+			}}
+			isDismissable={false}
+			className="sy-scrim"
+			data-placement={placement}
+			data-dock={placement === "side" ? dock : undefined}
+		>
+			<Modal
+				className={`w-full max-w-full max-h-full outline-none ${placement === "center" ? "flex justify-center" : ""} ${placement === "side" ? "h-full" : ""}`}
+			>
+				<DialogContent {...props} />
+			</Modal>
+		</ModalOverlay>
+	);
+}
+function DialogContent({
 	onClose,
 	title,
 	description,
 	children,
 	confirm,
 	footer,
-	returnFocusRef,
 	initialFocusRef,
+	returnFocusRef,
 	testId,
 	placement = "center",
-	dock = "inline-end",
 }: DialogProps) {
 	const { t } = useI18n();
 	const id = useId();
-	const rootRef = useRef<HTMLDivElement>(null);
+	const rootRef = useRef<HTMLElement>(null);
 	const cancelRef = useRef<HTMLButtonElement>(null);
-	const onCloseRef = useRef(onClose);
 	useEffect(() => {
-		onCloseRef.current = onClose;
-	});
-
-	useEffect(() => {
-		if (!open) return;
-		const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-		const unlock = lockScroll();
-		const root = rootRef.current;
 		const target =
 			initialFocusRef?.current ??
 			cancelRef.current ??
-			root?.querySelector<HTMLElement>("[data-autofocus]") ??
-			(root ? focusablesIn(root)[0] : null) ??
-			root;
+			rootRef.current?.querySelector<HTMLElement>("[data-autofocus]") ??
+			(rootRef.current ? focusablesIn(rootRef.current)[0] : null);
 		target?.focus();
 		return () => {
-			unlock();
-			const back = returnFocusRef?.current ?? opener;
-			if (back?.isConnected) back.focus();
+			if (returnFocusRef)
+				requestAnimationFrame(() => returnFocusRef.current?.focus());
 		};
-	}, [open, initialFocusRef, returnFocusRef]);
-
-	if (!open) return null;
-
-	const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-		if (e.key === "Escape") {
-			e.preventDefault();
-			e.stopPropagation();
-			onCloseRef.current();
-			return;
-		}
-		// A nested dialog (e.g. add-task inside a record sheet) already handled this Tab: do not move focus twice.
-		if (e.key !== "Tab" || !rootRef.current || e.defaultPrevented) return;
-		const items = focusablesIn(rootRef.current);
-		const next = trapIndex(e.shiftKey, items.indexOf(document.activeElement as HTMLElement), items.length);
-		if (next === null) {
-			if (items.length === 0) e.preventDefault(); // nothing focusable: keep focus on the dialog itself
-			return;
-		}
-		e.preventDefault();
-		items[next]?.focus();
-	};
-
+	}, [initialFocusRef, returnFocusRef]);
 	return (
-		<div className="sy-scrim" role="presentation" data-placement={placement} data-dock={placement === "side" ? dock : undefined}>
-			<div
-				ref={rootRef}
-				role="dialog"
-				aria-modal="true"
-				aria-labelledby={`${id}-title`}
-				aria-describedby={description ? `${id}-desc` : undefined}
-				tabIndex={-1}
-				className="sy-dialog"
-				data-variant={confirm ? "confirm" : "default"}
-				data-testid={testId}
-				onKeyDown={onKeyDown}
-			>
-				{placement === "side" ? (
-					<div className="sy-dialog__sidehead">
-						<button type="button" className="sy-dialog__back" onClick={onClose} data-testid="sheet-back">
-							<Icon name="chevronRight" size={18} mirrorInRtl={false} className="sy-back-icon" />
-							{t("record.back")}
-						</button>
-						<h2 id={`${id}-title`} className="sy-dialog__sidetitle">
-							{title}
-						</h2>
-					</div>
-				) : (
-					<h2 id={`${id}-title`} className="sy-dialog__title">
+		<AriaDialog
+			ref={rootRef}
+			render={(domProps) => <section {...domProps} role="dialog" aria-modal="true" />}
+			aria-labelledby={`${id}-title`}
+			aria-describedby={description ? `${id}-desc` : undefined}
+			className="sy-dialog outline-none"
+			data-variant={confirm ? "confirm" : "default"}
+			data-testid={testId}
+		>
+			{placement === "side" ? (
+				<div className="sy-dialog__sidehead">
+					<button
+						type="button"
+						className="sy-dialog__back"
+						onClick={onClose}
+						data-testid="sheet-back"
+					>
+						<Icon
+							name="chevronRight"
+							size={18}
+							mirrorInRtl={false}
+							className="sy-back-icon"
+						/>
+						{t("record.back")}
+					</button>
+					<h2 id={`${id}-title`} className="sy-dialog__sidetitle">
 						{title}
 					</h2>
-				)}
-				{description ? (
-					<p id={`${id}-desc`} className="sy-dialog__desc">
-						{description}
-					</p>
-				) : null}
-				{children ? <div className="sy-dialog__body">{children}</div> : null}
-				{confirm ? (
-					<div className="sy-dialog__footer">
-						<Button ref={cancelRef} onClick={onClose} data-testid="dialog-cancel">
-							{t("common.cancel")}
-						</Button>
-						<Button
-							variant={confirm.tone === "primary" ? "primary" : "danger"}
-							loading={confirm.loading ?? false}
-							onClick={confirm.onConfirm}
-							data-testid="dialog-confirm"
-						>
-							{confirm.label}
-						</Button>
-					</div>
-				) : footer ? (
-					<div className="sy-dialog__footer">{footer}</div>
-				) : null}
-			</div>
-		</div>
+				</div>
+			) : (
+				<h2 id={`${id}-title`} className="sy-dialog__title">
+					{title}
+				</h2>
+			)}
+			{description ? (
+				<p id={`${id}-desc`} className="sy-dialog__desc">
+					{description}
+				</p>
+			) : null}
+			{children ? <div className="sy-dialog__body">{children}</div> : null}
+			{confirm ? (
+				<div className="sy-dialog__footer">
+					<Button ref={cancelRef} onClick={onClose} data-testid="dialog-cancel">
+						{t("common.cancel")}
+					</Button>
+					<Button
+						variant={confirm.tone === "primary" ? "primary" : "danger"}
+						loading={confirm.loading ?? false}
+						onClick={confirm.onConfirm}
+						data-testid="dialog-confirm"
+					>
+						{confirm.label}
+					</Button>
+				</div>
+			) : footer ? (
+				<div className="sy-dialog__footer">{footer}</div>
+			) : null}
+		</AriaDialog>
 	);
 }

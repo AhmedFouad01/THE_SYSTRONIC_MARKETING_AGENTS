@@ -41,7 +41,7 @@ import { carryExpand } from "../expand.ts";
 import { toRoute } from "../../router.ts";
 import { cappedCount, formatCapped } from "../capped.ts";
 import { KpiCard } from "../reporting/KpiCard.tsx";
-import "../reporting/reporting.css";
+import "../reporting/reporting-kit.css";
 import { LeadDetail } from "./LeadDetail.tsx";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
@@ -66,7 +66,6 @@ import { bulkMessage, GENERIC_BULK_KEYS, runBulkOps, TASK_BULK_KEYS } from "../b
 import { buildCreateBody as buildTaskBody, type NewTaskInput } from "../tasks/model.ts";
 import { createTask } from "../tasks/api.ts";
 import { BulkTaskDialog } from "./BulkTaskDialog.tsx";
-import "./leads.css";
 
 const VIEW_LABEL = {
 	all: "leads.view.all",
@@ -560,14 +559,14 @@ export function LeadsView() {
 	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
 
 	return (
-		<div className="sy-leads" data-testid="leads-view">
+		<div className="sy-leads flex flex-col gap-12 min-w-0" data-testid="leads-view">
 			<PageHeader
 				title={t("nav.leads")}
 				subtitle={t("leads.subtitle")}
 				kpis={
 					leads.status === "error" ? undefined : (
 						<section
-							className="sy-leads__kpis"
+							className="sy-leads__kpis grid grid-cols-3 gap-12 min-w-0 max-mobile:gap-8 max-mobile:[&_.sy-kpi]:min-h-[76px]! max-mobile:[&_.sy-kpi]:p-8! max-mobile:[&_.sy-kpi__label]:text-[11px]! max-mobile:[&_.sy-kpi__sub]:text-[11px]! max-mobile:[&_.sy-kpi__value]:text-[20px]!"
 							aria-label={t("leads.kpis")}
 							data-testid="leads-kpis"
 						>
@@ -603,16 +602,16 @@ export function LeadsView() {
 				tabs={BUILT_IN_VIEWS.map((v) => ({ id: v, label: t(VIEW_LABEL[v]) }))}
 			/>
 			{ownersFailed ? (
-				<p className="sy-leads__muted" role="status">
+				<p className="sy-leads__muted m-0 mt-4 text-text-3" role="status">
 					{t("leads.ownersFailed")}
 				</p>
 			) : null}
-			<div className="sy-leads__body">
-				<div className="sy-leads__main">
+			<div className="sy-leads__body min-w-0">
+				<div className="sy-leads__main min-w-0 flex flex-col gap-8">
 					{bulk ? (
 						<p
 							role="status"
-							className="sy-leads__muted"
+							className="sy-leads__muted m-0 mt-4 text-text-3"
 							data-testid="bulk-progress"
 						>
 							{t("leads.bulk.progress", {

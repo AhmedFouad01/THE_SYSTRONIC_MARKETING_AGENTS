@@ -4,7 +4,6 @@ import type { PreviewGuard } from "../overlays/previewGuard.tsx";
 import { PreviewPanel, type PreviewNav } from "../overlays/PreviewPanel.tsx";
 import { Button } from "./Button.tsx";
 import { RecordDetails, type RecordDetailsRow } from "./RecordDetails.tsx";
-import "./record-panel.css";
 
 /** Lets the sticky edit footer offer Cancel (leave edit mode). */
 const RecordCancelContext = createContext<{ cancel: () => void } | null>(null);
@@ -97,7 +96,7 @@ function RecordBody(p: RecordPanelProps) {
 		>
 			{/* biome-ignore lint/a11y/noStaticElementInteractions: Escape leaves edit mode; popovers (Select) consume their own Escape first */}
 			<div
-				className="sy-record"
+				className="sy-record flex flex-col gap-12 min-w-0"
 				data-editing={editing || undefined}
 				onKeyDown={(e) => {
 					if (e.key !== "Escape" || !editing || !canEdit || e.defaultPrevented)
@@ -109,9 +108,9 @@ function RecordBody(p: RecordPanelProps) {
 					else setEditing(false);
 				}}
 			>
-				<div className="sy-record__head">
-					<div className="sy-record__titles">
-						<p className="sy-record__title" data-testid={p.titleTestId}>
+				<div className="sy-record__head flex items-start justify-between gap-10">
+					<div className="sy-record__titles min-w-0">
+						<p className="sy-record__title m-0 text-[18px] font-[700] leading-[1.3] text-text [overflow-wrap:anywhere]" data-testid={p.titleTestId}>
 							{typeof p.title === "string" ? (
 								<BidiText wrap>{p.title}</BidiText>
 							) : (
@@ -119,7 +118,7 @@ function RecordBody(p: RecordPanelProps) {
 							)}
 						</p>
 						{p.subtitle ? (
-							<p className="sy-record__subtitle">
+							<p className="sy-record__subtitle m-0 mt-4 text-data text-text-3">
 								{typeof p.subtitle === "string" ? (
 									<BidiText title={p.subtitle}>{p.subtitle}</BidiText>
 								) : (
@@ -130,7 +129,7 @@ function RecordBody(p: RecordPanelProps) {
 					</div>
 					{p.chip ? <span data-testid={p.chipTestId}>{p.chip}</span> : null}
 				</div>
-				<div className="sy-record__actions">
+				<div className="sy-record__actions flex flex-wrap gap-8">
 					{p.actions}
 					{canEdit && !editing ? (
 						<Button
@@ -146,16 +145,16 @@ function RecordBody(p: RecordPanelProps) {
 				{p.persistent?.(editing)}
 				{editing && canEdit ? (
 					p.editor ? (
-						<div className="sy-record__edit" data-testid="record-editor">
+						<div className="sy-record__edit flex flex-col gap-10 [&_form]:flex [&_form]:flex-col [&_form]:gap-10" data-testid="record-editor">
 							{p.editor(() => setEditing(false))}
 						</div>
 					) : null
 				) : (
 					<>
 						{p.facts && p.facts.length > 0 ? (
-							<dl className="sy-record__facts" data-testid="record-facts">
+							<dl className="sy-record__facts grid grid-cols-2 gap-y-12 gap-x-16 m-0" data-testid="record-facts">
 								{p.facts.map((f) => (
-									<div key={f.label} className="sy-record__fact">
+									<div key={f.label} className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 										<dt>{f.label}</dt>
 										<dd data-testid={f.testId}>{f.value}</dd>
 									</div>
@@ -202,7 +201,7 @@ export function RecordEditFooter({
 	const cancel = onCancel ?? ctx?.cancel;
 	const noChanges = !dirty && !saving;
 	return (
-		<div className="sy-record__footer" data-testid="record-footer">
+		<div className="sy-record__footer sticky bottom-0 z-[2] flex flex-wrap justify-end gap-8 mx-[calc(-1*var(--sy-space-16))] mb-[calc(-1*var(--sy-space-16))] py-10 px-16 border-t border-solid border-border bg-surface" data-testid="record-footer">
 			<Button
 				type="submit"
 				variant="primary"
