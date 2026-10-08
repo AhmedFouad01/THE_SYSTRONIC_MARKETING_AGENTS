@@ -1,3 +1,4 @@
+import { Input as AriaInput, TextArea as AriaTextArea } from "react-aria-components";
 import {
 	type FormEvent,
 	type InputHTMLAttributes,
@@ -107,7 +108,7 @@ export function Input({
 			className={className}
 		>
 			{(p) => (
-				<input
+				<AriaInput
 					{...rest}
 					{...p}
 					dir={bidi.dir}
@@ -143,7 +144,7 @@ export function Textarea({
 			className={className}
 		>
 			{(p) => (
-				<textarea
+				<AriaTextArea
 					{...rest}
 					{...p}
 					dir={bidi.dir}

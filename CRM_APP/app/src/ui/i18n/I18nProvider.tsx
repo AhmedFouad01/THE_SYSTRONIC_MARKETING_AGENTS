@@ -1,3 +1,4 @@
+import { I18nProvider as AriaI18nProvider } from "react-aria-components";
 import {
 	createContext,
 	Fragment,
@@ -110,7 +111,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 		};
 	}, [locale, dir, setLocale, toggleLocale]);
 
-	return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+	return <Ctx.Provider value={value}><AriaI18nProvider locale={locale === "ar" ? "ar-EG" : "en"}>{children}</AriaI18nProvider></Ctx.Provider>;
 }
 
 export function useI18n(): I18nCtx {
