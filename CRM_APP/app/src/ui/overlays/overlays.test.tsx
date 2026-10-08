@@ -4,7 +4,12 @@ import { I18nProvider } from "../i18n/index.ts";
 import { Dialog } from "./Dialog.tsx";
 import { MenuButton } from "./Menu.tsx";
 import { rovingIndex, trapIndex, typeaheadIndex } from "./nav.ts";
-import { type ToastItem, ToastProvider, toastReducer, toastTimeoutMs } from "./Toast.tsx";
+import {
+	type ToastItem,
+	ToastProvider,
+	toastReducer,
+	toastTimeoutMs,
+} from "./Toast.tsx";
 
 describe("nav models", () => {
 	it("rovingIndex: Up/Down wrap, Home/End, entry from nothing, no-wrap clamps, other keys ignored", () => {
@@ -40,34 +45,44 @@ describe("nav models", () => {
 });
 
 describe("toast model", () => {
-	const t = (id: number, tone: ToastItem["tone"] = "info"): ToastItem => ({ id, tone, message: `m${id}` });
+	const t = (id: number, tone: ToastItem["tone"] = "info"): ToastItem => ({
+		id,
+		tone,
+		message: `m${id}`,
+	});
 	it("is bounded (oldest dropped) and dismisses by id", () => {
 		let s: readonly ToastItem[] = [];
-		for (let i = 1; i <= 6; i++) s = toastReducer(s, { type: "push", toast: t(i) });
+		for (let i = 1; i <= 6; i++)
+			s = toastReducer(s, { type: "push", toast: t(i) });
 		expect(s.map((x) => x.id)).toEqual([3, 4, 5, 6]);
-		expect(toastReducer(s, { type: "dismiss", id: 4 }).map((x) => x.id)).toEqual([3, 5, 6]);
+		expect(
+			toastReducer(s, { type: "dismiss", id: 4 }).map((x) => x.id),
+		).toEqual([3, 5, 6]);
 	});
 	it("errors persist until dismissed; others auto-dismiss", () => {
 		expect(toastTimeoutMs("error")).toBeNull();
 		expect(toastTimeoutMs("success")).toBeGreaterThan(0);
-		expect(toastTimeoutMs("warning")).toBeGreaterThanOrEqual(toastTimeoutMs("info") ?? 0);
+		expect(toastTimeoutMs("warning")).toBeGreaterThanOrEqual(
+			toastTimeoutMs("info") ?? 0,
+		);
 	});
 });
 
 describe("overlay markup", () => {
-	it("Dialog: role=dialog, aria-modal, labelled and described; nothing when closed", () => {
+	it("Dialog: portals mount only in the browser; nothing when closed", () => {
 		const html = renderToString(
 			<I18nProvider>
-				<Dialog open onClose={() => undefined} title="Delete?" description="This cannot be undone." confirm={{ label: "Delete", onConfirm: () => undefined }} />
+				<Dialog
+					open
+					onClose={() => undefined}
+					title="Delete?"
+					description="This cannot be undone."
+					confirm={{ label: "Delete", onConfirm: () => undefined }}
+				/>
 			</I18nProvider>,
 		);
-		expect(html).toContain('role="dialog"');
-		expect(html).toContain('aria-modal="true"');
-		expect(html).toMatch(/aria-labelledby="([^"]+)-title"/);
-		expect(html).toMatch(/aria-describedby="([^"]+)-desc"/);
-		expect(html).toContain('data-variant="confirm"');
-		expect(html).toContain("Delete?");
-		expect(html).toContain('data-testid="dialog-cancel"');
+		// RAC modal portals have no server DOM. Role/name/trap/return are checked in the bounded browser fixture.
+		expect(html).toBe("");
 		const closed = renderToString(
 			<I18nProvider>
 				<Dialog open={false} onClose={() => undefined} title="x" />
@@ -78,7 +93,10 @@ describe("overlay markup", () => {
 	it("MenuButton trigger exposes haspopup/expanded and renders no menu while closed", () => {
 		const html = renderToString(
 			<I18nProvider>
-				<MenuButton label="Actions" items={[{ id: "a", label: "A", onSelect: () => undefined }]} />
+				<MenuButton
+					label="Actions"
+					items={[{ id: "a", label: "A", onSelect: () => undefined }]}
+				/>
 			</I18nProvider>,
 		);
 		expect(html).toContain('aria-haspopup="menu"');

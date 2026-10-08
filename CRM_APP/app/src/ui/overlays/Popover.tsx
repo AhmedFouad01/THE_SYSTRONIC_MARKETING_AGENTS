@@ -1,10 +1,11 @@
-import { type FocusEvent, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import {
+	DialogTrigger,
+	Popover as AriaPopover,
+	Dialog as AriaDialog,
+} from "react-aria-components";
 import type { IconName } from "../icons/index.ts";
 import { Button } from "../primitives/Button.tsx";
-import { focusablesIn } from "./nav.ts";
-import { useOutsideDismiss } from "./useDismiss.ts";
-import "./overlays.css";
-
 export type PopoverProps = {
 	/** Visible trigger text. */
 	triggerLabel: ReactNode;
@@ -16,61 +17,35 @@ export type PopoverProps = {
 	testId?: string;
 };
 
-/** Non-modal popover panel (e.g. column chooser): focus enters it, Escape/outside/focus-leave closes, focus returns to the trigger on Escape. */
-export function Popover({ triggerLabel, label, icon, children, testId }: PopoverProps) {
-	const [open, setOpen] = useState(false);
-	const id = useId();
-	const rootRef = useRef<HTMLDivElement>(null);
-	const panelRef = useRef<HTMLDivElement>(null);
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const dismiss = useCallback(() => setOpen(false), []);
-	useOutsideDismiss(open, rootRef, dismiss);
-
-	useEffect(() => {
-		if (open && panelRef.current) (focusablesIn(panelRef.current)[0] ?? panelRef.current).focus();
-	}, [open]);
-
-	const onKeyDown = (e: KeyboardEvent) => {
-		if (e.key !== "Escape") return;
-		e.preventDefault();
-		e.stopPropagation();
-		setOpen(false);
-		triggerRef.current?.focus();
-	};
-	const onBlur = (e: FocusEvent) => {
-		const next = e.relatedTarget;
-		if (next instanceof Node && rootRef.current && !rootRef.current.contains(next)) setOpen(false);
-	};
-
+export function Popover({
+	triggerLabel,
+	label,
+	icon,
+	children,
+	testId,
+}: PopoverProps) {
 	return (
-		<div className="sy-menu-wrap" ref={rootRef}>
+		<DialogTrigger>
 			<Button
-				ref={triggerRef}
 				size="sm"
 				{...(icon ? { icon } : {})}
 				aria-label={label}
-				aria-haspopup="dialog"
-				aria-expanded={open}
-				aria-controls={open ? `${id}-panel` : undefined}
 				data-testid={testId}
-				onClick={() => setOpen((v) => !v)}
 			>
 				{triggerLabel}
 			</Button>
-			{open ? (
-				<div
-					id={`${id}-panel`}
-					ref={panelRef}
-					role="dialog"
-					aria-label={label}
-					tabIndex={-1}
-					className="sy-popover"
-					onKeyDown={onKeyDown}
-					onBlur={onBlur}
-				>
-					{typeof children === "function" ? children(dismiss) : children}
-				</div>
-			) : null}
-		</div>
+			<AriaPopover
+				isNonModal
+				placement="bottom end"
+				offset={6}
+				className="z-[1200] min-w-[190px] max-w-[calc(100vw_-_16px)] max-h-[var(--available-height)] overflow-auto p-6 border border-solid border-border rounded-10 bg-surface shadow-menu"
+			>
+				<AriaDialog aria-label={label} className="outline-none">
+					{({ close }) =>
+						typeof children === "function" ? children(close) : children
+					}
+				</AriaDialog>
+			</AriaPopover>
+		</DialogTrigger>
 	);
 }

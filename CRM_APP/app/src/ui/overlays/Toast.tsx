@@ -1,17 +1,33 @@
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useReducer,
+	useRef,
+} from "react";
 import { useI18n } from "../i18n/index.ts";
 import { Icon, type IconName } from "../icons/index.ts";
+import { IconButton } from "../primitives/Button.tsx";
 import "./overlays.css";
 
 export type ToastTone = "info" | "success" | "warning" | "error";
 export type ToastItem = { id: number; tone: ToastTone; message: string };
-export type ToastAction = { type: "push"; toast: ToastItem } | { type: "dismiss"; id: number };
+export type ToastAction =
+	| { type: "push"; toast: ToastItem }
+	| { type: "dismiss"; id: number };
 
 export const MAX_TOASTS = 4;
 
 /** Pure list model: newest last, bounded (oldest dropped). */
-export function toastReducer(state: readonly ToastItem[], action: ToastAction): readonly ToastItem[] {
-	if (action.type === "push") return [...state, action.toast].slice(-MAX_TOASTS);
+export function toastReducer(
+	state: readonly ToastItem[],
+	action: ToastAction,
+): readonly ToastItem[] {
+	if (action.type === "push")
+		return [...state, action.toast].slice(-MAX_TOASTS);
 	return state.filter((t) => t.id !== action.id);
 }
 
@@ -20,12 +36,26 @@ export function toastTimeoutMs(tone: ToastTone): number | null {
 	return tone === "error" ? null : tone === "warning" ? 8000 : 5000;
 }
 
-const ICON: Record<ToastTone, IconName> = { info: "info", success: "success", warning: "warning", error: "critical" };
+const ICON: Record<ToastTone, IconName> = {
+	info: "info",
+	success: "success",
+	warning: "warning",
+	error: "critical",
+};
 
-type ToastApi = { notify: (message: string, tone?: ToastTone) => void; dismiss: (id: number) => void };
+type ToastApi = {
+	notify: (message: string, tone?: ToastTone) => void;
+	dismiss: (id: number) => void;
+};
 const Ctx = createContext<ToastApi | null>(null);
 
-function ToastView({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: number) => void }) {
+function ToastView({
+	toast,
+	onDismiss,
+}: {
+	toast: ToastItem;
+	onDismiss: (id: number) => void;
+}) {
 	const { t } = useI18n();
 	useEffect(() => {
 		const ms = toastTimeoutMs(toast.tone);
@@ -39,9 +69,13 @@ function ToastView({ toast, onDismiss }: { toast: ToastItem; onDismiss: (id: num
 			<span className="sy-toast__msg">
 				<bdi dir="auto">{toast.message}</bdi>
 			</span>
-			<button type="button" className="sy-toast__close" aria-label={t("common.close")} onClick={() => onDismiss(toast.id)}>
-				<Icon name="close" size={14} />
-			</button>
+			<IconButton
+				size="sm"
+				icon="close"
+				className="sy-toast__close"
+				aria-label={t("common.close")}
+				onClick={() => onDismiss(toast.id)}
+			/>
 		</div>
 	);
 }
@@ -55,20 +89,33 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 		seq.current += 1;
 		dispatch({ type: "push", toast: { id: seq.current, tone, message } });
 	}, []);
-	const dismiss = useCallback((id: number) => dispatch({ type: "dismiss", id }), []);
+	const dismiss = useCallback(
+		(id: number) => dispatch({ type: "dismiss", id }),
+		[],
+	);
 	const api = useMemo(() => ({ notify, dismiss }), [notify, dismiss]);
 	return (
 		<Ctx.Provider value={api}>
 			{children}
 			<section className="sy-toasts" aria-label={t("toast.region")}>
-				<div role="status" aria-live="polite" aria-atomic="false" className="sy-toasts__region">
+				<div
+					role="status"
+					aria-live="polite"
+					aria-atomic="false"
+					className="sy-toasts__region"
+				>
 					{toasts
 						.filter((x) => x.tone !== "error")
 						.map((x) => (
 							<ToastView key={x.id} toast={x} onDismiss={dismiss} />
 						))}
 				</div>
-				<div role="alert" aria-live="assertive" aria-atomic="false" className="sy-toasts__region">
+				<div
+					role="alert"
+					aria-live="assertive"
+					aria-atomic="false"
+					className="sy-toasts__region"
+				>
 					{toasts
 						.filter((x) => x.tone === "error")
 						.map((x) => (
