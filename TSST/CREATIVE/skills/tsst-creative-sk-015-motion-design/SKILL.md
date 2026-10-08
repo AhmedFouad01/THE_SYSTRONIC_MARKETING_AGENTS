@@ -39,6 +39,7 @@ Adobe After Effects official keyframe/animation principles + professional motion
 - `ref/easing.md` — master easing table (CSS/GSAP/Motion), spot-test errors, Elastic/Bounce, springs.
 - `ref/web.md` — web motion libraries, licences (GSAP, Remotion), performance, Arabic text animation rule.
 - `ref/after-effects.md` — expressions, JS vs Legacy engine, AE-from-bezier method, plugins, Lottie survival.
+- `ref/code-motion.md` — code-drawn motion video (one HTML, GSAP/SVG/Canvas): when to use, agent prompt template, Playwright+ffmpeg capture (`TSST/CREATIVE/tools/code-motion/`), QA, failures, example links.
 
 ## Practical evaluation
 
