@@ -4,6 +4,8 @@ Provider-neutral. Runtime agent files (`.claude/agents/tsst-*.md`, `.codex/agent
 are GENERATED from `TSST/context/roster.yaml` + this text by `TSST/context/gen_runtime_agents.py`.
 Edit here or in roster.yaml, then regenerate. Never hand-edit the generated files.
 
+Lead-only (outside the numbered items, so not in generated agent files): any `skill_friction` other than `none` is appended to `TSST/core/friction-log.md`; run `python TSST/context/friction_check.py` to surface repeats as lesson candidates (Lead/user still approve per `lessons.md` promotion_gate).
+
 1. Your brief carries the Lead's Skill Plan: `TEAM`, `AGENT`, `SKILLS`, `TIER`, `ACCEPTANCE`.
    **Open every listed `SKILL.md` before working** — locate it with
    `python TSST/skills/build_index.py --id <ID>`. "To save time" is never a reason to skip one.
