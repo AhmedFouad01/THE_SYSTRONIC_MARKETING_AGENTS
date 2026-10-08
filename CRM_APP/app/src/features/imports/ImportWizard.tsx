@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { isApiError, useSession } from "../../api/index.ts";
+import { workspaceName } from "../../ui/shell/workspaceName.ts";
 import { workspaceKey } from "../../api/workspaces.ts";
 import { navigate } from "../../router.ts";
 import { Bdi, type MessageKey, useI18n } from "../../ui/i18n/index.ts";
-import { Button, Input, LoadingState, PageHeader, Panel, Select } from "../../ui/primitives/index.ts";
+import { Button, Identity, Input, LoadingState, PageHeader, Panel, Select } from "../../ui/primitives/index.ts";
 import { fetchAssignees } from "../leads/api.ts";
 import type { Assignee } from "../leads/model.ts";
 import { bytesToBase64, fetchImportFields, inspectUpload, previewImport } from "./api.ts";
@@ -175,8 +176,8 @@ export function ImportWizard() {
 		<div className="grid gap-16 min-w-0" data-testid="import-wizard">
 			<PageHeader title={t("nav.import")} subtitle={tx("import.progress", { step: formatCount(draft.step === "upload" ? 1 : draft.step === "mapping" ? 2 : draft.step === "preview" ? 3 : draft.step === "policy" ? 4 : 5), total: formatCount(5) })} />
 			{draft.step !== "result" ? <Button onClick={() => update({ step: "result" })}>{t("import.history")}</Button> : null}
-			<p className="sy-import__workspace">{t("workspace.label")}: <Bdi>{workspace.tenantId}</Bdi></p>
-			{error ? <div ref={errorSummary} tabIndex={-1} className="border border-solid border-danger-icon bg-danger-field-bg text-danger-fg rounded-8 p-12" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Bdi>{requestId}</Bdi></details> : null}</div> : null}
+			<p className="sy-import__workspace">{t("workspace.label")}: <Identity value={workspace.tenantId} label={workspaceName(workspace, t("nav.workspace"))} /></p>
+			{error ? <div ref={errorSummary} tabIndex={-1} className="border border-solid border-danger-icon bg-danger-field-bg text-danger-fg rounded-8 p-12" role="alert"><p>{errorText(error)}</p>{apiFailure?.safeMessage ? <p><Bdi>{apiFailure.safeMessage}</Bdi></p> : null}{apiFailure ? <p>{t(apiFailure.retryable ? "import.retryable" : "import.correctBeforeRetry")}</p> : null}{apiFailure?.issues.map((issue) => <p key={`${issue.field}:${issue.code}`}><Bdi>{issue.field}</Bdi>: {errorText(issue.code)}</p>)}{requestId ? <details><summary>{t("import.errorDetails")}</summary><Identity value={requestId} label={t("import.errorDetails")} /></details> : null}</div> : null}
 			{draft.step === "result" ? <Panel title={t("import.step.result")}><ImportResults commit={draft.commit} onRetry={() => void importCommitController.submit(scope, gate === "ready", issues)} onNew={() => resetInspection({ ...newDraft() })} onEdit={() => update({ step: "mapping" })} onDenied={deny} /></Panel> : draft.step === "upload" ? <Panel title={t("import.step.upload")}>
 				<div className="grid gap-12 min-w-0">
 					<Select label={t("import.object")} value={draft.object} disabled={processing} onChange={(event) => {

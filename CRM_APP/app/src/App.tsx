@@ -6,6 +6,7 @@ import { ContactsView, DashboardView, DealsView, LeadsView, PipelineView, Proper
 import { useRoute } from "./router.ts";
 import { EmptyState, I18nProvider, roleLabel, ThemeProvider, ToastProvider, useI18n } from "./ui/index.ts";
 import { ImportWizard } from "./features/imports/ImportWizard.tsx";
+import { workspaceName } from "./ui/shell/workspaceName.ts";
 import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
@@ -42,10 +43,10 @@ function Routed() {
 		if (previousScope.current && previousScope.current !== scope) {
 			const target = document.querySelector<HTMLElement>('[data-testid="workspace-switch"]') ?? document.getElementById("sy-main");
 			target?.focus();
-			setAnnouncedWorkspace(session.workspace?.tenantId ?? null);
+			setAnnouncedWorkspace(session.workspace ? workspaceName(session.workspace, t("nav.workspace")) : null);
 		}
 		previousScope.current = scope;
-	}, [connected, scope, session.workspace?.tenantId]);
+	}, [connected, scope, session.workspace, t]);
 	const canImport = useImportAccess(connected, scope, session.info, Boolean(session.workspace?.grantId));
 	const canReadSchema = useSchemaRead(actorId, connected ? session.info?.schema_read : undefined, scope);
 	const [actorName, setActorName] = useState<string | null>(null);

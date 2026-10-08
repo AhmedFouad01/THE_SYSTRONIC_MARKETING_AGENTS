@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { type ApiError, sessionStore } from "../../api/index.ts";
 import { useI18n } from "../i18n/index.ts";
-import { Button, Input, Panel } from "../primitives/index.ts";
+import { Button, Identity, Input, Panel } from "../primitives/index.ts";
 import "./connect.css";
 
 type MsgT = ReturnType<typeof useI18n>["t"];
@@ -86,7 +86,7 @@ export function ConnectGate({ error, checking }: { error: ApiError | null; check
 							<>
 								{" "}
 								<bdi dir="ltr" className="sy-ltr">
-									{t("error.requestId", { id: error.requestId })}
+									<Identity value={error.requestId} label={t("record.technical")} />
 								</bdi>
 							</>
 						) : null}
