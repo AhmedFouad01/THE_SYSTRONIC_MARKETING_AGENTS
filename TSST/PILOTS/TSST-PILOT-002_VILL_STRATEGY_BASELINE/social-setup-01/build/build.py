@@ -322,7 +322,7 @@ REPORT.append(f"FEED r2: photo #10 (sea view) scale {sc}; line 'One team, start 
 # ---------------------------------------------------------------- profile mock (Instagram, phone 780 wide = 2x of 390)
 W = 780; mk_ = Image.new("RGB", (W, 1420), (255, 255, 255)); d = ImageDraw.Draw(mk_)
 fb_, fm, fs_ = F(INTER_D, 30), F(INTER_R, 26), F(INTER_L, 22)
-d.text((40, 36), "[handle pending]", font=fb_, fill=(40, 40, 40)); d.text((440, 40), "MOCK, indicative layout", font=fs_, fill=(150, 150, 150))
+d.text((40, 36), "vill.studio", font=fb_, fill=(40, 40, 40)); d.text((440, 40), "MOCK, indicative layout", font=fs_, fill=(150, 150, 150))
 mk_.paste(circ(av, 176, (255, 255, 255)), (40, 110))
 for i, lab in enumerate(("Posts", "Followers", "Following")):
     d.text((300 + i * 160, 170), "-", font=fb_, fill=(40, 40, 40)); d.text((300 + i * 160, 214), lab, font=fs_, fill=(60, 60, 60))

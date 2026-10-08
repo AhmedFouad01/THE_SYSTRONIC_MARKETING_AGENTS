@@ -28,3 +28,7 @@ Deadline; account handles; contact channel for the bio.
 - Account name: **VILL Studio**. Exact @handle not given yet; the mock keeps a placeholder.
 - Contact / CTA channel: **website vill-studio.com**. This is the first set CTA channel for VILL; it was "not set" until now.
 - Still open: "New Alamein" clearance; scope confirmation (floors/walls/lighting plan) for the LinkedIn About; Lead's 4 round-2 tweaks (grid variety, avatar margin, story/reel band, reel text spot).
+
+## Ahmed, 2026-10-09
+- Handle: **@vill.studio**.
+- Round 2 kit **APPROVED → handover** (stage D closed).

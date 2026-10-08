@@ -82,3 +82,4 @@ Rules installed this day (all UNVALIDATED): INTAKE_GATE, FINAL_ASSET_GATE (open-
 
 - 2026-10-08: Creative tuning after VILL showcase-01 v3 approval: text_space keep-outs (SK-004 0.3), logo contrast rule (SK-006 0.4), script-line leading/punctuation (SK-005 0.3).
 2026-10-08: VILL social-setup-01 stage C kit built (PILOTS/.../social-setup-01/build/): avatar x4, FB+LinkedIn covers, 3 highlight covers, story/reel/feed templates, profile mock, gate 20.5/24 PRODUCTION_DRAFT pending Ahmed review; lessons: 9:16 from 3:4 photos needs ground bands (1.25x cap), measure text planes before placing.
+2026-10-09: VILL social-setup-01 round 2 owner APPROVED and handed over (handover/ per platform, handle @vill.studio); GATE_REVIEW FINAL; skills SK-019/010/011 stay UNVALIDATED.

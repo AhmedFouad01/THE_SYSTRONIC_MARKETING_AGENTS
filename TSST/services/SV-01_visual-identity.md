@@ -64,4 +64,12 @@ Logo matrix pixel-verified (background theme vs file name). Colours named by mea
 **VILL — social media setup (applications-only).** The identity exists: logo matrix, palette in petrol, Alexandria + Inter, direction B, showcase grammar approved (TSD-019/021).
 
 ## Lessons log
-—
+- **2026-10-09 · VILL social-setup-01 (first live job, applications-only), APPROVED after round 2 of 3.**
+  1. Intake first worked: 4 questions (platforms, language, highlights, who posts) settled the scope before any design.
+  2. Gemini/Antigravity specs were unreliable. SPARK + Lead verified the specs on official pages. Instagram does NOT publish the avatar size, the highlight cover size or the grid crop, so use practice defaults and check them after the first upload.
+  3. A profile mock (avatar + highlights + bio + first grid row) catches what single files hide. It showed 2 stone-wall tiles side by side, which were fixed.
+  4. Avatar: keep the mark at ≤80 % of the circle and drop tags under ~7 px at 110 px.
+  5. 3:4 source photos vs 9:16 story/reel: the ≤1.25× upscale cap rules out full-bleed, so use a passe-partout or a photo band with intentional type/logo zones.
+  6. Voice by platform: LinkedIn formal English and third person. Locations go only in that project's posts, never in bios. Brand text never implies a single project or states a count.
+  7. CTA: the website goes in the link field, not the bio text (Instagram links in the bio are not clickable).
+

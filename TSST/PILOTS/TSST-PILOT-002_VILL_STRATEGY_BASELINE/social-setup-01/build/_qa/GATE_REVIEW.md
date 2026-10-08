@@ -1,5 +1,5 @@
 # GATE_REVIEW · VILL social-setup-01 stage C · CREATIVE_AG · 2026-10-08
-State: **FINAL_FOR_USER_REVIEW candidate (PRODUCTION_DRAFT until Ahmed's review; not for publication)**. All exports opened and inspected before scoring. Skills UNVALIDATED.
+State: **FINAL (owner approved 2026-10-09)**. Handover in `../handover/`. Not published. Skills UNVALIDATED.
 Evidence: `_qa/contrast.txt` (tools/contrast.py, rendered pixels), `_qa/*.png`, `contact-sheet.png`, `layers/<asset>/layers.json`.
 
 ## Scores (0-3; item 5 n/a for organic setup assets; total proportional)
