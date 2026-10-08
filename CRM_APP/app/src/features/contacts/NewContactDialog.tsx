@@ -78,7 +78,7 @@ function NewContactForm({
 	return (
 		<form
 			id={formId}
-			className="sy-contacts__form"
+			className="sy-contacts__form flex flex-col gap-10"
 			noValidate
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -86,7 +86,7 @@ function NewContactForm({
 			}}
 		>
 			{serverError ? (
-				<p className="sy-contacts__banner" role="alert" data-testid="new-contact-error">
+				<p className="sy-contacts__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8" role="alert" data-testid="new-contact-error">
 					{t(ERROR_KEY[serverError])}
 				</p>
 			) : null}

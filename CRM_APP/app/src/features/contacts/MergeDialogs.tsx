@@ -139,7 +139,7 @@ export function MergeDialogs({
 				) : (
 					<div>
 						<p>{t("contacts.merge.intro", names)}</p>
-						<table className="sy-contacts__table" data-testid="merge-fields">
+						<table className="sy-contacts__table w-full border-collapse table-fixed [&_th]:text-start [&_th]:p-6 [&_th]:border-b [&_th]:border-solid [&_th]:border-border [&_th]:[overflow-wrap:anywhere] [&_th]:align-top [&_td]:text-start [&_td]:p-6 [&_td]:border-b [&_td]:border-solid [&_td]:border-border [&_td]:[overflow-wrap:anywhere] [&_td]:align-top [&_tr[data-differs=true]_td:nth-child(2)]:line-through [&_tr[data-differs=true]_td:nth-child(2)]:text-text-3" data-testid="merge-fields">
 							<thead>
 								<tr>
 									<th scope="col">{t("contacts.merge.field")}</th>
@@ -172,7 +172,7 @@ export function MergeDialogs({
 							})}
 						</p>
 						{p.conflicts.length > 0 ? (
-							<p className="sy-contacts__muted">
+							<p className="sy-contacts__muted m-0 mt-4 text-text-3">
 								{t("contacts.merge.conflicts")}:{" "}
 								{p.conflicts.map((c) => (
 									<bdi key={c} dir="ltr" className="sy-ltr">
@@ -201,7 +201,7 @@ export function MergeDialogs({
 				<p>{t("contacts.merge.confirmBody", names)}</p>
 				{error ? (
 					<p
-						className="sy-contacts__banner"
+						className="sy-contacts__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 						role="alert"
 						data-testid="merge-error"
 					>

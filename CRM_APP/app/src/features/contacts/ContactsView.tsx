@@ -49,7 +49,6 @@ import {
 	mergeLatest,
 	toRows,
 } from "./model.ts";
-import "./contacts.css";
 
 const VIEW_LABEL = {
 	all: "contacts.view.all",
@@ -364,7 +363,7 @@ export function ContactsView() {
 	const gridColumns = useMemo(() => [...columns, ...cc.columns], [columns, cc.columns]);
 
 	return (
-		<div className="sy-contacts" data-testid="contacts-view">
+		<div className="sy-contacts flex flex-col gap-12 min-w-0" data-testid="contacts-view">
 			<PageHeader
 				title={t("nav.contacts")}
 				actions={
@@ -385,12 +384,12 @@ export function ContactsView() {
 				tabs={BUILT_IN_VIEWS.map((v) => ({ id: v, label: t(VIEW_LABEL[v]) }))}
 			/>
 			{ownersFailed ? (
-				<p className="sy-contacts__muted" role="status">
+				<p className="sy-contacts__muted m-0 mt-4 text-text-3" role="status">
 					{t("contacts.ownersFailed")}
 				</p>
 			) : null}
-			<div className="sy-contacts__body">
-				<div className="sy-contacts__main">
+			<div className="sy-contacts__body min-w-0">
+				<div className="sy-contacts__main min-w-0 flex flex-col gap-8">
 					{contacts.status === "error" && isForbidden(contacts.error) ? (
 						<ForbiddenState />
 					) : (

@@ -128,7 +128,7 @@ function ContactEditor({
 
 	return (
 		<form
-			className="sy-contacts__form"
+			className="sy-contacts__form flex flex-col gap-10"
 			onSubmit={(e) => {
 				e.preventDefault();
 				void save();
@@ -137,7 +137,7 @@ function ContactEditor({
 		>
 			{error === "conflict" ? (
 				<div
-					className="sy-contacts__banner"
+					className="sy-contacts__banner m-0 p-10 rounded-8 bg-info-bg text-info-fg [&_p]:m-0 [&_p]:mt-4 [&_p]:mb-8"
 					role="alert"
 					data-testid="contact-conflict"
 				>
@@ -221,13 +221,13 @@ function JourneyList({ contactId }: { contactId: string }) {
 		return <EmptyState title={t("contacts.journey.empty")} />;
 	return (
 		<div data-testid="journey">
-			<ol className="sy-contacts__list">
+			<ol className="sy-contacts__list list-none m-0 p-0 flex flex-col gap-8">
 				{sortJourney(list.items).map((e) => {
 					const key = journeyActionKey(e.name);
 					return (
 						<li
 							key={e.id}
-							className="sy-contacts__item"
+							className="sy-contacts__item flex flex-wrap justify-between items-center gap-8 py-6 border-b border-solid border-border min-w-0 [overflow-wrap:anywhere]"
 							data-testid="journey-item"
 						>
 							<span>
@@ -237,7 +237,7 @@ function JourneyList({ contactId }: { contactId: string }) {
 									<Ltr>{e.name}</Ltr>
 								)}
 							</span>
-							<span className="sy-contacts__when">
+							<span className="sy-contacts__when text-text-3">
 								<Bdi>{formatDateTime(e.occurred_at)}</Bdi>
 							</span>
 						</li>
@@ -303,21 +303,21 @@ function DuplicatesList({
 		return <EmptyState title={t("contacts.dup.empty")} />;
 	return (
 		<div data-testid="duplicates">
-			<p className="sy-contacts__muted">{t("contacts.dup.hint")}</p>
+			<p className="sy-contacts__muted m-0 mt-4 text-text-3">{t("contacts.dup.hint")}</p>
 			{canMerge ? null : (
 				<p
-					className="sy-contacts__muted"
+					className="sy-contacts__muted m-0 mt-4 text-text-3"
 					id="merge-blocked"
 					data-testid="merge-blocked"
 				>
 					{t("contacts.dup.mergeBlocked")}
 				</p>
 			)}
-			<ul className="sy-contacts__list">
+			<ul className="sy-contacts__list list-none m-0 p-0 flex flex-col gap-8">
 				{state.items.map((d) => (
 					<li
 						key={d.id}
-						className="sy-contacts__item"
+						className="sy-contacts__item flex flex-wrap justify-between items-center gap-8 py-6 border-b border-solid border-border min-w-0 [overflow-wrap:anywhere]"
 						data-testid="duplicate-item"
 					>
 						<span>
@@ -403,7 +403,7 @@ function AddIdentifierForm({
 	};
 	return (
 		<form
-			className="sy-contacts__form"
+			className="sy-contacts__form flex flex-col gap-10"
 			noValidate
 			onSubmit={(e) => {
 				e.preventDefault();
@@ -484,8 +484,8 @@ function ContactBody({
 	const overview = (
 		<div>
 			<section aria-label={t("contacts.identifiers.title")}>
-				<div className="sy-contacts__section-head">
-					<h3 className="sy-contacts__muted">
+				<div className="sy-contacts__section-head flex items-center justify-between gap-8 [&_h3]:m-0">
+					<h3 className="sy-contacts__muted m-0 mt-4 text-text-3">
 						{t("contacts.identifiers.title")}
 					</h3>
 					<AddIdentifier contact={contact} onUpdated={onUpdated} />
@@ -493,9 +493,9 @@ function ContactBody({
 				{failed ? (
 					<p role="status">{t("contacts.detail.failed")}</p>
 				) : full === null ? null : ids.state === "visible" ? (
-					<ul className="sy-contacts__list" data-testid="identifiers">
+					<ul className="sy-contacts__list list-none m-0 p-0 flex flex-col gap-8" data-testid="identifiers">
 						{ids.items.map((i) => (
-							<li key={i.id} className="sy-contacts__item">
+							<li key={i.id} className="sy-contacts__item flex flex-wrap justify-between items-center gap-8 py-6 border-b border-solid border-border min-w-0 [overflow-wrap:anywhere]">
 								<Badge tone="neutral">
 									{t(i.kind === "phone" ? "common.phone" : "common.email")}
 								</Badge>
@@ -506,7 +506,7 @@ function ContactBody({
 				) : (
 					<div data-testid="identifiers-hidden">
 						<p>{t("contacts.identifiers.hidden")}</p>
-						<p className="sy-contacts__muted">
+						<p className="sy-contacts__muted m-0 mt-4 text-text-3">
 							{t("contacts.identifiers.hiddenHint")}
 						</p>
 					</div>
