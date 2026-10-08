@@ -42,7 +42,7 @@ export const NAV_TREE: readonly NavNode[] = [
 	] },
 	{ kind: "group", key: "administration", label: "nav.administration", icon: "settings", children: [
 		{ kind: "upcoming", key: "integrations", label: "nav.integrations", icon: "route" },
-		{ kind: "upcoming", key: "users", label: "nav.users", icon: "contacts" },
+		{ kind: "link", key: "users", label: "nav.users", icon: "contacts", route: "/settings/users" },
 		{ kind: "group", key: "settings", label: "nav.settings", icon: "settings", children: [
 			{ kind: "link", key: "properties", label: "nav.properties", icon: "settings", route: "/settings/properties" },
 			{ kind: "upcoming", key: "security", label: "nav.security", icon: "lock" },

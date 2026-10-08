@@ -23,11 +23,13 @@ describe("hierarchical navigation", () => {
 	});
 	it("reserves future screens as inert text without a navigable route", () => {
 		const upcoming = allNodes(NAV_TREE).filter((n) => n.kind === "upcoming");
-		expect(upcoming.map((n) => n.key)).toEqual(["segments", "journeys", "integrations", "users", "security"]);
+		expect(upcoming.map((n) => n.key)).toEqual(["segments", "journeys", "integrations", "security"]);
 		for (const node of upcoming) expect(node).not.toHaveProperty("route");
 		expect(toRoute("/app/imports")).toBe("/imports");
 		expect(NAV_ROUTES).toContain("/imports");
-		for (const route of ["/segments", "/journeys", "/settings/integrations", "/settings/users", "/settings/security"]) expect(toRoute(`/app${route}`)).toBeNull();
+		expect(toRoute("/app/settings/users")).toBe("/settings/users");
+		expect(navigationTrail(NAV_TREE, "/settings/users").map(n => n.key)).toEqual(["administration", "users"]);
+		for (const route of ["/segments", "/journeys", "/settings/integrations", "/settings/security"]) expect(toRoute(`/app${route}`)).toBeNull();
 	});
 	it("removes denied live leaves from the hierarchy, aliases and mobile shortcuts", () => {
 		const hidden = ["properties", "leads", "reporting", "journeys", ...upcomingHiddenKeys(false, false)];

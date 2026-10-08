@@ -10,6 +10,7 @@ import { workspaceKey } from "./api/workspaces.ts";
 import { upcomingHiddenKeys } from "./ui/shell/navigation.ts";
 import { AppShell, ConnectGate } from "./ui/shell/index.ts";
 
+import { UsersView } from "./features/auth/UsersView.tsx";
 import { AuthLinkPage } from "./features/auth/AuthLinkPage.tsx";
 import type { AuthLink } from "./features/auth/link.ts";
 import { SignIn } from "./features/auth/SignIn.tsx";
@@ -79,7 +80,7 @@ function Routed() {
 		>
 			{connected && session.error ? <p role="alert" className="text-danger-fg">{t(authErrorKey(session.error))}</p> : null}
 			{connected ? (
-				<WorkspaceContent key={scope} route={route} />
+				<WorkspaceContent key={scope} route={route} usersEnabled={session.info?.configure === true && !session.workspace?.grantId} />
 			) : (
 				<ConnectGate error={session.error} checking={session.status === "checking"} />
 			)}
@@ -89,9 +90,11 @@ function Routed() {
 }
 
 /** A successful scope change remounts every feature: selections, records and future import drafts are tenant-bound. */
-function WorkspaceContent({ route }: { route: ReturnType<typeof useRoute> }) {
+function WorkspaceContent({ route, usersEnabled }: { route: ReturnType<typeof useRoute>; usersEnabled: boolean }) {
 	return (
-		route === "/imports" ? (
+		route === "/settings/users" ? (
+			<UsersView enabled={usersEnabled} />
+		) : route === "/imports" ? (
 			<ImportWizard />
 		) : route === "/leads" ? (
 			<LeadsView />

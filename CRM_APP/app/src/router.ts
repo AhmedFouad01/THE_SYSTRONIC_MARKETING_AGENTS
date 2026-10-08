@@ -13,6 +13,7 @@ export const ROUTES = [
 	"/reporting",
 	"/reporting-v2",
 	"/settings/properties",
+	"/settings/users",
 	"/imports",
 ] as const;
 export const PUBLIC_ROUTES = ["/invite", "/reset"] as const;

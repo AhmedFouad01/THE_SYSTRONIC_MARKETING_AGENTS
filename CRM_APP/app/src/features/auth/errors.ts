@@ -2,6 +2,9 @@ import type { ApiError } from "../../api/errors.ts";
 import type { MessageKey } from "../../ui/i18n/en.ts";
 
 const keys: Record<string, MessageKey> = {
+	LAST_MANAGER_REQUIRED: "users.lastManager",
+	VALIDATION_FAILED: "users.validation",
+	NOT_FOUND: "users.notFound",
 	AUTH_RESET_INVALID: "auth.error.reset_invalid",
 	AUTH_INVITATION_INVALID: "auth.error.invitation_invalid",
 	AUTH_PASSWORD_POLICY: "auth.error.password_policy",

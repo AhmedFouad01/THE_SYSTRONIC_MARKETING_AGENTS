@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 // B7 contracts are mocked in the browser; this suite needs no database or API credentials.
 export default defineConfig({
 	testDir: "tests",
-	testMatch: ["auth-ui.spec.ts", "auth-links.spec.ts"],
+	testMatch: ["auth-ui.spec.ts", "auth-links.spec.ts", "auth-users.spec.ts"],
 	workers: 1,
 	use: { baseURL: "http://127.0.0.1:4418", browserName: "chromium" },
 	webServer: {
