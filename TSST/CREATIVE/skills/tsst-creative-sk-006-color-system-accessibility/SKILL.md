@@ -1,7 +1,7 @@
 ---
 name: tsst-creative-sk-006-color-system-accessibility
 description: Build semantic, theme-aware color systems and verify text, interface, and data-visualization contrast without relying on color alone.
-version: 0.3
+version: 0.4
 ---
 
 # TSST-CREATIVE-SK-006 Color System & Accessibility
@@ -93,3 +93,13 @@ Source use: semantic-token and accessibility method reference, not palette copyi
 ## Changelog
 - 0.2 (2026-10-07): added naming/matching rules after the Lead called petrol #01304A "navy"; points to tools/contrast.py. Status unchanged.
 - 0.3 (2026-10-08): Partial-alpha brand colour lesson with numbers (VILL v1). Status unchanged.
+
+- 0.4 (2026-10-08): Logo / mark contrast on photos (below). Status unchanged.
+
+## Logo / mark contrast on photos
+Why a separate rule: WCAG 2.2 SC 1.4.3 exempts logotypes from text contrast ([Understanding 1.4.3](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)), so the 4.5:1 text gate must not be applied to a logo. We borrow the idea of non-text contrast, 3:1 ([Understanding 1.4.11](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html)), as our house brand-legibility floor, not as a compliance claim.
+- Measure: logo fill vs the photo behind the logo bbox (tools/contrast.py). Gate = **p50 (median background) >= 3:1**.
+- Worst pixels (p5/p95) under 2:1 = flag for an eye check, never an automatic fail.
+- If p50 < 3:1, in this order: (1) move the logo to a quieter spot of the same photo; (2) switch to the other approved variant (pixel-verify per the ASSETS.yaml matrix, never assume); (3) put the logo on a solid slide. Never add a plate, scrim, glow or overlay behind the logo on project photos.
+- Approved marks are composited, never regenerated or recoloured.
+- Applied to VILL showcase-01 v3 cover (build-v3/_qa/contrast.json, slide 1, Wordmark Dark Transparent, fg #F4F4F4): p50 5.26:1 (bg #985425), p5 8.00, p95 3.24. Verdict PASS (p50 >= 3, no worst pixel under 2). The old text-rule `ok:false` (needs 4.5, worst 3.24) is superseded for logos; owner accepted by eye.

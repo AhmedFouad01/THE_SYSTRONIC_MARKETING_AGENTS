@@ -6,9 +6,9 @@ description: Define readable Arabic and Latin typography systems with role-based
 # TSST-CREATIVE-SK-005 Typography System
 
 Status: `UNVALIDATED`
-Version: 0.2 (2026-10-08)
+Version: 0.3 (2026-10-08)
 
-Changelog: v0.2 adds "Typography craft" (ref/hierarchy.md, lockups.md, pairing-bilingual.md, checklist.md) from GEM-CR-006 after Lead review, plus measured Inter/Alexandria numbers (fonts/METRICS.md, tools/font_metrics.py) and a first lockup test (fonts/lockup-tests/). v0.1 = type-system skill only.
+Changelog: v0.3 adds ref/lockups.md section 2b (script-line leading formula, script:Inter size ratio, sans punctuation after a script word), measured with tools/font_metrics.py on VILL v3. v0.2 adds "Typography craft" (ref/hierarchy.md, lockups.md, pairing-bilingual.md, checklist.md) from GEM-CR-006 after Lead review, plus measured Inter/Alexandria numbers (fonts/METRICS.md, tools/font_metrics.py) and a first lockup test (fonts/lockup-tests/). v0.1 = type-system skill only.
 
 ## Typography craft (v0.2, UNVALIDATED)
 

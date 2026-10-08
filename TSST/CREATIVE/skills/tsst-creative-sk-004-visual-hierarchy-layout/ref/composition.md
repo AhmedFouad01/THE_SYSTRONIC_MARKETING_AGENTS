@@ -26,3 +26,6 @@ Numbers marked (default) are common practice, not facts.
 - Texture: needs raking side light; front light flattens. Test: can you see the grain/relief?
 - Window light: interior bulbs must not cast contradicting shadows or colour temperature against window light.
 - Before/after: same position, focal length, height. Test: 50 % overlay, structural walls align.
+
+## Keep-out zones (text_space.py v0.3)
+Placed non-text layers (BEFORE/AFTER label, logo, accent rule) are busy ground for the text finder: pass `--slide SLIDE_DIR` (auto from layers.json alpha bbox) or `--keepout x0,y0,x1,y1` (repeatable). The text box must clear each keep-out by the margin (default 64 px). The lockup layers 03_text + 03c_script are treated as ONE box being placed, not as keep-outs.

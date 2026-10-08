@@ -1,0 +1,120 @@
+{
+ "canvas": [
+  1080,
+  1350
+ ],
+ "text_box": [
+  436,
+  150
+ ],
+ "plane": [
+  534,
+  184
+ ],
+ "edge_threshold": 24.0,
+ "margin": 64,
+ "keepouts": [
+  {
+   "layer": "03b_label.png",
+   "box": [
+    66,
+    1265,
+    186,
+    1284
+   ]
+  }
+ ],
+ "picks": [
+  {
+   "rank": 1,
+   "text_box_xyxy": [
+    365,
+    81,
+    801,
+    231
+   ],
+   "plane_xyxy": [
+    316,
+    64,
+    850,
+    248
+   ],
+   "edge_pct": 0.26,
+   "lum_std": 12.8,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#B98F6B",
+   "text": "#011C2C",
+   "ratio_mean": 5.98,
+   "ratio_worst": 5.01
+  },
+  {
+   "rank": 2,
+   "text_box_xyxy": [
+    353,
+    1101,
+    789,
+    1251
+   ],
+   "plane_xyxy": [
+    304,
+    1084,
+    838,
+    1268
+   ],
+   "edge_pct": 0.0,
+   "lum_std": 18.8,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#776154",
+   "text": "#F4F4F4",
+   "ratio_mean": 5.27,
+   "ratio_worst": 3.3
+  },
+  {
+   "rank": 3,
+   "text_box_xyxy": [
+    521,
+    273,
+    957,
+    423
+   ],
+   "plane_xyxy": [
+    472,
+    256,
+    1006,
+    440
+   ],
+   "edge_pct": 0.11,
+   "lum_std": 25.5,
+   "subject_dist": null,
+   "quiet": true,
+   "mean": "#876C55",
+   "text": "#F4F4F4",
+   "ratio_mean": 4.43,
+   "ratio_worst": 2.55
+  }
+ ],
+ "v2": {
+  "text_box_xyxy": [
+   408,
+   128,
+   844,
+   278
+  ],
+  "plane_xyxy": [
+   359,
+   111,
+   893,
+   295
+  ],
+  "edge_pct": 0.15,
+  "lum_std": 16.9,
+  "quiet": true,
+  "pct_of_positions_quieter": 1.2,
+  "mean": "#BF936D",
+  "text": "#011C2C",
+  "ratio_mean": 6.32,
+  "ratio_worst": 4.49
+ }
+}

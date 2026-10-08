@@ -2,8 +2,12 @@
 Usage:
   python text_space.py --photo P.png --box WxH [--crop x0,y0,x1,y1 --canvas 1080x1350] [--subject x0,y0,x1,y1]
                        [--margin 64] [--v2 x0,y0,x1,y1] --out OUTDIR
-  python text_space.py --slide SLIDE_DIR --out OUTDIR [--subject ...]
-      (slide mode: reads SLIDE_DIR/01_photo.png and takes the box + the v2 placement from the 03_text.png alpha bbox)
+  python text_space.py --slide SLIDE_DIR --out OUTDIR [--subject ...] [--keepout x0,y0,x1,y1 ...]
+      (slide mode: reads SLIDE_DIR/01_photo.png and takes the box + the v2 placement from the alpha bbox of the lockup
+       layers 03_text.png + 03c_script.png (union). Every OTHER non-photo layer in layers.json (label, logo, accent...)
+       becomes an automatic keep-out from its alpha bbox.)
+--keepout (repeatable, v0.3): box that counts as busy; a candidate text box must clear it by --margin on every side.
+  Auto keep-outs from --slide are listed in result.json["keepouts"]; --no-auto-keepout turns them off.
 --crop/--canvas: crop the photo then resize to the canvas (scale > 1.25 is refused).
 Ranks the top 3 non-overlapping boxes by quietness: edge density % (Sobel on a 1.5px blur), luminance std,
 distance from the subject. The plane is the text box grown to 1.5x its area (quiet if edge density < 5 %).
@@ -67,10 +71,35 @@ def colour_pick(arr, box):
     return dict(mean=mean, text=best, ratio_mean=round(ratio(best, mean), 2), ratio_worst=round(worst(best), 2))
 
 
+LOCKUP = ["03_text.png", "03c_script.png"]
+
+
+def auto_keepouts(slide, size):
+    """alpha bbox of every non-photo layer in layers.json that is not part of the lockup being placed."""
+    out = []
+    for l in json.load(open(os.path.join(slide, "layers.json")))["layers"]:
+        f = l["file"]
+        if f in LOCKUP or f.startswith("01_photo"):
+            continue
+        p = os.path.join(slide, f)
+        if not os.path.exists(p):
+            continue
+        b = Image.open(p).convert("RGBA").getchannel("A").getbbox()
+        if b and (b[2] - b[0]) * (b[3] - b[1]) < 0.6 * size[0] * size[1]:
+            out.append(dict(layer=f, box=list(b)))
+    return out
+
+
 def load(a):
     if a.slide:
         im = Image.open(os.path.join(a.slide, "01_photo.png")).convert("RGB")
-        t = Image.open(os.path.join(a.slide, "03_text.png")).getchannel("A").getbbox()
+        t = None
+        for f in LOCKUP:  # the lockup being placed = Inter text + script accent layer (union)
+            p = os.path.join(a.slide, f)
+            if os.path.exists(p):
+                b = Image.open(p).convert("RGBA").getchannel("A").getbbox()
+                t = b if t is None else (min(t[0], b[0]), min(t[1], b[1]), max(t[2], b[2]), max(t[3], b[3]))
+        a.auto_ko = [] if a.no_auto_keepout else auto_keepouts(a.slide, im.size)
         a.v2 = a.v2 or ",".join(map(str, t))
         a.box = a.box or f"{t[2] - t[0]}x{t[3] - t[1]}"
         return im
@@ -90,7 +119,10 @@ def main():
     ap.add_argument("--crop"); ap.add_argument("--canvas", default="1080x1350"); ap.add_argument("--subject")
     ap.add_argument("--v2"); ap.add_argument("--margin", type=int, default=64); ap.add_argument("--out", required=True)
     ap.add_argument("--stride", type=int, default=12)
+    ap.add_argument("--keepout", action="append", default=[], help="x0,y0,x1,y1 (repeatable)")
+    ap.add_argument("--no-auto-keepout", action="store_true")
     a = ap.parse_args()
+    a.auto_ko = []
     if not (a.photo or a.slide) or (not a.box and not a.slide):
         ap.error("need --slide, or --photo with --box")
     im = load(a)
@@ -106,6 +138,7 @@ def main():
     subj = tuple(map(int, a.subject.split(","))) if a.subject else None
     diag = (W * W + H * H) ** 0.5
     m = a.margin
+    kos = [dict(layer="--keepout", box=list(map(int, k.split(",")))) for k in a.keepout] + a.auto_ko
     cands = []
     for y in range(m, H - m - ph + 1, a.stride):
         for x in range(m, W - m - pw + 1, a.stride):
@@ -113,6 +146,9 @@ def main():
             ox, oy = (pw - tw) // 2, (ph - th) // 2
             tb = (x + ox, y + oy, x + ox + tw, y + oy + th)
             if subj and not (tb[2] <= subj[0] or tb[0] >= subj[2] or tb[3] <= subj[1] or tb[1] >= subj[3]):
+                continue
+            if any(not (tb[2] + m <= k["box"][0] or tb[0] - m >= k["box"][2] or
+                        tb[3] + m <= k["box"][1] or tb[1] - m >= k["box"][3]) for k in kos):
                 continue
             ed, sd, dist = stats(I_e, I_l, I_l2, plane, subj, diag)
             cands.append((ed + 0.15 * sd - (10 * dist if dist is not None else 0), ed, sd, dist, plane, tb))
@@ -123,7 +159,7 @@ def main():
             top.append(c)
         if len(top) == 3:
             break
-    res = dict(canvas=[W, H], text_box=[tw, th], plane=[pw, ph], edge_threshold=EDGE_T, picks=[])
+    res = dict(canvas=[W, H], text_box=[tw, th], plane=[pw, ph], edge_threshold=EDGE_T, margin=m, keepouts=kos, picks=[])
     for i, (s, ed, sd, dist, plane, tb) in enumerate(top, 1):
         res["picks"].append(dict(rank=i, text_box_xyxy=list(tb), plane_xyxy=list(plane), edge_pct=round(ed, 2),
                                  lum_std=round(sd, 1), subject_dist=None if dist is None else round(dist, 3),
@@ -161,6 +197,11 @@ def main():
         d.text((b[0] + 6, b[3] + 6), f"v2 {res['v2']['edge_pct']}%", fill="#FF00FF")
     if subj:
         d.rectangle(subj, outline="#FFFFFF", width=3)
+    for k in kos:
+        b = k["box"]
+        d.rectangle([b[0] - m, b[1] - m, b[2] + m, b[3] + m], outline="#FF8800", width=2)
+        d.rectangle(b, outline="#FF8800", width=4)
+        d.text((b[0] + 4, b[1] - m + 4), "KEEP-OUT " + os.path.basename(k["layer"]), fill="#FF8800")
     pv.convert("RGB").save(os.path.join(a.out, "heatmap.png"))
     json.dump(res, open(os.path.join(a.out, "result.json"), "w"), indent=1)
     for p in res["picks"]:
@@ -168,6 +209,8 @@ def main():
               f"mean={p['mean']} text={p['text']} ratio={p['ratio_mean']} worst={p['ratio_worst']}")
     if a.v2:
         print("v2 ", res["v2"])
+    for k in kos:
+        print("keepout", k["layer"], k["box"])
 
 
 if __name__ == "__main__":

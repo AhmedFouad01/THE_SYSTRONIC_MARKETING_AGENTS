@@ -1,6 +1,6 @@
 ---
 name: tsst-creative-sk-004-visual-hierarchy-layout
-version: 0.2
+version: 0.3
 description: Design or review visual hierarchy and layout using reading order, grid, spacing, alignment, rhythm, responsive behavior, and task-focused composition.
 ---
 
@@ -91,3 +91,4 @@ Source use: design-system and layout principles, not visual imitation.
 
 ## Changelog
 - 0.2 (2026-10-08): Photo composition and layout section, ref/ (composition, cropping-layout, critique), tools/text_space.py; from GEM-CR-005 with Lead overrides. Status unchanged (UNVALIDATED).
+- 0.3 (2026-10-08): tools/text_space.py gains --keepout x0,y0,x1,y1 (repeatable) and, with --slide, automatic keep-outs from the alpha bbox of every non-lockup, non-photo layer (label, logo, accent) plus margin. Test on VILL showcase-01 v3 s02/s04: build-v3/_qa/text_space/REPORT.md. Status unchanged (UNVALIDATED).
