@@ -182,3 +182,4 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
   - The slide-5 socket/switch retouch is APPROVED.
   - v3 (Inter + Alex Brush) is built and awaits owner review.
 - Source: commits `cb64934`, `d8abbf5`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/REVIEW_v1.md`; Lead review headers in `TSST/CREATIVE/gemini/GEM-CR-003_out.md`, `GEM-CR-005_out.md` and `GEM-CR-006_out.md`; `TSST/brands/vill-studio/assets/ASSETS.yaml`.
+- Amended `2026-10-08` (same day): the user APPROVED showcase-01 v3 and the Lens CHANGED lines. Captions are still open (AR lines, the LinkedIn "most clients" claim). Skill statuses stay `UNVALIDATED`; v3 is recorded as field evidence in `TSST/CREATIVE/TRAINING_STATUS.md`.

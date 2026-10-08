@@ -31,8 +31,8 @@ Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-1
   - v1 REJECTED (overlays, template look).
   - v2 direction APPROVED: 7 slides, no overlays, logo on the cover and the last slide only.
   - Slide-5 retouch APPROVED.
-  - v3 is built with Inter and an Alex Brush accent (lockup C, the user's pick) and awaits owner review.
-- Still open: the Lens CHANGED lines, the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
+  - **v3 APPROVED by the user** (Inter + Alex Brush accent, lockup C). The Lens CHANGED lines are approved too.
+- Still open: the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
 
 ## Next action
 Lead decides/issues C7-VILL-12 round 2 (fix list in the review); native review of `VERBAL_IDENTITY_v1.0.md` is pending (user). See `projects/strategy-baseline/project.md#Next`.

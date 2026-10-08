@@ -17,3 +17,5 @@ Script: 2 of 7 slides, 1 word each. s7 chosen over the cover because orange only
 1 thumb-stop 2 · 2 focal point in 1 s 3 · 3 realism/image quality 2 (s1 and s5 at 1.25x, soft but clean; s5 retouch owner-approved) · 4 safe zones 2 (s1 text 4.49 min; s2 text near ceiling hook, cleared) · 5 n/a · 6 hierarchy/legibility 3 (text 62-92 px vs 48-50 in v2; phone readable) · 7 native to placement 2 (4:5 only; 9:16 not checked) · 8 variation 3.
 Total 17/21 = 19.4/24, passes >=18/24. No 0.
 Open: s1 logo p95 3.24 (mark exempt from text rule; p50 5.26); s1 text margin x=92 (clears pendant cord/lamp, differs from 64 elsewhere); s2 text 4.40 at p5/p95 spread; 9:16 not done.
+
+**Status 2026-10-08: OWNER APPROVED (Ahmed): FINAL visuals.** The captions are not covered here (AR lines and the LinkedIn claim are still open in COPY_DECK.md).

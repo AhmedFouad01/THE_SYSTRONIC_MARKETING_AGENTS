@@ -25,3 +25,5 @@ Lessons:
 - Fixed corner labels need a canvas-consistent position; framed slides put the label in the margin.
 - Gap in the L6 logo rule: the logo-variant choice is by measured background, and here the white variant sat on a dark floor corner (5.45:1), not on the "light" wall.
 - Retouching real sockets/switch plates alters a built element: still needs the owner OK; unretouched alternate kept.
+
+**Outcome 2026-10-08:** v3 APPROVED by the owner. What fixed it: zero overlays, placement in the photo's quiet plane (measured), solid dark-petrol type slide, logo on 2 slides only, 4 layout types, the brand font (Inter, not Cairo), and one script accent word per slide (Alex Brush) on at most 2 slides.

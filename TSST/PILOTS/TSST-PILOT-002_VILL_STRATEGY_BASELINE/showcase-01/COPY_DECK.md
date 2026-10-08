@@ -149,3 +149,7 @@ CHANGED vs v1: added "The brief was everything: finishes, lighting, furniture." 
 
 ### 8. Open items (v2)
 Ahmed OK on the 2 CHANGED lines and the moved-line placement; AR new lines native review; CTA channel (still out); lighting/finishing scope; confirm 7 slides or add the tight #8 crop.
+
+### Owner decision 2026-10-08 (Lead record)
+- **APPROVED by Ahmed:** the v2 CHANGED lines ("After" split into a label + "Made to live in."; end slide = "One team, start to finish." without the question) and the move of v1 lines into the captions.
+- Still open: native review of the new AR caption lines (بنش / على إيد فريق واحد / تليق عليه), and the LinkedIn opening "Most clients hand us a shell…" (unverified claim: confirm or cut). CTA channel not set.

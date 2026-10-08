@@ -43,7 +43,7 @@ All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPER
 
 1. C7 phase 2c: Lead issues `C7-VILL-12` round 2 (fix list in `LEAD_REVIEW_C7-VILL-12.md`) → Lead re-review → user acceptance; native review of `VERBAL_IDENTITY_v1.0.md` (user).
 2. First real job under the new Creative rules (TSD-019) validates them end-to-end. Before any paid launch, re-verify the platform specs in `TSST/CREATIVE/gemini/GEM-CR-001_out.md`.
-3. Owner review of VILL showcase-01 v3 (`showcase-01/build-v3/export`). Also open: the Lens CHANGED lines, the new AR caption lines, the unverified LinkedIn "most clients" claim, and cover-logo contrast by eye. The C7-VILL-12 round 2 must use petrol `#01304A` and Alexandria + Inter (the draft says navy and Cairo).
+3. VILL showcase-01 v3 visuals APPROVED by the user (2026-10-08), along with the Lens CHANGED lines. Still open before posting: the new AR caption lines (native review), the unverified LinkedIn "most clients" claim, and the CTA channel. The C7-VILL-12 round 2 must use petrol `#01304A` and Alexandria + Inter (the draft says navy and Cairo).
 4. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
 
 ## Blockers

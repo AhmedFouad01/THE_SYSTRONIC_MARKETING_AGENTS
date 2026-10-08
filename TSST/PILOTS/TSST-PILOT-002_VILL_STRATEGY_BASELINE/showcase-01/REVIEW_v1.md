@@ -34,8 +34,11 @@ Open for Ahmed: s05 socket/switch clone-out (the ALT is exported); typeface (Cai
 ## Ahmed on v2 (2026-10-08)
 - **Direction APPROVED.** Slide 5 retouch (socket/switch removed) is APPROVED.
 - Fonts: NOT Cairo. Arabic = Alexandria, English = Inter (both installed; recorded in ASSETS.yaml). v2 must be re-set in these fonts.
-- The team needs real skill in typography (e.g. a handwritten/script word layered with a bold word; text should look designer-made) and in photo composition/layout. Research: GEM-CR-004 (typography), GEM-CR-005 (composition/layout) → CREATIVE distils them into skills → re-set v2 as the test.
+- The team needs real skill in typography (e.g. a handwritten/script word layered with a bold word; text should look designer-made) and in photo composition/layout. Research: GEM-CR-006 (typography; first filed as GEM-CR-004, which another session overwrote), GEM-CR-005 (composition/layout) → CREATIVE distils them into skills → re-set v2 as the test.
 - Still open: Lens's CHANGED lines, the AR caption lines, and the unverified LinkedIn opening claim.
 
 ## Next
 GEM-CR-003 research (how interior/fit-out project showcases are presented) → Lens + Creative distil it into rules/skills → v2 rebuild. No v2 before the research is reviewed.
+
+## Ahmed on v3 (2026-10-08): **APPROVED**
+build-v3/ (Inter, Alex Brush accent on slides 4 and 7, re-crops ≤1.25×, gate 19.4/24) is the approved visual set. The cover logo was accepted by eye. Lens CHANGED lines approved. Captions still open (AR lines, LinkedIn claim).
