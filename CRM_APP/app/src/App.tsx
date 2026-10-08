@@ -54,7 +54,7 @@ function Routed() {
 	}, [actorId, scope]);
 	return (
 		<>
-		<div className="sy-workspace-announcement" role="status" aria-live="polite" aria-atomic="true">{announcedWorkspace && connected ? tx("workspace.changed", { name: announcedWorkspace }) : null}</div>
+		<div className="sy-workspace-announcement sr-only" role="status" aria-live="polite" aria-atomic="true">{announcedWorkspace && connected ? tx("workspace.changed", { name: announcedWorkspace }) : null}</div>
 		<AppShell
 			key={scope}
 			workspace={session.workspace}

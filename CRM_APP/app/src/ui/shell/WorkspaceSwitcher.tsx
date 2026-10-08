@@ -1,4 +1,12 @@
-import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { Button as AriaButton } from "react-aria-components";
+import { shellClass } from "./styles.ts";
+import {
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import type { Workspace } from "../../api/workspaces.ts";
 import { sameWorkspace } from "../../api/workspaces.ts";
 import { isApiError } from "../../api/errors.ts";
@@ -14,23 +22,46 @@ export type WorkspaceControls = {
 	switchWorkspace?: (workspace: Workspace) => Promise<boolean>;
 };
 
-export function WorkspaceControl({ workspace, canSwitch, onOpen }: {
+export function WorkspaceControl({
+	workspace,
+	canSwitch,
+	onOpen,
+}: {
 	workspace: Workspace;
 	canSwitch: boolean;
 	onOpen: () => void;
 }) {
 	const { t } = useI18n();
 	return (
-		<div className="sy-workspace" data-testid="workspace-context">
-			<span className="sy-workspace__label">{t("workspace.label")}</span>
-			<span className="sy-workspace__name"><Bdi>{workspace.tenantId}</Bdi></span>
-			{workspace.grantId ? <span className="sy-workspace__hint">{t("workspace.restricted")}</span> : null}
-			{canSwitch ? <Button size="sm" onClick={onOpen} data-testid="workspace-switch">{t("workspace.switch")}</Button> : null}
+		<div className={shellClass("sy-workspace")} data-testid="workspace-context">
+			<span className={shellClass("sy-workspace__label")}>
+				{t("workspace.label")}
+			</span>
+			<span className={shellClass("sy-workspace__name")}>
+				<Bdi>{workspace.tenantId}</Bdi>
+			</span>
+			{workspace.grantId ? (
+				<span className={shellClass("sy-workspace__hint")}>
+					{t("workspace.restricted")}
+				</span>
+			) : null}
+			{canSwitch ? (
+				<Button size="sm" onClick={onOpen} data-testid="workspace-switch">
+					{t("workspace.switch")}
+				</Button>
+			) : null}
 		</div>
 	);
 }
 
-export function WorkspaceSwitchDialog({ open, onClose, workspace, loadWorkspaces, switchWorkspace, returnFocusRef }: {
+export function WorkspaceSwitchDialog({
+	open,
+	onClose,
+	workspace,
+	loadWorkspaces,
+	switchWorkspace,
+	returnFocusRef,
+}: {
 	open: boolean;
 	onClose: () => void;
 	workspace: Workspace;
@@ -51,13 +82,21 @@ export function WorkspaceSwitchDialog({ open, onClose, workspace, loadWorkspaces
 		setOptions([]);
 		setLoading(true);
 		setError(null);
-		loadWorkspaces(controller.signal).then((available) => {
-			if (!controller.signal.aborted) setOptions(available);
-		}).catch((failure: unknown) => {
-			if (!controller.signal.aborted) setError(isApiError(failure) ? describeError(failure, t) : t("error.network"));
-		}).finally(() => {
-			if (!controller.signal.aborted) setLoading(false);
-		});
+		loadWorkspaces(controller.signal)
+			.then((available) => {
+				if (!controller.signal.aborted) setOptions(available);
+			})
+			.catch((failure: unknown) => {
+				if (!controller.signal.aborted)
+					setError(
+						isApiError(failure)
+							? describeError(failure, t)
+							: t("error.network"),
+					);
+			})
+			.finally(() => {
+				if (!controller.signal.aborted) setLoading(false);
+			});
 	}, [loadWorkspaces, t]);
 	useEffect(() => {
 		if (!open) return;
@@ -79,20 +118,51 @@ export function WorkspaceSwitchDialog({ open, onClose, workspace, loadWorkspaces
 		}
 	};
 	return (
-		<Dialog open={open} onClose={() => { if (!pending) onClose(); }} title={t("workspace.switch")} placement="side" dock="right"
-			returnFocusRef={returnFocusRef} testId="workspace-switch-dialog" footer={<Button disabled={pending} onClick={onClose}>{t("common.close")}</Button>}>
+		<Dialog
+			open={open}
+			onClose={() => {
+				if (!pending) onClose();
+			}}
+			title={t("workspace.switch")}
+			placement="side"
+			dock="right"
+			returnFocusRef={returnFocusRef}
+			testId="workspace-switch-dialog"
+			footer={
+				<Button disabled={pending} onClick={onClose}>
+					{t("common.close")}
+				</Button>
+			}
+		>
 			<p>{t("workspace.knownOnly")}</p>
 			{loading ? <p role="status">{t("workspace.checking")}</p> : null}
-			{error ? <div role="alert"><p>{error}</p><Button disabled={pending} onClick={load}>{t("state.retry")}</Button></div> : null}
-			{!loading && !error && options.length === 0 ? <p>{t("workspace.none")}</p> : null}
-			<div className="sy-workspace-options" aria-busy={loading || pending}>
+			{error ? (
+				<div role="alert">
+					<p>{error}</p>
+					<Button disabled={pending} onClick={load}>
+						{t("state.retry")}
+					</Button>
+				</div>
+			) : null}
+			{!loading && !error && options.length === 0 ? (
+				<p>{t("workspace.none")}</p>
+			) : null}
+			<div
+				className={shellClass("sy-workspace-options")}
+				aria-busy={loading || pending}
+			>
 				{options.map((option) => (
-					<button key={JSON.stringify([option.tenantId, option.grantId ?? ""])} type="button" className="sy-nav sy-workspace-option"
-						disabled={pending || sameWorkspace(option, workspace)} aria-current={sameWorkspace(option, workspace) ? "true" : undefined}
-						onClick={() => void choose(option)}>
+					<AriaButton
+						key={JSON.stringify([option.tenantId, option.grantId ?? ""])}
+						type="button"
+						className={shellClass("sy-nav sy-workspace-option")}
+						isDisabled={pending || sameWorkspace(option, workspace)}
+						aria-current={sameWorkspace(option, workspace) ? "true" : undefined}
+						onPress={() => void choose(option)}
+					>
 						<Bdi>{option.tenantId}</Bdi>
 						{option.grantId ? <span>{t("workspace.restricted")}</span> : null}
-					</button>
+					</AriaButton>
 				))}
 			</div>
 		</Dialog>

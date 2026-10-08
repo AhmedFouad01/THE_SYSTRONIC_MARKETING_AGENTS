@@ -90,6 +90,7 @@
 	--leading-data: var(--sy-type-data-line);
 	--font-weight-data: var(--sy-type-data-weight);
 
+	--spacing-0: 0px;
 	--spacing-2: var(--sy-space-2);
 	--spacing-4: var(--sy-space-4);
 	--spacing-6: var(--sy-space-6);
