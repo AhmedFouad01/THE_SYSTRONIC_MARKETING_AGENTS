@@ -1237,4 +1237,10 @@ export const ar: Record<MessageKey, string> = {
 	"import.ledgerPage": "تعرض هذه الصفحة {count} صف (بحد أقصى {max}).",
 	"import.ledgerEmpty": "لا توجد صفوف تطابق هذه النتيجة في الصفحة.",
 	"import.record": "السجل",
+	"fileDrop.browse": "اختيار ملف",
+	"fileDrop.prompt": "اسحب ملفًا إلى هنا أو اختره من جهازك.",
+	"fileDrop.remove": "إزالة {name}",
+	"fileDrop.empty": "لم يتم اختيار ملف.",
+	"fileDrop.readFailed": "تعذرت قراءة الملف. يرجى اختياره مرة أخرى.",
+	"fileDrop.kib": "ك.ب",
 };

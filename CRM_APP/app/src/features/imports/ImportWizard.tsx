@@ -4,7 +4,7 @@ import { workspaceName } from "../../ui/shell/workspaceName.ts";
 import { workspaceKey } from "../../api/workspaces.ts";
 import { navigate } from "../../router.ts";
 import { Bdi, type MessageKey, useI18n } from "../../ui/i18n/index.ts";
-import { Button, Identity, Input, LoadingState, PageHeader, Panel, Select } from "../../ui/primitives/index.ts";
+import { Button, FileDropZone, Identity, Input, LoadingState, PageHeader, Panel, Select } from "../../ui/primitives/index.ts";
 import { fetchAssignees } from "../leads/api.ts";
 import type { Assignee } from "../leads/model.ts";
 import { bytesToBase64, fetchImportFields, inspectUpload, previewImport } from "./api.ts";
@@ -186,11 +186,9 @@ export function ImportWizard() {
 						<option value="contact">{t("nav.contacts")}</option><option value="lead">{t("nav.leads")}</option>
 					</Select>
 					<p>{tx("import.limits", { mib: formatNumber(fields.limits.fileBytes / 1024 / 1024), rows: formatCount(fields.limits.rows), columns: formatCount(fields.limits.columns) })}</p>
-					<section className="border border-dashed border-border-strong rounded-8 p-16" aria-label={t("import.drop")} onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); if (!processing) chooseFile(event.dataTransfer.files[0]); }}>
-						<Input label={t("import.chooseFile")} type="file" accept={fields.formats.map((format) => `.${format}`).join(",")} disabled={processing} onChange={(event) => chooseFile(event.target.files?.[0])} />
-						<p>{t("import.drop")}</p>
-					</section>
-					{draft.file ? <p><Bdi>{inspection?.file.name ?? cleanFilename(draft.file.name)}</Bdi> · {formatNumber(draft.file.size / 1024)} {t("import.kib")}</p> : <p>{t("import.empty")}</p>}
+					<FileDropZone label={t("import.chooseFile")} acceptedFileTypes={fields.formats.map((format) => `.${format}`)} disabled={processing}
+      file={draft.file ? { name: inspection?.file.name ?? cleanFilename(draft.file.name), size: draft.file.size } : null}
+      onSelect={chooseFile} onRemove={() => resetInspection({ file: null, file_base64: null, options: { ...draft.options, sheet: "1" } })} />
 					{draft.file && fileFormat(draft.file.name) === "xlsx" ? <Input label={t("import.sheet")} hint={t("import.sheetHint")} value={draft.options.sheet} disabled={processing} onChange={(event) => resetInspection({ options: { ...draft.options, sheet: event.target.value } })} /> : null}
 					<Input label={t("import.country")} hint={t("import.countryHint")} value={draft.options.default_country_code} disabled={processing} dir="ltr" onChange={(event) => update({ options: { ...draft.options, default_country_code: event.target.value } })} />
 					<Select label={t("common.owner")} value={draft.options.owner_id} disabled={processing} onChange={(event) => update({ options: { ...draft.options, owner_id: event.target.value } })}>

@@ -1239,6 +1239,12 @@ export const en = {
 	"import.ledgerPage": "This page shows {count} rows (up to {max}).",
 	"import.ledgerEmpty": "No rows match this outcome on this page.",
 	"import.record": "Record",
+	"fileDrop.browse": "Browse files",
+	"fileDrop.prompt": "Drop a file here or browse your device.",
+	"fileDrop.remove": "Remove {name}",
+	"fileDrop.empty": "No file selected.",
+	"fileDrop.readFailed": "The file could not be read. Please choose it again.",
+	"fileDrop.kib": "KiB",
 } as const satisfies Record<string, string>;
 
 export type MessageKey = keyof typeof en;
