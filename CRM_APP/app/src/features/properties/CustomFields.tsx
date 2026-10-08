@@ -268,13 +268,13 @@ export function CustomFieldsRead({ cf }: { cf: CustomFields }) {
 	if (cf.status === "off") return null;
 	if (cf.status === "loading")
 		return (
-			<p className="sy-record__muted" role="status" data-testid="cf-loading">
+			<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid="cf-loading">
 				{t("cf.loading")}
 			</p>
 		);
 	if (cf.status === "error")
 		return (
-			<p className="sy-record__muted" role="status" data-testid="cf-error">
+			<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid="cf-error">
 				{t("cf.failed")}
 			</p>
 		);
@@ -290,13 +290,13 @@ export function CustomFieldsRead({ cf }: { cf: CustomFields }) {
 					<Heading>
 						<BidiText>{pickLabel(g.group.label, locale, g.group.key)}</BidiText>
 					</Heading>
-					<dl className="sy-record__facts sy-cf__facts">
+					<dl className="sy-record__facts sy-cf__facts grid grid-cols-2 gap-y-12 gap-x-16 m-0">
 						{g.properties.map((p) => {
 							const v = readValue(p, cf.values[p.key], ctx);
 							return (
 								<div
 									key={p.key}
-									className={`sy-record__fact${v.kind === "multiline" || v.kind === "chips" ? " sy-cf__fact--wide" : ""}`}
+									className={`sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]${v.kind === "multiline" || v.kind === "chips" ? " sy-cf__fact--wide" : ""}`}
 									data-testid={`cf-fact-${p.key}`}
 								>
 									<dt>
@@ -515,13 +515,13 @@ export function CustomFieldsEdit({ cf, draft, mode }: { cf: CustomFields; draft:
 	if (cf.status === "off") return null;
 	if (cf.status === "loading" || (mode === "edit" && cf.status === "ready" && !cf.current))
 		return (
-			<p className="sy-record__muted" role="status" data-testid="cf-loading">
+			<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid="cf-loading">
 				{t("cf.loading")}
 			</p>
 		);
 	if (cf.status === "error")
 		return (
-			<p className="sy-record__muted" role="status" data-testid="cf-error">
+			<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid="cf-error">
 				{t("cf.failed")}
 			</p>
 		);

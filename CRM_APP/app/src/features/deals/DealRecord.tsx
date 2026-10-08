@@ -390,8 +390,8 @@ export function DealRecord({
 										/>
 									</div>
 								) : (
-									<dl className="sy-record__facts" data-testid="record-facts">
-										<div className="sy-record__fact">
+									<dl className="sy-record__facts grid grid-cols-2 gap-y-12 gap-x-16 m-0" data-testid="record-facts">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.detail.contact")}</dt>
 											<dd>
 												<Link route="/contacts" id={deal.contact_id}>
@@ -399,20 +399,20 @@ export function DealRecord({
 												</Link>
 											</dd>
 										</div>
-										<div className="sy-record__fact">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.detail.pipeline")}</dt>
 											<dd>
 												<Bdi>{deal.pipelineName}</Bdi>
 											</dd>
 										</div>
-										<div className="sy-record__fact">
+										<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 											<dt>{t("deals.field.currency")}</dt>
 											<dd>
 												<bdi dir="ltr">{deal.currency}</bdi>
 											</dd>
 										</div>
 										{deal.lead_id ? (
-											<div className="sy-record__fact">
+											<div className="sy-record__fact min-w-0 [&_dt]:text-[11px] [&_dt]:text-text-3 [&_dd]:m-0 [&_dd]:mt-2 [&_dd]:font-[600] [&_dd]:text-text [&_dd]:[overflow-wrap:anywhere]">
 												<dt>{t("deals.context.lead")}</dt>
 												<dd>
 													<Link route="/leads" id={deal.lead_id}>

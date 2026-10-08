@@ -576,7 +576,7 @@ export function ContactDetail({
 				onClose={onClose}
 				{...(preview.returnFocus ? { returnFocus: preview.returnFocus } : {})}
 			>
-				<p className="sy-record__muted" role="status" data-testid={`contact-detail-${state}`}>
+				<p className="sy-record__muted m-0 mt-4 text-data text-text-3" role="status" data-testid={`contact-detail-${state}`}>
 					{state === "loading" ? t("preview.loading") : t("preview.missing")}
 				</p>
 			</PreviewPanel>
