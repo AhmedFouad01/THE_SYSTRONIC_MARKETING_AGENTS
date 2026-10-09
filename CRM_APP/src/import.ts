@@ -7,6 +7,7 @@
 // the same mapping returns the stored job (`replayed: true`) and writes nothing; UNIQUE(tenant, object, import_key) is the backstop.
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
+import { requireLeadContact } from "./leadcontact.js";
 import { id as uuidOf, permit, type Body } from "./crm.js";
 import { type Context, Fault, transaction } from "./db.js";
 import {
@@ -284,7 +285,7 @@ async function propertyContext(
 }
 
 // ---- the plan (shared by preview and commit) -----------------------------------------------------------------------------------
-type Existing = { id: string; display_name: string; custom: Row };
+type Existing = { id: string; display_name: string; custom: Row; has_channel?: boolean };
 async function plan(
 	db: Db,
 	ctx: Context,
@@ -382,7 +383,7 @@ async function plan(
 	].sort();
 	for (let i = 0; i < touched.length; i += 1000) {
 		const { rows } = await db.query(
-			`SELECT id,display_name,custom FROM crm.contact WHERE tenant_id=$1 AND id=ANY($2::uuid[]) ORDER BY id ${forWrite && inp.options.duplicate_mode === "update" ? "FOR UPDATE" : ""}`,
+			`SELECT id,display_name,custom,crm.contact_has_channel(id) has_channel FROM crm.contact WHERE tenant_id=$1 AND id=ANY($2::uuid[]) ORDER BY id ${forWrite && inp.options.duplicate_mode === "update" ? "FOR UPDATE" : ""}`,
 			[ctx.tenant, touched.slice(i, i + 1000)],
 		);
 		for (const r of rows)
@@ -482,6 +483,7 @@ async function plan(
 				id: it.contactRef,
 				display_name: name,
 				custom: it.custom ?? {},
+				has_channel: idents(v).length > 0,
 			});
 			register(it.contactRef);
 		};
@@ -552,7 +554,9 @@ async function plan(
 			} else {
 				const existing = leadsOf.get(match)?.get(titleK);
 				if (existing && mode !== "create") {
-					if (mode === "skip") {
+					if (mode === "skip" && !state.get(match)?.has_channel) {
+						fail([{field:"contact_channels",code:"CONTACT_REQUIRED"}]);
+					} else if (mode === "skip") {
 						it.status = "skip";
 						it.reason = "DUPLICATE";
 						it.contactRef = match;
@@ -566,7 +570,7 @@ async function plan(
 							existing.custom,
 						);
 						if (!p.ok) fail(p.errors);
-						else if (!p.changed.length) {
+						else if (!p.changed.length && state.get(match)?.has_channel) {
 							it.status = "skip";
 							it.reason = "NO_CHANGE";
 						} else {
@@ -975,6 +979,7 @@ async function commit(db: Db, ctx: Context, b: Body, request: string) {
 			continue;
 		}
 		// lead rows
+		const hadContact = Boolean(contact);
 		if (!contact) {
 			contact = randomUUID();
 			ids.set(`new:${it.row}`, contact);
@@ -996,6 +1001,14 @@ async function commit(db: Db, ctx: Context, b: Body, request: string) {
 				],
 			});
 		}
+		if (hadContact) {
+			await db.query("SELECT id FROM crm.contact WHERE tenant_id=$1 AND id=$2 FOR UPDATE",[ctx.tenant,contact]);
+			for (const x of idents(it.value as RowValue)) {
+				const restored = await db.query("UPDATE crm.contact_identifier SET is_active=true WHERE tenant_id=$1 AND contact_id=$2 AND kind=$3 AND keyed_lookup_digest=crm.identifier_digest($4) RETURNING id",[ctx.tenant,contact,x.kind,x.value]);
+				if (!restored.rowCount) await addIdentifiers(contact as string,[x]);
+			}
+		}
+		await requireLeadContact(db,ctx,contact as string);
 		if (it.status === "create") {
 			const lead = randomUUID();
 			leadIds.set(`new:${it.row}`, lead);

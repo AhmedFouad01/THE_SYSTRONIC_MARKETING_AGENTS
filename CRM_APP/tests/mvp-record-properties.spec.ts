@@ -45,7 +45,7 @@ async function makeLead(request: APIRequestContext, f: Fixture, title: string, e
 	const command_id = randomUUID();
 	const r = await request.post("/v1/leads", {
 		headers: { ...auth(f), "Idempotency-Key": command_id },
-		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}` }, ...extra },
+		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" }, ...extra },
 	});
 	expect(r.status()).toBe(201);
 	return (await r.json()).data as { id: string };
@@ -130,6 +130,7 @@ for (const language of ["en", "ar"] as const) {
 			await expect(dialog.getByTestId("cf-edit")).toBeVisible();
 			await dialog.locator("[name=title]").fill("Needs region");
 			await dialog.locator("[name=contactName]").fill("Ada Lovelace");
+			await dialog.locator("[name=email]").fill("ada@example.test");
 			await dialog.locator("[name=evidence]").fill("synthetic");
 			await page.getByTestId("new-lead-submit").click();
 			await expect(dialog.getByTestId("cf-field-region").locator(".sy-field__error")).toBeVisible();

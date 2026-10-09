@@ -33,7 +33,7 @@ import {
 	type LeadStatus,
 } from "./model.ts";
 
-type EditError = null | "conflict" | "forbidden" | "other";
+type EditError = null | "conflict" | "forbidden" | "other" | "contactRequired";
 
 type EditorProps = {
 	lead: LeadRow;
@@ -55,6 +55,9 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 
 	const fields = useContactFieldDraft(lead, false);
 	const custom = useCustomDraft(cf, "edit");
+	const contactRequired = lead.sensitive_masked === false
+		? !fields.draft.email?.trim() && !fields.draft.phone?.trim()
+		: lead.missing_contact === true;
 	const dirty = buildPatchBody(lead, draft, "x") !== null || custom.dirty || fields.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === lead.owner_id) || !lead.owner_id
@@ -67,6 +70,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 			return;
 		}
 		if (fields.errors.length) return;
+		if (contactRequired) {setError("contactRequired"); return;}
 		const c = custom.prepare();
 		if (!c.ok) return;
 		const id = crypto.randomUUID();
@@ -81,6 +85,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 			onDone();
 		} catch (e) {
 			if (custom.fail(e)) return;
+			if (isApiError(e) && e.code === "CONTACT_REQUIRED") {setError("contactRequired");return;}
 			setError(
 				isVersionConflict(e)
 					? "conflict"
@@ -191,6 +196,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 					</option>
 				))}
 			</Select>
+			{error === "contactRequired" ? <p role="alert">{t("leads.contact.required")}</p> : null}
 			<ContactFieldsEdit fields={fields} masked={lead.sensitive_masked !== false} />
 			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
@@ -315,6 +321,7 @@ export function LeadDetail({
 					: undefined
 			}
 		>
+			{lead.missing_contact ? <p role="status">{t("leads.contact.missing")}</p> : null}
 			<CustomFieldsRead cf={cf} />
 		</RecordPanel>
 	);

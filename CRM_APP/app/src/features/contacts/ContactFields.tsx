@@ -77,6 +77,7 @@ export function useContactFieldDraft(
 		(k) => draft[k] !== String(record[k as keyof ContactFields] ?? ""),
 	);
 	const errors = fields.filter((k) =>
+		!draft[k]?.trim() ? false :
 		k === "email"
 			? !normalizeEmail(draft[k] ?? "")
 			: k === "phone"

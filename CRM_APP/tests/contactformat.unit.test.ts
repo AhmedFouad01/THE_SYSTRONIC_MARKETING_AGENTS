@@ -1,3 +1,4 @@
+import { contactRequiredMessage } from "../src/leadcontact.js";
 import { describe, expect, it } from "vitest";
 import {
 	normalizeEmail,
@@ -19,3 +20,5 @@ describe("R09 channel and custom typed validation", () => {
 		expect(normalizeUrl("https://example.com")).toBe("https://example.com/");
 	});
 });
+
+it("R10 API channel errors support English and Arabic while codes stay stable",()=>{expect(contactRequiredMessage("en-US")).toContain("phone number or email");expect(contactRequiredMessage("ar-EG, en;q=0.5")).toContain("رقم هاتف");});

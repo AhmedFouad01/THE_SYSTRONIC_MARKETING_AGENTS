@@ -23,6 +23,7 @@ export type Lead = ContactFields & {
 	status: LeadStatus;
 	version: number;
 	received_at: string;
+	missing_contact?: boolean;
 } & Expanded;
 
 export type Assignee = { id: string; name: string };
@@ -31,11 +32,12 @@ export type Contact = { id: string; display_name: string };
 /** Lead enriched for the grid (names come from the list's `expand=contact,owner`; the assignee directory names owners of confirmed writes). */
 export type LeadRow = Lead & { contactName: string; ownerName: string };
 
-export type BuiltInView = "all" | "mine" | "unassigned";
+export type BuiltInView = "all" | "mine" | "unassigned" | "missing_contact";
 export const BUILT_IN_VIEWS: readonly BuiltInView[] = [
 	"all",
 	"mine",
 	"unassigned",
+	"missing_contact",
 ];
 
 /**
@@ -44,6 +46,7 @@ export const BUILT_IN_VIEWS: readonly BuiltInView[] = [
  */
 export function builtInViewNodes(view: BuiltInView, actor: string | null): ServerNode[] {
 	if (view === "all") return [];
+	if (view === "missing_contact") return [cond("missing_contact","eq",true)];
 	if (view === "mine") return [actor === null ? NOTHING : cond("owner_id", "eq", actor)];
 	return [cond("owner_id", "is_null")];
 }
@@ -168,10 +171,11 @@ export type NewLeadInput = {
 export type NewLeadField =
 	| "title"
 	| "contactName"
+	| "contactChannels"
 	| "phone"
 	| "email"
 	| "evidence";
-export type FieldIssue = "required" | "tooLong" | "phone" | "email";
+export type FieldIssue = "required" | "tooLong" | "phone" | "email" | "contactRequired";
 export type NewLeadErrors = Partial<Record<NewLeadField, FieldIssue>>;
 
 export const EMPTY_NEW_LEAD: NewLeadInput = {
@@ -186,6 +190,7 @@ const MAX = { title: 160, contactName: 160, evidence: 500 } as const;
 
 export function validateNewLead(i: NewLeadInput): NewLeadErrors {
 	const e: NewLeadErrors = {};
+	if (!i.email.trim() && !i.phone.trim()) e.contactChannels="contactRequired";
 	const need = (field: "title" | "contactName" | "evidence", value: string) => {
 		if (value.trim() === "") e[field] = "required";
 		else if (value.trim().length > MAX[field]) e[field] = "tooLong";

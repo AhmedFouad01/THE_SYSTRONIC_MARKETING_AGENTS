@@ -87,7 +87,7 @@ async function makeDeal(
 			command_id: leadCmd,
 			title: `L ${title}`,
 			source_evidence: "synthetic",
-			contact: { display_name: `Contact ${title}` },
+			contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" },
 		},
 	});
 	expect(leadRes.status()).toBe(201);

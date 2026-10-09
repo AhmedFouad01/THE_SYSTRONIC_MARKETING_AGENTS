@@ -60,7 +60,7 @@ test.beforeAll(async ({ playwright }) => {
 	// Leads (each creates its contact). The two "needles" are created FIRST = oldest = last in newest-first order.
 	type L = { id: string; contact_id: string; version: number };
 	const lead = (title: string) =>
-		post<L>(request, "/v1/leads", { title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}` } });
+		post<L>(request, "/v1/leads", { title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" } });
 	const leads: L[] = [await lead(ZEBRA), await lead(AR_TITLE)];
 	const titles = Array.from({ length: N - 2 }, (_, i) => `Item ${String(i + 1).padStart(3, "0")}`);
 	await inChunks(titles, 10, async (t) => {

@@ -26,7 +26,7 @@ async function makeLead(request: APIRequestContext, f: Fixture, title: string, p
 	const command_id = randomUUID();
 	const r = await request.post("/v1/leads", {
 		headers: { ...auth(f), "Idempotency-Key": command_id },
-		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}` }, properties },
+		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" }, properties },
 	});
 	expect(r.status()).toBe(201);
 }

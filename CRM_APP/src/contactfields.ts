@@ -14,7 +14,7 @@ export async function attachContactFields(
 	if ((kind !== "contact" && kind !== "lead") || !rows.length) return;
 	const ids = rows.map((r) => r.id);
 	const results = await db.query(
-		`SELECT x.id, c.id contact_id,
+		`SELECT x.id, c.id contact_id, crm.contact_has_channel(c.id) has_channel,
  crm.can_object('sensitive.read',$3,x.id,$4) AND crm.can_object('sensitive.read','contact',c.id,$4) allowed
  FROM crm.${kind} x JOIN crm.contact c ON c.tenant_id=x.tenant_id AND c.id=${kind === "contact" ? "x.id" : "x.contact_id"}
  WHERE x.tenant_id=$1 AND x.id=ANY($2::uuid[])`,
@@ -28,7 +28,7 @@ export async function attachContactFields(
 	if (allowedContacts.length) {
 		const channels = await db.query(
 			`SELECT DISTINCT ON(contact_id,kind) contact_id,kind,crm.identifier_value_scoped(id,$3) value
-   FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=ANY($2::uuid[])
+   FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=ANY($2::uuid[]) AND is_active
    ORDER BY contact_id,kind,is_primary DESC,(original_contact_id=contact_id) DESC,id`,
 			[ctx.tenant, allowedContacts, ctx.grant ?? null],
 		);
@@ -56,6 +56,7 @@ export async function attachContactFields(
 			? values.get(permission.contact_id)
 			: undefined;
 		row.sensitive_masked = !permission?.allowed;
+		if (kind === "lead") row.missing_contact = !permission?.has_channel;
 		for (const field of kind === "contact"
 			? ["email", "phone", "company", "job_title"]
 			: ["email", "phone"])
@@ -87,6 +88,10 @@ export async function writeContactFields(
 	for (const field of fields) {
 		const raw = body[field];
 		if (field === "email" || field === "phone") {
+			if (raw === null || (typeof raw === "string" && !raw.trim())) {
+				await db.query("UPDATE crm.contact_identifier SET is_active=false,is_primary=false WHERE tenant_id=$1 AND contact_id=$2 AND kind=$3",[ctx.tenant,contact,field]);
+				continue;
+			}
 			const value =
 				typeof raw === "string"
 					? field === "email"
@@ -95,7 +100,7 @@ export async function writeContactFields(
 					: null;
 			if (!value) throw new Fault(422, "VALIDATION_FAILED");
 			await db.query(
-				"UPDATE crm.contact_identifier SET is_primary=false WHERE tenant_id=$1 AND contact_id=$2 AND kind=$3",
+				"UPDATE crm.contact_identifier SET is_primary=false,is_active=false WHERE tenant_id=$1 AND contact_id=$2 AND kind=$3",
 				[ctx.tenant, contact, field],
 			);
 			const existing = await db.query(
@@ -104,7 +109,7 @@ export async function writeContactFields(
 			);
 			if (existing.rowCount)
 				await db.query(
-					"UPDATE crm.contact_identifier SET is_primary=true WHERE tenant_id=$1 AND id=$2",
+					"UPDATE crm.contact_identifier SET is_primary=true,is_active=true WHERE tenant_id=$1 AND id=$2",
 					[ctx.tenant, existing.rows[0].id],
 				);
 			else

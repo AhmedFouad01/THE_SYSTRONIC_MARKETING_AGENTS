@@ -132,10 +132,12 @@ describe("new lead form", () => {
 		...EMPTY_NEW_LEAD,
 		title: " Intro ",
 		contactName: "Ada",
+		email: "ada@example.test",
 		evidence: "Call",
 	};
 	it("requires title, contact name and evidence", () => {
 		expect(validateNewLead(EMPTY_NEW_LEAD)).toEqual({
+			contactChannels: "contactRequired",
 			title: "required",
 			contactName: "required",
 			evidence: "required",
@@ -160,10 +162,10 @@ describe("new lead form", () => {
 			command_id: "cmd",
 			title: "Intro",
 			source_evidence: "Call",
-			contact: { display_name: "Ada" },
+			contact: { display_name: "Ada", identifiers: [{kind:"email",value:"ada@example.test",provenance:"manual_entry"}] },
 		});
 		const withIds = buildCreateBody(
-			{ ...ok, phone: "+201001234567", ownerId: ME },
+			{ ...ok, email: "", phone: "+201001234567", ownerId: ME },
 			"cmd",
 		);
 		expect(withIds.owner_id).toBe(ME);
@@ -258,4 +260,15 @@ describe("leads KPI strip", () => {
 		expect(leadStripTone("closed", { count: 5, capped: true })).toBe("neutral");
 		expect(leadStripTone("qualified", { count: 0, capped: false })).toBe("neutral");
 	});
+});
+
+describe("corrected R10 contact channels",()=>{
+ const form={...EMPTY_NEW_LEAD,title:"Lead",contactName:"Name",evidence:"Manual"};
+ it("name alone and whitespace fail; phone-only/email-only/both succeed",()=>{
+  expect(validateNewLead(form).contactChannels).toBe("contactRequired");
+  expect(validateNewLead({...form,phone:"  ",email:"  "}).contactChannels).toBe("contactRequired");
+  for (const channels of [{phone:"01001234567"},{email:"valid@example.test"},{phone:"01001234567",email:"valid@example.test"}]) expect(validateNewLead({...form,...channels})).toEqual({});
+  expect(validateNewLead({...form,email:"•••• (Hidden)"}).email).toBe("email");
+ });
+ it("missing contact preset sends a boolean server filter",()=>{expect(builtInViewNodes("missing_contact",ME)).toEqual([{p:"missing_contact",op:"eq",v:true}]);});
 });

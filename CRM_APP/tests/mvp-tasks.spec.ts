@@ -37,7 +37,7 @@ async function makeLead(request: APIRequestContext, f: Fixture, title: string) {
 			command_id,
 			title,
 			source_evidence: "synthetic",
-			contact: { display_name: `Contact ${title}` },
+			contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" },
 		},
 	});
 	expect(res.status()).toBe(201);

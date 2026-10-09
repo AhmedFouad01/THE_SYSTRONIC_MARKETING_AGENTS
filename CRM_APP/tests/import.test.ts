@@ -628,3 +628,25 @@ test("R09 scalar identifier edits remain dedup/import compatible, masked, and in
  const invalid=await call(mgr,"POST","/v1/imports",req(csv("name,email\nNew,new@example.com\nInvalid,bad\n"),NAME_EMAIL,{options:{error_policy:"abort"}}));assert.equal(invalid.status,422);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before);
  const hidden=await call(reader,"GET",`/v1/contacts/${id}`);assert.equal(hidden.body.data.sensitive_masked,true);assert.equal(hidden.body.data.email,null);assert.equal(hidden.body.data.phone,null);
 });
+
+test("R10 lead imports reject name/blank/invalid rows and repair historical-only duplicate updates",async()=>{
+ await fresh();
+ const columns=[{column:0,target:"title"},{column:1,target:"contact_name"},{column:2,target:"email"},{column:3,target:"phone"}];
+ const body=req(csv("title,name,email,phone\nName only,Name,,\nBlank,Name,  ,  \nInvalid,Name,bad,\nEmail,Email,email-only@example.test,\nPhone,Phone,,01001234567\nBoth,Both,both@example.test,01001234568\n"),columns,{object:"lead"});
+ const before=await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]);
+ const preview=await call(mgr,"POST","/v1/imports/preview",body);assert.equal(preview.status,200,JSON.stringify(preview.body));assert.equal(preview.body.data.summary.error,3);
+ assert.ok(JSON.stringify(preview.body).includes("CONTACT_REQUIRED"));assert.ok(JSON.stringify(preview.body).includes("INVALID_EMAIL"));
+ const rejected=await call(mgr,"POST","/v1/imports",{...body,options:{error_policy:"abort"}});assert.equal(rejected.status,422);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before);
+ const saved=await call(mgr,"POST","/v1/imports",body);assert.equal(saved.status,201,JSON.stringify(saved.body));assert.equal(saved.body.data.job.created,3);assert.equal(saved.body.data.job.failed,3);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before+3);
+ const c=await call(mgr,"POST","/v1/contacts",{command_id:randomUUID(),display_name:"History",email:"history@example.test"});assert.equal(c.status,201);
+ const lead=await call(mgr,"POST","/v1/leads",{command_id:randomUUID(),title:"Historic duplicate",source_evidence:"manual",contact_id:c.body.data.id});assert.equal(lead.status,201);
+ const cleared=await call(mgr,"PATCH",`/v1/contacts/${c.body.data.id}`,{command_id:randomUUID(),expected_version:c.body.data.version,email:null});assert.equal(cleared.status,200);assert.equal((await call(reader,"GET",`/v1/leads/${lead.body.data.id}`)).body.data.missing_contact,true);
+ const restore=req(csv("title,name,email,phone\nHistoric duplicate,History,history@example.test,\n"),columns,{object:"lead",options:{duplicate_mode:"update"}});
+ const pv=await call(mgr,"POST","/v1/imports/preview",restore);assert.equal(pv.status,200);assert.equal(pv.body.data.summary.update,1);
+ const done=await call(mgr,"POST","/v1/imports",restore);assert.equal(done.status,201,JSON.stringify(done.body));assert.equal(done.body.data.job.updated,1);
+ const checked=await call(mgr,"GET",`/v1/leads/${lead.body.data.id}`);assert.equal(checked.body.data.missing_contact,false);assert.equal(checked.body.data.email,"history@example.test");
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,c.body.data.id]),1);
+ const replay=await call(mgr,"POST","/v1/imports",restore);assert.equal(replay.status,200);assert.equal(replay.body.data.replayed,true);
+ const newLead=req(csv("title,name,email,phone\nNew historic match,History,history@example.test,\n"),columns,{object:"lead"});
+ const newest=await call(mgr,"POST","/v1/imports",newLead);assert.equal(newest.status,201);assert.equal(newest.body.data.job.created,1);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.body.data.id]),1);
+});

@@ -71,6 +71,7 @@ const VIEW_LABEL = {
 	all: "leads.view.all",
 	mine: "leads.view.mine",
 	unassigned: "leads.view.unassigned",
+	missing_contact: "leads.contact.missing",
 } as const;
 
 // Default order: newest first, so a just-created lead is on page 1.
@@ -324,7 +325,7 @@ export function LeadsView() {
 				sortable: true,
 				hideable: false,
 				mobile: "title",
-				cell: (r) => <IdentityCell name={r.title} caption={r.contactName} />,
+				cell: (r) => <div><IdentityCell name={r.title} caption={r.contactName} />{r.missing_contact ? <ChipCell tone="warning">{t("leads.contact.missing")}</ChipCell> : null}</div>,
 			},
 			{
 				id: "contact",

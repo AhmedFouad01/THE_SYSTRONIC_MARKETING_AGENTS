@@ -25,7 +25,7 @@ async function makeLead(request: APIRequestContext, f: Fixture, title: string) {
 			"X-Tenant-ID": f.ids.a,
 			"Idempotency-Key": command_id,
 		},
-		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}` } },
+		data: { command_id, title, source_evidence: "synthetic", contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" } },
 	});
 	expect(res.status()).toBe(201);
 	return (await res.json()).data as { id: string };

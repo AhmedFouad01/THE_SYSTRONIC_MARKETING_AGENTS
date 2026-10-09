@@ -1,0 +1,19 @@
+npm notice run systronic-crm@0.1.0 build
+npm notice run tsc && npm run app:build && tsx scripts/build-assets.ts
+npm notice run systronic-crm@0.1.0 app:build
+npm notice run vite build app
+vite v8.3.2 building client environment for production...
+transforming...
+✓ 1521 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/app/index.html                     0.41 kB │ gzip:   0.28 kB
+dist/app/assets/index-DyLZl8PT.css     78.55 kB │ gzip:  13.97 kB
+dist/app/assets/index-B5XWlgcy.js   1,212.19 kB │ gzip: 360.02 kB
+
+✓ built in 425ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

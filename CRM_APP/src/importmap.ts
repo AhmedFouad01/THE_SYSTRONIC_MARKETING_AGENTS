@@ -270,12 +270,11 @@ export function buildRow(
 		errors.push({ field: "title", code: "REQUIRED" });
 	if (
 		object === "lead" &&
-		v.displayName === undefined &&
 		!v.email &&
 		!v.phone &&
 		!errors.length
 	)
-		errors.push({ field: "contact_name", code: "CONTACT_REQUIRED" });
+		errors.push({ field: "contact_channels", code: "CONTACT_REQUIRED" });
 	return errors.length
 		? { ok: false, errors }
 		: { ok: true, value: v, warnings };

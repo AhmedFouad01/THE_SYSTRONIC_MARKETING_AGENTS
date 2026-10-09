@@ -561,7 +561,7 @@ test("B3 custom_search: folded text of searchable non-sensitive properties; q fi
 	assert.equal((await customOf("contact", c.id)).l3, undefined);
 	// q on leads/deals/tasks also reads their own custom_search
 	await prop("lead", "lnote", "text", { searchable: true });
-	const lead = await call(mgr, "POST", "/v1/leads", { ...cmd(), contact_id: f.ids.contact, title: "Lead T", source_evidence: "e", properties: { lnote: "findme-lead" } });
+	const lead = await call(mgr, "POST", "/v1/leads", { ...cmd(), contact_id: f.ids.contact, email:"b3-fixture@example.test", title: "Lead T", source_evidence: "e", properties: { lnote: "findme-lead" } });
 	assert.equal(lead.status, 201);
 	assert.deepEqual(await q("findme-lead", "leads"), [lead.body.data.id]);
 });
@@ -638,7 +638,7 @@ test("B3 all four objects: create + patch + read with properties; legacy create 
 	for (const o of ["contact", "lead", "deal", "task"]) await prop(o, "x", "text", { searchable: true });
 	await prop("deal", "n", "number");
 	await prop("task", "flag", "checkbox");
-	const lead = await call(mgr, "POST", "/v1/leads", { ...cmd(), contact_id: f.ids.contact, title: "L", source_evidence: "e", properties: { x: "lead x" } });
+	const lead = await call(mgr, "POST", "/v1/leads", { ...cmd(), contact_id: f.ids.contact, email:"b3-fixture@example.test", title: "L", source_evidence: "e", properties: { x: "lead x" } });
 	assert.equal(lead.status, 201, JSON.stringify(lead.body));
 	const deal = await call(mgr, "POST", "/v1/deals", { ...cmd(), contact_id: f.ids.contact, pipeline_id: f.ids.pipeline, stage_id: f.ids.start, title: "D", properties: { x: "deal x", n: 7 } });
 	assert.equal(deal.status, 201, JSON.stringify(deal.body));
@@ -857,4 +857,74 @@ test("R09 actual migration 028 preserves populated records and ciphertext, then 
   await admin.query("SELECT crm.seed_system_properties($1)",[mgr.tenant]);assert.equal((await one("SELECT count(*)::int n FROM crm.property_definition WHERE tenant_id=$1 AND storage='protected'",[mgr.tenant])).n,6);
  } finally {await admin.query("ROLLBACK");}
  assert.deepEqual(await snapshot(),before);
+});
+
+// Corrected R10: phone OR email, including update, atomic channel removal, masked writers and historic rows.
+test("R10 create requires real phone/email; invalid/name-only/linked-only writes leave no orphan",async()=>{
+ await fresh();
+ const snapshot=async()=>one("SELECT (SELECT count(*) FROM crm.contact WHERE tenant_id=$1) contacts,(SELECT count(*) FROM crm.lead WHERE tenant_id=$1) leads,(SELECT count(*) FROM crm.audit_log WHERE tenant_id=$1) audits",[mgr.tenant]);
+ const before=await snapshot();
+ for (const contact of [{display_name:"Name only"},{display_name:"Blank",email:"  ",phone:null},{display_name:"Invalid",email:"not-email"},{display_name:"Masked",phone:"•••• (Hidden)"}]) {
+  const bad=await call(mgr,"POST","/v1/leads",{...cmd(),title:"Rejected",source_evidence:"manual",contact});assert.equal(bad.status,422,JSON.stringify(bad.body));
+ }
+ const linked=await call(mgr,"POST","/v1/leads",{...cmd(),title:"Linked only",source_evidence:"manual",contact_id:f.ids.contact});assert.equal(linked.status,422);assert.equal(linked.body.code,"CONTACT_REQUIRED");
+ assert.deepEqual(await snapshot(),before);
+ for (const channels of [{phone:"01001234567"},{email:"only@example.test"},{email:"both@example.test",phone:"01001234568"}]) {
+  const id=randomUUID(),body={command_id:id,title:"Accepted",source_evidence:"manual",contact:{display_name:"Channel",...channels}};
+  const made=await call(mgr,"POST","/v1/leads",body,id);assert.equal(made.status,201,JSON.stringify(made.body));assert.equal(made.body.data.missing_contact,false);
+  const replay=await call(mgr,"POST","/v1/leads",body,id);assert.equal(replay.status,201);assert.equal(replay.body.data.id,made.body.data.id);assert.equal(replay.body.data.replayed,true);
+ }
+});
+test("R10 lead update validates resulting stored state, rolls back last-channel removal, preserves history",async()=>{
+ await fresh();
+ const made=await call(mgr,"POST","/v1/leads",{...cmd(),title:"Two",source_evidence:"manual",contact:{display_name:"Two",email:"two@example.test",phone:"01001234567"}});assert.equal(made.status,201);
+ let lead=made.body.data;
+ const oneRemoved=await patch(mgr,"leads",lead.id,lead.version,{email:"  "});assert.equal(oneRemoved.status,200);lead=oneRemoved.body.data;assert.equal(lead.email,null);assert.equal(lead.missing_contact,false);
+ const before=await one("SELECT version,title FROM crm.lead WHERE tenant_id=$1 AND id=$2",[mgr.tenant,lead.id]);
+ const last=await patch(mgr,"leads",lead.id,lead.version,{title:"Must rollback",email:null,phone:null});assert.equal(last.status,422);assert.equal(last.body.code,"CONTACT_REQUIRED");assert.deepEqual(await one("SELECT version,title FROM crm.lead WHERE tenant_id=$1 AND id=$2",[mgr.tenant,lead.id]),before);
+ assert.equal((await get(mgr,"leads",lead.id)).body.data.phone,"+201001234567");
+ const invalid=await patch(mgr,"leads",lead.id,lead.version,{email:"invalid",phone:null});assert.equal(invalid.status,422);
+ const history=await one("SELECT count(*)::int total,count(*) FILTER(WHERE is_active)::int active FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,lead.contact_id]);assert.deepEqual(history,{total:2,active:1});
+ const restored=await patch(mgr,"leads",lead.id,lead.version,{phone:null,email:"two@example.test"});assert.equal(restored.status,200);assert.equal(restored.body.data.email,"two@example.test");assert.equal(restored.body.data.phone,null);
+ assert.equal((await one("SELECT count(*)::int n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,lead.contact_id])).n,2);
+});
+test("R10 legacy missing-contact flag/filter is permission safe and ordinary updates require repair",async()=>{
+ await fresh();
+ const id=randomUUID();await admin.query("INSERT INTO crm.lead(tenant_id,id,contact_id,owner_id,title,source,source_evidence) VALUES($1,$2,$3,$4,'Legacy','legacy','legacy')",[mgr.tenant,id,f.ids.contact,f.ids.manager]);
+ const masked=await get(reader,"leads",id);assert.equal(masked.status,200);assert.equal(masked.body.data.missing_contact,true);assert.equal(masked.body.data.email,null);assert.equal(masked.body.data.sensitive_masked,true);
+ const filter=encodeURIComponent(JSON.stringify({p:"missing_contact",op:"eq",v:true}));const list=await call(reader,"GET",`/v1/leads?filter=${filter}`);assert.equal(list.status,200,JSON.stringify(list.body));assert.deepEqual(list.body.data.map((r:{id:string})=>r.id),[id]);
+ assert.equal((await patch(mgr,"leads",id,0,{title:"Name alone"})).body.code,"CONTACT_REQUIRED");
+ const fixed=await patch(mgr,"leads",id,0,{title:"Repaired",email:"repair@example.test"});assert.equal(fixed.status,200);assert.equal(fixed.body.data.missing_contact,false);
+ const contact=(await get(mgr,"contacts",f.ids.contact)).body.data;
+ assert.equal((await patch(mgr,"contacts",contact.id,contact.version,{email:null})).status,200);
+ assert.equal((await get(reader,"leads",id)).body.data.missing_contact,true);
+ assert.equal((await patch(mgr,"leads",id,1,{status:"qualified"})).body.code,"CONTACT_REQUIRED","historical ciphertext is not an active channel");
+ assert.equal((await call(mgrB,"GET",`/v1/leads?filter=${filter}`)).body.data.some((r:{id:string})=>r.id===id),false);
+});
+test("R10 serialized concurrent lead edits cannot each remove a different last channel",async()=>{
+ await fresh();
+ const c=await call(mgr,"POST","/v1/contacts",{...cmd(),display_name:"Shared",email:"shared@example.test",phone:"01001234567"});assert.equal(c.status,201);
+ const a=await call(mgr,"POST","/v1/leads",{...cmd(),contact_id:c.body.data.id,title:"A",source_evidence:"manual"});const b=await call(mgr,"POST","/v1/leads",{...cmd(),contact_id:c.body.data.id,title:"B",source_evidence:"manual"});assert.equal(a.status,201);assert.equal(b.status,201);
+ const results=await Promise.all([patch(mgr,"leads",a.body.data.id,0,{email:null}),patch(mgr,"leads",b.body.data.id,0,{phone:null})]);assert.deepEqual(results.map(r=>r.status).sort(),[200,422]);assert.equal(results.find(r=>r.status===422)?.body.code,"CONTACT_REQUIRED");
+ const final=await get(mgr,"contacts",c.body.data.id);assert.ok(Boolean(final.body.data.email)!==Boolean(final.body.data.phone));
+});
+test("R10 masked writer validates stored channels without sensitive.read; 029 preserves counts/RLS/privileges",async()=>{
+ await fresh();
+ const role=`r10_${randomUUID()}`;
+ await admin.query("INSERT INTO crm.role_permission VALUES($1,'crm.read','assigned'),($1,'crm.write','assigned')",[role]);
+ try {
+  const actor=await principal(mgr.tenant,role);
+  const c=await call(mgr,"POST","/v1/contacts",{...cmd(),display_name:"Masked writer",email:"masked@example.test",owner_id:actor.id});assert.equal(c.status,201);
+  const lead=await call(actor.who,"POST","/v1/leads",{...cmd(),contact_id:c.body.data.id,title:"Masked own",source_evidence:"manual"});assert.equal(lead.status,201,JSON.stringify(lead.body));assert.equal(lead.body.data.email,null);assert.equal(lead.body.data.sensitive_masked,true);assert.equal(lead.body.data.missing_contact,false);
+  const updated=await patch(actor.who,"leads",lead.body.data.id,0,{title:"Allowed update"});assert.equal(updated.status,200);assert.equal(updated.body.data.missing_contact,false);
+ } finally {await admin.query("DELETE FROM crm.role_permission WHERE role=$1",[role]);}
+ const before=await one("SELECT count(*)::int n,md5(string_agg(encode(encrypted_value,'hex'),'' ORDER BY tenant_id,id)) cipher FROM crm.contact_identifier");
+ await admin.query("BEGIN");try {
+  await admin.query("DROP FUNCTION crm.contact_has_channel(uuid); ALTER TABLE crm.contact_identifier DROP COLUMN is_active");
+  await admin.query(await readFile(new URL("../migrations/029_lead_contact_gate.sql",import.meta.url),"utf8"));
+  assert.deepEqual(await one("SELECT count(*)::int n,md5(string_agg(encode(encrypted_value,'hex'),'' ORDER BY tenant_id,id)) cipher FROM crm.contact_identifier"),before);
+  assert.equal((await one("SELECT count(*)::int n FROM crm.contact_identifier WHERE NOT is_active")).n,0);
+  const publicGrant=await one("SELECT count(*)::int n FROM pg_proc p CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE p.oid='crm.contact_has_channel(uuid)'::regprocedure AND a.grantee=0");assert.equal(publicGrant.n,0);
+  const rls=await one("SELECT relrowsecurity,relforcerowsecurity FROM pg_class WHERE oid='crm.contact_identifier'::regclass");assert.ok(rls.relrowsecurity&&rls.relforcerowsecurity);
+ } finally {await admin.query("ROLLBACK");}
 });

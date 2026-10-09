@@ -14,7 +14,7 @@ import { COLUMNS, type Kind, projection } from "./query.js";
 import { KEY_RE, RESERVED_KEYS, type PropType } from "./schemarules.js";
 
 // num/date/dtm/pos exist only for custom properties: numeric, ISO date text, ISO UTC instant text, select option position.
-type T = "uuid" | "text" | "int" | "big" | "ts" | "num" | "date" | "dtm" | "pos";
+type T = "uuid" | "text" | "int" | "big" | "ts" | "num" | "date" | "dtm" | "pos" | "bool";
 type Field = {
 	t: T;
 	sort?: true;
@@ -53,6 +53,7 @@ export const FIELDS: Record<Kind, Map<string, Field>> = {
 		source: f("text", { sort: true }),
 		status: f("text", { sort: true, enum: ["open", "qualified", "closed"] }),
 		received_at: f("ts", { sort: true }),
+		missing_contact: f("bool"),
 		...stamps,
 	}),
 	deal: fields({
@@ -86,6 +87,7 @@ export const FIELDS: Record<Kind, Map<string, Field>> = {
 const BASE = ["eq", "neq", "in", "nin", "is_null", "not_null"];
 const ORD = ["gt", "gte", "lt", "lte", "between"];
 const OPS: Partial<Record<T, string[]>> = {
+	bool: ["eq", "neq"],
 	uuid: BASE,
 	text: [...BASE, "contains", "starts_with"],
 	int: [...BASE, ...ORD],
@@ -113,8 +115,9 @@ const str = (v: unknown, max: number): string => {
 	return v;
 };
 const INT4 = 2147483647;
-function value(fd: Field, v: unknown): string | number {
+function value(fd: Field, v: unknown): string | number | boolean {
 	switch (fd.t) {
+		case "bool": if (typeof v === "boolean") return v; break;
 		case "uuid":
 			if (typeof v === "string" && UUID.test(v)) return v.toLowerCase();
 			break;
@@ -142,6 +145,7 @@ function value(fd: Field, v: unknown): string | number {
 	throw bad();
 }
 const CAST: Record<T, string> = {
+	bool: "boolean",
 	uuid: "uuid",
 	text: "text",
 	int: "integer",
@@ -411,8 +415,9 @@ function condition(cx: Cx, n: Record<string, unknown>): Node {
 	if (fd.custom) return customCondition(cx, fd.custom, n, n.p);
 	const op = n.op as string;
 	if (fd.sortOnly || !OPS[fd.t]?.includes(op)) throw bad();
-	const col = n.p as string;
-	if (!/^[a-z_]+$/.test(col)) throw bad();
+	const name = n.p as string;
+	const col = name === "missing_contact" ? "(NOT crm.contact_has_channel(contact_id))" : name;
+	if (!/^[a-z_]+$/.test(name)) throw bad();
 	const cast = CAST[fd.t],
 		one = (v: unknown) => `${bind(value(fd, v))}::${cast}`;
 	const arr = (v: unknown) => {
@@ -423,7 +428,7 @@ function condition(cx: Cx, n: Record<string, unknown>): Node {
 		if ("v" in n) throw bad();
 		return {
 			sql: `${col} IS ${op === "is_null" ? "" : "NOT "}NULL`,
-			canon: { p: col, op },
+			canon: { p: name, op },
 		};
 	}
 	if (!("v" in n)) throw bad();
@@ -467,7 +472,7 @@ function condition(cx: Cx, n: Record<string, unknown>): Node {
 			cv = s;
 		}
 	}
-	return { sql, canon: { p: col, op, v: cv } };
+	return { sql, canon: { p: name, op, v: cv } };
 }
 function group(
 	cx: Cx,

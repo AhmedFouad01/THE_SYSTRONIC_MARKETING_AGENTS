@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import type pg from "pg";
 import { attachContactFields, writeContactFields } from "./contactfields.js";
+import { requireLeadContact } from "./leadcontact.js";
 import { normalizeEmail, normalizePhone } from "./contactformat.js";
 import { type Context, Fault, transaction } from "./db.js";
 import { contactSources, listRecords } from "./list.js";
@@ -78,7 +79,7 @@ export async function record(
 	await permit(db, ctx, action, kind, object);
 	if (kind === "contact") {
 		const { rows } = await db.query(
-			"SELECT id,kind,crm.identifier_value_scoped(id,$3) value,provenance,original_contact_id FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2 AND crm.can_object('sensitive.read','contact',contact_id,$3)",
+			"SELECT id,kind,crm.identifier_value_scoped(id,$3) value,provenance,original_contact_id FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2 AND is_active AND crm.can_object('sensitive.read','contact',contact_id,$3)",
 			[ctx.tenant, object, ctx.grant ?? null],
 		);
 		r.identifiers = rows;
@@ -172,6 +173,9 @@ async function identifiers(
 		const value = typeof raw.value === "string" ? (kind === "phone" ? normalizePhone(raw.value) : kind === "email" ? normalizeEmail(raw.value) : null) : null;
 		if (!value) throw new Fault(422, "VALIDATION_FAILED");
 		const provenance = text(raw.provenance ?? "manual", 300);
+		await db.query("SELECT id FROM crm.contact WHERE tenant_id=$1 AND id=$2 FOR UPDATE",[ctx.tenant,contact]);
+		const restored = await db.query("UPDATE crm.contact_identifier SET is_active=true WHERE tenant_id=$1 AND contact_id=$2 AND kind=$3 AND keyed_lookup_digest=crm.identifier_digest($4) RETURNING id",[ctx.tenant,contact,kind,value]);
+		if (restored.rowCount) continue;
 		// Use only the explicitly provisioned tenant key; never replace missing state.
 		const {
 			rows: [encrypted],
@@ -771,6 +775,10 @@ export async function crmRequest(
 			key,
 			async () => {
 				if (object) {
+					if (kind === "lead") {
+						const linked = await record(db,ctx,"lead",object,"crm.write");
+						await db.query("SELECT id FROM crm.contact WHERE tenant_id=$1 AND id=$2 FOR UPDATE",[ctx.tenant,linked.contact_id]);
+					}
 					const old = await record(db, ctx, kind, object, "crm.write", true);
 					if (old.version !== integer(b.expected_version) || old.merged_into_id)
 						throw new Fault(409, "VERSION_CONFLICT");
@@ -850,6 +858,7 @@ export async function crmRequest(
 					if (kind === "contact" || kind === "lead") {
 						if (kind === "lead" && ("email" in b || "phone" in b)) await permit(db,ctx,"sensitive.write","lead",object);
 						await writeContactFields(db,ctx,kind === "contact" ? object : old.contact_id,b,kind === "lead");
+						if (kind === "lead") await requireLeadContact(db,ctx,old.contact_id);
 					}
 					await evidence(
 						db,
@@ -927,6 +936,7 @@ export async function crmRequest(
 				if (kind === "lead" && contact) {
 					if ("email" in b || "phone" in b) await permit(db,ctx,"sensitive.write","lead",objectId);
 					await writeContactFields(db,ctx,contact,b,true);
+					await requireLeadContact(db,ctx,contact);
 				}
 				if (kind === "deal") {
 					const pipeline = id(b.pipeline_id),

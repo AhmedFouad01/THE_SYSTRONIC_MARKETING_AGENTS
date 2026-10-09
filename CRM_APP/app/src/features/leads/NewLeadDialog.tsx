@@ -1,4 +1,4 @@
-import { useSession } from "../../api/index.ts";
+import { isApiError, useSession } from "../../api/index.ts";
 import { useId, useRef, useState } from "react";
 import {
 	Button,
@@ -28,12 +28,15 @@ import {
 } from "./model.ts";
 
 const ISSUE_KEY: Record<FieldIssue, MessageKey> = {
+	contactRequired: "leads.contact.required",
 	required: "leads.issue.required",
 	tooLong: "leads.issue.tooLong",
 	phone: "leads.issue.phone",
 	email: "leads.issue.email",
 };
-const ERROR_KEY: Record<CreateErrorKind, MessageKey> = {
+type LeadCreateError = CreateErrorKind | "contactRequired";
+const ERROR_KEY: Record<LeadCreateError, MessageKey> = {
+	contactRequired: "leads.contact.required",
 	validation: "leads.err.validation",
 	assignment: "leads.err.assignment",
 	conflict: "leads.err.conflict",
@@ -58,7 +61,7 @@ function NewLeadForm({
 	const masked = session.info?.sensitive_read === false || session.info?.sensitive_write === false;
 	const [input, setInput] = useState<NewLeadInput>(EMPTY_NEW_LEAD);
 	const [touched, setTouched] = useState(false);
-	const [serverError, setServerError] = useState<CreateErrorKind | null>(null);
+	const [serverError, setServerError] = useState<LeadCreateError | null>(null);
 	const cf = useCustomFields("lead", "leads", null, null);
 	const custom = useCustomDraft(cf, "create");
 	const memo = useRef<KeyMemo | null>(null);
@@ -84,7 +87,7 @@ function NewLeadForm({
 			onCreated(await createLead(withCreateProperties(buildCreateBody(input, key), c.patch), key));
 		} catch (e) {
 			if (custom.fail(e)) return;
-			setServerError(classifyCreateError(e));
+			setServerError(isApiError(e) && e.code === "CONTACT_REQUIRED" ? "contactRequired" : classifyCreateError(e));
 		} finally {
 			onBusy(false);
 		}
@@ -128,6 +131,7 @@ function NewLeadForm({
 				error={err("contactName")}
 				onChange={(e) => set({ contactName: e.target.value })}
 			/>
+			{err("contactChannels") ? <p role="alert">{err("contactChannels")}</p> : null}
 			<div className="sy-form-row">
 			<Input
 				label={t("leads.new.phone")}
