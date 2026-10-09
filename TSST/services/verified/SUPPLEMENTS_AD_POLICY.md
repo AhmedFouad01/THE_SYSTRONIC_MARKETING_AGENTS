@@ -109,3 +109,6 @@ Platform account
 ## Ahmed, 2026-10-08 (Lead record): ANVIL business model
 - ANVIL SUPPS is a **retailer/distributor**. It sells supplements and vitamins that are already manufactured and **already EDA-registered** by their makers. ANVIL manufactures nothing. E8 (SKU registration) is answered: registered.
 - **Still open (not registration):** E1–E3 cover *advertising* of registered products (prior approval via PROMAT). Whether a retailer's own social ads need their own PROMAT approval, or can use the registration holder's approved material/claims, is **NOT CONFIRMED**. Ask the brand owner/agent or EDA (pm@edaegypt.gov.eg, ext. 1473) before the first paid ad. Not a legal opinion.
+
+## Ahmed, 2026-10-09 (Lead record): EDA question answered
+Ahmed reports that ANVIL asked about retailer advertising of the registered products and was told it is fine to proceed ("قالوا تمام اشتغلوا"). The exact source (brand owner/agent or EDA) and any written reference are not on file. **Status: owner-cleared to proceed.** The platform rules above (18+, no cure/treat/prevent claims, no supplement before/after, no fat-pinching or exaggerated timeframes) still apply to every ad. Keep any written confirmation if one arrives.

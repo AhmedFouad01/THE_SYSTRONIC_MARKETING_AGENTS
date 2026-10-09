@@ -1,0 +1,554 @@
+{
+ "client": "ANVIL SUPPS",
+ "service": "SV-05 Campaigns",
+ "job": "Simplified campaign (3 posts)",
+ "date": "2026-10-09",
+ "title": "Launch Campaign: Three Posts",
+ "subtitle": "Delivery for ANVIL SUPPS · Facebook, Instagram and TikTok · 9 October 2026",
+ "status": "progress",
+ "status_label": "In progress",
+ "status_detail": "Post 1 published; Post 2 awaiting your review; Post 3 in production",
+ "arabic_font": {
+  "family": "Cairo",
+  "files": {
+   "400": "../11_PRODUCTION_V01/source/fonts/Cairo-Regular.ttf",
+   "700": "../11_PRODUCTION_V01/source/fonts/Cairo-Bold.ttf"
+  }
+ },
+ "about": {
+  "paragraphs": [
+   "A simplified launch campaign of three posts introducing ANVIL SUPPS, formerly Shark, to its existing community of traders and customers. The objective is brand awareness across Facebook, Instagram and TikTok. Post 1 is published. Post 2 is ready for your review. Post 3 is in production."
+  ],
+  "facts": [
+   [
+    "Post 1",
+    "Teaser · Published"
+   ],
+   [
+    "Post 2",
+    "Name reveal video · Awaiting your review"
+   ],
+   [
+    "Post 3",
+    "Launch offers · In production"
+   ],
+   [
+    "Channels",
+    "Facebook · Instagram · TikTok"
+   ]
+  ],
+  "internal_paragraphs": [
+   "This campaign moves Shark X Store to ANVIL SUPPS after 8 years of support from traders and customers. Ahmed simplified it to 3 posts instead of the long sequence.",
+   "ANVIL is a trader, distributor and online store, not a manufacturer. Products are registered with the Egyptian Drug Authority (EDA) by their manufacturers. The ad was approved by the owner on 2026-10-09, subject to platform rules.",
+   "Objective: brand awareness. Channels: Facebook, Instagram, TikTok. Colours: black and ANVIL Orange #FF6A00. Official logo only, no redrawing or alteration.",
+   "Internal status: Post 1 (teaser) is published. Post 2 (reveal video) is in review: the HD master and the music version are on Magnific and waiting for Ahmed to download them. Post 3 (three offers) is a draft, waiting for the details from Ahmed. No spend before Ahmed approves."
+  ],
+  "internal_facts": [
+   [
+    "Spend",
+    "Not allowed without Ahmed's approval and ad-account access"
+   ]
+  ]
+ },
+ "items": [
+  {
+   "id": "post1_teaser",
+   "title": "Teaser image",
+   "desc": "Static image, PNG. The ANVIL SUPPS mark beneath a black cloth. Final approved file.",
+   "file": "../12_STATIC_CAMPAIGN/CREATIVE_02_TEASE/creative-02-FINAL.png",
+   "status": "published",
+   "group": "Post 1",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Teaser 02 (logo under the black cloth). Published. Final locked file."
+  },
+  {
+   "id": "post1_qa",
+   "internal": true,
+   "title": "Post 1 · QA notes",
+   "desc": "Check notes for the teaser.",
+   "file": "../12_STATIC_CAMPAIGN/CREATIVE_02_TEASE/FINAL-QA.md",
+   "type": "doc",
+   "status": "approved",
+   "group": "Post 1"
+  },
+  {
+   "id": "post2_master_link",
+   "internal": true,
+   "title": "Post 2 · Reveal HD master (Magnific)",
+   "desc": "1080x1920 · 8 seconds · 24 fps · HEVC .mov · 17 MB.",
+   "href": "https://www.magnific.com/app/creation/ksRIEVH16B",
+   "type": "link",
+   "status": "review",
+   "group": "Post 2",
+   "who": "Ahmed",
+   "int_note": "Primary master, no sound. Waiting for Ahmed to download it into reveal/. Check: product labels in the render may be distorted, and the 3D ANVIL logo must match the official one."
+  },
+  {
+   "id": "post2_music_link",
+   "internal": true,
+   "title": "Post 2 · Reveal music version (Magnific)",
+   "desc": "608x1080 (small).",
+   "href": "https://www.magnific.com/app/creation/1lZtQpAr4r",
+   "type": "link",
+   "status": "review",
+   "group": "Post 2",
+   "who": "Ahmed",
+   "int_note": "Problem: 608x1080 is below the 720 px minimum for Reels. Do not publish. Correct route: HD master plus this version's music, merged locally (ffmpeg)."
+  },
+  {
+   "id": "post2_reveal_video",
+   "title": "Name reveal video",
+   "desc": "Vertical video, 1080 x 1920 px, MP4. A rotating pillar revealing the ANVIL SUPPS mark and the new name. The final edit with music will be supplied for review; the caption below accompanies it.",
+   "file": "reveal/reveal-final.mp4",
+   "type": "video",
+   "status": "review",
+   "group": "Post 2",
+   "int_note": "Does not exist yet: it is built after Ahmed downloads the master and the music into reveal/."
+  },
+  {
+   "id": "post3_offers",
+   "title": "Launch offers post",
+   "desc": "Post presenting the three launch offers. Production continues once the offer details are received (see Next steps).",
+   "type": "doc",
+   "status": "production",
+   "group": "Post 3",
+   "int_note": "Details are not in the repository: waiting for Ahmed (or sync from ChatGPT). Each offer is checked against ad policy before publication. No discount framing: ANVIL is not a discount-only brand."
+  },
+  {
+   "id": "rejected_reveal_v03",
+   "internal": true,
+   "title": "Rejected · Reveal 01 v03 (the bag)",
+   "desc": "PNG 4:5. Kept for history only.",
+   "file": "../12_STATIC_CAMPAIGN/REVEAL_01/v03/reveal-01-v03.png",
+   "status": "rejected",
+   "group": "Rejected",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Ahmed: weak."
+  }
+ ],
+ "texts_intro": "Post 2 caption. Two options are provided for your selection. Text is in Arabic and is shown exactly as it will be published.",
+ "texts": [
+  {
+   "id": "caption_option_a",
+   "title": "Caption, Option A",
+   "platform": "Post 2",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "مرحلة جديدة بتتشكّل.\n\nوصلنالها بدعمكم وثقتكم في Shark على مدار 8 سنين، تجّار وعملاء كرام.\n\nالنهارده بنفتح معاكم صفحة جديدة، بشكل جديد واسم جديد:\nShark بقى ANVIL SUPPS\n\nاستنّوا الخدمات الجديدة وعروض الهوية الجديدة.\n\n#ANVIL_SUPPS #ANVILSUPPS #Shark",
+   "note": "Opens with the new phase, then thanks, then the name announcement. Recommended.",
+   "int_note": "Ahmed's pick. The name line has no full stop or mark at the end. Test on iPhone Instagram, Android Instagram and TikTok. If the order scrambles, add RLM (U+200F) after Shark and after SUPPS."
+  },
+  {
+   "id": "caption_option_b",
+   "title": "Caption, Option B",
+   "platform": "Post 2",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "8 سنين من دعمكم وثقتكم في Shark، من تجّارنا وعملائنا الكرام، هي اللي وصّلتنا للمرحلة الجديدة.\n\nالنهارده بنفتح معاكم صفحة جديدة بشكل جديد واسم جديد.\nShark بقى ANVIL SUPPS\n\nاستنّوا الخدمات الجديدة وعروض الهوية الجديدة.\n\n#ANVIL_SUPPS #ANVILSUPPS #Shark",
+   "note": "Opens with thanks to traders and customers, then the name announcement.",
+   "int_note": "Formal, thanks first. Safe, but it buries the reveal under the thanks. Recommendation: A."
+  },
+  {
+   "id": "caption_short",
+   "title": "Short version",
+   "platform": "Post 2",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "مرحلة جديدة. صفحة جديدة. اسم جديد.\nShark بقى ANVIL SUPPS - استنّوا عروضنا الجديدة",
+   "note": "Shorter text for TikTok and Stories.",
+   "int_note": "Shorter alternative for the Story text: «Shark بقى ANVIL SUPPS. استنّونا.»"
+  }
+ ],
+ "options": {
+  "title": "Offers line: wording options",
+  "label": "Wording options for the offers line in the captions. Please select one.",
+  "items": [
+   {
+    "ar": "عروض الهوية الجديدة",
+    "tag": "current wording"
+   },
+   {
+    "ar": "عروض التغيير"
+   },
+   {
+    "ar": "عروض الإطلاق"
+   }
+  ],
+  "int_note": "The current wording is an Arabic rendering of \"rebranding offers\". Do not say \"discounts\". Waiting for Ahmed's choice. Also, if \"بقى\" (is now) feels like filler, replace with «بقى اسمه»."
+ },
+ "next": [
+  "Select the caption for Post 2: Option A or Option B.",
+  "Confirm the wording of the offers line (three options above).",
+  "Review the Post 2 reveal video once supplied, including the mark and the product labels in the final frame.",
+  "Provide the details of the three launch offers for Post 3.",
+  "Confirm publication dates for Posts 2 and 3."
+ ],
+ "internal_next": [
+  "Ahmed downloads the HD master and the music from Magnific into reveal/ inside 13_SV05_CONTINUATION.",
+  "Merge master and music locally (ffmpeg), then check the last frame (logo and labels).",
+  "Ahmed picks caption A or B and settles the offers-line wording.",
+  "Ahmed sends the details of the three offers (Post 3).",
+  "Open before launch: budget and dates (is the 1,500 EGP cap still valid?) and ad-account access."
+ ],
+ "decisions": [
+  {
+   "date": "2026-10-09",
+   "item": "Campaign structure of three posts: teaser, name reveal video, launch offers.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "Simplified to 3 posts: teaser, reveal video, the three offers."
+  },
+  {
+   "date": "2026-10-09",
+   "item": "Post 1 teaser image, final file.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "Teaser 02 final file locked and published."
+  },
+  {
+   "date": "2026-10-09",
+   "item": "Creative direction for Post 2: rotating pillar video with an accompanying caption.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "Reveal direction: pillar video from Magnific, with a caption about the new phase."
+  },
+  {
+   "date": "2026-10-09",
+   "internal": true,
+   "item": "Reveal 01 v03 (split bag) rejected.",
+   "status": "Rejected",
+   "who": "Ahmed",
+   "int_note": "Ahmed: weak."
+  },
+  {
+   "date": "2026-10-09",
+   "internal": true,
+   "item": "Ad approved by the owner; EDA question.",
+   "status": "Noted",
+   "who": "Ahmed",
+   "int_note": "EDA was asked and the answer was to continue (no written confirmation yet)."
+  }
+ ],
+ "checks": [
+  {
+   "title": "Open wording question for Ahmed: the \"new identity offers\" line",
+   "state": "open",
+   "note": "See the wording options above. Cannot say \"discounts\". Waiting for Ahmed's choice."
+  },
+  {
+   "title": "Do not publish the 608x1080 music version",
+   "state": "fail",
+   "note": "Below the 720 px minimum for Reels."
+  },
+  {
+   "title": "ANVIL logo in the video matches the official one",
+   "state": "open",
+   "note": "Ahmed's eye: the 3D geometry may drift from the official mark. Distorting the logo is not allowed."
+  },
+  {
+   "title": "Product labels in the last frame",
+   "state": "open",
+   "note": "Rule: real third-party packaging only. The render may be distorted."
+  },
+  {
+   "title": "Policy M3/T6: no cure or treatment claims",
+   "state": "pass",
+   "note": "Caption: zero health or performance claims, no ingredients."
+  },
+  {
+   "title": "Policy M4/T3: no exaggerated results or time frames",
+   "state": "pass",
+   "note": "The figure 8 years is company history, not a result."
+  },
+  {
+   "title": "Policy M5/M6/T4: no body language or body shots",
+   "state": "pass",
+   "note": "Caption is text only. Video: pillar and products without bodies (CREATIVE check)."
+  },
+  {
+   "title": "Policy M7/T6: no before/after",
+   "state": "pass",
+   "note": "\"New look\" refers to the identity, not the body. Do not describe it as before/after."
+  },
+  {
+   "title": "18+ targeting (M1, T1, T5)",
+   "state": "open",
+   "note": "Not in the text. Set an 18+ audience on the organic post where the platform allows, and on any paid post."
+  },
+  {
+   "title": "EDA (E1-E3)",
+   "state": "open",
+   "note": "The owner approved verbally on 2026-10-09. Keep written confirmation if it arrives."
+  },
+  {
+   "title": "Re-read policy pages before launch (7 days)",
+   "state": "open",
+   "note": "Not legal advice. A human must read the live pages."
+  },
+  {
+   "title": "Post 3: offers checked against ad policy before any publication",
+   "state": "open",
+   "note": "Details are not available yet."
+  },
+  {
+   "title": "Spend and ad account",
+   "state": "open",
+   "note": "Any spend needs an explicit go from Ahmed per launch, plus Meta Business and TikTok Ads account access. No Shopify tracking so far."
+  }
+ ],
+ "sources": [
+  {
+   "label": "STATE_2026-10-09.md",
+   "path": "../../../brands/anvil/STATE_2026-10-09.md"
+  },
+  {
+   "label": "INTAKE.md",
+   "path": "INTAKE.md"
+  },
+  {
+   "label": "COPY_REVEAL.md",
+   "path": "COPY_REVEAL.md"
+  },
+  {
+   "label": "SUPPLEMENTS_AD_POLICY.md",
+   "path": "../../../services/verified/SUPPLEMENTS_AD_POLICY.md"
+  },
+  {
+   "label": "SV-05 playbook",
+   "path": "../../../services/SV-05_campaigns.md"
+  },
+  {
+   "label": "Magnific · HD master",
+   "url": "https://www.magnific.com/app/creation/ksRIEVH16B"
+  },
+  {
+   "label": "Magnific · music version",
+   "url": "https://www.magnific.com/app/creation/1lZtQpAr4r"
+  }
+ ],
+ "default_lang": "ar",
+ "ar": {
+  "about": {
+   "paragraphs": [
+    "حملة إطلاق مبسطة من ثلاثة منشورات تعرّف بعلامة ANVIL SUPPS، المعروفة سابقًا باسم Shark، لدى مجتمعها الحالي من التجّار والعملاء. الهدف رفع الوعي بالعلامة التجارية عبر منصات Facebook، Instagram، TikTok. المنشور 1 منشور، والمنشور 2 جاهز لمراجعتكم، والمنشور 3 قيد الإنتاج."
+   ],
+   "internal_paragraphs": [
+    "تنقل هذه الحملة Shark X Store إلى ANVIL SUPPS بعد 8 سنوات من دعم التجّار والعملاء. بسّط أحمد الحملة إلى 3 منشورات بدلًا من التسلسل الطويل.",
+    "ANVIL تاجر وموزّع ومتجر إلكتروني، وليست جهة مصنِّعة. المنتجات مسجّلة لدى هيئة الدواء المصرية (EDA) عن طريق جهاتها المصنِّعة. اعتمد المالك الإعلان في 9 أكتوبر 2026 مع التقيد بقواعد المنصات.",
+    "الهدف: رفع الوعي بالعلامة التجارية. القنوات: Facebook، Instagram، TikTok. الألوان: الأسود وبرتقالي ANVIL (#FF6A00). يُستخدم الشعار الرسمي فقط، دون إعادة رسم أو تعديل.",
+    "الحالة الداخلية: المنشور 1 (الصورة التشويقية) منشور. المنشور 2 (فيديو الكشف) قيد المراجعة؛ النسخة الرئيسية عالية الدقة ونسخة الموسيقى على Magnific بانتظار تنزيلها بواسطة أحمد. المنشور 3 (العروض الثلاثة) مسودة بانتظار التفاصيل من أحمد. لا إنفاق قبل اعتماد أحمد."
+   ],
+   "facts": {
+    "Post 1": [
+     "المنشور 1",
+     "تشويقي · منشور"
+    ],
+    "Post 2": [
+     "المنشور 2",
+     "فيديو الكشف عن الاسم · بانتظار مراجعتكم"
+    ],
+    "Post 3": [
+     "المنشور 3",
+     "عروض الإطلاق · قيد الإنتاج"
+    ],
+    "Channels": [
+     "القنوات",
+     "Facebook · Instagram · TikTok"
+    ]
+   },
+   "internal_facts": [
+    [
+     "الإنفاق",
+     "غير مسموح دون اعتماد أحمد وإتاحة الوصول إلى الحساب الإعلاني"
+    ]
+   ]
+  },
+  "items": {
+   "post1_teaser": {
+    "group": "المنشور 1",
+    "title": "الصورة التشويقية",
+    "desc": "صورة ثابتة بصيغة PNG تعرض شعار ANVIL SUPPS تحت قماش أسود. الملف النهائي المعتمد.",
+    "int_note": "التشويقي 02 (الشعار تحت القماش الأسود). منشور. الملف النهائي مقفل.",
+    "who": "أحمد"
+   },
+   "post1_qa": {
+    "group": "المنشور 1",
+    "title": "المنشور 1 · ملاحظات الفحص",
+    "desc": "ملاحظات فحص الصورة التشويقية."
+   },
+   "post2_master_link": {
+    "group": "المنشور 2",
+    "title": "المنشور 2 · النسخة الرئيسية عالية الدقة للكشف (من Magnific)",
+    "desc": "عرض 1080 وارتفاع 1920 · المدة 8 ثوانٍ · 24 إطارًا في الثانية · صيغة HEVC .mov · الحجم 17 ميغابايت.",
+    "int_note": "النسخة الرئيسية الأساسية، بلا صوت. بانتظار تنزيلها بواسطة أحمد إلى مجلد reveal. للفحص: قد تظهر ملصقات المنتجات مشوهة في العرض، ويجب أن يطابق شعار ANVIL ثلاثي الأبعاد الشعار الرسمي.",
+    "who": "أحمد"
+   },
+   "post2_music_link": {
+    "group": "المنشور 2",
+    "title": "المنشور 2 · نسخة الكشف مع الموسيقى (من Magnific)",
+    "desc": "عرض 608 وارتفاع 1080 (دقة منخفضة).",
+    "int_note": "مشكلة: الدقة 608 × 1080 أقل من الحد الأدنى لمقاطع Reels (720 بكسل). لا تُنشر. المسار الصحيح: دمج النسخة الرئيسية عالية الدقة مع موسيقى هذه النسخة محليًا (ffmpeg).",
+    "who": "أحمد"
+   },
+   "post2_reveal_video": {
+    "group": "المنشور 2",
+    "title": "فيديو الكشف عن الاسم",
+    "desc": "فيديو عمودي بصيغة MP4 بعرض 1080 وارتفاع 1920 بكسل. يظهر عمود دوّار يكشف عن شعار ANVIL SUPPS والاسم الجديد. سيُقدَّم المونتاج النهائي مع الموسيقى للمراجعة، ويرافقه التعليق الوارد أدناه.",
+    "int_note": "غير موجود بعد؛ يُنجز بعد أن ينزّل أحمد النسخة الرئيسية والموسيقى إلى مجلد reveal."
+   },
+   "post3_offers": {
+    "group": "المنشور 3",
+    "title": "منشور عروض الإطلاق",
+    "desc": "منشور يعرض عروض الإطلاق الثلاثة. يستمر الإنتاج فور استلام تفاصيل العروض (انظر الخطوات التالية).",
+    "int_note": "التفاصيل غير متوفرة في المستودع؛ بانتظار أحمد (أو المزامنة من ChatGPT). يُفحص كل عرض وفق سياسة الإعلانات قبل النشر. لا تُستخدم صياغة الخصومات، فـ ANVIL ليست علامة قائمة على الخصومات فقط."
+   },
+   "rejected_reveal_v03": {
+    "group": "مرفوض",
+    "title": "مرفوض · Reveal 01 v03 (الحقيبة)",
+    "desc": "صورة PNG بنسبة 4 إلى 5. محفوظة للأرشيف فقط.",
+    "int_note": "تقييم أحمد: ضعيف.",
+    "who": "أحمد"
+   }
+  },
+  "texts": {
+   "caption_option_a": {
+    "title": "التعليق، الخيار أ",
+    "platform": "المنشور 2",
+    "note": "يبدأ بالمرحلة الجديدة، ثم الشكر، ثم الإعلان عن الاسم. الخيار الموصى به.",
+    "int_note": "اختيار أحمد. سطر الاسم بلا نقطة أو علامة في نهايته. يُختبر على Instagram لنظام iPhone وعلى Instagram لنظام Android وعلى TikTok. إذا اختل ترتيب الكلمات تُضاف علامة الاتجاه من اليمين إلى اليسار (RLM، الرمز U+200F) بعد Shark وبعد SUPPS."
+   },
+   "caption_option_b": {
+    "title": "التعليق، الخيار ب",
+    "platform": "المنشور 2",
+    "note": "يبدأ بالشكر للتجّار والعملاء، ثم الإعلان عن الاسم.",
+    "int_note": "صياغة رسمية تبدأ بالشكر. آمنة، لكنها تؤخر الكشف عن الاسم. التوصية: الخيار أ."
+   },
+   "caption_short": {
+    "title": "النسخة المختصرة",
+    "platform": "المنشور 2",
+    "note": "نص أقصر لمنصة TikTok وللقصص.",
+    "int_note": "بديل مختصر لنص القصة: «Shark بقى ANVIL SUPPS. استنّونا.»"
+   }
+  },
+  "next": [
+   "اختيار تعليق المنشور 2: الخيار أ أو الخيار ب.",
+   "تأكيد صياغة سطر العروض (ثلاثة خيارات أعلاه).",
+   "مراجعة فيديو الكشف للمنشور 2 فور تقديمه، بما في ذلك الشعار وملصقات المنتجات في الإطار الأخير.",
+   "تزويدنا بتفاصيل عروض الإطلاق الثلاثة للمنشور 3.",
+   "تأكيد تواريخ نشر المنشورين 2 و3."
+  ],
+  "internal_next": [
+   "ينزّل أحمد النسخة الرئيسية عالية الدقة والموسيقى من Magnific إلى مجلد reveal داخل 13_SV05_CONTINUATION.",
+   "دمج النسخة الرئيسية مع الموسيقى محليًا (ffmpeg)، ثم فحص الإطار الأخير (الشعار والملصقات).",
+   "يختار أحمد التعليق أ أو ب ويحسم صياغة سطر العروض.",
+   "يرسل أحمد تفاصيل العروض الثلاثة (المنشور 3).",
+   "مسائل مفتوحة قبل الإطلاق: الميزانية والتواريخ (هل سقف 1,500 جنيه مصري ما زال ساريًا؟) وإتاحة الوصول إلى الحساب الإعلاني."
+  ],
+  "decisions": [
+   {
+    "item": "اعتماد هيكل الحملة المؤلف من ثلاثة منشورات: صورة تشويقية، وفيديو كشف عن الاسم، وعروض الإطلاق.",
+    "int_note": "بُسّطت الحملة إلى 3 منشورات: الصورة التشويقية، وفيديو الكشف، والعروض الثلاثة.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد الصورة التشويقية للمنشور 1 بملفها النهائي.",
+    "int_note": "قُفل الملف النهائي للصورة التشويقية 02 ونُشر.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد التوجه الإبداعي للمنشور 2: فيديو عمود دوّار مع تعليق مرافق.",
+    "int_note": "توجه الكشف: فيديو العمود من Magnific مع تعليق عن المرحلة الجديدة.",
+    "who": "أحمد"
+   },
+   {
+    "item": "رفض Reveal 01 v03 (الحقيبة المنقسمة).",
+    "int_note": "تقييم أحمد: ضعيف.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد المالك للإعلان؛ وسؤال هيئة الدواء المصرية (EDA).",
+    "int_note": "وُجّه السؤال إلى الهيئة وكانت الإجابة بالمتابعة (دون تأكيد كتابي حتى الآن).",
+    "who": "أحمد"
+   }
+  ],
+  "checks": [
+   {
+    "title": "سؤال مفتوح لأحمد بشأن صياغة سطر «عروض الهوية الجديدة»",
+    "note": "انظر خيارات الصياغة أعلاه. لا يمكن استخدام كلمة «خصومات». بانتظار اختيار أحمد."
+   },
+   {
+    "title": "عدم نشر نسخة الموسيقى بدقة 608 × 1080",
+    "note": "أقل من الحد الأدنى لمقاطع Reels (720 بكسل)."
+   },
+   {
+    "title": "مطابقة شعار ANVIL في الفيديو للشعار الرسمي",
+    "note": "تقدير أحمد البصري: قد تنحرف الهندسة ثلاثية الأبعاد عن الشعار الرسمي. لا يجوز تشويه الشعار."
+   },
+   {
+    "title": "ملصقات المنتجات في الإطار الأخير",
+    "note": "القاعدة: عبوات الأطراف الثالثة الحقيقية فقط. قد يكون العرض مشوهًا."
+   },
+   {
+    "title": "السياسة M3/T6: لا ادعاءات علاج أو معالجة",
+    "note": "التعليق خالٍ من أي ادعاء صحي أو أدائي، ولا يذكر مكونات."
+   },
+   {
+    "title": "السياسة M4/T3: لا نتائج أو أطر زمنية مبالغ فيها",
+    "note": "الرقم 8 سنوات هو تاريخ الشركة، وليس نتيجة."
+   },
+   {
+    "title": "السياسة M5/M6/T4: لا لغة جسد ولا لقطات للجسم",
+    "note": "التعليق نص فقط. الفيديو: العمود والمنتجات دون أجسام (فحص فريق الإبداع)."
+   },
+   {
+    "title": "السياسة M7/T6: لا مقارنات قبل وبعد",
+    "note": "عبارة «المظهر الجديد» تخص الهوية وليس الجسم. لا تُوصف على أنها قبل وبعد."
+   },
+   {
+    "title": "الاستهداف لمن هم فوق 18 عامًا (M1, T1, T5)",
+    "note": "غير وارد في النص. يُضبط جمهور فوق 18 عامًا على المنشور العضوي حيث تتيح المنصة ذلك، وعلى أي منشور مدفوع."
+   },
+   {
+    "title": "هيئة الدواء المصرية (E1-E3)",
+    "note": "اعتمد المالك شفهيًا في 9 أكتوبر 2026. يُحتفظ بأي تأكيد كتابي عند وروده."
+   },
+   {
+    "title": "إعادة قراءة صفحات السياسات قبل الإطلاق (خلال 7 أيام)",
+    "note": "ليست استشارة قانونية. يجب أن يقرأ شخص الصفحات المنشورة حاليًا."
+   },
+   {
+    "title": "المنشور 3: فحص العروض وفق سياسة الإعلانات قبل أي نشر",
+    "note": "التفاصيل غير متوفرة بعد."
+   },
+   {
+    "title": "الإنفاق والحساب الإعلاني",
+    "note": "يتطلب أي إنفاق موافقة صريحة من أحمد لكل إطلاق، إضافة إلى إتاحة الوصول إلى حسابي Meta Business وTikTok Ads. لا يوجد تتبع عبر Shopify حتى الآن."
+   }
+  ],
+  "sources": {
+   "STATE_2026-10-09.md": "STATE_2026-10-09.md",
+   "INTAKE.md": "INTAKE.md",
+   "COPY_REVEAL.md": "COPY_REVEAL.md",
+   "SUPPLEMENTS_AD_POLICY.md": "SUPPLEMENTS_AD_POLICY.md",
+   "SV-05 playbook": "دليل خدمة الحملات SV-05",
+   "Magnific · HD master": "Magnific · النسخة الرئيسية عالية الدقة",
+   "Magnific · music version": "Magnific · نسخة الموسيقى"
+  },
+  "options": {
+   "title": "سطر العروض: خيارات الصياغة",
+   "label": "خيارات صياغة سطر العروض في التعليقات. يرجى اختيار صياغة واحدة.",
+   "tag0": "الصياغة الحالية",
+   "int_note": "الصياغة الحالية ترجمة عربية لعبارة «عروض إعادة الهوية». لا تُستخدم كلمة «خصومات». بانتظار اختيار أحمد. وإذا بدت كلمة «بقى» حشوًا فتُستبدل بعبارة «بقى اسمه»."
+  },
+  "title": "حملة الإطلاق: ثلاثة منشورات",
+  "subtitle": "تسليم لصالح ANVIL SUPPS · Facebook · Instagram · TikTok · 9 أكتوبر 2026",
+  "status_label": "قيد التنفيذ",
+  "status_detail": "المنشور 1 منشور؛ المنشور 2 بانتظار مراجعتكم؛ المنشور 3 قيد الإنتاج",
+  "texts_intro": "تعليق المنشور 2. يُقدَّم خياران لاختيار أحدهما. النص بالعربية ويظهر تمامًا كما سيُنشر."
+ }
+}

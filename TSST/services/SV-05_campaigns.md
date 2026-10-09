@@ -77,7 +77,7 @@ LENS goes before SPARK on message and order (lesson 2026-10-07). SPARK owns form
 - Still NOT CONFIRMED: EDA claim-assessment rules ("white lists"), the legal basis and sanctions, TikTok Shop rules for Egypt.
 
 ## Live job
-**ANVIL SUPPS — campaigns.** ANVIL is a retailer/distributor of already EDA-registered supplements and vitamins and makes nothing (Ahmed, 2026-10-08). Open: does retailer advertising need its own PROMAT approval? (see the verified file). Prior work: TSST-PILOT-001 static campaign REVEAL_01 v03, which is in review and awaits user acceptance (`TSST/brands/anvil/projects/switch-pilot/project.md`).
+**ANVIL SUPPS — campaigns.** ANVIL is a retailer/distributor of already EDA-registered supplements and vitamins and makes nothing (Ahmed, 2026-10-08). Retailer advertising: owner-cleared to proceed on 2026-10-09 (Ahmed: asked and told OK; see the verified file). Platform rules still apply. Prior work: TSST-PILOT-001 static campaign REVEAL_01 v03, which is in review and awaits user acceptance (`TSST/brands/anvil/projects/switch-pilot/project.md`).
 
 ## Lessons log
 —

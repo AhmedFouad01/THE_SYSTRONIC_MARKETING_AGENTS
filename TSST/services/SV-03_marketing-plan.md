@@ -4,6 +4,11 @@
 **Variants:** short-term (launch / 90 days) · long-term (year).
 
 ## Client deliverables
+**House format:** the one-page Systronic **Marketing Plan canvas** (`TSST/brands/t-sag/assets/IDENTITY.md`).
+- Six numbered blocks: objectives by stage → targeting → channels → tactics table (task | channels | type | status | deadline) → radial calendar → reporting.
+- A bottom row of five boxes: audience · persona/need · competition · products/services · brand persona.
+- The full plan document expands the canvas.
+
 The plan document: objectives, KPIs, stages/phases, funnels per segment, channel roles, our approach, budget frame, timeline, measurement, risks. Format: OPEN.
 
 ## Blocking intake questions

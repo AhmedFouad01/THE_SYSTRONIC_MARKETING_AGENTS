@@ -52,6 +52,6 @@ brands:
     memory: TSST/brands/anvil/memory/source.md
     projects:
       switch-pilot:
-        state: TSST-PILOT-001 static campaign REVEAL_01 v03 in REVIEW, awaiting user acceptance; no release authorisation
+        state: synced 2026-10-09 → TSST/brands/anvil/STATE_2026-10-09.md; gate ANV-001A Teasing IN PROGRESS; REVEAL_01 v03 rejected; reveal = pillar film draft (Magnific); run via SV-05
         checkpoint: TSST/brands/anvil/projects/switch-pilot/project.md
-        next: user acceptance/feedback on REVEAL_01 v03
+        next: approve teaser copy territory → finish teasing bank → open Reveal gate

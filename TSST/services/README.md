@@ -28,5 +28,12 @@ Status: SKELETON. Each playbook gets filled in from research (`gemini/GEM-SV-*`)
 6. **Fix loop.** On rejection, write down the measured cause, then fix it. A stage gets at most 3 rounds; after that the best version goes to the user to decide. The owner may accept below a numeric gate.
 7. **Lesson.** Every job ends with a lesson written into the playbook and/or skills (R9 version + changelog). Real Memory is synced when the user asks.
 
+## Delivery page standard (user direction 2026-10-09)
+Every job is shown to the user as **one HTML delivery page that lives in the job folder** (`<job>/DELIVERY.html`), and the Lead sends that link. The model is the ANVIL pilot `11_PRODUCTION_V01/PREVIEW.html`: organised, explains everything, previews images and videos inline. The changes:
+- **The Systronic theme for every client**, never the client's brand theme (the client's work shows inside it).
+- **A status dot on every item:** 🟢 approved · 🟡 in review · ⚪ draft · 🔴 rejected, plus the decision date and who decided.
+- The explanation is part of the page: what this is, the decisions, the texts to paste and the checks, in organised sections. Arabic RTL, with English names kept intact.
+- Built from a small manifest (`<job>/DELIVERY.yaml`) by one shared generator, so every job looks the same and the page updates when a status changes.
+
 ## Playbook template (each SV file)
 What it is · variants · client deliverables (format) · blocking intake questions · stages table (stage | owner | skills | output | client gate) · quality gates · dependencies · common mistakes · skill gaps · research sources · lessons log.

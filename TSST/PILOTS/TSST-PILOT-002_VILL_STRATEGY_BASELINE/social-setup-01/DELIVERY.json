@@ -1,0 +1,601 @@
+{
+ "client": "VILL Studio",
+ "service": "SV-01 Social profile setup",
+ "job": "social-setup-01",
+ "date": "2026-10-09",
+ "title": "Social Media Profile Setup",
+ "subtitle": "Delivery for VILL Studio · Instagram, Facebook, TikTok and LinkedIn · 9 October 2026",
+ "status": "approved",
+ "status_label": "Approved",
+ "about": {
+  "paragraphs": [
+   "The Systronic has prepared the social media profile set for VILL Studio on Instagram, Facebook, TikTok and LinkedIn: profile images, covers, Instagram highlight covers, post templates and profile text for each platform. The complete set was approved on 9 October 2026. Nothing has been published."
+  ],
+  "voice": "Each platform carries its own tone. LinkedIn uses formal English. Instagram and TikTok are brief and understated. Facebook is plain and direct. Project locations appear only in the relevant project post, not in profile text.",
+  "facts": [
+   [
+    "Platforms",
+    "Instagram · Facebook · TikTok · LinkedIn"
+   ],
+   [
+    "Account name",
+    "VILL Studio"
+   ],
+   [
+    "Instagram handle",
+    "@vill.studio"
+   ],
+   [
+    "Website",
+    "vill-studio.com"
+   ],
+   [
+    "Status",
+    "Approved. Upload to follow."
+   ]
+  ],
+  "internal_paragraphs": [
+   "Internal summary: the four-platform set (Instagram, Facebook, TikTok, LinkedIn) was approved by Ahmed on 2026-10-09. Nothing is published. Upload is manual, done by Ahmed. After the first upload, the checklist below is run and the results are recorded in the report.",
+   "Name everywhere: VILL Studio. Instagram handle: @vill.studio. Link: vill-studio.com. The same handle is intended on Facebook, TikTok and LinkedIn if available (availability not yet checked)."
+  ]
+ },
+ "items": [
+  {
+   "id": "profile_mock",
+   "title": "Profile preview, all platforms",
+   "desc": "Composite preview of the four profiles, PNG. For reference only; not for upload.",
+   "file": "build/_qa/profile_mock.png",
+   "status": "approved",
+   "group": "Preview",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Preview only, not for upload."
+  },
+  {
+   "id": "ig_profile_picture",
+   "title": "Profile picture",
+   "desc": "1080 x 1080 px, PNG. Cropped to a circle from the centre.",
+   "file": "handover/instagram/01_profile-picture_1080.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "ig_highlight_1",
+   "title": "Highlight cover: Projects",
+   "desc": "1080 x 1920 px, PNG. Highlight name: Projects.",
+   "file": "handover/instagram/highlight-cover_1_projects.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Name sits under the circle: Projects."
+  },
+  {
+   "id": "ig_highlight_2",
+   "title": "Highlight cover: Before & After",
+   "desc": "1080 x 1920 px, PNG. Highlight name: Before & After. If the name is truncated in the app, use Before/After.",
+   "file": "handover/instagram/highlight-cover_2_before-after.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "ig_highlight_3",
+   "title": "Highlight cover: Furniture",
+   "desc": "1080 x 1920 px, PNG. Highlight name: Furniture.",
+   "file": "handover/instagram/highlight-cover_3_furniture.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Name sits under the circle: Furniture."
+  },
+  {
+   "id": "ig_template_story",
+   "title": "Story template",
+   "desc": "1080 x 1920 px, PNG. Template for future Stories; not for publication as supplied.",
+   "file": "handover/instagram/template_story.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "ig_template_reel",
+   "title": "Reel cover template",
+   "desc": "1080 x 1920 px, PNG. Template for future Reels; not for publication as supplied.",
+   "file": "handover/instagram/template_reel-cover.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "ig_template_feed",
+   "title": "Feed post template",
+   "desc": "1080 x 1350 px, PNG. Template for future feed posts; not for publication as supplied.",
+   "file": "handover/instagram/template_feed-post.png",
+   "status": "approved",
+   "group": "Instagram",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "fb_profile_picture",
+   "title": "Profile picture",
+   "desc": "320 x 320 px, PNG.",
+   "file": "handover/facebook/01_profile-picture_320.png",
+   "status": "approved",
+   "group": "Facebook",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "On an Arabic (RTL) page the picture sits on the right."
+  },
+  {
+   "id": "fb_cover",
+   "title": "Cover image",
+   "desc": "1640 x 924 px, JPG.",
+   "file": "handover/facebook/02_cover_1640x924.jpg",
+   "status": "approved",
+   "group": "Facebook",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "Check that the profile picture does not cover the middle of the cover."
+  },
+  {
+   "id": "tt_profile_picture",
+   "title": "Profile picture",
+   "desc": "200 x 200 px, PNG.",
+   "file": "handover/tiktok/01_profile-picture_200.png",
+   "status": "approved",
+   "group": "TikTok",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  },
+  {
+   "id": "li_logo",
+   "title": "Company logo",
+   "desc": "400 x 400 px, PNG.",
+   "file": "handover/linkedin/01_logo_400.png",
+   "status": "approved",
+   "group": "LinkedIn",
+   "date": "2026-10-09",
+   "who": "Ahmed",
+   "int_note": "The logo covers the bottom-left of the cover."
+  },
+  {
+   "id": "li_cover",
+   "title": "Cover image",
+   "desc": "1512 x 256 px, PNG.",
+   "file": "handover/linkedin/02_cover_1512x256.png",
+   "status": "approved",
+   "group": "LinkedIn",
+   "date": "2026-10-09",
+   "who": "Ahmed"
+  }
+ ],
+ "texts_intro": "Approved profile text, ready to be pasted into each platform.",
+ "texts": [
+  {
+   "id": "ig_bio",
+   "title": "Instagram bio",
+   "platform": "Instagram",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "Interior fit-out and furniture studio in Egypt.\nFurniture made by VILL.\nOne team, start to finish.\nProjects and contact: link below",
+   "note": "Name field: VILL Studio. Username: vill.studio. Website field: vill-studio.com.",
+   "int_note": "4 lines, 131 characters. The website goes in the Website field, not inside the bio."
+  },
+  {
+   "id": "fb_intro",
+   "title": "Facebook intro",
+   "platform": "Facebook",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "Interior fit-out and furniture studio in Egypt.",
+   "int_note": "47 characters."
+  },
+  {
+   "id": "fb_about",
+   "title": "Facebook About",
+   "platform": "Facebook",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "VILL is an interior fit-out and furniture studio in Egypt. We finish interiors and make the furniture ourselves. One team, start to finish.\n\nvill-studio.com",
+   "note": "Website and contact information: vill-studio.com."
+  },
+  {
+   "id": "tt_bio",
+   "title": "TikTok bio",
+   "platform": "TikTok",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "Interiors finished. Furniture made by VILL.",
+   "note": "The website is entered in the Links field, where available, not in the bio.",
+   "int_note": "43 characters. Links field eligibility is unconfirmed (see checks)."
+  },
+  {
+   "id": "li_tagline",
+   "title": "LinkedIn tagline",
+   "platform": "LinkedIn",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "VILL Studio | Interior fit-out, lighting and bespoke furniture manufactured by VILL | Egypt",
+   "int_note": "91 characters."
+  },
+  {
+   "id": "li_about",
+   "title": "LinkedIn About",
+   "platform": "LinkedIn",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "VILL Studio is an interior fit-out and furniture studio based in Egypt.\n\nVILL delivers interior fit-out and finishing, lighting, and bespoke furniture manufactured by VILL. Clients work with one team from empty shell to finished space.\n\nvill-studio.com"
+  },
+  {
+   "id": "li_post_opener",
+   "title": "LinkedIn project post, opening sentence",
+   "platform": "LinkedIn",
+   "status": "approved",
+   "dir": "ltr",
+   "body": "VILL Studio has completed the interior fit-out of a residential apartment, including lighting and bespoke furniture manufactured by VILL.",
+   "note": "For the first project post.",
+   "int_note": "Post showcase-01. Formal English on LinkedIn only."
+  }
+ ],
+ "next": [
+  "Upload the approved files and text to each platform, following the platform order in the handover pack.",
+  "After upload, we verify the result on each platform (image cropping, highlight names, cover overlap) and report any findings.",
+  "We confirm that the handle @vill.studio is available on Facebook, TikTok and LinkedIn, and whether the website link field is available on TikTok.",
+  "Pinned posts on Instagram, Facebook and TikTok follow once the first project post is approved. Nothing unapproved will be pinned."
+ ],
+ "internal_next": [
+  "Ahmed uploads the files manually, following the per-platform order in handover/HANDOVER.md.",
+  "After the first upload, run the checklist above and record the results in the report.",
+  "Pinning on Instagram, Facebook and TikTok waits for the first approved post (showcase-01). Nothing unapproved is pinned."
+ ],
+ "decisions": [
+  {
+   "date": "2026-10-09",
+   "item": "Complete profile set approved for handover.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "Whole set approved and handed over; manual upload by Ahmed."
+  },
+  {
+   "date": "2026-10-08",
+   "item": "Account name VILL Studio and website vill-studio.com as the contact channel.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "The link goes in the links field, not in the bio text."
+  },
+  {
+   "date": "2026-10-08",
+   "item": "Tone of voice per platform, and project locations limited to project posts.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "LinkedIn very formal English; Instagram and TikTok short and premium; Facebook plain. Place names only in the project post; no project counts in any bio."
+  },
+  {
+   "date": "2026-10-08",
+   "item": "Final profile text for Instagram, Facebook, TikTok and LinkedIn.",
+   "status": "Approved",
+   "who": "Ahmed",
+   "int_note": "Instagram A, Facebook A, TikTok B, LinkedIn final (tagline and About)."
+  }
+ ],
+ "checks": [
+  {
+   "title": "Instagram grid 3:4 crop",
+   "state": "open",
+   "note": "Confirm that text and logo in the templates sit inside the crop on a real grid (preview in build/_qa)."
+  },
+  {
+   "title": "Highlight circle",
+   "state": "open",
+   "note": "The whole symbol sits inside the circle and is legible at real size; Before & After is not truncated (fallback: Before/After)."
+  },
+  {
+   "title": "Facebook avatar overlap",
+   "state": "open",
+   "note": "On an RTL page the picture sits on the right: confirm it does not cover the middle of the cover on mobile and desktop."
+  },
+  {
+   "title": "LinkedIn logo overlap",
+   "state": "open",
+   "note": "The logo covers the bottom-left of the cover: confirm nothing important is hidden."
+  },
+  {
+   "title": "TikTok link eligibility",
+   "state": "open",
+   "note": "Reported to need 1,000 followers or a verified business account; unconfirmed. Check Profile > Edit profile > Links."
+  },
+  {
+   "title": "Instagram website field / account type",
+   "state": "open",
+   "note": "Account-type requirement unconfirmed."
+  },
+  {
+   "title": "Platform text limits",
+   "state": "open",
+   "note": "All from unofficial sources: IG bio 150 (ours 131), FB intro 101 (47), TikTok bio 80 (43), LinkedIn tagline 220 (91), LinkedIn About 2,600 (about 252)."
+  },
+  {
+   "title": "Handle vill.studio available on Facebook, TikTok and LinkedIn",
+   "state": "open",
+   "note": "Not yet checked."
+  },
+  {
+   "title": "Ahmed approval of the set",
+   "state": "pass",
+   "note": "2026-10-09"
+  }
+ ],
+ "sources": [
+  {
+   "label": "HANDOVER.md",
+   "path": "handover/HANDOVER.md"
+  },
+  {
+   "label": "COPY.md",
+   "path": "COPY.md"
+  },
+  {
+   "label": "INTAKE.md",
+   "path": "INTAKE.md"
+  },
+  {
+   "label": "GATE_REVIEW.md",
+   "path": "build/_qa/GATE_REVIEW.md"
+  },
+  {
+   "label": "Contact sheet",
+   "path": "build/contact-sheet.png"
+  }
+ ],
+ "default_lang": "en",
+ "ar": {
+  "about": {
+   "paragraphs": [
+    "أعدّت The Systronic مجموعة ملفات التعريف على وسائل التواصل الاجتماعي لصالح VILL Studio على منصات Instagram، Facebook، TikTok، LinkedIn. تشمل المجموعة صور الملفات، وصور الغلاف، وأغلفة اللقطات المميزة على Instagram، وقوالب المنشورات، ونصوص التعريف الخاصة بكل منصة. اعتُمدت المجموعة كاملة في 9 أكتوبر 2026، ولم يُنشر أي شيء حتى الآن."
+   ],
+   "voice": "لكل منصة نبرتها الخاصة. تعتمد LinkedIn الإنجليزية الرسمية، وتعتمد Instagram، وكذلك TikTok، صياغة موجزة وهادئة، وتعتمد Facebook صياغة بسيطة ومباشرة. تُذكر مواقع المشاريع في منشور المشروع المعني فقط، ولا ترد في نصوص التعريف.",
+   "internal_paragraphs": [
+    "ملخص داخلي: اعتمد أحمد مجموعة المنصات الأربع (Instagram، Facebook، TikTok، LinkedIn) في 9 أكتوبر 2026. لم يُنشر أي شيء. الرفع يدوي ويتولاه أحمد. بعد أول عملية رفع تُنفَّذ قائمة الفحوصات الواردة أدناه، وتُسجَّل نتائجها في التقرير.",
+    "الاسم المعتمد في كل مكان هو VILL Studio، ومعرّف Instagram هو @vill.studio، والرابط هو vill-studio.com. المقصود استخدام المعرّف نفسه على Facebook وTikTok وLinkedIn إن كان متاحًا، ولم يُتحقق من توفره بعد."
+   ],
+   "facts": {
+    "Platforms": [
+     "المنصات",
+     "Instagram · Facebook · TikTok · LinkedIn"
+    ],
+    "Account name": [
+     "اسم الحساب",
+     "VILL Studio"
+    ],
+    "Instagram handle": [
+     "معرّف الحساب على Instagram",
+     "@vill.studio"
+    ],
+    "Website": [
+     "الموقع الإلكتروني",
+     "vill-studio.com"
+    ],
+    "Status": [
+     "الحالة",
+     "معتمد. الرفع لاحقًا."
+    ]
+   }
+  },
+  "items": {
+   "profile_mock": {
+    "group": "معاينة",
+    "title": "معاينة الملفات الأربعة لجميع المنصات",
+    "desc": "معاينة مجمّعة للملفات الشخصية الأربعة بصيغة PNG. للاطلاع فقط وليست للرفع.",
+    "int_note": "معاينة فقط، وليست للرفع.",
+    "who": "أحمد"
+   },
+   "ig_profile_picture": {
+    "group": "Instagram",
+    "title": "الصورة الشخصية",
+    "desc": "صورة مربعة بصيغة PNG بمقاس 1080 بكسل لكل ضلع. تُقصّ على شكل دائرة من المنتصف.",
+    "who": "أحمد"
+   },
+   "ig_highlight_1": {
+    "group": "Instagram",
+    "title": "غلاف لقطة «Projects» المميزة",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1920 بكسل. اسم اللقطة المميزة المعتمد هو «Projects».",
+    "int_note": "يظهر الاسم أسفل الدائرة.",
+    "who": "أحمد"
+   },
+   "ig_highlight_2": {
+    "group": "Instagram",
+    "title": "غلاف لقطة «Before & After» المميزة",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1920 بكسل. اسم اللقطة المميزة المعتمد هو «Before & After». إذا ظهر الاسم مقتطعًا في التطبيق، يُستخدم الاسم البديل «Before/After».",
+    "who": "أحمد"
+   },
+   "ig_highlight_3": {
+    "group": "Instagram",
+    "title": "غلاف لقطة «Furniture» المميزة",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1920 بكسل. اسم اللقطة المميزة المعتمد هو «Furniture».",
+    "int_note": "يظهر الاسم أسفل الدائرة.",
+    "who": "أحمد"
+   },
+   "ig_template_story": {
+    "group": "Instagram",
+    "title": "قالب القصة",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1920 بكسل. قالب للقصص المستقبلية، وليس للنشر بصيغته المرفقة.",
+    "who": "أحمد"
+   },
+   "ig_template_reel": {
+    "group": "Instagram",
+    "title": "قالب غلاف مقاطع ريلز",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1920 بكسل. قالب لأغلفة المقاطع المستقبلية، وليس للنشر بصيغته المرفقة.",
+    "who": "أحمد"
+   },
+   "ig_template_feed": {
+    "group": "Instagram",
+    "title": "قالب منشور الصفحة الرئيسية",
+    "desc": "صورة بصيغة PNG بعرض 1080 وارتفاع 1350 بكسل. قالب للمنشورات المستقبلية، وليس للنشر بصيغته المرفقة.",
+    "who": "أحمد"
+   },
+   "fb_profile_picture": {
+    "group": "Facebook",
+    "title": "الصورة الشخصية",
+    "desc": "صورة مربعة بصيغة PNG بمقاس 320 بكسل لكل ضلع.",
+    "int_note": "في الصفحات العربية (من اليمين إلى اليسار) تقع الصورة الشخصية على الجهة اليمنى.",
+    "who": "أحمد"
+   },
+   "fb_cover": {
+    "group": "Facebook",
+    "title": "صورة الغلاف",
+    "desc": "صورة بصيغة JPG بعرض 1640 وارتفاع 924 بكسل.",
+    "int_note": "يجب التأكد من أن الصورة الشخصية لا تغطي وسط الغلاف.",
+    "who": "أحمد"
+   },
+   "tt_profile_picture": {
+    "group": "TikTok",
+    "title": "الصورة الشخصية",
+    "desc": "صورة مربعة بصيغة PNG بمقاس 200 بكسل لكل ضلع.",
+    "who": "أحمد"
+   },
+   "li_logo": {
+    "group": "LinkedIn",
+    "title": "شعار الشركة",
+    "desc": "صورة مربعة بصيغة PNG بمقاس 400 بكسل لكل ضلع.",
+    "int_note": "يغطي الشعار الزاوية السفلية اليسرى من صورة الغلاف.",
+    "who": "أحمد"
+   },
+   "li_cover": {
+    "group": "LinkedIn",
+    "title": "صورة الغلاف",
+    "desc": "صورة بصيغة PNG بعرض 1512 وارتفاع 256 بكسل.",
+    "who": "أحمد"
+   }
+  },
+  "texts": {
+   "ig_bio": {
+    "title": "النبذة التعريفية على Instagram",
+    "platform": "Instagram",
+    "note": "يُدخل VILL Studio في حقل الاسم، ثم vill.studio في حقل اسم المستخدم، ثم vill-studio.com في حقل الموقع الإلكتروني.",
+    "int_note": "أربعة أسطر، 131 حرفًا. يوضع الموقع الإلكتروني في حقل الموقع، وليس داخل النبذة."
+   },
+   "fb_intro": {
+    "title": "التعريف المختصر على Facebook",
+    "platform": "Facebook",
+    "int_note": "47 حرفًا."
+   },
+   "fb_about": {
+    "title": "قسم «نبذة عنا» على Facebook",
+    "platform": "Facebook",
+    "note": "يُذكر الموقع الإلكتروني vill-studio.com ضمن معلومات التواصل."
+   },
+   "tt_bio": {
+    "title": "النبذة التعريفية على TikTok",
+    "platform": "TikTok",
+    "note": "يُدخل الموقع الإلكتروني في حقل الروابط عند توفره، وليس في النبذة.",
+    "int_note": "43 حرفًا. لم يُؤكد بعد توفر حقل الروابط (انظر الفحوصات)."
+   },
+   "li_tagline": {
+    "title": "العبارة التعريفية على LinkedIn",
+    "platform": "LinkedIn",
+    "int_note": "91 حرفًا."
+   },
+   "li_about": {
+    "title": "قسم «نبذة» على LinkedIn",
+    "platform": "LinkedIn"
+   },
+   "li_post_opener": {
+    "title": "الجملة الافتتاحية لمنشور المشروع على LinkedIn",
+    "platform": "LinkedIn",
+    "note": "مخصصة لأول منشور مشروع.",
+    "int_note": "المنشور showcase-01. الإنجليزية الرسمية على LinkedIn فقط."
+   }
+  },
+  "next": [
+   "رفع الملفات والنصوص المعتمدة على كل منصة، وفق ترتيب المنصات الوارد في حزمة التسليم.",
+   "بعد الرفع نتحقق من النتيجة على كل منصة (قصّ الصور، وأسماء اللقطات المميزة، وتداخل صورة الغلاف)، ونوافيكم بأي ملاحظات.",
+   "نتأكد من توفر المعرّف @vill.studio على Facebook وكذلك TikTok وكذلك LinkedIn، ومن إتاحة حقل رابط الموقع الإلكتروني في حساب TikTok.",
+   "يلي ذلك تثبيت المنشورات على Instagram وFacebook وTikTok بعد اعتماد أول منشور مشروع، ولن يُثبَّت أي محتوى غير معتمد."
+  ],
+  "internal_next": [
+   "يرفع أحمد الملفات يدويًا وفق ترتيب كل منصة الوارد في handover/HANDOVER.md.",
+   "بعد أول عملية رفع، تُنفَّذ قائمة الفحوصات الواردة أعلاه وتُسجَّل النتائج في التقرير.",
+   "يتوقف التثبيت على Instagram وFacebook وTikTok إلى حين اعتماد أول منشور (showcase-01)، ولن يُثبَّت أي محتوى غير معتمد."
+  ],
+  "decisions": [
+   {
+    "item": "اعتماد مجموعة ملفات التعريف كاملة للتسليم.",
+    "int_note": "اعتُمدت المجموعة كاملة وسُلّمت، والرفع يدوي ويتولاه أحمد.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد اسم الحساب VILL Studio، واعتماد الموقع الإلكتروني vill-studio.com قناةً للتواصل.",
+    "int_note": "يوضع الرابط في حقل الروابط، وليس في نص النبذة.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد نبرة الخطاب لكل منصة، وحصر ذكر مواقع المشاريع في منشورات المشاريع.",
+    "int_note": "الإنجليزية الرسمية جدًا على LinkedIn؛ وصياغة موجزة وراقية على Instagram وTikTok؛ وصياغة بسيطة على Facebook. أسماء الأماكن في منشور المشروع فقط، ولا ذكر لعدد المشاريع في أي نبذة.",
+    "who": "أحمد"
+   },
+   {
+    "item": "اعتماد النصوص النهائية لملفات Instagram وFacebook وTikTok وLinkedIn.",
+    "int_note": "الصيغة أ لـ Instagram، والصيغة أ لـ Facebook، والصيغة ب لـ TikTok، والنص النهائي لـ LinkedIn (العبارة التعريفية وقسم «نبذة»).",
+    "who": "أحمد"
+   }
+  ],
+  "checks": [
+   {
+    "title": "قصّ شبكة Instagram بنسبة 3:4",
+    "note": "التأكد من أن النص والشعار في القوالب يقعان داخل حدود القص على شبكة فعلية (المعاينة في build/_qa)."
+   },
+   {
+    "title": "دائرة اللقطة المميزة",
+    "note": "التأكد من أن الرمز كاملًا داخل الدائرة ومقروء بالحجم الفعلي، وأن «Before & After» لا يُقتطع (البديل: «Before/After»)."
+   },
+   {
+    "title": "تداخل الصورة الشخصية مع الغلاف على Facebook",
+    "note": "في الصفحات من اليمين إلى اليسار تقع الصورة على الجهة اليمنى؛ يجب التأكد من أنها لا تغطي وسط الغلاف على الجوال وسطح المكتب."
+   },
+   {
+    "title": "تداخل الشعار مع الغلاف على LinkedIn",
+    "note": "يغطي الشعار الزاوية السفلية اليسرى من الغلاف؛ يجب التأكد من عدم إخفاء أي عنصر مهم."
+   },
+   {
+    "title": "أهلية رابط الموقع على TikTok",
+    "note": "يُذكر أن الحقل يتطلب 1,000 متابع أو حساب أعمال موثّقًا، وهذا غير مؤكد. التحقق عبر: الملف الشخصي > تعديل الملف > الروابط."
+   },
+   {
+    "title": "حقل الموقع الإلكتروني ونوع الحساب على Instagram",
+    "note": "متطلبات نوع الحساب غير مؤكدة."
+   },
+   {
+    "title": "حدود النصوص على المنصات",
+    "note": "جميعها من مصادر غير رسمية: نبذة Instagram 150 حرفًا (نصنا 131)، تعريف Facebook 101 (47)، نبذة TikTok 80 (43)، عبارة LinkedIn 220 (91)، قسم «نبذة» في LinkedIn 2,600 (نحو 252)."
+   },
+   {
+    "title": "توفر المعرّف vill.studio على Facebook وTikTok وLinkedIn",
+    "note": "لم يُتحقق منه بعد."
+   },
+   {
+    "title": "اعتماد أحمد للمجموعة",
+    "note": "9 أكتوبر 2026"
+   }
+  ],
+  "sources": {
+   "HANDOVER.md": "HANDOVER.md",
+   "COPY.md": "COPY.md",
+   "INTAKE.md": "INTAKE.md",
+   "GATE_REVIEW.md": "GATE_REVIEW.md",
+   "Contact sheet": "ورقة المعاينة"
+  },
+  "options": {},
+  "title": "إعداد ملفات التعريف على وسائل التواصل الاجتماعي",
+  "subtitle": "تسليم لصالح VILL Studio · Instagram · Facebook · TikTok · LinkedIn · 9 أكتوبر 2026",
+  "status_label": "معتمد",
+  "texts_intro": "نصوص التعريف المعتمدة، جاهزة للصق في كل منصة."
+ }
+}
