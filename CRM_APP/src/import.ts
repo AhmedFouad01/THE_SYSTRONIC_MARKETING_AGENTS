@@ -285,7 +285,7 @@ async function propertyContext(
 }
 
 // ---- the plan (shared by preview and commit) -----------------------------------------------------------------------------------
-type Existing = { id: string; display_name: string; custom: Row; has_channel?: boolean };
+type Existing = { id: string; display_name: string; custom: Row; has_channel: boolean; activeKeys: Set<string> };
 async function plan(
 	db: Db,
 	ctx: Context,
@@ -348,6 +348,7 @@ async function plan(
 			if (r.value.phone) wanted.add(r.value.phone);
 		}
 	const byKey = new Map<string, Set<string>>(); // "email:x" -> contact refs
+	const activeByContact = new Map<string, Set<string>>();
 	if (wanted.size) {
 		const vals = [...wanted];
 		const digestOf = new Map<string, string>();
@@ -363,7 +364,7 @@ async function plan(
 		const digests = [...digestOf.keys()];
 		for (let i = 0; i < digests.length; i += 1000) {
 			const { rows } = await db.query(
-				"SELECT ci.kind,ci.keyed_lookup_digest dg,ci.contact_id FROM crm.contact_identifier ci JOIN crm.contact c ON (c.tenant_id,c.id)=(ci.tenant_id,ci.contact_id) WHERE ci.tenant_id=$1 AND ci.keyed_lookup_digest=ANY($2::text[]) AND c.merged_into_id IS NULL",
+				"SELECT ci.kind,ci.keyed_lookup_digest dg,ci.contact_id,ci.is_active FROM crm.contact_identifier ci JOIN crm.contact c ON (c.tenant_id,c.id)=(ci.tenant_id,ci.contact_id) WHERE ci.tenant_id=$1 AND ci.keyed_lookup_digest=ANY($2::text[]) AND c.merged_into_id IS NULL",
 				[ctx.tenant, digests.slice(i, i + 1000)],
 			);
 			for (const r of rows) {
@@ -373,6 +374,11 @@ async function plan(
 				);
 				if (!byKey.has(k)) byKey.set(k, new Set());
 				byKey.get(k)?.add(r.contact_id as string);
+				if (r.is_active) {
+					const active = activeByContact.get(r.contact_id as string) ?? new Set<string>();
+					active.add(k);
+					activeByContact.set(r.contact_id as string, active);
+				}
 			}
 		}
 	}
@@ -391,6 +397,8 @@ async function plan(
 				id: r.id,
 				display_name: r.display_name,
 				custom: (r.custom ?? {}) as Row,
+				has_channel: r.has_channel === true,
+				activeKeys: activeByContact.get(r.id as string) ?? new Set<string>(),
 			});
 	}
 	// leads of those contacts (lead duplicate = same contact + same title, not closed)
@@ -484,6 +492,7 @@ async function plan(
 				display_name: name,
 				custom: it.custom ?? {},
 				has_channel: idents(v).length > 0,
+				activeKeys: new Set(keys),
 			});
 			register(it.contactRef);
 		};
@@ -570,7 +579,7 @@ async function plan(
 							existing.custom,
 						);
 						if (!p.ok) fail(p.errors);
-						else if (!p.changed.length && state.get(match)?.has_channel) {
+						else if (!p.changed.length && keys.every((k) => state.get(match)?.activeKeys.has(k))) {
 							it.status = "skip";
 							it.reason = "NO_CHANGE";
 						} else {
@@ -595,6 +604,15 @@ async function plan(
 						leadsOf.set(match, m);
 					}
 				}
+			}
+		}
+		// Planned channel restorations/additions are visible to later rows, just like planned leads.
+		if (inp.object === "lead" && (it.status === "create" || it.status === "update") && it.contactRef) {
+			const contact = state.get(it.contactRef);
+			if (contact) {
+				contact.has_channel = true;
+				for (const key of keys) contact.activeKeys.add(key);
+				register(it.contactRef);
 			}
 		}
 		done();

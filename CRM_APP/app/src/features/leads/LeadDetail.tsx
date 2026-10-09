@@ -1,6 +1,6 @@
 import { ContactChannels, protectedFacts, ContactFieldsEdit, useContactFieldDraft } from "../contacts/ContactFields.tsx";
 import { useState } from "react";
-import { isApiError, isForbidden, isVersionConflict, useIsAdmin } from "../../api/index.ts";
+import { isApiError, isForbidden, isVersionConflict, useIsAdmin, useSession } from "../../api/index.ts";
 import {
 	Badge,
 	Bdi,
@@ -25,6 +25,7 @@ import { fetchLead, patchLead } from "./api.ts";
 import { STATUS_KEY, STATUS_TONE } from "./labels.ts";
 import {
 	buildPatchBody,
+	missingLeadContact,
 	draftOf,
 	LEAD_STATUSES,
 	type Assignee,
@@ -47,6 +48,7 @@ type EditorProps = {
 function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 	const { t } = useI18n();
 	const toast = useToast();
+	const session = useSession();
 	const [draft, setDraft] = useState(() => draftOf(lead));
 	const [saving, setSaving] = useState(false);
 	const [reloading, setReloading] = useState(false);
@@ -55,9 +57,8 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 
 	const fields = useContactFieldDraft(lead, false);
 	const custom = useCustomDraft(cf, "edit");
-	const contactRequired = lead.sensitive_masked === false
-		? !fields.draft.email?.trim() && !fields.draft.phone?.trim()
-		: lead.missing_contact === true;
+	const channelsEditable = lead.sensitive_masked === false && session.info?.sensitive_write !== false;
+	const contactRequired = missingLeadContact(lead, fields.draft, channelsEditable);
 	const dirty = buildPatchBody(lead, draft, "x") !== null || custom.dirty || fields.dirty;
 	const ownerOptions =
 		assignees.some((a) => a.id === lead.owner_id) || !lead.owner_id
@@ -197,7 +198,7 @@ function LeadEditor({ lead, assignees, cf, onUpdated, onDone }: EditorProps) {
 				))}
 			</Select>
 			{error === "contactRequired" ? <p role="alert">{t("leads.contact.required")}</p> : null}
-			<ContactFieldsEdit fields={fields} masked={lead.sensitive_masked !== false} />
+			<ContactFieldsEdit fields={fields} masked={lead.sensitive_masked !== false} disabled={!channelsEditable} />
 			<CustomFieldsEdit cf={cf} draft={custom} mode="edit" />
 			<RecordEditFooter
 				dirty={dirty}

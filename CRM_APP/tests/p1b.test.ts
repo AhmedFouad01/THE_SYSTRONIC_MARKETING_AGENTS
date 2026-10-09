@@ -949,7 +949,7 @@ test("P1B-B1 API output never carries custom/custom_search (get + list, all four
 	const created = async (path: string, body: Body) =>
 		(await req(path, "POST", { command_id: randomUUID(), ...body }))
 			.data as pg.QueryResultRow;
-	const contact = await created("contacts", { display_name: "B1 Contact" });
+	const contact = await created("contacts", { display_name: "B1 Contact", email: "projection-fixture@example.test" });
 	const lead = await created("leads", {
 		contact_id: contact.id,
 		title: "B1 Lead",

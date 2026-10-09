@@ -276,6 +276,16 @@ export function classifyCreateError(e: unknown): CreateErrorKind {
 
 // ---- detail edit ------------------------------------------------------------------------------------------
 
+/** Editable forms validate the resulting draft; protected/read-only forms use server presence. */
+export function missingLeadContact(
+ lead: Pick<Lead, "missing_contact" | "sensitive_masked">,
+ channels: { email?: string; phone?: string },
+ editable: boolean,
+): boolean {
+ if (!editable || lead.sensitive_masked !== false) return lead.missing_contact === true;
+ return !normalizeEmail(channels.email ?? "") && !normalizePhone(channels.phone ?? "");
+}
+
 export type EditDraft = { title: string; status: LeadStatus; ownerId: string };
 
 export const draftOf = (l: Lead): EditDraft => ({

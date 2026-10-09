@@ -37,7 +37,7 @@ async function seedData(request: APIRequestContext, f: Fixture) {
 	const lead = await post(request, f, "/v1/leads", {
 		title: "Kitchen inquiry",
 		source_evidence: "Referred by a neighbour",
-		contact: { display_name: "Alex Carter", email: "ui-fixture@example.test", email: "ui-fixture@example.test" },
+		contact: { display_name: "Alex Carter", email: "ui-fixture@example.test" },
 	});
 	const pipe = await post(request, f, "/v1/pipelines", {
 		name: "Flow",

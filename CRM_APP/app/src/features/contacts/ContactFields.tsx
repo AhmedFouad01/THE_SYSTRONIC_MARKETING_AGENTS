@@ -114,9 +114,11 @@ export function useContactFieldDraft(
 export function ContactFieldsEdit({
 	fields,
 	masked,
+	disabled = masked,
 }: {
 	fields: ReturnType<typeof useContactFieldDraft>;
 	masked: boolean;
+	disabled?: boolean;
 }) {
 	const { t } = useI18n();
 	return (
@@ -129,7 +131,7 @@ export function ContactFieldsEdit({
 					type="text" inputMode={k === "phone" ? "tel" : k === "email" ? "email" : "text"}
 					dir="auto"
 					value={masked ? "" : (fields.draft[k] ?? "")}
-					disabled={masked}
+					disabled={disabled || masked}
 					placeholder={masked ? t("contacts.fields.masked") : undefined}
 					error={
 						fields.errors.includes(k) ? t("cf.err.INVALID_VALUE") : undefined

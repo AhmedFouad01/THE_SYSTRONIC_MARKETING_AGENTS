@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { ApiError } from "../../api/errors.ts";
 import {
 	leadStripTone,
+	missingLeadContact,
 	type BulkItem,
 	buildCreateBody,
 	buildPatchBody,
@@ -271,4 +272,23 @@ describe("corrected R10 contact channels",()=>{
   expect(validateNewLead({...form,email:"•••• (Hidden)"}).email).toBe("email");
  });
  it("missing contact preset sends a boolean server filter",()=>{expect(builtInViewNodes("missing_contact",ME)).toEqual([{p:"missing_contact",op:"eq",v:true}]);});
+});
+
+
+describe("R10 resulting edit channels", () => {
+ it("allows an editable repair despite stale missing_contact and rejects clearing both", () => {
+  const row=lead("missing",ME,{missing_contact:true,sensitive_masked:false});
+  expect(missingLeadContact(row,{email:"repair@example.test",phone:""},true)).toBe(false);
+  expect(missingLeadContact(row,{email:"",phone:"٠١٠٠١٢٣٤٥٦٧"},true)).toBe(false);
+  expect(missingLeadContact(row,{email:"bad",phone:"invalid"},true)).toBe(true);
+  expect(missingLeadContact({...row,missing_contact:false},{email:"  ",phone:""},true)).toBe(true);
+ });
+ it("trusts server presence for masked and read-only forms, ignoring uneditable drafts", () => {
+  for (const masked of [true,undefined,false]) {
+   const row=lead("protected",ME,{missing_contact:false,sensitive_masked:masked});
+   expect(missingLeadContact(row,{email:"",phone:""},false)).toBe(false);
+   expect(missingLeadContact({...row,missing_contact:true},{email:"repair@example.test"},false)).toBe(true);
+  }
+  expect(missingLeadContact({missing_contact:true,sensitive_masked:true},{email:"repair@example.test"},true)).toBe(true);
+ });
 });

@@ -294,6 +294,7 @@ test("B3 required (create + non-clearable) and read_only", async () => {
 		call(mgr, "POST", "/v1/leads", {
 			...cmd(),
 			contact_id: contact,
+			email: "required-fixture@example.test",
 			title: "L",
 			source_evidence: "e",
 			...(properties ? { properties } : {}),
@@ -328,7 +329,7 @@ test("B3 required (create + non-clearable) and read_only", async () => {
 		title: "L4",
 		source_evidence: "e",
 		properties: { must: "m", later: "l" },
-		contact: { display_name: "Inline" },
+		contact: { email: "inline-required@example.test", display_name: "Inline" },
 	});
 	assert.deepEqual(errs(r), ["cmust:REQUIRED"]);
 	r = await call(mgr, "POST", "/v1/leads", {
@@ -336,7 +337,7 @@ test("B3 required (create + non-clearable) and read_only", async () => {
 		title: "L4",
 		source_evidence: "e",
 		properties: { must: "m", later: "l" },
-		contact: { display_name: "Inline", properties: { cmust: "c" } },
+		contact: { email: "inline-required@example.test", display_name: "Inline", properties: { cmust: "c" } },
 	});
 	assert.equal(r.status, 201, JSON.stringify(r.body));
 	assert.deepEqual(r.body.data.properties, { must: "m", later: "l" });
@@ -927,4 +928,17 @@ test("R10 masked writer validates stored channels without sensitive.read; 029 pr
   const publicGrant=await one("SELECT count(*)::int n FROM pg_proc p CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a WHERE p.oid='crm.contact_has_channel(uuid)'::regprocedure AND a.grantee=0");assert.equal(publicGrant.n,0);
   const rls=await one("SELECT relrowsecurity,relforcerowsecurity FROM pg_class WHERE oid='crm.contact_identifier'::regclass");assert.ok(rls.relrowsecurity&&rls.relforcerowsecurity);
  } finally {await admin.query("ROLLBACK");}
+});
+
+
+test("R10 HTTP errors localize contact requirement without changing the code or exposing contact data",async()=>{
+ await fresh();
+ for (const [language,phrase] of [["en-US","phone number or email"],["ar-EG, en;q=0.5","رقم هاتف"]]) {
+  const command=randomUUID();
+  const response=await fetch(`${base}/v1/leads`,{method:"POST",headers:{authorization:`Bearer ${mgr.token}`,"x-tenant-id":mgr.tenant,"content-type":"application/json","idempotency-key":command,"accept-language":language as string},body:JSON.stringify({command_id:command,title:"Missing",source_evidence:"manual",contact:{display_name:"Private fixture name"}})});
+  assert.equal(response.status,422);
+  const error=await response.json() as {code:string;safe_message:string;errors:{field:string;code:string}[]};
+  assert.equal(error.code,"CONTACT_REQUIRED");assert.ok(error.safe_message.includes(phrase as string));
+  assert.deepEqual(error.errors,[{field:"contact_channels",code:"CONTACT_REQUIRED"}]);assert.ok(!JSON.stringify(error).includes("Private fixture name"));
+ }
 });
