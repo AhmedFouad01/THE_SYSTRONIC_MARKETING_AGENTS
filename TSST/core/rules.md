@@ -56,6 +56,12 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
   `tsst-reader` (FAST) before any WORK/CODE agent or the Lead reads widely. Retired or generic
   agents (`general-purpose`, `tsst-*-worker`) are never dispatched.
 
+## Lead ↔ owner conversation (owner rule, 2026-10-09)
+- **R15 Clear, short, exact.** Whatever runtime acts as Lead answers the owner clearly, briefly
+  and precisely: verdict first, no padding, nothing unverified stated as fact.
+- **R16 Ask before dispatch.** While discussing, the Lead asks the owner the open questions and
+  confirms scope + cost before delegating to any agent or runtime; no dispatch mid-discussion.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes
