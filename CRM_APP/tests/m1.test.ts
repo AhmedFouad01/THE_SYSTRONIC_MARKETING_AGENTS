@@ -146,7 +146,7 @@ test("M1-02 manual lead atomically creates contact, audit, event/outbox and repl
 	await fresh();
 	const body = {
 		command_id: randomUUID(),
-		contact: { display_name: "New from lead" },
+		contact: { display_name: "New from lead", email:"new-lead@example.test" },
 		title: "Manual inquiry",
 		source_evidence: "Synthetic call",
 	};
@@ -350,7 +350,7 @@ test("M1-08 actor membership revoked before automation effect blocks pending tas
 test("M1-09 tenant A cannot read B contact or update B lead/deal/task; forged tenant/token denied", async () => {
 	await fresh();
 	const other = { tenant: f.ids.b, token: f.tokens.agency };
-	const c = await create("contacts", { display_name: "B" }, other),
+	const c = await create("contacts", { display_name: "B", email:"b@example.test" }, other),
 		l = await create(
 			"leads",
 			{ contact_id: c.id, title: "B lead", source_evidence: "synthetic" },
@@ -467,7 +467,7 @@ test("M1-11 sensitive action removal denies identifiers; manager and agency-mana
 test("M1-12 cross-tenant FKs and typed ledger references fail in actual PostgreSQL", async () => {
 	await fresh();
 	const other = { tenant: f.ids.b, token: f.tokens.agency },
-		c = await create("contacts", { display_name: "B" }, other);
+		c = await create("contacts", { display_name: "B", email:"b@example.test" }, other);
 	for (const sql of [
 		"INSERT INTO crm.lead(tenant_id,id,contact_id,owner_id,title,source,source_evidence) VALUES($1,$2,$3,$4,'x','manual','x')",
 		"INSERT INTO crm.task(tenant_id,id,contact_id,owner_id,title,due_at) VALUES($1,$2,$3,$4,'x',now())",
@@ -570,7 +570,7 @@ test("M1-15 concurrent manual command replays serialize and bind every retry key
 	await fresh();
 	const body = {
 		command_id: randomUUID(),
-		contact: { display_name: "Concurrent contact" },
+		contact: { display_name: "Concurrent contact", email:"concurrent-lead@example.test" },
 		title: "Concurrent lead",
 		source_evidence: "Synthetic concurrency",
 	};
@@ -600,7 +600,7 @@ test("M1-16 manual intake audit failure rolls contact/lead/event/outbox/receipt 
 	try {
 		await assert.rejects(
 			create("leads", {
-				contact: { display_name: "Rolled back" },
+				contact: { display_name: "Rolled back", email:"rollback-lead@example.test" },
 				title: "Rolled back",
 				source_evidence: "Synthetic",
 			}),

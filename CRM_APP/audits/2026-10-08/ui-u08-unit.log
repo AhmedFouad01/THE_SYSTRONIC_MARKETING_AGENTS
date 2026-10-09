@@ -1,0 +1,14 @@
+npm notice run systronic-crm@0.1.0 test:unit
+npm notice run vitest run
+
+ RUN  v5.0.3 C:/Work/tsst-crm-codex/CRM_APP
+
+
+ Test Files  63 passed (63)
+      Tests  642 passed (642)
+   Start at  19:34:59
+   Duration  4.09s (import 73%, transform 17%, tests 9%, worker 1%)
+
+    Isolate  63 workers spawned · ~208ms startup each (spawn + environment, per file)
+             at least ~664ms faster with isolate: false — reuses workers across files instead of one per file
+

@@ -1,3 +1,4 @@
+import { useSession } from "../../api/index.ts";
 import { useId, useRef, useState } from "react";
 import {
 	Button,
@@ -40,6 +41,8 @@ function NewContactForm({
 	onBusy: (busy: boolean) => void;
 }) {
 	const { t } = useI18n();
+	const session = useSession();
+	const masked = session.info?.sensitive_read === false || session.info?.sensitive_write === false;
 	const [input, setInput] = useState<NewContactInput>(EMPTY_NEW_CONTACT);
 	const [touched, setTouched] = useState(false);
 	const [serverError, setServerError] = useState<CreateContactError | null>(null);
@@ -104,6 +107,8 @@ function NewContactForm({
 				<Input
 					label={t("contacts.new.phone")}
 					name="phone"
+				disabled={masked}
+				placeholder={masked ? t("contacts.fields.masked") : undefined}
 					type="tel"
 					dir="ltr"
 					value={input.phone}
@@ -113,6 +118,8 @@ function NewContactForm({
 				<Input
 					label={t("contacts.new.email")}
 					name="email"
+				disabled={masked}
+				placeholder={masked ? t("contacts.fields.masked") : undefined}
 					type="email"
 					dir="ltr"
 					value={input.email}
@@ -120,7 +127,9 @@ function NewContactForm({
 					onChange={(e) => set({ email: e.target.value })}
 				/>
 			</div>
-			<Select
+			<Input label={t("props.system.company")} name="company" dir="auto" maxLength={300} value={input.company ?? ""} disabled={masked} placeholder={masked ? t("contacts.fields.masked") : undefined} onChange={e=>set({company:e.target.value})}/>
+   <Input label={t("props.system.job_title")} name="jobTitle" dir="auto" maxLength={300} value={input.jobTitle ?? ""} disabled={masked} placeholder={masked ? t("contacts.fields.masked") : undefined} onChange={e=>set({jobTitle:e.target.value})}/>
+   <Select
 				label={t("contacts.new.owner")}
 				name="owner"
 				value={input.ownerId}

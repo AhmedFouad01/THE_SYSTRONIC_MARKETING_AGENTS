@@ -22,6 +22,7 @@ import {
 	type ObjectKey,
 	type ObjectSchema,
 	type OptionColor,
+	contentLabel,
 	pickLabel,
 	type PropertyDef,
 	type PropertyGroupView,
@@ -68,7 +69,8 @@ const OFF: CustomFields = { status: "off", schema: null, values: {}, current: fa
 export function useCustomFields(object: ObjectKey, path: RecordPath, id: string | null, version: number | null): CustomFields {
 	const session = useSession();
 	const allowed = session.info?.schema_read !== false;
-	const [schema, setSchema] = useState<{ status: "loading" | "ready" | "error" | "off"; schema: ObjectSchema | null }>({
+	const [schema, setSchema] = useState<{ status: "loading" | "ready" | "error" | "off"; schema: ObjectSchema | null;
+	}>({
 		status: "loading",
 		schema: null,
 	});
@@ -147,7 +149,8 @@ export type CustomDraft = {
 export function useCustomDraft(cf: CustomFields, mode: "edit" | "create"): CustomDraft {
 	const { locale } = useI18n();
 	const groups = useMemo(
-		() => (cf.schema === null ? [] : (mode === "create" ? createGroups : customGroups)(cf.schema, locale)),
+		() =>
+			cf.schema === null ? [] : (mode === "create" ? createGroups : customGroups)(cf.schema, locale),
 		[cf.schema, locale, mode],
 	);
 	const defs = useMemo(() => flatten(groups), [groups]);
@@ -202,11 +205,9 @@ export function ReadValueView({ v }: { v: ReadValue }) {
 		case "plain":
 			return <BidiText wrap>{v.text}</BidiText>;
 		case "multiline":
-			return (
-				<span className="sy-cf__multiline">
+			return <span className="sy-cf__multiline">
 					{v.text}
-				</span>
-			);
+				</span>;
 		case "num":
 			return <bdi>{v.text}</bdi>;
 		case "money":
@@ -290,7 +291,7 @@ export function CustomFieldsRead({ cf }: { cf: CustomFields }) {
 			{groups.map((g) => (
 				<div key={g.group.key} className="sy-cf__group" data-testid="cf-group" data-group={g.group.key}>
 					<Heading>
-						<BidiText>{pickLabel(g.group.label, locale, g.group.key)}</BidiText>
+						<BidiText>{contentLabel(g.group, locale, t, g.group.key)}</BidiText>
 					</Heading>
 					<dl className="sy-record__facts sy-cf__facts grid grid-cols-2 gap-y-12 gap-x-16 m-0">
 						{g.properties.map((p) => {
@@ -302,7 +303,7 @@ export function CustomFieldsRead({ cf }: { cf: CustomFields }) {
 									data-testid={`cf-fact-${p.key}`}
 								>
 									<dt>
-										<BidiText>{pickLabel(p.label, locale, p.key)}</BidiText>
+										<BidiText>{contentLabel(p, locale, t, p.key)}</BidiText>
 									</dt>
 									<dd data-testid={`cf-value-${p.key}`}>
 										<ReadValueView v={v} />
@@ -350,7 +351,9 @@ function FieldFrame({
 			<legend className="sy-field__label">
 				<bdi>{label}</bdi>
 				{p.required ? <span aria-hidden="true"> *</span> : null}
-				{p.sensitive ? <span className="sy-cf__tag">{t("cf.sensitive")}</span> : null}
+				{p.sensitive ? (
+					<span className="sy-cf__tag">{t("cf.sensitive")}</span>
+				) : null}
 			</legend>
 			{children}
 			{hint ? <p className="sy-field__hint">{hint}</p> : null}
@@ -377,12 +380,15 @@ function FieldInput({
 	users: ReadonlyMap<string, string>;
 }) {
 	const { t, locale } = useI18n();
-	const label = pickLabel(p.label, locale, p.key);
+	const label = contentLabel(p, locale, t, p.key);
 	const name = `cf_${p.key}`;
 	const testId = `cf-input-${p.key}`;
 	const text = typeof value === "string" ? value : "";
 	const common = { label, name, error, required: p.required, "data-testid": testId };
 	switch (p.type) {
+  case "email": case "phone": case "url":
+   return <Input {...common} type="text" inputMode={p.type === "phone" ? "tel" : p.type === "email" ? "email" : "url"} dir="auto" value={text} onChange={e=>onChange(e.target.value)} />;
+
 		case "long_text":
 			return (
 				<Textarea
@@ -394,7 +400,9 @@ function FieldInput({
 				/>
 			);
 		case "number":
-			return <Input {...common} type="text" inputMode="decimal" dir="ltr" value={text} onChange={(e) => onChange(e.target.value)} />;
+			return (
+				<Input {...common} type="text" inputMode="decimal" dir="ltr" value={text} onChange={(e) => onChange(e.target.value)} />
+			);
 		case "currency":
 			return (
 				<Input
@@ -427,9 +435,10 @@ function FieldInput({
 				return (
 					<FieldFrame p={p} label={label} error={error}>
 						<RadioGroup className="sy-cf__options" aria-label={label} name={name} value={text} onChange={onChange}>
-							{(p.required ? choices : [{ value: "", label: {}, color: null, position: -1, archived: false }, ...choices]).map((o) => (
+							{(p.required ? choices : [{ value: "", label: "", color: null, position: -1, archived: false }, ...choices]).map((o) => (
 								<Radio key={o.value || "none"} value={o.value} data-testid={`${testId}-${o.value || "none"}`} className="sy-cf__check rounded-6 outline-none data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus data-[focus-visible]:outline-offset-2">
-									{({isSelected}) => <><span aria-hidden="true" className={`inline-block shrink-0 w-[16px] h-[16px] border border-solid rounded-pill ${isSelected ? "border-primary bg-primary shadow-[inset_0_0_0_3px_var(--sy-surface)]" : "border-border-strong bg-surface"}`} />
+									{({isSelected}) => (
+										<><span aria-hidden="true" className={`inline-block shrink-0 w-[16px] h-[16px] border border-solid rounded-pill ${isSelected ? "border-primary bg-primary shadow-[inset_0_0_0_3px_var(--sy-surface)]" : "border-border-strong bg-surface"}`} />
 									<span>
 										<bdi>
 											{o.value === ""
@@ -439,7 +448,8 @@ function FieldInput({
 													: pickLabel(o.label, locale, o.value)}
 										</bdi>
 									</span>
-								</> }
+								</>
+									)}
 								</Radio>
 							))}
 						</RadioGroup>
@@ -490,7 +500,9 @@ function FieldInput({
 			);
 		}
 		default:
-			return <Input {...common} value={text} {...(p.validation.max_length !== undefined ? { maxLength: p.validation.max_length } : {})} onChange={(e) => onChange(e.target.value)} />;
+			return (
+				<Input {...common} value={text} {...(p.validation.max_length !== undefined ? { maxLength: p.validation.max_length } : {})} onChange={(e) => onChange(e.target.value)} />
+			);
 	}
 }
 
@@ -498,7 +510,8 @@ function FieldInput({
  * Edit section: put it inside the record's form (before the footer) or the create dialog. read_only properties show their
  * value (never an input); sensitive ones appear only when the schema returned them; server errors land on the right field.
  */
-export function CustomFieldsEdit({ cf, draft, mode }: { cf: CustomFields; draft: CustomDraft; mode: "edit" | "create" }) {
+export function CustomFieldsEdit({ cf, draft, mode }: { cf: CustomFields; draft: CustomDraft; mode: "edit" | "create";
+}) {
 	const { t, locale, formatNumber } = useI18n();
 	const ctx = useReadCtx(cf.users);
 	const fmt = (n: number) => formatNumber(n, { maximumFractionDigits: 6 });
@@ -535,7 +548,7 @@ export function CustomFieldsEdit({ cf, draft, mode }: { cf: CustomFields; draft:
 				<div key={g.group.key} className="sy-cf__group" data-testid="cf-group" data-group={g.group.key}>
 					{mode === "edit" ? (
 						<Heading>
-							<BidiText>{pickLabel(g.group.label, locale, g.group.key)}</BidiText>
+							<BidiText>{contentLabel(g.group, locale, t, g.group.key)}</BidiText>
 						</Heading>
 					) : null}
 					<div className="sy-cf__fields">
@@ -543,7 +556,7 @@ export function CustomFieldsEdit({ cf, draft, mode }: { cf: CustomFields; draft:
 							p.read_only ? (
 								<div key={p.key} className="sy-field sy-cf__ro" data-testid={`cf-field-${p.key}`}>
 									<span className="sy-field__label">
-										<bdi>{pickLabel(p.label, locale, p.key)}</bdi>
+										<bdi>{contentLabel(p, locale, t, p.key)}</bdi>
 										<span className="sy-cf__tag">{t("cf.readOnly")}</span>
 									</span>
 									<div className="sy-cf__rovalue" data-testid={`cf-readonly-${p.key}`}>

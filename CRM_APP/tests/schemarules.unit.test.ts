@@ -11,7 +11,7 @@ import {
 	validateProperty,
 } from "../src/schemarules.js";
 
-const L = { en: "Label", ar: "عنوان" };
+const L = "Label";
 const issues = (fn: () => unknown) => {
 	try {
 		fn();
@@ -46,13 +46,17 @@ describe("schema rules (pure)", () => {
 		expect(validateProperty({ ...ok, type: "currency", currency: "USD" }, "create").currency).toBe("USD");
 	});
 	it("labels: en/ar, one required, NFC-trimmed, bidi controls rejected, empty language dropped", () => {
-		expect(validateProperty({ ...ok, label: { en: "  A  ", ar: "" } }, "create").label).toEqual({ en: "A" });
-		expect(validateProperty({ ...ok, label: { ar: "مرحبا" } }, "create").label).toEqual({ ar: "مرحبا" });
-		expect(issues(() => validateProperty({ ...ok, label: { en: "", ar: " " } }, "create"))).toContain("LABEL_REQUIRED");
-		expect(issues(() => validateProperty({ ...ok, label: { en: "a‮b" } }, "create"))).toContain("LABEL_INVALID");
-		expect(issues(() => validateProperty({ ...ok, label: { en: "a\nb" } }, "create"))).toContain("LABEL_INVALID");
+		expect(validateProperty({ ...ok, label: "  A  " }, "create").label).toEqual(
+			"A",
+		);
+		expect(validateProperty({ ...ok, label: "مرحبا" }, "create").label).toEqual(
+			"مرحبا",
+		);
+		expect(issues(() => validateProperty({ ...ok, label: "" }, "create"))).toContain("LABEL_REQUIRED");
+		expect(issues(() => validateProperty({ ...ok, label: "a‮b" }, "create"))).toContain("LABEL_INVALID");
+		expect(issues(() => validateProperty({ ...ok, label: "a\nb" }, "create"))).toContain("LABEL_INVALID");
 		// LRM/RLM are legal
-		expect(() => validateProperty({ ...ok, label: { en: "a‏b" } }, "create")).not.toThrow();
+		expect(() => validateProperty({ ...ok, label: "a‏b" }, "create")).not.toThrow();
 	});
 	it("update: system properties accept label/group/position only; immutable names are FIELD_NOT_WRITABLE", () => {
 		const sys = { type: "text" as const, is_system: true, required: false, read_only: false, sensitive: false, searchable: false, show_default: false, display: "default" };

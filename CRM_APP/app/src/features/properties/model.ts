@@ -13,10 +13,13 @@ export const LABEL_MAX = { property: 120, group: 80, option: 80 } as const;
 export const OPTIONS_MAX = 200;
 export const MAX_LENGTH_LIMITS = { text: 2000, long_text: 20000 } as const;
 
-export type Lang = { en?: string; ar?: string };
+export type Lang = string;
 export type PropType =
 	| "text"
 	| "long_text"
+	| "email"
+	| "phone"
+	| "url"
 	| "number"
 	| "currency"
 	| "date"
@@ -25,11 +28,13 @@ export type PropType =
 	| "multi_select"
 	| "checkbox"
 	| "user";
-export type OptionColor = "gray" | "blue" | "teal" | "green" | "amber" | "orange" | "red" | "purple";
+export type OptionColor =
+	| "gray" | "blue" | "teal" | "green" | "amber" | "orange" | "red" | "purple";
 
 export type PropertyOption = {
 	value: string;
 	label: Lang;
+	label_key?: string | null;
 	color: string | null;
 	position: number;
 	archived: boolean;
@@ -37,11 +42,14 @@ export type PropertyOption = {
 export type PropertyDef = {
 	key: string;
 	label: Lang;
+	label_key?: string | null;
 	type: PropType;
 	display: string;
 	group: string;
 	position: number;
 	is_system: boolean;
+	system_field?: "email" | "phone" | "company" | "job_title" | null;
+	storage?: "column" | "custom" | "record" | "protected";
 	required: boolean;
 	read_only: boolean;
 	sensitive: boolean;
@@ -54,8 +62,12 @@ export type PropertyDef = {
 	option_count: number;
 	options: PropertyOption[];
 };
-export type SchemaGroup = { key: string; label: Lang; position: number; version: number; archived: boolean };
-export type TypeSpec = { type: PropType; displays: string[]; validation: string[]; options: boolean };
+export type SchemaGroup = { key: string; label: Lang;
+	label_key?: string | null;
+	position: number; version: number; archived: boolean;
+};
+export type TypeSpec = { type: PropType; displays: string[]; validation: string[]; options: boolean;
+};
 export type ObjectSchema = {
 	object: ObjectKey;
 	schema_rev: number;
@@ -72,17 +84,29 @@ export function countKey(count: number, locale: "en" | "ar"): MessageKey {
 	return `props.count.${new Intl.PluralRules(locale).select(count)}` as MessageKey;
 }
 
-/** Label for the UI language, falling back to the other language, then to the key. */
-export function pickLabel(label: Lang | undefined, locale: "en" | "ar", fallback = ""): string {
-	const other = locale === "ar" ? "en" : "ar";
-	return label?.[locale]?.trim() || label?.[other]?.trim() || fallback;
+/** User content is shown verbatim in either interface language. */
+export function pickLabel(label: Lang | undefined,
+	_locale: "en" | "ar", fallback = ""): string {
+	return label?.trim() || fallback;
+}
+
+/** Seeded system defaults are interface chrome; a renamed label remains user content. */
+export function contentLabel(
+	value: { label: string; label_key?: string | null },
+	locale: "en" | "ar",
+	t: (key: MessageKey) => string,
+	fallback = "",
+): string {
+	return value.label_key
+		? t(value.label_key as MessageKey)
+		: pickLabel(value.label, locale, fallback);
 }
 
 // ---- keys ---------------------------------------------------------------------------------------------
 
 /** Key suggestion from an English label: lowercase, [a-z0-9_], starts with a letter, <= 63 chars. Empty when no Latin letter or digit is available. */
-export function deriveKey(labelEn: string): string {
-	const base = labelEn
+export function deriveKey(label: string): string {
+	const base = label
 		.normalize("NFKD")
 		.replace(/[̀-ͯ]/g, "")
 		.toLowerCase()
@@ -94,8 +118,9 @@ export function deriveKey(labelEn: string): string {
 }
 
 /** Stable option value from its label (EN preferred); unique among `taken`. */
-export function deriveOptionValue(labelEn: string, taken: ReadonlySet<string>, index: number): string {
-	const slug = labelEn
+export function deriveOptionValue(
+	label: string, taken: ReadonlySet<string>, index: number): string {
+	const slug = label
 		.normalize("NFKD")
 		.replace(/[̀-ͯ]/g, "")
 		.toLowerCase()
@@ -110,11 +135,10 @@ export function deriveOptionValue(labelEn: string, taken: ReadonlySet<string>, i
 
 // ---- draft ----------------------------------------------------------------------------------------------
 
-export type OptionDraft = { id: string; en: string; ar: string; color: string };
+export type OptionDraft = { id: string; label: string; color: string };
 export type PropertyDraft = {
 	type: PropType;
-	labelEn: string;
-	labelAr: string;
+	label: string;
 	key: string;
 	keyTouched: boolean;
 	group: string;
@@ -134,8 +158,7 @@ export type PropertyDraft = {
 
 export const EMPTY_DRAFT: PropertyDraft = {
 	type: "text",
-	labelEn: "",
-	labelAr: "",
+	label: "",
 	key: "",
 	keyTouched: false,
 	group: "general",
@@ -160,8 +183,7 @@ export function draftOf(p: PropertyDef): PropertyDraft {
 	const v = p.validation;
 	return {
 		type: p.type,
-		labelEn: p.label.en ?? "",
-		labelAr: p.label.ar ?? "",
+		label: p.label,
 		key: p.key,
 		keyTouched: true,
 		group: p.group,
@@ -196,9 +218,11 @@ export function withType(d: PropertyDraft, type: PropType): PropertyDraft {
 	};
 }
 
-/** Typing the English label updates the key until the user edits the key by hand. */
-export function withLabelEn(d: PropertyDraft, labelEn: string, creating: boolean): PropertyDraft {
-	return { ...d, labelEn, key: creating && !d.keyTouched ? deriveKey(labelEn) : d.key };
+/** Typing the label updates the key until the user edits the key by hand. */
+export function withLabel(d: PropertyDraft,
+	label: string, creating: boolean): PropertyDraft {
+	return { ...d,
+		label, key: creating && !d.keyTouched ? deriveKey(label) : d.key };
 }
 
 // ---- validation (mirrors schemarules.ts; the server stays the authority) ------------------------------------------
@@ -236,10 +260,9 @@ const isInt = (s: string): boolean => /^-?\d+$/.test(s.trim());
 /** Live validation of the draft. `creating` adds the key rule; `system` skips everything that is not editable on a system property. */
 export function validateDraft(d: PropertyDraft, creating: boolean, system = false): DraftErrors {
 	const e: DraftErrors = { option: {} };
-	const en = d.labelEn.trim();
-	const ar = d.labelAr.trim();
-	if (!en && !ar) e.label = "labelRequired";
-	else if (codePoints(en) > LABEL_MAX.property || codePoints(ar) > LABEL_MAX.property) e.label = "labelTooLong";
+	const label = d.label.trim();
+	if (!label) e.label = "labelRequired";
+	else if (codePoints(label) > LABEL_MAX.property) e.label = "labelTooLong";
 	if (creating && !KEY_RE.test(d.key)) e.key = "keyInvalid";
 	if (system) return e;
 	if (d.type === "currency") {
@@ -266,10 +289,9 @@ export function validateDraft(d: PropertyDraft, creating: boolean, system = fals
 	if (creating && isSelectType(d.type)) {
 		if (d.options.length > OPTIONS_MAX) e.options = "tooManyOptions";
 		for (const o of d.options) {
-			const oen = o.en.trim();
-			const oar = o.ar.trim();
-			if (!oen && !oar) e.option[o.id] = "optionLabelRequired";
-			else if (codePoints(oen) > LABEL_MAX.option || codePoints(oar) > LABEL_MAX.option) e.option[o.id] = "optionLabelTooLong";
+			const label = o.label.trim();
+			if (!label) e.option[o.id] = "optionLabelRequired";
+			else if (codePoints(label) > LABEL_MAX.option) e.option[o.id] = "optionLabelTooLong";
 		}
 	}
 	return e;
@@ -282,18 +304,11 @@ export function hasDraftErrors(e: DraftErrors): boolean {
 
 // ---- bodies -----------------------------------------------------------------------------------------------
 
-const langOf = (en: string, ar: string): Lang => {
-	const out: Lang = {};
-	if (en.trim()) out.en = en.trim();
-	if (ar.trim()) out.ar = ar.trim();
-	return out;
-};
-
 /** Option values for a draft list: derived once from the labels, unique within the list. */
 export function optionValues(options: readonly OptionDraft[]): string[] {
 	const taken = new Set<string>();
 	return options.map((o, i) => {
-		const v = deriveOptionValue(o.en, taken, i);
+		const v = deriveOptionValue(o.label, taken, i);
 		taken.add(v);
 		return v;
 	});
@@ -313,7 +328,7 @@ export function buildCreateBody(d: PropertyDraft, commandId: string): Record<str
 		command_id: commandId,
 		key: d.key,
 		type: d.type,
-		label: langOf(d.labelEn, d.labelAr),
+		label: d.label.normalize("NFC").trim(),
 		group: d.group,
 		display: d.display,
 		required: d.required,
@@ -328,7 +343,7 @@ export function buildCreateBody(d: PropertyDraft, commandId: string): Record<str
 		const values = optionValues(d.options);
 		body.options = d.options.map((o, i) => ({
 			value: values[i],
-			label: langOf(o.en, o.ar),
+			label: o.label.normalize("NFC").trim(),
 			color: o.color || null,
 			position: (i + 1) * 10,
 		}));
@@ -341,8 +356,8 @@ const sameJson = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON
 /** PATCH body with only the changed, writable fields. null = nothing changed. System properties: label and group only. */
 export function buildPatchBody(p: PropertyDef, d: PropertyDraft, commandId: string): Record<string, unknown> | null {
 	const body: Record<string, unknown> = {};
-	const label = langOf(d.labelEn, d.labelAr);
-	if (!sameJson(label, langOf(p.label.en ?? "", p.label.ar ?? ""))) body.label = label;
+	const label = d.label.normalize("NFC").trim();
+	if (!sameJson(label, p.label)) body.label = label;
 	if (d.group !== p.group) body.group = d.group;
 	if (!p.is_system) {
 		if (d.display !== p.display) body.display = d.display;
@@ -368,7 +383,8 @@ export function commandFor(prev: CommandMemo | null, payload: Record<string, unk
 
 // ---- server errors --------------------------------------------------------------------------------------------
 
-export type WriteErrorKind = "validation" | "conflict" | "exists" | "forbidden" | "network" | "limit" | "notEmpty" | "system" | "other";
+export type WriteErrorKind =
+	| "validation" | "conflict" | "exists" | "forbidden" | "network" | "limit" | "notEmpty" | "system" | "other";
 
 export function classifyWriteError(e: unknown): WriteErrorKind {
 	if (!isApiError(e)) return "other";
@@ -415,7 +431,8 @@ export function formFieldOf(field: string): FormField {
 	return "form";
 }
 
-export type ServerFieldErrors = Partial<Record<FormField, string>> & { optionRows: Record<number, string> };
+export type ServerFieldErrors = Partial<Record<FormField, string>> & { optionRows: Record<number, string>;
+};
 
 /** First server code per form field, plus per-option-row codes (`options[2].value`). */
 export function serverFieldErrors(issues: readonly FieldIssue[]): ServerFieldErrors {
@@ -461,7 +478,8 @@ const ISSUE_MESSAGES: Record<string, MessageKey> = {
 
 // ---- listing: group, search, order -----------------------------------------------------------------------------
 
-export type PropertyGroupView = { group: SchemaGroup; properties: PropertyDef[] };
+export type PropertyGroupView = { group: SchemaGroup; properties: PropertyDef[];
+};
 
 const byPosition = <T extends { position: number; key?: string }>(a: T, b: T): number =>
 	a.position - b.position || (a.key ?? "").localeCompare(b.key ?? "");
@@ -469,7 +487,7 @@ const byPosition = <T extends { position: number; key?: string }>(a: T, b: T): n
 export function matchesQuery(p: PropertyDef, q: string, locale: "en" | "ar"): boolean {
 	const needle = q.trim().toLowerCase();
 	if (!needle) return true;
-	return [p.key, p.label.en ?? "", p.label.ar ?? "", pickLabel(p.label, locale)].some((s) => s.toLowerCase().includes(needle));
+	return [p.key, pickLabel(p.label, locale)].some((s) => s.toLowerCase().includes(needle));
 }
 
 /** Properties grouped by group (group order, then property order); empty groups are dropped while searching. */
@@ -488,7 +506,7 @@ export function groupProperties(
 	}));
 	// a property whose group is not listed (should not happen) still shows up, under a synthetic group
 	const orphans = visible.filter((p) => !known.has(p.group));
-	if (orphans.length) out.push({ group: { key: orphans[0]?.group ?? "?", label: {}, position: 1e9, version: 0, archived: false }, properties: orphans });
+	if (orphans.length) out.push({ group: { key: orphans[0]?.group ?? "?", label: "", position: 1e9, version: 0, archived: false }, properties: orphans });
 	const searching = opts.query.trim() !== "";
 	return out.filter((g) => g.properties.length > 0 || !searching);
 }
@@ -538,7 +556,7 @@ export const activeGroups = (schema: ObjectSchema): SchemaGroup[] =>
 export const activeOptions = (p: PropertyDef): PropertyOption[] =>
 	p.options.filter((o) => !o.archived).sort(byPosition);
 
-/** Group key from its English label (same shape as a property key). */
+/** Group key from its label (same shape as a property key). */
 export const deriveGroupKey = deriveKey;
 
 /** Swatch token per fixed option colour name (design tokens only; the NAME is always shown too, never colour alone). */

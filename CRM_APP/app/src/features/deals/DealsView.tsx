@@ -383,7 +383,11 @@ export function DealsView() {
 				width: "140px",
 				mobile: "chip",
 				filter: { options: stageOptions },
-				cell: (r) => <Badge tone={toneOf(r.stageOutcome)}>{r.stageName}</Badge>,
+				cell: (r) => (
+					<Badge tone={toneOf(r.stageOutcome)}>
+						<bdi dir="auto">{r.stageName}</bdi>
+					</Badge>
+				),
 			},
 			{
 				id: "value",

@@ -326,3 +326,12 @@ describe("cells, mapping and rows", () => {
 		expect(good.ok && good.warnings).toContain("FORMULA_LIKE:display_name");
 	});
 });
+
+describe("R10 lead import channels",()=>{
+ it("requires normalized channels even with a contact name",()=>{
+  const registry:Registry={object:"lead",defs:new Map()};const cols=[{column:0,target:"title"},{column:1,target:"contact_name"},{column:2,target:"email"},{column:3,target:"phone"}];
+  for (const values of [["Lead","Name","",""],["Lead","Name"," "," "]]) {const row=buildRow("lead",cols,values,registry,{default_country_code:"+20"});expect(!row.ok&&row.errors).toContainEqual({field:"contact_channels",code:"CONTACT_REQUIRED"});}
+  for (const values of [["Lead","Name","valid@example.test",""],["Lead","Name","","01001234567"],["Lead","Name","valid@example.test","01001234567"]]) expect(buildRow("lead",cols,values,registry,{default_country_code:"+20"}).ok).toBe(true);
+  expect(buildRow("lead",cols,["Lead","Name","invalid",""],registry,{default_country_code:"+20"}).ok).toBe(false);
+ });
+});

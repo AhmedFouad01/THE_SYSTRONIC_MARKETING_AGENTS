@@ -16,7 +16,7 @@ import {
 	issueMessageKey,
 	type ObjectKey,
 	type ObjectSchema,
-	pickLabel,
+	contentLabel,
 	type PropertyDef,
 	type PropertyDraft,
 	type PropType,
@@ -24,7 +24,7 @@ import {
 	serverFieldErrors,
 	validateDraft,
 	type WriteErrorKind,
-	withLabelEn,
+	withLabel,
 	withType,
 } from "./model.ts";
 import { OptionsEditor } from "./OptionsEditor.tsx";
@@ -76,7 +76,7 @@ export function PropertyDialog({
 
 	const spec = schema.types.find((s) => s.type === draft.type);
 	const errors = validateDraft(draft, creating, system);
-	// live: the key and the labels show their problem as soon as something was typed; the rest after the first submit
+	// live: the key and the label shows its problem as soon as something was typed; the rest after the first submit
 	const live = {
 		key: creating && draft.key !== "" ? errors.key : undefined,
 		label: touched ? errors.label : undefined,
@@ -92,8 +92,10 @@ export function PropertyDialog({
 		const code = server?.[key];
 		return typeof code === "string" ? t(issueMessageKey(code)) : undefined;
 	};
-	const issue = (c: string | undefined) => (c ? t(`props.issue.${c}` as MessageKey) : undefined);
-	const show = <K extends keyof typeof errors>(k: K) => (touched ? issue(errors[k] as string | undefined) : undefined);
+	const issue = (c: string | undefined) =>
+		c ? t(`props.issue.${c}` as MessageKey) : undefined;
+	const show = <K extends keyof typeof errors>(k: K) =>
+		touched ? issue(errors[k] as string | undefined) : undefined;
 
 	const submit = async () => {
 		setTouched(true);
@@ -116,7 +118,7 @@ export function PropertyDialog({
 		}
 	};
 
-	const labelError = live.label ? issue(live.label) : (msg(undefined, "label") ?? msg(undefined, "label.en"));
+	const labelError = live.label ? issue(live.label) : msg(undefined, "label");
 	const typeOptions = schema.types.map((s) => s.type);
 	const displayChoices = spec?.displays ?? ["default"];
 	const flagsError = show("flags") ?? msg(undefined, "flags");
@@ -170,24 +172,16 @@ export function PropertyDialog({
 				) : null}
 				<div className="sy-form-row">
 					<Input
-						label={t("props.f.labelEn")}
-						name="label_en"
-						value={draft.labelEn}
+						label={t("props.f.label")}
+						dir="auto"
+						name="label"
+						value={draft.label}
 						maxLength={120}
 						data-autofocus
-						data-testid="label-en"
+						data-testid="label"
 						error={labelError}
 						hint={t("props.f.labelHint")}
-						onChange={(e) => set(withLabelEn(draft, e.target.value, creating))}
-					/>
-					<Input
-						label={t("props.f.labelAr")}
-						name="label_ar"
-						value={draft.labelAr}
-						maxLength={120}
-						data-testid="label-ar"
-						error={msg(undefined, "label.ar")}
-						onChange={(e) => patch({ labelAr: e.target.value })}
+						onChange={(e) => set(withLabel(draft, e.target.value, creating))}
 					/>
 				</div>
 				<Input
@@ -228,7 +222,7 @@ export function PropertyDialog({
 					>
 						{groups.map((g) => (
 							<option key={g.key} value={g.key}>
-								{pickLabel(g.label, locale, g.key)}
+								{contentLabel(g, locale, t, g.key)}
 							</option>
 						))}
 					</Select>

@@ -117,3 +117,12 @@ describe("S4 list compiler (pure)", () => {
 		expect(pageAfter("-due_at,-completed_at", [TS, TS], "task").sql).not.toContain("(due_at,completed_at,id)");
 	});
 });
+
+describe("R10 missing_contact filter",()=>{
+ it("binds boolean presence and rejects strings, operators and other objects",()=>{
+  const filter=JSON.stringify({p:"missing_contact",op:"eq",v:true});const p=planList("lead",new URLSearchParams({filter}),T,tenant);
+  expect(p.sql).toContain("(NOT crm.contact_has_channel(contact_id)) = $2::boolean");expect(p.params).toEqual([T,true]);
+  expect(()=>planList("contact",new URLSearchParams({filter}),T,tenant)).toThrow(Fault);
+  for (const node of [{p:"missing_contact",op:"eq",v:"true"},{p:"missing_contact",op:"contains",v:true}]) expect(()=>planList("lead",new URLSearchParams({filter:JSON.stringify(node)}),T,tenant)).toThrow(Fault);
+ });
+});

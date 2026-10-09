@@ -4,7 +4,7 @@
 import { Fault } from "./db.js";
 
 export type Issue = { field: string; code: string };
-export type Lang = { en?: string; ar?: string };
+export type Lang = string;
 
 export const KEY_RE = /^[a-z][a-z0-9_]{0,62}$/;
 export const OPTION_VALUE_RE = /^[a-z0-9][a-z0-9_-]{0,63}$/;
@@ -20,6 +20,9 @@ export const LIMITS = {
 export const TYPE_NAMES = [
 	"text",
 	"long_text",
+	"email",
+	"phone",
+	"url",
 	"number",
 	"currency",
 	"date",
@@ -35,6 +38,9 @@ export const TYPES: Record<
 	PropType,
 	{ displays: string[]; validation: string[]; options: boolean }
 > = {
+	email: { displays: ["default"], validation: [], options: false },
+	phone: { displays: ["default"], validation: [], options: false },
+	url: { displays: ["default"], validation: [], options: false },
 	text: { displays: ["default"], validation: ["max_length"], options: false },
 	long_text: {
 		displays: ["default"],
@@ -144,67 +150,33 @@ export function validateLabel(
 	max: number,
 	e: Issues,
 	required = true,
-): Lang | undefined {
-	if (!isObj(v)) {
-		e.add(field, "LABEL_REQUIRED");
+): string | undefined {
+	if (typeof v !== "string") {
+			e.add(field, v == null ? "LABEL_REQUIRED" : "LABEL_INVALID");
 		return undefined;
-	}
-	const out: Lang = {};
-	let ok = true;
-	for (const [lang, raw] of Object.entries(v)) {
-		if (lang !== "en" && lang !== "ar") {
-			e.add(field, "LABEL_LANG_UNSUPPORTED");
-			ok = false;
-			continue;
 		}
-		if (typeof raw !== "string") {
-			e.add(`${field}.${lang}`, "LABEL_INVALID");
-			ok = false;
-			continue;
-		}
-		const s = raw.normalize("NFC").trim();
-		if (!s) continue; // an empty language is simply absent
-		if ([...s].length > max || BAD_TEXT.test(s)) {
-			e.add(`${field}.${lang}`, "LABEL_INVALID");
-			ok = false;
-			continue;
-		}
-		out[lang] = s;
-	}
-	if (ok && required && !out.en && !out.ar) e.add(field, "LABEL_REQUIRED");
-	return ok ? out : undefined;
+		const value = v.normalize("NFC").trim();
+		if (required && !value) e.add(field, "LABEL_REQUIRED");
+	else if ([...value].length > max || BAD_TEXT.test(value)) e.add(field, "LABEL_INVALID");
+	return value;
 }
 function validateDescription(
 	v: unknown,
 	e: Issues,
-): Lang | null | undefined {
+): string | null | undefined {
 	if (v === null) return null;
-	if (!isObj(v)) {
+	if (typeof v !== "string") {
 		e.add("description", "DESCRIPTION_INVALID");
 		return undefined;
 	}
-	const out: Lang = {};
-	for (const [lang, raw] of Object.entries(v)) {
-		if (lang !== "en" && lang !== "ar") {
-			e.add("description", "LABEL_LANG_UNSUPPORTED");
-			return undefined;
-		}
-		if (typeof raw !== "string") {
-			e.add(`description.${lang}`, "DESCRIPTION_INVALID");
-			return undefined;
-		}
-		const s = raw.normalize("NFC").trim();
-		if (!s) continue;
-		if (
-			[...s].length > LIMITS.label.description ||
-			BAD_TEXT_MULTILINE.test(s)
-		) {
-			e.add(`description.${lang}`, "DESCRIPTION_INVALID");
-			return undefined;
-		}
-		out[lang] = s;
+	const value = v.normalize("NFC").trim();
+	if (
+		[...value].length > LIMITS.label.description ||
+		BAD_TEXT_MULTILINE.test(value)) {
+		e.add("description", "DESCRIPTION_INVALID");
+		return undefined;
 	}
-	return out.en || out.ar ? out : null;
+	return value || null;
 }
 function validatePosition(v: unknown, field: string, e: Issues) {
 	if (!Number.isInteger(v) || (v as number) < 0 || (v as number) > LIMITS.position) {

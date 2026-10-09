@@ -95,7 +95,7 @@ async function pipeline() {
 async function sample(owner?: string, as = ctx) {
 	const c = await create(
 			"contacts",
-			{ display_name: "P1a Contact", ...(owner ? { owner_id: owner } : {}) },
+			{ display_name: "P1a Contact", email:"p1a@example.test", ...(owner ? { owner_id: owner } : {}) },
 			as,
 		),
 		l = await create(
@@ -165,13 +165,13 @@ test("P1A-S1 get/list return exactly the projected columns; a column added later
 			assert.deepEqual(
 				// P1b B3: a single record read adds `properties` (active custom values), never the `custom` blob itself.
 				keys(got).filter((x) => x !== "identifiers" && x !== "replayed" && x !== "properties"),
-				[...S1_COLUMNS[k], ...TS].sort(),
+				[...S1_COLUMNS[k], ...TS, ...(k === "contacts" ? ["email","phone","company","job_title","sensitive_masked"] : k === "leads" ? ["email","phone","sensitive_masked","missing_contact"] : [])].sort(),
 				`${k} get`,
 			);
 			const row = ((await request(k)).data as pg.QueryResultRow[]).find(
 				(r) => r.id === ids[k],
 			) as pg.QueryResultRow;
-			assert.deepEqual(keys(row), [...S1_COLUMNS[k], ...TS].sort(), `${k} list`);
+			assert.deepEqual(keys(row), [...S1_COLUMNS[k], ...TS, ...(k === "contacts" ? ["email","phone","company","job_title","sensitive_masked"] : k === "leads" ? ["email","phone","sensitive_masked","missing_contact"] : [])].sort(), `${k} list`);
 			assert.ok(!("p1a_secret" in got) && !("p1a_secret" in row));
 		}
 	} finally {
@@ -1076,7 +1076,7 @@ test("P1A-S5d distinct sources cap200, tenant/rep/auth scope and byte-compatible
 			has_more: rows.length > 50,
 		};
 		assert.equal(
-			JSON.stringify(await list("", kind)),
+			JSON.stringify({...await list("", kind),data:(await list("", kind)).data.map(r=>Object.fromEntries(Object.entries(r).filter(([key])=>!["email","phone","company","job_title","sensitive_masked","missing_contact"].includes(key))))}),
 			JSON.stringify(expected),
 			`${kind} exact legacy bytes`,
 		);

@@ -1,6 +1,7 @@
 // Import, server half: the MAPPING CONTRACT and per-row normalisation. Pure (no I/O): the same functions serve preview and commit,
 // so a preview row and the job row can never disagree. Custom property values go through the ONE validator (properties.ts
 // `validateProperties`); this file only turns a spreadsheet cell into the JSON value that validator expects.
+import { normalizeEmail, normalizePhone } from "./contactformat.js";
 import { Fault } from "./db.js";
 import type { Cell } from "./importfile.js";
 import {
@@ -76,28 +77,7 @@ export function formulaLike(c: Cell): boolean {
 	return !/^[+-]?[\d٠-٩۰-۹][\d٠-٩۰-۹.,\s()-]*$/.test(t.trim());
 }
 
-export function normalizeEmail(raw: string): string | null {
-	const v = raw.toLowerCase();
-	return v.length <= 254 &&
-		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) &&
-		!BAD_TEXT.test(v)
-		? v
-		: null;
-}
-export function normalizePhone(
-	raw: string,
-	defaultCc: string | null,
-): string | null {
-	let s = foldDigits(raw).replace(/[\s().-]/g, "");
-	if (s.startsWith("00")) s = `+${s.slice(2)}`;
-	if (!s.startsWith("+")) {
-		const cc = defaultCc ? defaultCc.replace(/^\+/, "") : null;
-		if (cc && /^0[1-9]\d*$/.test(s)) s = `+${cc}${s.slice(1)}`;
-		else if (cc && s.startsWith(cc)) s = `+${s}`;
-		else return null;
-	}
-	return /^\+[1-9]\d{6,14}$/.test(s) ? s : null;
-}
+export { normalizeEmail, normalizePhone } from "./contactformat.js";
 function parseNumber(c: Cell): number | null {
 	if (typeof c === "number") return Number.isFinite(c) ? c : null;
 	const t = cellText(c);
@@ -115,6 +95,9 @@ export function coerceCell(d: Def, c: Cell): unknown {
 	const t = cellText(c);
 	if (t === undefined) return undefined;
 	switch (d.type) {
+		case "email":
+		case "phone":
+		case "url":
 		case "text":
 		case "long_text":
 			// Raw text, newlines kept for long_text; the validator trims, NFC-normalises and length-checks.
@@ -261,7 +244,7 @@ export function buildRow(
 		} else if (target === "phone") {
 			const t = cellText(cell);
 			if (t !== undefined) {
-				const p = normalizePhone(t, opts.default_country_code);
+				const p = normalizePhone(t, opts.default_country_code ?? "+20");
 				if (p) v.phone = p;
 				else errors.push({ field: "phone", code: "INVALID_PHONE" });
 			}
@@ -287,12 +270,11 @@ export function buildRow(
 		errors.push({ field: "title", code: "REQUIRED" });
 	if (
 		object === "lead" &&
-		v.displayName === undefined &&
 		!v.email &&
 		!v.phone &&
 		!errors.length
 	)
-		errors.push({ field: "contact_name", code: "CONTACT_REQUIRED" });
+		errors.push({ field: "contact_channels", code: "CONTACT_REQUIRED" });
 	return errors.length
 		? { ok: false, errors }
 		: { ok: true, value: v, warnings };

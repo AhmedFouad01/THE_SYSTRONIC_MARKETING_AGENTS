@@ -72,7 +72,7 @@ async function call(
 	// biome-ignore lint/suspicious/noExplicitAny: loosely typed JSON in a test helper
 	return { status: r.status, body: (await r.json()) as Record<string, any> };
 }
-const L = (en: string) => ({ en, ar: `${en} ع` });
+const L = (label: string) => label;
 const csv = (s: string) => Buffer.from(`﻿${s}`, "utf8");
 const req = (
 	file: Buffer,
@@ -384,7 +384,7 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 			...extra,
 		});
 	assert.equal(
-		(await mkProp("company", "text", { searchable: true })).status,
+		(await mkProp("custom_company", "text", { searchable: true })).status,
 		201,
 	);
 	assert.equal((await mkProp("seats", "number")).status, 201);
@@ -397,12 +397,12 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 		"display_name",
 		"email",
 		"phone",
-		"property:company",
+		"property:custom_company",
 		"property:seats",
 	]);
 	const cols = [
 		{ column: 0, target: "display_name" },
-		{ column: 1, target: "property:company" },
+		{ column: 1, target: "property:custom_company" },
 		{ column: 2, target: "property:seats" },
 	];
 	const file = csv(
@@ -418,7 +418,7 @@ test("I5 custom properties: mapped through the registry validator; unknown / rea
 			[f.ids.a],
 		)
 	).rows[0];
-	assert.deepEqual(ada.custom, { company: "شركة النور", seats: 12 });
+	assert.deepEqual(ada.custom, { custom_company: "شركة النور", seats: 12 });
 	assert.ok(ada.custom_search.length > 0);
 	const bad = await call(
 		mgr,
@@ -613,4 +613,84 @@ test("I8 a file at the row limit (5000 rows) imports in one transaction within a
 	);
 	assert.equal(big.status, 422);
 	assert.equal(big.body.code, "TOO_MANY_ROWS");
+});
+
+test("R09 scalar identifier edits remain dedup/import compatible, masked, and invalid imports roll back",async()=>{
+ await fresh();
+ const c=await call(mgr,"POST","/v1/contacts",{command_id:randomUUID(),display_name:"R09 import",email:" Initial@EXAMPLE.COM ",phone:"01001234567"});assert.equal(c.status,201,JSON.stringify(c.body));
+ const id=c.body.data.id;
+ const patched=await call(mgr,"PATCH",`/v1/contacts/${id}`,{command_id:randomUUID(),expected_version:c.body.data.version,email:"current@example.com"});assert.equal(patched.status,200);
+ for (const email of ["initial@example.com","current@example.com"]) {
+  const result=await call(mgr,"POST","/v1/imports",req(csv(`name,email\nDuplicate,${email}\n`),NAME_EMAIL));assert.equal(result.status,201,JSON.stringify(result.body));assert.equal(result.body.data.job.created,0);assert.equal(result.body.data.job.skipped,1);
+ }
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,id]),3);
+ const before=await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]);
+ const invalid=await call(mgr,"POST","/v1/imports",req(csv("name,email\nNew,new@example.com\nInvalid,bad\n"),NAME_EMAIL,{options:{error_policy:"abort"}}));assert.equal(invalid.status,422);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before);
+ const hidden=await call(reader,"GET",`/v1/contacts/${id}`);assert.equal(hidden.body.data.sensitive_masked,true);assert.equal(hidden.body.data.email,null);assert.equal(hidden.body.data.phone,null);
+});
+
+test("R10 lead imports reject name/blank/invalid rows and repair historical-only duplicate updates",async()=>{
+ await fresh();
+ const columns=[{column:0,target:"title"},{column:1,target:"contact_name"},{column:2,target:"email"},{column:3,target:"phone"}];
+ const body=req(csv("title,name,email,phone\nName only,Name,,\nBlank,Name,  ,  \nInvalid,Name,bad,\nEmail,Email,email-only@example.test,\nPhone,Phone,,01001234567\nBoth,Both,both@example.test,01001234568\n"),columns,{object:"lead"});
+ const before=await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]);
+ const preview=await call(mgr,"POST","/v1/imports/preview",body);assert.equal(preview.status,200,JSON.stringify(preview.body));assert.equal(preview.body.data.summary.error,3);
+ assert.ok(JSON.stringify(preview.body).includes("CONTACT_REQUIRED"));assert.ok(JSON.stringify(preview.body).includes("INVALID_EMAIL"));
+ const rejected=await call(mgr,"POST","/v1/imports",{...body,options:{error_policy:"abort"}});assert.equal(rejected.status,422);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before);
+ const saved=await call(mgr,"POST","/v1/imports",body);assert.equal(saved.status,201,JSON.stringify(saved.body));assert.equal(saved.body.data.job.created,3);assert.equal(saved.body.data.job.failed,3);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1",[mgr.tenant]),before+3);
+ const c=await call(mgr,"POST","/v1/contacts",{command_id:randomUUID(),display_name:"History",email:"history@example.test"});assert.equal(c.status,201);
+ const lead=await call(mgr,"POST","/v1/leads",{command_id:randomUUID(),title:"Historic duplicate",source_evidence:"manual",contact_id:c.body.data.id});assert.equal(lead.status,201);
+ const cleared=await call(mgr,"PATCH",`/v1/contacts/${c.body.data.id}`,{command_id:randomUUID(),expected_version:c.body.data.version,email:null});assert.equal(cleared.status,200);assert.equal((await call(reader,"GET",`/v1/leads/${lead.body.data.id}`)).body.data.missing_contact,true);
+ const restore=req(csv("title,name,email,phone\nHistoric duplicate,History,history@example.test,\n"),columns,{object:"lead",options:{duplicate_mode:"update"}});
+ const pv=await call(mgr,"POST","/v1/imports/preview",restore);assert.equal(pv.status,200);assert.equal(pv.body.data.summary.update,1);
+ const done=await call(mgr,"POST","/v1/imports",restore);assert.equal(done.status,201,JSON.stringify(done.body));assert.equal(done.body.data.job.updated,1);
+ const checked=await call(mgr,"GET",`/v1/leads/${lead.body.data.id}`);assert.equal(checked.body.data.missing_contact,false);assert.equal(checked.body.data.email,"history@example.test");
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,c.body.data.id]),1);
+ const replay=await call(mgr,"POST","/v1/imports",restore);assert.equal(replay.status,200);assert.equal(replay.body.data.replayed,true);
+ const newLead=req(csv("title,name,email,phone\nNew historic match,History,history@example.test,\n"),columns,{object:"lead"});
+ const newest=await call(mgr,"POST","/v1/imports",newLead);assert.equal(newest.status,201);assert.equal(newest.body.data.job.created,1);assert.equal(await count("SELECT count(*) n FROM crm.contact WHERE tenant_id=$1 AND id=$2",[mgr.tenant,c.body.data.id]),1);
+});
+
+
+test("R10 import duplicate channel state stays row-local and follows earlier same-job restorations", async () => {
+ await fresh();
+ const columns=[{column:0,target:"title"},{column:1,target:"email"}];
+ const make=async(title: string,email: string)=>{
+  const r=await call(mgr,"POST","/v1/leads",{command_id:randomUUID(),title,source_evidence:"manual",contact:{display_name:title,email}});
+  assert.equal(r.status,201,JSON.stringify(r.body));return r.body.data;
+ };
+ const active=await make("Active","active-state@example.test");
+ const history=await make("Historical","history-state@example.test");
+ await admin.query("UPDATE crm.contact_identifier SET is_active=false WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,history.contact_id]);
+ const run=async(text: string,mode="skip")=>{
+  const body=req(csv(text),columns,{object:"lead",options:{duplicate_mode:mode}});
+  const preview=await call(mgr,"POST","/v1/imports/preview",body);assert.equal(preview.status,200,JSON.stringify(preview.body));
+  const saved=await call(mgr,"POST","/v1/imports",body);assert.equal(saved.status,201,JSON.stringify(saved.body));
+  return {preview:preview.body.data.summary,job:saved.body.data.job};
+ };
+ const mixed=await run("title,email\nActive,active-state@example.test\nHistorical,history-state@example.test\nFresh,fresh-state@example.test\n");
+ assert.deepEqual([mixed.preview.create,mixed.preview.skip,mixed.preview.error],[1,1,1]);
+ assert.deepEqual([mixed.job.created,mixed.job.skipped,mixed.job.failed],[1,1,1]);
+ assert.equal((await call(mgr,"GET",`/v1/leads/${active.id}`)).body.data.missing_contact,false);
+ assert.equal((await call(mgr,"GET",`/v1/leads/${history.id}`)).body.data.missing_contact,true);
+ const restore=await run("title,email\nRepair first,history-state@example.test\nHistorical,history-state@example.test\n");
+ assert.deepEqual([restore.preview.create,restore.preview.skip,restore.preview.error],[1,1,0]);
+ assert.deepEqual([restore.job.created,restore.job.skipped,restore.job.failed],[1,1,0]);
+ await admin.query("UPDATE crm.contact_identifier SET is_active=false WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,history.contact_id]);
+ const update=await run("title,email\nHistorical,history-state@example.test\nHistorical,history-state@example.test\n", "update");
+ assert.deepEqual([update.preview.update,update.preview.skip,update.preview.error],[1,1,0]);
+ assert.deepEqual([update.job.updated,update.job.skipped,update.job.failed],[1,1,0]);
+ assert.equal((await call(mgr,"GET",`/v1/leads/${history.id}`)).body.data.missing_contact,false);
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,history.contact_id]),1);
+ const contact=(await call(mgr,"GET",`/v1/contacts/${history.contact_id}`)).body.data;
+ const phone=await call(mgr,"PATCH",`/v1/contacts/${history.contact_id}`,{command_id:randomUUID(),expected_version:contact.version,phone:"01001234567"});assert.equal(phone.status,200);
+ const cleared=await call(mgr,"PATCH",`/v1/contacts/${history.contact_id}`,{command_id:randomUUID(),expected_version:phone.body.data.version,phone:null});assert.equal(cleared.status,200);
+ const both=req(csv("title,email,phone\nHistorical,history-state@example.test,01001234567\nHistorical,,01001234567\n"),[...columns,{column:2,target:"phone"}],{object:"lead",options:{duplicate_mode:"update"}});
+ const bothPreview=await call(mgr,"POST","/v1/imports/preview",both);assert.equal(bothPreview.status,200);
+ assert.deepEqual([bothPreview.body.data.summary.update,bothPreview.body.data.summary.skip],[1,1]);
+ const bothSaved=await call(mgr,"POST","/v1/imports",both);assert.equal(bothSaved.status,201,JSON.stringify(bothSaved.body));
+ assert.deepEqual([bothSaved.body.data.job.updated,bothSaved.body.data.job.skipped],[1,1]);
+ assert.equal((await call(mgr,"GET",`/v1/leads/${history.id}`)).body.data.phone,"+201001234567");
+ assert.equal(await count("SELECT count(*) n FROM crm.contact_identifier WHERE tenant_id=$1 AND contact_id=$2",[mgr.tenant,history.contact_id]),2);
+
 });

@@ -43,7 +43,7 @@ async function makeLead(
 			command_id,
 			title,
 			source_evidence: evidence,
-			contact: { display_name: contact },
+			contact: { display_name: contact, email: "ui-fixture@example.test" },
 		},
 	});
 	expect(res.status()).toBe(201);

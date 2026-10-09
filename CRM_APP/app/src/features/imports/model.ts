@@ -3,10 +3,13 @@ import type { PreviewSnapshot } from "./preview.ts";
 export type ImportObject = "contact" | "lead";
 export type ImportFormat = "csv" | "xlsx";
 export type MappingColumn = { column: number; target: string };
-export type ImportLimits = { fileBytes: number; rows: number; columns: number; cellChars: number };
+export type ImportLimits = { fileBytes: number; rows: number; columns: number; cellChars: number;
+};
 export const HARD_LIMITS: ImportLimits = { fileBytes: 5 * 1024 * 1024, rows: 5000, columns: 100, cellChars: 20_000 };
-export type Target = { target: string; required: boolean; label: string | { en?: string; ar?: string }; type?: string; property_required?: boolean; sensitive?: boolean; options?: string[] };
-export type ImportFields = { object: ImportObject; limits: ImportLimits; formats: ImportFormat[]; sensitive_mapping: boolean; targets: Target[] };
+export type Target = { target: string; required: boolean; label: string; type?: string; property_required?: boolean; sensitive?: boolean; options?: string[];
+};
+export type ImportFields = { object: ImportObject; limits: ImportLimits; formats: ImportFormat[]; sensitive_mapping: boolean; targets: Target[];
+};
 export type Inspection = {
 	object: ImportObject;
 	format: ImportFormat;
@@ -17,8 +20,10 @@ export type Inspection = {
 	sheet: number | string | null;
 	samples: { row: number; cells: (string | number | boolean | null)[] }[];
 };
-export type ImportOptions = { sheet: string; default_country_code: string; owner_id: string; duplicate_mode: "skip" | "update" | "create"; error_policy: "skip" | "abort" };
-export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping" | "preview" | "policy" | "result"; commit: CommitState; preview: PreviewSnapshot | null; revision: number };
+export type ImportOptions = { sheet: string; default_country_code: string; owner_id: string; duplicate_mode: "skip" | "update" | "create"; error_policy: "skip" | "abort";
+};
+export type ImportDraft = { object: ImportObject; file: File | null; file_base64: string | null; inspection: Inspection | null; mapping: MappingColumn[]; options: ImportOptions; step: "upload" | "mapping" | "preview" | "policy" | "result"; commit: CommitState; preview: PreviewSnapshot | null; revision: number;
+};
 export function newDraft(): ImportDraft {
 	return { object: "contact", file: null, file_base64: null, inspection: null, mapping: [], options: { sheet: "1", default_country_code: "", owner_id: "", duplicate_mode: "skip", error_policy: "skip" }, step: "upload", commit: emptyCommit(), preview: null, revision: 0 };
 }
@@ -48,11 +53,7 @@ export function parseFields(value: unknown, object: ImportObject): ImportFields 
 		if (typeof target.target !== "string" || !(fixed.includes(target.target) || /^property:[a-z][a-z0-9_]{0,62}$/.test(target.target))) throw new Error("INVALID_IMPORT_RESPONSE");
 		if (target.type === "user" || target.read_only === true || target.archived === true || target.archived_at != null) continue;
 		if (!sensitive && (target.target === "email" || target.target === "phone" || target.sensitive === true)) continue;
-		if (typeof target.label !== "string" && (!target.label || typeof target.label !== "object" || Array.isArray(target.label))) throw new Error("INVALID_IMPORT_RESPONSE");
-		if (typeof target.label !== "string") {
-			const label = target.label as Record<string, unknown>;
-			if ((label.en !== undefined && typeof label.en !== "string") || (label.ar !== undefined && typeof label.ar !== "string") || (!label.en && !label.ar)) throw new Error("INVALID_IMPORT_RESPONSE");
-		}
+		if (typeof target.label !== "string") throw new Error("INVALID_IMPORT_RESPONSE");
 		if (target.options !== undefined && (!Array.isArray(target.options) || target.options.some((option) => typeof option !== "string"))) throw new Error("INVALID_IMPORT_RESPONSE");
 		if (targets.some((item) => item.target === target.target)) throw new Error("INVALID_IMPORT_RESPONSE");
 		targets.push({ target: target.target, required: target.required === true, label: target.label as Target["label"],
@@ -122,5 +123,5 @@ export function sampleText(value: string | number | boolean | null): string { re
 /** Step navigation preserves review; any source/mapping/options change requires a new server preview. */
 export function changeDraft(current: ImportDraft, change: Partial<ImportDraft>): ImportDraft {
 	const invalidates = ["object", "file", "file_base64", "inspection", "mapping", "options"].some((key) => Object.hasOwn(change, key));
-	return { ...current, ...change, commit: invalidates ? emptyCommit() : change.commit ?? current.commit, preview: invalidates ? null : change.preview === undefined ? current.preview : change.preview, revision: current.revision + (invalidates ? 1 : 0) };
+	return { ...current, ...change, commit: invalidates ? emptyCommit() : (change.commit ?? current.commit), preview: invalidates ? null : change.preview === undefined ? current.preview : change.preview, revision: current.revision + (invalidates ? 1 : 0) };
 }

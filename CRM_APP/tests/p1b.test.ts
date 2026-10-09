@@ -162,14 +162,14 @@ test("P1B-B1 seed: every tenant has the 4 standard objects, general group, syste
 				[t],
 			)
 		).rows;
-		assert.equal(props.length, 26);
+		assert.equal(props.length, 32);
 		for (const p of props) {
 			assert.equal(p.is_system, true);
-			assert.equal(p.storage, "column");
-			assert.equal(p.column_name, p.key);
+			assert.ok(["column","protected"].includes(p.storage));
+			assert.equal(p.column_name, p.storage === "column" ? p.key : null);
 		}
 		// every column-mapped property really is a column of its table (no dangling mapping)
-		for (const p of props)
+		for (const p of props.filter(p=>p.storage === "column"))
 			assert.ok(
 				(
 					await one(
@@ -224,7 +224,7 @@ test("P1B-B1 seed is idempotent, never overwrites edits, re-adds missing rows; o
 	await admin.query("SELECT crm.seed_system_properties($1)", [f.ids.a]);
 	assert.deepEqual(await counts(), before);
 	const kept = await one(
-		"SELECT label->>'en' en,show_default FROM crm.property_definition WHERE tenant_id=$1 AND object_type='contact' AND key='source'",
+		"SELECT label#>>'{}' en,show_default FROM crm.property_definition WHERE tenant_id=$1 AND object_type='contact' AND key='source'",
 		[f.ids.a],
 	);
 	assert.deepEqual(kept, { en: "Edited", show_default: false });
@@ -245,7 +245,7 @@ test("P1B-B1 seed is idempotent, never overwrites edits, re-adds missing rows; o
 				)
 			).n,
 		),
-		26,
+		32,
 	);
 	await assert.rejects(
 		admin.query("SELECT crm.seed_system_properties($1)", [randomUUID()]),
@@ -500,7 +500,7 @@ test("P1B-B1 isolation: two tenants, per new table (read, insert, update, cross-
 		Number(
 			(
 				await one(
-					"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1 AND label->>'en'='hijack'",
+					"SELECT count(*) n FROM crm.property_definition WHERE tenant_id=$1 AND label#>>'{}'='hijack'",
 					[f.ids.b],
 				)
 			).n,
@@ -778,7 +778,7 @@ test("P1B-B1 limits: 100 active custom properties per object, 200 active options
 		),
 		/OPTION_LIMIT_EXCEEDED/,
 	);
-	// system rows are not counted against the 100 (26 system rows exist next to the 100 custom ones)
+	// system rows are not counted against the 100 (32 system rows exist next to the 100 custom ones)
 	assert.equal(
 		Number(
 			(
@@ -949,7 +949,7 @@ test("P1B-B1 API output never carries custom/custom_search (get + list, all four
 	const created = async (path: string, body: Body) =>
 		(await req(path, "POST", { command_id: randomUUID(), ...body }))
 			.data as pg.QueryResultRow;
-	const contact = await created("contacts", { display_name: "B1 Contact" });
+	const contact = await created("contacts", { display_name: "B1 Contact", email: "projection-fixture@example.test" });
 	const lead = await created("leads", {
 		contact_id: contact.id,
 		title: "B1 Lead",

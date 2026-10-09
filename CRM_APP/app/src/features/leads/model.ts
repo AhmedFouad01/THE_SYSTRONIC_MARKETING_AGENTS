@@ -1,3 +1,5 @@
+import { normalizeEmail, normalizePhone } from "../../../../src/contactformat.ts";
+import type { ContactFields } from "../contacts/ContactFields.tsx";
 // Pure leads view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (leads + assignees).
 import { type ApiErrorKind, isApiError } from "../../api/errors.ts";
 import type { CappedCount } from "../capped.ts";
@@ -11,7 +13,7 @@ export const LEAD_STATUSES: readonly LeadStatus[] = [
 	"closed",
 ];
 
-export type Lead = {
+export type Lead = ContactFields & {
 	id: string;
 	contact_id: string;
 	owner_id: string | null;
@@ -21,6 +23,7 @@ export type Lead = {
 	status: LeadStatus;
 	version: number;
 	received_at: string;
+	missing_contact?: boolean;
 } & Expanded;
 
 export type Assignee = { id: string; name: string };
@@ -29,11 +32,12 @@ export type Contact = { id: string; display_name: string };
 /** Lead enriched for the grid (names come from the list's `expand=contact,owner`; the assignee directory names owners of confirmed writes). */
 export type LeadRow = Lead & { contactName: string; ownerName: string };
 
-export type BuiltInView = "all" | "mine" | "unassigned";
+export type BuiltInView = "all" | "mine" | "unassigned" | "missing_contact";
 export const BUILT_IN_VIEWS: readonly BuiltInView[] = [
 	"all",
 	"mine",
 	"unassigned",
+	"missing_contact",
 ];
 
 /**
@@ -42,6 +46,7 @@ export const BUILT_IN_VIEWS: readonly BuiltInView[] = [
  */
 export function builtInViewNodes(view: BuiltInView, actor: string | null): ServerNode[] {
 	if (view === "all") return [];
+	if (view === "missing_contact") return [cond("missing_contact","eq",true)];
 	if (view === "mine") return [actor === null ? NOTHING : cond("owner_id", "eq", actor)];
 	return [cond("owner_id", "is_null")];
 }
@@ -166,10 +171,11 @@ export type NewLeadInput = {
 export type NewLeadField =
 	| "title"
 	| "contactName"
+	| "contactChannels"
 	| "phone"
 	| "email"
 	| "evidence";
-export type FieldIssue = "required" | "tooLong" | "phone" | "email";
+export type FieldIssue = "required" | "tooLong" | "phone" | "email" | "contactRequired";
 export type NewLeadErrors = Partial<Record<NewLeadField, FieldIssue>>;
 
 export const EMPTY_NEW_LEAD: NewLeadInput = {
@@ -181,11 +187,10 @@ export const EMPTY_NEW_LEAD: NewLeadInput = {
 	ownerId: "",
 };
 const MAX = { title: 160, contactName: 160, evidence: 500 } as const;
-const E164 = /^\+[1-9]\d{6,14}$/;
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateNewLead(i: NewLeadInput): NewLeadErrors {
 	const e: NewLeadErrors = {};
+	if (!i.email.trim() && !i.phone.trim()) e.contactChannels="contactRequired";
 	const need = (field: "title" | "contactName" | "evidence", value: string) => {
 		if (value.trim() === "") e[field] = "required";
 		else if (value.trim().length > MAX[field]) e[field] = "tooLong";
@@ -193,8 +198,8 @@ export function validateNewLead(i: NewLeadInput): NewLeadErrors {
 	need("title", i.title);
 	need("contactName", i.contactName);
 	need("evidence", i.evidence);
-	if (i.phone.trim() !== "" && !E164.test(i.phone.trim())) e.phone = "phone";
-	if (i.email.trim() !== "" && !EMAIL.test(i.email.trim())) e.email = "email";
+	if (i.phone.trim() !== "" && !normalizePhone(i.phone)) e.phone = "phone";
+	if (i.email.trim() !== "" && !normalizeEmail(i.email)) e.email = "email";
 	return e;
 }
 
@@ -211,13 +216,13 @@ export function buildCreateBody(
 	if (i.phone.trim() !== "")
 		identifiers.push({
 			kind: "phone",
-			value: i.phone.trim(),
+			value: normalizePhone(i.phone) ?? i.phone.trim(),
 			provenance: "manual_entry",
 		});
 	if (i.email.trim() !== "")
 		identifiers.push({
 			kind: "email",
-			value: i.email.trim(),
+			value: normalizeEmail(i.email) ?? i.email.trim(),
 			provenance: "manual_entry",
 		});
 	return {
@@ -270,6 +275,16 @@ export function classifyCreateError(e: unknown): CreateErrorKind {
 }
 
 // ---- detail edit ------------------------------------------------------------------------------------------
+
+/** Editable forms validate the resulting draft; protected/read-only forms use server presence. */
+export function missingLeadContact(
+ lead: Pick<Lead, "missing_contact" | "sensitive_masked">,
+ channels: { email?: string; phone?: string },
+ editable: boolean,
+): boolean {
+ if (!editable || lead.sensitive_masked !== false) return lead.missing_contact === true;
+ return !normalizeEmail(channels.email ?? "") && !normalizePhone(channels.phone ?? "");
+}
 
 export type EditDraft = { title: string; status: LeadStatus; ownerId: string };
 

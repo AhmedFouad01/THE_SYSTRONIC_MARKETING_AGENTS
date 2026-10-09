@@ -1,3 +1,5 @@
+import { normalizeEmail, normalizePhone } from "../../../../src/contactformat.ts";
+import type { ContactFields } from "../contacts/ContactFields.tsx";
 // Pure contacts view-model helpers (no DOM, no React). Field names follow M1_CONTRACTS (contacts, duplicates,
 // merge-previews, merges) and the journey timeline (audit rows).
 import { isApiError } from "../../api/errors.ts";
@@ -14,7 +16,7 @@ export type Identifier = {
 };
 
 /** GET /contacts rows carry no identifiers; GET /contacts/{id} adds the ones the session may read. */
-export type Contact = {
+export type Contact = ContactFields & {
 	id: string;
 	display_name: string;
 	owner_id: string | null;
@@ -104,29 +106,25 @@ export function identifierView(c: Pick<Contact, "identifiers">): IdentifierView 
 	return items.length === 0 ? { state: "hidden" } : { state: "visible", items };
 }
 
-const E164 = /^\+[1-9]\d{6,14}$/;
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export type IdentifierIssue = "phone" | "email" | null;
-export function validateIdentifier(
-	kind: IdentifierKind,
-	value: string,
-): IdentifierIssue {
-	const v = value.trim().toLowerCase();
-	if (v === "") return null;
-	if (kind === "phone")
-		return E164.test(v.replace(/[ ()-]/g, "")) ? null : "phone";
-	return EMAIL.test(v) ? null : "email";
+export function validateIdentifier(kind: IdentifierKind, value: string): IdentifierIssue {
+ if (!value.trim()) return null;
+ return (kind === "phone" ? normalizePhone(value) : normalizeEmail(value)) ? null : kind;
 }
 
 // ---- create -------------------------------------------------------------------------------------------------
 
 export type NewContactInput = {
+	company?: string;
+	jobTitle?: string;
 	name: string;
 	phone: string;
 	email: string;
 	ownerId: string;
 };
 export const EMPTY_NEW_CONTACT: NewContactInput = {
+	company: "",
+	jobTitle: "",
 	name: "",
 	phone: "",
 	email: "",
@@ -153,12 +151,14 @@ export function buildCreateContactBody(
 ): Record<string, unknown> {
 	const identifiers: Array<{ kind: IdentifierKind; value: string; provenance: string }> = [];
 	if (i.phone.trim() !== "")
-		identifiers.push({ kind: "phone", value: i.phone.trim(), provenance: "manual_entry" });
+		identifiers.push({ kind: "phone", value: normalizePhone(i.phone) ?? i.phone.trim(), provenance: "manual_entry" });
 	if (i.email.trim() !== "")
-		identifiers.push({ kind: "email", value: i.email.trim(), provenance: "manual_entry" });
+		identifiers.push({ kind: "email", value: normalizeEmail(i.email) ?? i.email.trim(), provenance: "manual_entry" });
 	return {
 		command_id: commandId,
 		display_name: i.name.trim(),
+		...(i.company?.trim() ? {company:i.company.trim()} : {}),
+		...(i.jobTitle?.trim() ? {job_title:i.jobTitle.trim()} : {}),
 		...(i.ownerId ? { owner_id: i.ownerId } : {}),
 		...(identifiers.length > 0 ? { identifiers } : {}),
 	};

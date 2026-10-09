@@ -1,3 +1,4 @@
+import { normalizeEmail, normalizePhone, normalizeUrl } from "../../../../src/contactformat.ts";
 // P1b B3 UI model: custom-field VALUES on records (pure: no React, no fetch; unit-tested in values.test.ts).
 // Wire shapes (ADR-002 §4.4, P1B_CONTRACTS B3): a record carries `properties:{key:value}` (custom only, active and permitted
 // only); writes send a PARTIAL map, `null` clears a key. Value per type: text/long_text string; number finite number;
@@ -26,6 +27,7 @@ export type IssueCode =
 	| "TOO_SMALL"
 	| "TOO_LARGE"
 	| "TOO_LONG"
+	| "INVALID_VALUE"
 	| "TOO_MANY"
 	| "DATE_INVALID"
 	| "DECIMALS"
@@ -208,6 +210,10 @@ export function parseDraft(p: PropertyDef, d: Draft, original?: unknown): Parsed
 	const text = typeof d === "string" ? d : "";
 	if (text.trim() === "") return { ok: true, value: null };
 	switch (p.type) {
+  case "email": case "phone": case "url": {
+   const value=p.type === "email" ? normalizeEmail(text) : p.type === "phone" ? normalizePhone(text) : normalizeUrl(text);
+   return value ? {ok:true,value} : bad("INVALID_VALUE");
+  }
 		case "number": {
 			const n = parseNumber(text);
 			if (n === null) return bad("NOT_A_NUMBER");

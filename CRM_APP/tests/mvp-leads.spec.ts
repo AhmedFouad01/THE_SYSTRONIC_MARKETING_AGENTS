@@ -38,7 +38,7 @@ async function makeLead(request: APIRequestContext, f: Fixture, title: string, o
 			title,
 			source_evidence: "synthetic",
 			...(owner ? { owner_id: owner } : {}),
-			contact: { display_name: `Contact ${title}` },
+			contact: { display_name: `Contact ${title}`, email: "ui-fixture@example.test" },
 		},
 	});
 	expect(res.status()).toBe(201);

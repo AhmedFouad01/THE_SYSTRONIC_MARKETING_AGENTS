@@ -21,6 +21,7 @@ import {
 	devBearerEnabled,
 	sharedAuth,
 } from "./auth/ba.js";
+import { contactRequiredMessage } from "./leadcontact.js";
 import { crmRequest, type Body } from "./crm.js";
 import { chartsRequest, isCharts } from "./charts.js";
 import { isSchema, schemaRequest } from "./schema.js";
@@ -350,7 +351,7 @@ export function server(options: { auth?: AuthRuntime | null } = {}) {
 			res.end(
 				JSON.stringify({
 					code: error.code,
-					safe_message: error.code,
+					safe_message: error.code === "CONTACT_REQUIRED" ? contactRequiredMessage(String(req.headers["accept-language"] ?? "en")) : error.code,
 					request_id: requestId,
 					retryable: error.status >= 500,
 					...(error.details ? { errors: error.details } : {}),
