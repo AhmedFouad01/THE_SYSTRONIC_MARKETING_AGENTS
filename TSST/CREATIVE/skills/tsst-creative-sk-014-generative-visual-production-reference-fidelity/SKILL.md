@@ -41,6 +41,7 @@ Creative writes one recipe per image for a user-run tool (ChatGPT image edit, Ma
 8. Acceptance: structure exact, proportions within the user-set tolerance (dresser-01: +-10%). A generated re-render is a "hyper-real render" and is labelled internally as a render, never as the physical product photo.
 9. Max 3 rounds per stage (user rule); after round 3 accept the best result or escalate. When the tool keeps pulling to one view, re-target to that view if the stage allows it, rather than fighting it.
 10. Product card captures the signature FORM first (silhouette, taper, curvature of seams, how parts join), numbers second; the owner confirms the card before round 1. Owner acceptance can override the numeric gate; record it with the known differences.
+11. Source photos come from the brand's photo bank (`TSST/CREATIVE/tools/photo-bank/`, `photobank.py search`); after each round run `photobank.py fidelity <render> <real photos>` and log the numbers next to the geometry QA. Before the next stage, show the owner the approved file side by side with the real photo (dresser-01 lesson: a wrong file was marked approved).
 
 ## Failure patterns
 
@@ -69,3 +70,4 @@ Package installation and study do not validate the skill. Validation requires ac
 - 0.5 (2026-10-07): owner-acceptance lesson (form-first card, owner confirms card, acceptance may override numeric gate). Status unchanged.
 - 0.6 (2026-10-07): When text specs drift, give the generator a measured STRUCTURE GUIDE image (front-elevation line drawing traced from the real photo) as the primary reference; QA against the original via overlay, not against an earlier approved render. Status unchanged.
 - 0.7 (2026-10-07): Manual-bridge rounds for one product run in ONE continuous chat; each step edits the tool's previous output. Start from the REAL photo as the edit base: editing preserves form, while generating from references regresses to the tool's generic archetype (evidence: dresser-01 Step A vs P1/P3). Status unchanged.
+- 0.8 (2026-10-10): photo-bank tool for source picking + fidelity numbers; owner confirms the approved file side by side. dresser-01 method closed as working. Status unchanged.

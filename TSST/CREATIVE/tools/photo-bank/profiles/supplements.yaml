@@ -1,0 +1,140 @@
+brand_name: "ANVIL Supps"
+brand_subtitle: "Sports Nutrition & Supplement Hardware"
+brand_logo_text: "ANVIL"
+
+score_weights:
+  resolution: 0.15
+  sharpness: 0.20
+  exposure: 0.15
+  clutter: 0.25
+  dominance: 0.25
+
+space_tags:
+  - gym
+  - studio
+  - kitchen
+  - retail
+  - warehouse
+  - outdoor
+  - other
+
+space_prompts:
+  - "a photo of a gym fitness floor with workout equipment, weights, and racks"
+  - "a photo of a clean commercial studio with solid background and lighting"
+  - "a photo of a kitchen counter or pantry shelf"
+  - "a photo of a supplement retail store display or nutrition shop shelf"
+  - "a photo of a warehouse or storage facility with boxes and pallets"
+  - "a photo of an outdoor sports park or athletic track"
+  - "a photo of miscellaneous interior or background setting"
+
+clean_prompts:
+  - "a clean well-lit professional product photograph of supplement packaging in an elegant tidy gym or studio"
+  - "a beautiful clean commercial studio product photograph of fitness supplements"
+  - "a spotless tidy tabletop with luxury sports nutrition product and perfect staging"
+
+clutter_prompts:
+  - "a cluttered messy setting with scattered trash, dirty gym towels, spilled powder, debris, and boxes"
+  - "a chaotic messy room with dirty floors, trash, random items, and heavy clutter"
+  - "a messy cluttered gym floor with scattered random objects and confusing background"
+
+hero_prompts:
+  - "a focused hero product shot of a single dominant supplement tub or shaker bottle prominently filling the frame"
+  - "a tight focused photograph highlighting one specific fitness nutrition product as the main subject"
+  - "a professional catalog photo centered on one clear supplement container or shaker"
+
+busy_prompts:
+  - "a wide shot with many competing scattered gym items, background clutter, and no single focal point"
+  - "a distant chaotic view with lots of empty floor, ceiling, and distracting elements"
+  - "a confusing photo with multiple scattered items competing for attention"
+
+piece_prompts:
+  "tub":
+    - "a photo of a supplement protein powder tub, pre-workout tub, or large plastic supplement container"
+    - "a round cylindrical supplement powder tub with screw lid"
+    - "a high-protein supplement powder jar container"
+  "scoop":
+    - "a photo of a supplement powder measuring scoop, plastic scoop with powder, or scoop resting on tub"
+    - "a plastic measuring scoop holding protein or pre-workout powder"
+    - "a supplement serving scoop with powder granules"
+  "shaker":
+    - "a photo of a supplement shaker bottle, gym water bottle, or protein shaker cup"
+    - "a sports fitness shaker cup with flip cap and mixing grid"
+    - "a gym shaker bottle on a bench or counter"
+  "label close-up":
+    - "a macro close-up photo of supplement label nutrition facts, ingredients table, or packaging typography"
+    - "a tight detail shot of supplement bottle branding, nutrition panel, and product text"
+    - "a close-up view of supplement packaging label design"
+  "lifestyle":
+    - "a photo of an athlete, fitness model, or person holding or consuming a supplement or shaker"
+    - "an athlete drinking from a supplement shaker in athletic sportswear"
+    - "a fitness lifestyle photograph with athlete and nutrition product"
+  "gym":
+    - "a photo of gym workout equipment, dumbbells, weight rack, barbell, or training gym floor"
+    - "commercial fitness gym machines, free weights, and workout area"
+    - "a bodybuilding weight room or fitness club interior"
+  "none":
+    - "a photo with no supplements, shakers, or gym equipment, blank packaging, or unidentifiable items"
+    - "a smartphone screenshot, catalog graphic flyer, text banner, or floor plan diagram"
+    - "a non-supplement photo showing only tools, random clutter, or irrelevant objects"
+
+material_prompts:
+  "matte plastic":
+    - "matte black or textured plastic container, HDPE plastic jar, or frosted lid"
+    - "matte finish black plastic tub surface"
+    - "non-reflective textured plastic packaging"
+  "glossy plastic":
+    - "glossy shiny plastic bottle, clear PET shaker cup, or glossy lid"
+    - "high-gloss polished plastic surface with reflections"
+    - "shiny smooth plastic tub or bottle"
+  "metal/steel":
+    - "stainless steel shaker bottle, metallic gym bottle, or brushed aluminum lid"
+    - "metallic stainless steel gym shaker or chrome accents"
+    - "brushed metal tumbler or steel bottle"
+  "powder":
+    - "loose protein powder, creatine crystals, or pre-workout powder granules"
+    - "dry textured supplement powder inside tub or on scoop"
+    - "fine whey protein or creatine monohydrate powder"
+  "printed label":
+    - "glossy printed product label, vinyl sticker, or nutrition facts label"
+    - "printed adhesive paper label with bold typography and logo"
+    - "metallic foil stamped or printed supplement label"
+  "clear acrylic/glass":
+    - "transparent clear acrylic shaker or glass jar"
+    - "see-through translucent plastic or glass container"
+    - "transparent bottle showing liquid or powder inside"
+
+stage_prompts:
+  "raw/packaging":
+    - "unboxed raw supplement containers, bulk warehouse shipment, factory batch, or production line"
+    - "raw unpacked supplement tubs sitting on a plain pallet or shipping carton"
+    - "manufacturing or warehouse packaging stage"
+  "studio product":
+    - "clean studio product photography of supplement tub or shaker on pedestal with professional lighting"
+    - "isolated studio catalog shot with crisp commercial studio lighting"
+    - "professional commercial tabletop product photography"
+  "active use/lifestyle":
+    - "in-gym workout action shot, active training session, or athlete drinking supplement"
+    - "active athletic workout environment with product in use"
+    - "real-world gym or fitness lifestyle photo"
+
+angle_prompts:
+  "front":
+    - "a straight-on frontal view showing product label and brand name"
+    - "a direct front elevation photo of the supplement container"
+  "three-quarter":
+    - "a three-quarter perspective angle view showing tub front, side, and lid"
+    - "an angled 3D perspective photograph of the supplement product"
+  "close-up detail":
+    - "a tight macro close-up focused on label typography, seal, lid texture, or powder granules"
+    - "a close-up detail shot of container craftsmanship, lid ribs, or nutritional facts"
+  "wide lifestyle":
+    - "a wide-angle establishing shot showing the product in a gym or fitness environment"
+    - "a wide scene showing the whole workout space or gym environment"
+
+piece_order:
+  - "tub"
+  - "scoop"
+  - "shaker"
+  - "label close-up"
+  - "lifestyle"
+  - "gym"

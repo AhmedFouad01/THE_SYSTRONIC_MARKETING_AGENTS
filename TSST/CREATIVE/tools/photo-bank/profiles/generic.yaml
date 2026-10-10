@@ -1,0 +1,139 @@
+brand_name: "Photo Bank"
+brand_subtitle: "Visual Asset Library & Catalog"
+brand_logo_text: "BANK"
+
+score_weights:
+  resolution: 0.15
+  sharpness: 0.20
+  exposure: 0.15
+  clutter: 0.25
+  dominance: 0.25
+
+space_tags:
+  - studio
+  - indoor
+  - outdoor
+  - workshop
+  - office
+  - retail
+  - other
+
+space_prompts:
+  - "a photo inside a clean photography studio with solid background"
+  - "a photo of an indoor room, interior architecture, or residential space"
+  - "a photo of an outdoor environment, street, nature, or architecture"
+  - "a photo inside a workshop, factory, construction site, or fabrication space"
+  - "a photo of an office workplace, meeting room, or commercial building"
+  - "a photo of a retail shop, display showroom, or commercial store"
+  - "a photo of miscellaneous objects or general setting"
+
+clean_prompts:
+  - "a clean well-lit high quality photograph with professional composition, elegant staging, and tidy background"
+  - "a beautiful clean commercial photograph with balanced lighting and clear subject"
+  - "a spotless tidy professional photo with excellent staging and minimal distractions"
+
+clutter_prompts:
+  - "a cluttered messy photograph with scattered debris, wires, random trash, messy floor, and heavy clutter"
+  - "a chaotic messy room with dirty surfaces, scattered tools, junk, and distracting elements"
+  - "a confusing messy composition filled with unwanted background clutter and chaos"
+
+hero_prompts:
+  - "a focused hero shot of a single dominant subject prominently filling the frame"
+  - "a tight focused photograph highlighting one clear main subject or product"
+  - "a professional catalog photo centered cleanly on one principal focal point"
+
+busy_prompts:
+  - "a wide chaotic view with many competing scattered objects, background clutter, and no single focal point"
+  - "a distant confusing shot with lots of empty space and distracting elements"
+  - "a messy photo with multiple scattered elements competing for visual attention"
+
+piece_prompts:
+  "product":
+    - "a photo of a commercial product, manufactured item, packaging, consumer good, or merchandise"
+    - "a standalone product photo on a tabletop or display surface"
+    - "packaged consumer goods or commercial equipment"
+  "person/portrait":
+    - "a photo of a person, portrait, model, athlete, worker, or human subject"
+    - "a person posing or working as the main subject of the photograph"
+    - "a portrait or action shot of an individual"
+  "environment/place":
+    - "a photo of an architectural space, room interior, outdoor landscape, building exterior, or urban location"
+    - "a scenic landscape, building facade, or architectural room view"
+    - "an environmental photo showing a location or physical space"
+  "detail/texture":
+    - "a close-up detail photo of a material surface, craftsmanship texture, pattern, or joint"
+    - "a tight macro shot focusing on surface texture, finish, or fine details"
+    - "an abstract macro photo of material craftsmanship"
+  "graphic/document":
+    - "a photo of a printed document, sign, blueprint, packaging diagram, or graphic artwork"
+    - "a printed graphic layout, flyer, poster, or typography display"
+    - "a technical diagram or graphic document"
+  "none":
+    - "an unidentifiable photo, blurry frame, random trash, bare floor, or completely blank image"
+    - "a failed capture, accidental blurry shot, or chaotic junk"
+    - "a photo showing only irrelevant background clutter or unidentifiable objects"
+
+material_prompts:
+  "wood":
+    - "natural wood timber, wooden planks, carved wood, or wood veneer surface"
+    - "organic timber texture with visible wood grain"
+    - "solid wood carpentry or architectural woodwork"
+  "metal":
+    - "metallic steel, polished aluminum, brass, bronze, gold, or chrome surface"
+    - "machined metal hardware, brushed stainless steel, or metallic elements"
+    - "shiny or matte metal fabrication"
+  "fabric/textile":
+    - "woven fabric, cloth upholstery, garment, canvas, or textile material"
+    - "soft plush textile fabric, velvet, linen, or woven cloth"
+    - "upholstered or tailored textile surface"
+  "plastic":
+    - "molded plastic, acrylic, polycarbonate, synthetic resin, or polymer"
+    - "rigid synthetic plastic container, smooth plastic casing, or acrylic sheet"
+    - "commercial plastic product or packaging"
+  "glass/ceramic":
+    - "transparent clear glass, mirror, glazed porcelain, or ceramic tile"
+    - "reflective glass surface, glazed pottery, or porcelain ceramic"
+    - "smooth vitreous glass or ceramic material"
+  "stone/concrete":
+    - "natural stone, polished marble slab, granite, brick masonry, or raw concrete"
+    - "architectural concrete wall, natural stone surface, or mineral rock"
+    - "solid mineral masonry or paving"
+  "organic/natural":
+    - "natural leather, foliage, green plant, flowers, food, or natural organic material"
+    - "botanical plant leaves, organic food, or genuine leather texture"
+    - "natural organic elements"
+
+stage_prompts:
+  "raw/draft":
+    - "raw unfinished material, rough skeleton, sketch, preliminary prototype, or early work in progress"
+    - "rough initial fabrication or unpainted raw pieces"
+    - "early stage draft or raw material prep"
+  "production/process":
+    - "active assembly in progress, fabrication work, tools in use, or installation underway"
+    - "work in progress on site or inside workshop with active fabrication"
+    - "ongoing process or active installation phase"
+  "finished/final":
+    - "completed finished deliverable, polished product ready for handover, release, or showcase"
+    - "fully finalized, cleaned, and professionally styled result"
+    - "completed turnkey final handover photo"
+
+angle_prompts:
+  "front":
+    - "a straight-on frontal elevation view facing directly towards the main subject"
+    - "a direct front perspective photograph"
+  "three-quarter":
+    - "a three-quarter perspective angle view showing front and side dimensions"
+    - "an angled isometric or 3D perspective photograph"
+  "close-up detail":
+    - "a tight close-up macro detail shot focused on texture, craftsmanship, or small elements"
+    - "a macro photograph capturing fine craftsmanship details"
+  "wide view":
+    - "a wide-angle establishing shot showing the subject in its surrounding environment"
+    - "a panoramic or wide view showing the broader context"
+
+piece_order:
+  - "product"
+  - "person/portrait"
+  - "environment/place"
+  - "detail/texture"
+  - "graphic/document"

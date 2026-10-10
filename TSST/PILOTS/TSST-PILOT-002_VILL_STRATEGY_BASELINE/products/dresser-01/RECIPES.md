@@ -1,4 +1,7 @@
 # dresser-01 — RECIPES (SK-014 v0.3 manual bridge; Ahmed runs them; PREVIS until QA passes)
+
+> **CLOSED — METHOD WORKS (owner, 2026-10-10).** The product render came out right; the owner had picked the wrong file as "approved". The true approved product is `products-rendered/dresser-01_P1f_TRUE-APPROVED.webp` (tapered pedestals, curved seams, 3-panel lid, navy wing + drum stool). `dresser-01_P1f_v1_APPROVED.png` is NOT the truth; the P3/P3r2 studio rounds were built on it, so their rejects were the input's fault, not the method's. Lesson for SK-014: before any next stage, the Lead confirms the approved file with the owner by showing it side by side with the source photo.
+
 Save outputs to `TSST/brands/vill-studio/assets/source/products-rendered/`. Creative runs GEOMETRY_QA.md on each file before the next step. Do not skip the QA gate between A and B.
 
 ## P3 — studio, round 1 of 3  (SUPERSEDED by round 2 below: product drifted from the real dresser; product stage CLOSED, P1f_v1 approved by owner 2026-10-07; SK-014 v0.5)

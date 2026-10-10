@@ -43,3 +43,6 @@ TSST/brands/*/projects/*/post-*/**/*.jpg
 TSST/brands/*/projects/*/post-*/**/*.webp
 TSST/brands/*/projects/*/_qa/
 TSST/brands/*/projects/*/files/
+# Photo bank generated data (rebuild with TSST/CREATIVE/tools/photo-bank/photobank.py)
+TSST/brands/*/assets/source/portfolio/**/BANK.html
+TSST/brands/*/assets/source/portfolio/**/*.json

@@ -30,6 +30,8 @@ Adobe Premiere/Photoshop export guidance + TSST production-state and final-asset
 
 Per asset, one folder with: numbered layer PNGs (`01_photo`, `02_tone`, `03_logo`, `04_text`); `layers.json` (order, file, blend, opacity, scale); a reproducible `build.py` that flattens from the json; a contact sheet and 360 px phone previews (`tools/phone_preview.py`). To swap a source, replace one layer and rebuild. HTML screenshots are PREVIS only. Reference build: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/assets/post-01/`.
 
+Source intake: a client's raw photos go through `TSST/CREATIVE/tools/photo-bank/` (embed → group → name → sort → catalog) before any production; pick `01_photo` from its BANK.html / search, never from the unsorted client folder. Bank media stays on Drive, git-ignored.
+
 ## Failure patterns
 
 - HTML instead of requested PNG/MP4
@@ -52,3 +54,4 @@ Package installation and study do not validate the skill. Validation requires ac
 
 ## Changelog
 - 0.2 (2026-10-07): Layered build standard (L4). Status unchanged.
+- 0.3 (2026-10-10): source intake via the photo-bank tool. Status unchanged.
