@@ -62,6 +62,15 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
 - **R16 Ask before dispatch.** While discussing, the Lead asks the owner the open questions and
   confirms scope + cost before delegating to any agent or runtime; no dispatch mid-discussion.
 
+## Daily board (owner rule, 2026-10-09)
+- **R17 Locked daily board.** A working day starts when the owner says "ابدأ اليوم":
+  `python TSST/daily/day.py collect` → the Lead plans every row (team / agent / skills / tier /
+  executor / after / done_when; the owner's manual work = executor `ahmed`) → owner OK → `lock`.
+  While locked, work runs only on board rows, one track at a time; any new request is `park`ed
+  to tomorrow's inbox. It enters today only with the owner's explicit OK in chat
+  (`add --owner-ok --swap <row>`), and the swapped row moves to tomorrow. Day end: `close`
+  (unfinished → tomorrow) + project checkpoints (Must 6). Spec: `TSST/daily/README.md`.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes

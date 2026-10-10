@@ -5,6 +5,7 @@
 | **TSST core** (this kind) | the operating system: boot, bus, teams, skills, governance, audits | `TSST core` |
 | one per brand | that brand only (e.g. VILL, ANVIL, YAKEBDA, AKYRO) | the brand name, e.g. `TSST-VILL` |
 | one per project | a project inside a brand (e.g. T.SAG CRM) | `TSST-CRM` |
+| **daily** (morning only) | plan today's board: collect → plan → owner OK → lock; no execution here (rule R17) | `ابدأ اليوم` |
 
 Start: boot.md → `router.yaml#brand_only_entry` (10-line brief, 3 numbered next actions).
 During: team + skills only (`TSST/core/rules.md` Must 9); delegate FAST/WORK/CODE to workers or the bus.
