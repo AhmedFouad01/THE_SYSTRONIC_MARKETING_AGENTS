@@ -26,3 +26,20 @@ TSST/brands/*/assets/**/*.zip
 
 # Creative reference library: third-party books/guides live on Drive, not in git
 TSST/CREATIVE/library/**/*.pdf
+
+# VILL raw photo bank (2.4 GB): media stays on Drive; INDEX/CATALOG/scripts stay in git
+TSST/brands/vill-studio/assets/source/portfolio/**/*.jpg
+TSST/brands/vill-studio/assets/source/portfolio/**/*.JPG
+TSST/brands/vill-studio/assets/source/portfolio/**/*.png
+TSST/brands/vill-studio/assets/source/portfolio/**/*.mp4
+TSST/brands/vill-studio/assets/source/portfolio/**/*.npy
+TSST/brands/vill-studio/assets/source/portfolio/**/__pycache__/
+
+# Brand project media (renders, plates, AI clips, QA shots): stays on Drive; docs/scripts/JSON stay in git
+TSST/brands/*/projects/*/post-*/**/*.mp4
+TSST/brands/*/projects/*/post-*/**/*.mov
+TSST/brands/*/projects/*/post-*/**/*.png
+TSST/brands/*/projects/*/post-*/**/*.jpg
+TSST/brands/*/projects/*/post-*/**/*.webp
+TSST/brands/*/projects/*/_qa/
+TSST/brands/*/projects/*/files/

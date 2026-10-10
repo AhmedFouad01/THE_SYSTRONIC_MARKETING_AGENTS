@@ -1,5 +1,7 @@
 # switch-pilot — project manifest
 
+**ARCHIVED 2026-10-09:** live ANVIL work moved to `TSST/brands/anvil/projects/campaign-01/`. This pilot stays as history.
+
 brand: anvil · id: TSST-PILOT-001
 implementation: `TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/`
 checkpoint: `CONTINUATION_STATUS_2026-09-28.md`; latest asset QA `12_STATIC_CAMPAIGN/REVEAL_01/v03/INTEGRATED_QA.md`

@@ -7,17 +7,17 @@
  "subtitle": "Delivery for ANVIL SUPPS · Facebook, Instagram and TikTok · 9 October 2026",
  "status": "progress",
  "status_label": "In progress",
- "status_detail": "Post 1 published; Post 2 awaiting your review; Post 3 in production",
+ "status_detail": "Post 1 published; Post 2 in production (new version); Post 3 in production",
  "arabic_font": {
   "family": "Cairo",
   "files": {
-   "400": "../11_PRODUCTION_V01/source/fonts/Cairo-Regular.ttf",
-   "700": "../11_PRODUCTION_V01/source/fonts/Cairo-Bold.ttf"
+   "400": "assets/fonts/Cairo-Regular.ttf",
+   "700": "assets/fonts/Cairo-Bold.ttf"
   }
  },
  "about": {
   "paragraphs": [
-   "A simplified launch campaign of three posts introducing ANVIL SUPPS, formerly Shark, to its existing community of traders and customers. The objective is brand awareness across Facebook, Instagram and TikTok. Post 1 is published. Post 2 is ready for your review. Post 3 is in production."
+   "A simplified launch campaign of three posts introducing ANVIL SUPPS, formerly Shark, to its existing community of traders and customers. The objective is brand awareness across Facebook, Instagram and TikTok. Post 1 is published. Post 2 is being produced in a new, stronger version. Post 3 is in production."
   ],
   "facts": [
    [
@@ -26,7 +26,7 @@
    ],
    [
     "Post 2",
-    "Name reveal video · Awaiting your review"
+    "Name reveal video · In production"
    ],
    [
     "Post 3",
@@ -41,7 +41,7 @@
    "This campaign moves Shark X Store to ANVIL SUPPS after 8 years of support from traders and customers. Ahmed simplified it to 3 posts instead of the long sequence.",
    "ANVIL is a trader, distributor and online store, not a manufacturer. Products are registered with the Egyptian Drug Authority (EDA) by their manufacturers. The ad was approved by the owner on 2026-10-09, subject to platform rules.",
    "Objective: brand awareness. Channels: Facebook, Instagram, TikTok. Colours: black and ANVIL Orange #FF6A00. Official logo only, no redrawing or alteration.",
-   "Internal status: Post 1 (teaser) is published. Post 2 (reveal video) is in review: the HD master and the music version are on Magnific and waiting for Ahmed to download them. Post 3 (three offers) is a draft, waiting for the details from Ahmed. No spend before Ahmed approves."
+   "Internal status: Post 1 published. Post 2: the first Magnific pillar draft was rejected by Ahmed (generation, motion, music); v2 follows post-2-reveal/REVEAL_V2_PACK.md (15 s storyboard, empty AI plates, real logos/products composited). Master Plate M: 4 variants generated in Magnific (400 credits), waiting for download and QA. Post 3: the three approved bundles (1,499 / 2,499 / 2,799 EGP). No spend before Ahmed approves."
   ],
   "internal_facts": [
    [
@@ -55,7 +55,7 @@
    "id": "post1_teaser",
    "title": "Teaser image",
    "desc": "Static image, PNG. The ANVIL SUPPS mark beneath a black cloth. Final approved file.",
-   "file": "../12_STATIC_CAMPAIGN/CREATIVE_02_TEASE/creative-02-FINAL.png",
+   "file": "post-1-teaser/creative-02-FINAL.png",
    "status": "published",
    "group": "Post 1",
    "date": "2026-10-09",
@@ -67,7 +67,7 @@
    "internal": true,
    "title": "Post 1 · QA notes",
    "desc": "Check notes for the teaser.",
-   "file": "../12_STATIC_CAMPAIGN/CREATIVE_02_TEASE/FINAL-QA.md",
+   "file": "post-1-teaser/FINAL-QA.md",
    "type": "doc",
    "status": "approved",
    "group": "Post 1"
@@ -75,52 +75,52 @@
   {
    "id": "post2_master_link",
    "internal": true,
-   "title": "Post 2 · Reveal HD master (Magnific)",
+   "title": "Rejected · Reveal HD master (Magnific)",
    "desc": "1080x1920 · 8 seconds · 24 fps · HEVC .mov · 17 MB.",
    "href": "https://www.magnific.com/app/creation/ksRIEVH16B",
    "type": "link",
-   "status": "review",
-   "group": "Post 2",
+   "status": "rejected",
+   "group": "Rejected",
    "who": "Ahmed",
-   "int_note": "Primary master, no sound. Waiting for Ahmed to download it into reveal/. Check: product labels in the render may be distorted, and the 3D ANVIL logo must match the official one."
+   "int_note": "Draft v1, rejected by Ahmed 2026-10-09 (generation, motion and music). Reference only."
   },
   {
    "id": "post2_music_link",
    "internal": true,
-   "title": "Post 2 · Reveal music version (Magnific)",
+   "title": "Rejected · Reveal music version (Magnific)",
    "desc": "608x1080 (small).",
    "href": "https://www.magnific.com/app/creation/1lZtQpAr4r",
    "type": "link",
-   "status": "review",
-   "group": "Post 2",
+   "status": "rejected",
+   "group": "Rejected",
    "who": "Ahmed",
-   "int_note": "Problem: 608x1080 is below the 720 px minimum for Reels. Do not publish. Correct route: HD master plus this version's music, merged locally (ffmpeg)."
+   "int_note": "Draft v1, rejected by Ahmed 2026-10-09 (generation, motion and music). Reference only."
   },
   {
    "id": "post2_reveal_video",
    "title": "Name reveal video",
-   "desc": "Vertical video, 1080 x 1920 px, MP4. A rotating pillar revealing the ANVIL SUPPS mark and the new name. The final edit with music will be supplied for review; the caption below accompanies it.",
-   "file": "reveal/reveal-final.mp4",
+   "desc": "Vertical video, 1080 x 1920 px, MP4, about 15 seconds. The covered mark from the teaser is unveiled, the column rises from the Shark heritage at its base to the ANVIL SUPPS mark at the top, with the launch products. The final edit with music will be supplied for review; the caption below accompanies it.",
+   "file": "post-2-reveal/reveal-final.mp4",
    "type": "video",
-   "status": "review",
+   "status": "production",
    "group": "Post 2",
-   "int_note": "Does not exist yet: it is built after Ahmed downloads the master and the music into reveal/."
+   "int_note": "v2 in production per REVEAL_V2_PACK.md. Next: Master Plate M QA, then shots 1–5, then compositing and music."
   },
   {
    "id": "post3_offers",
    "title": "Launch offers post",
-   "desc": "Post presenting the three launch offers. Production continues once the offer details are received (see Next steps).",
+   "desc": "Post presenting the three launch bundles. In production.",
    "type": "doc",
    "status": "production",
    "group": "Post 3",
-   "int_note": "Details are not in the repository: waiting for Ahmed (or sync from ChatGPT). Each offer is checked against ad policy before publication. No discount framing: ANVIL is not a discount-only brand."
+   "int_note": "Bundles: 1,499 EGP (Furiux Mass 3kg + Tractor Creatine 80 serv. + shaker); 2,499 EGP (whey 7 serv. + Premium Creatine 500g + Premium Pre-Hell 30 serv. + shaker); 2,799 EGP (Farah Secrets GainSecret 5kg + Marvelous Creatine + shaker). No EU/Spanish claims. No discount framing."
   },
   {
    "id": "rejected_reveal_v03",
    "internal": true,
    "title": "Rejected · Reveal 01 v03 (the bag)",
    "desc": "PNG 4:5. Kept for history only.",
-   "file": "../12_STATIC_CAMPAIGN/REVEAL_01/v03/reveal-01-v03.png",
+   "file": "post-2-reveal/rejected/reveal-01-v03.png",
    "status": "rejected",
    "group": "Rejected",
    "date": "2026-10-09",
@@ -184,16 +184,15 @@
  "next": [
   "Select the caption for Post 2: Option A or Option B.",
   "Confirm the wording of the offers line (three options above).",
-  "Review the Post 2 reveal video once supplied, including the mark and the product labels in the final frame.",
-  "Provide the details of the three launch offers for Post 3.",
+  "Review the Post 2 reveal video once supplied.",
   "Confirm publication dates for Posts 2 and 3."
  ],
  "internal_next": [
-  "Ahmed downloads the HD master and the music from Magnific into reveal/ inside 13_SV05_CONTINUATION.",
-  "Merge master and music locally (ffmpeg), then check the last frame (logo and labels).",
-  "Ahmed picks caption A or B and settles the offers-line wording.",
-  "Ahmed sends the details of the three offers (Post 3).",
-  "Open before launch: budget and dates (is the 1,500 EGP cap still valid?) and ad-account access."
+  "Ahmed downloads Master Plate M_v1..v4 from Magnific into post-2-reveal/plates/; Lead QA against the pack checklist.",
+  "Product files: real photos of the bundle products (ChatGPT step 2 or a READER pass).",
+  "Open questions: orange tag plain or marked; Tractor 80 vs 160 serv.; shaker in video; end card EN only or + Arabic; hi-res Shark logo.",
+  "Ahmed picks caption A or B and the offers-line wording.",
+  "Open before launch: budget and dates and ad-account access."
  ],
  "decisions": [
   {
@@ -304,23 +303,23 @@
  "sources": [
   {
    "label": "STATE_2026-10-09.md",
-   "path": "../../../brands/anvil/STATE_2026-10-09.md"
+   "path": "../../STATE_2026-10-09.md"
   },
   {
    "label": "INTAKE.md",
    "path": "INTAKE.md"
   },
   {
-   "label": "COPY_REVEAL.md",
-   "path": "COPY_REVEAL.md"
+   "label": "copy/COPY_REVEAL.md",
+   "path": "copy/COPY_REVEAL.md"
   },
   {
    "label": "SUPPLEMENTS_AD_POLICY.md",
-   "path": "../../../services/verified/SUPPLEMENTS_AD_POLICY.md"
+   "path": "../../../../services/verified/SUPPLEMENTS_AD_POLICY.md"
   },
   {
    "label": "SV-05 playbook",
-   "path": "../../../services/SV-05_campaigns.md"
+   "path": "../../../../services/SV-05_campaigns.md"
   },
   {
    "label": "Magnific · HD master",
@@ -335,13 +334,13 @@
  "ar": {
   "about": {
    "paragraphs": [
-    "حملة إطلاق مبسطة من ثلاثة منشورات تعرّف بعلامة ANVIL SUPPS، المعروفة سابقًا باسم Shark، لدى مجتمعها الحالي من التجّار والعملاء. الهدف رفع الوعي بالعلامة التجارية عبر منصات Facebook، Instagram، TikTok. المنشور 1 منشور، والمنشور 2 جاهز لمراجعتكم، والمنشور 3 قيد الإنتاج."
+    "حملة إطلاق مبسطة من ثلاثة منشورات تعرّف بعلامة ANVIL SUPPS، المعروفة سابقًا باسم Shark، لدى مجتمعها الحالي من التجّار والعملاء. الهدف رفع الوعي بالعلامة التجارية عبر منصات Facebook، Instagram، TikTok. المنشور 1 منشور، والمنشور 2 قيد الإنتاج بنسخة جديدة أقوى، والمنشور 3 قيد الإنتاج."
    ],
    "internal_paragraphs": [
     "تنقل هذه الحملة Shark X Store إلى ANVIL SUPPS بعد 8 سنوات من دعم التجّار والعملاء. بسّط أحمد الحملة إلى 3 منشورات بدلًا من التسلسل الطويل.",
     "ANVIL تاجر وموزّع ومتجر إلكتروني، وليست جهة مصنِّعة. المنتجات مسجّلة لدى هيئة الدواء المصرية (EDA) عن طريق جهاتها المصنِّعة. اعتمد المالك الإعلان في 9 أكتوبر 2026 مع التقيد بقواعد المنصات.",
     "الهدف: رفع الوعي بالعلامة التجارية. القنوات: Facebook، Instagram، TikTok. الألوان: الأسود وبرتقالي ANVIL (#FF6A00). يُستخدم الشعار الرسمي فقط، دون إعادة رسم أو تعديل.",
-    "الحالة الداخلية: المنشور 1 (الصورة التشويقية) منشور. المنشور 2 (فيديو الكشف) قيد المراجعة؛ النسخة الرئيسية عالية الدقة ونسخة الموسيقى على Magnific بانتظار تنزيلها بواسطة أحمد. المنشور 3 (العروض الثلاثة) مسودة بانتظار التفاصيل من أحمد. لا إنفاق قبل اعتماد أحمد."
+    "الحالة الداخلية: المنشور 1 منشور. المنشور 2: رفض أحمد مسودة العمود الأولى من Magnific (التوليد والحركة والموسيقى)؛ النسخة الثانية تتبع ملف REVEAL_V2_PACK.md (ستوري بورد 15 ثانية، خلفيات فارغة بالذكاء الاصطناعي، والشعارات والمنتجات الحقيقية تُركَّب في المونتاج). الماستر بليت: 4 نسخ مولدة على Magnific (400 كريدت) بانتظار التنزيل والفحص. المنشور 3: البوندلز الثلاثة المعتمدة (1,499 / 2,499 / 2,799 جنيه). لا إنفاق قبل اعتماد أحمد."
    ],
    "facts": {
     "Post 1": [
@@ -350,7 +349,7 @@
     ],
     "Post 2": [
      "المنشور 2",
-     "فيديو الكشف عن الاسم · بانتظار مراجعتكم"
+     "فيديو الكشف عن الاسم · قيد الإنتاج"
     ],
     "Post 3": [
      "المنشور 3",
@@ -382,30 +381,30 @@
     "desc": "ملاحظات فحص الصورة التشويقية."
    },
    "post2_master_link": {
-    "group": "المنشور 2",
-    "title": "المنشور 2 · النسخة الرئيسية عالية الدقة للكشف (من Magnific)",
+    "group": "مرفوض",
+    "title": "مرفوض · النسخة الرئيسية عالية الدقة للكشف (من Magnific)",
     "desc": "عرض 1080 وارتفاع 1920 · المدة 8 ثوانٍ · 24 إطارًا في الثانية · صيغة HEVC .mov · الحجم 17 ميغابايت.",
-    "int_note": "النسخة الرئيسية الأساسية، بلا صوت. بانتظار تنزيلها بواسطة أحمد إلى مجلد reveal. للفحص: قد تظهر ملصقات المنتجات مشوهة في العرض، ويجب أن يطابق شعار ANVIL ثلاثي الأبعاد الشعار الرسمي.",
+    "int_note": "المسودة الأولى، رفضها أحمد في 9 أكتوبر 2026 (التوليد والحركة والموسيقى). مرجع فقط.",
     "who": "أحمد"
    },
    "post2_music_link": {
-    "group": "المنشور 2",
-    "title": "المنشور 2 · نسخة الكشف مع الموسيقى (من Magnific)",
+    "group": "مرفوض",
+    "title": "مرفوض · نسخة الكشف مع الموسيقى (من Magnific)",
     "desc": "عرض 608 وارتفاع 1080 (دقة منخفضة).",
-    "int_note": "مشكلة: الدقة 608 × 1080 أقل من الحد الأدنى لمقاطع Reels (720 بكسل). لا تُنشر. المسار الصحيح: دمج النسخة الرئيسية عالية الدقة مع موسيقى هذه النسخة محليًا (ffmpeg).",
+    "int_note": "المسودة الأولى، رفضها أحمد في 9 أكتوبر 2026 (التوليد والحركة والموسيقى). مرجع فقط.",
     "who": "أحمد"
    },
    "post2_reveal_video": {
     "group": "المنشور 2",
     "title": "فيديو الكشف عن الاسم",
-    "desc": "فيديو عمودي بصيغة MP4 بعرض 1080 وارتفاع 1920 بكسل. يظهر عمود دوّار يكشف عن شعار ANVIL SUPPS والاسم الجديد. سيُقدَّم المونتاج النهائي مع الموسيقى للمراجعة، ويرافقه التعليق الوارد أدناه.",
-    "int_note": "غير موجود بعد؛ يُنجز بعد أن ينزّل أحمد النسخة الرئيسية والموسيقى إلى مجلد reveal."
+    "desc": "فيديو عمودي بصيغة MP4 بعرض 1080 وارتفاع 1920 بكسل، مدته نحو 15 ثانية. يُكشف الشعار المغطّى من الصورة التشويقية، ويرتفع العمود من إرث Shark في قاعدته إلى شعار ANVIL SUPPS في قمته مع منتجات الإطلاق. سيُقدَّم المونتاج النهائي مع الموسيقى للمراجعة، ويرافقه التعليق الوارد أدناه.",
+    "int_note": "النسخة الثانية قيد الإنتاج وفق REVEAL_V2_PACK.md. التالي: فحص الماستر بليت، ثم اللقطات 1–5، ثم التركيب والموسيقى."
    },
    "post3_offers": {
     "group": "المنشور 3",
     "title": "منشور عروض الإطلاق",
-    "desc": "منشور يعرض عروض الإطلاق الثلاثة. يستمر الإنتاج فور استلام تفاصيل العروض (انظر الخطوات التالية).",
-    "int_note": "التفاصيل غير متوفرة في المستودع؛ بانتظار أحمد (أو المزامنة من ChatGPT). يُفحص كل عرض وفق سياسة الإعلانات قبل النشر. لا تُستخدم صياغة الخصومات، فـ ANVIL ليست علامة قائمة على الخصومات فقط."
+    "desc": "منشور يعرض باقات الإطلاق الثلاث. قيد الإنتاج.",
+    "int_note": "البوندلز: 1,499 جنيه (Furiux Mass 3kg + Tractor Creatine 80 حصة + شيكر)؛ 2,499 جنيه (واي 7 حصص + Premium Creatine 500g + Premium Pre-Hell 30 حصة + شيكر)؛ 2,799 جنيه (Farah Secrets GainSecret 5kg + Marvelous Creatine + شيكر). بلا ادعاءات منشأ. بلا صياغة خصومات."
    },
    "rejected_reveal_v03": {
     "group": "مرفوض",
@@ -438,16 +437,15 @@
   "next": [
    "اختيار تعليق المنشور 2: الخيار أ أو الخيار ب.",
    "تأكيد صياغة سطر العروض (ثلاثة خيارات أعلاه).",
-   "مراجعة فيديو الكشف للمنشور 2 فور تقديمه، بما في ذلك الشعار وملصقات المنتجات في الإطار الأخير.",
-   "تزويدنا بتفاصيل عروض الإطلاق الثلاثة للمنشور 3.",
+   "مراجعة فيديو الكشف للمنشور 2 فور تقديمه.",
    "تأكيد تواريخ نشر المنشورين 2 و3."
   ],
   "internal_next": [
-   "ينزّل أحمد النسخة الرئيسية عالية الدقة والموسيقى من Magnific إلى مجلد reveal داخل 13_SV05_CONTINUATION.",
-   "دمج النسخة الرئيسية مع الموسيقى محليًا (ffmpeg)، ثم فحص الإطار الأخير (الشعار والملصقات).",
-   "يختار أحمد التعليق أ أو ب ويحسم صياغة سطر العروض.",
-   "يرسل أحمد تفاصيل العروض الثلاثة (المنشور 3).",
-   "مسائل مفتوحة قبل الإطلاق: الميزانية والتواريخ (هل سقف 1,500 جنيه مصري ما زال ساريًا؟) وإتاحة الوصول إلى الحساب الإعلاني."
+   "ينزّل أحمد نسخ الماستر بليت M_v1..v4 من Magnific إلى post-2-reveal/plates/، ويفحصها الـLead وفق قائمة الملف.",
+   "ملفات المنتجات: صور حقيقية لمنتجات البوندلز (الخطوة 2 في ChatGPT أو جولة READER).",
+   "أسئلة مفتوحة: التاج سادة أم بعلامة؛ Tractor ‏80 أم 160 حصة؛ الشيكر في الفيديو؛ كارت النهاية إنجليزي فقط أم مع سطر عربي؛ شعار Shark بدقة أعلى.",
+   "يختار أحمد التعليق أ أو ب وصياغة سطر العروض.",
+   "مسائل مفتوحة قبل الإطلاق: الميزانية والتواريخ وإتاحة الوصول إلى الحساب الإعلاني."
   ],
   "decisions": [
    {
@@ -533,7 +531,7 @@
   "sources": {
    "STATE_2026-10-09.md": "STATE_2026-10-09.md",
    "INTAKE.md": "INTAKE.md",
-   "COPY_REVEAL.md": "COPY_REVEAL.md",
+   "copy/COPY_REVEAL.md": "COPY_REVEAL.md",
    "SUPPLEMENTS_AD_POLICY.md": "SUPPLEMENTS_AD_POLICY.md",
    "SV-05 playbook": "دليل خدمة الحملات SV-05",
    "Magnific · HD master": "Magnific · النسخة الرئيسية عالية الدقة",

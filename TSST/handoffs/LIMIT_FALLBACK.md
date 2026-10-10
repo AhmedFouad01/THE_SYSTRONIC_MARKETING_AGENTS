@@ -2,6 +2,8 @@
 
 Owner rule (Ahmed, 2026-10-09): if Claude's usage limit runs out, hand these tracks to Antigravity (file work in this repo) or to the Gemini app (research, in a NEW chat). Copy the prompt block as is. When Claude returns, the Lead reviews every output before it counts.
 
+Backup Lead (owner, 2026-10-09): while Claude is limited, Codex is Lead (`roles: [lead]` in runtimes.yaml; DEEP model gpt-6-astra sparingly); Antigravity = ROLE B file-work tool (not a bus runtime), Gemini app = research/image/video; Claude resumes Lead on return.
+
 Never hand off: ad spend, publishing or posting, account or settings actions, Magnific generation, git push.
 
 Last updated: 2026-10-09 by the Lead.
@@ -20,7 +22,7 @@ Goal: finish "The Systronic Delivery System v1.0" — bilingual (Arabic + Englis
 Read first: TSST/services/delivery/README.md, TSST/services/delivery/build_delivery.py (docstring = manifest schema),
 TSST/services/delivery/i18n/en.json + ar.json, and CLIENT_COPY_AR.md in these two job folders:
   TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/social-setup-01/
-  TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/13_SV05_CONTINUATION/
+  TSST/brands/anvil/projects/campaign-01/
 Also read C:\Users\10\.claude\projects\G--My-Drive-THE-SYSTRONIC-MARKETING-AGENTS\memory\feedback-delivery-pages-client-formal.md (hard rules).
 Do:
 1. All UI strings come from i18n/{en,ar}.json, with no hard-coded English. Each job has default_lang: ANVIL=ar, VILL=en.
@@ -37,16 +39,16 @@ Report: the files you changed, plus any problem you could not solve. Write the r
 ```
 
 ## T2 · ANVIL Post 2 final video, only after Ahmed drops the files
-**State:** waiting for Ahmed to download two Magnific files into `TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/13_SV05_CONTINUATION/reveal/`: the HD master (1080×1920, silent .mov) and the music version (608×1080).
+**State:** waiting for Ahmed to download two Magnific files into `TSST/brands/anvil/projects/campaign-01/post-2-reveal/`: the HD master (1080×1920, silent .mov) and the music version (608×1080).
 
 **Antigravity prompt (ROLE B):**
 ```
 ROLE B — external tool. Repo: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS. Do not commit or push.
-In TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/13_SV05_CONTINUATION/reveal/ there are 2 files: an HD master (1080x1920, no audio) and a low-res music version (608x1080).
+In TSST/brands/anvil/projects/campaign-01/post-2-reveal/ there are 2 files: an HD master (1080x1920, no audio) and a low-res music version (608x1080).
 Make reveal-final.mp4. Video comes from the HD master, re-encoded to H.264 High, yuv420p, 1080x1920, same fps, CRF 18, +faststart. Audio is the music version's track as AAC 192k, trimmed to the video length, with a 0.3 s fade out.
 ffmpeg: C:\Users\10\AppData\Local\Microsoft\WinGet\Links\ffmpeg.exe. Do not upscale or use the low-res video.
 Check the duration and the A/V sync (first beat vs first camera move); note any offset.
-Then rebuild the page: python TSST/services/delivery/build_delivery.py TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/13_SV05_CONTINUATION
+Then rebuild the page: python TSST/services/delivery/build_delivery.py TSST/brands/anvil/projects/campaign-01
 Report to TSST/handoffs/LIMIT_FALLBACK_T2_report.md (ffprobe summary + sync note).
 ```
 

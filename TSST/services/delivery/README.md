@@ -13,7 +13,7 @@ One manifest per job -> two pages in the job folder, one template, two languages
 - `fonts/`: Poppins (Latin) and IBM Plex Sans Arabic (Arabic), embedded in every page. `assets/`: iconic-mark tints and favicon (made from `TSST/brands/t-sag/assets/final/logo/systronic_iconic-mark_*`).
 
 ## Add a job
-1. Create `<job>/DELIVERY.json` (copy `social-setup-01/DELIVERY.json` or ANVIL `13_SV05_CONTINUATION/DELIVERY.json`). English fields come from LENS `CLIENT_COPY.md`; Arabic fields go in the `"ar"` block from `CLIENT_COPY_AR.md`. Set `default_lang`.
+1. Create `<job>/DELIVERY.json` (copy `social-setup-01/DELIVERY.json` or ANVIL `TSST/brands/anvil/projects/campaign-01/DELIVERY.json`). English fields come from LENS `CLIENT_COPY.md`; Arabic fields go in the `"ar"` block from `CLIENT_COPY_AR.md`. Set `default_lang`.
 2. Every item and text needs a stable `id` (also the client file name). Internal-only entries: `"internal": true`. Internal-only detail: `int_note`, `internal_*`, `checks`, `sources`.
 3. Verbatim copy (bios, captions, hashtags) goes in `texts[].body` untouched: `dir: "ltr"` or `"rtl"`. It is shown identically in both languages.
 4. Build: `python TSST/services/delivery/build_delivery.py <job_folder> [--audience client|internal|both]`. It prints structure check, missing files, missing Arabic fields and a leak scan of the client page (exit 1 on a leak).
