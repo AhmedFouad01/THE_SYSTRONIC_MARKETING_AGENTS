@@ -190,3 +190,11 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Status: `APPROVED` (owner approval in chat 2026-10-10/11; governance registration only).
 - Decision: new team `motion`, manager MOTION_AG (`tsst-motion`), peer of CREATIVE; skills TSST-CREATIVE-SK-015..018 became TSST-MOTION-SK-001..004 (`UNVALIDATED`); generation manual through the owner; MOTION_AG `NOT_READY`.
 - Source: `TSST/decisions/TSST-ADR-005.md`, commit `d5bb15e`.
+
+## TSD-023 — Job home, delivery page and same-round sync (core rules R18–R20)
+
+- Date: `2026-10-11`
+- Status: `APPROVED` (owner in chat 2026-10-11: chose Track A, then "save in git and Real Memory and continue the tracks").
+- Decision: every client job lives in `TSST/brands/<id>/projects/<job>/` (PILOTS = read-only archive); every job that reaches the owner/client ends with a DELIVERY page built by `TSST/services/delivery/build_delivery.py`; DELIVERY.json, project.md, status.md and portfolio.yaml are updated in the same round. VILL move scope = active jobs only.
+- Why: Codex never saw the Delivery System because it lived only in `TSST/services/`; work came out in PILOTS, in two shapes, without pages or sync.
+- Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.

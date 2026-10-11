@@ -1,5 +1,15 @@
 # TSST — CURRENT STATUS
 
+## Update 2026-10-11 (evening, owner-approved Real Memory apply)
+
+- **Problem found:** Codex (VILL Lead) ran `marketing-week-01` for VILL and ANVIL without The Systronic Delivery System: VILL work landed in `TSST/PILOTS/`, two different file shapes, no DELIVERY pages, portfolio not synced. Root cause: the Delivery System and the "jobs live inside the brand" agreement were written only in `TSST/services/`, outside the chain every runtime reads.
+- **Fixed (Track A, commit `0f95d46`, TSD-023):** core rules R18 (job home `TSST/brands/<id>/projects/<job>/`; PILOTS = read-only archive), R19 (every job ends with `DELIVERY.json` → `DELIVERY.html` + `DELIVERY_INTERNAL.html`), R20 (same-round sync of DELIVERY.json + project.md + status.md + portfolio.yaml). Wired into AGENTS.md, boot, both adapters, tsst-router and all 12 generated agents. Checker: `TSST/services/delivery/job_check.py`.
+- **marketing-week-01 (commit `14f7471`):** VILL + ANVIL week-one organic plans by LENS + SPARK, REVIEW DRAFT, not published, no spend. ANVIL first FB post NOT published (owner correction; same Shark page will be renamed). Both fail `job_check` today (no DELIVERY page; VILL in the wrong home).
+- **Next tracks (owner go 2026-10-11):** C = one job file layout for both weeks → B = move VILL active jobs (marketing-week-01, social-setup-01, showcase-01, products) into `TSST/brands/vill-studio/projects/` (pilot archive stays, with a pointer) → D = Delivery System v1.1 (plan sections + status sync) and DELIVERY pages for both weeks.
+- Brand canonical Real Memory for VILL/ANVIL is Google Docs on Drive (`.gdoc`); not writable from the filesystem runtimes. Repo `status.md` + `portfolio.yaml` carry the state until the owner syncs the Docs.
+
+---
+
 ## State as of 2026-10-11 (owner-approved Real Memory apply)
 
 Overall readiness: `NOT_READY` (unchanged). Pointer-first; details live in the cited files.

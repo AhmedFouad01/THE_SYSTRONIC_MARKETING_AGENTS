@@ -29,13 +29,17 @@ brands:
   vill-studio:
     name: VILL_STUDIO
     kind: client
-    active: strategy-baseline  # phase 2c C7-VILL-12 codex done, Lead review: round 2 needed (2026-10-06); see project.md
+    active: marketing-week-01  # 2026-10-11 Codex Lead; week-one organic plan REVIEW DRAFT; strategy-baseline backlog kept
     memory: TSST/brands/vill-studio/memory/source.md
     projects:
       strategy-baseline:
         state: TSST-PILOT-002 (C7) delivered — strategy v0.2 + brand look v0.2 user-approved 2026-10-05
         checkpoint: TSST/brands/vill-studio/projects/strategy-baseline/project.md
         next: user supplies OPEN_DATA_REQUESTS → close VILL-001 → W1 Foundation
+      marketing-week-01:
+        state: LENS + SPARK week-one organic plan (FB/IG/LinkedIn) REVIEW DRAFT 2026-10-11; no DELIVERY page yet; still in PILOTS (R18 move = Track B)
+        checkpoint: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/START_HERE.md
+        next: Track C re-layout → Track B move into brands/vill-studio/projects/ → Track D delivery page; then owner review
     next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:
     name: YAKEBDA_MS
@@ -55,3 +59,7 @@ brands:
         state: synced 2026-10-09 → TSST/brands/anvil/STATE_2026-10-09.md; gate ANV-001A Teasing IN PROGRESS; REVEAL_01 v03 rejected; reveal = pillar film draft (Magnific); run via SV-05
         checkpoint: TSST/brands/anvil/projects/switch-pilot/project.md
         next: approve teaser copy territory → finish teasing bank → open Reveal gate
+      campaign-01:
+        state: launch campaign SV-05; first FB post NOT published (owner correction 2026-10-11); week-one plan (marketing-week-01) REVIEW DRAFT; AE/video paused; budget 2000 EGP planning only
+        checkpoint: TSST/brands/anvil/projects/campaign-01/project.md
+        next: Track C re-layout → Track D delivery page; owner picks start date + name-change timing
