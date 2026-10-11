@@ -1,4 +1,5 @@
 # BRIEF · SKV-ALL — Codex Lead runs the full skill validation (13 rounds, non-stop)
+> **SUPERSEDED 2026-10-11** by `TSST/brands/t-sag/projects/tsst-ai/gemini/GEM-SKV-001.md` (Antigravity heavy pass; Claude + Codex review only).
 ROLE A — TEAM RUNTIME: Codex = **acting Lead for this track only** (owner decision 2026-10-11, in chat to Claude Lead).
 Follow AGENTS.md → TSST/context/boot.md. Bus task: `SKV-ALL`.
 
