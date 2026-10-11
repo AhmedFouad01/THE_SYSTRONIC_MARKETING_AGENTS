@@ -8,7 +8,7 @@ Paths are repository-relative; B = `TSST/brands`, S = `TSST/services`, C = `syst
 | T.SAG / CRM | project | Text wireframes: `CRM_APP/MVP_LOFI_WORKSPACE_WIREFRAMES.md` | D/F/R | `B/t-sag/projects/crm/project.md`, `CRM_APP/MVP_INFORMATION_ARCHITECTURE.md`, `CRM_APP/MVP_CORE_TASK_FLOWS.md`, `CRM_APP/CRM_MVP_SPRINT_PLAN_v0.1.md` | L |
 | T.SAG / SCC | project | Mermaid: `C/03_architecture/SYSTEM_ARCHITECTURE.md`, `C/03_architecture/DATA_FLOWS.md`, `C/10_ux/USER_FLOWS.md` | R; existing D/F cover selected flows only | `B/t-sag/projects/scc/PARKED.md`, `C/01_product/PRODUCT_ROADMAP.md` | L |
 | T.SAG / tsst-ai | project | None found | D/F/R | `B/t-sag/projects/tsst-ai/project.md`, `B/t-sag/status.md` | L |
-| VILL / strategy-baseline, social setup | project | Delivery pages: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/social-setup-01/DELIVERY.html` | D/F/R | `B/vill-studio/projects/strategy-baseline/project.md`, `B/vill-studio/status.md` | M |
+| VILL / strategy-baseline, social setup | project | Delivery pages: `TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.html` | D/F/R | `B/vill-studio/projects/strategy-baseline/project.md`, `B/vill-studio/status.md` | M |
 | ANVIL / switch-pilot | project | Preview: `TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/11_PRODUCTION_V01/PREVIEW.html`; delivery: same pilot's `TSST/brands/anvil/projects/campaign-01/DELIVERY.html` | D/F/R | `B/anvil/projects/switch-pilot/project.md`, `B/anvil/status.md` | M |
 | SV-01 · Visual identity | service | None found; stage table exists | D/F/R | `S/SV-01_visual-identity.md` | M |
 | SV-02 · Market research | service | None found; stage table exists | D/F/R | `S/SV-02_market-research.md` | M |

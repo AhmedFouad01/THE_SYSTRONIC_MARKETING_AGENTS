@@ -8,14 +8,14 @@ Source: `TSST/handoffs/VILL_NEXT_SESSION_CODEX.md`; newer state supersedes the d
 Project: `strategy-baseline` — `projects/strategy-baseline/project.md`.
 - Strategy Baseline v0.2 + Brand Look v0.2: delivered and user-approved 2026-10-05.
 - Identity `C7-VILL-11`: accepted. Main colour PETROL `#01304A`; fonts Alexandria (AR) + Inter (EN), per `assets/ASSETS.yaml`. Navy/Cairo/Barlow in the guidelines draft are superseded/wrong.
-- `social-setup-01` (SV-01): all 13 items APPROVED; handover 2026-10-09, verified in `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/social-setup-01/DELIVERY.json`. Approval/handover does not mean published.
+- `social-setup-01` (SV-01): all 13 items APPROVED; handover 2026-10-09, verified in `TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.json`. Approval/handover does not mean published.
 - `showcase-01`: carousel v3 APPROVED. Open: AR captions, unverified LinkedIn "most clients" claim, CTA channel.
 - `showcase-01-reel` (New Alamein): AI route paused; Ahmed finishes manually in After Effects. Do not restart without his request.
 - `dresser-01`: METHOD CLOSED AS WORKING (owner 2026-10-10; `products/dresser-01/RECIPES.md` header). True approved file: `assets/source/products-rendered/dresser-01_P1f_TRUE-APPROVED.webp` (Drive). `dresser-01_P1f_v1_APPROVED.png` is not the truth. Studio set awaits Ahmed's go and side-by-side confirmation against the real photo; max 3 rounds.
 - Raw portfolio bank: 1,583 source files / 54 project folders in `assets/source/portfolio/` (`INDEX.md`, `CATALOG.csv`, `STUDIO_PICKS.md`, `_catalog/BANK.html`). Index accounts for 1,432 sorted + 53 duplicates + 98 review. New campaign images start here; trust piece tags/text search, treat material/stage tags cautiously.
 
 ## Active marketing — owner request 2026-10-11
-- Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/README.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
+- Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/brands/vill-studio/projects/marketing-week-01/README.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
 
 ## Other open workstreams — do not auto-start
 1. `C7-VILL-12` round 2: not issued; review fix list + correct petrol/fonts. Exact scope and cost require owner OK before dispatch.
@@ -53,7 +53,7 @@ Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-1
 
 ## 2026-10-08 — showcase-01 + craft skills (TSD-021)
 - **Brand fonts: Alexandria (AR) + Inter (EN).** Cairo/Barlow in the `BRAND_GUIDELINES_v1.0` draft are wrong; that draft also still says navy. The source of truth is `assets/ASSETS.yaml`.
-- showcase-01 (`TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/`):
+- showcase-01 (`TSST/brands/vill-studio/projects/showcase-01/`):
   - v1 REJECTED (overlays, template look).
   - v2 direction APPROVED: 7 slides, no overlays, logo on the cover and the last slide only.
   - Slide-5 retouch APPROVED.

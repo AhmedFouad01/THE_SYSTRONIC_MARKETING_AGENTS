@@ -63,3 +63,5 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 - 2026-10-11 | LENS_AG | GEM-REPO-001 grading | SK-002 lacks a tool/repo-health grading template (stars, pushed_at, CVE) and a live API spot-check step
 - 2026-10-11 | DEV_AG | repo-cleanup step1 | SK-011 no guidance for repo hygiene/security scans; pre-push needs >100MB blob check in future git-hygiene skill
 - 2026-10-11 | DEV_AG | Track A rule wiring (R18-R20) | no DEV skill for governance/docs wiring (SKILL_GAP); gen_runtime_agents.py has no dry-run and rewrites 12 files silently -> a broken f-string reached the working tree before --check caught it
+- 2026-10-11 | DEV_AG | repo-cleanup step1b | git-hygiene skill must cover: filter-repo drops signed-merge sigs (use 147db3f..branch --refs), fresh-clone check fails if extra remote added first, pip Scripts PATH on Windows
+- 2026-10-11 | DEV_AG | Track B VILL move into brand | no move checklist: moving a job under brands/*/projects/ triggers .gitignore (_qa/, files/) and silently untracks media; build.py ROOT depth hard-coded -> add move checklist to JOB_LAYOUT

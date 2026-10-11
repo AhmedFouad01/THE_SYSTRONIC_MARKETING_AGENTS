@@ -21,7 +21,7 @@ ROLE B — external tool. Repo: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS. Do n
 Goal: finish "The Systronic Delivery System v1.0" — bilingual (Arabic + English) client delivery pages.
 Read first: TSST/services/delivery/README.md, TSST/services/delivery/build_delivery.py (docstring = manifest schema),
 TSST/services/delivery/i18n/en.json + ar.json, and CLIENT_COPY_AR.md in these two job folders:
-  TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/social-setup-01/
+  TSST/brands/vill-studio/projects/social-setup-01/
   TSST/brands/anvil/projects/campaign-01/
 Also read C:\Users\10\.claude\projects\G--My-Drive-THE-SYSTRONIC-MARKETING-AGENTS\memory\feedback-delivery-pages-client-formal.md (hard rules).
 Do:

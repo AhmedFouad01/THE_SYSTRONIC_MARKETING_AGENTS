@@ -5,7 +5,7 @@ OUT=R+"CREATIVE/fonts/lockup-tests/"
 FD=os.path.expandvars(r"$LOCALAPPDATA/Microsoft/Windows/Fonts/")
 BOLD=FD+"Inter_28pt-Bold.ttf"; SEMI=FD+"Inter_28pt-SemiBold.ttf"
 SCR={"Allura":R+"CREATIVE/fonts/allura/Allura-Regular.ttf","AlexBrush":R+"CREATIVE/fonts/alexbrush/AlexBrush-Regular.ttf"}
-PHOTO=R+"PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/build-v2/slide-04/01_photo.png"
+PHOTO=R+"brands/vill-studio/projects/showcase-01/build-v2/slide-04/01_photo.png"
 DARK="#011C2C";WHITE="#F4F4F4";ORANGE="#F58021";PET="#01304A"
 def F(p,s): return ImageFont.truetype(p,max(8,int(round(s))))
 def bb(f,t): return f.getbbox(t,anchor="ls")

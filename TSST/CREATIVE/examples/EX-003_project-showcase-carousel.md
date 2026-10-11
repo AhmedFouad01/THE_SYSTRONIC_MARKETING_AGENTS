@@ -1,5 +1,5 @@
 # EX-003 Project showcase carousel, 9 slides, real photos (interior fit-out brand, PILOT-002)
-Brand-neutral. Evidence: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/` (INTAKE.md, build/build.py, build/slide-0N/layers.json). First full run of INTAKE_GATE + L5/L6/L4/L7.
+Brand-neutral. Evidence: `TSST/brands/vill-studio/projects/showcase-01/` (INTAKE.md, build/build.py, build/slide-0N/layers.json). First full run of INTAKE_GATE + L5/L6/L4/L7.
 ## Asked
 9-slide 4:5 organic carousel from 7 client photos (3:4, 1086x1448) + approved copy, no CTA; also exported as PNG set and PDF.
 ## What the rules helped with

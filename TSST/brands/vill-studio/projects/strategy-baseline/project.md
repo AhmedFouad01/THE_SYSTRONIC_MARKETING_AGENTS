@@ -2,8 +2,9 @@
 
 brand: vill-studio · id: TSST-PILOT-002 (C7 live-project pilot)
 implementation: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/`
-PILOTS = historical archive (R18). New jobs → `TSST/brands/vill-studio/projects/<job>/`. Move of active jobs: Track B (pending owner go).
-checkpoint: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/README.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
+PILOTS = historical archive (R18). New jobs → `TSST/brands/vill-studio/projects/<job>/`.
+Jobs (R18), all under `TSST/brands/vill-studio/projects/`: `marketing-week-01/` · `social-setup-01/` · `showcase-01/` · `products/` (incl. `dresser-01/`). `showcase-01-reel`: still in PILOTS, AE by Ahmed. See `PILOTS/.../MOVED.md`.
+checkpoint: `TSST/brands/vill-studio/projects/marketing-week-01/README.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
 memory: `TSST/brands/vill-studio/memory/source.md`
 teams: marketing (LENS lead, SPARK capability), studio (CREATIVE — identity production in phase 2c)
 
