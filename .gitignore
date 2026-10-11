@@ -46,3 +46,19 @@ TSST/brands/*/projects/*/files/
 # Photo bank generated data (rebuild with TSST/CREATIVE/tools/photo-bank/photobank.py)
 TSST/brands/*/assets/source/portfolio/**/BANK.html
 TSST/brands/*/assets/source/portfolio/**/*.json
+
+# ANVIL roll-up Pre-Hell: heavy master/plate files (10 files, 11-194 MB) stay on Drive, scrubbed from git history
+TSST/brands/anvil/projects/rollup-pre-hell/**/*.tif
+TSST/brands/anvil/projects/rollup-pre-hell/**/*.tiff
+TSST/brands/anvil/projects/rollup-pre-hell/**/*.psd
+TSST/brands/anvil/projects/rollup-pre-hell/**/*.psb
+TSST/brands/anvil/projects/rollup-pre-hell/**/*.ai
+TSST/brands/anvil/projects/rollup-pre-hell/final/*.pdf
+TSST/brands/anvil/projects/rollup-pre-hell/work/01_plate_extended.png
+TSST/brands/anvil/projects/rollup-pre-hell/work/04_main_cells_chains.png
+TSST/brands/anvil/projects/rollup-pre-hell/work/07_master_rgb.png
+TSST/brands/anvil/projects/rollup-pre-hell/plates/plate-a.png
+TSST/brands/anvil/projects/rollup-pre-hell/plates/plate-b.png
+TSST/brands/anvil/projects/rollup-pre-hell/plates/plate-b-4x.jpg
+TSST/brands/anvil/projects/rollup-pre-hell/ai-pass/v1.png
+TSST/brands/anvil/projects/rollup-pre-hell/ai-pass/v2.png
