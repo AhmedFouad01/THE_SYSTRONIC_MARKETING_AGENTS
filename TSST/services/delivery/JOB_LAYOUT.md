@@ -22,6 +22,8 @@ Every job folder under `TSST/brands/<id>/projects/<job>/` uses this layout. Chec
   observations/           skill observations (evidence; unchanged)
 ```
 
+Start a job: `python TSST/services/delivery/new_job.py <brand-id> <job-path> --service "<SV-.. name>" --title "<title>" [--lang en|ar] [--dry-run]` (creates README, 00_BRIEF, DELIVERY.json stub and registers the job; see README.md).
+
 ## Rules
 - Slots 00-08 are optional. If the job has no such content, do not create an empty or invented file; the README file map lists what exists.
 - File names: `NN_NAME.ext` or `NNb_NAME.ext` (b, c... = extra file in the same slot), upper-case ASCII names; `.md` or `.csv`.
