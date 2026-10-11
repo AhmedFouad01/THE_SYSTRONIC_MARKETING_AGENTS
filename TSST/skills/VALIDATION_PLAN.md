@@ -113,3 +113,10 @@ Round 1 expected: dossiers by `tsst-reader` (FAST), one Codex run, Lead scoring 
 3. Executor independence: is a Codex or Gemini run scored by Lead acceptable as the "practical evaluation"?
 4. Cadence: 90 days platform/tool skills, 180 days others, or event-only?
 5. Does validating skills move team readiness? Under the Scorecard `PILOT_READY` still needs the 18 Phase-1 evaluations (covered by rounds 1, 4, 5) plus a Lead-approved pilot scope; this plan does not change `NOT_READY`.
+
+---
+## Owner decisions 2026-10-11
+- P1 VALIDATED needs a real job; fixtures cap at LAB_VALIDATED; high-risk skills need 2 evidence items — APPROVED.
+- P2 retro-scoring of past jobs (locked dossier, scorer != producer, trigger-negative fixture) — APPROVED.
+- P3 promotion: Lead scores; **Ahmed reviews ALL results at the end before any status change** (replaces the proposed split).
+- Round 1: ON HOLD until Ahmed reviews the plan.
