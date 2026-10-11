@@ -1,57 +1,58 @@
-# GEM-SKV-001 · Skill validation, heavy pass (all rounds)
+# GEM-SKV-001 · Skill validation: Antigravity evidence + test runs (method v1, one round per paste)
 SURFACE: Antigravity
-Owner decision 2026-10-11: Antigravity does the heavy work. Claude Lead and Codex only review the packets, to save their tokens.
-How to run: open Antigravity on the repo folder `G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS`, paste everything between the lines, and let it run. If it stops, paste "continue from TSST/skills/validation/PROGRESS.md".
+Owner decision 2026-10-11. Method v1 is based on GEM-SKV-002 (research) and LENS-SKV-001 (option C).
+- **Antigravity** does the heavy work: evidence collection and test runs. It **does not score**.
+- **ChatGPT** judges ✓/✗ from the judge packet (separate request: `GEM-SKV-003`, prepared after round 1).
+- **Claude Lead** reviews a sample. **Ahmed** reviews FAILs, Arabic and the final sheet.
+
+How to run:
+1. Open Antigravity on `G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS`.
+2. Paste everything between the lines, replacing `ROUND = 1` with the round number you are running.
+3. One round per paste. When it finishes, tell Claude.
 
 ---
-ROLE: EXTERNAL TOOL — skill-validation evidence + preliminary scoring.
-You are NOT a TSST agent. Do not claim TSST roles, teams, agents, skills or tiers. Do not run the TSST boot. Do not create bus tasks. Do not commit.
+ROLE: EXTERNAL TOOL — skill-validation evidence + test runs for ONE round. No scoring.
+You are NOT a TSST agent. Do not claim TSST roles, teams, agents, skills or tiers. Do not run the TSST boot. Do not create bus tasks. Do not commit. Do not do any web search.
 WRITE: only inside `TSST/skills/validation/`.
-DO NOT: edit, move or delete any other file. Do not edit SKILL.md files, index.yaml or status fields. Do not touch REAL_MEMORY, .git, the bus or brand folders.
-Your output is INPUT for the TSST Lead (Claude) and Codex reviewers. Every score is a PROPOSAL.
+DO NOT: edit, move or delete any other file. In particular, never touch SKILL.md files, index.yaml, status fields, REAL_MEMORY, .git, the bus or brand folders.
+Your output is INPUT for an independent judge and the TSST Lead.
+
+ROUND = 1
 
 ## Read
-1. `TSST/skills/VALIDATION_PLAN.md`. It sets the rounds, methods and Round 1 list. Its last section holds the owner decisions (P1, P2 and P3), which are binding.
-2. `TSST/skills/validation_tracker.csv`. It has 120 skills, with their priority, method and existing evidence.
-3. `TSST/context_os/skills/TSST-CTX-SK-018-skill-evaluator/SKILL.md`. Use it as the evaluation method.
-4. For each skill: its SKILL.md (path is in `TSST/skills/index.yaml`), plus only the evidence files listed for it in the tracker.
+1. `TSST/skills/VALIDATION_PLAN.md`: section 3 (rounds) and section 6 (Round 1 list), plus the end section "Owner decisions".
+2. `TSST/skills/validation_tracker.csv`. Use the rows where `round == ROUND` (columns: id, priority, method, existing_evidence).
+3. For each skill, its SKILL.md. The path is in `TSST/skills/index.yaml`.
 
-## Do
-Work round by round, 1 to 12. Skip round 13 (MOTION): mark those skills `BLOCKED — needs pilot job`.
+## Step 0 (round 1 only): write `TSST/skills/validation/check_locators.py`
+- Input: a judge-packet .md file.
+- For every `LOCATOR: <path>#L<start>-L<end>` line followed by an `EXCERPT:` block, check that the file exists and that the excerpt text appears in those lines. Ignore whitespace differences.
+- Output: a table with OK or MISSING for each locator, and exit code 1 if anything is MISSING.
+- Python standard library only.
 
-For each skill:
-- **(a) Dossier.** Write `round-NN/<id>.md`, ≤ 40 lines:
-  - the skill's acceptance criteria, as a checklist;
-  - for each criterion: ✓, ✗ or ? (no evidence), with the exact evidence file path and line or section;
-  - one trigger-negative check: a task this skill must NOT fire on, and whether its trigger text would wrongly match it.
-- **(b) Preliminary score.** Give a score from 0 to 5 and a verdict of PASS / PARTIAL / FAIL / BLOCKED.
-- **(c) Proposed status.** Follow P1 exactly:
-  - VALIDATED only when the evidence is a real client job.
-  - Fixture or synthetic evidence goes no higher than LAB_VALIDATED.
-  - A high-risk skill needs 2 evidence items.
-  - If you cannot find evidence, the verdict is BLOCKED with the reason. Never guess, and never invent evidence.
-- **(d) Code skills (DEV).** Run the tests the tracker names and paste the real output in the dossier. Shell is allowed for read-only commands and tests only.
+## For each skill in this round
+1. **Checklist.** Turn the skill's acceptance or validation criteria into **3–5 binary checks** (PASS/FAIL questions that a reader can answer from the output alone). Copy the wording from the SKILL.md. Do not invent new requirements.
+2. **Evidence.** What counts as evidence depends on the skill's priority:
+   - **P0:** run **5 fresh positive tests**. Write 5 realistic task prompts for the skill (Egyptian/Arabic context where relevant), follow the SKILL.md yourself, and save each raw output unedited. Code skills: run the real tests the tracker names and paste their real output.
+   - **P1/P2:** find **1 real past job** in `existing_evidence`. Use the **RAW agent output, not the human-edited final.** Look for the earliest version in the job folder (drafts, round-1 files, `_v0`/`_draft`, review notes), or the first git version (`git log --follow`, `git show <first-commit>:<path>` are allowed read-only). If only a human-edited final exists, use it, but mark it `EDITED_FINAL`.
+3. **Negative tests.** Write **2 near-miss prompts**: similar words, but a different job. For each, state whether this skill's trigger/description would wrongly fire (YES/NO) and which skill should own the prompt instead.
+4. **Arabic flag.** If the output contains Arabic or Egyptian text, mark it `ARABIC_HUMAN_REVIEW`. The judge only checks structure; Ahmed judges dialect and tone.
+5. **No evidence found:** write `BLOCKED — <reason>` and move on to the next skill. Never invent evidence. Motion skills: `BLOCKED — needs pilot job`.
 
-## Outputs (in `TSST/skills/validation/`)
-1. `results.csv`: one row per skill. Columns:
-   - `round, id, team, priority, method, evidence, score_0_5, criteria_passed, criteria_total, verdict, proposed_status, blocked_reason, scorer=antigravity, notes_1_line`
-2. `RESULTS.html`: the owner's review sheet. Self-contained, no external assets, readable on phone, RTL-safe.
-   - Top: count tiles ✅ PASS · ⚠️ PARTIAL · ❌ FAIL · ⏸ BLOCKED, plus % done.
-   - One table per team (Lead, Core, LENS, SPARK, CREATIVE, MOTION, DEV), sorted FAIL first and then by priority. Columns:
-     - ✓/✗ icon
-     - id + short name
-     - score
-     - proposed status
-     - one-line reason
-     - dossier link
-   - A "Needs owner decision" table: taste, Arabic ear, high-risk promotions and conflicts.
-   - A "Needs reviewer check" column flag on every PASS that proposes VALIDATED.
-   - Plain colours only: green / amber / red / grey.
-3. `PROGRESS.md`: the last finished skill, the current round, and the time per round. Update it after every round, so a stop can resume.
-4. `REVIEW_PACKETS/round-NN.md`: ≤ 25 lines per round, containing the table of that round's verdicts plus the 3 weakest claims. These packets are what the Claude and Codex reviewers will read.
+## Outputs (in `TSST/skills/validation/round-ROUND/`)
+- `JUDGE_PACKET.md`: **this is what the judge reads.** It must be self-contained, with no need to open other files. For each skill:
+  - id + one-line purpose;
+  - the 3–5 checks;
+  - the evidence, either the fresh outputs inline or a past-job excerpt in the form `LOCATOR: path#Lx-Ly` + `EXCERPT:` (verbatim, ≤ 30 lines each);
+  - the 2 negative tests with your YES/NO;
+  - flags: `EDITED_FINAL`, `ARABIC_HUMAN_REVIEW`, `BLOCKED`.
+  - Do NOT include your opinion of pass or fail.
+- `runs/<id>-test-N.md`: each fresh test prompt and its raw output.
+- `RUN_LOG.md`: the skills done, the time spent, anything skipped and why.
+- Last step: run `python TSST/skills/validation/check_locators.py TSST/skills/validation/round-ROUND/JUDGE_PACKET.md` and `git status --short`. Paste both outputs at the end of RUN_LOG.md. If git status shows any changed file outside `TSST/skills/validation/`, list it clearly as `OUT_OF_SCOPE_EDIT`.
 
 ## Done when
-- Rounds 1–12 have dossiers, and round 13 is marked BLOCKED.
-- `results.csv` has 120 rows, `RESULTS.html` is complete, and there are 12 review packets.
-- `python TSST/context/tests/validate_spine.py` still shows 27/29. Run it read-only and report the result.
+- JUDGE_PACKET.md covers every skill of the round.
+- check_locators reports all OK, or each MISSING is explained.
+- RUN_LOG.md is written.
 ---

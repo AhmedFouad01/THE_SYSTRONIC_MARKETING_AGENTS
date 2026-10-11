@@ -120,3 +120,11 @@ Round 1 expected: dossiers by `tsst-reader` (FAST), one Codex run, Lead scoring 
 - P2 retro-scoring of past jobs (locked dossier, scorer != producer, trigger-negative fixture) — APPROVED.
 - P3 promotion: Lead scores; **Ahmed reviews ALL results at the end before any status change** (replaces the proposed split).
 - Round 1: ON HOLD until Ahmed reviews the plan.
+
+## Method v1 (owner 2026-10-11, from GEM-SKV-002 + LENS-SKV-001)
+- Binary 3-5 checks per skill (no 0-5 scale). Cross-model: Antigravity runs, ChatGPT judges, Claude samples.
+- P0: 5 fresh positive tests + 2 near-miss negatives. P1/P2: 1 RAW past-job output (not human-edited final) + 2 negatives.
+- Arabic/Egyptian dialect + tone = Ahmed only; LLM judge checks structure.
+- Ahmed reviews all FAILs + all Arabic; Claude samples PASSes + disagreements; >2 disagreements on a skill -> full manual review.
+- Re-run the same tests after any skill edit (regression).
+- Runner: `TSST/brands/t-sag/projects/tsst-ai/gemini/GEM-SKV-001.md` (one round per paste).
