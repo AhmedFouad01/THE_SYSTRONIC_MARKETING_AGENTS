@@ -364,3 +364,9 @@
 2026-10-09T12:47Z	VB-3	claude	close	Lead visual QA in browser: labels readable, flow/legend/lifecycle correct; PNG optional skipped
 2026-10-11T13:28Z	SKV-ALL	claude	new	
 2026-10-11T13:33Z	SKV-ALL	claude	cancel	owner 2026-10-11: heavy pass moved to Antigravity (GEM-SKV-001, ROLE B); Claude+Codex review packets only
+2026-10-11T14:53Z	VILL-W1-LENS	codex	new	
+2026-10-11T14:53Z	VILL-W1-LENS	codex	claim on gpt-6.1-sol	
+2026-10-11T15:03Z	VILL-W1-LENS	codex	done	Draft received; SPARK domain and owner/native review pending. Passive evidence only.
+2026-10-11T15:03Z	VILL-W1-SPARK	codex	new	
+2026-10-11T15:03Z	VILL-W1-SPARK	codex	claim on gpt-6.1-sol	
+2026-10-11T15:17Z	VILL-W1-SPARK	codex	done	Domain review delivered; Lead integrated. Owner/native/visual/live gates pending; no independent validation.

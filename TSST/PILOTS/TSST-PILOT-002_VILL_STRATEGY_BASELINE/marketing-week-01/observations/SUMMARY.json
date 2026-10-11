@@ -1,0 +1,131 @@
+{
+  "run": "TSST-MARKETING-OBS-20261011-W01",
+  "date": "2026-10-11",
+  "timezone": "Africa/Cairo",
+  "type": "passive production/review observations",
+  "owner_authorized_specialist_runs": 2,
+  "actual_specialist_runs": 2,
+  "extra_validation_runs": 0,
+  "skills_observed": 7,
+  "validation_executed": false,
+  "independent_cross_runtime_acceptance": false,
+  "status_change": false,
+  "readiness": "UNVALIDATED/NOT_READY unchanged",
+  "currency_cost": "not metered; no external spend",
+  "exact_token_usage": "not exposed/not inferred",
+  "artifact_stage": "Producer hashes preserved in canonical lens/spark snapshots; final integrated outputs hashed separately",
+  "producer_snapshot_root": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/",
+  "remaining_gates": [
+    "Ahmed native and final content acceptance",
+    "LinkedIn language",
+    "Start date and human operator",
+    "Actual preview and derivative production/acceptance",
+    "Insight access and live observations"
+  ],
+  "results": [
+    {
+      "id": "TSST-LENS-SK-006",
+      "result": "OBSERVED_DRAFT_DELIVERED",
+      "review": "Lead/SPARK desk review",
+      "evidence": "01_STRATEGY.md",
+      "limitation": "One-week adaptation, no live effectiveness"
+    },
+    {
+      "id": "TSST-LENS-SK-013",
+      "result": "OBSERVED_DRAFT_DELIVERED",
+      "review": "Lead/SPARK desk review",
+      "evidence": "01/02/04",
+      "limitation": "Preview/derivative/native gates pending"
+    },
+    {
+      "id": "TSST-LENS-SK-011",
+      "result": "OBSERVED_DRAFT_REVISED",
+      "review": "Same-run LENS corrections + Lead/SPARK",
+      "evidence": "03_COPY.md",
+      "limitation": "Final owner copy acceptance pending"
+    },
+    {
+      "id": "TSST-LENS-SK-012",
+      "result": "DESK_CHECK_ONLY_NATIVE_PENDING",
+      "review": "Desk check, not native acceptance",
+      "evidence": "03/04",
+      "limitation": "Ahmed native and real render preview pending"
+    },
+    {
+      "id": "TSST-SPARK-SK-002",
+      "result": "OBSERVED_NARROWED_APPLICATION",
+      "review": "Lead desk review",
+      "evidence": "05/06 + 06_WEEKLY_VIEW",
+      "limitation": "Organic strategy/Meta dictionary not covered; no live data"
+    },
+    {
+      "id": "TSST-LEAD-SK-024",
+      "result": "OBSERVED_GOVERNANCE_APPLICATION",
+      "review": "Lead self-record",
+      "evidence": "BRIEF.md/SPARK_REVIEW_BRIEF.md",
+      "limitation": "No independent evaluation"
+    },
+    {
+      "id": "TSST-LEAD-SK-029",
+      "result": "OBSERVED_REVIEW_INTEGRATION",
+      "review": "Same-runtime domain/Lead review",
+      "evidence": "07_LEAD_INTEGRATION.md",
+      "limitation": "No cross-runtime acceptance or promotion"
+    }
+  ],
+  "producer_snapshots": [
+    {
+      "producer": "LENS",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\01_STRATEGY.md",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\lens\\01_STRATEGY.md",
+      "recorded_sha256": "2b261ae126b1f01d5801f7fbf19a20d6b6ae27bf74b3b184e791053749196e85",
+      "snapshot_sha256": "2b261ae126b1f01d5801f7fbf19a20d6b6ae27bf74b3b184e791053749196e85",
+      "matches": true
+    },
+    {
+      "producer": "LENS",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\02_CALENDAR.md",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\lens\\02_CALENDAR.md",
+      "recorded_sha256": "eb9ba3d2c790809880a3eeb004cc71e16b3472f155c112152033fb33370c5ac1",
+      "snapshot_sha256": "eb9ba3d2c790809880a3eeb004cc71e16b3472f155c112152033fb33370c5ac1",
+      "matches": true
+    },
+    {
+      "producer": "LENS",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\03_COPY.md",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\lens\\03_COPY.md",
+      "recorded_sha256": "b612befc5a9970aabf1078216f607d1b1a989acc8e70f1a98032df60c5c7adef",
+      "snapshot_sha256": "b612befc5a9970aabf1078216f607d1b1a989acc8e70f1a98032df60c5c7adef",
+      "matches": true
+    },
+    {
+      "producer": "LENS",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\04_CREATIVE_BRIEFS.md",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\lens\\04_CREATIVE_BRIEFS.md",
+      "recorded_sha256": "863d78f0c68dab78872ea8b71ca222f7f0de5e5086fea2d2603dce61fbada5d9",
+      "snapshot_sha256": "863d78f0c68dab78872ea8b71ca222f7f0de5e5086fea2d2603dce61fbada5d9",
+      "matches": true
+    },
+    {
+      "producer": "SPARK",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\05_SPARK_REVIEW_MEASUREMENT.md",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\spark\\05_SPARK_REVIEW_MEASUREMENT.md",
+      "recorded_sha256": "845d83b8197af5690e6dd4ca0a4b836bf19a5d56b8c533eced89ab7cd16d890c",
+      "snapshot_sha256": "845d83b8197af5690e6dd4ca0a4b836bf19a5d56b8c533eced89ab7cd16d890c",
+      "matches": true
+    },
+    {
+      "producer": "SPARK",
+      "original_output_path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\06_METRICS_TEMPLATE.csv",
+      "snapshot_path": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\PILOTS\\TSST-PILOT-002_VILL_STRATEGY_BASELINE\\marketing-week-01\\spark\\06_METRICS_TEMPLATE.csv",
+      "recorded_sha256": "fed3d24af1d19a918aaee13bdbfd21edeb076813bbd7e2658a427db85cb793a6",
+      "snapshot_sha256": "fed3d24af1d19a918aaee13bdbfd21edeb076813bbd7e2658a427db85cb793a6",
+      "matches": true
+    }
+  ],
+  "artifact_integrity": {
+    "note": "Integrity of documentation, not validation of skill effectiveness",
+    "producer_snapshots_match": true,
+    "source_inputs_unchanged": true
+  }
+}

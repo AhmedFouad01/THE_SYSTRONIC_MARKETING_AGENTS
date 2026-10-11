@@ -1,0 +1,12 @@
+{
+  "kind": "ordinary saved-artifact read-back, not skill validation",
+  "captions": 8,
+  "story_frames": 9,
+  "detailed_csv_columns": 47,
+  "detailed_csv_rows": 111,
+  "live_metric_values": 0,
+  "json_files_parsed": 6,
+  "start_links_resolve": true,
+  "producer_snapshots_match": true,
+  "scope": "counts/provenance only; semantic review in 07 and observation report"
+}

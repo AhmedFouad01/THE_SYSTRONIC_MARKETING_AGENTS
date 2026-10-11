@@ -1,0 +1,26 @@
+id: VILL-W1-LENS
+title: VILL week 01 strategy content calendar and platform copy
+kind: work
+status: done
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: WORK
+team: marketing
+skills: [TSST/LENS/skills/tsst-lens-sk-006-marketing-planning, TSST/skills/marketing/tsst-lens-sk-013-organic-social-content-system, TSST/skills/marketing/tsst-lens-sk-011-copywriting, TSST/skills/marketing/tsst-lens-sk-012-arabic-egyptian-copy-transcreation]
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/BRIEF.md
+read: [TSST/brands/vill-studio, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/lens]
+after: []
+done_when: Week-one plan calendar full platform copy briefs and passive skill evidence; no publication; Lead review required
+issued_by: codex
+created: "2026-10-11T14:53Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST/LENS/skills/tsst-lens-sk-006-marketing-planning, TSST/skills/marketing/tsst-lens-sk-013-organic-social-content-system, TSST/skills/marketing/tsst-lens-sk-011-copywriting, TSST/skills/marketing/tsst-lens-sk-012-arabic-egyptian-copy-transcreation]
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/lens/RESULT.md
+sha256: 03d45055b58b5e2425da0fb6a3a0797effd1b754c01185c94c5b974ad6142e68
+note: Draft received; SPARK domain and owner/native review pending. Passive evidence only.

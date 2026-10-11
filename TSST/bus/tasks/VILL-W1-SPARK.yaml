@@ -1,0 +1,26 @@
+id: VILL-W1-SPARK
+title: VILL week 01 organic measurement and channel review
+kind: work
+status: done
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: WORK
+team: marketing
+skills: [TSST/SPARK/skills/tsst-spark-sk-002-measurement-architecture]
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/SPARK_REVIEW_BRIEF.md
+read: [TSST/brands/vill-studio, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/spark]
+after: []
+done_when: Domain review with official-source limits plus manual measurement template and passive skill observation; owner approval pending
+issued_by: codex
+created: "2026-10-11T15:03Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST/SPARK/skills/tsst-spark-sk-002-measurement-architecture]
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/spark/RESULT.md
+sha256: 4c54ef5596955cdfd7f903769da74b2a08113ca276a82947b61e08068859c29a
+note: Domain review delivered; Lead integrated. Owner/native/visual/live gates pending; no independent validation.

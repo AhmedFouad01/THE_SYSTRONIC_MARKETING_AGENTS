@@ -1,0 +1,67 @@
+{
+  "batch": "TSST-MARKETING-OBS-20261011-W01",
+  "date": "2026-10-11",
+  "timezone": "Africa/Cairo",
+  "evidence_type": "passive normal task governance/review observation",
+  "extra_validation_runs": 0,
+  "observations": [
+    {
+      "skill_id": "TSST-LEAD-SK-024",
+      "version": "1.0",
+      "skill_status": "UNVALIDATED unchanged",
+      "role": "TSST Lead / root",
+      "inputs": [
+        "owner request 2026-10-11",
+        "owner scope/usage approval + passive observation amendment",
+        "BRIEF.md",
+        "SPARK_REVIEW_BRIEF.md"
+      ],
+      "method_applied": "Bounded work packages, ownership, acceptance gates, dependency order and cost/change control",
+      "output_sections": [
+        "BRIEF.md: Outcome and proposed scope / Execution usage / Skill Plans / passive evidence amendment",
+        "SPARK_REVIEW_BRIEF.md: deliverables and acceptance"
+      ],
+      "result": "Scope and two sequential WORK runs completed; content/measurement drafts and passive evidence packaged",
+      "self_check": "No added specialist/validation run, image generation, spend, publication or arbitrary numerical performance target",
+      "review_status": "Lead self-record only; owner approval covers work scope, not output quality",
+      "independent_validation": false,
+      "limitations": [
+        "exact engine identity for Lead not exposed",
+        "exact usage/token/currency cost not metered",
+        "planning effectiveness requires live observations"
+      ],
+      "skill_friction": "none",
+      "next_gate": "Ahmed native/content review, LinkedIn language and execution date/operator; creative preview for derivatives"
+    },
+    {
+      "skill_id": "TSST-LEAD-SK-029",
+      "version": "1.0",
+      "skill_status": "UNVALIDATED unchanged",
+      "role": "TSST Lead / root",
+      "inputs": [
+        "generated LENS/SPARK contracts",
+        "LENS 01-04 original artifacts and observations",
+        "SPARK 05-06 original artifacts and observations"
+      ],
+      "method_applied": "Minimum-source routing; per-skill handoff criteria; read and challenge claims/copy; domain review before owner report",
+      "output_sections": [
+        "BRIEF.md: Skill Plans",
+        "03_COPY.md: integrated name/scope/format alternatives",
+        "05: integrated narrow no-extra-approval note",
+        "06_WEEKLY_VIEW.md",
+        "07_LEAD_INTEGRATION.md"
+      ],
+      "result": "Same-run LENS changes and SPARK findings integrated; lighter owner measurement view added without another specialist run",
+      "self_check": "All four LENS skills cited; eight captions, three Story sets and asset dependencies inspected",
+      "review_status": "Lead desk and SPARK domain review complete; same Codex runtime, not independent cross-runtime acceptance",
+      "independent_validation": false,
+      "limitations": [
+        "Arabic native, render/mobile preview, final owner acceptance and live results pending",
+        "bus marketing default prints tsst-lens even for SPARK-only skill task; explicit generated SPARK contract used",
+        "same runtime review cannot be labeled independent cross-runtime acceptance"
+      ],
+      "skill_friction": "none",
+      "next_gate": "Owner native/final review and later visual/live evidence"
+    }
+  ]
+}

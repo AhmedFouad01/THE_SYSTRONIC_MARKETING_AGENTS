@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0",
+  "observation_id": "TSST-MARKETING-OBS-20261011-W01-SPARK",
+  "date": "2026-10-11",
+  "agent": "SPARK_AG / tsst-spark",
+  "team": "marketing",
+  "tier": "WORK",
+  "approved_run": "2 of 2",
+  "runtime": {
+    "environment": "Codex desktop; same Codex runtime as LENS",
+    "dispatch_contract_model": "gpt-6.1-sol",
+    "dispatch_contract_reasoning": "medium",
+    "actual_model_identity": "not independently exposed",
+    "independent_cross_runtime_acceptance": false
+  },
+  "evidence_kind": "same-run passive production and domain-review observation",
+  "validation_executed": false,
+  "benchmark_executed": false,
+  "status_before": "UNVALIDATED / NOT_READY",
+  "status_after": "UNVALIDATED / NOT_READY",
+  "skill": {
+    "id": "TSST-SPARK-SK-002",
+    "name": "Measurement Architecture",
+    "version": "No numeric version declared in SKILL.md; SHA-256 identifies exact source",
+    "source": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/SPARK/skills/tsst-spark-sk-002-measurement-architecture/SKILL.md",
+    "sha256": "94655AF4EF8ABF86FA3A90BA382BD72B9D63F2D144600FE3F9C0F75D4CA714E3",
+    "status": "UNVALIDATED",
+    "located_by": "python TSST/skills/build_index.py --id TSST-SPARK-SK-002",
+    "read": "full"
+  },
+  "inputs": [
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\BRIEF.md",
+      "read": "full",
+      "sha256": "7F8716753C0D05E0A3F8B503125E40BEC493733B11397430458029203518FF42"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\SPARK_REVIEW_BRIEF.md",
+      "read": "full",
+      "sha256": "D82487EBAF76B14FA3E45A5B14692447C37DCE08AA1FF1C896D899BBFA186DB6"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\01_STRATEGY.md",
+      "read": "full",
+      "sha256": "2B261AE126B1F01D5801F7FBF19A20D6B6AE27BF74B3B184E791053749196E85"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\02_CALENDAR.md",
+      "read": "full",
+      "sha256": "EB9BA3D2C790809880A3EEB004CC71E16B3472F155C112152033FB33370C5AC1"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\03_COPY.md",
+      "read": "full",
+      "sha256": "B612BEFC5A9970AABF1078216F607D1B1A989ACC8E70F1A98032DF60C5C7ADEF"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\04_CREATIVE_BRIEFS.md",
+      "read": "full",
+      "sha256": "863D78F0C68DAB78872EA8B71CA222F7F0DE5E5086FEA2D2603DCE61FBADA5D9"
+    }
+  ],
+  "other_sources": [
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/.codex/agents/tsst-spark.toml",
+      "read": "full generated contract"
+    },
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/SPARK/AGENT.md",
+      "read": "Mission / Owns / Does not own; initial scoped read also returned required-input/output sections"
+    },
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/teams/marketing/team.md",
+      "read": "full"
+    },
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/COPY_DECK.md",
+      "read": "scope/claim and dated approval excerpts, not full file"
+    },
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/build-v3/_qa/GATE_REVIEW.md",
+      "read": "full"
+    },
+    {
+      "path": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/build-v3/export/VILL_showcase-01v3_s01.png through s07.png",
+      "read": "all seven opened visually; export filenames listed; PDF not rendered"
+    }
+  ],
+  "method_application": [
+    {
+      "step": "Business definitions and funnel decision use",
+      "output": "05 sections 1 and 3",
+      "application": "Organic introduction/trust objective precedes metrics; all audience signals secondary; no conversion or revenue deployment"
+    },
+    {
+      "step": "Item/event dictionary and parameter schema",
+      "output": "05 sections 3-4; 06 CSV all columns and seeded rows",
+      "application": "Stable item/frame/checkpoint keys, raw label/unit/window, timestamps/timezone/age, numerator/denominator, separate qualitative records"
+    },
+    {
+      "step": "Systems of record and ownership",
+      "output": "05 sections 3 and 6",
+      "application": "Native content insights for platform counts; Lead checklist for approvals; human de-identified questions for comprehension observations"
+    },
+    {
+      "step": "Deduplication, missing/delayed sources, QA",
+      "output": "05 sections 4-6",
+      "application": "Snapshots not summed; corrected captures supersede; blank unavailable values; organic scope gate; designed manual negative checks, not live test execution"
+    },
+    {
+      "step": "Monitoring and bounded decisions",
+      "output": "05 section 5",
+      "application": "D0 baseline/access, D3 initial posts, D7 age/lag caveats and later manual equal-age recommendation; no causal A/B claim"
+    }
+  ],
+  "self_check": {
+    "kind": "ordinary same-run deliverable inspection, not independent validation",
+    "scope": "8 feed IDs and 3 Story sets mapped; all 7 approved PNG strings checked; no Lens edits; CSV parsed and JSON parsed for saved-file integrity",
+    "outcome": "See final ordinary artifact read-back; live values intentionally blank",
+    "not_claimed": [
+      "VALIDATED skill",
+      "publish readiness",
+      "independent acceptance",
+      "native Arabic approval",
+      "live analytics results",
+      "causal testing"
+    ]
+  },
+  "review_findings": [
+    {
+      "id": "SPARK-01",
+      "finding": "LI1 document-to-images closing CTA must track actual format",
+      "fix": "05 section 1 exact closing-line override",
+      "state": "proposed for Lead integration"
+    },
+    {
+      "id": "SPARK-02",
+      "finding": "IG2 single-image fallback must not retain swipe instruction",
+      "fix": "05 section 1 select complete existing FB2 caption",
+      "state": "proposed for Lead integration"
+    },
+    {
+      "id": "SPARK-03",
+      "finding": "Older scope checkbox conflicts with dated all-copy approval",
+      "fix": "05 section 1 reconciles 2026-10-07 and 2026-10-08 decisions; do not reconfirm approved project-specific scope",
+      "state": "source-supported reconciliation"
+    },
+    {
+      "id": "SPARK-04",
+      "finding": "New Arabic brand spelling unnecessary pending choice",
+      "fix": "05 section 1 proposes established VILL Studio normalization",
+      "state": "proposed; new Arabic still pending native review"
+    },
+    {
+      "id": "SPARK-05",
+      "finding": "D3/D7 age/lag prevents full week performance ranking",
+      "fix": "05 section 5 bounded decisions and later manual observation",
+      "state": "measurement design"
+    },
+    {
+      "id": "SPARK-06",
+      "finding": "FB format Help redirect prevents direct verification; Meta UI definitions unavailable",
+      "fix": "05 sections 1-4 human preview/raw-definition/organic gate",
+      "state": "unverified remains explicit"
+    }
+  ],
+  "official_sources": [
+    {
+      "url": "https://www.linkedin.com/help/linkedin/answer/a564051",
+      "checked": "2026-10-11",
+      "access": "direct read",
+      "use": "Page metrics definitions, denominator and up-to-48-hour lag"
+    },
+    {
+      "url": "https://www.linkedin.com/help/linkedin/answer/a518996/posting-and-sharing-content-overview?lang=en",
+      "checked": "2026-10-11",
+      "access": "direct read",
+      "use": "general image/document support; no Page fit claim"
+    },
+    {
+      "url": "https://www.facebook.com/help/iphone-app/187741037945488",
+      "checked": "2026-10-11",
+      "access": "redirected to login/temporary-block",
+      "use": "not verified; manual preview gate"
+    },
+    {
+      "url": "https://www.facebook.com/help/289207354498410/r.php/",
+      "checked": "2026-10-11",
+      "access": "official search text; direct fetch redirected to login",
+      "use": "access context only; not VILL access/metric proof"
+    }
+  ],
+  "limitations": [
+    "No account access, baseline or live observations",
+    "No PDF render/accessibility check or new Story/crop production",
+    "No broad project/process/effectiveness inference",
+    "No paid tracking, deployment, private data collection, generation, publication, scheduling or commit",
+    "Actual platform labels and organic scope require human confirmation"
+  ],
+  "skill_friction": [
+    "SK-002 does not supply organic editorial strategy or current Meta UI dictionary; restrict review to objective/CTA/asset coherence and manual measurement; LENS retains content ownership.",
+    "Generated SPARK contract calls SPARK marketing manager while team map names LENS manager; follow Lead assignment and LENS content ownership; no registry mutation.",
+    "No semantic skill version in source; exact SHA-256 used."
+  ],
+  "skipped": {
+    "unselected": [
+      "paid media strategy",
+      "campaign build",
+      "attribution infrastructure"
+    ],
+    "selected_skill_steps_not_applicable": [
+      "browser/server/CRM/import implementation",
+      "visit-to-revenue practical evaluation",
+      "Google enhanced-conversion references"
+    ],
+    "reason": "Organic manual observation only; no conversion deployment or revenue objective"
+  },
+  "review_status": {
+    "specialist_domain_review": "completed same-run, pending Lead integration",
+    "lead_review": "pending",
+    "owner_final": "pending",
+    "new_arabic_native": "PENDING Ahmed",
+    "existing_visuals": "Ahmed approved 2026-10-08 per source; preserved",
+    "new_creative_crops_stories_pdf_accessibility": "pending",
+    "live_preview": "pending human",
+    "account_insights": "pending human access/definition confirmation",
+    "baseline_and_live_results": "not collected",
+    "independent_review": "not performed"
+  },
+  "outputs": [
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\05_SPARK_REVIEW_MEASUREMENT.md",
+      "sha256": "845D83B8197AF5690E6DD4CA0A4B836BF19A5D56B8C533ECED89AB7CD16D890C"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\06_METRICS_TEMPLATE.csv",
+      "sha256": "FED3D24AF1D19A918AAEE13BDBFD21EDEB076813BBD7E2658A427DB85CB793A6"
+    }
+  ],
+  "next_gate": "Lead integrates exact overrides and appends Lead review/hashes; Ahmed accepts new copy/native language and human preview/creative readiness; operator captures baseline and live observations only within subsequently authorized manual execution. No extra specialist run implied."
+}

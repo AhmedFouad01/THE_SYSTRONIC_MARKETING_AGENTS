@@ -1,8 +1,34 @@
 # vill-studio — status
 
-updated: 2026-10-08
+updated: 2026-10-11
 
-## Current
+## Current — Lead handover 2026-10-11
+Lead: Codex for `vill-studio` only (owner request in chat: «استلم الليد في VILL Studio»).
+Source: `TSST/handoffs/VILL_NEXT_SESSION_CODEX.md`; newer state supersedes the dated notes below.
+Project: `strategy-baseline` — `projects/strategy-baseline/project.md`.
+- Strategy Baseline v0.2 + Brand Look v0.2: delivered and user-approved 2026-10-05.
+- Identity `C7-VILL-11`: accepted. Main colour PETROL `#01304A`; fonts Alexandria (AR) + Inter (EN), per `assets/ASSETS.yaml`. Navy/Cairo/Barlow in the guidelines draft are superseded/wrong.
+- `social-setup-01` (SV-01): all 13 items APPROVED; handover 2026-10-09, verified in `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/social-setup-01/DELIVERY.json`. Approval/handover does not mean published.
+- `showcase-01`: carousel v3 APPROVED. Open: AR captions, unverified LinkedIn "most clients" claim, CTA channel.
+- `showcase-01-reel` (New Alamein): AI route paused; Ahmed finishes manually in After Effects. Do not restart without his request.
+- `dresser-01`: METHOD CLOSED AS WORKING (owner 2026-10-10; `products/dresser-01/RECIPES.md` header). True approved file: `assets/source/products-rendered/dresser-01_P1f_TRUE-APPROVED.webp` (Drive). `dresser-01_P1f_v1_APPROVED.png` is not the truth. Studio set awaits Ahmed's go and side-by-side confirmation against the real photo; max 3 rounds.
+- Raw portfolio bank: 1,583 source files / 54 project folders in `assets/source/portfolio/` (`INDEX.md`, `CATALOG.csv`, `STUDIO_PICKS.md`, `_catalog/BANK.html`). Index accounts for 1,432 sorted + 53 duplicates + 98 review. New campaign images start here; trust piece tags/text search, treat material/stage tags cautiously.
+
+## Active marketing — owner request 2026-10-11
+- Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/START_HERE.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
+
+## Other open workstreams — do not auto-start
+1. `C7-VILL-12` round 2: not issued; review fix list + correct petrol/fonts. Exact scope and cost require owner OK before dispatch.
+2. `VERBAL_IDENTITY_v1.0.md`: Ahmed's native review pending.
+3. `showcase-01`: close AR captions, verify/drop LinkedIn claim, choose CTA channel.
+4. Next content from `STUDIO_PICKS.md`: LENS story → SPARK formats → CREATIVE, after scope/cost approval.
+5. `dresser-01` studio set: true approved file only, subject to the confirmation gate above.
+6. `VILL-001`: `OPEN_DATA_REQUESTS.md` awaits client economics/capacity.
+
+Session checkpoint: week-one marketing planning delivered with exactly two approved specialist runs (LENS then SPARK), passive skill observations and Lead integration. VILL-W1-LENS and VILL-W1-SPARK are done pending final acceptance; no cross-runtime independent acceptance claimed. No publication/visual generation. No daily-board mutation.
+Skills used: Lead SK-024/029; LENS SK-006/013/011/012; SPARK SK-002. Per-skill results and friction are recorded in the observation packet and generalized friction-log entries.
+
+## Historical checkpoints (superseded where Current differs)
 Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
 - Phase 1 (C7-VILL-01..06): **DELIVERED 2026-10-05** — Strategy Baseline v0.2 + Brand Look Direction v0.2
   approved by user (`ACCEPTANCE.md`).
@@ -35,10 +61,10 @@ Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-1
 - Still open: the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
 
 ## Next action
-Lead decides/issues C7-VILL-12 round 2 (fix list in the review); native review of `VERBAL_IDENTITY_v1.0.md` is pending (user). See `projects/strategy-baseline/project.md#Next`.
+Ahmed reviews the week-one pack and Arabic captions, chooses LinkedIn language and sets execution date/operator after content approval. Other workstreams stay deferred; no automatic guidelines round 2 or extra specialist run.
 
 ## do_not_repeat
-See `projects/strategy-baseline/project.md#do_not_repeat`. Closed: C7-VILL-11 (accepted; do not redo).
+See `projects/strategy-baseline/project.md#do_not_repeat`. Closed: C7-VILL-11 (accepted; do not redo), social-setup-01 (approved), dresser-01 product method (working). Do not restart the paused AI reel or use the false approved dresser PNG.
 
 ## Verified draft fold — 2026-10-04
 

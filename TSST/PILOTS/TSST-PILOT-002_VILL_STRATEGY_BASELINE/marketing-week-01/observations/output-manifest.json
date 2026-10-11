@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-11",
+  "manifest_excludes_self": true,
+  "files": [
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\01_STRATEGY.md",
+      "bytes": 10109,
+      "sha256": "da094ad5bfb91542475031b6be7cb3a13ccecbc30474e778c23594485ecc9dc7",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\02_CALENDAR.md",
+      "bytes": 3832,
+      "sha256": "eb9ba3d2c790809880a3eeb004cc71e16b3472f155c112152033fb33370c5ac1",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\03_COPY.md",
+      "bytes": 15334,
+      "sha256": "e9aae037f95ee31415579c197d107736567cc35f5f1ce3872725bdabc01ba966",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\04_CREATIVE_BRIEFS.md",
+      "bytes": 9981,
+      "sha256": "2b574f1af93c44030895eb03c85eff1e4ef7d1e68da84e25d5dc6d3817fd3fa5",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\05_SPARK_REVIEW_MEASUREMENT.md",
+      "bytes": 22245,
+      "sha256": "f976e0546718ecf78a549406177a1028fe97c2d69bfc04e2ed565df2816a689a",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\06_METRICS_TEMPLATE.csv",
+      "bytes": 30468,
+      "sha256": "fed3d24af1d19a918aaee13bdbfd21edeb076813bbd7e2658a427db85cb793a6",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\06_WEEKLY_VIEW.md",
+      "bytes": 4578,
+      "sha256": "6b3d8113088734ee9ed5c1080330c5f27efe4c01b0682f1638e694a94b9a72f2",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\07_LEAD_INTEGRATION.md",
+      "bytes": 3642,
+      "sha256": "215e05b97762f1ca238f52f42293560f51f6eef0da86b853fcf741b8b5a924ae",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\BRIEF.md",
+      "bytes": 8627,
+      "sha256": "7f8716753c0d05e0a3f8b503125e40bec493733b11397430458029203518ff42",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\SPARK_REVIEW_BRIEF.md",
+      "bytes": 4175,
+      "sha256": "d82487ebaf76b14fa3e45a5b14692447c37dce08aa1ff1c896d899bbfa186db6",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\VILL_MARKETING\\week-01\\START_HERE.md",
+      "bytes": 6326,
+      "sha256": "af2e1670187f0dd78bddbbeb8f38aa93f2a6ab29af5c716eb559340b2b2053b2",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\LEAD_SKILL_OBSERVATIONS.json",
+      "bytes": 3270,
+      "sha256": "1317109b9332deeca3e2dd84cfd8cb68b8e67b5c2711da76b503e56c78429852",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\LENS_SKILL_OBSERVATIONS.json",
+      "bytes": 7746,
+      "sha256": "27e28191e713bfacb69417ca487ebcfa359c5a540e6412524fecf01367a70486",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\packaging-check.json",
+      "bytes": 371,
+      "sha256": "3b44aaf8bf05f2f7b3b028d8f62b9687ed59be1acae773de33fa19663ccfd5a0",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\README.md",
+      "bytes": 2073,
+      "sha256": "13693138645cec2ccb8619431b086c4b8d350193440f4b7faf26b58f1fac3cb2",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\REPORT.md",
+      "bytes": 5058,
+      "sha256": "368ed2af10df2518d8050aa0c70ded82cf4d33e7a3deb290be6094db6125a83d",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\source-integrity.json",
+      "bytes": 7509,
+      "sha256": "f093711bc0b49972e29b8b4ba3dd5a17d7627f5bc96997abb5848b794a399b43",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\source-manifest.json",
+      "bytes": 3114,
+      "sha256": "fcb9043b5ca80c113ae01fcd097ccbf34b87a62e24553df597a4df4fd30e1dc3",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\SPARK_SKILL_OBSERVATIONS.json",
+      "bytes": 11147,
+      "sha256": "17ed2a2ec761462ccd9ff76e19387869320063f7f6dbb1641e4c1dff727052fb",
+      "stage": "final integrated draft/observation packet"
+    },
+    {
+      "path": "C:\\Users\\10\\Documents\\ChatGPT\\THE_SYSTRONIC_MARKETING_AGENTS\\validation\\TSST-MARKETING-OBS-20261011-W01\\SUMMARY.json",
+      "bytes": 6328,
+      "sha256": "c508e3af2e065c5a5d05bf8d4d2b9df5fecccdfe72df61055c8fe03a4fc1a642",
+      "stage": "final integrated draft/observation packet"
+    }
+  ]
+}
