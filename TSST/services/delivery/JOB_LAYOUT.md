@@ -1,5 +1,7 @@
 # Job layout (R18)
 
+Status: **APPROVED by the owner 2026-10-11** (standard for every new job, all brands and runtimes; TSD-023).
+
 Every job folder under `TSST/brands/<id>/projects/<job>/` uses this layout. Checked by `python TSST/services/delivery/job_check.py <job>` (check e).
 
 ```

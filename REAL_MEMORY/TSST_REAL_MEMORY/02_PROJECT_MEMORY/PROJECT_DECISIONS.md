@@ -198,3 +198,4 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Decision: every client job lives in `TSST/brands/<id>/projects/<job>/` (PILOTS = read-only archive); every job that reaches the owner/client ends with a DELIVERY page built by `TSST/services/delivery/build_delivery.py`; DELIVERY.json, project.md, status.md and portfolio.yaml are updated in the same round. VILL move scope = active jobs only.
 - Why: Codex never saw the Delivery System because it lived only in `TSST/services/`; work came out in PILOTS, in two shapes, without pages or sync.
 - Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.
+- Amended `2026-10-11`: the owner APPROVED the job file layout `TSST/services/delivery/JOB_LAYOUT.md` (README + 00_BRIEF…08_LEAD_CHECKPOINT + DELIVERY.* + files/ work/ observations/) as the standard for every new job (commit `3fc8b57`).
