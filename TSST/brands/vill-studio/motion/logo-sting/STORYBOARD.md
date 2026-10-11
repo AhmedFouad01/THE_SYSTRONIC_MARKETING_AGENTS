@@ -2,7 +2,7 @@
 
 Status: concept A APPROVED by owner 2026-10-08 (PNG cut OK, sweep left to right, #011C2C + #01304A pool OK, 3.8 s OK). STEP 2 BUILD done: renders exist, readiness stays NOT_READY (owner review of renders pending).
 Skills: TSST-CREATIVE-SK-015 (motion), -001 (brand system), -008 (art direction), -010 (compliance).
-Method: `TSST/CREATIVE/skills/tsst-creative-sk-015-motion-design/ref/code-motion.md` (one HTML, GSAP paused timeline, `window.seek(t)`, capture with `TSST/CREATIVE/tools/code-motion/`).
+Method: `TSST/MOTION/skills/tsst-motion-sk-001-motion-design/ref/code-motion.md` (one HTML, GSAP paused timeline, `window.seek(t)`, capture with `TSST/CREATIVE/tools/code-motion/`).
 
 ## 1. Verified brand facts (measured from current files, 2026-10-08)
 

@@ -3,7 +3,8 @@
 ```
 TSST LEAD            (TSST/LEAD/AGENT.md)    intake · recovery · routing · conflict · review · synthesis
 ├── MARKETING        manager: LENS_AG        (+ performance capability: SPARK_AG assets)
-├── STUDIO           manager: CREATIVE_AG    (internal workers DESIGNER_AG, MOTION_AG)
+├── STUDIO           manager: CREATIVE_AG    (internal worker DESIGNER_AG; static design, brand, UI, final brand check on video)
+├── MOTION           manager: MOTION_AG      (AI-shots-first short-form video and motion; TSST-ADR-005)
 └── BUILD            manager: DEV_AG
 ```
 
@@ -11,6 +12,9 @@ This is an **operating mapping**, not a rename. Agent records, IDs, skills, eval
 and readiness states under `TSST/LEAD`, `TSST/LENS`, `TSST/SPARK`, `TSST/CREATIVE`,
 `TSST/DEV` are unchanged and remain the evidence of record. All agents remain
 `NOT_READY` per `TSST/READINESS_REPORT.md`; decision rights per `TSST/TSST_DECISION_RIGHTS.md`.
+
+MOTION_AG was promoted from a CREATIVE internal worker to an independent team manager by TSST-ADR-005
+(governance registration only; NOT_READY; skills UNVALIDATED).
 
 Compatibility: SPARK_AG keeps its ID and skills; in routing it is the MARKETING
 performance/paid-media capability rather than a separate top-level manager. Any formal

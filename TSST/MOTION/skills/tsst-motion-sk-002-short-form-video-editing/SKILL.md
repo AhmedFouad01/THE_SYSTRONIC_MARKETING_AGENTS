@@ -1,13 +1,14 @@
 ---
-name: tsst-creative-sk-016-short-form-video-editing
+name: tsst-motion-sk-002-short-form-video-editing
 description: Edit Reels/TikTok/short video with strong opening, beat structure, shot purpose, pacing, captions and platform-native visual behavior.
 ---
 
-# TSST-CREATIVE-SK-016 — Short-form Video Editing
+# TSST-MOTION-SK-002 — Short-form Video Editing
 
 Status: `UNVALIDATED`  
 Training installed: 2026-09-24  
-Owner: `CREATIVE_AG`
+Owner: `MOTION_AG`  
+Formerly TSST-CREATIVE-SK-016 (moved to the Motion AG team, TSST-ADR-005, 2026-10-11)
 
 ## Objective
 

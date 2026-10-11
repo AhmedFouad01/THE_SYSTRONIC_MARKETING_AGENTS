@@ -1,13 +1,14 @@
 ---
-name: tsst-creative-sk-015-motion-design
+name: tsst-motion-sk-001-motion-design
 description: Animate brand/typographic/graphic systems with intentional timing, easing, hierarchy and narrative function.
 ---
 
-# TSST-CREATIVE-SK-015 — Motion Design
+# TSST-MOTION-SK-001 — Motion Design
 
 Status: `UNVALIDATED`  
 Training installed: 2026-09-24  
-Owner: `CREATIVE_AG`
+Owner: `MOTION_AG`  
+Formerly TSST-CREATIVE-SK-015 (moved to the Motion AG team, TSST-ADR-005, 2026-10-11)
 
 ## Objective
 

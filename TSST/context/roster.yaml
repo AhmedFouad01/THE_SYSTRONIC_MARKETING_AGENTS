@@ -48,10 +48,26 @@ agents:
     write: true
     web: false
     skills: [TSST-CREATIVE-*]
-    does: brand systems, design systems, art direction, social/performance creative, compositing, motion/video, export QA, product UX (internal roles DESIGNER_AG, MOTION_AG)
+    does: brand systems, design systems, art direction, social/performance creative, compositing, export QA, product UX, final brand check on Motion AG video (internal role DESIGNER_AG)
     role_rules:
-      - Actual creative/video work also loads TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md and TSST/CREATIVE/FINAL_ASSET_GATE.md. HTML layouts, prompts, briefs, storyboards are PREVIS; final assets need render QA.
-      - Approved logos/marks are composited, never regenerated. Image/video generation only where the runtime has a verified IMAGE/VIDEO capability (runtimes.yaml); otherwise ESCALATE_TO_DEEP naming the tier need.
+      - Actual creative work (and the final brand check on Motion AG video) also loads TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md and TSST/CREATIVE/FINAL_ASSET_GATE.md. HTML layouts, prompts, briefs, storyboards are PREVIS; final assets need render QA.
+      - Approved logos/marks are composited, never regenerated. Image generation only where the runtime has a verified IMAGE capability (runtimes.yaml); otherwise ESCALATE_TO_DEEP naming the tier need.
+      - Video, motion, reels, animation, voice-over and shot lists belong to MOTION_AG. Hand back, don't do it.
+  motion:
+    tsst_id: MOTION_AG
+    team: motion
+    identity: TSST/MOTION/AGENT.md
+    team_file: TSST/teams/motion/team.md
+    tier: WORK
+    write: true
+    web: false
+    skills: [TSST-MOTION-*]
+    does: AI-shots-first short-form video and motion, Egyptian script, JSON shot lists, shot/voice prompts, code-motion Arabic text, ffmpeg assembly, edit, sound, grade, ad cutdowns, one credit quote per job
+    role_rules:
+      - Pipeline is brief, Egyptian script, JSON shot list, master frame, shots, voice, code-motion text, ffmpeg. Handoffs are LENS story in, then CREATIVE brand check, then SPARK ad specs. Never self-approve release.
+      - Raw media is reference only; no slideshow of static cards; approved logos are composited, never regenerated; Arabic is code-drawn and RTL must never break.
+      - No on-camera Arabic speech until an Arabic lip-sync test passes (voice-over only before that).
+      - Generation is MANUAL through Ahmed: prepare prompts and ONE credit quote per job (cost fits the package). No spend, publication or client contact. Storyboards and prompts are PREVIS; final video needs render QA.
   dev:
     tsst_id: DEV_AG
     team: build
@@ -82,6 +98,7 @@ route:
   marketing: lens              # paid media / measurement / platform → spark
   marketing_performance: spark
   studio: creative
+  motion: motion
   build: dev
   read_only: reader
   decide_accept: lead

@@ -266,6 +266,7 @@ def structural(portfolio):
         return total, unresolved
 
     for team, d, pre in (("TSST/teams/studio/team.md", "TSST/CREATIVE/skills", "tsst-creative-sk-"),
+                         ("TSST/teams/motion/team.md", "TSST/MOTION/skills", "tsst-motion-sk-"),
                          ("TSST/teams/build/team.md", "TSST/DEV/skills", "tsst-dev-sk-")):
         total, unresolved = ids_for(team, d, pre)
         check("structural", f"skill ids resolve: {team.split('/')[2]} ({total} ids)",

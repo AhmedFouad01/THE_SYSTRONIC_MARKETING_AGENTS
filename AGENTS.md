@@ -4,7 +4,7 @@
 
 Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). **Rule: every task is done by the routed TSST team with its skills — never ad hoc by the model** (`TSST/core/rules.md` Must 9). Every runtime routes tasks by the **Universal task routing** section below. Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [ChatGPT](TSST/context/adapters/chatgpt.md) (manual bridge) · Gemini/Antigravity retired as a runtime (ADR-004); [Gemini Desktop](TSST/context/adapters/gemini-desktop.md) = manual external tool via Ahmed (TSD-018). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
 
-Use [TSST Lead](TSST/LEAD/AGENT.md) as the executive role and the user's single direct interface. Consult the relevant sections of [team governance](TSST/TEAM_CONSTITUTION.md), [readiness](TSST/READINESS_REPORT.md) and the team skill map in [TSST/teams/](TSST/teams/README.md) before selecting skills; do not load whole registries. Specialist names are CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG.
+Use [TSST Lead](TSST/LEAD/AGENT.md) as the executive role and the user's single direct interface. Consult the relevant sections of [team governance](TSST/TEAM_CONSTITUTION.md), [readiness](TSST/READINESS_REPORT.md) and the team skill map in [TSST/teams/](TSST/teams/README.md) before selecting skills; do not load whole registries. Specialist names are CREATIVE_AG, MOTION_AG, LENS_AG, SPARK_AG and DEV_AG.
 
 Existing evaluations are historical evidence. Do not rerun them, start campaigns or begin Deep Onboarding unless the user explicitly requests that work. Do not infer company facts from fictional fixtures. Onboarding is prepared at [Deep Onboarding](TSST/LEAD/DEEP_ONBOARDING.md); its persistent profile starts empty.
 
@@ -13,7 +13,7 @@ Use canonical TSST IDs and preserve validation boundaries. The [specialist regis
 
 ## CREATIVE production rule — 2026-09-24
 
-When a task requests actual social creative or video, load `TSST/CREATIVE/AGENT.md`, `CREATIVE_PRODUCTION_STANDARD.md`, `FINAL_ASSET_GATE.md` and only the relevant production skills. CREATIVE_AG may invoke its internal DESIGNER_AG and MOTION_AG workers. HTML/browser layouts, prompts, briefs or storyboards are `PREVIS`, not final PNG/MP4 campaign assets. Final creative requires actual render QA.
+When a task requests actual social creative, load `TSST/CREATIVE/AGENT.md`, `CREATIVE_PRODUCTION_STANDARD.md`, `FINAL_ASSET_GATE.md` and only the relevant production skills. CREATIVE_AG may invoke its internal DESIGNER_AG worker. Video, motion, reels, animation, voice-over and shot lists belong to the independent Motion AG team (`TSST/MOTION/AGENT.md`, [TSST-ADR-005](TSST/decisions/TSST-ADR-005.md)); CREATIVE_AG does the final brand check on its video. HTML/browser layouts, prompts, briefs or storyboards are `PREVIS`, not final PNG/MP4 campaign assets. Final creative requires actual render QA.
 
 
 ## Approved DEV_AG registration — 2026-09-28
@@ -27,7 +27,7 @@ The runtime's **main session is the TSST Lead**. For every task, before any work
 
 1. **Boot** — `TSST/context/boot.md` (brand, project, checkpoint, rules).
 2. **TEAM** — `TSST/context/router.yaml#team_routing`.
-3. **AGENT** — `TSST/context/roster.yaml#route`: marketing → `tsst-lens` (paid media/measurement → `tsst-spark`) · studio → `tsst-creative` · build → `tsst-dev` · reads/inventory only → `tsst-reader` · decisions/acceptance → stay in the Lead.
+3. **AGENT** — `TSST/context/roster.yaml#route`: marketing → `tsst-lens` (paid media/measurement → `tsst-spark`) · studio → `tsst-creative` · motion (video, reels, animation, voice-over, shot lists) → `tsst-motion` · build → `tsst-dev` · reads/inventory only → `tsst-reader` · decisions/acceptance → stay in the Lead.
 4. **SKILLS** — `python TSST/skills/build_index.py --team <team>` → pick ≤3 ids (`--id <ID>` for a path). No fit → `SKILL_GAP` → `TSST-CTX-SK-023`.
 5. **TIER** — the agent's default tier in `roster.yaml` (FAST/WORK/CODE/DEEP); raise only on evidence.
 6. **MODEL** — `TSST/bus/runtimes.yaml#<your runtime>.tier_<TIER>`: only models **your plan actually has**. Never name a model your runtime does not list; if one is missing use the next tier up and say so.

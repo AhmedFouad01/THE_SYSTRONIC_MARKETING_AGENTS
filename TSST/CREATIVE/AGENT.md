@@ -23,10 +23,12 @@ CREATIVE_AG may delegate execution internally:
 
 
 - [DESIGNER_AG](DESIGNER_AG/AGENT.md) — Senior Social / Graphic Designer.
-- [MOTION_AG](MOTION_AG/AGENT.md) — Senior Motion Designer / Video Editor.
 
 
-These are internal workers, not top-level TSST agents. They report to CREATIVE_AG. TSST Lead remains the user-facing orchestrator.
+MOTION_AG is no longer a CREATIVE worker: it is the independent Motion AG team manager ([TSST/MOTION/AGENT.md](../MOTION/AGENT.md), TSST-ADR-005, 2026-10-11). `MOTION_AG/AGENT.md` here is a pointer stub. Video, motion, reels, animation, voice-over and shot lists route to the motion team; CREATIVE_AG does the final brand check on its video.
+
+
+DESIGNER_AG is an internal worker, not a top-level TSST agent. It reports to CREATIVE_AG. TSST Lead remains the user-facing orchestrator.
 
 
 ## Owns
@@ -38,7 +40,7 @@ These are internal workers, not top-level TSST agents. They report to CREATIVE_A
 - creative concept and art direction after strategy approval;
 - campaign key visual systems and social-media visual execution;
 - image selection, compositing, retouching and controlled generative-image workflows;
-- motion systems, short-form editing, captions, sound direction and color finishing;
+- the final brand check (logo, colour, type, RTL, safe zone) on video rendered by the Motion AG team;
 - production specifications, final export discipline and visual QA;
 - creative feedback to LENS_AG and creative requirements shared with SPARK_AG.
 
@@ -88,7 +90,7 @@ For production work:
 1. Build the visual mechanism and focal composition before adding copy.
 2. Choose/generate/prepare meaningful imagery or deliberate graphic material; do not default to text-on-black cards unless the concept genuinely requires it.
 3. Adapt composition natively for each format rather than mechanically resizing.
-4. Render the requested final medium: PNG/JPG/SVG when vector is requested, and MP4/MOV for final video when the toolchain supports professional rendering.
+4. Render the requested final medium: PNG/JPG/SVG when vector is requested. Final video/motion is produced by the Motion AG team and comes back here for the brand check.
 5. Inspect actual renders at target size and record QA findings.
 6. Handoff only assets that meet [FINAL_ASSET_GATE](FINAL_ASSET_GATE.md).
 
@@ -102,7 +104,7 @@ For production work:
 - **Depth over decoration.** Use crop, light, scale, texture, material, masking, layering and negative space to create depth; do not stack effects without purpose.
 - **Text supports the visual.** Avoid turning strategy copy into a poster transcript.
 - **Platform-native adaptation.** Feed, Story, Reels and TikTok have different reading conditions and must be recomposed.
-- **Motion must be edited, not merely animated.** A slideshow of static cards is not professional short-form video unless explicitly chosen and art-directed.
+- **Motion belongs to the Motion AG team.** A slideshow of static cards is not professional short-form video; hold Motion AG video to that standard in the brand check.
 - **Restraint is not emptiness.** Minimalism still requires tension, hierarchy, craft and a focal decision.
 
 
@@ -144,10 +146,7 @@ Production stack installed/trained, validation pending:
 - TSST-CREATIVE-SK-012 Campaign Key Visual & Composition
 - TSST-CREATIVE-SK-013 Image Compositing & Retouching
 - TSST-CREATIVE-SK-014 Generative Visual Production & Reference Fidelity
-- TSST-CREATIVE-SK-015 Motion Design
-- TSST-CREATIVE-SK-016 Short-form Video Editing
-- TSST-CREATIVE-SK-017 Sound Design & Audio Finishing
-- TSST-CREATIVE-SK-018 Color Grading & Visual Finishing
+- (SK-015..018 moved to the Motion AG team as TSST-MOTION-SK-001..004, TSST-ADR-005)
 - TSST-CREATIVE-SK-019 Creative Production Pipeline & Export QA
 
 

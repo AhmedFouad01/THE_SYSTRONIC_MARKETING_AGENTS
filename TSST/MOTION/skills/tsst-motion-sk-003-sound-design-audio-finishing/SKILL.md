@@ -1,13 +1,14 @@
 ---
-name: tsst-creative-sk-017-sound-design-audio-finishing
+name: tsst-motion-sk-003-sound-design-audio-finishing
 description: Use voice, music, ambience and SFX to create clarity, rhythm and brand feel without masking the message or violating rights.
 ---
 
-# TSST-CREATIVE-SK-017 — Sound Design & Audio Finishing
+# TSST-MOTION-SK-003 — Sound Design & Audio Finishing
 
 Status: `UNVALIDATED`  
 Training installed: 2026-09-24  
-Owner: `CREATIVE_AG`
+Owner: `MOTION_AG`  
+Formerly TSST-CREATIVE-SK-017 (moved to the Motion AG team, TSST-ADR-005, 2026-10-11)
 
 ## Objective
 

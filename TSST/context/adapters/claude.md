@@ -16,7 +16,8 @@ Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated fr
 |---|---|---|
 | LENS_AG (MARKETING manager) | `tsst-lens` | WORK (Sonnet · medium) |
 | SPARK_AG (MARKETING performance) | `tsst-spark` | WORK (Sonnet) |
-| CREATIVE_AG (+DESIGNER/MOTION) | `tsst-creative` | WORK (Sonnet) |
+| CREATIVE_AG (+DESIGNER) | `tsst-creative` | WORK (Sonnet) |
+| MOTION_AG (MOTION manager) | `tsst-motion` | WORK (Sonnet) |
 | DEV_AG (BUILD manager) | `tsst-dev` | CODE (Sonnet, high effort) |
 | utility reader (R2) | `tsst-reader` / `Explore` | FAST (Haiku) |
 | TSST Lead | main conversation (current Opus) | DEEP — Skill Plan, architecture, conflict, acceptance |

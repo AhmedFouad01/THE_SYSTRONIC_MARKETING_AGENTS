@@ -1,6 +1,6 @@
 # code-motion capture tool
 
-Method: `TSST/CREATIVE/skills/tsst-creative-sk-015-motion-design/ref/code-motion.md`.
+Method: `TSST/MOTION/skills/tsst-motion-sk-001-motion-design/ref/code-motion.md`.
 
 Installed 2026-10-08 OUTSIDE Google Drive (node_modules must not sync):
 

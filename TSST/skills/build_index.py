@@ -24,13 +24,14 @@ SOURCES = [
     ("TSST/LENS/skills", "marketing", "LENS_AG"),
     ("TSST/SPARK/skills", "marketing", "SPARK_AG"),
     ("TSST/CREATIVE/skills", "studio", "CREATIVE_AG"),
+    ("TSST/MOTION/skills", "motion", "MOTION_AG"),
     ("TSST/DEV/skills", "build", "DEV_AG"),
 ]
 # id prefix -> (team, owner)
 PREFIX = {"CTX": ("core", "CORE"), "LEAD": ("lead", "LEAD"), "LENS": ("marketing", "LENS_AG"),
-          "SPARK": ("marketing", "SPARK_AG"), "CREATIVE": ("studio", "CREATIVE_AG"), "DEV": ("build", "DEV_AG")}
-TEAM_ORDER = ["core", "lead", "marketing", "studio", "build"]
-TEAM_OWNER = {"core": "CORE", "lead": "LEAD", "marketing": "LENS_AG/SPARK_AG", "studio": "CREATIVE_AG", "build": "DEV_AG"}
+          "SPARK": ("marketing", "SPARK_AG"), "CREATIVE": ("studio", "CREATIVE_AG"), "MOTION": ("motion", "MOTION_AG"), "DEV": ("build", "DEV_AG")}
+TEAM_ORDER = ["core", "lead", "marketing", "studio", "motion", "build"]
+TEAM_OWNER = {"core": "CORE", "lead": "LEAD", "marketing": "LENS_AG/SPARK_AG", "studio": "CREATIVE_AG", "motion": "MOTION_AG", "build": "DEV_AG"}
 REGISTRIES = ["TSST/SKILL_REGISTRY.md", "TSST/LEAD/SKILL_REGISTRY.md", "TSST/DEV/SKILL_REGISTRY.md"]
 ID_RE = re.compile(r"(tsst-[a-z]+-sk-\d{3})", re.I)
 STATUS_RE = re.compile(r"\b(UNVALIDATED|LAB_VALIDATED|VALIDATED|DEPRECATED|[A-Z]+_VALIDATED|[A-Z_]{5,})\b")
@@ -126,7 +127,7 @@ def scan():
     base = os.path.join(REPO, "TSST", "skills")
     for team in sorted(os.listdir(base)):  # future TSST/skills/<team>/<slug>/SKILL.md
         if os.path.isdir(os.path.join(base, team)):
-            owner = {"marketing": "", "studio": "CREATIVE_AG", "build": "DEV_AG", "lead": "LEAD", "core": "CORE"}.get(team, "")
+            owner = {"marketing": "", "studio": "CREATIVE_AG", "motion": "MOTION_AG", "build": "DEV_AG", "lead": "LEAD", "core": "CORE"}.get(team, "")
             dirs.append((f"TSST/skills/{team}", team, owner))
     skills, seen = [], {}
     for rel, team0, owner0 in dirs:

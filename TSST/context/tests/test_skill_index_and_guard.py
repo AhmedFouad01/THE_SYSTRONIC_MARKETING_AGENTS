@@ -54,7 +54,7 @@ def test_index():
     for l in rows:
         t = re.search(r"team: (\w+)", l).group(1)
         by[t] = by.get(t, 0) + 1
-    for team, n in {"core": 22, "lead": 30, "studio": 29, "build": 16, "marketing": 12}.items():
+    for team, n in {"core": 22, "lead": 30, "studio": 26, "motion": 4, "build": 16, "marketing": 12}.items():
         expect(f"index team {team} >= {n} (got {by.get(team, 0)})", by.get(team, 0) >= n)
     ids = [re.search(r"id: (\S+?),", l).group(1) for l in rows]
     expect("ids unique and uppercase", len(ids) == len(set(ids)) and all(i == i.upper() for i in ids))
@@ -95,6 +95,14 @@ def test_guard():
     expect("spark/marketing allow", rc == 0)
     rc, _ = guard("tsst-creative", "TEAM: studio\nSKILLS: TSST-CREATIVE-SK-003")
     expect("creative/studio allow", rc == 0)
+    rc, _ = guard("tsst-motion", "TEAM: motion\nSKILLS: TSST-MOTION-SK-001, TSST-MOTION-SK-002")
+    expect("motion/motion allow with TSST-MOTION-SK ids", rc == 0)
+    rc, err = guard("tsst-motion", "TEAM: studio\nSKILLS: TSST-CREATIVE-SK-003")
+    expect("motion agent with TEAM: studio -> deny", rc == 2)
+    rc, err = guard("tsst-creative", "TEAM: studio\nSKILLS: TSST-MOTION-SK-001")
+    expect("creative cannot use motion skill (moved) -> deny, names skill", rc == 2 and "TSST-MOTION-SK-001" in err)
+    rc, err = guard("tsst-motion", "TEAM: motion\nSKILLS: TSST-CREATIVE-SK-015")
+    expect("old TSST-CREATIVE-SK-015 id no longer in index -> deny", rc == 2 and "TSST-CREATIVE-SK-015" in err)
     rc, err = guard("tsst-dev", "TEAM: build\nno skills here")
     expect("missing SKILLS -> deny", rc == 2 and "SKILLS" in err)
     rc, err = guard("tsst-dev", "SKILLS: TSST-DEV-SK-005")
@@ -150,6 +158,7 @@ def test_bus():
     sk_dev = "TSST/DEV/skills/tsst-dev-sk-005-api-integration-engineering"
     expect("bus: path skill ok", errs("build", [sk_dev]) == [])
     expect("bus: ID skill ok", errs("build", ["TSST-DEV-SK-005"]) == [])
+    expect("bus: motion team accepts TSST-MOTION-SK ids", errs("motion", ["TSST-MOTION-SK-001"]) == [])
     expect("bus: lowercase id ok", errs("build", ["tsst-dev-sk-005"]) == [])
     expect("bus: path with /SKILL.md ok", errs("build", [sk_dev + "/SKILL.md"]) == [])
     expect("bus: core skill ok for any team", errs("studio", ["TSST-CTX-SK-008"]) == [])

@@ -40,10 +40,11 @@ context_budget:
 # Step 11: team routing. Teams are TSST/teams/<team>/team.md.
 team_routing:
   marketing: [research, strategy, positioning, messaging, content plan, campaign plan, performance, paid media, measurement, radar, market]
-  studio:    [design, visual, image, logo, video, motion, art direction, creative qa, asset, ui design]
+  studio:    [design, visual, image, logo, art direction, creative qa, asset, ui design]
+  motion:    [video, motion, reel, animation, voice-over, shot list]
   build:     [code, crm implementation, database, api, automation, integration, agent engineering, security, test, release, bug]
   lead:      [intake, priorities, conflict, acceptance, portfolio, onboarding, business decision]
-  multi_team_order: marketing → studio → marketing/performance (only the steps the task needs)
+  multi_team_order: marketing → motion → studio (only the steps the task needs; motion = video pipeline, studio = brand check; then marketing/performance for ad specs)
 
 # Step 12: skill routing — load only the matched skill packages listed in the team file.
 skill_routing:

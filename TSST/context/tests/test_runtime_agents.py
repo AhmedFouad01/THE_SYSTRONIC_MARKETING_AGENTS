@@ -64,8 +64,8 @@ def test_generator_and_files():
     r = py(GEN, "--check")
     expect("generator --check exits 0 (no drift)", r.returncode == 0)
     agents = {k: v for k, v in roster["agents"].items() if v.get("runtime_agent") is not False}
-    expect("roster runtime agents = lens spark creative dev reader",
-           sorted(agents) == ["creative", "dev", "lens", "reader", "spark"])
+    expect("roster runtime agents = lens spark creative motion dev reader",
+           sorted(agents) == ["creative", "dev", "lens", "motion", "reader", "spark"])
     expect("lead is never a spawned agent", "lead" in roster["agents"] and "lead" not in agents)
     for aid, a in agents.items():
         name = "tsst-" + aid
@@ -166,6 +166,7 @@ def test_bus_routing():
            af("marketing", ["TSST/SPARK/skills/tsst-spark-sk-001-paid-media-strategy"]) == "tsst-spark")
     expect("route marketing + mixed LENS/SPARK -> tsst-lens", af("marketing", ["TSST-LENS-SK-001", "TSST-SPARK-SK-001"]) == "tsst-lens")
     expect("route studio -> tsst-creative", af("studio", ["TSST-CREATIVE-SK-003"]) == "tsst-creative")
+    expect("route motion -> tsst-motion", af("motion", ["TSST-MOTION-SK-001"]) == "tsst-motion")
     expect("route build -> tsst-dev", af("build", ["TSST-DEV-SK-005"]) == "tsst-dev")
     expect("route lead -> lead-main", af("lead", ["TSST-LEAD-SK-001"]) == "lead-main")
     rts = bus.runtimes()

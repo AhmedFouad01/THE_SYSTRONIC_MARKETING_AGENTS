@@ -1,13 +1,14 @@
 ---
-name: tsst-creative-sk-018-color-grading-visual-finishing
+name: tsst-motion-sk-004-color-grading-visual-finishing
 description: Create consistent exposure, white balance, skin/product color and a deliberate final look across a sequence or campaign image set.
 ---
 
-# TSST-CREATIVE-SK-018 — Color Grading & Visual Finishing
+# TSST-MOTION-SK-004 — Color Grading & Visual Finishing
 
 Status: `UNVALIDATED`  
 Training installed: 2026-09-24  
-Owner: `CREATIVE_AG`
+Owner: `MOTION_AG`  
+Formerly TSST-CREATIVE-SK-018 (moved to the Motion AG team, TSST-ADR-005, 2026-10-11)
 
 ## Objective
 

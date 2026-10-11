@@ -189,7 +189,7 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Source: Adobe After Effects official keyframe/animation guidance
 - Practical evaluation: Render an 8–12s bilingual motion reveal and inspect full playback/keyframes
 - Guardrail: Presets/default fly-ins do not substitute for a motion concept
-- Package: `CREATIVE/skills/tsst-creative-sk-015-motion-design/SKILL.md`
+- Package: `MOTION/skills/tsst-motion-sk-001-motion-design/SKILL.md` (moved: now TSST-MOTION-SK-001, TSST-ADR-005)
 - Status: `UNVALIDATED` — training installed 2026-09-24
 
 
@@ -201,7 +201,7 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Source: Adobe Premiere official edit/export guidance + TikTok official vertical/native creative guidance
 - Practical evaluation: Render a 15–20s vertical short from mixed assets with a distinct first-3-second hook
 - Guardrail: Slideshow/static-card motion is not professional video by default
-- Package: `CREATIVE/skills/tsst-creative-sk-016-short-form-video-editing/SKILL.md`
+- Package: `MOTION/skills/tsst-motion-sk-002-short-form-video-editing/SKILL.md` (moved: now TSST-MOTION-SK-002, TSST-ADR-005)
 - Status: `UNVALIDATED` — training installed 2026-09-24
 
 
@@ -213,7 +213,7 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Source: Adobe Premiere official audio guidance + platform commercial-audio rights rules
 - Practical evaluation: Mix a 15–20s short and deliver a level/rights QA note
 - Guardrail: Music may not mask speech; accessible music does not imply advertising rights
-- Package: `CREATIVE/skills/tsst-creative-sk-017-sound-design-audio-finishing/SKILL.md`
+- Package: `MOTION/skills/tsst-motion-sk-003-sound-design-audio-finishing/SKILL.md` (moved: now TSST-MOTION-SK-003, TSST-ADR-005)
 - Status: `UNVALIDATED` — training installed 2026-09-24
 
 
@@ -225,7 +225,7 @@ Phase 1 follows the workbook's Training Roadmap: TSST-CREATIVE-SK-001–TSST-CRE
 - Source: Adobe Premiere official color correction/grading guidance
 - Practical evaluation: Match three mismatched sources and apply one restrained final look
 - Guardrail: Correct first, grade second; protect skin and product/brand color truth
-- Package: `CREATIVE/skills/tsst-creative-sk-018-color-grading-visual-finishing/SKILL.md`
+- Package: `MOTION/skills/tsst-motion-sk-004-color-grading-visual-finishing/SKILL.md` (moved: now TSST-MOTION-SK-004, TSST-ADR-005)
 - Status: `UNVALIDATED` — training installed 2026-09-24
 
 

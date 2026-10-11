@@ -13,12 +13,13 @@ import sys
 REPO = os.environ.get("CLAUDE_PROJECT_DIR") or os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 INDEX = os.path.join(REPO, "TSST", "skills", "index.yaml")
 # Must equal the runtime agents of TSST/context/roster.yaml (tested in test_runtime_agents.py).
-TEAM_AGENTS = {"tsst-lens": "marketing", "tsst-spark": "marketing", "tsst-creative": "studio", "tsst-dev": "build"}
+TEAM_AGENTS = {"tsst-lens": "marketing", "tsst-spark": "marketing", "tsst-creative": "studio", "tsst-motion": "motion",
+               "tsst-dev": "build"}
 UTILITY = {"tsst-reader", "explore"}
 RETIRED = {"tsst-fast-worker": "tsst-reader"}   # TSST-ADR-004: replaced
 ALLOWED = {"claude-code-guide", "statusline-setup"}
-TEAMS = {"marketing", "studio", "build", "lead"}
-DENY_R1 = "TSST R1: use a team agent (tsst-lens/spark/creative/dev) with a Skill Plan, or tsst-reader/Explore for reads"
+TEAMS = {"marketing", "studio", "motion", "build", "lead"}
+DENY_R1 = "TSST R1: use a team agent (tsst-lens/spark/creative/motion/dev) with a Skill Plan, or tsst-reader/Explore for reads"
 ID_RE = re.compile(r"TSST-[A-Z]+-SK-\d{3}")
 LINE = re.compile(r'^\s*- \{id: (?P<id>[^,]+), team: (?P<team>[^,]+), owner: [^,]+, status: (?P<status>[^,]+),')
 
@@ -53,14 +54,14 @@ def decide(data, index_loader=load_index):
         return f"{DENY_R1}. '{sub}' is retired (TSST-ADR-004); use {RETIRED[low]}."
     if low in UTILITY:
         if line_value(prompt, "TEAM") is None:
-            return f"{DENY_R1}. Utility agent '{sub}' needs a 'TEAM: <marketing|studio|build|lead>' line in the prompt."
+            return f"{DENY_R1}. Utility agent '{sub}' needs a 'TEAM: <marketing|studio|motion|build|lead>' line in the prompt."
         return None
     if low not in TEAM_AGENTS:
         return f"{DENY_R1}. Refused subagent_type '{sub}'."
     team = (line_value(prompt, "TEAM") or "").lower()
     team = re.split(r"[\s,;(]", team)[0] if team else ""
     if team not in TEAMS:
-        return f"{DENY_R1}. Agent '{sub}' needs a 'TEAM: <marketing|studio|build|lead>' line."
+        return f"{DENY_R1}. Agent '{sub}' needs a 'TEAM: <marketing|studio|motion|build|lead>' line."
     if team != "lead" and team != TEAM_AGENTS[low]:
         return f"{DENY_R1}. Agent '{sub}' serves team {TEAM_AGENTS[low]}, prompt says TEAM: {team}."
     sk = line_value(prompt, "SKILLS")

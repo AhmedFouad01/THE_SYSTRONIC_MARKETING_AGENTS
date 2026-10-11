@@ -27,13 +27,15 @@ FIELDS = ["id", "title", "kind", "status", "to", "needs", "tier", "team", "skill
           "write", "after", "done_when", "issued_by", "created", "rounds", "max_rounds",
           "claimed_by", "lease_until", "progress", "skills_used", "result", "sha256", "note"]
 LISTS = {"needs", "read", "write", "after", "skills", "skills_used"}
-TEAMS = {"marketing", "studio", "build", "lead"}
+TEAMS = {"marketing", "studio", "motion", "build", "lead"}
 NEED_SKILLS = {"work", "review"}          # kinds that must name a team + skills (TSST rule 9)
 SKILLS_FROM = "2026-10-05T09:00Z"         # tasks created from here on are bound by rule 9
 # What a worker loads before touching a task (team file first, then the team's agent files).
 TEAM_LOAD = {
     "marketing": ["TSST/teams/marketing/team.md", "TSST/LENS/AGENT.md"],
     "studio": ["TSST/teams/studio/team.md", "TSST/CREATIVE/AGENT.md",
+               "TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md", "TSST/CREATIVE/FINAL_ASSET_GATE.md"],
+    "motion": ["TSST/teams/motion/team.md", "TSST/MOTION/AGENT.md",
                "TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md", "TSST/CREATIVE/FINAL_ASSET_GATE.md"],
     "build": ["TSST/teams/build/team.md", "TSST/DEV/AGENT.md"],
     "lead": ["TSST/LEAD/AGENT.md"],      # the lead has no teams/ folder; its agent file is the team file
@@ -788,7 +790,7 @@ def main():
     c("check", cmd_check)
     c("new", cmd_new, tid, me, (["--title"], dict(required=True)), (["--kind"], dict(default="work")),
       (["--to"], dict(default="any")), (["--needs"], {}), (["--tier"], dict(default="WORK")),
-      (["--team"], dict(default="", help="marketing|studio|build|lead (required for work/review)")),
+      (["--team"], dict(default="", help="marketing|studio|motion|build|lead (required for work/review)")),
       (["--skills"], dict(default="", help="comma list of skill paths (required for work/review)")),
       (["--brand"], dict(default="t-sag")), (["--spec"], dict(required=True)), (["--read"], {}),
       (["--write"], {}), (["--after"], {}), (["--done-when"], dict(required=True)),

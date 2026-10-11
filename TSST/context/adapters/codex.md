@@ -19,6 +19,7 @@ generated custom agents in `.codex/agents/` — each file already pins its model
 | LENS_AG | `tsst-lens` | WORK | gpt-6.1-sol · medium |
 | SPARK_AG | `tsst-spark` | WORK | gpt-6.1-sol · medium |
 | CREATIVE_AG | `tsst-creative` | WORK | gpt-6.1-sol · medium |
+| MOTION_AG | `tsst-motion` | WORK | gpt-6.1-sol · medium |
 | DEV_AG | `tsst-dev` | CODE | gpt-6.1-sol · high |
 | Lead DEEP-only decision | main session `codex --profile deep` | DEEP | gpt-6-astra · high (few messages per 5 h on Plus — use sparingly, or bus task to the Claude Lead) |
 

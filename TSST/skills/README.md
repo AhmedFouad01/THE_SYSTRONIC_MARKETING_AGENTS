@@ -4,7 +4,7 @@
 registered-but-unpackaged IDs). It is GENERATED - never edit it by hand.
 
 ## Rules
-- Lead reads only the needed team slice of `index.yaml` (grep `team: marketing|studio|build|lead|core`).
+- Lead reads only the needed team slice of `index.yaml` (grep `team: marketing|studio|motion|build|lead|core`).
 - Read-only lookups (never rewrite the index): `python TSST/skills/build_index.py --team <team>` prints compact `ID | status | trigger` rows; `--id <ID>` prints that skill's path + full trigger.
 - Agents load at most 3 `SKILL.md` files, by path from the index. Do not scan skill folders.
 - Every dispatch carries a Skill Plan (`TEAM:` + `SKILLS:` IDs); enforced by
@@ -12,7 +12,7 @@ registered-but-unpackaged IDs). It is GENERATED - never edit it by hand.
 - DEPRECATED skills are refused. Team must match the task team (or be `core`; `lead` may use any).
 
 ## Add or change a skill
-1. Create `TSST/skills/<team>/<id-slug>/SKILL.md` (team = marketing|studio|build|lead|core).
+1. Create `TSST/skills/<team>/<id-slug>/SKILL.md` (team = marketing|studio|motion|build|lead|core).
 2. Frontmatter: `name, description ("Use when ..."), id, team, owner, status, version`.
 3. Regenerate: `python TSST/skills/build_index.py`; verify: `python TSST/skills/build_index.py --check`.
 4. New skills start `UNVALIDATED`; promotion only via TSST-CTX-SK-018 evidence.
