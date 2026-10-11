@@ -38,7 +38,7 @@ brands:
         next: user supplies OPEN_DATA_REQUESTS → close VILL-001 → W1 Foundation
       marketing-week-01:
         state: LENS + SPARK week-one organic plan (FB/IG/LinkedIn) REVIEW DRAFT 2026-10-11; no DELIVERY page yet; still in PILOTS (R18 move = Track B)
-        checkpoint: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/START_HERE.md
+        checkpoint: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/README.md
         next: Track C re-layout → Track B move into brands/vill-studio/projects/ → Track D delivery page; then owner review
     next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:

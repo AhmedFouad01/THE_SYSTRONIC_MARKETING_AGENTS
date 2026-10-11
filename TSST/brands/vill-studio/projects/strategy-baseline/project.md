@@ -3,7 +3,7 @@
 brand: vill-studio · id: TSST-PILOT-002 (C7 live-project pilot)
 implementation: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/`
 PILOTS = historical archive (R18). New jobs → `TSST/brands/vill-studio/projects/<job>/`. Move of active jobs: Track B (pending owner go).
-checkpoint: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/START_HERE.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
+checkpoint: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/marketing-week-01/README.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
 memory: `TSST/brands/vill-studio/memory/source.md`
 teams: marketing (LENS lead, SPARK capability), studio (CREATIVE — identity production in phase 2c)
 
@@ -20,7 +20,7 @@ C7-VILL-01..06 (strategy v0.1/v0.2, reviews, brand look v0.1/v0.2); C7-VILL-07..
 VILL-001 strategy work already in canonical PROJECT_MASTER (consolidate, do not redo discovery).
 
 ## Next
-Ahmed reviews marketing-week-01/START_HERE.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
+Ahmed reviews marketing-week-01/README.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
 
 ## Other backlog — previous next, deferred
 Lead issues C7-VILL-12 round 2 per `LEAD_REVIEW_C7-VILL-12.md`; user native-reviews `VERBAL_IDENTITY_v1.0.md`. Then: user supplies OPEN_DATA_REQUESTS → VILL-001 close → W1 Foundation (needs implementation mandate).

@@ -23,7 +23,7 @@ One manifest per job -> two pages in the job folder, one template, two languages
 - Home: `TSST/brands/<id>/projects/<job>/`, listed in the brand's project.md. Never `TSST/PILOTS/` (archive) or `TSST/projects/`.
 - Required to call a job delivered: `DELIVERY.json` + `DELIVERY.html` + `DELIVERY_INTERNAL.html` (built, not older than the JSON) and `python TSST/services/delivery/job_check.py <job>` passes.
 - Same-round sync: DELIVERY.json statuses, brand project.md, brand `status.md`, brand line in `TSST/core/portfolio.yaml`.
-- Content file names (plan, copy, decisions): pending Track C.
+- Layout and content file names (plan, copy, decisions): [JOB_LAYOUT.md](JOB_LAYOUT.md).
 
 ## Add a language
 Add `i18n/<code>.json` with the same keys as `en.json`, add the code to `LANGS` and a `<code>` block in each manifest, add a button to the header switch, and extend the CSS overrides (`html[lang=<code>]`). Only `en` and `ar` exist today.

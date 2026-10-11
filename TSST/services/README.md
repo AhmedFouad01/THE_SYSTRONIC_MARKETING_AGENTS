@@ -21,7 +21,7 @@ Status: SKELETON. Each playbook gets filled in from research (`gemini/GEM-SV-*`)
 ## How the Lead runs any service (orchestration)
 
 1. **Service intake.** Read the playbook, ask its blocking intake questions, and confirm the variant. No team starts work before the intake is answered. This is how we choose the right thing from the start.
-2. **Job plan.** Copy the playbook stages into the job's plan file in `TSST/brands/<id>/projects/<job>/` (R18; content file names: pending Track C), with owners, skills, client gates and dates. Present the cost and get a go per round (R11–R14, one track at a time).
+2. **Job plan.** Copy the playbook stages into the job's plan file in `TSST/brands/<id>/projects/<job>/` (R18; layout and content file names: [delivery/JOB_LAYOUT.md](delivery/JOB_LAYOUT.md)), with owners, skills, client gates and dates. Present the cost and get a go per round (R11–R14, one track at a time).
 3. **Dispatch in order.** LENS (story/message) → SPARK (formats/funnel/measurement) → CREATIVE (production). DEV works on the web track. Every dispatch carries a Skill Plan (team + skill IDs). Run teams in parallel only when their questions do not overlap.
 4. **Client gates.** Stop at each gate the playbook marks. The client's approval is recorded in `03_DECISIONS.md`.
 5. **QA before showing the client.** Run the playbook's quality gates, plus the team gates (e.g. CREATIVE FINAL_ASSET_GATE). The Lead opens the real output; it never approves from the report alone.

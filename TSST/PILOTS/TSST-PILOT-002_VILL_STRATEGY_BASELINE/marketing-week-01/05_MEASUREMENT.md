@@ -56,7 +56,7 @@ Use the manual CSV as the observation ledger, native content insights as the sou
 
 All audience effects are secondary observations. Category comprehension is read from question wording, not from saves. No fabricated reach, follower, lead or rate targets. Never add post reaches to obtain account unique reach, or add FB+IG+LinkedIn to claim unique audience. Exposure/engagement totals across channels are not a trust KPI.
 
-## 4. How to use 06_METRICS_TEMPLATE.csv
+## 4. How to use 06_SCORECARD.csv
 
 The CSV uses one row per item × review checkpoint × metric concept; it seeds all eight feed IDs and all three Story-set IDs, with each Story frame separately identified. D3 rows cover only planned initial items. D7 rows cover the full plan; seeds do not imply publication. Separate `question` rows hold qualitative observations and separate `baseline` rows hold D0 account context. Duplicate a question row for each anonymous thread; do not put message text/names/contact data in this file.
 
@@ -108,4 +108,4 @@ skill_friction / SKILL_GAP: TSST-SPARK-SK-002 is designed around conversion arch
 
 ## Lead integration — practical entry point
 
-Start with 06_WEEKLY_VIEW.md for the small operator checklist. The detailed CSV is an optional recording schema, not a prerequisite for the first post. Source-of-truth, blank-not-zero, window and age limits above still apply. Snapshot of the original producer return is preserved under the canonical pilot spark/ folder; no new SPARK or validation run was used for this simplification.
+Start with 06b_SCORECARD_GUIDE.md for the small operator checklist. The detailed CSV is an optional recording schema, not a prerequisite for the first post. Source-of-truth, blank-not-zero, window and age limits above still apply. Snapshot of the original producer return is preserved under the canonical pilot work/spark/ folder; no new SPARK or validation run was used for this simplification.

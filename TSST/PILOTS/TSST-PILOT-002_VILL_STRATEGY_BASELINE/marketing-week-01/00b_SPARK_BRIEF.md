@@ -1,6 +1,6 @@
 # SPARK — week 01 domain review and manual measurement
 
-Owner approval: 2026-10-11, two sequential WORK runs, plus passive skill-result recording without extra evaluation runs. This is run 2, after LENS. Read `BRIEF.md` and complete LENS 01–04 files in this working folder, plus LENS_SKILL_OBSERVATIONS.json if useful. Apply generated `.codex/agents/tsst-spark.toml` and TSST-SPARK-SK-002 (locate through build_index; open SKILL.md). TEAM marketing; AGENT tsst-spark; TIER WORK. No extra agents, owner questions, benchmark runs or later re-dispatch.
+Owner approval: 2026-10-11, two sequential WORK runs, plus passive skill-result recording without extra evaluation runs. This is run 2, after LENS. Read `00_BRIEF.md` and complete LENS 01–04 files in this working folder, plus LENS_SKILL_OBSERVATIONS.json if useful. Apply generated `.codex/agents/tsst-spark.toml` and TSST-SPARK-SK-002 (locate through build_index; open SKILL.md). TEAM marketing; AGENT tsst-spark; TIER WORK. No extra agents, owner questions, benchmark runs or later re-dispatch.
 
 Scope: measurement of organic introduction/trust on FB, IG, LinkedIn, and a domain review of Lens objective/channel/copy coherence. Root Lead integrates; LENS owns content strategy. Use only skill's applicable business-definition/source-of-truth/QA principles; no unnecessary pixel/CAPI/CRM implementation architecture or legal guidance. Organic strategy coverage limitations must be labeled as skill friction/gap, not hidden by claiming paid ad expertise covers it.
 

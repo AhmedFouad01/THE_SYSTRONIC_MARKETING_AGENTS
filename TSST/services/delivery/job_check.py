@@ -10,6 +10,9 @@ Checks:
  c) DELIVERY.html + DELIVERY_INTERNAL.html exist, not older than DELIVERY.json (R19)
  d) job named in a project.md of the brand, in the brand status.md, and the
     brand id has an entry in TSST/core/portfolio.yaml  (R20)
+ e) layout per JOB_LAYOUT.md: README.md exists; top-level files are README,
+    DELIVERY*, desktop.ini or NN_NAME.md/csv (slots 00-08); top-level folders
+    only files/ work/ observations/ (WARN otherwise)
 """
 import json
 import re
@@ -18,6 +21,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # TSST/services/delivery/job_check.py -> repo root
 results = []
+LAYOUT_FILE = re.compile(r"^0[0-8]b?_[A-Z0-9_]+\.(md|csv)$")
+LAYOUT_DIRS = {"files", "work", "observations"}
 
 
 def check(name, ok, detail=""):
@@ -82,6 +87,18 @@ def main():
         portfolio = read(ROOT / "TSST" / "core" / "portfolio.yaml")
         check("d) brand has entry in core/portfolio.yaml",
               re.search(rf"^\s+{re.escape(brand)}:", portfolio, re.M) is not None, brand)
+
+    # e) layout (JOB_LAYOUT.md)
+    check("e) README.md exists", (job / "README.md").is_file(),
+          "" if (job / "README.md").is_file() else "missing - start-here file")
+    top = sorted(job.iterdir(), key=lambda f: f.name) if job.is_dir() else []
+    bad = [f.name for f in top if f.is_file() and f.name != "README.md"
+           and not f.name.startswith("DELIVERY") and f.name != "desktop.ini"
+           and not LAYOUT_FILE.match(f.name)]
+    check("e) top-level file names match NN_NAME.ext", not bad, ", ".join(bad))
+    stray = [f.name for f in top if f.is_dir() and f.name not in LAYOUT_DIRS]
+    if stray:
+        print("WARN  e) unexpected top-level folders (allowed: files/ work/ observations/): " + ", ".join(stray))
 
     ok = all(results)
     print("RESULT: " + ("PASS" if ok else "FAIL"))
