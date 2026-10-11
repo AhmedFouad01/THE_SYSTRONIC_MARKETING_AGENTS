@@ -4,4 +4,4 @@
 | Job | Service | Title | Status | Date | Client page | Internal page | job_check |
 |---|---|---|---|---|---|---|---|
 | `campaign-01` | SV-05 Campaigns | Launch Campaign: Three Posts | progress | 2026-10-09 | [DELIVERY.html](projects/campaign-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/campaign-01/DELIVERY_INTERNAL.html) | PASS, 2 warn |
-| `campaign-01/marketing-week-01` | Marketing week 01 | First-Week Marketing Plan | review | 2026-10-11 | [DELIVERY.html](projects/campaign-01/marketing-week-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/campaign-01/marketing-week-01/DELIVERY_INTERNAL.html) | PASS |
+| `campaign-01/marketing-week-01` | Marketing week 01 | First-Week Marketing Plan | review | 2026-10-11 | [DELIVERY.html](projects/campaign-01/marketing-week-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/campaign-01/marketing-week-01/DELIVERY_INTERNAL.html) | PASS, 1 warn |

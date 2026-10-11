@@ -2,6 +2,8 @@
 
 ## Active owner direction — 2026-10-11
 
+Week-one DELIVERY page built 2026-10-11 (in review): [marketing-week-01/DELIVERY.html](marketing-week-01/DELIVERY.html) (+ internal).
+
 Current track: week-one marketing foundation, content strategy, content/copy plan and awareness measurement by LENS + SPARK. Review package: [marketing-week-01/README.md](marketing-week-01/README.md). Status: REVIEW DRAFT; no strategy/release approval implied.
 
 Owner correction: the first ANVIL Facebook post has NOT been published. It is the same existing Shark Facebook page; the name WILL change, not verified as already changed. Historical publication statements below are superseded for this scope. Other platform histories are unverified.

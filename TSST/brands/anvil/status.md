@@ -12,6 +12,8 @@ Owner approved CINEMATIC V1 and separately approved the FORMAL brand-guideline d
 
 ## Current campaign pointer — owner correction 2026-10-11 (retained)
 
+- DELIVERY page (R19) built 2026-10-11, in review: client [DELIVERY.html](projects/campaign-01/marketing-week-01/DELIVERY.html) · internal [DELIVERY_INTERNAL.html](projects/campaign-01/marketing-week-01/DELIVERY_INTERNAL.html); render QA passed after 5 generator fixes.
+
 Active scope: campaign-01 week-one marketing planning by LENS and SPARK. [Review package](projects/campaign-01/marketing-week-01/README.md) and [checkpoint](projects/campaign-01/marketing-week-01/08_LEAD_CHECKPOINT.md). Goal: ANVIL awareness and Shark trust transfer. Platforms: Facebook, Instagram, TikTok, LinkedIn. Budget stated: 2000 (EGP planning assumption), planning only.
 
 First ANVIL Facebook post is NOT published; SAME Shark page will change its name. Existing audience/history are not assumed zero. AE/video continuation paused by owner. The old pilot acceptance queue below is historical and must not be resumed for this request. Current package is REVIEW DRAFT, awaiting owner strategy/copy approval and start timing; no release or spend authorized.
