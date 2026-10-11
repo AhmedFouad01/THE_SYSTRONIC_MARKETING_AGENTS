@@ -10,8 +10,8 @@ Last updated: 2026-10-11 by the Lead.
 
 ---
 
-## T0 · Repo branch separation: OPEN 2026-10-11 → Codex (backup Lead)
-Prompt + limits: `TSST/handoffs/repo-cleanup/STEP3-CODEX.md` (no push; local branch/worktree cleanup only).
+## T0 · Repo cleanup: DONE 2026-10-11 (steps 1–4, Lead-reviewed, pushed). Skip this track.
+Prompt + limits: `TSST/handoffs/repo-cleanup/STEP4-CODEX.md` (no push; move 2 TSST commits off anvil + REAL_MEMORY update + leftovers).
 
 
 ## T1 · Delivery System v1 (bilingual): DONE 2026-10-09 (CREATIVE; Lead-reviewed). Skip this track.

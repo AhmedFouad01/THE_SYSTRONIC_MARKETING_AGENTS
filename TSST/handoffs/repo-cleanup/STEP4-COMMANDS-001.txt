@@ -1,0 +1,1822 @@
+STEP4 session: 2026-10-11T19:50:59.5109601Z
+Owner approval: اه موافق; STEP4 scope including durable TSST Real Memory entries and sole Force exception for scrub-anvil.
+Initial instruction read command: Get-Content STEP3-RESULT.md, AGENTS.md, boot.md, rules.md, codex.md; Get-ChildItem repo-cleanup. Exit 0. Full output follows.
+# STEP 3 RESULT — 2026-10-11
+
+Verdict: DONE WITH SKIPS. Local cleanup only; owner approved in chat before execution.
+Runtime: Codex backup Lead. Routed read-only support: DEV_AG (`tsst_dev`).
+Agent files applied: `TSST/LEAD/AGENT.md`, `TSST/DEV/AGENT.md`.
+Skills used: TSST-DEV-SK-015 (fresh verification), TSST-DEV-SK-016 (handoff); TSST-CTX-SK-023 consulted for existing git-hygiene gap. All remain UNVALIDATED.
+
+## Verdict per item
+
+1. **DONE** — copied six `repo-cleanup/*.md` files, `TSST/core/friction-log.md`, and `TSST/handoffs/LIMIT_FALLBACK.md` into the clean `tsst-core/owner-rules` worktree. Source/destination SHA256 matched for every copy. `desktop.ini` excluded. Commit `3184e369a301eb9bcfe60b5c82624dc01b6c2473`, exact message `docs(tsst-core): repo-cleanup handoffs + friction rows`; eight files, 582 insertions / one deletion. Worktree verified clean afterwards. Result file created after removal, so it is not part of that commit.
+2. **6 DELETED / 1 SKIPPED** — exact prefixes reconciled against ASSESSMENT and live branch listing before deletion. Each deleted branch passed `merge-base --is-ancestor <branch> master`, then `git branch -d` returned 0:
+
+   | Requested shorthand | Actual local branch | Former tip |
+   |---|---|---|
+   | crm-m0-foundation | feat/crm-m0-foundation | f54fbf6 |
+   | crm-m1-core | feat/crm-m1-core | 93bd92a |
+   | crm-m2-journey-reporting | feat/crm-m2-journey-reporting | a926b9d |
+   | crm-m2-post-close-hardening | chore/crm-m2-post-close-hardening | 4ff20bd |
+   | dev-ag-v0.2 | feat/dev-ag-v0.2 | 893b1da |
+   | tsst-core-v0.2-sync | tsst-core-v0.2-sync | 92696e1 |
+
+   `anvil-sync-tmp` retained at f4fe2e1: ancestor check against master returned 1; four commits are outside master. No deletion attempted, even though it is now free of its worktree. This preserves the explicit merged-into-master condition.
+3. **DONE** — local tag `archive/spike-better-auth-b0` created; tag and retained branch both resolve to `5175a91579eebc9dd2943c585b27de4670b6ad4b`.
+4. **PARTIAL / SAFE SKIPS** — both exact worktrees `C:/Work/anvil-sync` and `C:/Work/tsst-core-owner-rules` were listed, matched, verified clean, and removed without force. `git worktree prune --dry-run --verbose` had no candidates; normal prune returned 0.
+   - `C:/Work/scrub-anvil`: clean before deletion. Native `Remove-Item -Recurse` failed on hidden/read-only/access constraints after removing 16 runtime files. Restored only those own deletions with `git restore --worktree -- <16 exact paths>`; verified clean afterwards. Folder retained; no force retry.
+   - `C:/Work/gl-out` and `C:/Work/gl-out2`: listed and matched, but `git status` returned 128 (not Git repositories). Retained because the requested clean-Git check could not pass. Their files are scan reports, not worktrees.
+   - `C:/Work/backup/*` untouched. No CRM worktree inspected, removed, or modified.
+5. **INSPECTED / KEPT** — `git stash show -p stash@{0}` returned 0. Stash is `On feat/crm-mvp-ui: wip(crm): import — read-excel-file 9.3.10 dep (partial, sprint run 2026-10-07)`. Two files: `CRM_APP/package.json` and `CRM_APP/package-lock.json`, 68 insertions / two deletions. Adds `read-excel-file` 9.3.10 and lock entries for fflate, graceful-fs, node-int64, saxen, unzipper-esm, worker-f. No apply, pop, or drop.
+6. **REPORT ONLY** — inventories below; no branch switching, WIP staging, movement, or track changes.
+
+## Remote branches merged into origin/master
+
+Fresh local remote-tracking inventory; no fetch/network operation, so this is not a server-side freshness claim:
+
+```text
+origin/HEAD -> origin/master
+origin/chore/crm-m2-post-close-hardening
+origin/chore/pilot-eol
+origin/chore/tsst-001a-baseline
+origin/chore/tsst-session-2-spine
+origin/feat/c7-phase2-brand-assets
+origin/feat/c7-vill-strategy-baseline
+origin/feat/crm-m2-journey-reporting
+origin/feat/team-skills-rule
+origin/master
+origin/tsst-core-v0.2-sync
+origin/tsst-core/owner-rules
+```
+
+## CRM lanes contained in feat/crm-mvp-ui
+
+Verified by `git branch --merged feat/crm-mvp-ui`; target remains 4015129:
+
+```text
+feat/crm-charts
+feat/crm-ec2
+feat/crm-import
+feat/crm-p1b
+feat/crm-review-fix1
+feat/crm-review-fix2
+feat/crm-server-search
+feat/crm-ui-migration
+feat/crm-v3-dashboard
+feat/crm-v3-nav-import
+```
+
+## Main-tree WIP by R21 track
+
+Filename inventory only; contents/ownership were not reviewed. Full exact paths are in the command log.
+
+| Track | WIP observed | Branch for a future authorized commit |
+|---|---|---|
+| ANVIL | Modified `rollup-pre-hell/project.md`; untracked `CHATGPT_CREATIVE_CHECKPOINT_2026-10-11.md`; nine images under `rollup-pre-hell/chatgpt-pack/` | Existing `anvil/campaign-01-reveal` |
+| Skill validation | `TSST/skills/validation/check_locators.py`; round-1 JUDGE_PACKET/RUN_LOG; 25 results across CREATIVE-SK-005/-010, DEV-SK-011/-015, LENS-SK-002 | Proposed `skill-validation/round-1` (not created) |
+| SCC | Untracked `systronic-control-center/` | Proposed `scc/scaffold` (not created) |
+| Font ZIP | Untracked `monumentextended-freeforpersonaluse.zip` | Proposed `creative/font-assets` (not created); placement/licence still undecided |
+| Lead cleanup | Modified `LIMIT_FALLBACK.md`; original repo-cleanup handoffs remain untracked on main | Existing `tsst-core/owner-rules`; snapshot committed above. Main originals preserved |
+
+Main branch stayed `anvil/campaign-01-reveal` at d97fb10; master/origin/master stayed f53676c. Main WIP status before/after cleanup matched; only the requested new result/evidence files are added by reporting. Git's main worktree listing displays `C:/GitMetadata/...git`; operational commands used the explicitly requested G: working tree and verified that gitdir.
+
+## Commands, evidence, limitations
+
+Full command/output record: [STEP3-COMMANDS-001.txt](STEP3-COMMANDS-001.txt). Includes all operational commands, copy hashes, exit codes, failures, recovery and final inventories. Initial instruction reads are recorded separately from operational logs. Main script uses native PowerShell file operations only, exact resolved delete allowlists, and Git without config changes.
+
+Checks: fresh branch ancestry, exact copy hashes, clean worktree states, tag equality, retained stash, final refs/worktrees; `friction_check.py` returned 0 (56 rows, no repeated friction). Existing git-hygiene gap was already in the copied friction rows; no new rule or skill claim, no added friction edit to main WIP.
+
+No push of any kind, force, merge, rebase, history rewrite, config edit, `branch -D`, stash drop, brand edit, or protected CRM write was performed. Git emitted LF/CRLF warnings during staging; source files were copied byte-exact and configuration was unchanged.
+
+Remaining items: one unmerged temp branch and three retained scratch/report folders. This is a completed bounded run with explicit skips, not a claim that all cleanup candidates were deleted.
+
+## Final git branch -vv and git worktree list
+
+Fresh exact output appended below during report generation.
+
+```text
+> git branch -vv
+  anvil-sync-tmp           f4fe2e1 fix(tsst-delivery): v1.1 render-QA fixes (bidi punctuation, Arabic comma, nowrap) + R20 sync + Real Memory
+* anvil/campaign-01-reveal d97fb10 [origin/anvil/campaign-01-reveal: ahead 2] docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
++ feat/crm-charts          7583671 (C:/Work/tsst-crm-lanes/charts) docs(crm): charts — week starts Saturday, browser timezone (user decisions 2026-10-07)
++ feat/crm-ec2             cb07789 (C:/Work/tsst-crm-lanes/ec2) wip(crm): EC2 hosting outline (prepare only, deferred)
++ feat/crm-import          ed06974 (C:/Work/tsst-crm-lanes/import) feat(crm): import server — CSV + xlsx parse, mapping, preview, idempotent job
++ feat/crm-mvp-ui          4015129 (C:/Work/tsst-crm-mvp) merge(crm): review fix batch 2 — single name, contact fields/types, lead needs phone or email
++ feat/crm-p1b             6ca52bf (C:/Work/tsst-crm-p1b) Review and harden P1a list security
+  feat/crm-review-fix1     760cfdc fix(crm): add accessible kit file drop zone and native control guard
++ feat/crm-review-fix2     9301f2f (C:/Work/tsst-crm-codex) fix(crm): finish R10 lead contact validation and import regressions
+  feat/crm-server-search   fcd57c5 feat(crm): P1a S5 — Arabic-folded search, related-name search/sort, contact sources
+  feat/crm-ui-migration    3ac5741 feat(crm): U19 — migrate remaining properties and reporting surfaces
++ feat/crm-v3-dashboard    9034abe (C:/Work/tsst-crm-lanes/dash) feat(crm): D6 — chart record activity and order widgets by scope
+  feat/crm-v3-nav-import   7411549 feat(crm): I3R — commit imports and show result ledger
+  master                   f53676c [origin/master] docs(tsst-core): L-006 repo-cleanup lesson + R21/R22 session note
+  spike/better-auth-b0     5175a91 spike(crm): B0 better-auth@1.7.7 probes U1-U11 (THROWAWAY, never merge)
+  tsst-core/owner-rules    3184e36 docs(tsst-core): repo-cleanup handoffs + friction rows
+
+> git worktree list
+C:/GitMetadata/THE_SYSTRONIC_MARKETING_AGENTS.git d97fb10 [anvil/campaign-01-reveal]
+C:/Work/tsst-crm-codex                            9301f2f [feat/crm-review-fix2]
+C:/Work/tsst-crm-lanes/charts                     7583671 [feat/crm-charts]
+C:/Work/tsst-crm-lanes/dash                       9034abe [feat/crm-v3-dashboard]
+C:/Work/tsst-crm-lanes/ec2                        cb07789 [feat/crm-ec2]
+C:/Work/tsst-crm-lanes/import                     ed06974 [feat/crm-import]
+C:/Work/tsst-crm-mvp                              4015129 [feat/crm-mvp-ui]
+C:/Work/tsst-crm-p1b                              6ca52bf [feat/crm-p1b]
+```
+# The Systronic Smart Team
+
+## Boot (all runtimes) — 2026-10-04
+
+Start every task with [TSST/context/boot.md](TSST/context/boot.md) (provider-neutral). **Rule: every task is done by the routed TSST team with its skills — never ad hoc by the model** (`TSST/core/rules.md` Must 9). Every runtime routes tasks by the **Universal task routing** section below. Runtime mechanics: [Claude](TSST/context/adapters/claude.md) · [Codex](TSST/context/adapters/codex.md) · [ChatGPT](TSST/context/adapters/chatgpt.md) (manual bridge) · Gemini/Antigravity retired as a runtime (ADR-004); [Gemini Desktop](TSST/context/adapters/gemini-desktop.md) = manual external tool via Ahmed (TSD-018). Portfolio: [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml). Pointer first, context second: load only the active brand/project and the matched skills. Sections below remain valid; where they conflict on load order, boot.md wins.
+
+Use [TSST Lead](TSST/LEAD/AGENT.md) as the executive role and the user's single direct interface. Consult the relevant sections of [team governance](TSST/TEAM_CONSTITUTION.md), [readiness](TSST/READINESS_REPORT.md) and the team skill map in [TSST/teams/](TSST/teams/README.md) before selecting skills; do not load whole registries. Specialist names are CREATIVE_AG, MOTION_AG, LENS_AG, SPARK_AG and DEV_AG.
+
+Existing evaluations are historical evidence. Do not rerun them, start campaigns or begin Deep Onboarding unless the user explicitly requests that work. Do not infer company facts from fictional fixtures. Onboarding is prepared at [Deep Onboarding](TSST/LEAD/DEEP_ONBOARDING.md); its persistent profile starts empty.
+
+Use canonical TSST IDs and preserve validation boundaries. The [specialist registry](TSST/SKILL_REGISTRY.md) and [Lead registry](TSST/LEAD/SKILL_REGISTRY.md) are repository-local package catalogs. Load only relevant skills. The workbook is the historical specialist import and does not include the new Lead's 30 skills.
+
+
+## CREATIVE production rule — 2026-09-24
+
+When a task requests actual social creative, load `TSST/CREATIVE/AGENT.md`, `CREATIVE_PRODUCTION_STANDARD.md`, `FINAL_ASSET_GATE.md` and only the relevant production skills. CREATIVE_AG may invoke its internal DESIGNER_AG worker. Video, motion, reels, animation, voice-over and shot lists belong to the independent Motion AG team (`TSST/MOTION/AGENT.md`, [TSST-ADR-005](TSST/decisions/TSST-ADR-005.md)); CREATIVE_AG does the final brand check on its video. HTML/browser layouts, prompts, briefs or storyboards are `PREVIS`, not final PNG/MP4 campaign assets. Final creative requires actual render QA.
+
+
+## Approved DEV_AG registration — 2026-09-28
+
+[DEV_AG](TSST/DEV/AGENT.md) is a governance-`APPROVED` Software Engineering & Solutions specialist under TSST Lead with 16 `UNVALIDATED` core skills. Use its [lightweight registry](TSST/DEV/SKILL_REGISTRY.md) only for relevant routed technical scope. User approval is recorded in [TSST-ADR-002](TSST/decisions/TSST-ADR-002.md). Governance registration and repository merge only; no PILOT_READY, PRODUCTION_READY, autonomous execution authority or skill validation is granted. DEV_AG remains NOT_READY; existing specialist authority and readiness gates remain unchanged.
+
+<!-- TSST-UNIVERSAL-ROUTING-BEGIN (ADR-003/004) -->
+## Universal task routing — every runtime (Claude Code, Codex)
+
+The runtime's **main session is the TSST Lead**. For every task, before any work:
+
+1. **Boot** — `TSST/context/boot.md` (brand, project, checkpoint, rules).
+2. **TEAM** — `TSST/context/router.yaml#team_routing`.
+3. **AGENT** — `TSST/context/roster.yaml#route`: marketing → `tsst-lens` (paid media/measurement → `tsst-spark`) · studio → `tsst-creative` · motion (video, reels, animation, voice-over, shot lists) → `tsst-motion` · build → `tsst-dev` · reads/inventory only → `tsst-reader` · decisions/acceptance → stay in the Lead.
+4. **SKILLS** — `python TSST/skills/build_index.py --team <team>` → pick ≤3 ids (`--id <ID>` for a path). No fit → `SKILL_GAP` → `TSST-CTX-SK-023`.
+5. **TIER** — the agent's default tier in `roster.yaml` (FAST/WORK/CODE/DEEP); raise only on evidence.
+6. **MODEL** — `TSST/bus/runtimes.yaml#<your runtime>.tier_<TIER>`: only models **your plan actually has**. Never name a model your runtime does not list; if one is missing use the next tier up and say so.
+7. **DISPATCH** — spawn your runtime's generated agent `tsst-<id>` (it already carries the right model) with the Skill Plan block: `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER / ACCEPTANCE / SKILL_GAP`.
+8. **ACCEPT** — reject any return without `Skills used:`; record `skill_friction`. Rules R1–R14: `TSST/core/rules.md` (R11–R14 = usage discipline).
+9. **DELIVER + SYNC** — R18–R20 (`TSST/core/rules.md`): job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync, `job_check.py`.
+
+| | Claude Code (Claude Pro) | Codex (ChatGPT Plus) |
+|---|---|---|
+| team agents (generated) | `.claude/agents/tsst-*.md` | `.codex/agents/tsst-*.toml` |
+| tier → model for your plan | `TSST/context/adapters/claude.md` | `TSST/context/adapters/codex.md` |
+| DEEP (Lead) | main session | main session; DEEP-only decisions per the Codex adapter |
+| enforcement | dispatch hook + bus | bus + generated agent instructions |
+| TSST skill auto-load | none (index only) | `.agents/skills/tsst-router` |
+
+Model names live only in `TSST/bus/runtimes.yaml` and the adapters (core rule 8); generated agents
+already carry the right model. Regenerate agents with `python TSST/context/gen_runtime_agents.py`. Runtime mechanics:
+`TSST/context/adapters/<runtime>.md`. Antigravity/Gemini is **retired** (ADR-004).
+A large input is a reason to partition (reader), not to use a bigger model. Model routing never
+grants action authority; `TSST/TSST_DECISION_RIGHTS.md` stays controlling.
+<!-- TSST-UNIVERSAL-ROUTING-END -->
+
+# TSST Boot — portable operating entry point
+
+Provider-neutral. No model names, no provider tools. Runtime specifics live only in
+`TSST/context/adapters/<runtime>.md`. Every runtime (and every future runtime) runs this
+same sequence.
+
+Principle: **pointer first, context second.** Load the smallest authoritative slice that
+answers the current task. Large context is not better context.
+
+## Boot sequence
+
+| # | Step | Read | Stop condition |
+|---|------|------|----------------|
+| 0 | Bus check | `python TSST/bus/bus.py ls --me <runtime-id>` (`TSST/context/bus.md`) | user said continue → claim top `*` task; else continue with the user's task |
+| 0b | Daily board | `python TSST/daily/day.py show` (`TSST/daily/README.md`) | no board today → owner says "ابدأ اليوم" → collect → Lead plans → owner OK → lock; locked → work only on board rows; new request → `park` (core rule R17) |
+| 1 | Resolve TSST | this file + `TSST/context/router.yaml` | — |
+| 2 | Resolve brand | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` | ambiguous brand → ask user (one question); brand but no task → `router.yaml#brand_only_entry` |
+| 3 | Resolve project / workstream | `portfolio.yaml#brands.<id>.projects` → `TSST/brands/<id>/projects/<p>/project.md` | job home = `brands/<id>/projects/<job>/`, never `PILOTS/` or `projects/` (R18) |
+| 4 | Load portfolio pointer | the single brand + project entry only | never read other brand entries in depth |
+| 5 | Resolve canonical memory source | `TSST/brands/<id>/memory/source.md` | access state per runtime (see Memory resolution) |
+| 6 | Recover current status / checkpoint | `TSST/brands/<id>/status.md`, then the project's `checkpoint` pointer | — |
+| 7 | Apply source authority | `router.yaml#source_authority` | conflict → newest verified evidence wins; record it |
+| 8 | Apply do_not_repeat | `project.md#do_not_repeat` + `status.md#do_not_repeat` | — |
+| 9 | Apply rules | `TSST/core/rules.md`, then `TSST/brands/<id>/rules.md` | brand rule never overrides a core safety rule |
+| 10 | Build minimum context pack | only files named by steps 3–9 for this task | budget: `router.yaml#context_budget` |
+| 11 | Route team | `router.yaml#team_routing` → `TSST/teams/<team>/team.md` (team `lead` → `TSST/LEAD/AGENT.md`) | fixed roster only (rules R1–R2); runtime agent per adapter |
+| 12 | Route skills | `TSST/skills/index.yaml` (team slice) + team map → Skill Plan; load only the matched skill(s) | never load a whole registry; **mandatory — no ad-hoc work without team + skills** (`TSST/core/rules.md` 9) |
+| 13 | Route logical model tier | `TSST/context/models.yaml` (FAST/WORK/CODE/DEEP/IMAGE/VIDEO) | adapter maps tier → actual model |
+| 14 | Verify authority | `TSST/TSST_DECISION_RIGHTS.md` (relevant row only) | not authorised → ask user |
+| 15 | Execute | — | — |
+| 16 | Checkpoint | update `status.md` / project checkpoint pointer (repo); job delivered → R19 `DELIVERY.json` → `build_delivery.py`, R20 four-way sync (DELIVERY.json, project.md, status.md, portfolio.yaml) + `python TSST/services/delivery/job_check.py <job>` | durable Real Memory writes need approval |
+| 17 | Learning / memory gate | `TSST/core/lessons.md#promotion_gate` | brand-specific → brand `rules.md`; reusable → global lesson candidate |
+
+## Memory resolution (mandatory)
+
+```
+brand → canonical memory source → current status → latest relevant checkpoint
+      → relevant decisions/rules → minimum required source files → execute
+```
+
+- Brand `memory/` folders hold **pointers only**. Never copy, merge, or preload a brand's
+  Real Memory tree.
+- The *address* of a memory source is provider-neutral (Drive path / Drive file).
+  The *access method* is defined by the runtime adapter.
+- Access is resolved per runtime, never globally:
+
+  ```
+  canonical source → runtime capability check (adapter) → direct read if supported
+    → authorised bridge/export adapter if not (see TSST/context/bridge.md)
+    → SOURCE_UNAVAILABLE only if no authorised access path exists
+  ```
+
+  | state | meaning | action |
+  |---|---|---|
+  | `SOURCE_AVAILABLE` | this runtime can read the source | read the minimum slice |
+  | `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME` | source exists and is readable elsewhere (e.g. `.gdoc` in a filesystem runtime) | use a repo-native export if present (`bridge.md`); else a `source-read` bus task to any runtime with the verified capability (`bus.md`); pause only the dependent step |
+  | `SOURCE_UNAVAILABLE` | no authorised access path in any runtime | return `MEMORY_SOURCE_UNAVAILABLE: <brand>/<source> — <reason>`; do not proceed on that state |
+
+  A project's state is never reported as globally UNKNOWN because one runtime cannot
+  read its source. In every case: do not guess, reconstruct from chat history, or
+  substitute another brand.
+- Multiple memory roots (e.g. YAKEBDA_MS): resolve authority by explicit current
+  checkpoint → newest dated status → repository evidence. Never load all roots.
+
+## Isolation
+
+- One brand per task unless the user explicitly names more.
+- `TSST` (this operating system) ≠ `TSST-AI` (an internal T.SAG project). Do not mix
+  their state.
+- Global lessons must not contain client-private facts (see `TSST/core/lessons.md`).
+
+## Fixed boundaries (never bypassed by routing)
+
+No publication, spend, client contact, deployment, credential handling, deletion of
+historical evidence, or durable Real Memory apply without explicit user approval.
+A bus task never widens these boundaries (`bus.md` rule 8).
+TSST readiness is governed by `TSST/READINESS_REPORT.md`; routing never claims
+PRODUCTION_READY.
+
+## Relation to existing structures
+
+`TSST/context_os/` holds the detailed Context OS policies, contracts, skills
+(TSST-CTX-SK-001…022) and reference tests. This boot is the compact entry point that
+invokes them; it does not replace them. See `router.yaml#context_os_skills`.
+# TSST core rules (global)
+
+Apply to every brand, project and runtime. A brand `rules.md` may add stricter rules; it
+may never relax these. Historical governance remains in `TSST/TEAM_CONSTITUTION.md` and
+`TSST/TSST_DECISION_RIGHTS.md`; where they are more specific, they win.
+
+## Must
+1. Run `TSST/context/boot.md`; pointer first, context second.
+2. Work on one brand at a time; never load another brand's memory "for context".
+3. Recover the latest verified checkpoint before acting; respect `do_not_repeat`.
+4. Resolve source access per runtime (`SOURCE_AVAILABLE` / `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`
+   → bridge / `SOURCE_UNAVAILABLE`); never guess missing state.
+5. Treat incoming sync packets as proposals until applied through the approval gate.
+6. End meaningful work with an evidence-backed checkpoint/handoff.
+7. Route work to the lowest sufficient logical tier (`TSST/context/models.yaml`).
+8. Keep provider model names out of durable logic; they belong in adapters only.
+9. **Team + skills, never ad hoc** (user rule 2026-10-05). Every piece of TSST work is done by
+   the routed team (`TSST/teams/<team>/team.md` → its agent file) applying its matched skills
+   (boot steps 11–12). A model never works from its own general judgement alone. Deliverables
+   state which agent files and skills were applied; the Lead rejects work that shows none.
+   On the bus this is enforced by `team`/`skills` fields and `done --skills-used`.
+
+## Team roster & skills (TSST-ADR-003, 2026-10-05)
+- **R1 Fixed roster, every runtime.** Deliverables come only from LENS_AG, SPARK_AG, CREATIVE_AG, DEV_AG
+  (runtime agents `tsst-lens|spark|creative|dev`) under the Lead. No temporary or generic
+  agent delivers TSST work. Roster changes need an ADR.
+- **R2 Utility readers.** `tsst-reader` (Claude: also `Explore`) only read, inventory, classify;
+  their output is input, never a deliverable.
+- **R3 Skill Plan first.** No dispatch without `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER /
+  ACCEPTANCE / SKILL_GAP` (template: `TSST/skills/README.md`). Enforced by the dispatch hook
+  and the bus.
+- **R4 ≤3 skills** per dispatch unless the plan names and justifies more.
+- **R5 Index only.** Find skills through `TSST/skills/index.yaml` (team slice). Never load a
+  whole registry or every agent file.
+- **R6 Lead judges, team executes.** Lead skills (TSST-LEAD-*) are for decision and review;
+  execution uses the specialist's method skills.
+- **R7 Gap → intake.** No matching skill = `SKILL_GAP` → `TSST-CTX-SK-023`. Never fill a gap
+  with the model's general judgement.
+- **R8 External skills** = security review → user approval → `UNVALIDATED`. File existence is
+  never validation.
+- **R9 Evolution.** Skills change by version + changelog line; agents report `skill_friction`;
+  promotion only with CTX-SK-018 evidence.
+- **R10 Evidence.** Every deliverable lists `Skills used:`; the Lead rejects work without it.
+
+## Usage discipline (TSD-016, 2026-10-06)
+Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (cache reads up to
+~17M tokens per agent with a few k output), "verify + finish" re-dispatches and a 2-day Lead session.
+- **R11 One-pass batches.** Size each dispatch so the agent finishes and verifies in one run
+  (one slice, explicit file list, explicit test command). A batch that needed a "finish" agent
+  is split smaller next time, not re-dispatched whole.
+- **R12 Resume, don't restart.** An unfinished agent is continued (SendMessage / same agent
+  id) with only the missing step, never re-dispatched from zero to re-read everything.
+- **R13 Phase-bounded sessions.** Close the Lead session at each phase end with a short
+  handoff/checkpoint (Must 6) and start a new one; no multi-day Lead sessions.
+- **R14 Cheapest reader first.** Exploration, inventory and evidence gathering go to
+  `tsst-reader` (FAST) before any WORK/CODE agent or the Lead reads widely. Retired or generic
+  agents (`general-purpose`, `tsst-*-worker`) are never dispatched.
+
+## Lead ↔ owner conversation (owner rule, 2026-10-09)
+- **R15 Clear, short, exact.** Whatever runtime acts as Lead answers the owner clearly, briefly
+  and precisely: verdict first, no padding, nothing unverified stated as fact.
+- **R16 Ask before dispatch.** While discussing, the Lead asks the owner the open questions and
+  confirms scope + cost before delegating to any agent or runtime; no dispatch mid-discussion.
+
+## Daily board (owner rule, 2026-10-09)
+- **R17 Locked daily board.** A working day starts when the owner says "ابدأ اليوم":
+  `python TSST/daily/day.py collect` → the Lead plans every row (team / agent / skills / tier /
+  executor / after / done_when; the owner's manual work = executor `ahmed`) → owner OK → `lock`.
+  While locked, work runs only on board rows, one track at a time; any new request is `park`ed
+  to tomorrow's inbox. It enters today only with the owner's explicit OK in chat
+  (`add --owner-ok --swap <row>`), and the swapped row moves to tomorrow. Day end: `close`
+  (unfinished → tomorrow) + project checkpoints (Must 6). Spec: `TSST/daily/README.md`.
+
+## Job home, delivery, sync (owner rule, 2026-10-11)
+- **R18 Job home.** Every client job lives in `TSST/brands/<id>/projects/<job>/` and is listed in that brand's project.md. Never create new work in `TSST/PILOTS/` (historical archive, read-only) or `TSST/projects/`. Layout: `TSST/services/delivery/JOB_LAYOUT.md`. Start new jobs with `new_job.py` (`TSST/services/delivery/new_job.py`).
+- **R19 Delivery page.** Every job that reaches the owner or client ends with `<job>/DELIVERY.json` → `python TSST/services/delivery/build_delivery.py <job>` → `DELIVERY.html` (client) + `DELIVERY_INTERNAL.html`, per `TSST/services/delivery/README.md` (v1.0). The Lead sends the page, not a folder of markdown files.
+- **R20 Same-round sync.** In the same round as the deliverable, update: the job's DELIVERY.json statuses, the brand project.md (job + state), brand `status.md` (Current), and the brand line in `TSST/core/portfolio.yaml`. A job is not done until the four agree. Check: `python TSST/services/delivery/job_check.py <job>`; refresh the brand index with `python TSST/services/delivery/sync_jobs.py <brand>` (generates `TSST/brands/<id>/JOBS.md`; job_check f) fails if it is stale).
+
+## Branch per track (owner rule, 2026-10-11)
+- **R21 Branch first.** The moment a brand, product or track comes up (ANVIL, VILL, CRM, SCC,
+  skill validation, Motion…), whatever runtime acts as Lead checks `git branch --show-current`
+  and, if it doesn't match, proposes switching to that track's branch (or creating
+  `<brand|track>/<topic>`) before any commit. Never commit track X on track Y's branch;
+  parallel sessions each use their own branch or worktree. Applies to every runtime and agent.
+
+## One Lead memory (owner rule, 2026-10-11)
+- **R22 Owner rules live in TSST.** Whatever the owner tells the Lead, in any runtime (Claude,
+  Codex, Gemini, Antigravity…), is the same rule everywhere: the Lead writes it here in
+  `TSST/core/rules.md` in the same turn. Runtime-private memory (e.g. Claude auto-memory) may
+  only point to the rule number, never hold an owner rule that TSST doesn't have.
+
+## Owner rules moved from runtime memory (owner rule, 2026-10-11, R22)
+Lead conversation
+- **R23 Arabic owner replies.** Every reply to the owner is plain Egyptian Arabic; English only for unavoidable identifiers (paths, IDs, commands), in code spans. Agent English never changes the reply language.
+- **R24 Audit scope first.** No audit/review/fix round starts before the owner sees a numbered fix list (item, done-when, rough cost) and says OK. Never open-ended.
+- **R25 One next step.** A finished track ends with a short state + at most one proposed next step, not a menu. State token cost before spawning several agents.
+- **R26 Lead spends on analysis.** Lead tokens go to understanding, replying, reviewing team packets and skill validation; all doable work goes to the team.
+- **R27 Visual first.** Systems, plans and roadmaps are explained with a diagram first; big projects keep a live visual blueprint (CREATIVE-SK-031).
+Routing, cost, files
+- **R28 Marketing order.** LENS (story/copy) → SPARK (formats/KPIs) → CREATIVE; parallel only when questions don't overlap.
+- **R29 Research route.** Broad gathering, long reads and web research go first as a Gemini app request (ROLE B, paste-ready); launch-blocking facts are re-verified on the live official page.
+- **R30 Plan first, light reviews.** Spec before build; per-slice checks stay light; heavy reviews (security, full UI, AR/EN visual gate) only pre-launch.
+- **R31 Video fits the package.** Client video defaults to one-pass production, one credit quote, max one re-roll; shot-by-shot QA only for big budgets or training rounds.
+- **R32 Limit handoff.** Near a usage limit, keep `TSST/handoffs/LIMIT_FALLBACK.md` current with paste-ready prompts; never hand off spend, publishing, account actions or paid generation.
+- **R33 Next free ID.** Before creating any request/handoff/GEM file, list the folder and take the next free number; never overwrite (parallel sessions).
+- **R34 Tiny handoff files.** Handoff and bus files are pointer-first, no recaps; enforce format in code, not prose.
+- **R35 Log skill friction.** After every team report, a non-`none` skill_friction goes to `TSST/core/friction-log.md`, then run `TSST/context/friction_check.py`.
+Creative, product, delivery
+- **R36 Owner drafts are the floor.** Raise the owner's draft; keep what he accepted; ask before dropping any element.
+- **R37 Measure brand facts.** Before saying something matches a brand, measure it against current approved assets (hex/hue/font) and name what was measured.
+- **R38 AI shots, not raw slideshows.** Client raw media is reference only; plan video per shot (reference → AI still → AI video → assembly); confirm the pipeline with the owner first. CREATIVE + MOTION.
+- **R39 No native controls.** No product ever ships browser-native unstyled controls (file, date, colour, range, select, checkbox); styled kit components only, stated in every UI brief.
+- **R40 Client pages are formal.** DELIVERY.html shows no internal names, tools, IDs, spend gates, rejected work or sources; one language per sentence. Internal detail → DELIVERY_INTERNAL.html.
+
+## Never (without explicit user approval in chat)
+- publish, post, spend budget, contact clients, deploy
+- durably apply Real Memory changes
+- move, merge, duplicate or delete brand Real Memory roots or historical evidence
+- expose or store credentials/secrets in memory or repo
+- claim PILOT_READY / PRODUCTION_READY beyond `TSST/READINESS_REPORT.md`
+- redesign approved work (e.g. MagicPath-approved CRM UI) without a concrete defect
+
+## Creative
+- Exact approved logos/brand marks are preserved or composited, never regenerated, when
+  identity fidelity is required.
+- HTML/browser layouts, prompts, briefs and storyboards are `PREVIS`; final assets require
+  render QA through `TSST/CREATIVE/FINAL_ASSET_GATE.md`.
+
+## Naming
+- Folders: lowercase-kebab-case. Daily files: short semantic names (`status.md`,
+  `project.md`, `checkpoint.yaml`). Long IDs only for immutable audit/history artifacts.
+# Runtime adapter — Codex
+
+Entry: root `AGENTS.md` (Universal task routing) → `TSST/context/boot.md`.
+
+Request role: every request to Codex states ROLE A (team runtime) or ROLE B (external tool) — `TSST/context/request-role.md`. Codex is ROLE A only for a claimed bus task; ad-hoc use is ROLE B.
+
+Bus runtime id: `codex`. Run locally on this working tree (a cloud sandbox sees only
+pushed commits, not the bus). First bus task is its cold-start probe (`REVIEW-001`).
+Near a usage limit: `release` with a resume note, then `limit codex --until <UTC>`.
+Jobs: R18–R20 (`TSST/core/rules.md`) — job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync; check with `python TSST/services/delivery/job_check.py <job>`.
+
+## Plan: ChatGPT Plus — roster → Codex agent (ADR-004)
+Routing follows `AGENTS.md#universal-task-routing`. The main Codex session is the **Lead**
+(boot, Skill Plan, acceptance) on the default `work` profile. Team work is done only by the
+generated custom agents in `.codex/agents/` — each file already pins its model:
+
+| TSST agent | Codex agent | tier | model · effort (`TSST/bus/runtimes.yaml#codex`) |
+|---|---|---|---|
+| reads/inventory (R2) | `tsst-reader` (read-only sandbox) | FAST | gpt-6-luna · low |
+| LENS_AG | `tsst-lens` | WORK | gpt-6.1-sol · medium |
+| SPARK_AG | `tsst-spark` | WORK | gpt-6.1-sol · medium |
+| CREATIVE_AG | `tsst-creative` | WORK | gpt-6.1-sol · medium |
+| MOTION_AG | `tsst-motion` | WORK | gpt-6.1-sol · medium |
+| DEV_AG | `tsst-dev` | CODE | gpt-6.1-sol · high |
+| Lead DEEP-only decision | main session `codex --profile deep` | DEEP | gpt-6-astra · high (few messages per 5 h on Plus — use sparingly, or bus task to the Claude Lead) |
+
+- Model ids come from Codex's own list (`~/.codex/models_cache.json`, `/model`), never from memory.
+  If a mapped model disappears (e.g. `gpt-5.5` retires 2026-10-14), use the next tier up, say so,
+  and ask the Lead to update `runtimes.yaml` + regenerate agents.
+- Skills: Codex preloads `.agents/skills/*` descriptions; only `tsst-router` lives there. TSST
+  skills are found through `TSST/skills/index.yaml` (`build_index.py --team/--id`), ≤3 per task.
+- Bus: `claim` prints `AGENT:` and `RUN ON:`; claim with `--model <what actually ran>`;
+  `done --skills-used` is mandatory. Temporary Codex workers that are not `tsst-*` agents are
+  **not** TSST agents and never deliver TSST work (rule R1).
+- Fewer prompts for unattended work: `sandbox_mode = "workspace-write"` keeps writes inside the
+  workspace; approval settings are the user's choice in `~/.codex/config.toml` (TSST never edits it).
+
+## Memory access
+- Filesystem: repo working tree; `drive:` paths only if the Drive folder is mounted.
+- `.gdoc` → `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`: use the repo-native export if its
+  `EXPORTS.yaml` row exists, else ask the lead for a `source-read` bus task.
+- No push, merge or deploy without user approval.
+- Write files with LF line endings (repo files are hashed byte-exact; CRLF rewrites whole files).
+- Fresh clones on Windows: `git clone -c core.longpaths=true …`
+
+Status: UNVALIDATED. Cold-start not yet executed in this runtime.
+
+Name                   Length
+----                   ------
+ASSESSMENT.md            9594
+desktop.ini               352
+GEM-REPO-001_out.md     39816
+GEM-REPO-001.md          2921
+REPORT-top5.md           9352
+STEP1-RESULT.md         12297
+STEP3-CODEX.md           3301
+STEP3-COMMANDS-001.txt 167139
+STEP3-RESULT.md          9671
+STEP4-CODEX.md           2871
+
+
+> Get-ChildItem -LiteralPath 'G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup' -Force
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\ASSESSMENT.md | 9594 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\desktop.ini | 352 | Hidden, Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\GEM-REPO-001_out.md | 39816 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\GEM-REPO-001.md | 2921 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\REPORT-top5.md | 9352 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP1-RESULT.md | 12297 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-CODEX.md | 3301 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-COMMANDS-001.txt | 167139 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-RESULT.md | 9671 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP4-CODEX.md | 2871 | Normal
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch --show-current
+anvil/campaign-01-reveal
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" log --oneline origin/anvil/campaign-01-reveal..anvil/campaign-01-reveal
+d97fb10 docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+5973ad7 feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-list --reverse origin/anvil/campaign-01-reveal..anvil/campaign-01-reveal
+5973ad7d0f97fa0fdaff21842b23d1c959b01bee
+d97fb1053ee87b77154d17afab4f89642ffdabf5
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" status --porcelain=v1 --untracked-files=all
+ M TSST/brands/anvil/projects/rollup-pre-hell/project.md
+ M TSST/handoffs/LIMIT_FALLBACK.md
+?? TSST/brands/anvil/projects/rollup-pre-hell/CHATGPT_CREATIVE_CHECKPOINT_2026-10-11.md
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_BRAND_COMPOSITE_PREVIEW_ARCHIVE.jpg
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_EARLY_PREVIS_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_PORTRAIT_REVIEW.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_ROUND_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_FRONT_WIDE_REVISION_REVIEW.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_OWNER_APPROVED.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_BRAND_DIRECTION_APPROVED.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_PREVIS_2400x6000_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_formal_quality_v1_REVIEW.png
+?? TSST/handoffs/repo-cleanup/ASSESSMENT.md
+?? TSST/handoffs/repo-cleanup/GEM-REPO-001.md
+?? TSST/handoffs/repo-cleanup/GEM-REPO-001_out.md
+?? TSST/handoffs/repo-cleanup/REPORT-top5.md
+?? TSST/handoffs/repo-cleanup/STEP1-RESULT.md
+?? TSST/handoffs/repo-cleanup/STEP3-CODEX.md
+?? TSST/handoffs/repo-cleanup/STEP3-COMMANDS-001.txt
+?? TSST/handoffs/repo-cleanup/STEP3-RESULT.md
+?? TSST/handoffs/repo-cleanup/STEP4-CODEX.md
+?? TSST/skills/validation/check_locators.py
+?? TSST/skills/validation/round-1/JUDGE_PACKET.md
+?? TSST/skills/validation/round-1/RUN_LOG.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-5.md
+?? monumentextended-freeforpersonaluse.zip
+?? systronic-control-center/
+EXIT: 0
+> SHA256 snapshot of every pre-existing main-tree WIP file (recursive for untracked SCC directory)
+TSST/brands/anvil/projects/rollup-pre-hell/project.md SHA256 5A28DB5FB99D564D6D3F95F33CB1DF747267AA1B119B6ED535689D15107E0031
+TSST/handoffs/LIMIT_FALLBACK.md SHA256 360BB2CD6EF9F7DE8FF0CA141AEB74505FC1E8EBCD37AD0974023BBC9048C0C0
+TSST/brands/anvil/projects/rollup-pre-hell/CHATGPT_CREATIVE_CHECKPOINT_2026-10-11.md SHA256 5C36B49F570BF06C0C18C8E781832BFB50337FC3E1EEF2D81014F13004E6B26E
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_BRAND_COMPOSITE_PREVIEW_ARCHIVE.jpg SHA256 08C4864008C3984622B6F409D69E28F7D927F67319ED69CEA1AC2CE264380E84
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_EARLY_PREVIS_ARCHIVE.png SHA256 14D7801A1151AFADD897C6438643D2A3C7B0B7CF496A45E974A3189CF4FFB93D
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_PORTRAIT_REVIEW.png SHA256 3A27248A664D94E3C1EE2A60D10F0BA7EA0F05BB5635CFCDC459E8BBDF20E579
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_ROUND_ARCHIVE.png SHA256 4EA524CCE99085A6A4FC8239670741A8ACC6885F88D9BA7C8B886F66468A2073
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_FRONT_WIDE_REVISION_REVIEW.png SHA256 F48FF0D852F57E4AB30896BD82E1259A15F8BBF6358C208695D3D033BFE1BB73
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_OWNER_APPROVED.png SHA256 E2A4BC586ED85273E0E6AC10FB08FF46612615275CFF2009054C6B5D0665F018
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_BRAND_DIRECTION_APPROVED.png SHA256 A800B8A384D1DAC07E35F775B604DE991950547E06C8CE92E59A51206871960D
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_PREVIS_2400x6000_ARCHIVE.png SHA256 5352CF61F1B22D945AE8295720158EC3C5C09F816A95EEF7A4BF48E6DB5AB6F1
+TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_formal_quality_v1_REVIEW.png SHA256 17FA3876306D9186244C18D2CF2EC9F5D59E49B34CD2B32E4AA871D726E89548
+TSST/handoffs/repo-cleanup/ASSESSMENT.md SHA256 1516E16EDFD3CB61D2655A1552FD761130120EB888760D14671DFC0F54B6147B
+TSST/handoffs/repo-cleanup/GEM-REPO-001.md SHA256 9887F16F52D0ED2E833CF4435CFAF6F5856E80D7C4756E7B5A90117830A31F91
+TSST/handoffs/repo-cleanup/GEM-REPO-001_out.md SHA256 5CE2A12639829EF535E08B86EC19DD9223804F86CB3165EBF2F0A9E89DD05539
+TSST/handoffs/repo-cleanup/REPORT-top5.md SHA256 BE83D7E9676D90FAE5DAEEDAD09CB14BBFBBC312E6C6407A488558E6D74CB34E
+TSST/handoffs/repo-cleanup/STEP1-RESULT.md SHA256 66BCBF7D0B20EE8BC9CDB2777CF2FFB417EB46F645C40943A864361C3257E1B8
+TSST/handoffs/repo-cleanup/STEP3-CODEX.md SHA256 B5E08B650B6F32F3ABBC295DA48255BA3DD3B30E8CDD946D43B7F7BC3BE730E5
+TSST/handoffs/repo-cleanup/STEP3-COMMANDS-001.txt SHA256 0CAA1F9313956738D3326C5043FE36D94D20591C161C479C99AB97329A294720
+TSST/handoffs/repo-cleanup/STEP3-RESULT.md SHA256 31F3DD29BE6220DA91A619A7FCB16D7B74B53E257417F91ADC9FF07F89C4F616
+TSST/handoffs/repo-cleanup/STEP4-CODEX.md SHA256 CA8EBF613EABEDD204DD1904210A2FF3D8B8BE864F628DE19ACB2AFB2DE42AE1
+TSST/skills/validation/check_locators.py SHA256 CE7D76DD3D6258319D1D3FB970DE74937E6C3A941EA511B59B9579B1077DC80E
+TSST/skills/validation/round-1/JUDGE_PACKET.md SHA256 871EE8EB4FD44449A4DFD0CDF6FCF78C76614ED5423464858642051F80BEEC71
+TSST/skills/validation/round-1/RUN_LOG.md SHA256 D99F13305E0B1A3FFB03ABE8747C8B13E56ADD03CA88ABEEBB4C1787CFCB42BC
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-1.md SHA256 335430B325ACC078D77F4370FA6407AB397E3CE314AE009D081F24EDF4C9105C
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-2.md SHA256 0CB5A934850509760762A4AB0383DD5C803031891A7808C41ED9DF7169CF428C
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-3.md SHA256 ED2250CD5D33D4875EC25F8D19C092A4FFC2C20F70CB70457EBBDFBA4AE608CF
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-4.md SHA256 E0C18A4CBCB436D86CEDAB5EB3D8ABE5652C513E9DA7379648EE806DF02E5180
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-5.md SHA256 657FBA9C2D2252BEBEC7D39CE726C746E9EE877DCFAD54AE1F898C83190B94C0
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-1.md SHA256 31993CA8CF28C0F0C4655AABC4FFF4449CBCD3031210D0FB6C1C7AD02804F255
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-2.md SHA256 B0E4D59739E8EE8F5EF7017B93707727D16CB456054F0A82C30C3C86CB512245
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-3.md SHA256 7B876B96DEAB60B8C7B2993C104174401C81B243C79927506D6A1CC96FFCA200
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-4.md SHA256 84EEFFE3BBA11D8C3D7DCB73D63296C8786B667EE007D332C2345E8C816FDE86
+TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-5.md SHA256 8C6ED2A45E5F9375B96836874DCFA6736C8B86FAAAD3A72313925E138D8F815D
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-1.md SHA256 A78976B36D58C7AE5373E029F66F47CE26F170815E1C35BD6F7FEA50404C57B6
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-2.md SHA256 715659707A5352447EA5D14FC509E01C72DFB5737B7D22C7056399AD05FE82DC
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-3.md SHA256 7EE67B80EE24247725C575699D42B2D1D4E94092773CF98DA95A87F795D72D81
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-4.md SHA256 280AF922C3313E03EDBA422A471CB26F9CAE2CC18033F45FCF7FAB4667241449
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-5.md SHA256 3CB5189FF5CADCB3A2A8552CEF13EE0F14D29E47A265B436BA2557151DC01C22
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-1.md SHA256 339387C3AC62C127D25FF50930D0739F5731511C679588A63B4DD96C93D2D75D
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-2.md SHA256 C460AF725D27754D6307D6DC90D5D78FC4E4101771E63D61D125F17532B0ACD2
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-3.md SHA256 61263FF99FF9CA7E1C994B87A247562C417671674E513453CAFE6C8A248D19FE
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-4.md SHA256 612FCBF435CD6F3ADD1830D56FDCC343BB8D5DB04B59730D9D7ABA5AA153874C
+TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-5.md SHA256 20AB1F3E002C8728D87837D454FA33492C39BAC28703D39B930D3B6DBE131806
+TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-1.md SHA256 2E0890C5A983318D9BC4921D482EA253B2F438E705D1A6321CAA5167D5F34A4E
+TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-2.md SHA256 FAA88ADE02D91D5C4694BC5BBA77E099821F85979604E87D5E604111723F290E
+TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-3.md SHA256 6DED87C7EA750A1E0FD88DE9C46BD4EA5B7119E20BB19B27B2DED55AA515F8C4
+TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-4.md SHA256 71038A9D86C9BAE694142EFC60FA513DE18BEF1E7F8B5D2E3536B64DDD62A475
+TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-5.md SHA256 DFA65B13760D271B9FE975E0E2F4E5D57DFEB805FDA16BD25C17589E2F2AF4B8
+monumentextended-freeforpersonaluse.zip SHA256 F65C459762D69BC205FBF09A280D90EBDEB67F91B8AE993012987EC5BEF416F5
+systronic-control-center/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/config SHA256 40C6CE59EEE274C0DB9421C68768BF2F6FC2DD9D372970FEC144291D02E98E93
+systronic-control-center/.git/description SHA256 85AB6C163D43A17EA9CF7788308BCA1466F1B0A8D1CC92E26E9BF63DA4062AEE
+systronic-control-center/.git/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/HEAD SHA256 D3EFEA9136221F576FE2FF0AC33C70BB129F1FDD3976DAA3D1122E6973E8C203
+systronic-control-center/.git/index SHA256 05C9FB7D192D9F9424E37DD17B38DF99E6D3CB7DB55439B3403CCBA6B48C8C10
+systronic-control-center/.git/packed-refs SHA256 4C286C95E0AC8585E50F53B742D7144DFB72263D19930E88106D57D74747550D
+systronic-control-center/.git/hooks/applypatch-msg.sample SHA256 0223497A0B8B033AA58A3A521B8629869386CF7AB0E2F101963D328AA62193F7
+systronic-control-center/.git/hooks/commit-msg.sample SHA256 EFC1401B0E99D1FF51494D154D98B46C1E99059BCD8BF9F73CECDE19FD3EB23B
+systronic-control-center/.git/hooks/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/hooks/fsmonitor-watchman.sample SHA256 9159720099AD5595B8E66645CBFD47763C1E920F46E0B50AE75E642BBEC57EF0
+systronic-control-center/.git/hooks/post-update.sample SHA256 81765AF2DAEF323061DCBC5E61FC16481CB74B3BAC9AD8A174B186523586F6C5
+systronic-control-center/.git/hooks/pre-applypatch.sample SHA256 E15C5B469EA3E0A695BEA6F2C82BCF8E62821074939DDD85B77E0007FF165475
+systronic-control-center/.git/hooks/pre-commit.sample SHA256 57185B7B9F05239D7AB52DB045F5B89EB31348D7B2177EAB214F5EB872E1971B
+systronic-control-center/.git/hooks/pre-merge-commit.sample SHA256 D3825A70337940EBBD0A5C072984E13245920CDF8898BD225C8D27A6DFC9CB53
+systronic-control-center/.git/hooks/pre-push.sample SHA256 ECCE9C7E04D3F5DD9D8ADA81753DD1D549A9634B26770042B58DDA00217D086A
+systronic-control-center/.git/hooks/pre-rebase.sample SHA256 4FEBCE867790052338076F4E66CC47EFB14879D18097D1D61C8261859EAAA7B3
+systronic-control-center/.git/hooks/pre-receive.sample SHA256 A4C3D2B9C7BB3FD8D1441C31BD4EE71A595D66B44FCF49DDB310252320169989
+systronic-control-center/.git/hooks/prepare-commit-msg.sample SHA256 E9DDCAA4189FDDD25ED97FC8C789ECA7B6CA16390B2392AE3276F0C8E1AA4619
+systronic-control-center/.git/hooks/push-to-checkout.sample SHA256 A53D0741798B287C6DD7AFA64AEE473F305E65D3F49463BB9D7408EC3B12BF5F
+systronic-control-center/.git/hooks/sendemail-validate.sample SHA256 44EBFC923DC5466BC009602F0ECF067B9C65459ABFE8868DDC49B78E6CED7A92
+systronic-control-center/.git/hooks/update.sample SHA256 8D5F2FA83E103CF08B57EAA67521DF9194F45CBDBCB37DA52AD586097A14D106
+systronic-control-center/.git/info/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/info/exclude SHA256 6671FE83B7A07C8932EE89164D1F2793B2318058EB8B98DC5C06EE0A5A3B0EC1
+systronic-control-center/.git/objects/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/objects/pack/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/objects/pack/pack-1c3a69ebcae543d5b3072315d2e0dae62687cb81.idx SHA256 EE765699C4F1201958678ACD5D0CF94682566DA37139182AD44D79E174C10B9F
+systronic-control-center/.git/objects/pack/pack-1c3a69ebcae543d5b3072315d2e0dae62687cb81.pack SHA256 41DF1C058040F9E2342BB35FD1DA9E1F115AF591B044C36514C6E73135BC735C
+systronic-control-center/.git/objects/pack/pack-1c3a69ebcae543d5b3072315d2e0dae62687cb81.rev SHA256 2696E6D7C209FA7B9AAFA84671536685905E39E5F56B6FD279B9D08FDB843981
+systronic-control-center/.git/objects/info/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/heads/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/heads/feat/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/heads/feat/scc-m1-m5-implementation SHA256 BE06AA1B9C492BF9D0DB7C5204C5CBF1029023BD323FC074E0EA480B93AAEA2C
+systronic-control-center/.git/refs/tags/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/remotes/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/remotes/origin/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/refs/remotes/origin/HEAD SHA256 0E0E194CDFDB4CC43837858D640BD9E26AD144D5161337226694C2C8C6A6CFB2
+systronic-control-center/.git/logs/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/HEAD SHA256 7E0C167D0624912A6115E44F008CD6FDB8A4B0530211DA61A0C0A9ED32B6E2CA
+systronic-control-center/.git/logs/refs/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/refs/remotes/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/refs/remotes/origin/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/refs/remotes/origin/HEAD SHA256 7E0C167D0624912A6115E44F008CD6FDB8A4B0530211DA61A0C0A9ED32B6E2CA
+systronic-control-center/.git/logs/refs/heads/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/refs/heads/feat/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/.git/logs/refs/heads/feat/scc-m1-m5-implementation SHA256 7E0C167D0624912A6115E44F008CD6FDB8A4B0530211DA61A0C0A9ED32B6E2CA
+systronic-control-center/systronic-control-center/.env.example SHA256 BD65858B62B15B8CE159D953BC0BDE7855F0E0E6C639262E02588DF3BA5A3279
+systronic-control-center/systronic-control-center/.gitignore SHA256 B65FD7A273E078ABE35C93C51838DF6416DD74EF97553B697A172BFC37B7B591
+systronic-control-center/systronic-control-center/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docker-compose.yml SHA256 46F81B04B5622D3B8A236502DA54F10261B1D7D4FD88045C0B8E4536762B9182
+systronic-control-center/systronic-control-center/eslint.config.js SHA256 A0A5A693ACD828ABD74DD5CF7F593B533F2F678065FE2DCF6BB256C309864A0D
+systronic-control-center/systronic-control-center/Makefile SHA256 026663C0B8A747B05740B412E2D86396602631D5BA3E8B94348B5420E8DC6E2E
+systronic-control-center/systronic-control-center/package-lock.json SHA256 53887F66E022DC8D5ABE876F77E4A4D87BDA416AFE22DE872F108EA90F3D1067
+systronic-control-center/systronic-control-center/package.json SHA256 A387C2F3CBA4ED470AB0B08811CE77792CCB9C797FBA4BCC5A02BA321FB5D70F
+systronic-control-center/systronic-control-center/README.md SHA256 5118A00A2B94BA023327CA139C3DCA5BCF46E2DF9EC4C0759C754F2171B1AF53
+systronic-control-center/systronic-control-center/START_HERE.md SHA256 3C3244C2D914CBC801E561819B750B9C847C32324508573263D9D6A798A7D9EB
+systronic-control-center/systronic-control-center/tsconfig.base.json SHA256 2E4E73EDF36249F876C77D24F7A8D0688C76B431624BA3CC2F908B093BD9139F
+systronic-control-center/systronic-control-center/tsconfig.json SHA256 0809F3660D29FDE52C01AF44CCFC8B5626D468052E32915AE3F62D117666F964
+systronic-control-center/systronic-control-center/vitest.config.ts SHA256 C1406E95794F844C5677062C072FA5268502CC3A54E178D06836B3DCA3050963
+systronic-control-center/systronic-control-center/.github/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/.github/workflows/ci.yml SHA256 03073156A79D9FEA4428E836389B4B147C176C0969815625F1C7673CB6550D31
+systronic-control-center/systronic-control-center/.github/workflows/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/api/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/api/package.json SHA256 403119AEC0D3F98186E9FB0B4F4F9D941A16A11BBC2C52BF13A81B2DA252878D
+systronic-control-center/systronic-control-center/apps/api/tsconfig.json SHA256 3B019A8E666765FC26802652B93D89E9D348D133949320911E92BFDA35215342
+systronic-control-center/systronic-control-center/apps/api/src/auth.ts SHA256 3941B41DB14B5C1742728F1FA250A967B895F4157A19CF4ED4FC0389734FFA8E
+systronic-control-center/systronic-control-center/apps/api/src/config.ts SHA256 6257C23166B6B638A33815879159D8A81B91D6AB8216E86304D64963D7B4BA7A
+systronic-control-center/systronic-control-center/apps/api/src/db.ts SHA256 8999ED62E2C812D21503E0E21DA1060E6A097B067444DC2711D8D25D60ACB614
+systronic-control-center/systronic-control-center/apps/api/src/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/api/src/index.ts SHA256 2EEDE54F9ADCA628EC91DE0B45CE1230253CAA3E250C6DA47BB4C348E9232905
+systronic-control-center/systronic-control-center/apps/api/src/server.ts SHA256 5D93EA9B549C295D927C909194384B7935798D2D484630A2E1C668AE5F50B06F
+systronic-control-center/systronic-control-center/apps/api/src/signing.ts SHA256 07CB268284400A6499BB20EB59AD824E2A3265133F2F356522AC3EB07BC689B6
+systronic-control-center/systronic-control-center/apps/api/src/worker.ts SHA256 7C4BB35AACCFC91CF4EB148504111843EE59D9C4B3E8177B87A182C92D677F45
+systronic-control-center/systronic-control-center/apps/api/src/routes/change.ts SHA256 15336C5E89F31405C47EF12615727A7D4358245659CEB794A4BE61CADF9BEA82
+systronic-control-center/systronic-control-center/apps/api/src/routes/commercial.ts SHA256 B9C48436DE91521C3BA66152B5F27E685A0A2E3DFD62230EEEF590C43EBA15DE
+systronic-control-center/systronic-control-center/apps/api/src/routes/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/api/src/routes/foundation.ts SHA256 3EECED19748B9C74BD5BBDE7BBC043CABA165F7391A917F873507EA9E605EE25
+systronic-control-center/systronic-control-center/apps/api/src/routes/operations.ts SHA256 F1EE6714A120D6CE4239EFE349499B3C40CB71E8A1449125711F953D36E72CBA
+systronic-control-center/systronic-control-center/apps/dashboard/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/dashboard/index.html SHA256 6D6D54285336CB8C42C4C3DDFA6E91820F872CED6A222E89C39308B488F9E13E
+systronic-control-center/systronic-control-center/apps/dashboard/package.json SHA256 1937DD2E7F500D30D8395D185CAADAACB07A3AF187857D83791258AC2149A820
+systronic-control-center/systronic-control-center/apps/dashboard/tsconfig.json SHA256 08289CF5FBE6DCBC0BE5C6D777DA19C3E3A5D8726819301FAAC30BAB288EC00D
+systronic-control-center/systronic-control-center/apps/dashboard/vite.config.ts SHA256 E6117D747BE57FC8B846397AC6D07837B252B720B13560B3A97FD918FECAB13D
+systronic-control-center/systronic-control-center/apps/dashboard/src/api.ts SHA256 EE07829F4A4EDCE18067126270EBE13C299A9D537F794EE1E28CFA16C370E8F5
+systronic-control-center/systronic-control-center/apps/dashboard/src/App.tsx SHA256 B23BAF236116D1F31BC78349170401ADE3F16F7BEAB8B88E90367512BE915EBC
+systronic-control-center/systronic-control-center/apps/dashboard/src/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/dashboard/src/main.tsx SHA256 0A893D3F77C02E3AC04A36B6A19270C60DEDD5D62769E3835762A7A65F10077D
+systronic-control-center/systronic-control-center/apps/dashboard/src/styles.css SHA256 56B5F42752E50B3CD26370FCB5271C1351E98E4DCBC4CFF5D6C2249C2976D1D6
+systronic-control-center/systronic-control-center/apps/dashboard/src/components/DataView.tsx SHA256 BE07439DBA3EC6A2F4B9695D9A2603480E44DFAAEFB679613657E52FA609B74B
+systronic-control-center/systronic-control-center/apps/dashboard/src/components/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/apps/dashboard/src/components/Icons.tsx SHA256 4F398156E95BEF54B439A7C23972C5AE44A36894C44EC0C56A25C78CE3C341BD
+systronic-control-center/systronic-control-center/apps/dashboard/src/components/Login.tsx SHA256 989190A35BAB5E075979D1FA52E4B77B21B21F1073C082D04B456703FE1CB74E
+systronic-control-center/systronic-control-center/apps/dashboard/src/components/States.tsx SHA256 746F87DD63C77814FFAB518AEBC25EB9E9E2AEF61E711FD6E521C25ECEF304CC
+systronic-control-center/systronic-control-center/design-system/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/design-system/systronic-control-center/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/design-system/systronic-control-center/MASTER.md SHA256 A73F6B65BC6DBB32D827D67E1302E2F656E8CEE5FAAF1036DE8C7D9AA218B597
+systronic-control-center/systronic-control-center/design-system/systronic-control-center/pages/dashboard.md SHA256 4C4085FE5731BD05192E5378F876B0B6694C669CD6FBE6C671E842BFC0C4AF14
+systronic-control-center/systronic-control-center/design-system/systronic-control-center/pages/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/00_project/ASSUMPTIONS_AND_CONSTRAINTS.md SHA256 7E4176FC586227B40C0AF3A7DFFBD8722DEAB47D7A8BA52489C018CF06505B51
+systronic-control-center/systronic-control-center/docs/00_project/DECISION_BACKLOG.md SHA256 6E044EE61998024A0552465AE3DC9741AE497B73D5EDCCD65A170120E483F536
+systronic-control-center/systronic-control-center/docs/00_project/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/00_project/GLOSSARY.md SHA256 6184B3E1DC3279E740F2B3C149682FA5E54EC244B5B90E5E3A0C34D71D13C668
+systronic-control-center/systronic-control-center/docs/00_project/PROJECT_CHARTER.md SHA256 978BB30890F37C104EBF1FD1EDDECC04661EDFEED358F3A44A622DC2E1D193C0
+systronic-control-center/systronic-control-center/docs/00_project/PROJECT_MASTER.md SHA256 051D0D57D9750D6822F66C76496788BF692D2C4AA0E4B489A7412614FCA2239F
+systronic-control-center/systronic-control-center/docs/00_project/VISION_AND_OBJECTIVES.md SHA256 D70E5362E1B56102BAF30318FE03CF71AC31E59DB9844E201F0F3E3BDD4E0469
+systronic-control-center/systronic-control-center/docs/01_product/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/01_product/FUNCTIONAL_REQUIREMENTS.md SHA256 FF1EA59247738B8C50F8C0AD8B35EA5FA0D02CE5F329486F47194397AD915B20
+systronic-control-center/systronic-control-center/docs/01_product/MVP_SCOPE.md SHA256 BA90A4B83526AC7CC474AE8D786ABFAAA78D67F0E10A00AB9B0186A16FD3865A
+systronic-control-center/systronic-control-center/docs/01_product/NON_FUNCTIONAL_REQUIREMENTS.md SHA256 370F266D40968B1CDB2B595FA2419657211B9E2D6C5FB353FA25351628C61944
+systronic-control-center/systronic-control-center/docs/01_product/OUT_OF_SCOPE.md SHA256 324197F81F612A869392B0BAFD0B169258C6537DBF4105909E5FF28B69FE1545
+systronic-control-center/systronic-control-center/docs/01_product/PERSONAS_AND_ROLES.md SHA256 9150AF70D264B551A5E2446735DE2FE352CFBD314533A062DB5E98C095D8D6B0
+systronic-control-center/systronic-control-center/docs/01_product/PRD.md SHA256 17FB4A01FB2A241BF68CE8E4E906D75D3AE03B0E59268C408FF5D087C945845C
+systronic-control-center/systronic-control-center/docs/01_product/PRODUCT_ROADMAP.md SHA256 80FF4BB474E7FA91B4F22A4F495AE6BE08129F034C5F5AC91FE8A3F584425FF0
+systronic-control-center/systronic-control-center/docs/01_product/USE_CASES.md SHA256 E2972A0C71705A80DD6D41790729D504A8D9FF09217EFBB76A201D75B2366B29
+systronic-control-center/systronic-control-center/docs/01_product/USER_JOURNEYS.md SHA256 83FA96722D1B1352A7EF98307129532042D26EBCCDAFCA58A909D45DE35E0080
+systronic-control-center/systronic-control-center/docs/02_business_operations/CUSTOMER_LIFECYCLE.md SHA256 6B22FAFF4CB45CC0F101D109E03E9233837410777F61623203C802658AFA496C
+systronic-control-center/systronic-control-center/docs/02_business_operations/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/02_business_operations/LICENSING_MODEL.md SHA256 B822C00A56C1E898976703B5E7468B0C98BF875BE32F1BB0404731C7E04CE7AD
+systronic-control-center/systronic-control-center/docs/02_business_operations/MAINTENANCE_AND_SLA.md SHA256 C6E493BD19F8CFCD84AE38AAADA1C24C21E80D966A39F9267D0A12DE3B30833F
+systronic-control-center/systronic-control-center/docs/02_business_operations/OPERATING_WORKFLOWS.md SHA256 65E717CDF3C8EB0AFE98F9DC0DC8F5814142CFCD93928BDF4D1D06841A81B266
+systronic-control-center/systronic-control-center/docs/02_business_operations/SUBSCRIPTION_MODEL.md SHA256 478C80ABA6F1B6297A4A5D233D17E9EB24B2B547BD96B029698E73D4F97FEF85
+systronic-control-center/systronic-control-center/docs/03_architecture/DATA_FLOWS.md SHA256 E41F1C18AB756D4D7A42402EC84CE088704BCBB20EFF093B4606A6CC86417B2F
+systronic-control-center/systronic-control-center/docs/03_architecture/DEPLOYMENT_ARCHITECTURE.md SHA256 8F169D0BFFBD5025C0159EC66E7C726EE9D83F45FD10D0B5136774F18301B70C
+systronic-control-center/systronic-control-center/docs/03_architecture/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/03_architecture/DISASTER_RECOVERY.md SHA256 5117230D4AC92820CF5CB9200EBF2467A791321E1EA6F05EF1E860F9E827B4B8
+systronic-control-center/systronic-control-center/docs/03_architecture/FAILURE_MODES.md SHA256 CB45783314DB9282AFC6F10A0DF28D89C2B699EDDCA66795110971FDE92302FD
+systronic-control-center/systronic-control-center/docs/03_architecture/INTEGRATION_ARCHITECTURE.md SHA256 B5EFE2FB162C9445C71C297082A1817071147A839C8C83102A45AFD14386A92A
+systronic-control-center/systronic-control-center/docs/03_architecture/MODULE_ARCHITECTURE.md SHA256 4C328DC27D9F31CA85B2D7186C97D75C5B992749941DF0A3874665A622086528
+systronic-control-center/systronic-control-center/docs/03_architecture/SYSTEM_ARCHITECTURE.md SHA256 956B42321F61A2197E526DB263702A9252F7A3C0D6B0F4EC7260BC6FAAF63D38
+systronic-control-center/systronic-control-center/docs/04_data/AUDIT_EVENT_MODEL.md SHA256 3439DF0AD44279307EE221AB43CA288A513EEA1211E33027EBE0AF8AE5BAF828
+systronic-control-center/systronic-control-center/docs/04_data/DATA_RETENTION.md SHA256 826641E33BDB80BD3F70D8B3C19FC3FF4331F64FF5B09761265750BC2964A647
+systronic-control-center/systronic-control-center/docs/04_data/DATABASE_MODEL.md SHA256 43E0DC9257F08B03957180C738EC37346EEFCCE6217A8D4E7421A0EEE64EFCDD
+systronic-control-center/systronic-control-center/docs/04_data/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/04_data/DOMAIN_MODEL.md SHA256 5A4132883FE2046BD2F52AA8D02E36C50168663D36AAB1474CE34D5118ED2248
+systronic-control-center/systronic-control-center/docs/04_data/ENTITY_DICTIONARY.md SHA256 676BFC7D852B397D372A43E6E99F063489922696DC44F7FA51AC570709D3384C
+systronic-control-center/systronic-control-center/docs/04_data/TENANCY_AND_ISOLATION.md SHA256 D2782D7F1B32D30624ADCB0843D1BA2B196D6E69FA00385B7CED6E796B33443B
+systronic-control-center/systronic-control-center/docs/05_api/API_CATALOG.md SHA256 1F01B509C2B2440B4E48ECA5CC1C519DB51D8CE07AF0BCA1BD01B882AB6ABF23
+systronic-control-center/systronic-control-center/docs/05_api/API_GUIDELINES.md SHA256 9288EA653AC0E5C0CAFCB45733D66A7D7F727FF528209CCEB85AE7CAD3D672AC
+systronic-control-center/systronic-control-center/docs/05_api/AUTHENTICATION_AND_AUTHORIZATION.md SHA256 42435ED877CE27F93DF2517D6ADE4EB2C942D2DFBD16C076F36864F2398844A3
+systronic-control-center/systronic-control-center/docs/05_api/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/05_api/openapi.yaml SHA256 308498A26ADC88283AA995DC2014CFB125268D0BBA5F48DA1D4585E229D49DB2
+systronic-control-center/systronic-control-center/docs/05_api/WEBHOOKS.md SHA256 9D481398F23A191DF1B62C5B5AF038C84C3F8CA02D486A4F63F82992E82BF6E3
+systronic-control-center/systronic-control-center/docs/06_client_sdk/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/06_client_sdk/EVENT_SCHEMAS.md SHA256 BCEA1C971DA510D2AAD833E0E6F5B7B039DD07D41E2B8A321059D86D94C28F14
+systronic-control-center/systronic-control-center/docs/06_client_sdk/OFFLINE_AND_GRACE_PERIOD.md SHA256 0770BD6B62A1E03699A310F0EBA79550216B29B8B270BD6FAABF999D100D9561
+systronic-control-center/systronic-control-center/docs/06_client_sdk/PRODUCT_INTEGRATION_GUIDE.md SHA256 550FDCC5CE50592EAFDD5B6DF6C2860EEF33A4807815074D8F9A95D391998B02
+systronic-control-center/systronic-control-center/docs/06_client_sdk/SDK_CONTRACT.md SHA256 536DC32B489255340999CC068FFD0F052E3325AC7B853F561385E8DCF39D0A9D
+systronic-control-center/systronic-control-center/docs/06_client_sdk/SDK_SECURITY.md SHA256 A65678904FD86B750B246A02E75996B51003608C26C0438BD293A01AD3205118
+systronic-control-center/systronic-control-center/docs/06_client_sdk/UPDATE_CLIENT_FLOW.md SHA256 35A0B48F7E9BABFECFDD96452F01A8A955105BEE3BFCBA84B3115864B5DE49DA
+systronic-control-center/systronic-control-center/docs/07_security/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/07_security/INCIDENT_RESPONSE.md SHA256 EF551A9356F40CB05E638739AB2D5B790B5C36A68C204DA5EE8EE6364A2B2DF9
+systronic-control-center/systronic-control-center/docs/07_security/PRIVACY_AND_LOGGING.md SHA256 60FFC7F6C460D337FD7910ABDCC9959F5CA7CC0BC7015C00D798039F409E11EF
+systronic-control-center/systronic-control-center/docs/07_security/RBAC_MATRIX.md SHA256 99DDC425ED0D3E80040870D757CE10B8D4B0D72EABD9A1B4F5872675C4518141
+systronic-control-center/systronic-control-center/docs/07_security/SECURITY_ARCHITECTURE.md SHA256 5A0E04DDE7D6A35E12AFD728234A7FB9B9F7E9B8BBC3E4F70EC491D02599955D
+systronic-control-center/systronic-control-center/docs/07_security/SECURITY_TESTING.md SHA256 CF65517B486D63EF576D64F448267039A9CD70FDA236E7BCCD83E5FF41A97B24
+systronic-control-center/systronic-control-center/docs/07_security/THREAT_MODEL.md SHA256 F13F09027BB72DEEAD2EC76661D9E49ED6B8DA9ABFB153D90F865A6E02D5591C
+systronic-control-center/systronic-control-center/docs/08_releases/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/08_releases/END_OF_SUPPORT.md SHA256 45B45657659400656A6901533152F182B46A2C506668F845AB1CDF4B191BC6DC
+systronic-control-center/systronic-control-center/docs/08_releases/RELEASE_MANAGEMENT.md SHA256 A6534CCFBD1055CAC1F9569BECD39F53056A5F2AAB91CF4538160C0BB8E76AE9
+systronic-control-center/systronic-control-center/docs/08_releases/STAGED_ROLLOUT.md SHA256 24127124B4862268746EAD362BEDC9B1B3E8B9A20052AED97BDD4B42AE212B78
+systronic-control-center/systronic-control-center/docs/08_releases/UPDATE_AND_ROLLBACK.md SHA256 2BD3972095B3E048CBCD341BF2153D00DD8CFAD78F856F43DB179CBE6207ACA3
+systronic-control-center/systronic-control-center/docs/08_releases/VERSIONING_POLICY.md SHA256 CD95822E5635E6FB6F4FE2811251FC4597C6C8D7A1F7914841D95AF30A4BC729
+systronic-control-center/systronic-control-center/docs/09_operations/BACKUP_MONITORING.md SHA256 95682B1D600A87C1E8ABBFAF6B5F7B439F2B9F3E67812401B23E9C07D59D8695
+systronic-control-center/systronic-control-center/docs/09_operations/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/09_operations/ERROR_AND_CRASH_REPORTING.md SHA256 61B63DCB2A9105E8DDFE3DF5AEEB1F4FBA30514BDDB21FF419741D0EF1018361
+systronic-control-center/systronic-control-center/docs/09_operations/MAINTENANCE_OPERATIONS.md SHA256 A0C51E4AF02332FCC2FD93CF973B58BD0038CBB12B3BD1F0D1173F3B4D32E41D
+systronic-control-center/systronic-control-center/docs/09_operations/MONITORING_STRATEGY.md SHA256 1A6CFCD1F37FDE5654523B2280AFB7244261FF8334E85D06EF8029AF0D3B9404
+systronic-control-center/systronic-control-center/docs/09_operations/SUPPORT_ESCALATION.md SHA256 793D94E22801AA3EE436D57C65A40EA2A521A49870A1441A5D56D1588035122D
+systronic-control-center/systronic-control-center/docs/10_ux/DASHBOARD_SPECIFICATION.md SHA256 0EA1FF97AEEFEA777E8D1F2A4870C756AE8E36FA254CC6ABE0B6747ADFB438C2
+systronic-control-center/systronic-control-center/docs/10_ux/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/10_ux/INFORMATION_ARCHITECTURE.md SHA256 9A083A8386E47B73AD1EDC41FD76DF2528D1A4549AF0AB0033EB2479AF01A97B
+systronic-control-center/systronic-control-center/docs/10_ux/SCREEN_INVENTORY.md SHA256 42926E0B29B267020E38DC89D7F80E0BD5CDDE55D54D082DDDBFCECBC2A99D25
+systronic-control-center/systronic-control-center/docs/10_ux/USER_FLOWS.md SHA256 59DA744B33AE4BBCEA1588A900AE7F0B91656EE738551E3538D41BAA69844CA4
+systronic-control-center/systronic-control-center/docs/11_delivery/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/11_delivery/MILESTONES.md SHA256 7147060318590556A5909F91C27EE622E42AC85283756C1197027EEA81C0A13F
+systronic-control-center/systronic-control-center/docs/11_delivery/MVP_BACKLOG.md SHA256 699E4929E2ED0096066466CF43382298CC1958C24F8AB60B2D7BA11FDDA507DB
+systronic-control-center/systronic-control-center/docs/11_delivery/PILOT_PLAN.md SHA256 8F632AF3250E695B1A722EF1ADE1D35A3C23699FE4971F8D395771E8C5F0B259
+systronic-control-center/systronic-control-center/docs/11_delivery/PRODUCTION_READINESS.md SHA256 84B91681B9A2F4EE296BFCC83BFC51C559EA3955662F05D88442ED3A8F61FAFC
+systronic-control-center/systronic-control-center/docs/11_delivery/QA_STRATEGY.md SHA256 DCC88482110CB40B1143AAEBDADACFE9039D704D7E8D06A2A008196BF2B200D4
+systronic-control-center/systronic-control-center/docs/11_delivery/WORK_BREAKDOWN_STRUCTURE.md SHA256 C42BCFC093263BA3D08C9D0474FBAC85E90CCC4FFF0AA21E4921FF2E7C1392E0
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-001-central-control-plane.md SHA256 988952FD417EF8A9F2BA0738A8F78B64AC0D639F6441B79739C2C5A6F8B3CA00
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-002-modular-monolith.md SHA256 61D497F0B2CD50F11FC02CC6AE92A154BC88121D4C15426E60645AFC997D9CBF
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-003-multi-tenancy.md SHA256 61E844C78FADFD3B3EAE258BB9EBF9D4CF909C11EF28E813246F7792E31AF811
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-004-client-sdk.md SHA256 7C00C8CE798473CD5E3D2CBBFC685C677DAB45A23BCFAA66FB5F44116B2E6958
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-005-offline-licensing.md SHA256 DE55B604452EBDA7833432E1349BC22362E87E95F9CC151D1F1A8D90DA393D2D
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-006-grace-period.md SHA256 260BB7607F2D12F96A05AA81F45F1419F5C2F680ACDD79D1EEDBA711828C0A00
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-007-license-signing.md SHA256 29C387D9E37E39794D41E85E93EE7BDABAFA479E24D9A4FE4D78059C9576A758
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-008-device-identity.md SHA256 12AEAEB0DEE7526738DA8D2C9CCCCC394BCCE3382B1A49161D39BDA043BD6C0D
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-009-update-signing.md SHA256 CE761321B12537E494FC1D96ACCA605350A23F244768D76B9EF56737FD984AB7
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-010-rollout-rollback.md SHA256 E8165C672E9FBBDD0FAFFA3C6778EBC861E99662BE08C3D09610113B08C549D5
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-011-telemetry-boundaries.md SHA256 5E140180C53227F867E724EBF32FA224C92549E91E4BF758179D5C00C5C72074
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-012-remote-config-boundaries.md SHA256 B94BE3B2C742D15124C36F973C564C13CDA8C9773F69A0F2D720B2AE361A2034
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-013-audit-logging.md SHA256 32B15E52F85233C36E04ADB2EBD837BF1B81B3491E37EE03E1E4699D9E3049DC
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-014-database.md SHA256 1EB954F1C33C7E9484FFD5A8363BDC3E6B9CBCD48DC080E4C8FF7579A219C569
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-015-api-versioning.md SHA256 0D8636E1CBF109E381860468B73222D4EDC679CD06D841A8266640FC4839136C
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-016-authentication-authorization.md SHA256 437F2EAD92A28CC04FB0B77E616F8D79883A41825731664FCE829BA675433FD7
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-017-events-retry.md SHA256 FB296B39EDC94DC2790E8140CF4C1B956873FF7D4CE946F4DDCD89479510B7A6
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-018-backup-reporting.md SHA256 C55E4E07D37DE5E73FC4C448D15894A049C2B990B4FB3351EA24DA91E3C6556A
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-019-no-remote-execution.md SHA256 A55786DE4DC8726C8610A59707AC839A485077F0C319FB3FA886C27AB0B17137
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-020-initial-deployment.md SHA256 07086076B796AF7F78A2C9C1D74B9902030F12DE1075880431196F89F218719D
+systronic-control-center/systronic-control-center/docs/12_adrs/ADR-021-yakebda-first-real-pilot.md SHA256 1B3A1582E921B80F94303063CB7A8790895203FE6692BBDFCB3675D054A4120D
+systronic-control-center/systronic-control-center/docs/12_adrs/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/13_audit/CONSISTENCY_AUDIT.md SHA256 F1F09CECDCCEF9D70D614536643B3358548631A08F71E74BEC583F2D0B1878E5
+systronic-control-center/systronic-control-center/docs/13_audit/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/13_audit/FINAL_STATUS.md SHA256 DEC2BA1C924752BBA050AA90F8A155F4041B08067326655FF7353DAD626F8094
+systronic-control-center/systronic-control-center/docs/13_audit/IMPLEMENTATION_BLOCKERS.md SHA256 75F311AF3185D3E05CA45693E7A0F3A94F0A8DE8D4DFCDD6A043DF5E8DC5DB51
+systronic-control-center/systronic-control-center/docs/13_audit/IMPLEMENTATION_DECISIONS.md SHA256 BCE86A5EDC62C7A859AFAF1CAFF105013A78AC890083399F98FFE841C808AC41
+systronic-control-center/systronic-control-center/docs/13_audit/IMPLEMENTATION_STATUS.md SHA256 1B461B2585B8EEA11D946C59D0FC22ADDD56F7B5A3651A958890A47B148B8379
+systronic-control-center/systronic-control-center/docs/13_audit/IMPLEMENTATION_WORK_LOG.md SHA256 38B574BE465257C8FEE0D6C85686FB71D2A4B983555FAA5B93810E25AE648DE9
+systronic-control-center/systronic-control-center/docs/13_audit/OPEN_QUESTIONS.md SHA256 3274CC0FFC3D6F437A9DFD230B9575E681D81FEF227E43A541FE9E890BDF15D0
+systronic-control-center/systronic-control-center/docs/13_audit/RISK_REGISTER.md SHA256 FE7B9CBC7B830E48B7C634DD5EF84736746E93D36CAEE306FD0B98DAA8F0D454
+systronic-control-center/systronic-control-center/docs/13_audit/WORK_LOG.md SHA256 8E74CD035331C9334E26056DF58722474203B712876DE365CB6E9D1EBB457677
+systronic-control-center/systronic-control-center/docs/implementation/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/implementation/IMPLEMENTATION_ARCHITECTURE.md SHA256 9218796AF1F78F1603E6992FE15D5C2353BCCCD7829731CEDA3C2FDFCBE1FD9D
+systronic-control-center/systronic-control-center/docs/implementation/VALIDATION_EVIDENCE.md SHA256 50138C6A5C1754A3C1D3DDB6D3FDC30989E37E735B1593428196C9B92A5355A7
+systronic-control-center/systronic-control-center/docs/operations/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/operations/VALIDATION_COMMANDS.md SHA256 2C51DDD2291A74D8133585A7797BC76617EBDB252AD987BC7262281E388971B6
+systronic-control-center/systronic-control-center/docs/runbooks/BACKUP_AND_RECOVERY.md SHA256 7490678ED0C90F4BD00387851411C68F37EF8B5F6FE253F98F9CB40D9D78B2EA
+systronic-control-center/systronic-control-center/docs/runbooks/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/runbooks/LOCAL_DEVELOPMENT.md SHA256 37AD124915B1F8C635C3AE42E801D2859BD1EF081B7785CC642FE9414789C664
+systronic-control-center/systronic-control-center/docs/runbooks/PILOT_CHECKLIST.md SHA256 4E670421AE02DB1A22D8D3A7E517F96710E8801E1F6BCEAB508D79203A5A373D
+systronic-control-center/systronic-control-center/docs/runbooks/RELEASE_AND_ROLLBACK.md SHA256 B3E08F22D906462F62E9A20B9ED9F17CE8EFD9B055990C92924343D380A2BA48
+systronic-control-center/systronic-control-center/docs/runbooks/SECURITY_OPERATIONS.md SHA256 B4D53D0824A410BD9A86A29460FD158D57E8CAF8E24447E9001F57FB2BF38272
+systronic-control-center/systronic-control-center/docs/sdk/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/docs/sdk/SDK_IMPLEMENTATION_GUIDE.md SHA256 6A5BA1CBD5B2D751E5B2D8D6AFB4E1D09D9BBB1CFE96C05AC257D14E66E06A26
+systronic-control-center/systronic-control-center/examples/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/examples/arena-hub-adapter/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/examples/arena-hub-adapter/README.md SHA256 4AA9E44B3E219B5750749E1439D91A1166FF4DFB75CDE53C1DDBDF8C1C551B3A
+systronic-control-center/systronic-control-center/examples/client-simulator/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/examples/client-simulator/index.ts SHA256 28A4A4613158E6B9ACC0E69EA4D8F6946507EBA8459627EB9445D872F9F98BF5
+systronic-control-center/systronic-control-center/examples/restaurant-system-adapter/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/examples/restaurant-system-adapter/README.md SHA256 7AB6849BF36E39224BEB157D7F93FF0630BC7BB6A408A15D1FA999310F15C4D5
+systronic-control-center/systronic-control-center/infrastructure/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/infrastructure/docker/api.Dockerfile SHA256 5BD2F4F0AFBCEF3D6963C56604A51A5ED6F6D1628C5D0B5BE14F075BAB657C1D
+systronic-control-center/systronic-control-center/infrastructure/docker/dashboard.Dockerfile SHA256 127BF24A2DD6A8BDED4EEA97EE9A8B5AD7C3D984E97C3362110FE8CADBBF0321
+systronic-control-center/systronic-control-center/infrastructure/docker/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/infrastructure/docker/nginx.conf SHA256 3CC587DE358BCCF4A19948335AC37EC72AFE7866BF18F0300CF872F9CE348ADA
+systronic-control-center/systronic-control-center/infrastructure/local/backup.sh SHA256 471C5E2A02C8E82BEBC0FCDBCB291D12DA34A45BB6F17A1EAFF53F37EBE3AFF1
+systronic-control-center/systronic-control-center/infrastructure/local/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/infrastructure/local/reset.ts SHA256 441F2D8BE0C21FD59258FD021686E82C74535AB3F08EF29788790F040B47510C
+systronic-control-center/systronic-control-center/infrastructure/local/restore.sh SHA256 6A9060931F3DC6997D1601944AF41DCD38E693FB44E84EAED7FC531D6C43E7D0
+systronic-control-center/systronic-control-center/infrastructure/local/seed.ts SHA256 BDCBFAEB980A5330B0784A24792316CF9981BDF39C226BA6A171DED0882C1F3E
+systronic-control-center/systronic-control-center/infrastructure/migrations/001_initial.sql SHA256 FFC0D5E6465AD84080E75768959CA08D2A37C747E13BEF352B5C6F97348F1D1C
+systronic-control-center/systronic-control-center/infrastructure/migrations/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/infrastructure/migrations/migrate.ts SHA256 7EFD9EC0893A1D583B7187658C174089658BD9B57FF7481FAA4A783FDE08841D
+systronic-control-center/systronic-control-center/packages/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/adapters/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/adapters/package.json SHA256 B5320A0F044620E35B4BE0D711C11ED81D0F4E22582BF9CEE6D90DB9A77A8283
+systronic-control-center/systronic-control-center/packages/adapters/tsconfig.json SHA256 D8AEB031D2E1C199F0F2149DD06FB512C428EA3DBB0B3FA1DE4F4BD80B8BBC4C
+systronic-control-center/systronic-control-center/packages/adapters/src/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/adapters/src/index.ts SHA256 362173D20CD751504A1242278C3DC2F26A1830825366BA3119A0457FD37DF6B2
+systronic-control-center/systronic-control-center/packages/client-sdk/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/client-sdk/package.json SHA256 DA17CA52EF209509355592C1FEB0C9181596A91C3B9ECD834ECFDF8DD5342361
+systronic-control-center/systronic-control-center/packages/client-sdk/tsconfig.json SHA256 C81AC35B90BEAA6938D1D23AE128E53F7A1B1C20FC74D4AD933ED763A9FEDB39
+systronic-control-center/systronic-control-center/packages/client-sdk/src/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/client-sdk/src/index.ts SHA256 42AB8A15B570798E90F63488BA8121504BBF9B5ACE33B690E781F7F5E57A58B9
+systronic-control-center/systronic-control-center/packages/shared/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/shared/package.json SHA256 0DE2AFA30C6C6A85625C54DA11168648D7BE7124D131A47DD54ADA73F9CEDA5C
+systronic-control-center/systronic-control-center/packages/shared/tsconfig.json SHA256 5F557B3D1AD47E280656B5DBBC244F85CB801708518D549906EB8F14C3BF5E3C
+systronic-control-center/systronic-control-center/packages/shared/src/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/packages/shared/src/domain.ts SHA256 2EE7D8617DA6CDEA8B27D99E6288402128531C9EC6166C9F680A488AAD4DE13F
+systronic-control-center/systronic-control-center/packages/shared/src/index.ts SHA256 4E95270C5E593FFBF23D4CBDE9D478894F4CC7A5F5FC4F23FED790BA91020671
+systronic-control-center/systronic-control-center/packages/shared/src/schemas.ts SHA256 CAE144CF55B6E945A4A32FE3BD12CC92744C23A3DA03CE84E0C10ACE04CBE35B
+systronic-control-center/systronic-control-center/packages/shared/src/security.ts SHA256 6996FFC13DB86AFCB66D001320B8F4D1BB36186864D1152373DA543952F84F6B
+systronic-control-center/systronic-control-center/tests/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/contract/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/contract/openapi.mjs SHA256 6BAB53D5FEE7E6988AFE8B5238BAB9E09314AAF2177D50B4A5D36537CFF181A5
+systronic-control-center/systronic-control-center/tests/e2e/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/e2e/milestones.test.ts SHA256 80E9045743BFFC5B3C793559D3AF3409CEE1E482280F83E6996E7BAC13089DB2
+systronic-control-center/systronic-control-center/tests/helpers/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/helpers/environment.ts SHA256 D3D8E9BFD8906F406FBD58A183D28A1FF8B0E66609140AF3EFD89DB4D1124088
+systronic-control-center/systronic-control-center/tests/integration/database.test.ts SHA256 A6C84017BCD77968B5FCCD9D543777DFB8C40FC977217A5EE82FECD3F92CCF2D
+systronic-control-center/systronic-control-center/tests/integration/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/performance/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/performance/smoke.test.ts SHA256 DE71EB9E3F1DF6A7040A1CCFAEB4A723DF7847D878ED16AA8B3DB8E99578B97C
+systronic-control-center/systronic-control-center/tests/security/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/security/security.test.ts SHA256 06EB9084D7E8D46432DFD517871702BFB758A96747CB590407A27C5EE8A80C45
+systronic-control-center/systronic-control-center/tests/ui/accessibility.test.tsx SHA256 3534F1612C3C420FCF56233AC465851496DB47A3682E8193AC56E87139999B67
+systronic-control-center/systronic-control-center/tests/ui/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/unit/desktop.ini SHA256 D89A945C95731DE6A8C885533F5F8578EA1CC0ABE8C585D35DD1A65A2E7BF39D
+systronic-control-center/systronic-control-center/tests/unit/domain.test.ts SHA256 405DAF477870A89C9FBD86F45A412BFFD550FFCBACC5D6F39D28E534613283AA
+systronic-control-center/systronic-control-center/tests/unit/licensing.test.ts SHA256 35400ADF61315AA28BBE199F5BFB09789C9FE08978F3D53BB3DEF926D691E275
+systronic-control-center/systronic-control-center/tests/unit/update.test.ts SHA256 B6C88697E9879E537320F0A799A728FF02F195D0C603F4F85983504B70EBDE35
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" diff --name-only 5973ad7^ d97fb10
+.agents/skills/tsst-router/SKILL.md
+REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+TSST/core/friction-log.md
+TSST/core/rules.md
+TSST/services/delivery/JOB_LAYOUT.md
+TSST/services/delivery/README.md
+TSST/services/delivery/new_job.py
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse HEAD origin/anvil/campaign-01-reveal tsst-core/owner-rules master
+d97fb1053ee87b77154d17afab4f89642ffdabf5
+f4fe2e1e1f653e3b8ed6221d882b0f045674fb55
+3184e369a301eb9bcfe60b5c82624dc01b6c2473
+3184e369a301eb9bcfe60b5c82624dc01b6c2473
+EXIT: 0
+Snapshot saved locally; main tree remains unchanged.
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree list
+C:/GitMetadata/THE_SYSTRONIC_MARKETING_AGENTS.git d97fb10 [anvil/campaign-01-reveal]
+C:/Work/tsst-crm-codex                            9301f2f [feat/crm-review-fix2]
+C:/Work/tsst-crm-lanes/charts                     7583671 [feat/crm-charts]
+C:/Work/tsst-crm-lanes/dash                       9034abe [feat/crm-v3-dashboard]
+C:/Work/tsst-crm-lanes/ec2                        cb07789 [feat/crm-ec2]
+C:/Work/tsst-crm-lanes/import                     ed06974 [feat/crm-import]
+C:/Work/tsst-crm-mvp                              4015129 [feat/crm-mvp-ui]
+C:/Work/tsst-crm-p1b                              6ca52bf [feat/crm-p1b]
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree add C:\Work\tsst-core-owner-rules tsst-core/owner-rules
+Preparing worktree (checking out 'tsst-core/owner-rules')
+Updating files:  38% (906/2374)
+Updating files:  39% (926/2374)
+Updating files:  40% (950/2374)
+Updating files:  41% (974/2374)
+Updating files:  42% (998/2374)
+Updating files:  43% (1021/2374)
+Updating files:  44% (1045/2374)
+Updating files:  45% (1069/2374)
+Updating files:  46% (1093/2374)
+Updating files:  47% (1116/2374)
+Updating files:  48% (1140/2374)
+Updating files:  49% (1164/2374)
+Updating files:  50% (1187/2374)
+Updating files:  51% (1211/2374)
+Updating files:  52% (1235/2374)
+Updating files:  53% (1259/2374)
+Updating files:  54% (1282/2374)
+Updating files:  55% (1306/2374)
+Updating files:  56% (1330/2374)
+Updating files:  57% (1354/2374)
+Updating files:  58% (1377/2374)
+Updating files:  59% (1401/2374)
+Updating files:  60% (1425/2374)
+Updating files:  61% (1449/2374)
+Updating files:  62% (1472/2374)
+Updating files:  63% (1496/2374)
+Updating files:  64% (1520/2374)
+Updating files:  65% (1544/2374)
+Updating files:  66% (1567/2374)
+Updating files:  67% (1591/2374)
+Updating files:  68% (1615/2374)
+Updating files:  69% (1639/2374)
+Updating files:  70% (1662/2374)
+Updating files:  71% (1686/2374)
+Updating files:  72% (1710/2374)
+Updating files:  73% (1734/2374)
+Updating files:  74% (1757/2374)
+Updating files:  74% (1775/2374)
+Updating files:  75% (1781/2374)
+Updating files:  76% (1805/2374)
+Updating files:  77% (1828/2374)
+Updating files:  78% (1852/2374)
+Updating files:  79% (1876/2374)
+Updating files:  80% (1900/2374)
+Updating files:  81% (1923/2374)
+Updating files:  82% (1947/2374)
+Updating files:  83% (1971/2374)
+Updating files:  84% (1995/2374)
+Updating files:  85% (2018/2374)
+Updating files:  86% (2042/2374)
+Updating files:  87% (2066/2374)
+Updating files:  88% (2090/2374)
+Updating files:  89% (2113/2374)
+Updating files:  90% (2137/2374)
+Updating files:  91% (2161/2374)
+Updating files:  92% (2185/2374)
+Updating files:  93% (2208/2374)
+Updating files:  94% (2232/2374)
+Updating files:  95% (2256/2374)
+Updating files:  96% (2280/2374)
+Updating files:  97% (2303/2374)
+Updating files:  98% (2327/2374)
+Updating files:  99% (2351/2374)
+Updating files: 100% (2374/2374)
+Updating files: 100% (2374/2374), done.
+HEAD is now at 3184e36 docs(tsst-core): repo-cleanup handoffs + friction rows
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" status --porcelain=v1 --untracked-files=all
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" cherry-pick 5973ad7
+[tsst-core/owner-rules c38c4fe] feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+ Date: Sun Oct 11 22:01:00 2026 +0300
+ 5 files changed, 162 insertions(+), 2 deletions(-)
+ create mode 100644 TSST/services/delivery/new_job.py
+EXIT: 0
+STEP4 session: 2026-10-11T19:51:18.1880146Z
+> git -C "C:\Work\tsst-core-owner-rules" cherry-pick d97fb10
+[tsst-core/owner-rules b802a78] docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+ Date: Sun Oct 11 22:28:49 2026 +0300
+ 3 files changed, 7 insertions(+)
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" status --short
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" diff --name-only --diff-filter=U
+EXIT: 0
+> Read TSST Real Memory current status / project decisions / timeline for bounded cleanup update
+> Get-Content -LiteralPath 'C:\Work\tsst-core-owner-rules\REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md'
+# TSST — CURRENT STATUS
+
+## Update 2026-10-11 (evening, owner-approved Real Memory apply)
+
+- **Problem found:** Codex (VILL Lead) ran `marketing-week-01` for VILL and ANVIL without The Systronic Delivery System: VILL work landed in `TSST/PILOTS/`, two different file shapes, no DELIVERY pages, portfolio not synced. Root cause: the Delivery System and the "jobs live inside the brand" agreement were written only in `TSST/services/`, outside the chain every runtime reads.
+- **Fixed (Track A, commit `0f95d46`, TSD-023):** core rules R18 (job home `TSST/brands/<id>/projects/<job>/`; PILOTS = read-only archive), R19 (every job ends with `DELIVERY.json` → `DELIVERY.html` + `DELIVERY_INTERNAL.html`), R20 (same-round sync of DELIVERY.json + project.md + status.md + portfolio.yaml). Wired into AGENTS.md, boot, both adapters, tsst-router and all 12 generated agents. Checker: `TSST/services/delivery/job_check.py`.
+- **marketing-week-01 (commit `14f7471`):** VILL + ANVIL week-one organic plans by LENS + SPARK, REVIEW DRAFT, not published, no spend. ANVIL first FB post NOT published (owner correction; same Shark page will be renamed). Both fail `job_check` today (no DELIVERY page; VILL in the wrong home).
+- **Tracks C/B/D done 2026-10-11:** C `3fc8b57` one job layout (`TSST/services/delivery/JOB_LAYOUT.md`); B `2e42b03` VILL active jobs moved into `TSST/brands/vill-studio/projects/` (showcase-01-reel stays in PILOTS for the owner's AE edit; `PILOTS/.../MOVED.md`); D `0829776` + fix round: Delivery System v1.1 (plan sections, `sync_jobs.py` → `TSST/brands/<id>/JOBS.md`, job_check f), bidi fixes) and DELIVERY pages for both marketing-week-01 jobs, in review. All 4 jobs pass `job_check`. Open: owner review of both pages + Arabic captions; generator does not apply the brand Arabic font yet.
+- **Job structure approved + scaffold (owner 2026-10-11):** `TSST/services/delivery/JOB_LAYOUT.md` is the owner-approved standard for every new job (commit `a54ca35`). New jobs start with `python TSST/services/delivery/new_job.py <brand> <job-path> --service … --title …` (commit `5973ad7`): creates README + 00_BRIEF + DELIVERY.json stub, registers the job, runs sync_jobs + job_check; refuses PILOTS paths, existing folders, unknown brands.
+- **Session closed 2026-10-11 (R13).** Next Lead session starts from this section. Waiting on the owner: review of both marketing-week-01 DELIVERY pages, Arabic captions, VILL LinkedIn language, ANVIL start date + page rename timing. Restart any open Codex session so it loads R18–R20. Optional later: apply the brand Arabic font in the generator; tighten job_check d) matching; GitHub push blocked by a 185 MB TIF in rollup-pre-hell.
+- Brand canonical Real Memory for VILL/ANVIL is Google Docs on Drive (`.gdoc`); not writable from the filesystem runtimes. Repo `status.md` + `portfolio.yaml` carry the state until the owner syncs the Docs.
+
+---
+
+## State as of 2026-10-11 (owner-approved Real Memory apply)
+
+Overall readiness: `NOT_READY` (unchanged). Pointer-first; details live in the cited files.
+
+**Team roster (fixed, runtime agents in Claude Code + Codex, generated from `TSST/context/roster.yaml`):** Lead + `tsst-lens` (LENS_AG), `tsst-spark` (SPARK_AG), `tsst-creative` (CREATIVE_AG), `tsst-dev` (DEV_AG), `tsst-motion` (MOTION_AG, new) + `tsst-reader`.
+
+**Motion AG / MOTION_AG (new, TSST-ADR-005, commit `d5bb15e`, TSD-022):**
+- Independent team `motion`, a peer of CREATIVE. CREATIVE_AG no longer owns video or motion; it keeps static design, brand and UI and does the final brand check on video.
+- Skills TSST-MOTION-SK-001..004 (formerly TSST-CREATIVE-SK-015..018), all `UNVALIDATED`. Readiness `NOT_READY`.
+- Generation is manual through Ahmed (no spend, publication or client contact without approval).
+- v1 spec = Balanced setup, run Budget-first: `TSST/brands/t-sag/projects/tsst-ai/motion-ag/LENS-MO-001_*.md` and `SPARK-MO-001_*.md`, Lead-accepted 2026-10-10.
+- Next: MOTION_AG writes 6 new motion skills (2 rounds), then a pilot 15 s Egyptian teaser as its first job.
+
+**Work since 2026-10-08 (from `git log`):**
+- ANVIL campaign-01: folder, reveal v2 pack, AE text-scene script, Lead handoff to Codex; roll-up Pre-Hell in progress (`TSST/brands/anvil/projects/campaign-01/`).
+- Photo-bank tool (local CLIP, all brands) + VILL raw bank of 1,583 sorted photos (`TSST/CREATIVE/tools/`).
+- The Systronic Delivery System v1.0 (`TSST/services/delivery/`) and service playbooks SV-01..06 (`TSST/services/`).
+- Rules R15-R16 (Lead replies clear/short/exact; ask owner before dispatch) and R17 (locked daily board, "ابدأ اليوم"): `TSST/core/rules.md`, `TSST/daily/`.
+- VILL social-setup-01 HANDOVER (owner approved) + SV-01 first-job lessons.
+- Skill friction log + repeat detector (`TSST/core/friction-log.md`); code-drawn motion method + HTML-to-MP4 capture tool.
+- C7-VILL-12 Brand Guidelines v1.0: unchanged since 2026-10-05, Lead review says system accepted, book not client-ready, round 2 not yet issued (`LEAD_REVIEW_C7-VILL-12.md`).
+
+**Open items:**
+- `TSST-001A`: resolved 2026-10-11 — CLOSED 2026-10-05 (TSD-013); portfolio.yaml corrected.
+- Motion AG skills and first pilot; all skills remain `UNVALIDATED`.
+- C7-VILL-12 round 2; VILL OPEN_DATA_REQUESTS; ANVIL campaign-01 reveal re-run + QA.
+- Test baseline `validate_spine` 27/29: failing checks `neutrality` (provider model names in research files) and `bus` (hash mismatches on CRM-PLAN-BUILD, VB-1).
+
+---
+
+Project Key: `TSST`  
+Project Name: `The Systronic Smart Agents`  
+Last Updated: `2026-10-11`  
+State: `BASELINE_FROZEN`  
+Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
+
+## Current Phase
+
+`TSST-001 — Foundation & Agent Operating Model`
+
+## Active Gate
+
+`TSST-001A — Requirements & Governance Intake` — `CLOSED` 2026-10-05 (user approval).
+
+`C7` live-project pilot on VILL Studio — phase 1 (C7-VILL-01..06) `DELIVERED` 2026-10-05; phase 2c `C7-VILL-11` (final identity from approved logo) `DONE` (codex, Lead-accepted 2026-10-05; user approved colour direction, template execution not approved); `C7-VILL-12` Brand Guidelines v1.0 (24 pp.) codex done 2026-10-05, Lead review: system accepted as base, book not client-ready, round 2 needed (not yet issued). TSST Core v0.2 (ADR-003/004) merged to master `eac4446` (PR #6) 2026-10-05.
+
+2026-10-07: C7 is now also the live training ground for CREATIVE_AG (TSD-019). Rules were installed, the VILL palette was corrected to petrol `#01304A`, direction B was chosen, the post-01 layered carousel was built (PREVIS), and the dresser-01 product track was paused by the user after studio round 2.
+
+2026-10-08 (TSD-021): the user rejected VILL showcase-01 v1 (overlays and a template look). The team got a showcase grammar (no overlays on project photos, solid dark-petrol type grounds, logo on the cover and the last slide only) and new craft skills for typography (SK-005) and composition (SK-004), with tools. VILL brand fonts were corrected to Alexandria + Inter. v2 direction is approved; v3 (Inter + Alex Brush accent) awaits owner review.
+
+## Current Objective
+
+Complete TSST onboarding and freeze the first operational baseline before treating the agent team as production-ready.
+
+## Confirmed Baseline
+
+- Project key: `TSST`.
+- Display name: `The Systronic Smart Agents`.
+- TSST is isolated from other Real Memory projects.
+- `TSST Lead` is the lead/orchestrator and primary user-facing agent.
+- Seed specialist agents: `CREATIVE_AG`, `LENS_AG`, `SPARK_AG`.
+- The first operational interaction must continue requirements/onboarding before broad autonomous execution.
+- Real Memory gradual-sync rules apply.
+- Fixed team roster = runtime agents in Claude Code and Codex (`tsst-lens/spark/creative/dev` + `tsst-reader`), generated from `TSST/context/roster.yaml`; skills via `TSST/skills/index.yaml`; rules R1–R10 (TSD-014, TSD-015). Gemini/Antigravity retired.
+
+## Open / Not Yet Frozen
+
+All eleven items frozen in Operating Baseline v0.1 (2026-10-05): `TSST/TSST_OPERATING_PROFILE.md` v1.1, `TSST/TSST_DECISION_RIGHTS.md` v1.1, intake record `TSST/onboarding/INTAKE_TSST-001A.md`. Still open by design: numeric KPI baselines (set at end of C7); user-deferred items (revenue model, client qualification, market priority).
+
+## Pending Tasks
+
+1. C7 phase 2c: Lead issues `C7-VILL-12` round 2 (fix list in `LEAD_REVIEW_C7-VILL-12.md`) → Lead re-review → user acceptance; native review of `VERBAL_IDENTITY_v1.0.md` (user).
+2. First real job under the new Creative rules (TSD-019) validates them end-to-end. Before any paid launch, re-verify the platform specs in `TSST/CREATIVE/gemini/GEM-CR-001_out.md`.
+3. VILL showcase-01 v3 visuals APPROVED by the user (2026-10-08), along with the Lens CHANGED lines. Still open before posting: the new AR caption lines (native review), the unverified LinkedIn "most clients" claim, and the CTA channel. The C7-VILL-12 round 2 must use petrol `#01304A` and Alexandria + Inter (the draft says navy and Cairo).
+4. At C7 end: first KPI review (quality, cost, speed, commercial) and readiness reassessment.
+
+## Blockers
+
+- Production readiness stays `NOT_READY` until the C7 pilot is completed and reviewed.
+
+## Next Recommended Action
+
+Lead issues `C7-VILL-12` round 2 → review → user accepts brand guidelines + native-reviews verbal identity. Then commit the PILOTS assets and run the C7 KPI review.
+
+## State as of 2026-10-04
+
+Applied via RM-CS-001 (CS-01), user approval in chat 2026-10-04. Sources: packets `TSST-SYNC-20260928-0711-DEV_AG`, `TSST-SYNC-20261001-1301-CRM-M0-DECISIONS`, `TSST-SYNC-20261002-0040-CRM-M0-CLOSURE`, `TSST-SYNC-20261002-0129-CODEX-WORKER-GOVERNANCE`; repo evidence `f54fbf6`, `93bd92a`, `3bd3fcb`, `a926b9d`, `4ff20bd`; `TSST/decisions/TSST-ADR-002.md`.
+
+- Team: TSST Lead + `LENS_AG`, `CREATIVE_AG`, `SPARK_AG`, `DEV_AG`. `DEV_AG` is governance-`APPROVED` (ADR-002); all specialists remain `NOT_READY`.
+- Operating hierarchy: see TSD-012 (`APPROVED`; changes hierarchy only, not readiness or autonomous authority).
+- Operating spine: `TSST/context/boot.md` + `TSST/core/portfolio.yaml`.
+- CRM is a T.SAG project; milestones M0, M1, M2 are `CLOSED` (pointer: `TSST/brands/t-sag/projects/crm/project.md`). CRM status is a separate product-workstream pointer, not the global TSST next action. Recover latest CRM state from TSST/brands/t-sag/projects/crm/project.md; UI work is paused pending TSST Core acceptance; M3/provider/deployment work is not approved by these packets.
+- Gate `TSST-001A` `CLOSED` 2026-10-05; Operating Baseline v0.1 frozen (TSD-013).
+- Reviewed: nine Google-native packet exports in RM-CS-002 (9/9 registered hashes match). CS2-01..04 applied 2026-10-04 with user approval; all other packet claims rejected or deferred per `TSST/brands/t-sag/projects/tsst-ai/rm-cs-002.md`; packets stay in `incoming/`. Original Google Docs were not independently compared.
+> Get-Content -LiteralPath 'C:\Work\tsst-core-owner-rules\REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md'
+# TSST — PROJECT DECISIONS
+
+## TSD-001 — Use `TSST` as the project key
+
+- Date: `2026-09-23`
+- Status: `ACCEPTED`
+- Decision: The Real Memory project key is `TSST` and the display name is `The Systronic Smart Agents`.
+
+## TSD-002 — Keep TSST isolated
+
+- Date: `2026-09-23`
+- Status: `ACCEPTED`
+- Decision: TSST has its own Real Memory project folder and must not absorb durable memory from THE_SYSTRONIC or client/product projects by default.
+
+## TSD-003 — TSST Lead is the orchestration layer
+
+- Date: `2026-09-23`
+- Status: `SEED / TO VALIDATE DURING ONBOARDING`
+- Decision: `TSST Lead` is the primary user-facing orchestrator above specialist agents.
+
+## TSD-004 — Initial specialist agents
+
+- Date: `2026-09-23`
+- Status: `SEED / TO VALIDATE DURING ONBOARDING`
+- Decision: Initial specialist agent names are `CREATIVE_AG`, `LENS_AG`, and `SPARK_AG`.
+
+## TSD-005 — Onboarding before broad execution
+
+- Date: `2026-09-23`
+- Status: `ACCEPTED`
+- Decision: TSST Lead must complete a structured requirements/governance intake and freeze the first operating baseline before TSST is considered production-ready.
+
+## TSD-006 — Gradual Real Memory sync
+
+- Date: `2026-09-23`
+- Status: `ACCEPTED`
+- Decision: Meaningful memory updates use `RM_SYNC_NOW`, enter the TSST gradual-sync inbox, are reviewed, and are applied only after explicit approval.
+
+## TSD-007 — DEV_AG registration
+
+- Date: `2026-10-04`
+- Status: `ACCEPTED` (governance registration only; DEV_AG remains `NOT_READY`)
+- Decision: `DEV_AG` (Software Engineering & Solutions) is registered under TSST Lead per `TSST/decisions/TSST-ADR-002.md` (user approval 2026-09-28). No PILOT_READY/PRODUCTION_READY status or autonomous authority is granted.
+- Source: packet `TSST-SYNC-20260928-0711-DEV_AG`; apply authority RM-CS-001 CS-02 (user approval in chat 2026-10-04).
+
+## TSD-008 — CRM custom-build foundation
+
+- Date: `2026-10-04`
+- Status: `ACCEPTED` (boundary only)
+- Decision: CRM is a custom-build T.SAG project. This entry records the boundary only; CRM architecture decisions live in `CRM_APP/ADR-001.md`.
+- Source: packets `TSST-SYNC-20261001-1301-CRM-M0-DECISIONS`, `TSST-SYNC-20261002-0040-CRM-M0-CLOSURE`; repo `f54fbf6`, `93bd92a`, `3bd3fcb`, `a926b9d`, `4ff20bd`; RM-CS-001 CS-02.
+
+## TSD-009 — Temporary Codex workers are not TSST agents
+
+- Date: `2026-10-04`
+- Status: `ACCEPTED` (user approval in chat 2026-10-04, final Session 2 review)
+- Decision: Temporary Codex workers are execution tools and are not TSST agents.
+- Source: packet `TSST-SYNC-20261002-0129-CODEX-WORKER-GOVERNANCE` (self-labelled proposed); RM-CS-001 CS-02 / C3.
+
+## TSD-010 — Portable boot, thin runtime adapters, logical tiers
+
+- Date: `2026-10-04`
+- Status: `ACCEPTED`
+- Decision: TSST uses a portable boot context (`TSST/context/boot.md`), thin runtime adapters, and logical model tiers rather than runtime-specific duplication.
+- Source: RM-CS-001 CS-02 (user approval in chat 2026-10-04).
+
+## TSD-011 — Brand-first pointer registry
+
+- Date: `2026-10-04`
+- Status: `ACCEPTED`
+- Decision: Brand/project knowledge is organized in a brand-first pointer registry (`TSST/brands/`) with on-demand memory loading and no duplication of source content.
+- Source: RM-CS-001 CS-02 (user approval in chat 2026-10-04).
+
+## TSD-012 — Operating hierarchy
+
+- Date: `2026-10-04`
+- Status: `APPROVED` (user approval in chat 2026-10-04; changed from PROPOSED in RM-CS-001)
+- Decision: Operating hierarchy: TSST LEAD; MARKETING managed by LENS (SPARK remains the Performance / Paid Media specialist capability under MARKETING); STUDIO managed by CREATIVE; BUILD managed by DEV. Changes operating hierarchy only; does NOT change specialist readiness or grant new autonomous authority.
+- Source: RM-CS-001 CS-02.
+
+Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 here to match this file's convention.
+
+## TSD-013 — Operating Baseline v0.1 frozen; TSST-001A closed
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: Freeze Operating Baseline v0.1 from the TSST-001A intake (mission, success order quality → cost → speed, runtime/tool decision rights, independent cross-runtime review, single reroute on failure, end-of-phase reporting, no new agents before C7) and close gate TSST-001A. Does NOT change readiness (`NOT_READY`) or validate any skill; next gate is the C7 pilot on VILL Studio.
+- Source: `TSST/onboarding/INTAKE_TSST-001A.md`; `TSST/TSST_OPERATING_PROFILE.md` v1.1; `TSST/TSST_DECISION_RIGHTS.md` v1.1.
+
+## TSD-014 — Fixed team roster, central skill index, enforced Skill Plan
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: The TSST team agents are the runtime agents; generic tier workers retired. One skill entry point `TSST/skills/index.yaml`; ≤3 skills per dispatch via a Skill Plan; skill gaps go through intake `TSST-CTX-SK-023`; rules R1–R10. Agents are fixed, skills evolve. No readiness change.
+- Source: `TSST/decisions/TSST-ADR-003.md`; `TSST/core/rules.md`.
+
+## TSD-015 — Runtime-neutral roster for Claude + Codex; Antigravity retired
+
+- Date: `2026-10-05`
+- Status: `APPROVED` (user approval in chat 2026-10-05)
+- Decision: One neutral roster (`TSST/context/roster.yaml` + `agent-contract.md`) generates Claude and Codex agents; logical tier → model per runtime and plan (Claude Pro / ChatGPT Plus) only in `TSST/bus/runtimes.yaml` and adapters; Gemini/Antigravity retired.
+- Source: `TSST/decisions/TSST-ADR-004.md`; PR #6 → master `eac4446`.
+
+## TSD-016 — Usage discipline rules R11–R14
+
+- Date: `2026-10-06`
+- Status: `APPROVED` (user approval in chat 2026-10-06)
+- Decision: Add usage-discipline rules to `TSST/core/rules.md`: one-pass batches (R11), resume an unfinished agent instead of re-dispatching (R12), phase-bounded Lead sessions with handoff (R13), cheapest reader first and no generic/retired agents (R14). Based on the CRM MVP session audit (46 dispatches; ~10 "verify + finish" re-dispatches; per-agent cache reads up to ~17M tokens). No roster, readiness or authority change.
+- Source: `TSST/core/rules.md` § Usage discipline.
+
+## TSD-017 — Local AI reader parked
+
+- Date: `2026-10-06`
+- Status: `PARKED` (user decision in chat 2026-10-06)
+- Decision: Local AI (Ollama + headless Claude Code, read-only) is not adopted for now. Benchmark of `qwen3:14b` (num_ctx 32768, 5 read-only TSST tasks, one run each): tool calling worked and all cited paths existed, but counts, "latest version" judgements and rule locations were wrong in every answered task; ~108 s/task; VRAM 15.3/16 GB. Haiku baseline not run (CLI auth expired). Next candidate if resumed: `gpt-oss:20b`, reusing the same scripts. Do not repeat the qwen3:14b benchmark.
+- Source: `TSST/brands/t-sag/projects/tsst-ai/local-ai-bench/RESULTS.md` (Drive only, not committed).
+
+## TSD-018 — Gemini Desktop as a manual external tool
+
+- Date: `2026-10-06`
+- Status: `APPROVED` (user approval in chat 2026-10-06)
+- Decision: Gemini Desktop is available as an external tool, not a TSST agent or runtime (not Antigravity; no GEMINI_AG). Any agent may recommend it; the responsible agent prepares the handoff (objective, context, files, references, prompt, constraints, acceptance); the Lead packages it; Ahmed runs it manually and returns the output; the agent reviews and the Lead accepts. Output is input, not a deliverable; creative passes FINAL_ASSET_GATE; no secrets ever; sensitive client data only with explicit user approval + privacy check per request. No roster, routing, readiness or governance change.
+- Amended 2026-10-06 (user): data rule changed from "Keep Activity off" to approval + privacy check (Activity off breaks Connected Apps); ADR-004 note moved to Appendix A.
+- Source: `TSST/context/adapters/gemini-desktop.md`; `TSST/decisions/TSST-ADR-004.md` Appendix A.
+
+## TSD-019 — CREATIVE_AG live training on VILL; production rules installed
+
+- Date: `2026-10-07`
+- Status: `APPROVED` (user direction and approvals in chat 2026-10-07)
+- Decision: The main goal is to develop CREATIVE_AG's execution, using VILL Studio as the live training ground. Every creative round delivers the work AND writes its lesson back into the team. Rules installed (all `UNVALIDATED`):
+  - `TSST/CREATIVE/INTAKE_GATE.md`: stage 0, 12 blocking fields and 6 questions, no render before they are answered.
+  - FINAL_ASSET_GATE: open or measure every asset before writing rules, upscale at most 1.25x, scored self-review.
+  - SK-006 v0.2: colours are named by measured hue.
+  - SK-008 v0.2: references become a style sheet.
+  - SK-010 v0.3: no feature is "invented" without all views plus owner confirmation.
+  - SK-011 v0.2: design types and logo on photos.
+  - SK-014 v0.7: manual image bridge and product-fidelity protocol. The card captures the signature form first and the owner confirms it. Edit the real photo rather than generating from references. One continuous chat per product. Staged rounds, at most 3 per stage. Owner acceptance may override the numeric gate.
+  - SK-019 v0.2: layered build.
+  - Tools: `contrast.py`, `phone_preview.py`, `geometry_compare.py`.
+  - Examples: EX-001 and EX-002.
+- Image production stays a manual bridge via Ahmed (ChatGPT image edit, Magnific premium). Blender (installed) is deferred to a later phase. No runtime has a verified IMAGE capability.
+- VILL decisions the same day:
+  - The brand main colour is PETROL `#01304A`, not navy. The palette is the 3 logo colours plus deep petrol, terracotta, stone and cream; sage and brass are removed.
+  - Direction B, "light leads the eye", with Lugar Nefertiti set-up quality as the floor.
+  - The dresser-01 product track was paused by the user after studio round 2.
+- Source: `TSST/CREATIVE/TRAINING_STATUS.md`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/DIRECTION_SHEET_v0.1.md`, `products/dresser-01/`; commit `166b084`.
+
+## TSD-020 — Request role for every external tool or runtime
+
+- Date: `2026-10-07`
+- Status: `APPROVED` (user direction in chat 2026-10-07)
+- Decision: The request decides the role, not the tool. Every request to a tool that can read or write files starts with ROLE A (team runtime: boot, write scope, Skills used) or ROLE B (external tool: not a TSST agent, writes only its output file, edits nothing else). This applies to Codex, ChatGPT, Gemini and any future tool. The trigger was GEM-CR-001, where Gemini labelled itself "Lead/SPARK" and edited TOOLCHAIN.md directly; the Lead reviewed it and accepted it partially.
+- Source: `TSST/context/request-role.md`; pointers in the `adapters/` for claude, codex, chatgpt and gemini-desktop.
+
+## TSD-021 — Showcase grammar + typography and composition craft for CREATIVE_AG; VILL fonts corrected
+
+- Date: `2026-10-08`
+- Status: `APPROVED` (user direction and approvals in chat 2026-10-08). All rules are `UNVALIDATED` until owner review of real output.
+- Trigger: the user rejected VILL showcase-01 v1 ("level not acceptable at all"). The petrol overlays read grey and too light, they were overused behind the logo and text, and every slide used the same template. The user said the team is "completely lost" in typography and in photo composition/layout.
+- Decision:
+  - Showcase grammar, SK-011/008/006 v0.3:
+    - No colour overlays, bands, hazes or vignettes on project photos. Legibility comes from crop and placement.
+    - Brand colour as solid fields only. Type grounds use dark petrol `#011C2C`.
+    - On-image text on 3–4 slides at most, placed in the photo's own quiet plane.
+    - Small Before/After labels.
+    - At least 3 layout types per carousel.
+    - Logo small on the cover and the last slide only (the user's middle ground).
+  - Craft skills:
+    - SK-004 v0.2 composition and layout refs (from GEM-CR-005).
+    - SK-005 v0.2 typography craft refs (from GEM-CR-006): hierarchy, lockups, pairing and bilingual, checklist.
+    - Tools: `text_space.py` (quiet-plane finder plus brand text colour and contrast) and `font_metrics.py`.
+    - Script test fonts Allura and Alex Brush (OFL, user-approved download) in `TSST/CREATIVE/fonts/`.
+  - Research handling:
+    - GEM-CR-003 Part 1 (examples) was rejected as evidence. The patterns were adopted as working rules after the user said "let the team make the right call itself".
+    - Gemini requests take the next free GEM number, because parallel sessions collided on GEM-CR-004.
+    - Gemini requests must not run shell commands on the PC.
+    - Third-party guides (the Visme PDF) live in `TSST/CREATIVE/library/` on Drive, gitignored.
+- VILL decisions the same day:
+  - Brand fonts are **Alexandria (Arabic) + Inter (English)**, not Cairo/Barlow. The `BRAND_GUIDELINES_v1.0` draft is stale on fonts and colours.
+  - Lockup is treatment C, a script accent word inside an Inter line, set in Alex Brush.
+  - showcase-01 v2 direction is APPROVED.
+  - The slide-5 socket/switch retouch is APPROVED.
+  - v3 (Inter + Alex Brush) is built and awaits owner review.
+- Source: commits `cb64934`, `d8abbf5`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/REVIEW_v1.md`; Lead review headers in `TSST/CREATIVE/gemini/GEM-CR-003_out.md`, `GEM-CR-005_out.md` and `GEM-CR-006_out.md`; `TSST/brands/vill-studio/assets/ASSETS.yaml`.
+- Amended `2026-10-08` (same day): the user APPROVED showcase-01 v3 and the Lens CHANGED lines. Captions are still open (AR lines, the LinkedIn "most clients" claim). Skill statuses stay `UNVALIDATED`; v3 is recorded as field evidence in `TSST/CREATIVE/TRAINING_STATUS.md`.
+
+## TSD-022 — Motion AG: independent video/motion team (MOTION_AG)
+
+- Date: `2026-10-11`
+- Status: `APPROVED` (owner approval in chat 2026-10-10/11; governance registration only).
+- Decision: new team `motion`, manager MOTION_AG (`tsst-motion`), peer of CREATIVE; skills TSST-CREATIVE-SK-015..018 became TSST-MOTION-SK-001..004 (`UNVALIDATED`); generation manual through the owner; MOTION_AG `NOT_READY`.
+- Source: `TSST/decisions/TSST-ADR-005.md`, commit `d5bb15e`.
+
+## TSD-023 — Job home, delivery page and same-round sync (core rules R18–R20)
+
+- Date: `2026-10-11`
+- Status: `APPROVED` (owner in chat 2026-10-11: chose Track A, then "save in git and Real Memory and continue the tracks").
+- Decision: every client job lives in `TSST/brands/<id>/projects/<job>/` (PILOTS = read-only archive); every job that reaches the owner/client ends with a DELIVERY page built by `TSST/services/delivery/build_delivery.py`; DELIVERY.json, project.md, status.md and portfolio.yaml are updated in the same round. VILL move scope = active jobs only.
+- Why: Codex never saw the Delivery System because it lived only in `TSST/services/`; work came out in PILOTS, in two shapes, without pages or sync.
+- Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.
+- Amended `2026-10-11`: the owner APPROVED the job file layout `TSST/services/delivery/JOB_LAYOUT.md` (README + 00_BRIEF…08_LEAD_CHECKPOINT + DELIVERY.* + files/ work/ observations/) as the standard for every new job (commit `3fc8b57`).
+- Amended `2026-10-11`: owner asked for a command for every new job → `TSST/services/delivery/new_job.py` (commit `5973ad7`), wired into R18.
+> Get-Content -LiteralPath 'C:\Work\tsst-core-owner-rules\REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md'
+# TSST — PROJECT TIMELINE
+
+| Date | Event | Status | Next |
+|---|---|---|---|
+| 2026-09-23 | TSST isolated Real Memory project initialized | Done | Connect TSST folder to ChatGPT Project |
+| 2026-09-23 | Initial Project Instructions created | Done | Start `TSST_SETUP_CONTINUE` |
+| 2026-09-23 | `TSST-001A — Requirements & Governance Intake` opened | Active | Complete onboarding and approve baseline v0.1 |
+| 2026-09-28 | DEV_AG approved (governance registration, ADR-002; NOT_READY) | Done | Route technical scope only as needed |
+| 2026-10-01 | CRM custom-build M0 baseline | Done | Close M0 |
+| 2026-10-02 | CRM M0 closed (`f54fbf6`), M1 closed (`93bd92a`) | Done | M2 |
+| 2026-10-03 | CRM M2 delivered; CRM UI/UX sprint | Done | Close M2 |
+| 2026-10-04 | CRM M2 closed (`a926b9d`, `3bd3fcb`) + hardening (`4ff20bd`) | Done | Next milestone per user |
+| 2026-10-04 | TSST core consolidation session 1 | Done | `TSST-001A` still OPEN; baseline v0.1 awaits user approval |
+| 2026-10-05 | C7 phase 1 delivered (VILL Strategy Baseline v0.2 + Brand Look Direction v0.2) | Done | Phase 2c |
+| 2026-10-05 | TSST Core v0.2 merged (ADR-003/004, PR #6 `eac4446`) | Done | C7-VILL-11 |
+| 2026-10-05 | C7-VILL-11 issued to codex / studio (final VILL identity from logo) | Open | Lead review |
+| 2026-10-11 | Delivery System gap found (Codex week-01 work outside the system) → rules R18–R20 wired into every runtime (`0f95d46`, TSD-023) | Done | — |
+| 2026-10-11 | Job layout unified (`3fc8b57`); VILL active jobs moved into the brand (`2e42b03`) | Done | — |
+| 2026-10-11 | Delivery System v1.1 (plan sections, JOBS.md sync) + week-01 DELIVERY pages VILL/ANVIL (`0829776`, `9688160`) | Done | Owner review |
+| 2026-10-11 | JOB_LAYOUT owner-approved (`a54ca35`) + new_job.py scaffold (`5973ad7`) | Done | Use for every new job |
+> git -C "C:\Work\tsst-core-owner-rules" diff 3184e36 HEAD --stat
+ .agents/skills/tsst-router/SKILL.md                |   2 +-
+ .../01_CURRENT_STATUS/CURRENT_STATUS.md            |   2 +
+ .../02_PROJECT_MEMORY/PROJECT_DECISIONS.md         |   1 +
+ .../05_TIMELINE/PROJECT_TIMELINE.md                |   4 +
+ TSST/core/rules.md                                 |   2 +-
+ TSST/services/delivery/JOB_LAYOUT.md               |   2 +
+ TSST/services/delivery/README.md                   |   6 +
+ TSST/services/delivery/new_job.py                  | 152 +++++++++++++++++++++
+ 8 files changed, 169 insertions(+), 2 deletions(-)
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" log --oneline -3
+b802a78 docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+c38c4fe feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+3184e36 docs(tsst-core): repo-cleanup handoffs + friction rows
+EXIT: 0
+STEP4 session: 2026-10-11T19:51:59.5693714Z
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-list --reverse origin/anvil/campaign-01-reveal..anvil/campaign-01-reveal
+5973ad7d0f97fa0fdaff21842b23d1c959b01bee
+d97fb1053ee87b77154d17afab4f89642ffdabf5
+EXIT: 0
+PASS main/core text equality (LF-normalized): .agents/skills/tsst-router/SKILL.md
+PASS main/core text equality (LF-normalized): REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+PASS main/core text equality (LF-normalized): REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+PASS main/core text equality (LF-normalized): REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+PASS main/core text equality (LF-normalized): TSST/core/friction-log.md
+PASS main/core text equality (LF-normalized): TSST/core/rules.md
+PASS main/core text equality (LF-normalized): TSST/services/delivery/JOB_LAYOUT.md
+PASS main/core text equality (LF-normalized): TSST/services/delivery/README.md
+PASS main/core text equality (LF-normalized): TSST/services/delivery/new_job.py
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch --show-current
+anvil/campaign-01-reveal
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" reset --mixed origin/anvil/campaign-01-reveal
+Unstaged changes after reset:
+M	.agents/skills/tsst-router/SKILL.md
+M	REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+M	REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+M	REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+M	TSST/brands/anvil/projects/rollup-pre-hell/project.md
+M	TSST/core/friction-log.md
+M	TSST/core/rules.md
+M	TSST/handoffs/LIMIT_FALLBACK.md
+M	TSST/services/delivery/JOB_LAYOUT.md
+M	TSST/services/delivery/README.md
+EXIT: 0
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+PASS mixed reset preserved bytes of all nine moved files; pre-existing WIP SHA256 unchanged
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse HEAD origin/anvil/campaign-01-reveal
+f4fe2e1e1f653e3b8ed6221d882b0f045674fb55
+f4fe2e1e1f653e3b8ed6221d882b0f045674fb55
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" status --short --untracked-files=all
+ M .agents/skills/tsst-router/SKILL.md
+ M REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+ M REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+ M REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+ M TSST/brands/anvil/projects/rollup-pre-hell/project.md
+ M TSST/core/friction-log.md
+ M TSST/core/rules.md
+ M TSST/handoffs/LIMIT_FALLBACK.md
+ M TSST/services/delivery/JOB_LAYOUT.md
+ M TSST/services/delivery/README.md
+?? TSST/brands/anvil/projects/rollup-pre-hell/CHATGPT_CREATIVE_CHECKPOINT_2026-10-11.md
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_BRAND_COMPOSITE_PREVIEW_ARCHIVE.jpg
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_EARLY_PREVIS_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_PORTRAIT_REVIEW.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_ROUND_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_FRONT_WIDE_REVISION_REVIEW.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_CINEMATIC_V1_OWNER_APPROVED.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_BRAND_DIRECTION_APPROVED.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_FORMAL_PREVIS_2400x6000_ARCHIVE.png
+?? TSST/brands/anvil/projects/rollup-pre-hell/chatgpt-pack/ANVIL_PREHELL_formal_quality_v1_REVIEW.png
+?? TSST/handoffs/repo-cleanup/ASSESSMENT.md
+?? TSST/handoffs/repo-cleanup/GEM-REPO-001.md
+?? TSST/handoffs/repo-cleanup/GEM-REPO-001_out.md
+?? TSST/handoffs/repo-cleanup/REPORT-top5.md
+?? TSST/handoffs/repo-cleanup/STEP1-RESULT.md
+?? TSST/handoffs/repo-cleanup/STEP3-CODEX.md
+?? TSST/handoffs/repo-cleanup/STEP3-COMMANDS-001.txt
+?? TSST/handoffs/repo-cleanup/STEP3-RESULT.md
+?? TSST/handoffs/repo-cleanup/STEP4-CODEX.md
+?? TSST/services/delivery/new_job.py
+?? TSST/skills/validation/check_locators.py
+?? TSST/skills/validation/round-1/JUDGE_PACKET.md
+?? TSST/skills/validation/round-1/RUN_LOG.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-005-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-CREATIVE-SK-010-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-011-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-DEV-SK-015-test-5.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-1.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-2.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-3.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-4.md
+?? TSST/skills/validation/round-1/runs/TSST-LENS-SK-002-test-5.md
+?? monumentextended-freeforpersonaluse.zip
+?? systronic-control-center/
+EXIT: 0
+> Read relevant memory write gate and L-006 pointer
+---
+name: tsst-ctx-sk-005-memory-write-gate
+description: "Use when execution produces information that may deserve durable memory, to gate what is written to memory."
+id: TSST-CTX-SK-005
+status: UNVALIDATED
+version: 0.1
+---
+# SKILL — Memory Write Gate
+ID: TSST-CTX-SK-005
+Status: UNVALIDATED
+
+## Trigger
+Execution produces information that may deserve durable memory.
+
+## Workflow
+1. Classify item: FACT/DECISION/FEEDBACK/HYPOTHESIS/LEARNING/TODO/RISK/CHECKPOINT.
+2. Confirm project scope.
+3. Attach source/evidence.
+4. Check duplication/conflict/supersession.
+5. Check sensitivity and secret rules.
+6. Decide: discard / ephemeral / proposed durable write.
+7. Route durable TSST changes through controlled sync/review.
+
+## Critical Failure
+Promoting unsupported model inference or a single customer comment into durable general truth.
+
+
+## Shared v0.2 execution contract
+
+### Required return fields
+- `status`: PASS | PARTIAL | BLOCKED | FAIL
+- `facts`
+- `assumptions`
+- `evidence_locators`
+- `conflicts`
+- `remaining_unknowns`
+- `next_action`
+
+### General guardrails
+- Respect project/workstream/state_scope boundaries.
+- Preserve source provenance.
+- Do not promote derived material above canonical sources.
+- Do not claim validation/readiness from package creation.
+- Do not persist secrets.
+
+### Evaluation requirement
+This skill remains `UNVALIDATED` until a practical fixture demonstrates correct triggering, output, boundary behavior and critical-failure avoidance.
+> C:\Work\tsst-core-owner-rules\TSST\core\lessons.md:30:| L-006 | ACCEPTED | One branch per track (R21). Mixed tracks on one branch + unpushed local-only work + raw design masters in git = costly cleanup. Before any first push: backup gitdir, gitleaks full history, blob-size check (<100MB GitHub hard limit), dry-run; raw masters (tif/psd/ai/big png) stay on Drive and are gitignored; filter-repo only in a fresh clone with `--refs <pushed>..<branch>` (it strips signed merges otherwise). | repo cleanup 2026-10-11: anvil branch carried 13 non-ANVIL commits; CRM 122 commits never pushed; 185MB TIF blocked push; fixed by scan → push CRM → scrub anvil → R21/R22 | `TSST/handoffs/repo-cleanup/` |
+> git -C "C:\Work\tsst-core-owner-rules" status --porcelain=v1 --untracked-files=all
+EXIT: 0
+STEP4 session: 2026-10-11T19:52:51.2320383Z
+> Update owner-approved TSST memory only: C:\Work\tsst-core-owner-rules\REAL_MEMORY\TSST_REAL_MEMORY\01_CURRENT_STATUS\CURRENT_STATUS.md (UTF-8 LF; preserve previous text)
+> Update owner-approved TSST memory only: C:\Work\tsst-core-owner-rules\REAL_MEMORY\TSST_REAL_MEMORY\02_PROJECT_MEMORY\PROJECT_DECISIONS.md (UTF-8 LF; preserve previous text)
+> Update owner-approved TSST memory only: C:\Work\tsst-core-owner-rules\REAL_MEMORY\TSST_REAL_MEMORY\05_TIMELINE\PROJECT_TIMELINE.md (UTF-8 LF; preserve previous text)
+> git -C "C:\Work\tsst-core-owner-rules" diff --check
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md', LF will be replaced by CRLF the next time Git touches it
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" diff --stat
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md', LF will be replaced by CRLF the next time Git touches it
+ REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md | 7 +++++++
+ .../TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md      | 9 +++++++++
+ REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md     | 1 +
+ 3 files changed, 17 insertions(+)
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" diff -- REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md', LF will be replaced by CRLF the next time Git touches it
+diff --git a/REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md b/REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+index 6dcd272..9d5ca7b 100644
+--- a/REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
++++ b/REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+@@ -1,5 +1,12 @@
+ # TSST — CURRENT STATUS
+ 
++## Repo cleanup — 2026-10-11 (owner-approved apply)
++
++- **FACT / problem:** TSST core/delivery and ANVIL work shared the ANVIL branch; CRM UI (122 commits) and the auth spike had never been pushed as backups; a 185 MB rollup TIF blocked a normal ANVIL push.
++- **FACT / fixed:** historical cleanup verified gitleaks had no real secrets (one reviewed source-hash false positive), pushed CRM UI + spike, scrubbed ANVIL in a scratch clone, and advanced master linearly. Step 3 deleted six merged local branches and archived the retained spike with a local tag. Step 4 moved the last two unpushed TSST commits (5973ad7 / d97fb10) to tsst-core/owner-rules and reset only the local ANVIL ref with --mixed; pre-existing main-tree WIP hashes stayed unchanged. No push in Steps 3–4; CRM merge remains separate.
++- **DECISION:** R21 requires one branch per track; R22 makes TSST the single Lead memory across runtimes; R23–R40 were moved from Claude-private memory into TSST/core/rules.md. No readiness or skill-validation change.
++- **Sources:** TSST/core/lessons.md L-006; TSST/core/rules.md R21–R40; TSST/handoffs/repo-cleanup/ (STEP1-RESULT, STEP3-RESULT, STEP4-RESULT). This entry supersedes the older current-status assertion that the 185 MB TIF still blocks the scrubbed ANVIL branch; the original historical text is retained.
++
+ ## Update 2026-10-11 (evening, owner-approved Real Memory apply)
+ 
+ - **Problem found:** Codex (VILL Lead) ran `marketing-week-01` for VILL and ANVIL without The Systronic Delivery System: VILL work landed in `TSST/PILOTS/`, two different file shapes, no DELIVERY pages, portfolio not synced. Root cause: the Delivery System and the "jobs live inside the brand" agreement were written only in `TSST/services/`, outside the chain every runtime reads.
+diff --git a/REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md b/REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+index 3ffd0ce..bef2d0c 100644
+--- a/REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
++++ b/REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+@@ -200,3 +200,12 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
+ - Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.
+ - Amended `2026-10-11`: the owner APPROVED the job file layout `TSST/services/delivery/JOB_LAYOUT.md` (README + 00_BRIEF…08_LEAD_CHECKPOINT + DELIVERY.* + files/ work/ observations/) as the standard for every new job (commit `3fc8b57`).
+ - Amended `2026-10-11`: owner asked for a command for every new job → `TSST/services/delivery/new_job.py` (commit `5973ad7`), wired into R18.
++
++## TSD-024 — Repo cleanup and one Lead memory (R21–R40)
++
++- Date: `2026-10-11`
++- Status: `APPROVED` (Ahmed explicitly approved repo cleanup and this durable TSST memory update in chat).
++- Problem: mixed TSST/ANVIL tracks, 122 local-only CRM UI commits without a remote backup, and a 185 MB TIF in ANVIL history.
++- Recorded outcome: gitleaks found no real secrets (reviewed source-hash false positive); CRM UI + spike were pushed; ANVIL was scrubbed; master advanced linearly; six merged local branches were deleted. The last two unpushed TSST commits were relocated locally to tsst-core/owner-rules; main-tree WIP was preserved. No CRM merge or new push authorized by this entry.
++- Decision: R21 branch per track; R22 one Lead memory in TSST; R23–R40 migrated from Claude-private memory into TSST/core/rules.md. Readiness remains NOT_READY and skills remain UNVALIDATED.
++- Evidence: `TSST/core/lessons.md` L-006; `TSST/core/rules.md` R21–R40; `TSST/handoffs/repo-cleanup/` STEP1-RESULT, STEP3-RESULT and STEP4-RESULT.
+diff --git a/REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md b/REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+index a42442c..fd08fa2 100644
+--- a/REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
++++ b/REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+@@ -18,3 +18,4 @@
+ | 2026-10-11 | Job layout unified (`3fc8b57`); VILL active jobs moved into the brand (`2e42b03`) | Done | — |
+ | 2026-10-11 | Delivery System v1.1 (plan sections, JOBS.md sync) + week-01 DELIVERY pages VILL/ANVIL (`0829776`, `9688160`) | Done | Owner review |
+ | 2026-10-11 | JOB_LAYOUT owner-approved (`a54ca35`) + new_job.py scaffold (`5973ad7`) | Done | Use for every new job |
++| 2026-10-11 | Repo cleanup: mixed tracks / 122 unpushed CRM UI commits / 185 MB TIF → gitleaks no real secrets, CRM + spike backups pushed, ANVIL scrubbed, master linear, six merged local branches deleted; final two TSST commits relocated locally. R21 branch per track, R22 one Lead memory, R23–R40 migrated from Claude memory. Evidence: lessons.md L-006; TSST/handoffs/repo-cleanup/ | Done; local Step 4 | Lead reviews STEP4-RESULT; no CRM merge or new push |
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" add -- REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md', LF will be replaced by CRLF the next time Git touches it
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" commit -m docs(tsst-memory): record repo cleanup and shared Lead rules
+[tsst-core/owner-rules d1ad3da] docs(tsst-memory): record repo cleanup and shared Lead rules
+ 3 files changed, 17 insertions(+)
+EXIT: 0
+> git -C "C:\Work\tsst-core-owner-rules" status --porcelain=v1 --untracked-files=all
+EXIT: 0
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+> Copy authorized updated TSST memory from core worktree to main: REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md (was clean before Step 4; not other-session WIP)
+> Copy authorized updated TSST memory from core worktree to main: REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md (was clean before Step 4; not other-session WIP)
+> Copy authorized updated TSST memory from core worktree to main: REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md (was clean before Step 4; not other-session WIP)
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+PASS final main/core text equality: .agents/skills/tsst-router/SKILL.md
+PASS final main/core text equality: REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+PASS final main/core text equality: REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+PASS final main/core text equality: REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+PASS final main/core text equality: TSST/core/friction-log.md
+PASS final main/core text equality: TSST/core/rules.md
+PASS final main/core text equality: TSST/services/delivery/JOB_LAYOUT.md
+PASS final main/core text equality: TSST/services/delivery/README.md
+PASS final main/core text equality: TSST/services/delivery/new_job.py
+> git -C "C:\Work\tsst-core-owner-rules" log --oneline -3
+d1ad3da docs(tsst-memory): record repo cleanup and shared Lead rules
+b802a78 docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+c38c4fe feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+EXIT: 0
+STEP4 session: 2026-10-11T19:53:23.1799027Z
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree list
+C:/GitMetadata/THE_SYSTRONIC_MARKETING_AGENTS.git f4fe2e1 [anvil/campaign-01-reveal]
+C:/Work/tsst-core-owner-rules                     d1ad3da [tsst-core/owner-rules]
+C:/Work/tsst-crm-codex                            9301f2f [feat/crm-review-fix2]
+C:/Work/tsst-crm-lanes/charts                     7583671 [feat/crm-charts]
+C:/Work/tsst-crm-lanes/dash                       9034abe [feat/crm-v3-dashboard]
+C:/Work/tsst-crm-lanes/ec2                        cb07789 [feat/crm-ec2]
+C:/Work/tsst-crm-lanes/import                     ed06974 [feat/crm-import]
+C:/Work/tsst-crm-mvp                              4015129 [feat/crm-mvp-ui]
+C:/Work/tsst-crm-p1b                              6ca52bf [feat/crm-p1b]
+EXIT: 0
+> Get-ChildItem -LiteralPath 'C:\Work\tsst-core-owner-rules' -Force
+C:\Work\tsst-core-owner-rules\.agents | 1 | Directory
+C:\Work\tsst-core-owner-rules\.claude | 1 | Directory
+C:\Work\tsst-core-owner-rules\.codex | 1 | Directory
+C:\Work\tsst-core-owner-rules\.github | 1 | Directory
+C:\Work\tsst-core-owner-rules\CRM_APP | 1 | Directory
+C:\Work\tsst-core-owner-rules\CRM_BLUEPRINT | 1 | Directory
+C:\Work\tsst-core-owner-rules\CRM_UI_HANDOFF | 1 | Directory
+C:\Work\tsst-core-owner-rules\REAL_MEMORY | 1 | Directory
+C:\Work\tsst-core-owner-rules\TSST | 1 | Directory
+C:\Work\tsst-core-owner-rules\.git | 90 | Hidden, Archive
+C:\Work\tsst-core-owner-rules\.gitattributes | 1440 | Archive
+C:\Work\tsst-core-owner-rules\.gitignore | 2905 | Archive
+C:\Work\tsst-core-owner-rules\AGENTS.md | 5939 | Archive
+C:\Work\tsst-core-owner-rules\CLAUDE.md | 203 | Archive
+C:\Work\tsst-core-owner-rules\GEMINI.md | 5467 | Archive
+C:\Work\tsst-core-owner-rules\LEGACY_ID_MAP.md | 121375 | Archive
+C:\Work\tsst-core-owner-rules\TSST_Specialist_Skill_Matrix_v0.1.xlsx | 18918 | Archive
+C:\Work\tsst-core-owner-rules\TSST_TEAM_BOOTSTRAP_PROMPT_v0.1.md | 4481 | Archive
+> git -C "C:\Work\tsst-core-owner-rules" status --porcelain=v1 --untracked-files=all
+EXIT: 0
+CONFIRMED exact temporary core worktree; all three local commits retained by branch; clean before removal.
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree remove C:\Work\tsst-core-owner-rules
+EXIT: 0
+Core worktree exists after removal: False
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch --list anvil-sync-tmp
+  anvil-sync-tmp
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" merge-base --is-ancestor anvil-sync-tmp anvil/campaign-01-reveal
+EXIT: 0
+CONFIRMED exact allowed branch anvil-sync-tmp; contained in current ANVIL branch; -d only.
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch -d anvil-sync-tmp
+Deleted branch anvil-sync-tmp (was f4fe2e1).
+EXIT: 0
+> Get-ChildItem -LiteralPath 'C:\Work\gl-out' -Force
+C:\Work\gl-out\anvil_campaign-01-reveal.json | 896 | Archive
+C:\Work\gl-out\feat_crm-mvp-ui.json | 896 | Archive
+C:\Work\gl-out\scrub_anvil.json | 734 | Archive
+C:\Work\gl-out\spike_better-auth-b0.json | 896 | Archive
+CONFIRMED exact scan-report folder, not a repo; owner explicitly authorized deletion without git cleanliness requirement. Backup excluded.
+> Remove-Item -LiteralPath 'C:\Work\gl-out' -Recurse
+Exists after delete: False
+> Get-ChildItem -LiteralPath 'C:\Work\gl-out2' -Force
+C:\Work\gl-out2\step2-new-commits.json | 3 | Archive
+CONFIRMED exact scan-report folder, not a repo; owner explicitly authorized deletion without git cleanliness requirement. Backup excluded.
+> Remove-Item -LiteralPath 'C:\Work\gl-out2' -Recurse
+Exists after delete: False
+> Get-ChildItem -LiteralPath 'C:\Work\scrub-anvil' -Force
+C:\Work\scrub-anvil\.agents | 1 | Directory
+C:\Work\scrub-anvil\.claude | 1 | Directory
+C:\Work\scrub-anvil\.codex | 1 | Directory
+C:\Work\scrub-anvil\.git | 1 | Hidden, Directory
+C:\Work\scrub-anvil\.github | 1 | Directory
+C:\Work\scrub-anvil\CRM_APP | 1 | Directory
+C:\Work\scrub-anvil\CRM_BLUEPRINT | 1 | Directory
+C:\Work\scrub-anvil\CRM_UI_HANDOFF | 1 | Directory
+C:\Work\scrub-anvil\REAL_MEMORY | 1 | Directory
+C:\Work\scrub-anvil\TSST | 1 | Directory
+C:\Work\scrub-anvil\.gitattributes | 1440 | Archive
+C:\Work\scrub-anvil\.gitignore | 2905 | Archive
+C:\Work\scrub-anvil\AGENTS.md | 5794 | Archive
+C:\Work\scrub-anvil\CLAUDE.md | 203 | Archive
+C:\Work\scrub-anvil\GEMINI.md | 5467 | Archive
+C:\Work\scrub-anvil\LEGACY_ID_MAP.md | 121375 | Archive
+C:\Work\scrub-anvil\TSST_Specialist_Skill_Matrix_v0.1.xlsx | 18918 | Archive
+C:\Work\scrub-anvil\TSST_TEAM_BOOTSTRAP_PROMPT_v0.1.md | 4481 | Archive
+> git -C "C:\Work\scrub-anvil" status --porcelain=v1 --untracked-files=all
+EXIT: 0
+CONFIRMED exact scratch clone, clean; owner explicitly permits native -Force for read-only/hidden packs only here. Backup excluded.
+> Remove-Item -LiteralPath 'C:\Work\scrub-anvil' -Recurse -Force
+Exists after delete: False
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch -vv
+* anvil/campaign-01-reveal f4fe2e1 [origin/anvil/campaign-01-reveal] fix(tsst-delivery): v1.1 render-QA fixes (bidi punctuation, Arabic comma, nowrap) + R20 sync + Real Memory
++ feat/crm-charts          7583671 (C:/Work/tsst-crm-lanes/charts) docs(crm): charts — week starts Saturday, browser timezone (user decisions 2026-10-07)
++ feat/crm-ec2             cb07789 (C:/Work/tsst-crm-lanes/ec2) wip(crm): EC2 hosting outline (prepare only, deferred)
++ feat/crm-import          ed06974 (C:/Work/tsst-crm-lanes/import) feat(crm): import server — CSV + xlsx parse, mapping, preview, idempotent job
++ feat/crm-mvp-ui          4015129 (C:/Work/tsst-crm-mvp) merge(crm): review fix batch 2 — single name, contact fields/types, lead needs phone or email
++ feat/crm-p1b             6ca52bf (C:/Work/tsst-crm-p1b) Review and harden P1a list security
+  feat/crm-review-fix1     760cfdc fix(crm): add accessible kit file drop zone and native control guard
++ feat/crm-review-fix2     9301f2f (C:/Work/tsst-crm-codex) fix(crm): finish R10 lead contact validation and import regressions
+  feat/crm-server-search   fcd57c5 feat(crm): P1a S5 — Arabic-folded search, related-name search/sort, contact sources
+  feat/crm-ui-migration    3ac5741 feat(crm): U19 — migrate remaining properties and reporting surfaces
++ feat/crm-v3-dashboard    9034abe (C:/Work/tsst-crm-lanes/dash) feat(crm): D6 — chart record activity and order widgets by scope
+  feat/crm-v3-nav-import   7411549 feat(crm): I3R — commit imports and show result ledger
+  master                   3184e36 [origin/master] docs(tsst-core): repo-cleanup handoffs + friction rows
+  spike/better-auth-b0     5175a91 spike(crm): B0 better-auth@1.7.7 probes U1-U11 (THROWAWAY, never merge)
+  tsst-core/owner-rules    d1ad3da docs(tsst-memory): record repo cleanup and shared Lead rules
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" log --oneline -3 tsst-core/owner-rules
+d1ad3da docs(tsst-memory): record repo cleanup and shared Lead rules
+b802a78 docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+c38c4fe feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree list
+C:/GitMetadata/THE_SYSTRONIC_MARKETING_AGENTS.git f4fe2e1 [anvil/campaign-01-reveal]
+C:/Work/tsst-crm-codex                            9301f2f [feat/crm-review-fix2]
+C:/Work/tsst-crm-lanes/charts                     7583671 [feat/crm-charts]
+C:/Work/tsst-crm-lanes/dash                       9034abe [feat/crm-v3-dashboard]
+C:/Work/tsst-crm-lanes/ec2                        cb07789 [feat/crm-ec2]
+C:/Work/tsst-crm-lanes/import                     ed06974 [feat/crm-import]
+C:/Work/tsst-crm-mvp                              4015129 [feat/crm-mvp-ui]
+C:/Work/tsst-crm-p1b                              6ca52bf [feat/crm-p1b]
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse master anvil/campaign-01-reveal origin/anvil/campaign-01-reveal
+3184e369a301eb9bcfe60b5c82624dc01b6c2473
+f4fe2e1e1f653e3b8ed6221d882b0f045674fb55
+f4fe2e1e1f653e3b8ed6221d882b0f045674fb55
+EXIT: 0
+STEP4 session: 2026-10-11T19:54:38.6952433Z
+PASS: every pre-existing main-tree WIP file SHA256 unchanged
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=.agents/skills/tsst-router/SKILL.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\.agents\skills\tsst-router\SKILL.md
+ae8c84b2fc6c277f313f261c1c059eb575effbe8
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:.agents/skills/tsst-router/SKILL.md
+ae8c84b2fc6c277f313f261c1c059eb575effbe8
+EXIT: 0
+PASS main file matches core committed blob: .agents/skills/tsst-router/SKILL.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\REAL_MEMORY\TSST_REAL_MEMORY\01_CURRENT_STATUS\CURRENT_STATUS.md
+9d5ca7b51dd665325d1235ba8b30676fb23c14b5
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+9d5ca7b51dd665325d1235ba8b30676fb23c14b5
+EXIT: 0
+PASS main file matches core committed blob: REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\REAL_MEMORY\TSST_REAL_MEMORY\02_PROJECT_MEMORY\PROJECT_DECISIONS.md
+bef2d0c1ce072fc8ff5a9dffd214338681b5af08
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+bef2d0c1ce072fc8ff5a9dffd214338681b5af08
+EXIT: 0
+PASS main file matches core committed blob: REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\REAL_MEMORY\TSST_REAL_MEMORY\05_TIMELINE\PROJECT_TIMELINE.md
+fd08fa257894ed8a9f5b1b071659f399c4a3b7cb
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+fd08fa257894ed8a9f5b1b071659f399c4a3b7cb
+EXIT: 0
+PASS main file matches core committed blob: REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=TSST/core/friction-log.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\core\friction-log.md
+e80f4c4638162a6c2f9336f572d7ccd8bfb03f91
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:TSST/core/friction-log.md
+e80f4c4638162a6c2f9336f572d7ccd8bfb03f91
+EXIT: 0
+PASS main file matches core committed blob: TSST/core/friction-log.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=TSST/core/rules.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\core\rules.md
+9b8f38010ec5ffedf3ed7a3c3399e4580b56d536
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:TSST/core/rules.md
+9b8f38010ec5ffedf3ed7a3c3399e4580b56d536
+EXIT: 0
+PASS main file matches core committed blob: TSST/core/rules.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=TSST/services/delivery/JOB_LAYOUT.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\services\delivery\JOB_LAYOUT.md
+0a6133b82d7197b2209ebeeb0412f7c08d28989e
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:TSST/services/delivery/JOB_LAYOUT.md
+0a6133b82d7197b2209ebeeb0412f7c08d28989e
+EXIT: 0
+PASS main file matches core committed blob: TSST/services/delivery/JOB_LAYOUT.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=TSST/services/delivery/README.md G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\services\delivery\README.md
+6eacd80647b649dcba28de39ab1a9c2982f96de7
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:TSST/services/delivery/README.md
+6eacd80647b649dcba28de39ab1a9c2982f96de7
+EXIT: 0
+PASS main file matches core committed blob: TSST/services/delivery/README.md
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" hash-object --path=TSST/services/delivery/new_job.py G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\services\delivery\new_job.py
+3b4052e082fd8455381df8b78efba49888c54c26
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" rev-parse tsst-core/owner-rules:TSST/services/delivery/new_job.py
+3b4052e082fd8455381df8b78efba49888c54c26
+EXIT: 0
+PASS main file matches core committed blob: TSST/services/delivery/new_job.py
+> python TSST/context/friction_check.py (read validation)
+friction rows: 56 | repeated (>= 2): 0
+EXIT: 0
+PASS absent: C:\Work\tsst-core-owner-rules
+PASS absent: C:\Work\gl-out
+PASS absent: C:\Work\gl-out2
+PASS absent: C:\Work\scrub-anvil
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" branch -vv
+* anvil/campaign-01-reveal f4fe2e1 [origin/anvil/campaign-01-reveal] fix(tsst-delivery): v1.1 render-QA fixes (bidi punctuation, Arabic comma, nowrap) + R20 sync + Real Memory
++ feat/crm-charts          7583671 (C:/Work/tsst-crm-lanes/charts) docs(crm): charts — week starts Saturday, browser timezone (user decisions 2026-10-07)
++ feat/crm-ec2             cb07789 (C:/Work/tsst-crm-lanes/ec2) wip(crm): EC2 hosting outline (prepare only, deferred)
++ feat/crm-import          ed06974 (C:/Work/tsst-crm-lanes/import) feat(crm): import server — CSV + xlsx parse, mapping, preview, idempotent job
++ feat/crm-mvp-ui          4015129 (C:/Work/tsst-crm-mvp) merge(crm): review fix batch 2 — single name, contact fields/types, lead needs phone or email
++ feat/crm-p1b             6ca52bf (C:/Work/tsst-crm-p1b) Review and harden P1a list security
+  feat/crm-review-fix1     760cfdc fix(crm): add accessible kit file drop zone and native control guard
++ feat/crm-review-fix2     9301f2f (C:/Work/tsst-crm-codex) fix(crm): finish R10 lead contact validation and import regressions
+  feat/crm-server-search   fcd57c5 feat(crm): P1a S5 — Arabic-folded search, related-name search/sort, contact sources
+  feat/crm-ui-migration    3ac5741 feat(crm): U19 — migrate remaining properties and reporting surfaces
++ feat/crm-v3-dashboard    9034abe (C:/Work/tsst-crm-lanes/dash) feat(crm): D6 — chart record activity and order widgets by scope
+  feat/crm-v3-nav-import   7411549 feat(crm): I3R — commit imports and show result ledger
+  master                   3184e36 [origin/master] docs(tsst-core): repo-cleanup handoffs + friction rows
+  spike/better-auth-b0     5175a91 spike(crm): B0 better-auth@1.7.7 probes U1-U11 (THROWAWAY, never merge)
+  tsst-core/owner-rules    d1ad3da docs(tsst-memory): record repo cleanup and shared Lead rules
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" log --oneline -3 tsst-core/owner-rules
+d1ad3da docs(tsst-memory): record repo cleanup and shared Lead rules
+b802a78 docs(tsst-memory): session close 2026-10-11 — job layout approval, new_job.py, timeline, open owner items
+c38c4fe feat(tsst-delivery): new_job.py — start any new job on the approved layout (R18)
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" worktree list
+C:/GitMetadata/THE_SYSTRONIC_MARKETING_AGENTS.git f4fe2e1 [anvil/campaign-01-reveal]
+C:/Work/tsst-crm-codex                            9301f2f [feat/crm-review-fix2]
+C:/Work/tsst-crm-lanes/charts                     7583671 [feat/crm-charts]
+C:/Work/tsst-crm-lanes/dash                       9034abe [feat/crm-v3-dashboard]
+C:/Work/tsst-crm-lanes/ec2                        cb07789 [feat/crm-ec2]
+C:/Work/tsst-crm-lanes/import                     ed06974 [feat/crm-import]
+C:/Work/tsst-crm-mvp                              4015129 [feat/crm-mvp-ui]
+C:/Work/tsst-crm-p1b                              6ca52bf [feat/crm-p1b]
+EXIT: 0
+> git -C "G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS" stash list
+stash@{0}: On feat/crm-mvp-ui: wip(crm): import — read-excel-file 9.3.10 dep (partial, sprint run 2026-10-07)
+EXIT: 0
+> Get-ChildItem -LiteralPath 'G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup' -Force
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\ASSESSMENT.md | 9594 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\desktop.ini | 352 | Hidden, Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\GEM-REPO-001_out.md | 39816 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\GEM-REPO-001.md | 2921 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\REPORT-top5.md | 9352 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP1-RESULT.md | 12297 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-CODEX.md | 3301 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-COMMANDS-001.txt | 167139 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP3-RESULT.md | 9671 | Normal
+G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP4-CODEX.md | 2871 | Normal
+CONFIRMED STEP4-RESULT.md absent and 001 first free STEP4 command-log ID.
+> CreateNew UTF-8 LF 'G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP4-RESULT.md'
+PASS report created: 7402 bytes; required final outputs included
+> SHA256 STEP4-RESULT.md
+713F2DD5D9004F3891BC273118467C75F91137B77F6AE2AA36903BBA2345599D
+> CreateNew full command/output record 'G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\handoffs\repo-cleanup\STEP4-COMMANDS-001.txt'
