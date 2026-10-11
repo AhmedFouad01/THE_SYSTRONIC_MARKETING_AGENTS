@@ -34,6 +34,7 @@
   "plan_kpis": "مؤشرات الأداء",
   "plan_current_stage": "المرحلة الحالية",
   "plan_depends_n": "تعتمد على المرحلة {n}",
+  "list_sep": "،",
   "stage_n": "المرحلة {n}",
   "th_kpi": "المؤشر",
   "th_target": "المستهدف",

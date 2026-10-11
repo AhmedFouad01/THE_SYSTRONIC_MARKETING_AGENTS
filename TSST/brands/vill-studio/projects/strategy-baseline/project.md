@@ -21,7 +21,7 @@ C7-VILL-01..06 (strategy v0.1/v0.2, reviews, brand look v0.1/v0.2); C7-VILL-07..
 VILL-001 strategy work already in canonical PROJECT_MASTER (consolidate, do not redo discovery).
 
 ## Next
-Ahmed reviews marketing-week-01/README.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
+marketing-week-01 DELIVERY page built 2026-10-11 (in review): `../marketing-week-01/DELIVERY.html` (+ internal). Ahmed reviews marketing-week-01/README.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
 
 ## Other backlog — previous next, deferred
 Lead issues C7-VILL-12 round 2 per `LEAD_REVIEW_C7-VILL-12.md`; user native-reviews `VERBAL_IDENTITY_v1.0.md`. Then: user supplies OPEN_DATA_REQUESTS → VILL-001 close → W1 Foundation (needs implementation mandate).

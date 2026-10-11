@@ -34,6 +34,7 @@
   "plan_kpis": "Key performance indicators",
   "plan_current_stage": "Current stage",
   "plan_depends_n": "Depends on stage {n}",
+  "list_sep": ", ",
   "stage_n": "Stage {n}",
   "th_kpi": "Indicator",
   "th_target": "Target",

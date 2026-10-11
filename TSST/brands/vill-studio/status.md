@@ -17,6 +17,7 @@ Project: `strategy-baseline` — `projects/strategy-baseline/project.md`.
 - Raw portfolio bank: 1,583 source files / 54 project folders in `assets/source/portfolio/` (`INDEX.md`, `CATALOG.csv`, `STUDIO_PICKS.md`, `_catalog/BANK.html`). Index accounts for 1,432 sorted + 53 duplicates + 98 review. New campaign images start here; trust piece tags/text search, treat material/stage tags cautiously.
 
 ## Active marketing — owner request 2026-10-11
+- DELIVERY page (R19) built 2026-10-11, in review: client [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) · internal [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html); render QA passed after 5 generator fixes.
 - Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/brands/vill-studio/projects/marketing-week-01/README.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
 
 ## Other open workstreams — do not auto-start

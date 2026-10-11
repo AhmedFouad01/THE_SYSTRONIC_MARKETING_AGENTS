@@ -92,8 +92,27 @@ _MON = "|".join(I18N["ar"]["months"])
 AR_DATE = re.compile(r"\d{1,2} (?:" + _MON + r") \d{4}")
 
 
+TRAIL = ".:,;!?/'’-_&+"
+
+
+def ltr(s, nw=True):
+    """one LTR isolate; trailing punctuation stays OUTSIDE it (in RTL a period or colon inside would land on the wrong side).
+    Short multi-word runs (brand names) get class nw so chrome/plan text cannot break them across lines."""
+    core = s.rstrip(TRAIL)
+    if not core:
+        return e(s)
+    cls = ' class="nw"' if nw and len(core) <= 28 and re.search(r"\s", core) else ""
+    return f'<bdi dir="ltr"{cls}>{e(core)}</bdi>{e(s[len(core):])}'
+
+
 def _lat_plain(t):
-    return LAT_RUN.sub(lambda m: f'<bdi dir="ltr">{m.group(0)}</bdi>', e(t))
+    out, pos = [], 0
+    for m in LAT_RUN.finditer(t):
+        out.append(e(t[pos:m.start()]))
+        out.append(ltr(m.group(0)))
+        pos = m.end()
+    out.append(e(t[pos:]))
+    return "".join(out)
 
 
 def _lat_dates(t):
@@ -112,12 +131,16 @@ def lat(s):
     s = str(s)
     if " · " in s and AR_RUN.search(s):
         segs = s.split(" · ")
-        return " · ".join(f'<bdi dir="rtl">{_lat_dates(x)}</bdi>' if AR_RUN.search(x) else f'<bdi dir="ltr">{e(x)}</bdi>' for x in segs)
+        return " · ".join(f'<bdi dir="rtl">{_lat_dates(x.rstrip(TRAIL))}</bdi>{e(x[len(x.rstrip(TRAIL)):])}' if AR_RUN.search(x) else ltr(x) for x in segs)
     return _lat_dates(s)
 
 
-def T(en, ar):
-    return f'<span class="l-en">{en}</span><span class="l-ar" lang="ar">{ar}</span>'
+def T(en, ar, auto=False):
+    d = ' dir="auto"' if auto else ""
+    return f'<span class="l-en"{d}>{en}</span><span class="l-ar" lang="ar"{d}>{ar}</span>'
+
+
+INT_WHAT = re.compile(r"int_note|internal_|^ifact|^checks\[|\.who$")
 
 
 def S(key, **kw):
@@ -139,7 +162,7 @@ def rights(year):
     for l in LANGS:
         t = I18N[l]["foot_rights"].format(year=year, name=I18N[l]["foot_name"])
         mm = re.match(r"^(© \d+ [A-Za-z ]+\.?)(.*)$", t)
-        out.append(f'<bdi dir="ltr">{e(mm.group(1))}</bdi>{e(mm.group(2)) if l == "en" else lat(mm.group(2))}' if mm else (e(t) if l == "en" else lat(t)))
+        out.append(f'{ltr(mm.group(1), False)}{e(mm.group(2)) if l == "en" else lat(mm.group(2))}' if mm else (e(t) if l == "en" else lat(t)))
     return T(*out)
 
 
@@ -175,7 +198,7 @@ class Ctx:
         if not ar:
             missing_ar.append(what or str(en)[:40])
             ar = en
-        return T(rich(en), lat(ar))
+        return T(rich(en), lat(ar), bool(INT_WHAT.search(what or "")))
 
 
 def body_html(body, d):
@@ -183,7 +206,7 @@ def body_html(body, d):
     (no characters are added, so the copied text stays identical)"""
     if d != "rtl":
         return e(body)
-    return chr(10).join(f'<bdi dir="ltr">{e(l)}</bdi>' if l.strip() and not AR_RUN.search(l) else e(l) for l in body.split(chr(10)))
+    return chr(10).join(ltr(l, False) if l.strip() and not AR_RUN.search(l) else e(l) for l in body.split(chr(10)))
 
 
 def url(p):
@@ -425,7 +448,8 @@ html[lang=ar] .tbl-s td::before{content:attr(data-l-ar)}
 .pr .no{font-size:15px;font-weight:700;color:var(--redtx);line-height:1.9}
 .pr .ti{color:var(--navy);font-size:17px;line-height:1.6}
 .pr.cur .ti{font-weight:700}
-.pr .cu{margin-inline-start:10px;font-size:14px;color:var(--mut)}
+.pr .cu{display:inline-block;white-space:nowrap;margin-inline-start:10px;font-size:14px;color:var(--mut)}
+.pr .nw,.kv .nw,.facts-row .nw,.rail .nw,.idx .nw,.top .nw,.fb2 .nw,.sh .nw,.eyebrow .nw,td .nw{white-space:nowrap}
 .pr .sm{display:block;margin-top:2px;font-size:15px;line-height:1.6;color:var(--mut)}
 .pr .sm a.lk{color:var(--navy)}
 .pr .ps{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;justify-self:end;white-space:nowrap;color:var(--navy);font-size:15px;line-height:1.7}
@@ -736,7 +760,7 @@ def r_road(pl, cx, internal, sec):
                 meta.append(cx.bi(x["window"], ax.get("window"), w + ".window"))
             deps = [str(num[d]) for d in (x.get("depends_on") or []) if d in num]
             if deps:
-                meta.append(S("plan_depends_n", n=", ".join(deps)))
+                meta.append(T(*(fmt(l, "plan_depends_n", n=I18N[l]["list_sep"].join(deps)) for l in LANGS)))
             is_cur = x["id"] == cur
             body = (H("span", "ti", cx.bi(x.get("title", ""), ax.get("title"), w + ".title")) + itag(x, internal)
                     + (H("span", "cu", S("plan_current_stage")) if is_cur else "")
@@ -937,7 +961,7 @@ def build(job, audience="client", link_logo=False):
       f'<div class="lsw" role="group" data-lbl-en="{e(I18N["en"]["lang_switch_label"])}" data-lbl-ar="{e(I18N["ar"]["lang_switch_label"])}" aria-label="{e(I18N["en"]["lang_switch_label"])}">'
       f'<button type="button" data-lang="en" aria-pressed="{str(dl == "en").lower()}">EN</button>'
       f'<button type="button" data-lang="ar" lang="ar" aria-pressed="{str(dl == "ar").lower()}">ع</button></div></div></div>'
-      f'<div class="hero-body"><div><div class="bar"></div><p class="eyebrow">{S("prepared_for")} <bdi dir="ltr">{e(m["client"])}</bdi></p>'
+      f'<div class="hero-body"><div><div class="bar"></div><p class="eyebrow">{S("prepared_for")} <bdi dir="ltr" class="nw">{e(m["client"])}</bdi></p>'
       f'<h1>{cx.bi(m.get("title") or m["job"], ar.get("title"), "title")}</h1>')
     if m.get("subtitle"):
         a(f'<p class="sub">{cx.bi(m["subtitle"], ar.get("subtitle"), "subtitle")}</p>')
@@ -978,7 +1002,7 @@ def build(job, audience="client", link_logo=False):
     sl = cx.bi(m.get("status_label") or I18N["en"]["st_" + sk], ar.get("status_label") or I18N["ar"]["st_" + sk], "status_label")
     det = f'<small>{cx.bi(m["status_detail"], ar.get("status_detail"), "status_detail")}</small>' if m.get("status_detail") else ""
     det += tasks_line(pl)
-    a(f'<dl class="facts-row"><div><dt>{S("client")}</dt><dd><bdi dir="ltr">{e(m["client"])}</bdi></dd></div>'
+    a(f'<dl class="facts-row"><div><dt>{S("client")}</dt><dd><bdi dir="ltr" class="nw">{e(m["client"])}</bdi></dd></div>'
       f'<div><dt>{S("date")}</dt><dd>{D(m.get("date", ""))}</dd></div>'
       f'<div><dt>{S("status")}</dt><dd><span class="st"><i class="d {ST_CLS[sk]}"></i>{sl}</span>{det}</dd></div></dl>'
       f'</div></header><main>')
@@ -1156,7 +1180,7 @@ def build(job, audience="client", link_logo=False):
     sysname = I18N["en"]["system_name"].replace("v1", "v" + VERSION)
     a(f'</main><footer class="dark"><div class="wrap"><div class="ft">{img.replace("<img ", "<img class=lg ") if img else ""}<p class="tg">{S("foot_tagline")}</p></div>'
       f'{"<dl class=fc>" + cells + "</dl>" if cells else ""}'
-      f'<div class="fb2"><p><bdi dir="ltr">{e(m["client"])}</bdi> · {D(m.get("date", ""))}</p>'
+      f'<div class="fb2"><p><bdi dir="ltr" class="nw">{e(m["client"])}</bdi> · {D(m.get("date", ""))}</p>'
       f'<p>{rights(yr)}</p>'
       f'<p class="vs"><img src="{asset("mark_white_96.png")}" alt=""><bdi dir="ltr">{e(sysname)}</bdi></p></div></div></footer>')
     a(f'<nav class="rail" id="rail" aria-label="{e(I18N["en"]["contents"])}" data-lbl-en="{e(I18N["en"]["contents"])}" data-lbl-ar="{e(I18N["ar"]["contents"])}"><p>{S("contents")}</p>'
@@ -1221,6 +1245,9 @@ if __name__ == "__main__":
             print("  brand sync:", "; ".join(brand_sync))
         if plan_warn:
             print("  plan warnings:", "; ".join(plan_warn))
+        punct = len(re.findall(r"[.:,;]</bdi>", doc))
+        print("  bidi punctuation check ([.:,;]</bdi>):", "OK" if not punct else f"FAIL {punct} hit(s)")
+        bad += bool(punct)
         if who == "client":
             lk_ = leaks(doc)
             print("  leak scan:", "clean" if not lk_ else f"LEAK {lk_}")
