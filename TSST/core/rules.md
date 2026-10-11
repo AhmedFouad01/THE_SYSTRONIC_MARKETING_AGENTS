@@ -89,6 +89,29 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
   `TSST/core/rules.md` in the same turn. Runtime-private memory (e.g. Claude auto-memory) may
   only point to the rule number, never hold an owner rule that TSST doesn't have.
 
+## Owner rules moved from runtime memory (owner rule, 2026-10-11, R22)
+Lead conversation
+- **R23 Arabic owner replies.** Every reply to the owner is plain Egyptian Arabic; English only for unavoidable identifiers (paths, IDs, commands), in code spans. Agent English never changes the reply language.
+- **R24 Audit scope first.** No audit/review/fix round starts before the owner sees a numbered fix list (item, done-when, rough cost) and says OK. Never open-ended.
+- **R25 One next step.** A finished track ends with a short state + at most one proposed next step, not a menu. State token cost before spawning several agents.
+- **R26 Lead spends on analysis.** Lead tokens go to understanding, replying, reviewing team packets and skill validation; all doable work goes to the team.
+- **R27 Visual first.** Systems, plans and roadmaps are explained with a diagram first; big projects keep a live visual blueprint (CREATIVE-SK-031).
+Routing, cost, files
+- **R28 Marketing order.** LENS (story/copy) → SPARK (formats/KPIs) → CREATIVE; parallel only when questions don't overlap.
+- **R29 Research route.** Broad gathering, long reads and web research go first as a Gemini app request (ROLE B, paste-ready); launch-blocking facts are re-verified on the live official page.
+- **R30 Plan first, light reviews.** Spec before build; per-slice checks stay light; heavy reviews (security, full UI, AR/EN visual gate) only pre-launch.
+- **R31 Video fits the package.** Client video defaults to one-pass production, one credit quote, max one re-roll; shot-by-shot QA only for big budgets or training rounds.
+- **R32 Limit handoff.** Near a usage limit, keep `TSST/handoffs/LIMIT_FALLBACK.md` current with paste-ready prompts; never hand off spend, publishing, account actions or paid generation.
+- **R33 Next free ID.** Before creating any request/handoff/GEM file, list the folder and take the next free number; never overwrite (parallel sessions).
+- **R34 Tiny handoff files.** Handoff and bus files are pointer-first, no recaps; enforce format in code, not prose.
+- **R35 Log skill friction.** After every team report, a non-`none` skill_friction goes to `TSST/core/friction-log.md`, then run `TSST/context/friction_check.py`.
+Creative, product, delivery
+- **R36 Owner drafts are the floor.** Raise the owner's draft; keep what he accepted; ask before dropping any element.
+- **R37 Measure brand facts.** Before saying something matches a brand, measure it against current approved assets (hex/hue/font) and name what was measured.
+- **R38 AI shots, not raw slideshows.** Client raw media is reference only; plan video per shot (reference → AI still → AI video → assembly); confirm the pipeline with the owner first. CREATIVE + MOTION.
+- **R39 No native controls.** No product ever ships browser-native unstyled controls (file, date, colour, range, select, checkbox); styled kit components only, stated in every UI brief.
+- **R40 Client pages are formal.** DELIVERY.html shows no internal names, tools, IDs, spend gates, rejected work or sources; one language per sentence. Internal detail → DELIVERY_INTERNAL.html.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes
