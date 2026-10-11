@@ -14,3 +14,7 @@
 | 2026-10-05 | C7 phase 1 delivered (VILL Strategy Baseline v0.2 + Brand Look Direction v0.2) | Done | Phase 2c |
 | 2026-10-05 | TSST Core v0.2 merged (ADR-003/004, PR #6 `eac4446`) | Done | C7-VILL-11 |
 | 2026-10-05 | C7-VILL-11 issued to codex / studio (final VILL identity from logo) | Open | Lead review |
+| 2026-10-11 | Delivery System gap found (Codex week-01 work outside the system) → rules R18–R20 wired into every runtime (`0f95d46`, TSD-023) | Done | — |
+| 2026-10-11 | Job layout unified (`3fc8b57`); VILL active jobs moved into the brand (`2e42b03`) | Done | — |
+| 2026-10-11 | Delivery System v1.1 (plan sections, JOBS.md sync) + week-01 DELIVERY pages VILL/ANVIL (`0829776`, `9688160`) | Done | Owner review |
+| 2026-10-11 | JOB_LAYOUT owner-approved (`a54ca35`) + new_job.py scaffold (`5973ad7`) | Done | Use for every new job |

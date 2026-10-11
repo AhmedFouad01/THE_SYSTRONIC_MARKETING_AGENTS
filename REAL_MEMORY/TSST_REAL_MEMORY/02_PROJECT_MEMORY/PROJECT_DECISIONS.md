@@ -199,3 +199,4 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Why: Codex never saw the Delivery System because it lived only in `TSST/services/`; work came out in PILOTS, in two shapes, without pages or sync.
 - Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.
 - Amended `2026-10-11`: the owner APPROVED the job file layout `TSST/services/delivery/JOB_LAYOUT.md` (README + 00_BRIEF…08_LEAD_CHECKPOINT + DELIVERY.* + files/ work/ observations/) as the standard for every new job (commit `3fc8b57`).
+- Amended `2026-10-11`: owner asked for a command for every new job → `TSST/services/delivery/new_job.py` (commit `5973ad7`), wired into R18.
