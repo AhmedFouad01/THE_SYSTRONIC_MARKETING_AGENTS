@@ -72,7 +72,7 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
   (unfinished → tomorrow) + project checkpoints (Must 6). Spec: `TSST/daily/README.md`.
 
 ## Job home, delivery, sync (owner rule, 2026-10-11)
-- **R18 Job home.** Every client job lives in `TSST/brands/<id>/projects/<job>/` and is listed in that brand's project.md. Never create new work in `TSST/PILOTS/` (historical archive, read-only) or `TSST/projects/`. Layout: `TSST/services/delivery/JOB_LAYOUT.md`.
+- **R18 Job home.** Every client job lives in `TSST/brands/<id>/projects/<job>/` and is listed in that brand's project.md. Never create new work in `TSST/PILOTS/` (historical archive, read-only) or `TSST/projects/`. Layout: `TSST/services/delivery/JOB_LAYOUT.md`. Start new jobs with `new_job.py` (`TSST/services/delivery/new_job.py`).
 - **R19 Delivery page.** Every job that reaches the owner or client ends with `<job>/DELIVERY.json` → `python TSST/services/delivery/build_delivery.py <job>` → `DELIVERY.html` (client) + `DELIVERY_INTERNAL.html`, per `TSST/services/delivery/README.md` (v1.0). The Lead sends the page, not a folder of markdown files.
 - **R20 Same-round sync.** In the same round as the deliverable, update: the job's DELIVERY.json statuses, the brand project.md (job + state), brand `status.md` (Current), and the brand line in `TSST/core/portfolio.yaml`. A job is not done until the four agree. Check: `python TSST/services/delivery/job_check.py <job>`; refresh the brand index with `python TSST/services/delivery/sync_jobs.py <brand>` (generates `TSST/brands/<id>/JOBS.md`; job_check f) fails if it is stale).
 

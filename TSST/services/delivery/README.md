@@ -13,6 +13,12 @@ One manifest per job -> two pages in the job folder, one template, two languages
 - `systronic.json`: the agency footer data (website, email, phone, whatsapp, address, social, copyright). Empty fields are hidden on the client page and shown as "not set" on the internal page. Never invent data here.
 - `fonts/`: Poppins (Latin) and IBM Plex Sans Arabic (Arabic), embedded in every page. `assets/`: iconic-mark tints and favicon (made from `TSST/brands/t-sag/assets/final/logo/systronic_iconic-mark_*`).
 
+## Start a job (new_job.py)
+- `python TSST/services/delivery/new_job.py <brand-id> <job-path> --service "<SV-.. name>" --title "<title>" [--lang en|ar] [--dry-run]`
+- `<job-path>` is relative to `TSST/brands/<brand-id>/projects/`, may be nested (`campaign-01/marketing-week-02`), lowercase slugs `[a-z0-9-]+`. `--lang` is read from the brand's existing DELIVERY.json when omitted, else required.
+- Creates `README.md`, `00_BRIEF.md` (headings only) and a `DELIVERY.json` stub (status `progress`); appends a line to the brand `status.md` (`## New jobs (new_job.py)`) and, for a nested job, to the parent `project.md`; runs `sync_jobs.py` and `job_check.py`. Top-level jobs: the Lead adds the job to the brand `project.md`. Fresh job: check c) fails until `build_delivery.py` has run; fill the Arabic title in the `ar` block.
+- Refuses (exit 1): unknown brand, existing folder, PILOTS / `TSST/projects/` path, bad slug, no `--lang` with no earlier DELIVERY.json. `--dry-run` writes nothing. `--root` (tests only) points at a scratch tree.
+
 ## Add a job
 1. Create `<job>/DELIVERY.json` (copy `social-setup-01/DELIVERY.json` or ANVIL `TSST/brands/anvil/projects/campaign-01/DELIVERY.json`). English fields come from LENS `CLIENT_COPY.md`; Arabic fields go in the `"ar"` block from `CLIENT_COPY_AR.md`. Set `default_lang`.
 2. Every item and text needs a stable `id` (also the client file name). Internal-only entries: `"internal": true`. Internal-only detail: `int_note`, `internal_*`, `checks`, `sources`.
