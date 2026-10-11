@@ -1,0 +1,1067 @@
+{
+ "client": "VILL Studio",
+ "service": "Marketing week 01",
+ "job": "marketing-week-01",
+ "date": "2026-10-11",
+ "title": "First-Week Marketing Plan",
+ "subtitle": "Delivery for VILL Studio · Facebook, Instagram and LinkedIn · 11 October 2026",
+ "status": "review",
+ "status_label": "In review",
+ "status_detail": "Draft for your review. Nothing has been approved or published.",
+ "about": {
+  "paragraphs": [
+   "The Systronic has prepared a first-week marketing plan for VILL Studio on Facebook, Instagram and LinkedIn. The aim is to introduce the studio and build trust through one real project: the same space before and after, then one close detail, then the furniture made for it. This is a draft for your review. Nothing has been approved or published."
+  ],
+  "voice": "Facebook and Instagram captions are written in calm Egyptian Arabic. LinkedIn is proposed in English, and the choice of language is yours. Claims are limited to the documented project.",
+  "facts": [
+   [
+    "Channels",
+    "Facebook · Instagram · LinkedIn"
+   ],
+   [
+    "Plan length",
+    "One week, Day 1 to Day 7. The start date is to be set."
+   ],
+   [
+    "Planned content",
+    "3 Facebook posts · 3 Instagram posts · 2 LinkedIn posts · 3 Instagram Story sets (9 frames)"
+   ],
+   [
+    "Status",
+    "In review. Nothing approved or published."
+   ]
+  ],
+  "internal_paragraphs": [
+   "Internal summary: review draft produced 2026-10-11 (LENS + SPARK, Lead desk review). Native Arabic review, LinkedIn language, start date and human publisher are open owner gates. Derivatives and Stories are not produced. No post, schedule, spend or account change was made.",
+   "Facebook first post is not published (owner-reported). Old strategy approval is source input, not evidence of a live plan."
+  ]
+ },
+ "marketing_plan": {
+  "objective": "Introduce VILL Studio and build early trust on Facebook, Instagram and LinkedIn, starting from one real project.",
+  "audience": "Owners of apartments and villas in East and West Cairo who want to see how a space, its furniture and its details work together before they trust a studio.",
+  "channels": [
+   {
+    "id": "ch_fb",
+    "name": "Facebook",
+    "role": "A clear first introduction for a first-time visitor"
+   },
+   {
+    "id": "ch_ig",
+    "name": "Instagram",
+    "role": "A visual story first, then closer evidence"
+   },
+   {
+    "id": "ch_li",
+    "name": "LinkedIn",
+    "role": "A scoped project case for a professional reader"
+   }
+  ],
+  "messages": [
+   {
+    "id": "msg_who",
+    "text": "Who we are: VILL Studio is an interior design and fit-out studio."
+   },
+   {
+    "id": "msg_project",
+    "text": "See our work: one real project, from empty rooms to a furnished home."
+   },
+   {
+    "id": "msg_evidence",
+    "text": "See the closer evidence: the stone, the light and the furniture made for this project."
+   },
+   {
+    "id": "msg_scope",
+    "text": "Every claim stays specific to this documented project and is not a general guarantee."
+   }
+  ],
+  "kpis": [
+   {
+    "id": "kpi_reach",
+    "name": "Reach",
+    "target": "",
+    "source": "Facebook, Instagram and LinkedIn page insights",
+    "status": "planned",
+    "int_note": "05_MEASUREMENT.md: record the exact metric label and organic scope per platform; never sum reach across platforms. No numeric target before the Day 0 baseline."
+   },
+   {
+    "id": "kpi_signals",
+    "name": "Saves, shares and comments",
+    "target": "",
+    "source": "Facebook, Instagram and LinkedIn page insights",
+    "status": "planned",
+    "int_note": "06b_SCORECARD_GUIDE.md: record each action separately; they are helper signals, not proof of trust or sales."
+   },
+   {
+    "id": "kpi_understanding",
+    "name": "Understanding of the studio's scope",
+    "target": "",
+    "source": "Review of comments and messages",
+    "status": "planned",
+    "int_note": "01_STRATEGY.md Day 3 question: is VILL read as design and fit-out, or only as furniture? Absence of questions proves nothing."
+   },
+   {
+    "id": "kpi_enquiries",
+    "name": "Enquiries about a real project",
+    "target": "",
+    "source": "Manual enquiry log, without personal data",
+    "status": "planned",
+    "int_note": "Unique conversations asking about an actual project; praise is not an enquiry. No conversion rate is assumed."
+   }
+  ],
+  "int_note": "Organic week only; no paid media. Frequency of 8 feed posts + 3 Story sets is a workload hypothesis, not a reach promise. No targets until a baseline is recorded (D0). Source files: 01_STRATEGY.md, 05_MEASUREMENT.md, 06b_SCORECARD_GUIDE.md.",
+  "internal_paragraphs": [
+   "Capacity limit: if only reuse is available, run N1 (project introduction) on the three channels and postpone N2, N3 and the Stories.",
+   "Facebook has zero posts (owner-reported); Instagram and LinkedIn post history and follower numbers are unknown."
+  ]
+ },
+ "roadmap": [
+  {
+   "id": "rm_review",
+   "title": "Review the plan and the draft copy",
+   "desc": "Review the captions and Story texts, choose the LinkedIn language and confirm how the week will run.",
+   "status": "review",
+   "owner": "client",
+   "depends_on": [],
+   "window": "Before Day 1",
+   "internal": false,
+   "int_note": "Gates: native Arabic review, LinkedIn language, start of week and human publisher (01_STRATEGY.md, gates 1 to 3)."
+  },
+  {
+   "id": "rm_baseline",
+   "title": "Record the starting figures",
+   "desc": "Note each page's current follower count and whether post insights are available.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [],
+   "window": "Before Day 1",
+   "internal": false,
+   "int_note": "06b_SCORECARD_GUIDE.md: unavailable stays 'unavailable', never zero."
+  },
+  {
+   "id": "rm_visuals",
+   "title": "Prepare the image crops and Story frames",
+   "desc": "Prepare the crops for the stone detail and the furniture, and the three Story sets, then preview every format on the actual pages.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_review"
+   ],
+   "window": "Before each matching post",
+   "internal": false,
+   "int_note": "04_CREATIVE_BRIEFS.md: derivatives are not produced yet; one review version each."
+  },
+  {
+   "id": "rm_intro",
+   "title": "Introduce the studio through one project",
+   "desc": "The same space before and after, on Facebook and Instagram, with Stories, then on LinkedIn.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_review",
+    "rm_baseline",
+    "rm_visuals"
+   ],
+   "window": "Day 1 to Day 2",
+   "internal": false,
+   "int_note": "FB1, IG1, ST1 (D1); LI1 (D2)."
+  },
+  {
+   "id": "rm_checkin",
+   "title": "First review",
+   "desc": "Check whether the studio is understood as an interior design and fit-out studio, and note the questions that appeared.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_intro"
+   ],
+   "window": "Day 3",
+   "internal": false,
+   "int_note": "No post planned on D3."
+  },
+  {
+   "id": "rm_detail",
+   "title": "Show the closer detail",
+   "desc": "The natural stone wall, the lighting and the bench beneath it, on Facebook and Instagram, with Stories, then on LinkedIn.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_checkin",
+    "rm_visuals"
+   ],
+   "window": "Day 4 to Day 5",
+   "internal": false,
+   "int_note": "FB2, IG2, ST2 (D4); LI2 (D5)."
+  },
+  {
+   "id": "rm_furniture",
+   "title": "Show the furniture inside the same home",
+   "desc": "The bed, sofa, tables and bench made for this project, on Facebook and Instagram, with a Story set.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_detail",
+    "rm_visuals"
+   ],
+   "window": "Day 6",
+   "internal": false,
+   "int_note": "FB3, IG3, ST3 (D6)."
+  },
+  {
+   "id": "rm_wrapup",
+   "title": "Review the week and decide the next step",
+   "desc": "Compare each platform with itself and decide: repeat the idea, clarify the message, or ask for new project evidence.",
+   "status": "planned",
+   "owner": "team",
+   "depends_on": [
+    "rm_furniture"
+   ],
+   "window": "Day 7",
+   "internal": false,
+   "int_note": "No post planned on D7. Day 6 pieces are too recent to judge."
+  }
+ ],
+ "milestones": [
+  {
+   "id": "ms_copy_ok",
+   "title": "Captions and Story texts approved",
+   "date": "",
+   "date_basis": "planned",
+   "status": "review",
+   "stage": "rm_review",
+   "gate": "Client approval",
+   "internal": false,
+   "int_note": "Nothing approved yet."
+  },
+  {
+   "id": "ms_start_set",
+   "title": "Start date and publisher confirmed",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_review",
+   "gate": "Client confirmation",
+   "internal": false,
+   "int_note": "No start date approved; D1 is a relative day."
+  },
+  {
+   "id": "ms_previews",
+   "title": "Image crops and Stories approved",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_visuals",
+   "gate": "Client approval",
+   "internal": false,
+   "int_note": "Includes the format preview on each page."
+  },
+  {
+   "id": "ms_intro_live",
+   "title": "Project introduction published",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_intro",
+   "gate": "Client approval before publishing",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "ms_day3_review",
+   "title": "First review held",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_checkin",
+   "gate": "Review of questions",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "ms_detail_live",
+   "title": "Closer-detail posts published",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_detail",
+   "gate": "Client approval before publishing",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "ms_furniture_live",
+   "title": "Furniture posts published",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_furniture",
+   "gate": "Client approval before publishing",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "ms_next_step",
+   "title": "Next-step decision for the following week",
+   "date": "",
+   "date_basis": "planned",
+   "status": "planned",
+   "stage": "rm_wrapup",
+   "gate": "Client decision",
+   "internal": false,
+   "int_note": ""
+  }
+ ],
+ "items": [
+  {
+   "id": "vill_marketing_plan",
+   "title": "Week-one marketing plan",
+   "desc": "The objective, audience, key messages, the role of each channel and how progress is reviewed.",
+   "group": "Plan",
+   "status": "review",
+   "int_note": "Source: 01_STRATEGY.md and README.md. Draft; not approved."
+  },
+  {
+   "id": "vill_content_strategy",
+   "title": "Content strategy: three project stories",
+   "desc": "Three themes taken from one documented project: the whole space before and after, the stone, light and bench detail, and the furniture made for it.",
+   "group": "Plan",
+   "status": "review",
+   "int_note": "Source: 01_STRATEGY.md section on pillars (P1 to P3)."
+  },
+  {
+   "id": "vill_calendar",
+   "title": "Seven-day content plan",
+   "desc": "The sequence from Day 1 to Day 7: for each piece, the channel, format, image and approval point. The start date is to be set.",
+   "group": "Plan",
+   "status": "review",
+   "int_note": "Source: 02_PLAN.md. D1 to D7 are relative days; no calendar dates are approved."
+  },
+  {
+   "id": "vill_platform_copy",
+   "title": "Platform copy plan",
+   "desc": "Eight full captions (three for Facebook, three for Instagram, two for LinkedIn) and three sets of Story text, written for each channel.",
+   "group": "Copy",
+   "status": "review",
+   "int_note": "Source: 03_COPY.md. Full text appears in the Copy section below."
+  },
+  {
+   "id": "vill_asset_briefs",
+   "title": "Visual asset briefs",
+   "desc": "For each piece: the existing image to reuse or the new crop to prepare, who approves it, and the fallback if it is not ready.",
+   "group": "Visuals",
+   "status": "review",
+   "int_note": "Source: 04_CREATIVE_BRIEFS.md. Briefs only; no new visuals have been produced."
+  },
+  {
+   "id": "vill_measurement",
+   "title": "Measurement guide",
+   "desc": "A simple weekly sheet for recording reach, saves, shares, comments and project enquiries on each platform, with review points on Day 3 and Day 7.",
+   "group": "Measurement",
+   "status": "review",
+   "int_note": "Source: 06b_SCORECARD_GUIDE.md and 05_MEASUREMENT.md. No figures recorded yet."
+  },
+  {
+   "id": "vill_scorecard_csv",
+   "title": "Detailed scorecard template (optional)",
+   "desc": "Optional detailed template for the weekly figures.",
+   "group": "Measurement",
+   "status": "review",
+   "type": "doc",
+   "internal": true,
+   "int_note": "06_SCORECARD.csv: 47 columns, optional; empty."
+  },
+  {
+   "id": "vill_platform_review",
+   "title": "Platform evidence and measurement review",
+   "desc": "Internal review of platform evidence and metric definitions.",
+   "group": "Measurement",
+   "status": "review",
+   "type": "doc",
+   "internal": true,
+   "int_note": "05_MEASUREMENT.md: official-source check 2026-10-11; Facebook Help pages unreadable (login redirect); no Meta metric definitions retrieved."
+  }
+ ],
+ "texts_intro": "Draft captions and Story texts for your review, shown exactly as they would be published. Facebook and Instagram texts are in Arabic; LinkedIn texts are in English (proposed).",
+ "texts": [
+  {
+   "id": "fb1_caption",
+   "title": "Project introduction, Facebook (Day 1)",
+   "platform": "Facebook",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "من أوض فاضية لبيت متأثث على البحر.\n\nإحنا VILL Studio، للتصميم الداخلي والتشطيب. بنبدأ التعارف بمشروع حقيقي: استلمنا الأوض فاضية، وكان الشغل في المشروع ده تشطيب وإضاءة وأثاث، بفريق واحد.\n\nالصور بتعرض نفس المكان قبل وبعد، ومعاه الحجر الطبيعي والإضاءة الدافية والأثاث اللي صنعناه مخصوص للبيت ده.\n\nشوف الصور من البداية للتفاصيل.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use.",
+   "int_note": "03_COPY.md section FB1 (N1 / A1). Recommended first-post hook, outcome angle. Native Arabic review pending; not approved."
+  },
+  {
+   "id": "ig1_caption",
+   "title": "Project introduction, Instagram (Day 1)",
+   "platform": "Instagram",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "شقة على البحر، من أوض فاضية لبيت متأثث.\n\nده مشروع من VILL Studio للتصميم الداخلي والتشطيب. في المشروع ده: تشطيب وإضاءة وأثاث بفريق واحد، وأثاث من تصنيعنا مخصوص للمكان.\n\nحجر طبيعي، ضوء دافي، ونفس المساحة قبل وبعد.\n\nاسحب وشوف حكاية المكان.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use.",
+   "int_note": "03_COPY.md section IG1 (N1 / A1). Carousel; 'swipe' CTA valid only for a multi-image post."
+  },
+  {
+   "id": "li1_caption",
+   "title": "Project introduction, LinkedIn (Day 2)",
+   "platform": "LinkedIn",
+   "status": "review",
+   "dir": "ltr",
+   "lang": "en",
+   "body": "This apartment began as empty rooms with a sea view.\n\nVILL Studio is an interior design and fit-out studio. In this project, one team handled the finishes, lighting and furniture. The furniture was made by VILL for this home.\n\nThe project sequence shows the same space before and after, followed by the natural stone wall, its lighting and the sea view. These are details from one project, presented together so the scope is visible alongside the result.\n\nExplore the project in the document.",
+   "note": "Draft for your review. English is proposed for LinkedIn; the choice of language is yours. If the project is posted as images instead of a document, only the last line changes, to: See the images.",
+   "int_note": "03_COPY.md section LI1 (N1 / A1-LI); closing-line alternative from 03_COPY.md 'Placement alternatives'. LinkedIn language is an owner gate."
+  },
+  {
+   "id": "fb2_caption",
+   "title": "Closer detail, Facebook (Day 4)",
+   "platform": "Facebook",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "حجر طبيعي، وضوء هادي، ومقعد تحته.\n\nدي تفصيلة من نفس مشروع الشقة على البحر. الحائط من الحجر الطبيعي، والمقعد اللي تحته من تصنيعنا للمكان ده.\n\nبعد ما عرضنا المكان كامل، بنقرب هنا للعلاقة بين الحائط والإضاءة والأثاث اللي حواليه. وأنت بتتفرج، تابع ملمس الحجر تحت الضوء، ثم مكان المقعد تحته؛ التفصيلة بتتقري مع اللي حواليها.\n\nبص على التفصيلة عن قرب.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use.",
+   "int_note": "03_COPY.md section FB2 (N2 / A2). Also used in full for Instagram if the detail is posted as a single image."
+  },
+  {
+   "id": "ig2_caption",
+   "title": "Closer detail, Instagram (Day 4)",
+   "platform": "Instagram",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "تفصيلة من البيت اللي شفتوه قبل وبعد.\n\nحائط من الحجر الطبيعي بإضاءة هادية، وتحته مقعد صنعناه للمشروع ده. بص لملمس الحجر تحت الضوء، ثم مكان المقعد؛ شوف التفصيلة مع اللي حواليها.\n\nاسحب من المشهد الكامل للتفصيلة.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use. If the detail is posted as a single image, the Facebook caption for this day is used instead.",
+   "int_note": "03_COPY.md section IG2 (N2 / A2); single-image fallback per 03_COPY.md 'Placement alternatives'."
+  },
+  {
+   "id": "li2_caption",
+   "title": "Closer detail, LinkedIn (Day 5)",
+   "platform": "LinkedIn",
+   "status": "review",
+   "dir": "ltr",
+   "lang": "en",
+   "body": "A closer view of the natural stone wall from our apartment project.\n\nThe wall is softly lit, with a bench made by VILL beneath it. This detail follows the wider before-and-after sequence shared earlier in the week.\n\nRead the detail as a relationship: follow the texture of the stone under the light, then the position of the bench below. Looking at material, light and furniture together gives a fuller view than looking at each element on its own.\n\nLook at the wall, lighting and bench together.",
+   "note": "Draft for your review. English is proposed for LinkedIn; the choice of language is yours.",
+   "int_note": "03_COPY.md section LI2 (N2 / A2-LI)."
+  },
+  {
+   "id": "fb3_caption",
+   "title": "Furniture in the home, Facebook (Day 6)",
+   "platform": "Facebook",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "الأثاث هنا جزء من حكاية البيت.\n\nفي مشروع الشقة على البحر، السرير والكنبة والترابيزات والمقعد اتصنعوا عندنا مخصوص للمكان ده.\n\nالصور بتجمع مشهد غرفة النوم مع المعيشة، عشان تشوف القطع جوه المكان اللي اتعملت له. دي نظرة على شغل VILL Studio في أثاث المشروع ده.\n\nشوف الأثاث جوه البيت.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use.",
+   "int_note": "03_COPY.md section FB3 (N3 / A3)."
+  },
+  {
+   "id": "ig3_caption",
+   "title": "Furniture in the home, Instagram (Day 6)",
+   "platform": "Instagram",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "السرير والكنبة والترابيزات والمقعد، من تصنيعنا للمشروع ده.\n\nبعد حكاية المكان وتفصيلة الحجر، دي نظرة على الأثاث جوه الشقة نفسها: غرفة النوم، ثم المعيشة.\n\nاسحب وشوف القطع في مكانها.",
+   "note": "Draft for your review. The Arabic wording is to be confirmed by you before use.",
+   "int_note": "03_COPY.md section IG3 (N3 / A3)."
+  },
+  {
+   "id": "st1_frames",
+   "title": "Story set 1: the same space, before and after (Day 1)",
+   "platform": "Instagram Story",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "نفس المكان، قبل.\n\nوبعد.\n\nشوف حكاية المشروع في البوست.",
+   "note": "Story text, three frames shown in order. Draft for your review.",
+   "int_note": "03_COPY.md table 'frames', ST1.1 to ST1.3; images R6, R7, R8."
+  },
+  {
+   "id": "st2_frames",
+   "title": "Story set 2: the stone, the light and the bench (Day 4)",
+   "platform": "Instagram Story",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "من نفس مشروع الشقة على البحر.\n\nحجر طبيعي وإضاءة هادية.\n\nشوف التفصيلة في البوست.",
+   "note": "Story text, three frames shown in order. Draft for your review.",
+   "int_note": "03_COPY.md table 'frames', ST2.1 to ST2.3."
+  },
+  {
+   "id": "st3_frames",
+   "title": "Story set 3: pieces made for the project (Day 6)",
+   "platform": "Instagram Story",
+   "status": "review",
+   "dir": "rtl",
+   "lang": "ar",
+   "body": "السرير من تصنيعنا للمشروع ده.\n\nوالكنبة والترابيزات كمان.\n\nشوف الأثاث جوه البيت في البوست.",
+   "note": "Story text, three frames shown in order. Draft for your review.",
+   "int_note": "03_COPY.md table 'frames', ST3.1 to ST3.3."
+  }
+ ],
+ "tasks": [
+  {
+   "id": "tk_review_copy",
+   "title": "Review the Arabic captions and the Story texts",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_platform_copy",
+   "internal": false,
+   "int_note": "Native Arabic review is pending."
+  },
+  {
+   "id": "tk_linkedin_lang",
+   "title": "Choose the language for LinkedIn: English (proposed) or Arabic",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_platform_copy",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "tk_reuse_images",
+   "title": "Confirm that the approved English-language images may accompany the Arabic captions",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_asset_briefs",
+   "internal": false,
+   "int_note": "04_CREATIVE_BRIEFS.md A1: visible reuse decision."
+  },
+  {
+   "id": "tk_start_publisher",
+   "title": "Confirm the start date of the week, and who publishes and replies to comments",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_calendar",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "tk_contact_channel",
+   "title": "Decide whether the posts should carry a contact channel",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_platform_copy",
+   "internal": false,
+   "int_note": "Contact CTA is still open; current captions use editorial calls to action only."
+  },
+  {
+   "id": "tk_approve_visuals",
+   "title": "Approve the image crops and Story frames once prepared",
+   "owner": "client",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_asset_briefs",
+   "internal": false,
+   "int_note": "Not yet produced."
+  },
+  {
+   "id": "tk_record_baseline",
+   "title": "Record each page's follower count and insight access before Day 1",
+   "owner": "team",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_measurement",
+   "internal": false,
+   "int_note": ""
+  },
+  {
+   "id": "tk_prepare_visuals",
+   "title": "Prepare the crops and Story frames from the existing images",
+   "owner": "team",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_asset_briefs",
+   "internal": false,
+   "int_note": "Separate costing if more than one review round."
+  },
+  {
+   "id": "tk_preview_formats",
+   "title": "Preview each format and the Arabic text on the actual pages",
+   "owner": "team",
+   "due": "",
+   "status": "open",
+   "ref": "item:vill_platform_copy",
+   "internal": false,
+   "int_note": "Mixed-direction text, truncation, LinkedIn document view."
+  }
+ ],
+ "next": [
+  "Review the Arabic captions and the Story texts.",
+  "Choose the language for LinkedIn.",
+  "Confirm the start date of the week, and who publishes and replies to comments.",
+  "Once the direction is approved, we prepare the image crops and Story frames and preview each format on the actual pages.",
+  "Nothing is published until you approve it."
+ ],
+ "internal_next": [
+  "Ahmed: native review of the Arabic, choose LinkedIn language, set the start of the week, name the human publisher and replier.",
+  "CREATIVE: produce the stone/furniture crops and three Story sets after approval; preview LinkedIn document vs images. One review version each.",
+  "Record the baseline before D1 (06b_SCORECARD_GUIDE.md); D3 and D7 reviews follow 05_MEASUREMENT.md.",
+  "Open: contact CTA; rights for any new portfolio photos."
+ ],
+ "decisions": [
+  {
+   "date": "2026-10-11",
+   "item": "Objective and channels: introduce the studio and build trust on Facebook, Instagram and LinkedIn.",
+   "status": "Noted",
+   "who": "Ahmed",
+   "int_note": "Confirmed in chat 2026-10-11 (00_BRIEF.md). Organic week; not paid acquisition."
+  },
+  {
+   "date": "2026-10-11",
+   "item": "The first Facebook post has not been published.",
+   "status": "Noted",
+   "who": "Ahmed",
+   "int_note": "Owner-reported; Instagram and LinkedIn history unknown."
+  },
+  {
+   "date": "2026-10-11",
+   "item": "Seven-day plan prepared as a draft, with no calendar dates until the start is set.",
+   "status": "Noted",
+   "who": "Ahmed",
+   "int_note": "Draft only; nothing approved."
+  }
+ ],
+ "checks": [
+  {
+   "title": "Native Arabic review of all new captions and Story texts",
+   "state": "open",
+   "note": "Pending the owner (03_COPY.md)."
+  },
+  {
+   "title": "LinkedIn language chosen",
+   "state": "open",
+   "note": "English proposed; owner choice."
+  },
+  {
+   "title": "Format previews on Facebook, Instagram and LinkedIn pages",
+   "state": "open",
+   "note": "Not done; includes RTL/mixed script and LinkedIn document view."
+  },
+  {
+   "title": "Crops and Story frames produced and approved",
+   "state": "open",
+   "note": "Briefs only (04_CREATIVE_BRIEFS.md)."
+  },
+  {
+   "title": "Facebook Help evidence",
+   "state": "open",
+   "note": "The cited page redirected to login in the SPARK check; no Meta metric definitions verified (05_MEASUREMENT.md)."
+  },
+  {
+   "title": "Account figures and insight access",
+   "state": "open",
+   "note": "No baseline recorded; none invented."
+  },
+  {
+   "title": "Approval-state wording",
+   "state": "pass",
+   "note": "All items and texts are 'review'; page status is 'review'; nothing published."
+  }
+ ],
+ "sources": [
+  {
+   "label": "README.md",
+   "path": "README.md"
+  },
+  {
+   "label": "00_BRIEF.md",
+   "path": "00_BRIEF.md"
+  },
+  {
+   "label": "01_STRATEGY.md",
+   "path": "01_STRATEGY.md"
+  },
+  {
+   "label": "02_PLAN.md",
+   "path": "02_PLAN.md"
+  },
+  {
+   "label": "03_COPY.md",
+   "path": "03_COPY.md"
+  },
+  {
+   "label": "04_CREATIVE_BRIEFS.md",
+   "path": "04_CREATIVE_BRIEFS.md"
+  },
+  {
+   "label": "05_MEASUREMENT.md",
+   "path": "05_MEASUREMENT.md"
+  },
+  {
+   "label": "06b_SCORECARD_GUIDE.md",
+   "path": "06b_SCORECARD_GUIDE.md"
+  },
+  {
+   "label": "08_LEAD_CHECKPOINT.md",
+   "path": "08_LEAD_CHECKPOINT.md"
+  }
+ ],
+ "default_lang": "en",
+ "ar": {
+  "title": "الخطة التسويقية للأسبوع الأول",
+  "subtitle": "تسليم لصالح VILL Studio · Facebook · Instagram · LinkedIn · 11 أكتوبر 2026",
+  "status_label": "قيد المراجعة",
+  "status_detail": "مسودة لمراجعتكم. لم يُعتمد أو يُنشر أي شيء.",
+  "texts_intro": "مسودات تعليقات ونصوص قصص لمراجعتكم، وتظهر تمامًا كما ستُنشر. نصوص Facebook وInstagram بالعربية، ونصوص LinkedIn بالإنجليزية (مقترحة).",
+  "about": {
+   "paragraphs": [
+    "أعدّت The Systronic خطة تسويقية للأسبوع الأول لصالح VILL Studio على Facebook وInstagram وLinkedIn. الهدف هو التعريف بالاستوديو وبناء الثقة من خلال مشروع حقيقي واحد: المكان نفسه قبل التنفيذ وبعده، ثم تفصيلة قريبة، ثم الأثاث المصنوع له. هذه مسودة لمراجعتكم، ولم يُعتمد أو يُنشر أي شيء."
+   ],
+   "voice": "تُكتب تعليقات Facebook وInstagram بعربية مصرية هادئة، ويُقترح أن تكون لغة LinkedIn هي الإنجليزية، واختيار اللغة لكم. تقتصر الادعاءات على المشروع الموثّق.",
+   "facts": {
+    "Channels": [
+     "القنوات",
+     "Facebook · Instagram · LinkedIn"
+    ],
+    "Plan length": [
+     "مدة الخطة",
+     "أسبوع واحد، من اليوم 1 إلى اليوم 7. يُحدَّد تاريخ البداية لاحقًا."
+    ],
+    "Planned content": [
+     "المحتوى المخطط",
+     "3 منشورات على Facebook · 3 منشورات على Instagram · منشوران على LinkedIn · 3 مجموعات قصص على Instagram (9 إطارات)"
+    ],
+    "Status": [
+     "الحالة",
+     "قيد المراجعة. لم يُعتمد أو يُنشر أي شيء."
+    ]
+   },
+   "internal_paragraphs": [
+    "ملخص داخلي: مسودة مراجعة أُنتجت في 11 أكتوبر 2026. المراجعة العربية والاختيار بين لغتي LinkedIn وتاريخ البداية والمسؤول عن النشر قرارات مفتوحة للمالك. لم تُنتج المشتقات والقصص. لم يُنشر أو يُجدوَل أو يُنفق أو يُعدَّل أي حساب.",
+    "أول منشور على Facebook لم يُنشر (بحسب المالك). اعتماد الاستراتيجية القديمة مصدر مدخلات وليس دليلًا على خطة قائمة."
+   ]
+  },
+  "items": {
+   "vill_marketing_plan": {
+    "group": "الخطة",
+    "title": "الخطة التسويقية للأسبوع الأول",
+    "desc": "الهدف والجمهور والرسائل الرئيسية ودور كل قناة وطريقة مراجعة التقدم."
+   },
+   "vill_content_strategy": {
+    "group": "الخطة",
+    "title": "استراتيجية المحتوى: ثلاث حكايات من مشروع واحد",
+    "desc": "ثلاثة محاور من مشروع واحد موثّق: المكان كاملًا قبل التنفيذ وبعده، وتفصيلة الحجر والضوء والمقعد، والأثاث المصنوع لهذا المشروع."
+   },
+   "vill_calendar": {
+    "group": "الخطة",
+    "title": "خطة المحتوى لسبعة أيام",
+    "desc": "التسلسل من اليوم 1 إلى اليوم 7: لكل منشور القناة والصيغة والصورة ونقطة الاعتماد. يُحدَّد تاريخ البداية لاحقًا."
+   },
+   "vill_platform_copy": {
+    "group": "النصوص",
+    "title": "خطة النصوص حسب المنصة",
+    "desc": "ثمانية تعليقات كاملة (ثلاثة لـFacebook وثلاثة لـInstagram واثنان لـLinkedIn) وثلاث مجموعات من نصوص القصص، مكتوبة لكل قناة."
+   },
+   "vill_asset_briefs": {
+    "group": "المواد البصرية",
+    "title": "توصيف المواد البصرية",
+    "desc": "لكل منشور: الصورة المعتمدة التي يُعاد استخدامها أو القص الجديد المطلوب إعداده، وجهة الاعتماد، والبديل إذا لم تكن المادة جاهزة."
+   },
+   "vill_measurement": {
+    "group": "القياس",
+    "title": "دليل القياس",
+    "desc": "جدول أسبوعي بسيط لتسجيل الوصول والحفظ والمشاركة والتعليقات والاستفسارات عن المشاريع في كل منصة، مع مراجعة في اليوم 3 واليوم 7."
+   },
+   "vill_scorecard_csv": {
+    "group": "القياس",
+    "title": "قالب تفصيلي للأرقام (اختياري)",
+    "desc": "قالب تفصيلي اختياري للأرقام الأسبوعية."
+   },
+   "vill_platform_review": {
+    "group": "القياس",
+    "title": "مراجعة أدلة المنصات والقياس",
+    "desc": "مراجعة داخلية لأدلة المنصات وتعريفات المؤشرات."
+   }
+  },
+  "texts": {
+   "fb1_caption": {
+    "title": "التعريف بالمشروع، Facebook (اليوم 1)",
+    "platform": "Facebook",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام."
+   },
+   "ig1_caption": {
+    "title": "التعريف بالمشروع، Instagram (اليوم 1)",
+    "platform": "Instagram",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام."
+   },
+   "li1_caption": {
+    "title": "التعريف بالمشروع، LinkedIn (اليوم 2)",
+    "platform": "LinkedIn",
+    "note": "مسودة لمراجعتكم. الإنجليزية مقترحة للنشر على LinkedIn، واختيار اللغة لكم. إذا نُشر المشروع صورًا بدل مستند، يتغير السطر الأخير فقط ليصبح: See the images."
+   },
+   "fb2_caption": {
+    "title": "التفصيلة عن قرب، Facebook (اليوم 4)",
+    "platform": "Facebook",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام."
+   },
+   "ig2_caption": {
+    "title": "التفصيلة عن قرب، Instagram (اليوم 4)",
+    "platform": "Instagram",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام. وإذا نُشرت التفصيلة صورةً واحدة يُستخدم تعليق Facebook لهذا اليوم بدلًا منه."
+   },
+   "li2_caption": {
+    "title": "التفصيلة عن قرب، LinkedIn (اليوم 5)",
+    "platform": "LinkedIn",
+    "note": "مسودة لمراجعتكم. الإنجليزية مقترحة للنشر على LinkedIn، واختيار اللغة لكم."
+   },
+   "fb3_caption": {
+    "title": "الأثاث داخل البيت، Facebook (اليوم 6)",
+    "platform": "Facebook",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام."
+   },
+   "ig3_caption": {
+    "title": "الأثاث داخل البيت، Instagram (اليوم 6)",
+    "platform": "Instagram",
+    "note": "مسودة لمراجعتكم. تُعتمد الصياغة العربية منكم قبل الاستخدام."
+   },
+   "st1_frames": {
+    "title": "المجموعة 1 من القصص: المكان نفسه قبل وبعد (اليوم 1)",
+    "platform": "Instagram Story",
+    "note": "نص القصة في ثلاثة إطارات بالترتيب. مسودة لمراجعتكم."
+   },
+   "st2_frames": {
+    "title": "المجموعة 2 من القصص: الحجر والضوء والمقعد (اليوم 4)",
+    "platform": "Instagram Story",
+    "note": "نص القصة في ثلاثة إطارات بالترتيب. مسودة لمراجعتكم."
+   },
+   "st3_frames": {
+    "title": "المجموعة 3 من القصص: قطع صُنعت للمشروع (اليوم 6)",
+    "platform": "Instagram Story",
+    "note": "نص القصة في ثلاثة إطارات بالترتيب. مسودة لمراجعتكم."
+   }
+  },
+  "next": [
+   "مراجعة التعليقات العربية ونصوص القصص.",
+   "اختيار لغة LinkedIn.",
+   "تأكيد تاريخ بداية الأسبوع وتحديد من يتولى النشر والرد على التعليقات.",
+   "بعد اعتماد الاتجاه، نُعدّ قصّات الصور وإطارات القصص ونعاين كل صيغة على الصفحات الفعلية.",
+   "لا يُنشر أي شيء قبل اعتمادكم."
+  ],
+  "internal_next": [
+   "أحمد: مراجعة النص العربي، واختيار لغة LinkedIn، وتحديد بداية الأسبوع، وتسمية المسؤول البشري عن النشر والرد.",
+   "CREATIVE: إنتاج قصّات الحجر والأثاث ومجموعات القصص الثلاث بعد الاعتماد، ومعاينة LinkedIn مستندًا أو صورًا. نسخة مراجعة واحدة لكل منها.",
+   "تسجيل خط الأساس قبل اليوم 1 (06b_SCORECARD_GUIDE.md)، ومراجعتا اليوم 3 واليوم 7 وفق 05_MEASUREMENT.md.",
+   "مفتوح: دعوة التواصل؛ وحقوق أي صور جديدة من المعرض."
+  ],
+  "decisions": [
+   {
+    "item": "الهدف والقنوات: التعريف بالاستوديو وبناء الثقة على Facebook وInstagram وLinkedIn.",
+    "int_note": "أُكّد في المحادثة بتاريخ 11 أكتوبر 2026 (00_BRIEF.md). أسبوع عضوي وليس حملة إعلانية.",
+    "who": "أحمد"
+   },
+   {
+    "item": "لم يُنشر أول منشور على Facebook.",
+    "int_note": "بحسب إفادة المالك؛ سجل Instagram وLinkedIn غير معروف.",
+    "who": "أحمد"
+   },
+   {
+    "item": "أُعدّت خطة الأيام السبعة مسودةً، دون تواريخ تقويمية حتى تحديد البداية.",
+    "int_note": "مسودة فقط؛ لم يُعتمد شيء.",
+    "who": "أحمد"
+   }
+  ],
+  "checks": [
+   {
+    "title": "مراجعة عربية أصيلة لكل التعليقات ونصوص القصص الجديدة",
+    "note": "بانتظار المالك (03_COPY.md)."
+   },
+   {
+    "title": "اختيار لغة LinkedIn",
+    "note": "الإنجليزية مقترحة؛ الاختيار للمالك."
+   },
+   {
+    "title": "معاينة الصيغ على صفحات Facebook وInstagram وLinkedIn",
+    "note": "لم تُنفذ بعد؛ تشمل الاتجاه من اليمين إلى اليسار والنص المختلط وعرض المستند على LinkedIn."
+   },
+   {
+    "title": "إنتاج قصّات الصور وإطارات القصص واعتمادها",
+    "note": "توصيفات فقط (04_CREATIVE_BRIEFS.md)."
+   },
+   {
+    "title": "أدلة صفحات المساعدة في Facebook",
+    "note": "أعادت الصفحة المذكورة توجيهًا إلى تسجيل الدخول أثناء الفحص؛ لم تُتحقق تعريفات مؤشرات Meta (05_MEASUREMENT.md)."
+   },
+   {
+    "title": "أرقام الحسابات وإتاحة الإحصاءات",
+    "note": "لم يُسجَّل خط أساس، ولم يُختلق أي رقم."
+   },
+   {
+    "title": "صياغة حالات الاعتماد",
+    "note": "كل العناصر والنصوص بحالة المراجعة، وحالة الصفحة مراجعة، ولا شيء منشور."
+   }
+  ],
+  "sources": {
+   "README.md": "README.md",
+   "00_BRIEF.md": "00_BRIEF.md",
+   "01_STRATEGY.md": "01_STRATEGY.md",
+   "02_PLAN.md": "02_PLAN.md",
+   "03_COPY.md": "03_COPY.md",
+   "04_CREATIVE_BRIEFS.md": "04_CREATIVE_BRIEFS.md",
+   "05_MEASUREMENT.md": "05_MEASUREMENT.md",
+   "06b_SCORECARD_GUIDE.md": "06b_SCORECARD_GUIDE.md",
+   "08_LEAD_CHECKPOINT.md": "08_LEAD_CHECKPOINT.md"
+  },
+  "marketing_plan": {
+   "objective": "التعريف باستوديو VILL Studio وبناء الثقة المبدئية على Facebook وInstagram وLinkedIn، انطلاقًا من مشروع حقيقي واحد.",
+   "audience": "ملّاك الشقق والفلل في شرق القاهرة وغربها ممن يرغبون في رؤية كيف يتكامل المكان مع الأثاث والتفاصيل قبل أن يثقوا في الاستوديو.",
+   "channels": {
+    "ch_fb": {
+     "name": "Facebook",
+     "role": "تعريف واضح لأول زائر"
+    },
+    "ch_ig": {
+     "name": "Instagram",
+     "role": "حكاية مصوّرة أولًا، ثم أدلة أقرب"
+    },
+    "ch_li": {
+     "name": "LinkedIn",
+     "role": "عرض مشروع محدد النطاق لقارئ مهني"
+    }
+   },
+   "messages": {
+    "msg_who": "من نحن: VILL Studio استوديو للتصميم الداخلي والتشطيب.",
+    "msg_project": "شاهدوا عملنا: مشروع حقيقي واحد، من غرف فارغة إلى منزل مؤثَّث.",
+    "msg_evidence": "شاهدوا الدليل عن قرب: الحجر والإضاءة والأثاث المصنوع لهذا المشروع.",
+    "msg_scope": "كل ما نذكره يخص هذا المشروع الموثّق، وليس ضمانًا عامًا."
+   },
+   "kpis": {
+    "kpi_reach": {
+     "name": "الوصول",
+     "target": "",
+     "source": "إحصاءات صفحات Facebook وInstagram وLinkedIn"
+    },
+    "kpi_signals": {
+     "name": "الحفظ والمشاركة والتعليقات",
+     "target": "",
+     "source": "إحصاءات صفحات Facebook وInstagram وLinkedIn"
+    },
+    "kpi_understanding": {
+     "name": "فهم نطاق عمل الاستوديو",
+     "target": "",
+     "source": "مراجعة التعليقات والرسائل"
+    },
+    "kpi_enquiries": {
+     "name": "الاستفسارات عن مشروع فعلي",
+     "target": "",
+     "source": "سجل يدوي للاستفسارات دون بيانات شخصية"
+    }
+   }
+  },
+  "roadmap": {
+   "rm_review": {
+    "title": "مراجعة الخطة والنصوص المقترحة",
+    "desc": "مراجعة التعليقات ونصوص القصص، واختيار لغة LinkedIn، وتأكيد طريقة سير الأسبوع.",
+    "window": "قبل اليوم 1"
+   },
+   "rm_baseline": {
+    "title": "تسجيل الأرقام الحالية",
+    "desc": "تدوين عدد المتابعين الحالي لكل صفحة، وهل إحصاءات المنشورات متاحة.",
+    "window": "قبل اليوم 1"
+   },
+   "rm_visuals": {
+    "title": "إعداد قصّات الصور وإطارات القصص",
+    "desc": "إعداد قصّات تفصيلة الحجر والأثاث ومجموعات القصص الثلاث، ثم معاينة كل صيغة على الصفحات الفعلية.",
+    "window": "قبل كل منشور مرتبط بها"
+   },
+   "rm_intro": {
+    "title": "التعريف بالاستوديو من خلال مشروع واحد",
+    "desc": "المكان نفسه قبل التنفيذ وبعده على Facebook وInstagram مع القصص، ثم على LinkedIn.",
+    "window": "من اليوم 1 إلى اليوم 2"
+   },
+   "rm_checkin": {
+    "title": "المراجعة الأولى",
+    "desc": "التحقق من أن الاستوديو مفهوم بوصفه استوديو للتصميم الداخلي والتشطيب، وتدوين الأسئلة التي وردت.",
+    "window": "اليوم 3"
+   },
+   "rm_detail": {
+    "title": "عرض التفصيلة عن قرب",
+    "desc": "حائط الحجر الطبيعي والإضاءة والمقعد أسفله، على Facebook وInstagram مع القصص، ثم على LinkedIn.",
+    "window": "من اليوم 4 إلى اليوم 5"
+   },
+   "rm_furniture": {
+    "title": "عرض الأثاث داخل البيت نفسه",
+    "desc": "السرير والكنبة والطاولات والمقعد المصنوعة لهذا المشروع، على Facebook وInstagram مع مجموعة قصص.",
+    "window": "اليوم 6"
+   },
+   "rm_wrapup": {
+    "title": "مراجعة الأسبوع وتحديد الخطوة التالية",
+    "desc": "مقارنة كل منصة بنفسها وتحديد القرار: تكرار الفكرة أو توضيح الرسالة أو طلب دليل جديد من مشروع آخر.",
+    "window": "اليوم 7"
+   }
+  },
+  "milestones": {
+   "ms_copy_ok": {
+    "title": "اعتماد التعليقات ونصوص القصص",
+    "gate": "اعتماد العميل"
+   },
+   "ms_start_set": {
+    "title": "تأكيد تاريخ البداية والمسؤول عن النشر",
+    "gate": "تأكيد العميل"
+   },
+   "ms_previews": {
+    "title": "اعتماد قصّات الصور والقصص",
+    "gate": "اعتماد العميل"
+   },
+   "ms_intro_live": {
+    "title": "نشر التعريف بالمشروع",
+    "gate": "اعتماد العميل قبل النشر"
+   },
+   "ms_day3_review": {
+    "title": "إجراء المراجعة الأولى",
+    "gate": "مراجعة الأسئلة"
+   },
+   "ms_detail_live": {
+    "title": "نشر منشورات التفصيلة",
+    "gate": "اعتماد العميل قبل النشر"
+   },
+   "ms_furniture_live": {
+    "title": "نشر منشورات الأثاث",
+    "gate": "اعتماد العميل قبل النشر"
+   },
+   "ms_next_step": {
+    "title": "قرار الخطوة التالية للأسبوع الذي يليه",
+    "gate": "قرار العميل"
+   }
+  },
+  "tasks": {
+   "tk_review_copy": {
+    "title": "مراجعة التعليقات العربية ونصوص القصص"
+   },
+   "tk_linkedin_lang": {
+    "title": "اختيار لغة LinkedIn: الإنجليزية (مقترحة) أو العربية"
+   },
+   "tk_reuse_images": {
+    "title": "تأكيد جواز استخدام الصور المعتمدة ذات النصوص الإنجليزية مع التعليقات العربية"
+   },
+   "tk_start_publisher": {
+    "title": "تأكيد تاريخ بداية الأسبوع وتحديد من يتولى النشر والرد على التعليقات"
+   },
+   "tk_contact_channel": {
+    "title": "تحديد ما إذا كانت المنشورات ستتضمن وسيلة تواصل"
+   },
+   "tk_approve_visuals": {
+    "title": "اعتماد قصّات الصور وإطارات القصص فور إعدادها"
+   },
+   "tk_record_baseline": {
+    "title": "تسجيل عدد متابعي كل صفحة وإتاحة الإحصاءات قبل اليوم 1"
+   },
+   "tk_prepare_visuals": {
+    "title": "إعداد القصّات وإطارات القصص من الصور الموجودة"
+   },
+   "tk_preview_formats": {
+    "title": "معاينة كل صيغة والنص العربي على الصفحات الفعلية"
+   }
+  }
+ }
+}

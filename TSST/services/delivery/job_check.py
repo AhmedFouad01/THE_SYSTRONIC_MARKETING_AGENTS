@@ -12,7 +12,10 @@ Checks:
     brand id has an entry in TSST/core/portfolio.yaml  (R20)
  e) layout per JOB_LAYOUT.md: README.md exists; top-level files are README,
     DELIVERY*, desktop.ini or NN_NAME.md/csv (slots 00-08); top-level folders
-    only files/ work/ observations/ (WARN otherwise)
+    only files/ work/ observations/ (WARN otherwise). If README.md contains
+    `layout: legacy`, file-name mismatches are a WARN, not a FAIL.
+ f) the brand's JOBS.md (sync_jobs.py) exists, lists this job and shows the same
+    status as DELIVERY.json (R20). Fix: python TSST/services/delivery/sync_jobs.py <brand>
 """
 import json
 import re
@@ -95,10 +98,33 @@ def main():
     bad = [f.name for f in top if f.is_file() and f.name != "README.md"
            and not f.name.startswith("DELIVERY") and f.name != "desktop.ini"
            and not LAYOUT_FILE.match(f.name)]
-    check("e) top-level file names match NN_NAME.ext", not bad, ", ".join(bad))
+    legacy = re.search(r"layout:\s*legacy", read(job / "README.md")) is not None
+    if bad and legacy:
+        print("WARN  e) legacy layout (pre R18, not re-laid out); file names not NN_NAME.ext: " + ", ".join(bad))
+    else:
+        check("e) top-level file names match NN_NAME.ext", not bad, ", ".join(bad))
     stray = [f.name for f in top if f.is_dir() and f.name not in LAYOUT_DIRS]
     if stray:
         print("WARN  e) unexpected top-level folders (allowed: files/ work/ observations/): " + ", ".join(stray))
+
+    # f) JOBS.md index (R20)
+    if brand is None:
+        check("f) brand JOBS.md lists this job with the same status", False, "brand unknown (see a)")
+    else:
+        try:
+            status = str(json.loads(manifest.read_text(encoding="utf-8")).get("status"))
+        except (OSError, ValueError):
+            status = None
+        jobs = ROOT / "TSST" / "brands" / brand / "JOBS.md"
+        row = next((ln for ln in read(jobs).splitlines() if ln.startswith(f"| `{name}` |")), None)
+        cells = [c.strip() for c in row.strip().strip("|").split("|")] if row else []
+        if not jobs.is_file():
+            check("f) brand JOBS.md lists this job with the same status", False, "JOBS.md missing - run sync_jobs.py " + brand)
+        elif not row:
+            check("f) brand JOBS.md lists this job with the same status", False, "job not listed - run sync_jobs.py " + brand)
+        else:
+            check("f) brand JOBS.md lists this job with the same status", len(cells) > 3 and cells[3] == status,
+                  f"JOBS.md={cells[3] if len(cells) > 3 else '?'} DELIVERY.json={status}" + ("" if len(cells) > 3 and cells[3] == status else " - run sync_jobs.py " + brand))
 
     ok = all(results)
     print("RESULT: " + ("PASS" if ok else "FAIL"))

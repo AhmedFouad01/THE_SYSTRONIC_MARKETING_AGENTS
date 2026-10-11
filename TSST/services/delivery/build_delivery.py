@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Systronic Delivery System v1.0 - delivery-page generator (stdlib only).
+"""The Systronic Delivery System v1.1 - delivery-page generator (stdlib only).
 
 Usage:  python build_delivery.py <job_folder> [--audience client|internal|both] [--link-logo]
         reads  <job>/DELIVERY.json, i18n/{en,ar}.json, systronic.json
@@ -8,6 +8,8 @@ Usage:  python build_delivery.py <job_folder> [--audience client|internal|both] 
                <job>/files/                  (client media under neutral names; the client page links here)
         default audience = both. Prints missing files, missing Arabic fields, an HTML structure check and,
         for the client page, a leak scan of internal terms (exit code 1 on a leak).
+        v1.1: brand sync (client name from core/portfolio.yaml when the manifest omits "client"), optional plan
+        sections (marketing_plan, roadmap, milestones, tasks), and an internal-only "Job files" section.
 
 ONE file, TWO languages (English / Arabic). Every translatable string is rendered twice
 (<span class="l-en"> / <span class="l-ar">) and CSS shows the active one, so the header switch (EN | ع)
@@ -19,6 +21,7 @@ Arabic mode is a full RTL mirror (logical CSS properties). Latin runs inside Ara
 DELIVERY.json schema (paths relative to the job folder; "../" works)
 {
   "client": "VILL Studio", "service": "SV-01 ...", "job": "social-setup-01", "date": "2026-10-09",
+                                 # "client" may be omitted inside TSST/brands/<id>/: then name: from core/portfolio.yaml; "job" -> folder name
   "default_lang": "en" | "ar",                                   # the client's language
   "title": "..", "subtitle": "..", "status": "approved|review|progress|production|published",
   "status_label": "Approved", "status_detail": "optional line",
@@ -35,7 +38,19 @@ DELIVERY.json schema (paths relative to the job folder; "../" works)
   "decisions": [{"date","item","status":"Approved|Rejected|Noted","who","int_note","internal"}],
   "checks": [{"title","state":"pass|open|fail|na","note"}],      # internal page only
   "sources": [{"label","path"|"url"}],                           # internal page only
+  # plan sections (all optional; absent = hidden). Spec: specs/PLAN_SECTIONS_SPEC_v0.1.md. Every entry has a stable "id".
+  "marketing_plan": {"objective","audience","channels":[{"id","name","role"}],"messages":[{"id","text"}],
+                     "kpis":[{"id","name","target","source","status","int_note"}],"int_note","internal_paragraphs":[..]},
+  "roadmap": [{"id","title","desc","status":"approved|review|progress|production|published|planned","owner":"client|team",
+               "depends_on":[ids],"window","internal","int_note"}],
+  "milestones": [{"id","title","date","date_basis":"confirmed|planned","status","stage":"<roadmap id>","gate","internal","int_note"}],
+  "tasks": [{"id","title","owner":"client|team","due","status":"open|done|blocked","ref":"item:<id>|text:<id>","internal","int_note"}],
+  # items without "file"/"href": a text card (no media box); only status "production" keeps the "In production" placeholder
+  # client page drops internal:true entries, every task not owned by the client, all int_note / internal_paragraphs
   "ar": {                                                       # Arabic block (from CLIENT_COPY_AR.md)
+    "marketing_plan": {"objective","audience","channels":{"<id>":{"name","role"}},"messages":{"<id>":".."},
+                       "kpis":{"<id>":{"name","target","source"}}},
+    "roadmap": {"<id>":{"title","desc","window"}}, "milestones": {"<id>":{"title","gate"}}, "tasks": {"<id>":{"title"}},
     "title","subtitle","status_label","status_detail","texts_intro","next":[..],"internal_next":[..],
     "about": {"paragraphs","voice","facts":{"<en label>":[label,value]},"internal_paragraphs","internal_facts":[[l,v]]},
     "items": {"<id>": {"group","title","desc","int_note","who"}},
@@ -48,7 +63,7 @@ import base64, datetime, html, json, os, re, shutil, struct, sys
 from html.parser import HTMLParser
 from urllib.parse import quote
 
-VERSION = "1.0"
+VERSION = "1.1"
 HERE = os.path.dirname(os.path.abspath(__file__))
 LANGS = ("en", "ar")
 I18N = {l: json.load(open(os.path.join(HERE, "i18n", l + ".json"), encoding="utf-8")) for l in LANGS}
@@ -393,6 +408,40 @@ footer img.lg{height:200px;width:auto;margin-block:-40px -56px;margin-inline-sta
  .top .dl{display:none}}
 html[lang=ar] .tbl-s td::before{content:attr(data-l-ar)}
 @media(prefers-reduced-motion:reduce){.rail,.rail.on,.rail.open,.scrim{transition:none!important}}
+/* plan sections + job files (v1.1): rule lists, label/value rows, dot + word status; no boxes, pills, cards or timelines */
+.kvs{margin:0 0 40px}
+.kv{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:4px 24px;padding:14px 0;border-top:1px solid var(--rule)}
+.kv:last-child{border-bottom:1px solid var(--rule)}
+.kv .k{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600;line-height:1.7}
+.kv .v{color:var(--navy);font-size:17px;line-height:1.7}
+.kv .v ul{list-style:none;margin:0;padding:0}.kv .v li{padding:2px 0}
+.pl{list-style:none;margin:0;padding:0}
+.pr{display:grid;gap:6px 16px;align-items:start;padding:16px 0;border-top:1px solid var(--rule)}
+.pl>.pr:last-child{border-bottom:1px solid var(--rule)}
+.pr.n{grid-template-columns:36px minmax(0,1fr) auto}
+.pr.t{grid-template-columns:minmax(0,1fr) 220px auto}
+.pr.f{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+.pr>div{min-width:0}
+.pr .no{font-size:15px;font-weight:700;color:var(--redtx);line-height:1.9}
+.pr .ti{color:var(--navy);font-size:17px;line-height:1.6}
+.pr.cur .ti{font-weight:700}
+.pr .cu{margin-inline-start:10px;font-size:14px;color:var(--mut)}
+.pr .sm{display:block;margin-top:2px;font-size:15px;line-height:1.6;color:var(--mut)}
+.pr .sm a.lk{color:var(--navy)}
+.pr .ps{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;justify-self:end;white-space:nowrap;color:var(--navy);font-size:15px;line-height:1.7}
+.pr .dt2,.pr .dl2{color:var(--mut);font-size:15px;line-height:1.7}
+.itag{color:var(--redtx);font-weight:700;font-size:14px;margin-inline-start:8px}
+.ns2{color:var(--mut);font-style:italic;margin:0;font-size:15px}
+.rc{margin-inline-start:auto;font-size:14px;font-weight:500;color:var(--mut)}
+.idx a .rc{color:#AEB6D6}
+.facts-row dd small a{color:#fff;text-decoration:underline;text-decoration-color:var(--cyan);text-decoration-thickness:2px;text-underline-offset:4px}
+html[lang=ar] .kv .k{font-size:15px;font-weight:600}
+.card.nm{border-top:3px solid var(--navy);padding-top:18px}.card.nm h3{margin-top:0}
+@media(min-width:601px){html[lang=ar] .tbl-s td::before{content:none}}
+@media(min-width:1000px) and (max-width:1499px){.rail .rc{display:none}.rail:hover .rc,.rail:focus-within .rc{display:inline}}
+@media(max-width:600px){.kv{grid-template-columns:1fr}.pr.t,.pr.f{grid-template-columns:minmax(0,1fr)}
+ .pr.n{grid-template-columns:28px minmax(0,1fr)}.pr.n .ps{grid-column:2;justify-self:start}
+ .pr.t .ps{justify-self:start;white-space:normal}}
 """
 
 HEAD_JS = """(function(){var d=document.documentElement,k='tsst-lang-'+d.getAttribute('data-job'),l=d.getAttribute('data-default'),q=null;
@@ -469,6 +518,315 @@ def publish(job, it, n):
     return "files/" + name
 
 
+# ---------------------------------------------------------------- brand sync (v1.1)
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+brand_sync = []
+
+
+def brand_of(job):
+    mm = re.search(r"[/\\]TSST[/\\]brands[/\\]([^/\\]+)[/\\]", os.path.abspath(job) + os.sep)
+    return mm.group(1) if mm else None
+
+
+def portfolio_name(brand):
+    """name: of brands.<brand> in TSST/core/portfolio.yaml (tiny line parser, no YAML library)"""
+    try:
+        lines = open(os.path.join(ROOT, "TSST", "core", "portfolio.yaml"), encoding="utf-8").read().splitlines()
+    except OSError:
+        return None
+    inside = False
+    for ln in lines:
+        if re.match(r"^  " + re.escape(brand) + r":\s*(#.*)?$", ln):
+            inside = True
+        elif inside and re.match(r"^  \S", ln):
+            return None
+        elif inside:
+            mm = re.match(r"^    name:\s*(.*?)\s*$", ln)
+            if mm:
+                return re.sub(r"\s+#.*$", "", mm.group(1)).strip("\"'") or None
+    return None
+
+
+# ---------------------------------------------------------------- plan sections (v1.1, specs/PLAN_SECTIONS_SPEC_v0.1.md)
+PLAN_ST = {"approved": "d-ok", "review": "d-rev", "progress": "d-rev", "production": "d-prod", "published": "d-pub",
+           "planned": "d-prod", "open": "d-prod", "done": "d-ok", "blocked": "d-rev", "overdue": "d-rej"}
+ROAD_ST = ("approved", "review", "progress", "production", "published", "planned")
+TASK_ST = ("open", "done", "blocked")
+LAYOUT_FILE = re.compile(r"^0[0-8]b?_[A-Z0-9_]+\.(md|csv)$")
+LAYOUT_DIRS = ("files", "work", "observations")
+plan_warn, REF_IDS = [], set()
+
+
+def H(tag, cls, inner):
+    return f'<{tag} class="{cls}">{inner}</{tag}>'
+
+
+def pdot(st):
+    return f'<span class="st"><i class="d {PLAN_ST[st]}"></i>{S("st_" + st)}</span>'
+
+
+def nbi(en, ar):
+    """proper names (channels, measurement sources): Arabic falls back to the same name"""
+    return T(rich(en), lat(ar or en))
+
+
+def tgt_html(cx, en, ar, what):
+    """KPI target: units/numbers stay one LTR isolate in Arabic ('2,799 EGP'); empty = 'To be agreed'"""
+    if not en:
+        return H("span", "ns2", S("target_tbd"))
+    if ar and not AR_RUN.search(ar):
+        return T(rich(en), f'<bdi dir="ltr">{e(ar)}</bdi>')
+    if not ar and not AR_RUN.search(en) and re.search(r"\d", en):
+        return T(rich(en), f'<bdi dir="ltr">{e(en)}</bdi>')
+    return cx.bi(en, ar, what)
+
+
+def owner_w(o):
+    return S("owner_client" if o == "client" else "owner_team")
+
+
+def itag(x, internal):
+    return f' <b class="itag">{S("internal_tag")}</b>' if internal and x.get("internal") else ""
+
+
+def intbox(cx, internal, x, ax, what):
+    if internal and x.get("int_note"):
+        return f'<p class="int"><b>{S("internal_label")}</b>{cx.bi(x["int_note"], (ax or {}).get("int_note"), what + ".int_note")}</p>'
+    return ""
+
+
+def plan_prep(m, internal):
+    """visible plan data for one audience. Client page drops internal:true entries, every task not owned by the
+    client (even when the flag is missing), all int_note and internal_paragraphs."""
+    REF_IDS.clear()
+    del plan_warn[:]
+    today = datetime.date.today()
+
+    def norm(key):
+        res = []
+        for n, x in enumerate(m.get(key) or [], 1):
+            x = dict(x)
+            if not x.get("id"):
+                plan_warn.append(f"{key}[{n}] has no id")
+                x["id"] = f"{key}{n}"
+            res.append(x)
+        return res
+
+    rm, ms, tk = norm("roadmap"), norm("milestones"), norm("tasks")
+    empty = {"task due dates": 0, "milestone dates": 0, "KPI targets": 0}
+    for x in rm + ms:
+        x.setdefault("status", "planned")
+        if x["status"] not in ROAD_ST:
+            plan_warn.append(f"{x['id']}: unknown status {x['status']!r} -> planned")
+            x["status"] = "planned"
+    for x in tk:
+        if x.get("owner") not in ("client", "team"):
+            plan_warn.append(f"{x['id']}: owner {x.get('owner')!r} is not client|team -> treated as team (hidden on client page)")
+        st = x.get("status", "open")
+        if st not in TASK_ST:
+            plan_warn.append(f"{x['id']}: unknown status {st!r} -> open")
+            st = "open"
+        x["_st"] = st
+        try:
+            if st != "done" and x.get("due") and datetime.date.fromisoformat(x["due"]) < today:
+                x["_st"] = "overdue"
+        except ValueError:
+            plan_warn.append(f"{x['id']}: bad due date {x.get('due')!r}")
+        if not x.get("due"):
+            empty["task due dates"] += 1
+    for x in ms:
+        if not x.get("date"):
+            empty["milestone dates"] += 1
+    mp = m.get("marketing_plan") if isinstance(m.get("marketing_plan"), dict) else None
+    for k in (mp or {}).get("kpis", []) or []:
+        if not k.get("target"):
+            empty["KPI targets"] += 1
+    bits = [f"{n} {k}" for k, n in empty.items() if n]
+    if bits:
+        plan_warn.append("empty (shown as 'Date to be set' / 'To be agreed', never guessed): " + ", ".join(bits))
+    rmv = [x for x in rm if internal or not x.get("internal")]
+    msv = [x for x in ms if internal or not x.get("internal")]
+    tkv = [x for x in tk if internal or (not x.get("internal") and x.get("owner") == "client")]
+    REF_IDS.update(x["ref"] for x in tkv if x.get("ref"))
+    mp_has = bool(mp) and any(mp.get(k) for k in ("objective", "audience", "channels", "messages", "kpis"))
+    pend = sum(1 for x in tkv if x.get("owner") == "client" and x["_st"] != "done")
+    return {"mp": mp, "rm": rmv, "ms": msv, "tk": tkv,
+            "show_mp": (mp is not None) if internal else mp_has,
+            "show_rm": ("roadmap" in m) if internal else bool(rmv),
+            "show_ms": ("milestones" in m) if internal else bool(msv),
+            "show_tk": ("tasks" in m) if internal else bool(tkv),
+            "pending": pend}
+
+
+def tasks_line(pl):
+    if not pl["show_tk"] or not pl["pending"]:
+        return ""
+    k = S("tasks_pending_one") if pl["pending"] == 1 else S("tasks_pending_n", n=pl["pending"])
+    return f'<small><a href="#tasks">{k}</a></small>'
+
+
+def navlinks(secs):
+    return "".join(f'<a href="#{i}"><span class="nn">{n+1:02d}</span><span>{S(k)}</span>{H("span", "rc", str(c)) if c else ""}</a>'
+                   for n, (i, k, c) in enumerate(secs))
+
+
+def r_plan(pl, cx, internal, sec):
+    mp, amp = pl["mp"] or {}, cx.ar.get("marketing_plan") or {}
+    o = [sec("plan", "sec_plan")]
+    rows = []
+
+    def kv(key, val):
+        rows.append(f'<div class="kv"><b class="k">{S(key)}</b><div class="v">{val}</div></div>')
+
+    if mp.get("objective"):
+        kv("plan_objective", cx.bi(mp["objective"], amp.get("objective"), "marketing_plan.objective"))
+    if mp.get("audience"):
+        kv("plan_audience", cx.bi(mp["audience"], amp.get("audience"), "marketing_plan.audience"))
+    if mp.get("channels"):
+        lis = []
+        for c in mp["channels"]:
+            ac = (amp.get("channels") or {}).get(c.get("id"), {})
+            role = " · " + cx.bi(c["role"], ac.get("role"), "marketing_plan.channels." + str(c.get("id")) + ".role") if c.get("role") else ""
+            lis.append(f'<li><b>{nbi(c.get("name", ""), ac.get("name"))}</b>{role}</li>')
+        kv("plan_channels", "<ul>" + "".join(lis) + "</ul>")
+    if mp.get("messages"):
+        kv("plan_messages", "<ul>" + "".join(
+            f'<li>{cx.bi(x.get("text", ""), (amp.get("messages") or {}).get(x.get("id")), "marketing_plan.messages." + str(x.get("id")))}</li>' for x in mp["messages"]) + "</ul>")
+    if rows:
+        o.append('<div class="kvs">' + "".join(rows) + "</div>")
+    if mp.get("kpis"):
+        o.append(f'<h3 class="ia">{S("plan_kpis")}</h3><table class="tbl-s"><thead><tr>' + "".join(
+            f'<th>{S(h)}</th>' for h in ("th_kpi", "th_target", "th_source", "th_status")) + '</tr></thead><tbody>')
+        for k in mp["kpis"]:
+            ak = (amp.get("kpis") or {}).get(k.get("id"), {})
+            st = k.get("status", "planned")
+            st = st if st in ROAD_ST else "planned"
+            src = nbi(k["source"], ak.get("source")) if k.get("source") else ""
+            w = "marketing_plan.kpis." + str(k.get("id"))
+            o.append(f'<tr><td {DL("th_kpi")}><b>{cx.bi(k.get("name", ""), ak.get("name"), w + ".name")}</b>{intbox(cx, internal, k, ak, w)}</td>'
+                     f'<td {DL("th_target")}>{tgt_html(cx, k.get("target", ""), ak.get("target"), w + ".target")}</td>'
+                     f'<td {DL("th_source")}>{src}</td><td class="w" {DL("th_status")}>{pdot(st)}</td></tr>')
+        o.append("</tbody></table>")
+    has_int = internal and (mp.get("internal_paragraphs") or mp.get("int_note"))
+    if has_int:
+        parts = [f'<p>{cx.bi(p, lookup(amp, "internal_paragraphs", i), f"marketing_plan.internal_paragraphs[{i}]")}</p>' for i, p in enumerate(mp.get("internal_paragraphs") or [])]
+        if mp.get("int_note"):
+            parts.append(f'<p>{cx.bi(mp["int_note"], amp.get("int_note"), "marketing_plan.int_note")}</p>')
+        o.append(f'<div class="int"><b>{S("internal_label")}</b>' + "".join(parts) + "</div>")
+    if not rows and not mp.get("kpis") and not has_int:
+        o.append(H("p", "ns2", S("not_set")))
+    o.append("</div></section>")
+    return "".join(o)
+
+
+def r_road(pl, cx, internal, sec):
+    rows, ar = pl["rm"], cx.ar.get("roadmap") or {}
+    o = [sec("roadmap", "sec_roadmap", S("count_items", n=len(rows)) if rows else "")]
+    if not rows:
+        o.append(H("p", "ns2", S("not_set")))
+    else:
+        num = {x["id"]: n for n, x in enumerate(rows, 1)}
+        cur = next((x["id"] for x in rows if x["status"] in ("progress", "production", "review")), None)
+        o.append('<ol class="pl">')
+        for n, x in enumerate(rows, 1):
+            ax = ar.get(x["id"], {})
+            w = "roadmap." + x["id"]
+            meta = []
+            if x.get("window"):
+                meta.append(cx.bi(x["window"], ax.get("window"), w + ".window"))
+            deps = [str(num[d]) for d in (x.get("depends_on") or []) if d in num]
+            if deps:
+                meta.append(S("plan_depends_n", n=", ".join(deps)))
+            is_cur = x["id"] == cur
+            body = (H("span", "ti", cx.bi(x.get("title", ""), ax.get("title"), w + ".title")) + itag(x, internal)
+                    + (H("span", "cu", S("plan_current_stage")) if is_cur else "")
+                    + (H("span", "sm", cx.bi(x["desc"], ax.get("desc"), w + ".desc")) if x.get("desc") else "")
+                    + (H("span", "sm", " · ".join(meta)) if meta else "")
+                    + intbox(cx, internal, x, ax, w))
+            o.append(f'<li class="pr n{" cur" if is_cur else ""}" id="rm-{e(x["id"])}">{H("span", "no", str(n))}<div>{body}</div>'
+                     f'<div class="ps">{pdot(x["status"])}<span>·</span><span>{owner_w(x.get("owner"))}</span></div></li>')
+        o.append("</ol>")
+    o.append("</div></section>")
+    return "".join(o)
+
+
+def r_miles(pl, cx, internal, sec):
+    rows, ar = pl["ms"], cx.ar.get("milestones") or {}
+    o = [sec("milestones", "sec_milestones", S("count_items", n=len(rows)) if rows else "")]
+    if not rows:
+        o.append(H("p", "ns2", S("not_set")))
+    else:
+        num = {x["id"]: n for n, x in enumerate(pl["rm"], 1)}
+        o.append('<ul class="pl">')
+        for x in rows:
+            ax = ar.get(x["id"], {})
+            w = "milestones." + x["id"]
+            sub = []
+            if x.get("stage") in num:
+                sub.append(S("stage_n", n=num[x["stage"]]))
+            if x.get("gate"):
+                sub.append(S("th_gate") + " · " + cx.bi(x["gate"], ax.get("gate"), w + ".gate"))
+            dt = D(x["date"]) if x.get("date") else H("span", "ns2", S("date_tbd"))
+            basis = H("span", "sm", S("date_basis_planned")) if x.get("date") and x.get("date_basis") == "planned" else ""
+            body = (H("span", "ti", cx.bi(x.get("title", ""), ax.get("title"), w + ".title")) + itag(x, internal)
+                    + "".join(H("span", "sm", s_) for s_ in sub) + intbox(cx, internal, x, ax, w))
+            o.append(f'<li class="pr t" id="ms-{e(x["id"])}"><div>{body}</div><div class="dt2">{dt}{basis}</div><div class="ps">{pdot(x["status"])}</div></li>')
+        o.append("</ul>")
+    o.append("</div></section>")
+    return "".join(o)
+
+
+def r_tasks(pl, cx, internal, sec, refs):
+    rows, ar = pl["tk"], cx.ar.get("tasks") or {}
+    o = [sec("tasks", "sec_tasks_internal" if internal else "sec_tasks", S("count_items", n=len(rows)) if rows else "")]
+
+    def one(x):
+        ax = ar.get(x["id"], {})
+        w = "tasks." + x["id"]
+        ref = ""
+        if x.get("ref") and x["ref"] not in refs:
+            plan_warn.append(f"{x['id']}: ref {x['ref']!r} matches no visible item:<id> / text:<id> -> no link")
+        if x.get("ref") in refs:
+            t_en, t_ar = refs[x["ref"]]
+            ref = H("span", "sm", f'<a class="lk" href="#{e(x["ref"].replace(":", "-", 1))}">{T(rich(t_en), lat(t_ar or t_en))}</a>')
+        dt = (H("span", "dl2", S("th_due")) + " " + D(x["due"])) if x.get("due") else S("date_tbd")
+        own = f'<span>·</span><span>{owner_w(x.get("owner"))}</span>' if internal else ""
+        body = H("span", "ti", cx.bi(x.get("title", ""), ax.get("title"), w + ".title")) + itag(x, internal) + ref + intbox(cx, internal, x, ax, w)
+        return f'<li class="pr t" id="tk-{e(x["id"])}"><div>{body}</div><div class="dt2">{dt}</div><div class="ps">{pdot(x["_st"])}{own}</div></li>'
+
+    if not rows:
+        o.append(H("p", "ns2", S("not_set")))
+    elif internal:
+        for lab, own in (("tasks_client_label", True), ("tasks_team_label", False)):
+            grp = [x for x in rows if (x.get("owner") == "client") == own]
+            if grp:
+                o.append(f'<h3 class="ia">{S(lab)}</h3><ul class="pl">' + "".join(one(x) for x in grp) + "</ul>")
+    else:
+        o.append('<ul class="pl">' + "".join(one(x) for x in rows) + "</ul>")
+    o.append("</div></section>")
+    return "".join(o)
+
+
+def jobfiles(job):
+    """layout files that exist in the job folder (JOB_LAYOUT.md): README, 00-08 slots, files/ work/ observations/"""
+    out = []
+    for n in sorted(os.listdir(job)):
+        p = os.path.join(job, n)
+        if n == "README.md":
+            out.append((n, "jf_readme"))
+        elif os.path.isfile(p) and LAYOUT_FILE.match(n):
+            out.append((n, "jf_" + n[:2]))
+        elif os.path.isdir(p) and n in LAYOUT_DIRS:
+            out.append((n + "/", "jf_dir_" + n))
+    out.sort(key=lambda t: (t[1] != "jf_readme", t[0]))
+    return out
+
+
+def r_jobfiles(files, sec):
+    rows = "".join(f'<li class="pr f"><a class="lk" href="{e(url(n))}" target="_blank"><bdi dir="ltr">{e(n)}</bdi></a>{H("span", "dt2", S(k))}</li>' for n, k in files)
+    return sec("jobfiles", "sec_jobfiles", S("count_items", n=len(files))) + f'<ul class="pl">{rows}</ul></div></section>'
+
+
 def card(n, it, job, internal, cx):
     st = it.get("status", "production")
     st = "production" if st == "draft" else st
@@ -494,6 +852,8 @@ def card(n, it, job, internal, cx):
     elif internal and (exists or href):
         media = (f'<div class="well ph sm">{mark_img()}<b>{S("type_" + typ if typ in ("image", "video", "doc", "link") else "type_file")}</b>'
                  f'<span class="s">{S("ph_internal_reference")}</span></div>')
+    elif not f and not href and st != "production":
+        media = ""  # document-type item with no media (e.g. a source .md): text card, no empty media box
     else:
         media = (f'<div class="well ph">{mark_img()}<b>{S("ph_in_production")}</b><span class="s">{S("ph_preview_to_follow")}</span>'
                  f'<span class="dots"><i></i><i></i><i></i></span></div>')
@@ -520,7 +880,9 @@ def card(n, it, job, internal, cx):
             bits.append(wd)
         if bits:
             intn = f'<p class="int"><b>{S("internal_label")}</b>' + "<br>".join(bits) + '</p>'
-    return (f'<article class="card{wide} {e(st)}" data-status="{e(st)}" data-group="{e(grp)}">{media}'
+    aid = f' id="item-{e(it["id"])}"' if it.get("id") and "item:" + it["id"] in REF_IDS else ""
+    nm = " nm" if not media else ""
+    return (f'<article{aid} class="card{wide}{nm} {e(st)}" data-status="{e(st)}" data-group="{e(grp)}">{media}'
             f'<div class="tb"><h3>{cx.bi(title, ai.get("title"), f"items.{it.get(chr(105)+chr(100))}.title")}</h3>'
             f'<p class="ds">{cx.bi(it.get("desc", ""), ai.get("desc"), f"items.{it.get(chr(105)+chr(100))}.desc")}</p>{intn}'
             f'<div class="cf">{sdot(st)}{cf}</div></div></article>')
@@ -529,8 +891,17 @@ def card(n, it, job, internal, cx):
 def build(job, audience="client", link_logo=False):
     del missing[:]
     del missing_ar[:]
+    del brand_sync[:]
     internal = audience == "internal"
     m = json.load(open(os.path.join(job, "DELIVERY.json"), encoding="utf-8"))
+    brand = brand_of(job)
+    if not m.get("client"):  # brand sync: the manifest value always wins
+        nm = portfolio_name(brand) if brand else None
+        m["client"] = nm or brand or os.path.basename(os.path.abspath(job))
+        brand_sync.append(f'client = {m["client"]!r} from ' + ("core/portfolio.yaml" if nm else "brand id/folder name (no portfolio entry)"))
+    if not m.get("job"):
+        m["job"] = os.path.basename(os.path.abspath(job))
+        brand_sync.append(f'job = {m["job"]!r} from folder name')
     cx = Ctx(m)
     ar = cx.ar
     out = "DELIVERY_INTERNAL.html" if internal else "DELIVERY.html"
@@ -571,27 +942,42 @@ def build(job, audience="client", link_logo=False):
     if m.get("subtitle"):
         a(f'<p class="sub">{cx.bi(m["subtitle"], ar.get("subtitle"), "subtitle")}</p>')
     a('</div>')
+    pl = plan_prep(m, internal)
+    refs = {"item:" + it["id"]: (it.get("title", ""), lookup(ar, "items", it["id"], "title")) for _, it in items if it.get("id")}
+    refs.update({"text:" + t["id"]: (t.get("title", ""), lookup(ar, "texts", t["id"], "title")) for t in texts if t.get("id")})
+    jf = jobfiles(job) if internal else []
     secs = []
     if ab.get("paragraphs") or ab.get("facts"):
-        secs.append(("overview", "sec_overview"))
+        secs.append(("overview", "sec_overview", None))
+    if pl["show_mp"]:
+        secs.append(("plan", "sec_plan", None))
+    if pl["show_rm"]:
+        secs.append(("roadmap", "sec_roadmap", len(pl["rm"])))
+    if pl["show_ms"]:
+        secs.append(("milestones", "sec_milestones", len(pl["ms"])))
     if items:
-        secs.append(("deliverables", "sec_deliverables"))
+        secs.append(("deliverables", "sec_deliverables", None))
     if texts or m.get("options"):
-        secs.append(("copy", "sec_copy"))
+        secs.append(("copy", "sec_copy", None))
+    if pl["show_tk"]:
+        secs.append(("tasks", "sec_tasks_internal" if internal else "sec_tasks", len(pl["tk"])))
     if m.get("next") or (internal and m.get("internal_next")):
-        secs.append(("next", "sec_next"))
+        secs.append(("next", "sec_next", None))
     if decs:
-        secs.append(("approvals", "sec_approvals"))
+        secs.append(("approvals", "sec_approvals", None))
     if internal and m.get("checks"):
-        secs.append(("checks", "sec_checks"))
+        secs.append(("checks", "sec_checks", None))
     if internal and m.get("sources"):
-        secs.append(("sources", "sec_sources"))
+        secs.append(("sources", "sec_sources", None))
+    if jf:
+        secs.append(("jobfiles", "sec_jobfiles", None))
     a(f'<nav class="idx" aria-label="{e(I18N["en"]["contents"])}" data-lbl-en="{e(I18N["en"]["contents"])}" data-lbl-ar="{e(I18N["ar"]["contents"])}"><p>{S("contents")}</p>'
-      + "".join(f'<a href="#{i}"><span class="nn">{n+1:02d}</span><span>{S(k)}</span></a>' for n, (i, k) in enumerate(secs)) + '</nav></div>')
+      + navlinks(secs) + '</nav></div>')
     sk = m.get("status", "approved")
     sk = sk if sk in ST_CLS else "approved"
     sl = cx.bi(m.get("status_label") or I18N["en"]["st_" + sk], ar.get("status_label") or I18N["ar"]["st_" + sk], "status_label")
     det = f'<small>{cx.bi(m["status_detail"], ar.get("status_detail"), "status_detail")}</small>' if m.get("status_detail") else ""
+    det += tasks_line(pl)
     a(f'<dl class="facts-row"><div><dt>{S("client")}</dt><dd><bdi dir="ltr">{e(m["client"])}</bdi></dd></div>'
       f'<div><dt>{S("date")}</dt><dd>{D(m.get("date", ""))}</dd></div>'
       f'<div><dt>{S("status")}</dt><dd><span class="st"><i class="d {ST_CLS[sk]}"></i>{sl}</span>{det}</dd></div></dl>'
@@ -626,6 +1012,12 @@ def build(job, audience="client", link_logo=False):
         if rows:
             a('<dl class="f">' + "".join(rows) + '</dl>')
         a('</div></div></section>')
+    if pl["show_mp"]:
+        a(r_plan(pl, cx, internal, sec))
+    if pl["show_rm"]:
+        a(r_road(pl, cx, internal, sec))
+    if pl["show_ms"]:
+        a(r_miles(pl, cx, internal, sec))
     # deliverables
     if items:
         cards = [card(i, it, job, internal, cx) for i, it in items]
@@ -679,7 +1071,8 @@ def build(job, audience="client", link_logo=False):
             ints = f'<p class="int"><b>{S("internal_label")}</b>{cx.bi(t["int_note"], at.get("int_note"), "texts." + t.get("id", "") + ".int_note")}</p>' if internal and t.get("int_note") else ""
             plat = f'<div class="g">{cx.bi(t["platform"], at.get("platform"), "texts." + t.get("id", "") + ".platform")}</div>' if t.get("platform") else ""
             nt = f'<p class="nt">{cx.bi(t["note"], at.get("note"), "texts." + t.get("id", "") + ".note")}</p>' if t.get("note") else ""
-            a(f'<div class="tx"><div class="txh"><div>{plat}<h3>{cx.bi(t.get("title", ""), at.get("title"), "texts." + t.get("id", "") + ".title")}</h3></div>'
+            tid = f' id="text-{e(t["id"])}"' if t.get("id") and "text:" + t["id"] in REF_IDS else ""
+            a(f'<div{tid} class="tx"><div class="txh"><div>{plat}<h3>{cx.bi(t.get("title", ""), at.get("title"), "texts." + t.get("id", "") + ".title")}</h3></div>'
               f'<button class="btn" data-copy="tx{i}"><span class="bc">{S("btn_copy")}</span><span class="bd">{S("btn_copied")}</span></button></div>'
               f'<pre id="tx{i}" dir="{e(dr)}" lang="{e(lang)}">{body_html(t["body"], dr)}</pre>{nt}{ints}'
               f'{"<div class=stl>" + sdot(t["status"]) + "</div>" if t.get("status") else ""}</div>')
@@ -691,6 +1084,8 @@ def build(job, audience="client", link_logo=False):
             a(f'<div class="tx"><div class="txh"><div><div class="g">{S("selection")}</div><h3>{cx.bi(opt["title"], ao.get("title"), "options.title")}</h3></div></div>'
               f'<ul class="opt">{lis}</ul><p class="nt">{cx.bi(opt["label"], ao.get("label"), "options.label")}</p>{ints}</div>')
         a('</div></div></section>')
+    if pl["show_tk"]:
+        a(r_tasks(pl, cx, internal, sec, refs))
     # next steps
     if m.get("next") or (internal and m.get("internal_next")):
         a(sec("next", "sec_next"))
@@ -737,6 +1132,8 @@ def build(job, audience="client", link_logo=False):
                     missing.append(s_["path"])
                 a(f'<a class="lk {"" if ok else "miss"}" target="_blank" href="{e(url(s_["path"]))}">{lab}</a>')
         a('</div></div></section>')
+    if jf:
+        a(r_jobfiles(jf, sec))
     # footer
     cfg = json.load(open(os.path.join(HERE, "systronic.json"), encoding="utf-8"))
     ns = f'<span class="ns">{S("not_set")}</span>'
@@ -763,7 +1160,7 @@ def build(job, audience="client", link_logo=False):
       f'<p>{rights(yr)}</p>'
       f'<p class="vs"><img src="{asset("mark_white_96.png")}" alt=""><bdi dir="ltr">{e(sysname)}</bdi></p></div></div></footer>')
     a(f'<nav class="rail" id="rail" aria-label="{e(I18N["en"]["contents"])}" data-lbl-en="{e(I18N["en"]["contents"])}" data-lbl-ar="{e(I18N["ar"]["contents"])}"><p>{S("contents")}</p>'
-      + "".join(f'<a href="#{i}"><span class="nn">{n+1:02d}</span><span>{S(k)}</span></a>' for n, (i, k) in enumerate(secs)) + '</nav>'
+      + navlinks(secs) + '</nav>'
       f'<button class="rb" id="rb" aria-expanded="false" aria-controls="rail"><img src="{asset("mark_white_96.png")}" alt="">{S("contents")}</button><div class="scrim" id="scrim"></div>'
       f'<script>{JS}</script></body></html>')
     doc = "".join(P)
@@ -820,6 +1217,10 @@ if __name__ == "__main__":
         print("  structure:", "OK" if not c.err and not c.stack else f"PROBLEMS {c.err} unclosed={c.stack}")
         print("  missing files:", sorted(set(missing)) if missing else "none")
         print("  missing Arabic fields:", sorted(set(missing_ar)) if missing_ar else "none")
+        if brand_sync:
+            print("  brand sync:", "; ".join(brand_sync))
+        if plan_warn:
+            print("  plan warnings:", "; ".join(plan_warn))
         if who == "client":
             lk_ = leaks(doc)
             print("  leak scan:", "clean" if not lk_ else f"LEAK {lk_}")

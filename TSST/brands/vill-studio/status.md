@@ -1,5 +1,7 @@
 # vill-studio — status
 
+Jobs index (generated): [JOBS.md](JOBS.md)
+
 updated: 2026-10-11
 
 ## Current — Lead handover 2026-10-11

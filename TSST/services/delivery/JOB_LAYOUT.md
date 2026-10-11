@@ -31,3 +31,13 @@ Every job folder under `TSST/brands/<id>/projects/<job>/` uses this layout. Chec
 
 ## Example
 `TSST/brands/anvil/projects/campaign-01/marketing-week-01/` (00_BRIEF, 01_STRATEGY + 01b_CONTENT_STRATEGY, 02_PLAN, 03_COPY + 03b_PILOT_COPY_REVIEW, 05_MEASUREMENT + 05b_SPARK_REVIEW, 06_SCORECARD.csv, 07_DECISIONS, 08_LEAD_CHECKPOINT).
+
+## Legacy jobs
+A job that was not re-laid out has a README with the line `layout: legacy (pre R18, not re-laid out)`; `job_check.py` then reports file-name mismatches as WARN, not FAIL.
+
+## Moving a job (checklist)
+1. Move with `git mv` (history stays); never recreate `.git`.
+2. `brands/*/projects/{_qa,files}/` is git-ignored (media is untracked): move those folders by file copy and check they arrived; they do not travel with git.
+3. Build scripts under the job have a hard-coded `ROOT` depth (number of `..` / `parents[n]`): fix it after the move and rebuild.
+4. Hashed evidence (`work/`, `observations/`, bus task files, `log.tsv`) is never edited. Record old -> new paths in a `MOVED.md` next to the README instead.
+5. Update the brand `project.md`, `status.md` and `portfolio.yaml` paths, rebuild the delivery pages, then run `python TSST/services/delivery/sync_jobs.py <brand>` and `python TSST/services/delivery/job_check.py <job>`.
