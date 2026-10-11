@@ -1,0 +1,26 @@
+id: SKV-ALL
+title: Full skill validation, 13 rounds non-stop (Codex acting Lead)
+kind: work
+status: ready
+to: codex
+needs: []
+tier: CODE
+team: lead
+skills: [TSST/context_os/skills/TSST-CTX-SK-018-skill-evaluator]
+brand: t-sag
+spec: TSST/handoffs/codex-lead/BRIEF_SKILL_VALIDATION.md
+read: [TSST/skills/VALIDATION_PLAN.md, TSST/skills/validation_tracker.csv]
+write: [TSST/skills/validation/, TSST/handoffs/codex-lead/REPORT_SKV.md]
+after: []
+done_when: results.csv 120 rows + RESULTS.html complete; rounds 1-12 scored, 13 BLOCKED; validate_spine no new failures
+issued_by: claude
+created: "2026-10-11T13:28Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:
