@@ -12,3 +12,5 @@ During: team + skills only (`TSST/core/rules.md` Must 9); delegate FAST/WORK/COD
 End of every working block: update the project checkpoint (≤ 30 lines: state, decisions, next, do_not_repeat) so the next session starts cold and cheap.
 Never carry another brand's context into the session; a cross-brand request opens its own session.
 Git: every session works on its own track branch or worktree (R21); check `git branch --show-current` at start. Owner rules said in any session go to `TSST/core/rules.md` (R22).
+
+Branch map (R21, 2026-10-11): TSST core/rules/memory → `tsst-core/owner-rules` (ff into master) · Delivery System → `tsst-delivery/system` · ANVIL → `anvil/campaign-01-reveal` · CRM → `feat/crm-mvp-ui` · skill validation → `skill-validation/round-1` · SCC → its own repo (`systronic-control-center`). New brand/track → `<brand|track>/<topic>` from master.
