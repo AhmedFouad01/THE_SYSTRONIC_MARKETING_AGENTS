@@ -134,7 +134,9 @@ def body(a, contract):
     return (f"{who}\n\n## Operating contract (TSST-ADR-003/004, rules R1–R10)\n"
             "Generated from roster.yaml + agent-contract.md — do not hand-edit "
             "(edit those, then run `python TSST/context/gen_runtime_agents.py`).\n\n"
-            f"{contract}\n\n## Role-specific\n- Scope: {a['does'].strip()}\n{rules}\n")
+            f"{contract}\n\nJobs (R18–R20, `TSST/core/rules.md`): work lives in `TSST/brands/<id>/projects/<job>/` (never PILOTS/); "
+            "owner/client deliverables end with DELIVERY.json → build_delivery.py → DELIVERY pages; same-round sync + "
+            f"`python TSST/services/delivery/job_check.py <job>`.\n\n## Role-specific\n- Scope: {a['does'].strip()}\n{rules}\n")
 
 
 def claude_file(aid, a, runtimes, contract):

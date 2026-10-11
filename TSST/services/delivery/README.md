@@ -19,6 +19,12 @@ One manifest per job -> two pages in the job folder, one template, two languages
 4. Build: `python TSST/services/delivery/build_delivery.py <job_folder> [--audience client|internal|both]`. It prints structure check, missing files, missing Arabic fields and a leak scan of the client page (exit 1 on a leak).
 5. QA before sending: screenshots at 1280 and 390, English and Arabic, client and internal, plus a visual bidi check (punctuation, numbers, hashtags). Never hand-edit the HTML.
 
+## Job standard (R18–R20, `TSST/core/rules.md`)
+- Home: `TSST/brands/<id>/projects/<job>/`, listed in the brand's project.md. Never `TSST/PILOTS/` (archive) or `TSST/projects/`.
+- Required to call a job delivered: `DELIVERY.json` + `DELIVERY.html` + `DELIVERY_INTERNAL.html` (built, not older than the JSON) and `python TSST/services/delivery/job_check.py <job>` passes.
+- Same-round sync: DELIVERY.json statuses, brand project.md, brand `status.md`, brand line in `TSST/core/portfolio.yaml`.
+- Content file names (plan, copy, decisions): pending Track C.
+
 ## Add a language
 Add `i18n/<code>.json` with the same keys as `en.json`, add the code to `LANGS` and a `<code>` block in each manifest, add a button to the header switch, and extend the CSS overrides (`html[lang=<code>]`). Only `en` and `ar` exist today.
 

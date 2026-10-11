@@ -7,6 +7,7 @@ Request role: every request to Codex states ROLE A (team runtime) or ROLE B (ext
 Bus runtime id: `codex`. Run locally on this working tree (a cloud sandbox sees only
 pushed commits, not the bus). First bus task is its cold-start probe (`REVIEW-001`).
 Near a usage limit: `release` with a resume note, then `limit codex --until <UTC>`.
+Jobs: R18–R20 (`TSST/core/rules.md`) — job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync; check with `python TSST/services/delivery/job_check.py <job>`.
 
 ## Plan: ChatGPT Plus — roster → Codex agent (ADR-004)
 Routing follows `AGENTS.md#universal-task-routing`. The main Codex session is the **Lead**

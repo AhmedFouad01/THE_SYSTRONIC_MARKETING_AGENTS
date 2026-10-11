@@ -7,6 +7,7 @@ Bus runtime id: `claude` (lead).
 Requests the Lead sends to other tools/runtimes carry a ROLE block: `TSST/context/request-role.md`.
 Near a usage limit: `release` open claims with a resume
 note and `limit claude --until <UTC>` (`TSST/context/bus.md`).
+Jobs: R18–R20 (`TSST/core/rules.md`) — job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync; check with `python TSST/services/delivery/job_check.py <job>`.
 
 ## Plan: Claude Pro — roster → runtime agent (ADR-003/004)
 Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated from

@@ -21,7 +21,7 @@ Status: SKELETON. Each playbook gets filled in from research (`gemini/GEM-SV-*`)
 ## How the Lead runs any service (orchestration)
 
 1. **Service intake.** Read the playbook, ask its blocking intake questions, and confirm the variant. No team starts work before the intake is answered. This is how we choose the right thing from the start.
-2. **Job plan.** Copy the playbook stages into `TSST/projects/<job>/01_PLAN.md` (structure: `TSST/projects/README.md`), with owners, skills, client gates and dates. Present the cost and get a go per round (R11–R14, one track at a time).
+2. **Job plan.** Copy the playbook stages into the job's plan file in `TSST/brands/<id>/projects/<job>/` (R18; content file names: pending Track C), with owners, skills, client gates and dates. Present the cost and get a go per round (R11–R14, one track at a time).
 3. **Dispatch in order.** LENS (story/message) → SPARK (formats/funnel/measurement) → CREATIVE (production). DEV works on the web track. Every dispatch carries a Skill Plan (team + skill IDs). Run teams in parallel only when their questions do not overlap.
 4. **Client gates.** Stop at each gate the playbook marks. The client's approval is recorded in `03_DECISIONS.md`.
 5. **QA before showing the client.** Run the playbook's quality gates, plus the team gates (e.g. CREATIVE FINAL_ASSET_GATE). The Lead opens the real output; it never approves from the report alone.
@@ -32,8 +32,8 @@ Status: SKELETON. Each playbook gets filled in from research (`gemini/GEM-SV-*`)
 Every job is shown to the user as **one HTML delivery page that lives in the job folder** (`<job>/DELIVERY.html`), and the Lead sends that link. The model is the ANVIL pilot `11_PRODUCTION_V01/PREVIEW.html`: organised, explains everything, previews images and videos inline. The changes:
 - **The Systronic theme for every client**, never the client's brand theme (the client's work shows inside it).
 - **A status dot on every item:** 🟢 approved · 🟡 in review · ⚪ draft · 🔴 rejected, plus the decision date and who decided.
-- The explanation is part of the page: what this is, the decisions, the texts to paste and the checks, in organised sections. Arabic RTL, with English names kept intact.
-- Built from a small manifest (`<job>/DELIVERY.yaml`) by one shared generator, so every job looks the same and the page updates when a status changes.
+- The explanation is part of the page: what this is, the decisions, the texts to paste and the checks, in organised sections. Bilingual v1.0 (EN | ع switch, one file), see `delivery/README.md`.
+- Built from a small manifest (`<job>/DELIVERY.json`) by one shared generator, so every job looks the same and the page updates when a status changes.
 
 ## Playbook template (each SV file)
 What it is · variants · client deliverables (format) · blocking intake questions · stages table (stage | owner | skills | output | client gate) · quality gates · dependencies · common mistakes · skill gaps · research sources · lessons log.

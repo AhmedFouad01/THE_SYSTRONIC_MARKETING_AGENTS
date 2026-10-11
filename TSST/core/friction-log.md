@@ -53,3 +53,13 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 | 2026-10-10 | marketing | TSST-SPARK-SK-006 | same as SK-004: no official TikTok spec or AIGC-policy source list; disclosure preflight not covered | video-agent ad requirements |
 | 2026-10-11 | core | TSST-CTX-SK-023 | intake template (Objective/Triggers/Principles/Workflow/Changelog) differs from the team skill format (Objective/Method/Failure patterns/Validation); no rule on which wins or on frontmatter ids | Motion skills 005-007 |
 | 2026-10-11 | core | TSST-CTX-SK-018 | evaluator is a 6-line stub: no scoring bands, no lab-vs-real evidence tiers, no retro-scoring, re-validation or scorer-independence rules; status ladder split across 3 files | skill validation plan |
+
+- 2026-10-11 | DEV_AG | repo-cleanup assessment | no git/branch-hygiene skill in DEV set; SK-011/SK-006 mismatched -> propose git-repo-hygiene skill
+| 2026-10-11 | marketing | TSST-LENS-SK-006 | workflow and output contract hardcode a 90-day roadmap although the skill supports time-bounded plans; adapted to the owner-approved one-week horizon | weekly organic planning observation |
+| 2026-10-11 | marketing | TSST-LENS-SK-011 | approved-message prerequisite lacks a draft-review path for a combined strategy and copy brief; conditional drafts required explicit scope clarification | integrated strategy-copy draft |
+| 2026-10-11 | marketing | TSST-SPARK-SK-002 | conversion architecture method lacks a lightweight organic observation template and current native Meta metric dictionary; scope narrowed, raw-label human check retained, detailed schema made optional by Lead | weekly organic planning observation |
+| 2026-10-11 | marketing | TSST-SPARK-SK-002 | generated specialist contract and team map disagree on marketing manager ownership; runtime template ambiguity, not a measurement-method change | weekly organic planning observation |
+| 2026-10-11 | marketing | TSST-SPARK-SK-002 | source declares no semantic skill version; exact source SHA-256 used to identify observed method | weekly organic planning observation |
+- 2026-10-11 | LENS_AG | GEM-REPO-001 grading | SK-002 lacks a tool/repo-health grading template (stars, pushed_at, CVE) and a live API spot-check step
+- 2026-10-11 | DEV_AG | repo-cleanup step1 | SK-011 no guidance for repo hygiene/security scans; pre-push needs >100MB blob check in future git-hygiene skill
+- 2026-10-11 | DEV_AG | Track A rule wiring (R18-R20) | no DEV skill for governance/docs wiring (SKILL_GAP); gen_runtime_agents.py has no dry-run and rewrites 12 files silently -> a broken f-string reached the working tree before --check caught it

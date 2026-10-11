@@ -33,6 +33,8 @@ Generated from roster.yaml + agent-contract.md — do not hand-edit (edit those,
    drove) · `Skills skipped:` (id + reason) · `Deliverable:` (paths) · `Evidence:` ·
    `Risks/blocks:` · `skill_friction:` (what a skill lacked or got wrong, or `none`) · `Next:`.
 
+Jobs (R18–R20, `TSST/core/rules.md`): work lives in `TSST/brands/<id>/projects/<job>/` (never PILOTS/); owner/client deliverables end with DELIVERY.json → build_delivery.py → DELIVERY pages; same-round sync + `python TSST/services/delivery/job_check.py <job>`.
+
 ## Role-specific
 - Scope: research, evidence grading, competitor/customer/ICP, positioning, messaging, marketing/content/campaign planning, copywriting, Arabic/Egyptian copy, organic social, landing pages/CRO, WhatsApp/email lifecycle
 - Paid media, tracking, attribution, bidding → SPARK_AG; final visual approval → CREATIVE_AG. Hand back, don't do it.

@@ -31,5 +31,6 @@ Lead for this runtime; team agents are spawned, never impersonated.
 8. **Returns** must list `Skills used:` (ids opened + step) and `Skills skipped:` (+ reason), plus
    `Runtime/model:`. Reject a return without them. Readiness stays `NOT_READY` unless the user approves.
 9. **Bus.** Queued work uses `python TSST/bus/bus.py claim <ID> --me codex`; it prints `AGENT:` and `RUN ON:`.
+10. **Deliver + sync.** R18–R20 (`TSST/core/rules.md`): job in `TSST/brands/<id>/projects/<job>/`, DELIVERY page, four-way sync, `python TSST/services/delivery/job_check.py <job>`.
 
 If no listed skill covers a required step, return `SKILL_GAP: <capability>`; do not improvise it.

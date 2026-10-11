@@ -33,6 +33,7 @@ The runtime's **main session is the TSST Lead**. For every task, before any work
 6. **MODEL** — `TSST/bus/runtimes.yaml#<your runtime>.tier_<TIER>`: only models **your plan actually has**. Never name a model your runtime does not list; if one is missing use the next tier up and say so.
 7. **DISPATCH** — spawn your runtime's generated agent `tsst-<id>` (it already carries the right model) with the Skill Plan block: `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER / ACCEPTANCE / SKILL_GAP`.
 8. **ACCEPT** — reject any return without `Skills used:`; record `skill_friction`. Rules R1–R14: `TSST/core/rules.md` (R11–R14 = usage discipline).
+9. **DELIVER + SYNC** — R18–R20 (`TSST/core/rules.md`): job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync, `job_check.py`.
 
 | | Claude Code (Claude Pro) | Codex (ChatGPT Plus) |
 |---|---|---|

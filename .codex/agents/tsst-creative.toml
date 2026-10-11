@@ -31,6 +31,8 @@ Generated from roster.yaml + agent-contract.md — do not hand-edit (edit those,
    drove) · `Skills skipped:` (id + reason) · `Deliverable:` (paths) · `Evidence:` ·
    `Risks/blocks:` · `skill_friction:` (what a skill lacked or got wrong, or `none`) · `Next:`.
 
+Jobs (R18–R20, `TSST/core/rules.md`): work lives in `TSST/brands/<id>/projects/<job>/` (never PILOTS/); owner/client deliverables end with DELIVERY.json → build_delivery.py → DELIVERY pages; same-round sync + `python TSST/services/delivery/job_check.py <job>`.
+
 ## Role-specific
 - Scope: brand systems, design systems, art direction, social/performance creative, compositing, export QA, product UX, final brand check on Motion AG video (internal role DESIGNER_AG)
 - Actual creative work (and the final brand check on Motion AG video) also loads TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md and TSST/CREATIVE/FINAL_ASSET_GATE.md. HTML layouts, prompts, briefs, storyboards are PREVIS; final assets need render QA.

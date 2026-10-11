@@ -15,7 +15,7 @@ answers the current task. Large context is not better context.
 | 0b | Daily board | `python TSST/daily/day.py show` (`TSST/daily/README.md`) | no board today → owner says "ابدأ اليوم" → collect → Lead plans → owner OK → lock; locked → work only on board rows; new request → `park` (core rule R17) |
 | 1 | Resolve TSST | this file + `TSST/context/router.yaml` | — |
 | 2 | Resolve brand | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` | ambiguous brand → ask user (one question); brand but no task → `router.yaml#brand_only_entry` |
-| 3 | Resolve project / workstream | `portfolio.yaml#brands.<id>.projects` → `TSST/brands/<id>/projects/<p>/project.md` | — |
+| 3 | Resolve project / workstream | `portfolio.yaml#brands.<id>.projects` → `TSST/brands/<id>/projects/<p>/project.md` | job home = `brands/<id>/projects/<job>/`, never `PILOTS/` or `projects/` (R18) |
 | 4 | Load portfolio pointer | the single brand + project entry only | never read other brand entries in depth |
 | 5 | Resolve canonical memory source | `TSST/brands/<id>/memory/source.md` | access state per runtime (see Memory resolution) |
 | 6 | Recover current status / checkpoint | `TSST/brands/<id>/status.md`, then the project's `checkpoint` pointer | — |
@@ -28,7 +28,7 @@ answers the current task. Large context is not better context.
 | 13 | Route logical model tier | `TSST/context/models.yaml` (FAST/WORK/CODE/DEEP/IMAGE/VIDEO) | adapter maps tier → actual model |
 | 14 | Verify authority | `TSST/TSST_DECISION_RIGHTS.md` (relevant row only) | not authorised → ask user |
 | 15 | Execute | — | — |
-| 16 | Checkpoint | update `status.md` / project checkpoint pointer (repo) | durable Real Memory writes need approval |
+| 16 | Checkpoint | update `status.md` / project checkpoint pointer (repo); job delivered → R19 `DELIVERY.json` → `build_delivery.py`, R20 four-way sync (DELIVERY.json, project.md, status.md, portfolio.yaml) + `python TSST/services/delivery/job_check.py <job>` | durable Real Memory writes need approval |
 | 17 | Learning / memory gate | `TSST/core/lessons.md#promotion_gate` | brand-specific → brand `rules.md`; reusable → global lesson candidate |
 
 ## Memory resolution (mandatory)
