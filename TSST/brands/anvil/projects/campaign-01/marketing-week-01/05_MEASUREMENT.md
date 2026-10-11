@@ -112,7 +112,7 @@ QA يدوي قبل التقرير: تحقق رابط ومعرف ونوع كل ص
 
 ## ملف 07 وطريقة تقرير D7
 
-07_WEEK_01_SCORECARD.csv قالب UTF-8: صفوف للقطع العضوية المخططة وأيام المدفوع المحتملة، وجميع الأرقام/التواريخ/روابط التنفيذ فارغة. الصف المخطط ليس تنفيذًا. تُنسخ صفوف ٢٤/٧٢ ساعة/D7 عند الحاجة؛ window_start/end وsnapshot_at يحددان نطاق الأرقام، وmeasurement_window مثل 24h/72h/day7. تلك لقطات تراكمية عند المصدر؛ **لا تُجمع معًا**. review_codes مجموع الأكواد داخل كل نافذة محددة فقط؛ coding_mode يميز spontaneous/prompted/mixed. row_status يبدأ planned ويصير observed أو skipped، ولا يصير published بوجود مسودة.
+06_SCORECARD.csv قالب UTF-8: صفوف للقطع العضوية المخططة وأيام المدفوع المحتملة، وجميع الأرقام/التواريخ/روابط التنفيذ فارغة. الصف المخطط ليس تنفيذًا. تُنسخ صفوف ٢٤/٧٢ ساعة/D7 عند الحاجة؛ window_start/end وsnapshot_at يحددان نطاق الأرقام، وmeasurement_window مثل 24h/72h/day7. تلك لقطات تراكمية عند المصدر؛ **لا تُجمع معًا**. review_codes مجموع الأكواد داخل كل نافذة محددة فقط؛ coding_mode يميز spontaneous/prompted/mixed. row_status يبدأ planned ويصير observed أو skipped، ولا يصير published بوجود مسودة.
 
 حقول المتابعين تستخدم عند لقطة حساب channel_account_snapshot، لا لكل منشور. reach_scope وsource_metric_name وsource_reference تحفظ المصدر وتعريفه؛ فيديو غير موجود أو مؤشر غير متاح يبقى فارغًا. organic_paid يكون organic/paid أو mixed_unseparated عند تعذر الفصل. campaign/adset/ad_id لا تُملأ إلا من التنفيذ الفعلي. paid صفوف M01 مقترح وقد تتغير إلى مادة معتمدة أخرى مع تدوين السبب؛ لا تُسقط نتيجة القناة على مادة غير مستخدمة.
 

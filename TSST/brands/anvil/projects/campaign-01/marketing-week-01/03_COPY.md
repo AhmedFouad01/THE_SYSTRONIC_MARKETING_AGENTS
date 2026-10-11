@@ -4,7 +4,7 @@ DRAFT / NOT_READY. Skills used: TSST-LENS-SK-005 / 006 / 013 / 011 / 012. كل �
 
 ## بنك افتتاحيات SK-011
 
-تصحيح إعادة الاستخدام: تمت قراءة مصادر PILOT الأصلية وتطبيق TSST-LENS-SK-011 وTSST-LENS-SK-012 في هذا التعديل المحدود. صياغة الاستمرارية أصل مملوك للمشروع، وليست كتابة جديدة بديلة عنه؛ الاختيار موثق في 10_PILOT_COPY_REVIEW.md. رفض مخرج بصري سابق لا يعني رفض نصه.
+تصحيح إعادة الاستخدام: تمت قراءة مصادر PILOT الأصلية وتطبيق TSST-LENS-SK-011 وTSST-LENS-SK-012 في هذا التعديل المحدود. صياغة الاستمرارية أصل مملوك للمشروع، وليست كتابة جديدة بديلة عنه؛ الاختيار موثق في 03b_PILOT_COPY_REVIEW.md. رفض مخرج بصري سابق لا يعني رفض نصه.
 
 | ID | الافتتاحية | الزاوية |
 |---|---|---|
@@ -64,7 +64,7 @@ Shark X Store بقى ANVIL SUPPS.
 
 تابعوا الفصل الجديد مع ANVIL SUPPS.
 
-**Gloss:** Shark X Store is becoming ANVIL SUPPS: a new name and identity continuing the story built with the audience. Same Facebook page, name change pending. Follow the next chapter. “Stronger identity” describes branding, not product performance or superior service. Reuse map: 10_PILOT_COPY_REVIEW.md.
+**Gloss:** Shark X Store is becoming ANVIL SUPPS: a new name and identity continuing the story built with the audience. Same Facebook page, name change pending. Follow the next chapter. “Stronger identity” describes branding, not product performance or superior service. Reuse map: 03b_PILOT_COPY_REVIEW.md.
 
 **صياغة تراث أقوى اختيارية — ليست ضمن النسخة الأساسية حتى يؤكد أحمد الرقم:** «٨ سنين باسم Shark، والنهارده بنكمل باسم ANVIL SUPPS.» مصدر الرقم تقرير المالك في S2، وليس اختراعًا أو بحثًا مستقلاً. بعد تأكيده يمكن استبدال جملة الافتتاح فقط بهذه الجملة على FB/IG، مع إبقاء بقية النص. البديل دون رقم: «بدأت تعرفنا باسم Shark، ودلوقتي بنكمل باسم ANVIL SUPPS.» مخاطبته لمن يعرف Shark، لا كل زائر. Gloss: Eight years under Shark, continuing as ANVIL; numeric history requires owner confirmation.
 
