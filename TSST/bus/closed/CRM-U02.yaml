@@ -1,0 +1,26 @@
+id: CRM-U02
+title: Track U 2/19 · locale provider + Button/Field
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U02.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #2 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 1
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "No U02 work started. Resume at blocked U01 WIP 7cbd198/report CRM-U01.md: corrected utility fixture + AR/EN light/dark verification after Lead resolution; then U02."
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U02.md
+sha256: 734f1b9a2020e15f7d3796d8ed51effe4c55cab338bc5566235f63f5f3de2018
+note:

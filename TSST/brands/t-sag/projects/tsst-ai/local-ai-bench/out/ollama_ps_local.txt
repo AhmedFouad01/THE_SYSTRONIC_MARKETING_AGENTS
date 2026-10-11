@@ -1,0 +1,8 @@
+NAME                    ID              SIZE     PROCESSOR    CONTEXT    UNTIL              
+qwen3-14b-32k:latest    8d6c98e1c8db    14 GB    100% GPU     32768      4 minutes from now    
+NAME                    ID              SIZE     PROCESSOR    CONTEXT    UNTIL              
+qwen3-14b-32k:latest    8d6c98e1c8db    14 GB    100% GPU     32768      4 minutes from now    
+NAME                    ID              SIZE     PROCESSOR    CONTEXT    UNTIL              
+qwen3-14b-32k:latest    8d6c98e1c8db    14 GB    100% GPU     32768      4 minutes from now    
+NAME                    ID              SIZE     PROCESSOR    CONTEXT    UNTIL              
+qwen3-14b-32k:latest    8d6c98e1c8db    14 GB    100% GPU     32768      4 minutes from now    

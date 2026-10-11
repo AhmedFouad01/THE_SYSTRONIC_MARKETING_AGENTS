@@ -44,3 +44,9 @@ One-page **canvases** with the logo top-left and a red-barred title:
   - **Banned on delivery pages** (Ahmed, 2026-10-09): 29LT Bukra / Myriad Arabic; rounded cards with a cyan top border, pill badges and timelines; any generic "AI template" look.
   - **Target:** an editorial studio handover at or above the level of the ANVIL pilot `11_PRODUCTION_V01/PREVIEW.html`.
 - **SV-02/SV-03 deliverables** follow the house canvases as their one-page summary format (market research canvas, marketing plan canvas, BMC). Long documents expand them.
+
+## UI palette (Ahmed, 2026-10-09): official for product UI
+Royal Blue `#00338D` · Impact Red `#C60C30` · Legacy Blue `#002244` · Crisp White `#F2F3F3` · a Cyan matched to their saturation and mood (to be derived and confirmed); every other UI colour is derived from these. Charts, hover and active states use only this family. Decision: `TSST/brands/t-sag/projects/crm/redesign/DECISIONS.md` D-09. The logo files keep their measured colours (`#E7213A`, `#181D36`, `#29BCEF`) until Ahmed decides otherwise.
+
+## Vector mark (Ahmed, 2026-10-09)
+`assets/final/logo/systronic_mark_vector.svg` is the bolt mark as one clean polygon (viewBox 525.81×650.06). Ahmed exported it from the source as `D:\Work v2\Systronic Team\SVG\Asset 2.svg`; its export fill is `#e51c1c`. Use it for the product UI mark, the favicon and the watermark. Approved colourways: white, navy/Legacy Blue, and black, as in the existing PNG variants. The full logo (mark + wordmark) is still PNG only.

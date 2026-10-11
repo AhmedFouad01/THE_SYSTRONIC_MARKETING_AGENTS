@@ -1,0 +1,26 @@
+id: CRM-N2R
+title: Track A 2/5 · N2 workspace switcher + disclosure behaviour
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-N2R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task N2 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-N2R.md
+sha256: 290ef1bda3844876e543da7949f1a6236739b00a15edab4d438bf83276df7bc3
+note: b261291; C green lint298/typecheck/unit496 in43/build180. Switches revalidate known tab contexts; catalog/name gap documented.

@@ -1,0 +1,26 @@
+id: VB-2
+title: Visual blueprint plan
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+team: marketing
+skills: [TSST/LENS/skills/tsst-lens-sk-001-research-planning]
+brand: t-sag
+spec: TSST/handoffs/visual-blueprints/BRIEF_VB2_PLAN.md
+read: [TSST/handoffs/visual-blueprints/]
+write: [TSST/handoffs/visual-blueprints/VB2_PLAN.md]
+after: [VB-1]
+done_when: P1-P3 plan, nodes/arrows per item, CREATIVE rounds
+issued_by: claude
+created: "2026-10-09T09:35Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "Plan verified: 13 rows, 10 rounds, explicit teams/bus/review/friction loop, proposed architecture caveat. Bus check has unrelated CRM-PLAN-BUILD hash mismatch. Await review; model unverified."
+skills_used: [TSST-LENS-SK-001]
+result: TSST/handoffs/visual-blueprints/VB2_PLAN.md
+sha256: 1f2e647f888b59a6cb0785e500e12fe18594dd9667115e409563d84128b545fd
+note: Accepted P1 (TSST, Delivery, CRM) for drawing; P2/P3 placeholder chains deferred until scoped source reads

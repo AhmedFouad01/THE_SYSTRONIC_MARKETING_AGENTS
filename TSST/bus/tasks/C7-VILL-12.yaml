@@ -1,0 +1,26 @@
+id: C7-VILL-12
+title: VILL Brand Guidelines v1.0 (visual + verbal) at a higher craft bar — PDF + page PNGs
+kind: work
+status: done
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: WORK
+team: studio
+skills: [TSST-CREATIVE-SK-002, TSST-CREATIVE-SK-008, TSST-CREATIVE-SK-005, TSST-CREATIVE-SK-010]
+brand: vill-studio
+spec: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRIEF_C7-VILL-12.md
+read: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/, TSST/brands/vill-studio/assets/, TSST/CREATIVE/]
+write: [TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_GUIDELINES_v1.0/, TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_GUIDELINES_v1.0.md]
+after: []
+done_when: BRAND_GUIDELINES_v1.0 PDF + page PNGs + HTML sources; self-critique round recorded; per-page render QA; skills-used lists the 4 skills
+issued_by: claude
+created: "2026-10-05T18:09Z"
+rounds: 0
+max_rounds: 2
+claimed_by: codex
+lease_until:
+progress: Final24 PNG/HTML +24page PDF verified; fresh native phones/crops inspected. Three-page before/after, per-page QA, guidance, exact verbal integrity and hash inventory complete.
+skills_used: [TSST-CREATIVE-SK-002, TSST-CREATIVE-SK-008, TSST-CREATIVE-SK-005, TSST-CREATIVE-SK-010]
+result: TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/BRAND_GUIDELINES_v1.0.md
+sha256: 68524b2f7d0b42e387e8d807557a4292820eaebd5e53864db20835fcd426d629
+note: 24page guide PDF/PNG/HTML; critique+actual render QA+native crops+integrity. Internal inspection recorded; execution/verbal draft, no release. Skills002/008/005/010 applied.

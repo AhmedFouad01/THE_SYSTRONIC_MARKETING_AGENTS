@@ -1,0 +1,26 @@
+id: CRM-U01
+title: Track U 1/19 · stack setup + Tailwind theme
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U01.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #1 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 1
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: WIP 7cbd198; C green (625 unit tests). Report CRM-U01.md. Utility fixture injection failed twice; correct scan fixture and verify AR/EN light/dark before U02.
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015, TSST-DEV-SK-013]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U01.md
+sha256: d1f575ff43fa18886b3e97c7c793b7f023cb69caa722e1f41ea1b8d87e5b3ad2
+note: U01 production fixture PASS; fresh C green, 625 tests; existing 7cbd198 retained.

@@ -1,0 +1,26 @@
+id: CRM-PLAN-UIMIG
+title: "Plan: migrate CRM UI to React Aria + Tailwind (plan only)"
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-003, TSST-DEV-SK-004, TSST-DEV-SK-002]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_CRM-PLAN-UIMIG.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/review/]
+write: [TSST/brands/t-sag/projects/crm/specs/UI_MIGRATION_PLAN.md]
+after: []
+done_when: UI_MIGRATION_PLAN.md sections 1-5, exact version pins, ordered Codex tasks with done_when
+issued_by: claude
+created: "2026-10-07T23:41Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-003, TSST-DEV-SK-004, TSST-DEV-SK-002]
+result: TSST/brands/t-sag/projects/crm/specs/UI_MIGRATION_PLAN.md
+sha256: 32b0d170d7370c417e35b3c954fefd1962d6da1e72715f4cb1ad962564943f55
+note: Plan only; 2413 words; 5 sections; 20 tasks; npm pins verified; unavailable review/P0-P4 exports noted. tsst-dev gpt-6.1-sol.

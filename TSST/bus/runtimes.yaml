@@ -20,9 +20,9 @@ codex:
   plan: chatgpt-plus
   caps: [fs_read, shell, fs_write, git]
   unverified: [image]
-  roles: []
-  status: limited
-  until: "2099-12-31T23:59Z"
+  roles: [lead]    # backup Lead only while claude is limited (owner 2026-10-09); claude resumes Lead on return
+  status: available
+  until:
   verified: 2026-10-04
   models_source: ~/.codex/models_cache.json (2026-10-05)
   tier_FAST: gpt-6-luna · low

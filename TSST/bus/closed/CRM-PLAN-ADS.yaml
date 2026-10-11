@@ -1,0 +1,26 @@
+id: CRM-PLAN-ADS
+title: "CRM v3 requirements: segments, tracking/journey, Meta/Google/TikTok (plan only)"
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+team: marketing
+skills: [TSST-SPARK-SK-002, TSST-SPARK-SK-003, TSST-SPARK-SK-004]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_CRM-PLAN-ADS.md
+read: [TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/specs/ADS_REQUIREMENTS.md]
+after: []
+done_when: ADS_REQUIREMENTS.md has sections 1-6 per brief, cites official doc links, <=2500 words; skills-used listed
+issued_by: claude
+created: "2026-10-07T15:39Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-SPARK-SK-002, TSST-SPARK-SK-003, TSST-SPARK-SK-004]
+result: TSST/brands/t-sag/projects/crm/specs/ADS_REQUIREMENTS.md
+sha256: 4f474e780c46fd8cfdf6d498faf0b356a9cfaf279ab9ef44e064a484e6a5d18a
+note: 2222 words; sections 1-6. SPARK gpt-6.1-sol; Meta docs inaccessible, verification pending; Egypt legal validation gap recorded.

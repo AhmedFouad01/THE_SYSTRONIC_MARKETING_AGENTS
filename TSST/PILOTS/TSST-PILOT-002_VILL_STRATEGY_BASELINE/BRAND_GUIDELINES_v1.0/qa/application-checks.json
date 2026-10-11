@@ -1,0 +1,34 @@
+[
+  {
+    "name": "kitchen-ad",
+    "height": 1350,
+    "images": [
+      true
+    ],
+    "overflow": []
+  },
+  {
+    "name": "carousel-cover",
+    "height": 1350,
+    "images": [
+      true
+    ],
+    "overflow": []
+  },
+  {
+    "name": "story-cover",
+    "height": 1920,
+    "images": [
+      true
+    ],
+    "overflow": []
+  },
+  {
+    "name": "avatar",
+    "height": 1080,
+    "images": [
+      true
+    ],
+    "overflow": []
+  }
+]

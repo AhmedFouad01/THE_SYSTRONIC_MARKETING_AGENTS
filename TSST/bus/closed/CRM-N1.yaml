@@ -1,0 +1,26 @@
+id: CRM-N1
+title: Track A · N1 restructure navigation (NAV_AND_SCREENS §1)
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-N1.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task N1 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T16:38Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-N1.md
+sha256: 784998bfd8223d270826d3aca2dac8a88d0c3e82a22c32f760a9d408925fb140
+note: N1 eaaa351; C green lint293/typecheck/unit475 in41/build177. Session-to-nav contract audited unchanged. Visual deferred; capability projection gap reported.

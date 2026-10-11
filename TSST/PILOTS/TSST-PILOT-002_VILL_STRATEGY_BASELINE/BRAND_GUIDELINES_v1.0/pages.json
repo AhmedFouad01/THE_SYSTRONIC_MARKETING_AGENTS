@@ -1,0 +1,98 @@
+[
+  {
+    "page": 1,
+    "name": "cover"
+  },
+  {
+    "page": 2,
+    "name": "essence"
+  },
+  {
+    "page": 3,
+    "name": "directions"
+  },
+  {
+    "page": 4,
+    "name": "message-house"
+  },
+  {
+    "page": 5,
+    "name": "voice"
+  },
+  {
+    "page": 6,
+    "name": "language"
+  },
+  {
+    "page": 7,
+    "name": "logo"
+  },
+  {
+    "page": 8,
+    "name": "clear-space"
+  },
+  {
+    "page": 9,
+    "name": "misuse"
+  },
+  {
+    "page": 10,
+    "name": "colour"
+  },
+  {
+    "page": 11,
+    "name": "contrast"
+  },
+  {
+    "page": 12,
+    "name": "typography"
+  },
+  {
+    "page": 13,
+    "name": "bidi"
+  },
+  {
+    "page": 14,
+    "name": "grid"
+  },
+  {
+    "page": 15,
+    "name": "graphic-device"
+  },
+  {
+    "page": 16,
+    "name": "photography"
+  },
+  {
+    "page": 17,
+    "name": "labels"
+  },
+  {
+    "page": 18,
+    "name": "kitchen-ad"
+  },
+  {
+    "page": 19,
+    "name": "carousel-cover"
+  },
+  {
+    "page": 20,
+    "name": "story-cover"
+  },
+  {
+    "page": 21,
+    "name": "avatar"
+  },
+  {
+    "page": 22,
+    "name": "web-deck"
+  },
+  {
+    "page": 23,
+    "name": "governance"
+  },
+  {
+    "page": 24,
+    "name": "version"
+  }
+]

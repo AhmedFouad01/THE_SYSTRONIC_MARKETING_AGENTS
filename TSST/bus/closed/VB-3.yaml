@@ -1,0 +1,26 @@
+id: VB-3
+title: Draw TSST system map in MagicPath
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+team: studio
+skills: [TSST/CREATIVE/skills/tsst-creative-sk-020-product-ux-architecture-information-architecture, TSST/CREATIVE/skills/tsst-creative-sk-008-creative-art-direction]
+brand: t-sag
+spec: TSST/handoffs/visual-blueprints/BRIEF_VB3_DRAW_TSST_MAP.md
+read: [TSST/handoffs/visual-blueprints/, TSST/services/gemini/GEM-SV-004_out.md]
+write: [TSST/handoffs/visual-blueprints/VB3_TSST_MAP.png, TSST/handoffs/visual-blueprints/VB3_TSST_MAP.svg, TSST/handoffs/visual-blueprints/VB3_REPORT.md]
+after: [VB-2]
+done_when: MagicPath link + export + report <=10 lines
+issued_by: claude
+created: "2026-10-09T10:30Z"
+rounds: 1
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "Native map saved: project 459260283370766336, 63 shapes; report VB3_REPORT.md. No PNG/SVG or render QA. Resume same project for visual check/export; do not redraw."
+skills_used: [TSST-CREATIVE-SK-020, TSST-CREATIVE-SK-008]
+result: TSST/handoffs/visual-blueprints/VB3_REPORT.md
+sha256: 1c77a05917165c9eb9521eb5fc76462635c6e766aeafb3632d09805fd76c97c1
+note: "Lead visual QA in browser: labels readable, flow/legend/lifecycle correct; PNG optional skipped"

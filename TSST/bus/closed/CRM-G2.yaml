@@ -1,0 +1,26 @@
+id: CRM-G2
+title: Fix batch 2 · 2/3 · R09 email/phone/company/title system props + email/phone/url types
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-006, TSST-DEV-SK-005, TSST-DEV-SK-011]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_REVIEW_FIX2.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-G2.md]
+after: []
+done_when: BRIEF_REVIEW_FIX2 task 2 done; review row satisfied; D checks green on lane DB; report ≤12 lines
+issued_by: claude
+created: "2026-10-08T23:06Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: 028 applied on isolated lane; protected system fields/types and grid/panel/dialog actions compile. Adding masking/write/rollback/collision regressions before D.
+skills_used: [TSST-DEV-SK-006, TSST-DEV-SK-005, TSST-DEV-SK-011]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-G2.md
+sha256: 9591a2341c7c55125923761b52d660c49509b62cd1ce78476d3d1f73d8264edd
+note: "552d120; migration028; D green: unit693 DB219 on crm_lane_fix2. Dispatched tsst-dev gpt-6.1-sol/high."

@@ -1,0 +1,26 @@
+id: CRM-F4
+title: Fix batch 1 · 4/4 · R12 FileDropZone + no native controls
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_REVIEW_FIX1.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-F4.md]
+after: []
+done_when: BRIEF_REVIEW_FIX1 task 4 done; review rows satisfied; C green; report ≤12 lines
+issued_by: claude
+created: "2026-10-08T21:25Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-F4.md
+sha256: 519ce83ecd6b0bcd20bb3f639f616f94afe0ae2945429dd8c870add619a56ed0
+note:

@@ -1,0 +1,26 @@
+id: CRM-PLAN-BUILD
+title: "CRM v3 build plan: Codex-sized tasks for roadmap items 2-5 (plan only)"
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-003, TSST-DEV-SK-004, TSST-DEV-SK-005]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_CRM-PLAN-BUILD.md
+read: [TSST/brands/t-sag/projects/crm/codex/, TSST/brands/t-sag/projects/crm/specs/]
+write: [TSST/brands/t-sag/projects/crm/specs/BUILD_PLAN_v3.md]
+after: [CRM-PLAN-ADS, CRM-PLAN-UX]
+done_when: "BUILD_PLAN_v3.md: architecture decisions, migrations from 020, ordered task list with done_when each, shared rules, risks; skills-used listed"
+issued_by: claude
+created: "2026-10-07T15:39Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-003, TSST-DEV-SK-004, TSST-DEV-SK-005]
+result: TSST/brands/t-sag/projects/crm/specs/BUILD_PLAN_v3.md
+sha256: 4a57739266d6312b6c504b2de639c51536c2e28475c36b3a800e4b2570bbb491
+note: "Plan only: 2641 words, five sections, 40 tasks. No code/installs/tests/web. Dispatched gpt-6.1-sol high; worker actual model not exposed."

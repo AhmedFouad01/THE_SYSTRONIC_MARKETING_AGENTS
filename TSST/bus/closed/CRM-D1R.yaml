@@ -1,0 +1,26 @@
+id: CRM-D1R
+title: Track B 3/7 · D1 C1 pipeline widget
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-D1R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task D1 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-D1R.md
+sha256: 97a74c8ff0394bb0aa18d92ec751e891369d6c6ab8fc0615fb5c6c13ee882d1d
+note: "Commit 2cd9a0c; C green: lint299,type2,unit495/495,build185. C1 stage ordering/terminal tones/exact currency payload; no primary currency field exposed."

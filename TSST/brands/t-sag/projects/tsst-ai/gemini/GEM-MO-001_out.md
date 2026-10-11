@@ -1,0 +1,68 @@
+# GEM-MO-001_out · Gemini app Deep Research output (verbatim)
+Source: https://share.gemini.google/KrwJjTTwBFu5 (shared by Ahmed 2026-10-10; captured by Lead the same day).
+Status: INPUT only (request-role.md rule 2). Not verified. Lead review: `GEM-MO-001_review.md`.
+Note: the shared view shows no sources list. The only URLs are the 6 inside the table below.
+
+---
+
+## Architectural Blueprint for Agentic AI Video Production in the MENA Market
+
+Please note that this report provides external architectural research and workflow design based on the provided technology stack; as an external system without local access, it cannot execute local scripts, run local file modifications, or directly interact with the mentioned local HTML/CSS-to-MP4 rendering tools. The analysis focuses on designing an optimal, automated video production pipeline for the Egyptian market.
+
+The transition from manual video editing to agentic AI video production requires integrating multimodal foundation models through programmatic orchestrators. For short-form commercial content (9:16, 15–60 seconds) targeting the Egyptian market, an effective system must overcome the inherent limitations of generative video models, primarily their inability to handle right-to-left (RTL) Arabic typography and nuanced regional dialects. The prevailing architecture relies on separating the visual generation layer from the linguistic layer, using headless orchestrators to route generative tasks to specialized APIs.
+
+### Current Landscape of Agentic AI Video Production
+
+The industry currently divides into foundational models accessed via enterprise APIs, dedicated generative platforms, and pipeline orchestrators. Independent evidence from the Artificial Analysis video model leaderboard (February 2026) ranks Kling 3.0 Omni 1080p and Kling 3.0 as the top models for prompt adherence and visual quality, providing an objective baseline beyond marketing claims.
+
+To evaluate the options for an automated pipeline, the following comparative matrix details the leading systems and their capabilities. All prices and capabilities are marked "Official" (sourced directly from the provider's documentation) or "Third-party" (sourced from aggregator APIs or external reviews).
+
+| System / Model | Planning & Automation Level | Quality & Independent Evidence | Consistency Strategy | Cost: 30s 9:16 Video (Official vs. Third-Party) | Commercial Rights | Main Limits & Risks |
+|---|---|---|---|---|---|---|
+| (A) Claude + Local HTML | Brain: Claude Code (MCP). Automation: High (Local scripts). | Quality: 2.5D Motion Graphics only. | Consistency: Absolute (CSS rules). | Official: $0 API cost for video (included in Claude Pro). | Official: Yes. | Limited entirely to code-driven motion graphics; no generative pixel capability. |
+| (B) OpenAI Sora (sora-2-pro) | Brain: OpenAI API. Automation: High (REST API). | Quality: Ultra-realistic. | Consistency: High; natively supports up to 5-minute continuous generation. | Official: $0.30/sec (720p) to $0.50/sec (1080p). https://openai.com/pricing (Checked Oct 10, 2026) | Official: Yes (API output). | Extremely high cost; strict safety filters; API access limits. |
+| (C) Google Veo 3.1 | Brain: Vertex AI API. Automation: High. | Quality: Photorealistic, accurate physics. | Consistency: Strong physics and lighting retention. | Official: $0.75/sec via Vertex AI. Third-party: ~$0.15/video via gateways. https://cloud.google.com/vertex-ai/pricing (Checked Oct 10, 2026) | Official: Yes, with IP indemnity. | Requires Google Cloud architecture; high official cost. |
+| (D) Runway Gen-3 Alpha Turbo | Brain: External (n8n). Automation: High (API). | Quality: Highly realistic. | Consistency: Image-to-video reference frames. | Official: $0.05/sec API rate. https://docs.dev.runwayml.com/guides/pricing (Checked Oct 10, 2026) | Official: Yes (Standard plan & API). | High credit burn during iterative prompting. |
+| (D) Kling 3.0 / 4.0 | Brain: External (n8n). Automation: Medium. | Quality: Industry-leading (Elo 1015). | Consistency: Omni Reference & Element UI feature. | Third-party: ~$0.066/sec via Pollo API. Official API limited. https://pollo.ai/api-platform (Checked Oct 10, 2026) | Official: Yes (Paid plans). | Official API pricing is opaque; relies on third-party gateways for scale. |
+| (D) Hailuo / MiniMax 2.3 | Brain: External (n8n). Automation: High. | Quality: Strong motion sequences. | Consistency: Image-to-video workflows. | Official: $0.19 to $0.56 per clip. https://skywork.ai/skypage/en/minimax-pricing (Checked Oct 10, 2026) | Official: Yes. | Regional availability and API stability fluctuations. |
+| (D) LTX Studio | Brain: Native platform. Automation: Low (UI only). | Quality: Storyboard/Pre-visualization. | Consistency: Built-in global character locking. | Official: Included in $35/mo plan. https://www.g2.com/products/ltx/pricing (Checked Oct 10, 2026) | Official: Yes (Standard tier). | UI only; output quality is suited for animatics, not final broadcast. |
+
+For all generative models listed above, handling the Arabic language natively results in failure. AI video platforms hallucinate RTL typography, breaking Arabic characters into disconnected, left-to-right strings. Therefore, the Arabic text rendering must be managed entirely by the agency's local HTML/CSS tool, while voice generation requires a specialized engine. ElevenLabs provides official, documented native Egyptian voices (such as "Haytham" and "Adam") and processes audio emotion tags (e.g., [excited]) perfectly in the v3 model. Visual dubbing requires a secondary layer, utilizing the official Sync Labs API to map the Egyptian audio phonemes to the generative video characters.
+
+### Recommended Agentic Video Architectures
+
+To integrate brief ingestion, shot generation, audio synthesis, and RTL captioning, three distinct architectural setups are recommended. Each utilizes specific routing to balance cost, quality, and human oversight.
+
+#### 1. Budget Architecture: The Motion Graphics MCP Agent
+
+This pipeline leverages the existing paid stack entirely, avoiding expensive per-second video generation APIs in favor of programmatic 2.5D animation. It is ideal for rapid, high-volume social media ad testing.
+
+The flow operates primarily through the Claude Code desktop environment utilizing Model Context Protocol (MCP) connectors. First, Claude ingests the client brief and automatically generates a localized Egyptian Arabic script. Second, Claude uses the Magnific MCP to generate and upscale layered, static base assets (e.g., product shots or abstract backgrounds). Third, Claude calls the ElevenLabs API (Official: ~$0.30/minute equivalent) to synthesize the Egyptian voiceover. Claude then programmatically generates an HTML/CSS document, synchronizing CSS keyframe animations (pans, zooms, fades) to the duration of the audio, while embedding perfect RTL HarfBuzz-shaped Arabic captions using standard web fonts. The final step relies on the local HTML-to-MP4 recording tool to capture the DOM animation as a 9:16 export. Human approval is required at the script stage and the final export review.
+
+Financially, this setup incurs $0 in net-new monthly subscription costs. The cost to produce a 30-second ad is strictly the ElevenLabs API usage, which is approximately $0.15 (Official). To generate 5 variants of this ad (testing different hooks or text overlays while utilizing the same base assets), the cost is $0.75. The setup effort is low to medium, primarily requiring refined system prompts to ensure Claude calculates CSS animation timings correctly.
+
+#### 2. Balanced Architecture: The API-Driven Orchestrator
+
+This setup introduces true generative video capabilities, providing the best return on investment for standard commercial work. It utilizes n8n or Make to orchestrate APIs across OpenAI, Runway, ElevenLabs, and Sync Labs.
+
+The workflow begins with ChatGPT Plus (using Codex/GPT-4o) acting as the planning brain. It automatically generates the script, translates it to an English prompt shot list, and uses DALL-E 3 (subsequently enhanced by Magnific) to create precise reference frames. A human must explicitly approve the storyboard and reference frames at this checkpoint to prevent wasted API spend. Next, n8n routes the approved reference images to the official Runway Gen-3 Alpha Turbo API, utilizing image-to-video prompting to maintain visual consistency. Simultaneously, the ElevenLabs API generates the Egyptian Arabic voiceover. If characters are speaking on-screen, n8n sends the Runway output and ElevenLabs audio to the Sync Labs API for visual dubbing. Finally, ffmpeg concatenates the video clips, and the local HTML/CSS tool generates a transparent .webm text overlay containing the RTL Arabic captions, which is composited via Adobe After Effects or ffmpeg. A human editor approves the final cut.
+
+The monthly fixed costs include the existing subscriptions plus approximately $15 for the Runway Standard Web plan (serving as a UI fallback). The cost per 30-second ad requires calculating iteration overhead. Using the Runway Gen-3 Turbo official API rate of $0.05/second, generating a usable 30-second sequence typically requires a 3x to 4x iteration ratio (120 seconds generated), resulting in $6.00 for the video. Adding $0.15 for ElevenLabs and an estimated $1.50 for Sync Labs processing yields a total cost of $7.65 per ad. Creating 5 variants (swapping only the voiceover and text overlays while retaining the $6.00 video renders) costs $13.50. The setup effort is high, requiring API routing logic and asynchronous polling mechanisms within n8n.
+
+#### 3. Premium Architecture: The Cinematic Broadcast Agent
+
+Designed for high-ticket clients and brand anthems, this setup prioritizes photorealism, extended physical coherence, and native ambient audio using OpenAI's Sora 2 Pro or Google Veo 3.
+
+The pipeline begins with a planning agent mapping out complex, continuous cinematic sequences. Because Sora 2 Pro possesses an extensive context window and maintains object permanence over longer durations, it generates complete 10-to-15-second shots, drastically reducing the need for aggressive cutting. Following human approval of the raw AI footage, the system extracts the native sound effects (foley, ambient noise) generated directly by Sora or Veo. ElevenLabs generates the Egyptian voiceover, and Sync Labs provides the lip-syncing for any on-screen dialogue. Due to the premium nature of the assets, the final edit, audio mixing, and RTL caption integration are executed manually by a human editor in Adobe After Effects to guarantee broadcast perfection.
+
+This setup relies on enterprise API funding, utilizing official OpenAI Tier 3 API access or Google Cloud Vertex AI billing. The cost per 30-second ad using the official Sora-2-pro 720p rate ($0.30/second) with a conservative 3x iteration ratio (90 seconds generated) is $27.00 for video, plus $0.15 for audio and $1.50 for Sync Labs, totaling $28.65 per ad. Generating 5 variants costs $35.25. The setup effort is very high, requiring robust cloud infrastructure management and programmatic handling of large media payloads.
+
+### Best-Practice Workflow and Failure Avoidance
+
+Constructing a reliable agentic video pipeline requires defensive engineering to prevent API cost overruns and cultural missteps. High-performing teams structure their workflows around strict data models and physical lock-ins.
+
+To guarantee visual coherence, teams must utilize an image-to-video reference frame strategy. Foundation models hallucinate wildly when relying solely on text prompts across multiple shots. The agent must first generate a master static image of the product or character, receive human approval, and then pass that identical image as the starting frame input_image for every subsequent video generation API call. This locks the physical identity of the subject before motion is applied. Furthermore, the planning model must output the shot list as a strictly formatted JSON object—detailing subject, camera movement, lighting, and negative prompts—ensuring the orchestration layer (n8n) can parse the variables without error.
+
+Testing ad creatives requires a disciplined versioning strategy. The most common mistake agencies make is re-rendering the generative video for every ad variant. Instead, the workflow must lock the visual video generation layer. To produce variants, the agent should only manipulate the inexpensive API calls: altering the script for the ElevenLabs voiceover and updating the HTML payload for the text overlays. This methodology allows for multivariate testing (e.g., testing five different Arabic hooks) for pennies, rather than incurring recurring per-second video generation costs.
+
+A critical failure pattern in the MENA market is the collapse of RTL typography. Standard video assembly APIs, Cloud editing solutions, and raw ffmpeg text-draw commands lack the underlying HarfBuzz rendering engines necessary to shape connected Arabic script. Attempting to burn Arabic captions natively through these tools results in reversed, disconnected letters. The workflow must rigidly quarantine all text rendering to the local HTML/CSS tool, which leverages standard browser DOM capabilities to perfectly render dir="rtl" text, exporting a clean alpha-channel overlay for the final composite. Additionally, teams must prevent cultural hallucinations in TTS by explicitly instructing the planning LLM to write scripts phonetically in the Egyptian dialect (Masry) rather than Modern Standard Arabic, ensuring the ElevenLabs regional models deliver a culturally authentic performance.

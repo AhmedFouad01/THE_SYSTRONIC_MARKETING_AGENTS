@@ -1,0 +1,26 @@
+id: CRM-F3
+title: Fix batch 1 · 3/4 · R06 workspace name + upcoming nav dot
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_REVIEW_FIX1.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-F3.md]
+after: []
+done_when: BRIEF_REVIEW_FIX1 task 3 done; review rows satisfied; C green; report ≤12 lines
+issued_by: claude
+created: "2026-10-08T21:25Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: No F3 implementation begun. F2 corrected d408c7f/C green; Lead must reopen F2, then Codex refresh report/done before F3.
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-F3.md
+sha256: 9d67bcb14d6ff3f5de73b9ea764ba668b6d83b0abef83f940c5a956ed052f461
+note:

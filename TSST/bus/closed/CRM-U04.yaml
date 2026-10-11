@@ -1,0 +1,26 @@
+id: CRM-U04
+title: Track U 4/19 · Dialog/Menu/Popover/Toast
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U04.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #4 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U04.md
+sha256: 9d1fa3e099cebd6522f99fc84cc1d7e9a5ba3a9b3f3dad8eddcc45628da1e9c9
+note:

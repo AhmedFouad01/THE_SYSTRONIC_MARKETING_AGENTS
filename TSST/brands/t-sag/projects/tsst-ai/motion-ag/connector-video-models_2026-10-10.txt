@@ -1,0 +1,2283 @@
+models[46]:
+  - slug: bfl-flux-3
+    name: FLUX 3
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bfl
+    mode: standard
+    aspectRatios[8]: auto,"21:9","2:1","16:9","4:3","1:1","3:4","9:16"
+    durations[16]: 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+    resolutions[3]: 720p Draft,720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[3]: duration,resolution,prompt
+    soundEffects:
+      allowed: true
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[3]: jpeg,png,webp
+    keyframes:
+      start:
+        assetType: image
+        affectsCost: true
+      end:
+        assetType: image
+        affectsCost: true
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+    private: true
+  - slug: gemini-omni-1_1
+    name: Gemini Omni 1.1
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: google
+    mode: gemini-omni-1_1
+    aspectRatios[2]: "16:9","9:16"
+    durations[8]: 3,4,5,6,7,8,9,10
+    resolutions[4]: 720p,1080p,4K,360p
+    prompt:
+      maxLength: 10000
+    requiredInputs[3]: duration,aspectRatio,resolution
+    references[2]:
+      - type: image
+        allowed: true
+        limit: 8
+      - type: video
+        allowed: true
+        limit: 3
+        constraints:
+          file:
+            maxSize: 100000000
+          duration:
+            min: 1000
+            max: 10000
+          resolution:
+            min: 240
+            max: 4096
+          fps:
+            min: 1
+            max: 60
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[2]: image,video
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: google-veo3_1
+    name: Google Veo 3.1
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 300
+    api: google
+    mode: veo3_1
+    aspectRatios[2]: "16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[3]: 4,6,8
+    resolutions[3]: 4K,1080p,720p
+    requiredInputs[3]: duration,aspectRatio,resolution
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    references[1]{type,allowed,limit}:
+      image,true,3
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[1]: image
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: google-veo3_1-fast
+    name: Google Veo 3.1 Fast
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 180
+    api: google
+    mode: veo3_1_fast
+    aspectRatios[2]: "16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[3]: 4,6,8
+    resolutions[3]: 4K,1080p,720p
+    requiredInputs[3]: duration,aspectRatio,resolution
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: google-veo3_1-lite
+    name: Google Veo 3.1 Lite
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 180
+    api: google
+    mode: veo3_1_lite
+    aspectRatios[2]: "16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[3]: 4,6,8
+    resolutions[2]: 1080p,720p
+    requiredInputs[3]: duration,aspectRatio,resolution
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: grok-default
+    name: Grok
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: grok
+    mode: default
+    aspectRatios[5]: "16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[15]: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 480p,720p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: grok-imagine-video-1-5
+    name: Grok Imagine 1.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: grok
+    mode: imagine-1-5
+    aspectRatios[7]: "16:9","4:3","3:2","1:1","2:3","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[15]: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[3]: 480p,720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    references[1]:
+      - type: image
+        allowed: true
+        limit: 7
+        prohibitedWith[1]: keyframes.start
+        prohibitedIf:
+          resolution[1]: 1080p
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[1]: image
+    supportsReferences: true
+    referenceTypes[1]: image
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: happy-horse-1
+    name: Happy Horse
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: happy-horse-1
+    aspectRatios[5]: "1:1","16:9","9:16","4:3","3:4"
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    references[1]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[1]: keyframes.start
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[1]: image
+    supportsReferences: true
+    referenceTypes[1]: image
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: true
+  - slug: happy-horse-1-1
+    name: Happy Horse 1.1
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: happy-horse-1-1
+    aspectRatios[9]: "1:1","16:9","9:16","4:3","3:4","21:9","9:21","5:4","4:5"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    references[1]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[1]: keyframes.start
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[1]: image
+    supportsReferences: true
+    referenceTypes[1]: image
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: true
+  - slug: happy-horse-1-edit
+    name: Happy Horse Edit
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: happy-horse-1-edit
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[3]: resolution,keyframes,prompt
+    references[2]:
+      - type: image
+        allowed: true
+        limit: 5
+        constraints:
+          file:
+            maxSize: 10000000
+          resolution:
+            min: 300
+      - type: video
+        allowed: true
+        required: true
+        limit: 1
+    supportsReferences: true
+    referenceTypes[2]: image,video
+    supportsStartFrame: false
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: kling-25
+    name: Kling 2.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: "25"
+    aspectRatios[3]: "1:1","16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 5,10
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    agentRecommendation:
+      tier: recommended
+      rank: 2
+      useFor[7]: best_value_video,quality_price,lower_cost,fast_generation,fast_movements,realistic_videos,reference_guided
+      summary: "Best quality/price choice for silent 5-10s video. Use for fast 720p/1080p iterations, realistic motion, action, and start/end-frame control."
+    keyframes:
+      start:
+        assetType: image
+        requiredIf:
+          resolution[1]: 720p
+      end:
+        assetType: image
+        prohibitedIf:
+          resolution[1]: 720p
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: kling-26
+    name: Kling 2.6
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: "26"
+    aspectRatios[3]: "1:1","16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 5,10
+    resolutions[1]: 1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    voiceControl:
+      allowed: true
+      maxVoices: 2
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: kling-motion-control
+    name: Kling 2.6 Motion Control
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: motion-control
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[8]: 3,4,5,6,7,8,9,10
+    resolutions[2]: 720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[3]: duration,resolution,prompt
+    references[1]{type,allowed,limit}:
+      video,true,1
+    keyframes:
+      start:
+        assetType: video
+        required: true
+    supportsReferences: true
+    referenceTypes[1]: video
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: kling-30
+    name: Kling 3.0
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: "30"
+    featured: true
+    featuredOrder: -6
+    aspectRatios[3]: "16:9","9:16","1:1"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[3]: 720p,1080p,4K
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 15
+    references[3]:
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 3
+        constraints:
+          requiredWith[1]: startFrame
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 3
+        constraints:
+          requiredWith[1]: startFrame
+      - type: image
+        allowed: true
+        limit: 3
+        constraints:
+          requiredWith[1]: startFrame
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[3]: character,product,image
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: kling-motion-control-30
+    name: Kling 3.0 Motion Control
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: motion-control-30
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[3]: duration,resolution,prompt
+    multishot:
+      allowed: true
+      limit: 6
+    references[1]{type,allowed,limit}:
+      video,true,1
+    keyframes:
+      start:
+        assetType: video
+        required: true
+    supportsReferences: true
+    referenceTypes[1]: video
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: kling-omni3
+    name: Kling 3.0 Omni
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: kling
+    mode: omni3
+    aspectRatios[3]: "16:9","9:16","1:1"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[3]: 720p,1080p,4K
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    multishot:
+      allowed: true
+      limit: 6
+    references[4]:
+      - type: image
+        allowed: true
+        constraints:
+          file:
+            maxSize: 10000000
+          height:
+            min: 300
+          width:
+            min: 300
+          aspectRatio:
+            min: 0.4
+            max: 2.5
+          count:
+            with:
+              video: 4
+            includes[4]: startFrame,endFrame,character,product
+            savedElementsCountTwice: true
+          prohibitedWith[1]: endFrame
+      - type: video
+        allowed: true
+        prohibitedIf:
+          resolution[1]: 4K
+        constraints:
+          file:
+            maxSize: 200000000
+          duration:
+            min: 3000
+            max: 10000
+            maxDelta: 900
+          height:
+            min: 720
+            max: 2160
+          fps:
+            min: 24
+            max: 60
+          count:
+            max: 1
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 3
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 3
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+          prohibitedIf:
+            uploadCount:
+              ">": 1
+    supportsReferences: true
+    referenceTypes[4]: image,video,character,product
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: kling-30-turbo
+    name: Kling 3.0 Turbo
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: kling
+    mode: 30-turbo
+    aspectRatios[3]: "16:9","9:16","1:1"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[13]: 3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 15
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: kling-omni1
+    name: Kling O1
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: kling
+    mode: omni1
+    aspectRatios[3]: "16:9","9:16","1:1"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[8]: 3,4,5,6,7,8,9,10
+    resolutions[2]: 720p,1080p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    references[2]:
+      - type: image
+        allowed: true
+        constraints:
+          file:
+            maxSize: 10000000
+          height:
+            min: 300
+          width:
+            min: 300
+          aspectRatio:
+            min: 0.4
+            max: 2.5
+          count:
+            with:
+              video: 4
+            includes[2]: startFrame,endFrame
+            savedElementsCountTwice: true
+          prohibitedWith[1]: endFrame
+      - type: video
+        allowed: true
+        constraints:
+          file:
+            maxSize: 200000000
+          duration:
+            min: 3000
+            max: 10000
+            maxDelta: 900
+          height:
+            min: 720
+            max: 1080
+          fps:
+            min: 24
+            max: 60
+          count:
+            max: 1
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+          prohibitedIf:
+            uploadCount:
+              ">": 1
+    supportsReferences: true
+    referenceTypes[2]: image,video
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: minimax-video-3_0
+    name: MiniMax H3
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-3.0
+    featured: true
+    featuredOrder: -7
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[11]: 5,6,7,8,9,10,11,12,13,14,15
+    resolutions[3]: 2K,768p,480p
+    prompt:
+      required: true
+      maxLength: 7000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 3
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 15
+    cameraMotion:
+      values[21]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[4]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: video
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+      - type: audio
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 5760
+      maxHeight: 5760
+      minWidth: 256
+      minHeight: 256
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 50000000
+      maxCount: 3
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 15000
+      minResolution: 256
+      maxResolution: 5760
+      minFps: 23
+      maxFps: 60
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[3]: image,video,character
+      end:
+        assetType: image
+        prohibitedWith[3]: image,video,character
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[4]: image,character,video,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+    private: true
+  - slug: minimax-video-3_0-max
+    name: MiniMax H3 Max
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-3.0-Max
+    featured: true
+    featuredOrder: -9
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[11]: 5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 768p,480p
+    prompt:
+      required: true
+      maxLength: 7000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 3
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+    agentRecommendation:
+      tier: recommended
+      rank: 3
+      useFor[3]: fast_iterations,reference_guided,realistic_videos
+      summary: "Fast 5-15s drafts at 480p/768p with image, video and audio references. Useful for exploring motion and staging; prefer Seedance for final visual quality."
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 15
+    references[4]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+      - type: video
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+      - type: audio
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 5760
+      maxHeight: 5760
+      minWidth: 256
+      minHeight: 256
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 50000000
+      maxCount: 3
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 15000
+      minResolution: 256
+      maxResolution: 5760
+      minFps: 23
+      maxFps: 60
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[3]: image,video,character
+      end:
+        assetType: image
+        prohibitedWith[3]: image,video,character
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[4]: image,character,video,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: minimax-video-3_0-max-turbo
+    name: MiniMax H3 Max Turbo
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-3.0-Max-Turbo
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[11]: 5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 768p,480p
+    prompt:
+      required: true
+      maxLength: 7000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    agentRecommendation:
+      tier: recommended
+      rank: 4
+      useFor[4]: fast_iterations,fast_generation,lower_cost,realistic_videos
+      summary: "Lower-cost fast 5-15s drafts at 480p/768p from text or start/end frames. No image, video or audio reference pool; use H3 Max when those references are needed."
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 15
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 5760
+      maxHeight: 5760
+      minWidth: 256
+      minHeight: 256
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: minimax-video-02
+    name: MiniMax Hailuo 02
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-02
+    aspectRatios[1]: "16:9"
+    durations[1]: 6
+    resolutions[3]: 1080p,768p,512p
+    prompt:
+      required: true
+      maxLength: 1999
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    cameraMotion:
+      values[21]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    keyframes:
+      start:
+        assetType: image
+        requiredIf:
+          resolution[1]: 512p
+      end:
+        assetType: image
+        prohibitedIf:
+          resolution[1]: 512p
+        constraints:
+          requiresStartFrame: false
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: false
+  - slug: minimax-video-2_3
+    name: MiniMax Hailuo 2.3
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-2.3
+    aspectRatios[1]: "16:9"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 6,10
+    resolutions[2]: 1080p,768p
+    prompt:
+      required: true
+      maxLength: 2999
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    cameraMotion:
+      values[21]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: minimax-video-2_3-fast
+    name: MiniMax Hailuo 2.3 Fast
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: minimax
+    mode: MiniMax-Hailuo-2.3-Fast
+    aspectRatios[1]: "16:9"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 6,10
+    resolutions[2]: 1080p,768p
+    prompt:
+      required: true
+      maxLength: 2999
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    cameraMotion:
+      values[21]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: minimax-video-01-live2d
+    name: MiniMax Live Illustrations
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 600
+    api: minimax
+    mode: video-01-live2d
+    aspectRatios[1]: "16:9"
+    durations[1]: 5
+    resolutions[1]: 720p
+    prompt:
+      required: true
+      maxLength: 1999
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: bytedance-omnihuman-lipsync
+    name: Omni Human 1.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 180
+    api: bytedance
+    mode: omni_human
+    prompt:
+      maxLength: 500
+    requiredInputs[1]: audioConstraints
+    references[1]{type,allowed,required,limit}:
+      audio,true,true,1
+    audioConstraints:
+      required: true
+      maxRecommendedSeconds: 15
+      maxAllowedSeconds: 30
+    imageConstraints:
+      maxFileSize: 5000
+      maxWidth: 4096
+      maxHeight: 4096
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: true
+    referenceTypes[1]: audio
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: pixverse-5-5
+    name: PixVerse 5.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 60
+    api: fal-pixverse
+    mode: v5-5
+    aspectRatios[5]: "16:9","4:3","1:1","3:4","9:16"
+    durations[3]: 5,8,10
+    resolutions[4]: 1080p,720p,540p,360p
+    prompt:
+      required: true
+      maxLength: 2048
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 3
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: pixverse-6
+    name: PixVerse 6
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 60
+    api: fal-pixverse
+    mode: v6
+    aspectRatios[5]: "16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[15]: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[4]: 1080p,720p,540p,360p
+    prompt:
+      required: true
+      maxLength: 2048
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 3
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: runway-act-two
+    name: Runway Act Two
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: runway
+    mode: act_two
+    durations[2]: 3,30
+    resolutions[1]: 720p
+    prompt:
+      maxLength: 1000
+    requiredInputs[3]: duration,aspectRatio,resolution
+    references[2]:
+      - type: image
+        allowed: true
+        required: true
+        limit: 2
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 1
+    supportsReferences: true
+    referenceTypes[2]: image,character
+    supportsStartFrame: false
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: runway-std
+    name: Runway Gen 4
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: runway
+    mode: std
+    aspectRatios[6]: "16:9","9:16","1:1","4:3","3:4","21:9"
+    durations[2]: 5,10
+    resolutions[1]: 720p
+    prompt:
+      required: true
+      maxLength: 1000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: runway-gen45
+    name: Runway Gen 4.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: runway
+    mode: gen45
+    aspectRatios[6]: "16:9","9:16","1:1","4:3","3:4","21:9"
+    durations[3]: 5,8,10
+    resolutions[1]: 720p
+    prompt:
+      required: true
+      maxLength: 1000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: bytedance-seedance-pro-1.5
+    name: Seedance 1.5 Pro
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bytedance
+    mode: pro-1.5
+    aspectRatios[7]: "21:9","16:9","4:3","1:1","3:4","9:16","9:21"
+    durations[9]: 4,5,6,7,8,9,10,11,12
+    resolutions[4]: 1080p,720p,480p,Draft
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+      affectsCost: true
+    multishot:
+      allowed: true
+      limit: 3
+      durationRange:
+        min: 1
+        max: 12
+      showShotModeSelector: true
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: bytedance-seedance-pro-2.0
+    name: Seedance 2.0
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bytedance
+    mode: pro-2.0
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[12]: 4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[4]: 4K,1080p,720p,480p
+    prompt:
+      required: true
+      maxLength: 40000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 3
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    agentRecommendation:
+      tier: recommended
+      rank: 2
+      useFor[3]: high_resolution_4k,reference_guided,realistic_videos
+      summary: "Use for 4K output, native audio and multimodal reference control. Supports 4-15s clips with image, video and audio references; prefer H3 Max for rapid drafts."
+    soundEffects:
+      allowed: true
+    noMusic:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 12
+      showShotModeSelector: true
+      startFrame: true
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: video
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: color
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: effect
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: audio
+        allowed: true
+        limit: 3
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 200000000
+      maxCount: 3
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 15000
+      minResolution: 300
+      maxResolution: 6000
+      minFps: 24
+      maxFps: 60
+      totalPixels:
+        min: 409600
+        max: 8295044
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+      end:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[8]: image,video,character,product,style,color,effect,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: bytedance-seedance-fast-2.0
+    name: Seedance 2.0 Fast
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bytedance
+    mode: fast-2.0
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[12]: 4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 720p,480p
+    prompt:
+      required: true
+      maxLength: 40000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 3
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    agentRecommendation:
+      tier: recommended
+      rank: 3
+      useFor[5]: fast_generation,draft_video,fast_movements,native_audio,video_audio
+      summary: Use for fast drafts when Seedance controls or native audio matter and maximum quality is not required.
+    soundEffects:
+      allowed: true
+    noMusic:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 12
+      showShotModeSelector: true
+      startFrame: true
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: video
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: color
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: effect
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: audio
+        allowed: true
+        limit: 3
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 200000000
+      maxCount: 3
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 15000
+      minResolution: 300
+      maxResolution: 6000
+      minFps: 24
+      maxFps: 60
+      totalPixels:
+        min: 409600
+        max: 8295044
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+      end:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[8]: image,video,character,product,style,color,effect,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: bytedance-seedance-mini-2.0
+    name: Seedance 2.0 Mini
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bytedance
+    mode: mini-2.0
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[12]: 4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 720p,480p
+    prompt:
+      required: true
+      maxLength: 40000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 3
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    agentRecommendation:
+      tier: recommended
+      rank: 2
+      useFor[7]: best_value_video,quality_price,lower_cost,fast_generation,fast_movements,realistic_videos,reference_guided
+      summary: "Best quality/price choice for 4-15s video with native audio. Use for fast 480p/720p iterations, realistic motion, and rich reference control."
+    soundEffects:
+      allowed: true
+    noMusic:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 12
+      showShotModeSelector: true
+      startFrame: true
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: video
+        allowed: true
+        limit: 3
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 9
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: color
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: effect
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: audio
+        allowed: true
+        limit: 3
+    imageConstraints:
+      maxFileSize: 30000
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 200000000
+      maxCount: 3
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 15000
+      minResolution: 300
+      maxResolution: 6000
+      minFps: 24
+      maxFps: 60
+      totalPixels:
+        min: 409600
+        max: 8295044
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+      end:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[8]: image,video,character,product,style,color,effect,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+    private: true
+  - slug: bytedance-seedance-pro-2.5
+    name: Seedance 2.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: bytedance
+    mode: pro-2.5
+    featured: true
+    featuredOrder: -8
+    aspectRatios[6]: "21:9","16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[27]: 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+    resolutions[4]: 1080p,720p,480p,Draft
+    prompt:
+      required: true
+      maxLength: 10000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 10
+      notField: audioUrl
+      requiresVisualReference: false
+      constraints:
+        minAllowedSeconds: 2
+        maxRecommendedSeconds: 30
+        maxAllowedSeconds: 30
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    agentRecommendation:
+      tier: sota
+      rank: 1
+      useFor[8]: best_overall_video,realistic_videos,fast_movements,native_audio,video_audio,lipsync,reference_guided,scene_direction
+      summary: "Best overall video model. Prefer for high-quality realistic video, references, native audio or lip sync, complex motion, and directed camera work."
+    soundEffects:
+      allowed: true
+    noMusic:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 6
+      durationRange:
+        min: 1
+        max: 12
+      showShotModeSelector: true
+      startFrame: true
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: image
+        allowed: true
+        limit: 30
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: video
+        allowed: true
+        limit: 10
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 30
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: color
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: effect
+        allowed: true
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: audio
+        allowed: true
+        limit: 10
+    imageConstraints:
+      maxFileSize: 30720
+      maxWidth: 6000
+      maxHeight: 6000
+      minWidth: 300
+      minHeight: 300
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[5]: jpeg,png,webp,heic,heif
+    videoConstraints:
+      maxSize: 200000000
+      maxCount: 10
+      minDuration: 2000
+      codecs[2]: h264,hevc
+      maxDuration: 30000
+      minResolution: 300
+      maxResolution: 6000
+      minFps: 24
+      maxFps: 60
+      totalPixels:
+        min: 409600
+        max: 8295044
+      aspectRatio:
+        min: 0.4
+        max: 2.5
+      formats[2]: mp4,mov
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+      end:
+        assetType: image
+        prohibitedWith[7]: image,video,character,product,style,color,effect
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[8]: image,video,character,product,style,color,effect,audio
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: veed-fabric-1.0
+    name: Veed Fabric 1.0
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 180
+    api: veed
+    mode: fabric_1_0
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    requiredInputs[1]: audioConstraints
+    references[1]{type,allowed,required,limit}:
+      audio,true,true,1
+    audioConstraints:
+      required: true
+      maxRecommendedSeconds: 15
+      maxAllowedSeconds: 300
+    imageConstraints:
+      maxFileSize: 5000
+      maxWidth: 4096
+      maxHeight: 4096
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: true
+    referenceTypes[1]: audio
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: veed-fabric-1.0-fast
+    name: Veed Fabric 1.0 Fast
+    tool: video-generator
+    beta: false
+    expectedGenerationTime: 180
+    api: veed
+    mode: fabric_1_0_fast
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    requiredInputs[1]: audioConstraints
+    references[1]{type,allowed,required,limit}:
+      audio,true,true,1
+    audioConstraints:
+      required: true
+      maxRecommendedSeconds: 15
+      maxAllowedSeconds: 300
+    imageConstraints:
+      maxFileSize: 5000
+      maxWidth: 4096
+      maxHeight: 4096
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: true
+    referenceTypes[1]: audio
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: veed-sync-2-v2v
+    name: Veed Sync 2.0
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 180
+    api: veed
+    mode: sync_2_v2v
+    requiredInputs[1]: audioConstraints
+    references[2]{type,allowed,required,limit}:
+      video,true,true,1
+      audio,true,true,1
+    audioConstraints:
+      required: true
+      maxAllowedSeconds: 300
+    videoConstraints:
+      maxSeconds: 300
+      maxFileSize: 209715200
+    supportsReferences: true
+    referenceTypes[2]: video,audio
+    supportsStartFrame: false
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: wan-2-2
+    name: Wan 2.2
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 2-2
+    aspectRatios[3]: "1:1","16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 5,10
+    resolutions[3]: 720p,580p,480p
+    prompt:
+      required: true
+      maxLength: 2500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    keyframes:
+      start:
+        assetType: image
+        required: true
+    supportsReferences: false
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: wan-2-2-animate
+    name: Wan 2.2 Animate Move
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 2-2-animate
+    aspectRatios[3]: "16:9","9:16","1:1"
+    durations[3]: 3,30,120
+    resolutions[3]: 720p,580p,480p
+    prompt:
+      maxLength: 800
+    requiredInputs[3]: duration,aspectRatio,resolution
+    references[2]:
+      - type: image
+        allowed: true
+        required: true
+        limit: 2
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 1
+    keyframes:
+      start:
+        assetType: video
+        required: true
+    supportsReferences: true
+    referenceTypes[2]: image,character
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: false
+  - slug: wan-2-5
+    name: Wan 2.5
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 2-5
+    aspectRatios[3]: "1:1","16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[2]: 5,10
+    resolutions[3]: 1080p,720p,480p
+    prompt:
+      required: true
+      maxLength: 800
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    references[1]{type,allowed,limit}:
+      audio,true,1
+    audioConstraints:
+      maxRecommendedSeconds: 10
+      maxAllowedSeconds: 10
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: true
+    referenceTypes[1]: audio
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: true
+  - slug: wan-2-6
+    name: Wan 2.6
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 2-6
+    aspectRatios[3]: "1:1","16:9","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[3]: 5,10,15
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 1500
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 5
+    references[1]{type,allowed,limit}:
+      audio,true,1
+    audioConstraints:
+      maxRecommendedSeconds: 15
+      maxAllowedSeconds: 15
+    keyframes:
+      start:
+        assetType: image
+    supportsReferences: true
+    referenceTypes[1]: audio
+    supportsStartFrame: true
+    supportsEndFrame: false
+    supportsSoundEffects: true
+  - slug: wan-2-7
+    name: Wan 2.7
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 2-7
+    aspectRatios[5]: "1:1","16:9","9:16","4:3","3:4"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[14]: 2,3,4,5,6,7,8,9,10,11,12,13,14,15
+    resolutions[2]: 1080p,720p
+    prompt:
+      required: true
+      maxLength: 5000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    soundEffects:
+      prohibitedIf:
+        references[1]: poolNonEmpty
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 5
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[7]:
+      - type: video
+        allowed: true
+        limit: 5
+        constraints:
+          file:
+            maxSize: 100000000
+          duration:
+            min: 2000
+            max: 10000
+          resolution:
+            min: 240
+            max: 4096
+      - type: image
+        allowed: true
+        limit: 5
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 1
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+      - type: color
+        allowed: true
+      - type: effect
+        allowed: true
+    audioConstraints:
+      maxRecommendedSeconds: 15
+      maxAllowedSeconds: 30
+    negativePrompt:
+      maxLength: 500
+    keyframes:
+      start:
+        assetType: image
+      end:
+        assetType: image
+        constraints:
+          requiredWith[1]: startFrame
+    supportsReferences: true
+    referenceTypes[7]: video,image,character,product,style,color,effect
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+  - slug: wan-3-0
+    name: Wan 3.0
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 3-0
+    aspectRatios[5]: "16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[29]: 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+    resolutions[3]: 1080p,720p,480p
+    prompt:
+      required: true
+      maxLength: 20000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 5
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 1
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    soundEffects:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 5
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: video
+        allowed: true
+        limit: 5
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+        constraints:
+          file:
+            maxSize: 100000000
+          duration:
+            min: 1000
+            max: 15000
+          resolution:
+            min: 240
+            max: 4096
+          formats[2]: mp4,mov
+      - type: image
+        allowed: true
+        limit: 10
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        constraints:
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+      - type: audio
+        allowed: true
+        limit: 5
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        constraints:
+          file:
+            maxSize: 15728640
+          duration:
+            min: 1000
+            max: 15000
+          formats[2]: mp3,wav
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+      - type: color
+        allowed: true
+      - type: effect
+        allowed: true
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[2]: video,image
+        constraints:
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+      end:
+        assetType: image
+        prohibitedWith[2]: video,image
+        constraints:
+          requiredWith[1]: startFrame
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+    supportsReferences: true
+    referenceTypes[8]: video,image,audio,character,product,style,color,effect
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+    private: true
+  - slug: wan-3-0-prime
+    name: Wan 3.0 Prime
+    tool: video-generator
+    beta: true
+    expectedGenerationTime: 300
+    api: wan
+    mode: 3-0-prime
+    featured: true
+    featuredOrder: -10
+    aspectRatios[5]: "16:9","4:3","1:1","3:4","9:16"
+    aspectRatioAutoFrom:
+      input: startFrame
+      when: filled
+    durations[29]: 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
+    resolutions[3]: 1080p,720p,480p
+    prompt:
+      required: true
+      maxLength: 20000
+    requiredInputs[4]: duration,aspectRatio,resolution,prompt
+    audioReferences:
+      allowed: true
+      field: "references[]"
+      itemType: audio
+      useFor[1]: audio_reference
+      limit: 5
+      notField: audioUrl
+      requiresVisualReference: true
+      visualReferenceTypes[6]: references.image,references.video,references.character,references.product,references.style,references.effect
+      startFrameSatisfiesRequirement: false
+      constraints:
+        minAllowedSeconds: 1
+        maxRecommendedSeconds: 15
+        maxAllowedSeconds: 15
+        maxFileSize: 15728640
+        formats[2]: mp3,wav
+      canCombineWithSoundEffects: true
+    soundEffects:
+      allowed: true
+    multishot:
+      allowed: true
+      limit: 5
+    cameraMotion:
+      values[52]: truckLeft,truckRight,panLeft,panRight,pushIn,pullOut,pedestalUp,pedestalDown,tiltUp,tiltDown,zoomIn,zoomOut,static,moveLeft,moveRight,moveUp,moveDown,superDollyIn,superDollyOut,crashZoomIn,doubleDolly,jibUp,jibDown,craneUp,craneDown,craneOverTheHead,orbitLeft,orbitRight,360Orbit,fisheye,overhead,objectPov,whipPan,dutchAngle,dirtyLens,lensCrack,lensFlare,focusChange,lowShutter,fpvDrone,handheld,headTracking,snorricam,leftCircling,rightCircling,upwardTilt,leftWalking,rightWalking,downwardTilt,stageLeft,stageRight,scenicShot
+    references[8]:
+      - type: video
+        allowed: true
+        limit: 5
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        affectsCost: true
+        constraints:
+          file:
+            maxSize: 100000000
+          duration:
+            min: 1000
+            max: 15000
+          resolution:
+            min: 240
+            max: 4096
+          formats[2]: mp4,mov
+      - type: image
+        allowed: true
+        limit: 10
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        constraints:
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+      - type: audio
+        allowed: true
+        limit: 5
+        prohibitedWith[2]: keyframes.start,keyframes.end
+        constraints:
+          file:
+            maxSize: 15728640
+          duration:
+            min: 1000
+            max: 15000
+          formats[2]: mp3,wav
+      - type: character
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: product
+        assetType: image
+        allowed: true
+        limit: 1
+        prohibitedWith[2]: keyframes.start,keyframes.end
+      - type: style
+        assetType: image
+        allowed: true
+        limit: 1
+      - type: color
+        allowed: true
+      - type: effect
+        allowed: true
+    keyframes:
+      start:
+        assetType: image
+        prohibitedWith[2]: video,image
+        constraints:
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+      end:
+        assetType: image
+        prohibitedWith[2]: video,image
+        constraints:
+          requiredWith[1]: startFrame
+          file:
+            maxSize: 20000000
+          formats[4]: jpeg,png,bmp,webp
+    supportsReferences: true
+    referenceTypes[8]: video,image,audio,character,product,style,color,effect
+    supportsStartFrame: true
+    supportsEndFrame: true
+    supportsSoundEffects: true
+    private: true
+instruction: "Prefer models with `agentRecommendation.tier: sota`, then lower `agentRecommendation.rank`. Entries without `agentRecommendation` are valid but not preferred. `private: true` = internal or feature-flagged, not generally available. Pass the chosen entry's `slug` to `video_generate` as `slug`, copied verbatim; omit `slug` only for auto-mode. A `references` entry's `type` is the value to send in `video_generate` `references[].type`. A `keyframes` capability means start/end frames go in `video_generate` `keyframes.{start,end}` (each `{type:\"image\", url}`), NOT in `references[]`. If an entry has `audioReferences`, pass audio as `references[]` with `type:\"audio\"` (not `audioUrl`); this is the Seedance audio-reference path. Use optional `search` to narrow by name or slug before reading the full catalog."

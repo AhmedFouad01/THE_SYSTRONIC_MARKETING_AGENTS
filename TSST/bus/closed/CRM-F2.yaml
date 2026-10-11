@@ -1,0 +1,26 @@
+id: CRM-F2
+title: Fix batch 1 · 2/4 · R03 remove navy + derived palette
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_REVIEW_FIX1.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-F2.md]
+after: []
+done_when: BRIEF_REVIEW_FIX1 task 2 done; review rows satisfied; C green; report ≤12 lines
+issued_by: claude
+created: "2026-10-08T21:25Z"
+rounds: 1
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "No F2 implementation begun. Restore strict sequencing: F1 completion citation rejected; correct before F2 claim."
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-F2.md
+sha256: 6789611cc9c7c07c626fe3446cfc59412dcd22f4b4c11894eb9f68e3784714c7
+note:

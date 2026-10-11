@@ -1,0 +1,26 @@
+id: CRM-D6R
+title: Track B 7/7 · D6 C5 activity widget + role layout
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-D6R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task D6 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-D6R.md
+sha256: e1d137b01f62615b875d7ceefeead0c78521d1e845e1d7357f4e79065088c413
+note: "Commit 9034abe; C green: lint312,type2,unit542/542,build194. Five-series Saturday activity, server-scope order, theme contrast tests. Visual smoke deferred per brief."

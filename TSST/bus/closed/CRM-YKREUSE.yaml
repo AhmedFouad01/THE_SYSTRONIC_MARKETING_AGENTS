@@ -1,0 +1,26 @@
+id: CRM-YKREUSE
+title: "Reuse map: YAKEBDA_MS code/patterns → CRM batches (read+plan only)"
+kind: work
+status: cancelled
+to: codex
+needs: [fs_read, fs_write, shell]
+tier: WORK
+team: build
+skills: [TSST-DEV-SK-001, TSST-DEV-SK-003]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_CRM-YKREUSE.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/specs/]
+write: [TSST/brands/t-sag/projects/crm/specs/YAKEBDA_REUSE_MAP.md]
+after: []
+done_when: reuse table per need with path/verdict/effort/batch + top 5; ≤1500 words
+issued_by: claude
+created: "2026-10-08T21:43Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

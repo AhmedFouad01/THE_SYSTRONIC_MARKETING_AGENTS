@@ -1,0 +1,87 @@
+diff --git a/TSST/bus/bus.py b/TSST/bus/bus.py
+index a6237cd..d7ff1bf 100644
+--- a/TSST/bus/bus.py
++++ b/TSST/bus/bus.py
+@@ -503,6 +503,52 @@ def cmd_cancel(a):
+         save(t, a.me, "cancel", a.note)
+ 
+ 
++def _split_inline(rest):
++    """`value   # comment` -> (value, '   # comment'); a quoted value may itself contain ' #'."""
++    rest = rest.rstrip()
++    if rest.startswith('"'):
++        try:
++            _, end = json.JSONDecoder().raw_decode(rest)
++        except ValueError:
++            end = 0
++        return rest[:end].strip(), rest[end:] if rest[end:].lstrip().startswith("#") else ""
++    i = rest.find(" #")
++    return (rest[:i].rstrip(), rest[i:]) if i >= 0 else (rest.strip(), "")
++
++
++def edit_runtime(text, runtime, updates):
++    """Targeted line edits inside one top-level runtime block; every other byte (comments, order,
++    spacing, other runtimes) is preserved. Missing keys are appended to the end of the block."""
++    lines = text.split("\n")
++    start = next((i for i, l in enumerate(lines) if re.match(rf"{re.escape(runtime)}:\s*(#.*)?$", l)), None)
++    if start is None:
++        raise KeyError(runtime)
++    end = start + 1
++    while end < len(lines) and (not lines[end].strip() or lines[end].startswith((" ", "\t", "#"))):
++        end += 1
++    while end > start + 1 and (not lines[end - 1].strip() or lines[end - 1].startswith("#")):
++        end -= 1                                  # trailing blank/column-0 comment lines are not part of the block
++    for key, val in updates.items():
++        v = _dump_val(val)
++        for i in range(start + 1, end):
++            m = re.match(rf"(\s+){re.escape(key)}:(\s*)(.*)$", lines[i])
++            if m:
++                comment = _split_inline(m.group(3))[1]
++                lines[i] = f"{m.group(1)}{key}:" + (f" {v}" if v else "") + comment
++                break
++        else:
++            lines.insert(end, f"  {key}:" + (f" {v}" if v else ""))
++            end += 1
++    return "\n".join(lines)
++
++
++def save_runtime(runtime, updates):
++    with open(RUNTIMES, encoding="utf-8") as f:
++        text = f.read()
++    with open(RUNTIMES, "w", encoding="utf-8", newline="\n") as f:
++        f.write(edit_runtime(text, runtime, updates))
++
++
+ def cmd_limit(a):
+     """Mark a runtime limited/available so routing moves work elsewhere."""
+     if a.runtime != a.me:
+@@ -520,8 +566,7 @@ def cmd_limit(a):
+             except ValueError:
+                 die("--until must be UTC like 2026-10-04T18:00Z")
+         r.update(status="available", until="") if a.clear else r.update(status="limited", until=a.until)
+-        with open(RUNTIMES, "w", encoding="utf-8", newline="\n") as f:
+-            f.write(HEADER + dump(data))
++        save_runtime(a.runtime, {"status": r["status"], "until": r["until"]})
+         with open(LOG, "a", encoding="utf-8", newline="\n") as f:
+             f.write("\t".join([now(), "-", a.me, f"limit {a.runtime}", r["status"] + " " + r.get("until", "")]) + "\n")
+     print(f"OK {a.runtime} {r['status']} {r.get('until', '')}")
+@@ -552,18 +597,12 @@ def cmd_verify(a):
+         r["unverified"] = [c for c in unv if c != a.cap]
+         r["caps"] = (r.get("caps") or []) + [a.cap]
+         r["verified"] = now()[:10]
+-        with open(RUNTIMES, "w", encoding="utf-8", newline="\n") as f:
+-            f.write(HEADER + dump(data))
++        save_runtime(a.runtime, {"unverified": r["unverified"], "caps": r["caps"], "verified": r["verified"]})
+         with open(LOG, "a", encoding="utf-8", newline="\n") as f:
+             f.write("\t".join([now(), "-", a.me, f"verify {a.runtime}.{a.cap}", a.evidence]) + "\n")
+     print(f"OK {a.runtime}.{a.cap} verified")
+ 
+ 
+-HEADER = ("# TSST runtime capability registry — evidence, not assumption. Protocol: TSST/context/bus.md\n"
+-          "# caps = verified by a closed probe task; unverified = claimable only by kind: probe.\n"
+-          "# Edited only via bus.py limit/verify (lead) — never by a bus task.\n")
+-
+-
+ # ------------------------------------------------------------------ validation
+ def task_errors(t):
+     e = []

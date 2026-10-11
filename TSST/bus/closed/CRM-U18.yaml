@@ -1,0 +1,26 @@
+id: CRM-U18
+title: Track U 18/19 · record panels
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U18.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #18 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U18.md
+sha256: 7e527071532b638ce338a1c7b694e301b6f248190e12cbc9423c07fbcc86531b
+note:

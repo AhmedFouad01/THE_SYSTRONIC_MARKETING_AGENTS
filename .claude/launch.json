@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "crm-mvp",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:/Work/tsst-crm-mvp/CRM_APP", "run", "api"],
+      "port": 4317,
+      "autoPort": true
+    },
+    {
+      "name": "scc",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "set PORT=4000&& npm --prefix C:/dev/systronic-control-center run dev"],
+      "port": 5173
+    }
+  ]
+}

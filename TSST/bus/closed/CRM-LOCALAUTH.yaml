@@ -1,0 +1,26 @@
+id: CRM-LOCALAUTH
+title: Enable real local sign-in + demo manager for Ahmed's visual review
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-007, TSST-DEV-SK-013, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_CRM-LOCALAUTH.md
+read: [TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-LOCALAUTH.md]
+after: []
+done_when: "auth:local script committed+run; 4318 sign-in OK; secrets never printed; report ≤12 lines"
+issued_by: claude
+created: "2026-10-08T19:50Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-007, TSST-DEV-SK-013, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-LOCALAUTH.md
+sha256: 5f856f9fde86c03c0609cdecefaef9d21b7bb45943a758a4897fe357b74b4bb8
+note: Committed 0692d0d; all checks and 4318 sign-in pass; 4317 untouched. Actual parent model ID unavailable; DEV model per dispatch.

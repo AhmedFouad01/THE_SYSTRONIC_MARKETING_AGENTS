@@ -1,0 +1,26 @@
+id: CRM-U05
+title: Track U 5/19 · DatePicker/Badge/States/PageHeader
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U05.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #5 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "Context heavy: U02-U04 done, HEAD d6bd5e4; U05 untouched. Resume plan #5 DatePicker/Badge/States/PageHeader; updated brief + SK005/011/015; C lint/typecheck/test:unit/build + ISO/focus QA."
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U05.md
+sha256: 371a4c1cafa1c5df6a98fef78a04fb1bb04c6dbad2a46016c93a684d00815181
+note: U05 56fa9d2; C green 625 tests; 121 browser assertions. Next U06 shell/nav.

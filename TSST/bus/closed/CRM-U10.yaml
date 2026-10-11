@@ -1,0 +1,26 @@
+id: CRM-U10
+title: Track U 10/19 · B8 security page
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U10.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #10 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: Context heavy; U05-U09 done, HEAD a9f5b8e; U10 untouched. Resume Security sessions/password, SK005/011/015, cookie client; B6 deferred; C+authUI; 3 inherited Menu failures.
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U10.md
+sha256: 2a586fa22d308e856bd91117fbf090be806519d32c260b2e54fa79815c1b5c9d
+note:

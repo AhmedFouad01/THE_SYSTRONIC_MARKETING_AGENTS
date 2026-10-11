@@ -1,0 +1,26 @@
+id: CRM-D3
+title: Track B · D3 server Saturday week_start buckets
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-006, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-D3.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task D3 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T16:38Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-006, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-D3.md
+sha256: 73188e1eb1c491b97b6de65e22968689686eb25f1cb1d0379b65dd26e85a9650
+note: Commit 3b71847; C green (467 unit), isolated D 164/164; Saturday/Cairo DST/Monday compatibility. tsst-dev assigned CODE model; actual model not exposed.

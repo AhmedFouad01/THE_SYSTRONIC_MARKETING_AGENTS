@@ -1,0 +1,26 @@
+id: CRM-D0R
+title: Track B 2/7 · D0 shared chart surface (Chart.js 4.5.1 pins)
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-D0R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task D0 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-D0R.md
+sha256: 45e3e2c5848d8aa9c66e64e3e88aac1c6ced9d4bd23a24bec104b15681c55089
+note: "Commit 074a9c1; C green: lint296, typecheck2, unit485/485, build183. Shared chart surface; exact approved pins. No UI smoke per brief."

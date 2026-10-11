@@ -1,0 +1,310 @@
+[
+  {
+    "page": 1,
+    "name": "cover",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../../../../brands/vill-studio/assets/final/Logo.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / COVER\nدليل الهوية\nBrand guidelines / 2026\nقرار واضح.\nشكل له سبب.\n\nاسم الاتجاه البصري / Visual direction descriptor - not campaign copy\n\nاللون والاتجاه معتمدان.\nالدليل والتطبيقات للمراجعة.\n\nApproved palette and logo. Visual execution and verbal identity drafts; no release authority.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n01 / 24"
+  },
+  {
+    "page": 2,
+    "name": "essence",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / ESSENCE\nالشخصية قبل الزخرفة\nEssence / LENS verbal §1\nPrecise\n\nShort sentences, a named detail, a stated reason\n\nTechnical showing-off; invented figures\n\nCalm\n\nPlain, reassuring, no pressure; says what is unknown\n\nHype, urgency, \"luxury\", emotional drama\n\nAccountable\n\nNames scope, exclusions, next step, who answers\n\nAbsolute guarantees, fixed price, delivery promises\n\nVILL explains every design decision, so the home you approve is the home you get.\n\nHYPOTHESIS-level value statement; question or labelled concept until proof exists.\n\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n02 / 24"
+  },
+  {
+    "page": 3,
+    "name": "directions",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / DIRECTIONS\nاتجاهان. اختيار واحد.\nTwo directions / decision record\nA / Decision cut\n\nQuestion → decision → evidence. Original V lean as meaningful boundary.\n\nB / Scope ledger\n\nEditorial register. Useful precision, lower brand distinctiveness.\n\nSelected A before implementation. Measured slope -0.3494 px/px, 19.26° from vertical. Full rationale: ART_DIRECTION.md.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n03 / 24"
+  },
+  {
+    "page": 4,
+    "name": "message-house",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / MESSAGE-HOUSE\nالرسالة تحتاج دليل\nMessage house / exact LENS §2 excerpts\nPillar\tQualified message\tProof first\nDesign intelligence\tالتصميم يبدأ من استخدامك للمساحة\tApproved plan, constraint, choice, result\nExecution control + detail\tمن قرار التصميم لتفاصيل التنفيذ\tDated site log / QC check / handover record\nTransparency + accountability\tنطاق واضح وخطوات قابلة للمراجعة\tBOQ, exclusions, change control, named owner\n\nNo proof line without project + source + date + permission. Otherwise omit it or mark CONCEPT.\n\nCore working promise: One vision. One scope. One accountable team. Qualified only; accountability needs delivery proof. Not a generic campaign headline.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n04 / 24"
+  },
+  {
+    "page": 5,
+    "name": "voice",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / VOICE\nصوت ثابت. نبرة حسب الموقف.\nVoice and tone / exact LENS §3\nContext\tRegister\tLength / shape\tTone\nSocial organic\tEG\tOne decision per post; reason in line 2\tTeaching, warm\nPaid ad\tEG (MSA for headline if multi-market)\tHook + one benefit + one CTA\tDirect, never urgent\nWhatsApp reply\tEG\t2-3 lines; ask one question\tPersonal, brief\nProposal / quote\tSimplified MSA\tScope, exclusions, terms stated plainly\tFormal, exact\nSite\tEG headlines, MSA body/terms\tScannable; proof next to claim\tCalm, explanatory\nConstant voice: restrained, architectural, precise, reassuring. Reply timing/SLA is unapproved; this is tone guidance.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n05 / 24"
+  },
+  {
+    "page": 6,
+    "name": "language",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / LANGUAGE\nالعربي أولًا. نفس الفكرة.\nLanguage pairing / LENS §4 + §7\nمطبخ مش في طريقك.\n\nA kitchen that stays out of your way.\n\nCONCEPT / DRAFT LENS COPY\nOne idea per pair\n\nArabic leads. Each piece has ONE Arabic line and ONE English line that carry the same idea, grouped together, Arabic first, English smaller. English is a rendering of the Arabic, not a second slogan, and never a separate tagline (\"LIVE. BETTER.\").\n\nWrite\tNot\nاسأل / اسألنا\tأسأل\nابعتلنا / ابدأ\tإبدأ\nالتفاصيل\tتفاصيل تخدم حياتك\nExact spelling sheet from LENS. Western numerals 0-9: user decision OPEN. Full source snapshot: VERBAL_SOURCE.md.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n06 / 24"
+  },
+  {
+    "page": 7,
+    "name": "logo",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../../../../brands/vill-studio/assets/final/Logo.png",
+        "loaded": true
+      },
+      {
+        "src": "../../../../brands/vill-studio/assets/final/Logo.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / LOGO\nلوجو واحد. استخدام واضح.\nApproved master / no invented variant\n\nOn navy / original holding square\n\nOn white / retain navy holding square\n\nApproved PNG and read-only PSD only. No transparent/vector variant has been approved. Never extract, redraw, recolour, retype or regenerate.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n07 / 24"
+  },
+  {
+    "page": 8,
+    "name": "clear-space",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../../../../brands/vill-studio/assets/final/Logo.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / CLEAR-SPACE\nمسافة تحمي العلامة\nLogo clear space / minimum size\nH = V HEIGHT / EXCLUSION ≥ H\n\nH is the visible V height. Measure clear space to other content and crop edges.\n\nVisible mark ≥140 px on 1080 export; ≥44 px at 360 preview. Print ≥30 mm, proof required.\n\nOriginal square already holds generous top/bottom navy. Add outer holding field if side clearance requires it; never alter original pixels.\n\nDiagram illustrates exclusion logic; dashed frame does not modify the mark. Original logo proportions preserved in all placements.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n08 / 24"
+  },
+  {
+    "page": 9,
+    "name": "misuse",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / MISUSE\nقواعد لا تتغيّر\nLogo misuse / selection rules\nلا تعدّل\n\nNo recolour, shear, opacity, mirrored mark, outline or recreated letters.\n\nلا تقص\n\nDo not crop the visible mark or use a circular mask that cuts geometry.\n\nلا تخمّن\n\nNo invented transparent variant, sub-brand or monogram. Use approved master.\n\nIf the requested background does not support the original navy square, change the holding field. Do not “fix” the logo.\n\nInvalid treatments are named, not applied to approved pixels. Avatar example retains full original master.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n09 / 24"
+  },
+  {
+    "page": 10,
+    "name": "colour",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / COLOUR\nأدوار اللون\nOrange points to a decision / approved v1.1\n70 / NAVY / #040136\n25\nRole\tDark\tLight\nBackground / text\tNavy / White\tWhite / Navy\nMuted text\tNavy tint 80\tNavy tint 20\nCTA / on-orange\tOrange / Navy\tOrange / Navy\nBorder\tNavy tint 80\tNavy tint 20\nGraphic area excluding photos/logo: dark target 70/25/5, orange #EE8C01 maximum 10%; reverse dominant canvas for light. palette-v1.1.json remains authority.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n10 / 24"
+  },
+  {
+    "page": 11,
+    "name": "contrast",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / CONTRAST\nالنص له أزواج محددة\nContrast and prohibited pairs / v1.1\nForeground / background\tRatio\tRule\nWhite / Navy\t17.95:1\tPASS normal text\nOrange / Navy + Navy / Orange\t7.89:1\tPASS normal text\nNavy tint 80 / Navy\t11.33:1\tPASS muted dark text\nNavy / White\t17.95:1\tPASS normal text\nNavy tint 20 / White\t10.86:1\tPASS muted light text\nWhite / Orange + Orange / White\t2.28:1\tFAIL; use navy text, orange decoration only\nOpaque sRGB pairs, normal AA ≥4.5:1, large AA ≥3:1. No untested text over photos; no whole-document WCAG certification.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n11 / 24"
+  },
+  {
+    "page": 12,
+    "name": "typography",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / TYPOGRAPHY\nقوة العربي. هدوء الإنجليزي.\nRe-judged bundled type system\nكل سنتي\nليه سبب.\n\nEvery centimetre has a reason.\n\nCAIRO 900 / AR LEADS\nRole\tGuide px\tWeight / leading\nArabic display\t80-150\t900 / 1.35\nArabic heading\t42-64\t800 / 1.4\nAR + EN body\t32\t500 / 1.65\nSupport / data\t24-30\t500-700 / 1.5\nLatin index\t24-28\tBarlow 700 / 1.3\nCairo variable supports 200-1000, SIL OFL bundled. Barlow is narrow: use index labels only, not a logo match. Cairo 700 Latin supports Arabic; no fake stretch/italic. Wider Latin alternatives require later licence/font approval.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n12 / 24"
+  },
+  {
+    "page": 13,
+    "name": "bidi",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / BIDI\nسطر واحد. ترتيب صحيح.\nMixed script / actual specimen\n\nمطبخ VILL - 2400 mm (عرض)\n\nProject Assessment - احجز تقييم مشروعك\n\nالتاريخ: 2026-10-05 · السعر: EGP 250,000\n\nتَصْمِيمٌ لحياتك (اختبار فقط)\n\nRTL and right alignment. Arabic tracking 0; no tatweel. Whole number + unit isolated. Never mirror logo/photos/plans.\n\nSynthetic QA numbers only, not project measurements/prices. Fallback Cairo → Tahoma; Latin Cairo → Arial. Bundled fonts required for approved fidelity.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n13 / 24"
+  },
+  {
+    "page": 14,
+    "name": "grid",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / GRID\nشبكة تقود النظر\n1920 slide / 1080 social / responsive web\nAR FIRST / 01 → DECISION → EVIDENCE\n12 COLUMNS / 24 px GUTTER / 96 px PAGE MARGIN\nGuide: 96px margins, 48px gutters, 24px baseline. Social: 72px margin, 24px gutter; web: 24px mobile / 64px desktop. RTL reading begins in dominant right zone; secondary evidence occupies left. One focal point, not rigid symmetry.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n14 / 24"
+  },
+  {
+    "page": 15,
+    "name": "graphic-device",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / GRAPHIC-DEVICE\nالقطع يشرح علاقة\nThe decision cut / measured original V\nh\nΔx = h × 0.3494\n19.26°\n\nOne measured edge creates the boundary. The orange span marks the decision, not a new logo.\n\nSlope -0.3494 px/px; lean 19.26° from vertical. Use Δx = h × 0.3494 at every size.\n\nKeep the cut clear of type and original mark. A diagram is explanation, never proof of a project.\n\nMeasured scanlines y410-610 in approved original PNG, white threshold RGB>220, least-squares fit. geometry.json contains method/hash. This is graphic grammar, not an alternate logo.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n15 / 24"
+  },
+  {
+    "page": 16,
+    "name": "photography",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../../assets/images/kitchen.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / PHOTOGRAPHY\nصور تستحق تمثيل البراند\nCurrent sources are below-standard examples\nCONCEPT - BELOW STANDARD\n\n627×715 profile screenshot: soft detail, clutter and source type/rights unknown.\n\nOriginal photo/render ≥2400px long side; crop must meet delivery resolution without upscaling.\n\nAligned verticals; natural window light; true materials/finish; controlled glare; one deliberate subject.\n\nPeople only with documented consent and useful narrative. Never stage a photo as QC/handover proof.\n\nThese images demonstrate what must be replaced, not VILL visual standard. No completed-project claim. Photos and renders need explicit source type, rights and project provenance.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n16 / 24"
+  },
+  {
+    "page": 17,
+    "name": "labels",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / LABELS\nالتسمية جزء من الحقيقة\nIconography / status / provenance\nCONCEPT\n\nIllustrative diagram or unknown-source visual. No inference of built work.\n\nCONCEPT / DIAGRAM\nRENDER\n\nClearly identify a documented render as a render. Never call it completed.\n\nPROOF\n\nProject + source + date + permission. QC also requires actual signed record.\n\n01 / 02 / 03\nUse simple open geometric icons with consistent 3-4px strokes, never a decorative badge. Status needs word + icon/shape; colour alone carries no status. Actual rights missing → release blocked.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n17 / 24"
+  },
+  {
+    "page": 18,
+    "name": "kitchen-ad",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../applications/kitchen-ad.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / KITCHEN-AD\nإعلان المطبخ\nNative 4:5 / question-led entry\n\nمطبخ مش في طريقك.\n\nA kitchen that stays out of your way.\n\nEducational geometry, not real project proof. LENS lines remain drafts and are grouped Arabic first. Live CTA channel TBC.\n\nGUIDANCE EXAMPLE / REVIEW\nApplication master and native PNG delivered separately; phone/crop QA in qa/. No release approval. Avatar preserves original full logo square; circle simulation does not touch visible geometry.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n18 / 24"
+  },
+  {
+    "page": 19,
+    "name": "carousel-cover",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../applications/carousel-cover.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / CAROUSEL-COVER\nغلاف الكاروسيل\nNative 4:5 / one detail, one question\n\nليه الدرج بيفتح كده؟\n\nWhy does this drawer open this way?\n\nEducational geometry, not real project proof. LENS lines remain drafts and are grouped Arabic first. Live CTA channel TBC.\n\nGUIDANCE EXAMPLE / REVIEW\nApplication master and native PNG delivered separately; phone/crop QA in qa/. No release approval. Avatar preserves original full logo square; circle simulation does not touch visible geometry.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n19 / 24"
+  },
+  {
+    "page": 20,
+    "name": "story-cover",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../applications/story-cover.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / STORY-COVER\nغلاف الريل / ستوري\nNative 9:16 / recomposed, not resized\n\nكل سنتي ليه سبب.\n\nEvery centimetre has a reason.\n\nEducational geometry, not real project proof. LENS lines remain drafts and are grouped Arabic first. Live CTA channel TBC.\n\nGUIDANCE EXAMPLE / REVIEW\nApplication master and native PNG delivered separately; phone/crop QA in qa/. No release approval. Avatar preserves original full logo square; circle simulation does not touch visible geometry.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n20 / 24"
+  },
+  {
+    "page": 21,
+    "name": "avatar",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [
+      {
+        "src": "../applications/avatar.png",
+        "loaded": true
+      }
+    ],
+    "overflow": [],
+    "text": "VILL / AVATAR\nصورة الحساب\nOriginal approved mark / circle simulation\n\nاللوجو الأصلي بدون تعديل.\n\nNo monogram or retyped variant.\n\nEducational geometry, not real project proof. LENS lines remain drafts and are grouped Arabic first. Live CTA channel TBC.\n\nGUIDANCE EXAMPLE / REVIEW\nApplication master and native PNG delivered separately; phone/crop QA in qa/. No release approval. Avatar preserves original full logo square; circle simulation does not touch visible geometry.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n21 / 24"
+  },
+  {
+    "page": 22,
+    "name": "web-deck",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / WEB-DECK\nنفس المنطق. ترتيب يناسب الشاشة.\nResponsive web + deck type mapping\nDeck\n\nDisplay 80/900; body 32/500; data 28/700. One decision per slide. 96px margins, 48px gap.\n\nWeb\n\nDesktop display 56/900; mobile 36/900; body 18/500; label 16/700. Arabic first and one CTA; stack evidence after question on mobile.\n\nSocial 1080: AR display 84-104/900, EN support 34/500, label 28/700. Cairo → Tahoma fallback; Latin Cairo → Arial. Metric mismatch requires reflow QA.\n\nResponsive HTML specimen and 1440/390 screenshots supplied in qa/. No site publication or implementation acceptance; alternative extended Latin family is a future approved font task.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n22 / 24"
+  },
+  {
+    "page": 23,
+    "name": "governance",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / GOVERNANCE\nقواعد قابلة للتطبيق\nDo / don’t and source precedence\nWhen\tDo\tDon’t\nNeed logo\tRead approved final/Logo.png\tRecreate or extract an unapproved variant\nNeed colour\tRead approved final/palette-v1.1.json\tUse historical VI colours\nNeed words\tUse draft VERBAL_IDENTITY_v1.0 with status\tRewrite or imply approved copy\nNeed execution proof\tRequire project/source/date/permission\tTreat concept diagrams/screenshots as proof\nNeed application\tNative AR-first question/detail composition\tReuse rejected generic templates\nPrecedence: current user → approved logo/palette + accepted strategy → draft verbal → this guide/examples. Owner: TSST Lead; execution CREATIVE_AG, verbal LENS_AG. Change rules through versioned review.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n23 / 24"
+  },
+  {
+    "page": 24,
+    "name": "version",
+    "fonts": [
+      true,
+      true
+    ],
+    "images": [],
+    "overflow": [],
+    "text": "VILL / VERSION\nالإصدار والتواصل\nv1.0 / 2026-10-05 / review gates\nAuthority\n\nLogo + palette approved. Strategy accepted. This guide’s execution and LENS wording are draft for independent Lead/user review.\n\nOpen items\n\nPhone, email, website and public contact channel: not supplied. Do not invent or publish. Rights/proof/high-res photos and live placement overlays remain open.\n\nReview route: CREATIVE render QA → independent Lead inspection → user acceptance. Campaign release is a separate decision.\n\nSkills used: 002 versioned guidance; 008 decision-cut direction; 005 bilingual typography; 010 actual render QA. PDF skill applied. Readiness NOT_READY; no launch/spend/contact authority.\nBRAND GUIDELINES / v1.0 / PRIVATE REVIEW\n24 / 24"
+  }
+]

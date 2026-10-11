@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRM redesign: site map (neutral)</title>
+<style>
+:root{--bg:#ececec;--s1:#f7f7f7;--s2:#fff;--ink:#222;--mut:#666;--hair:#d4d4d4;--dk:#444;--chip:#e2e2e2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,"Segoe UI",Tahoma,sans-serif;padding:24px}
+header.top{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+h1{font-size:20px;margin:0;flex:1 1 300px}
+h1 small{display:block;font-weight:400;color:var(--mut);font-size:13px}
+.btn{height:36px;padding:0 16px;border:0;border-radius:8px;background:var(--dk);color:#fff;font:inherit;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:20px;color:var(--mut);font-size:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.b{display:inline-block;min-width:18px;padding:0 6px;border-radius:9px;background:var(--chip);color:var(--dk);font-size:11px;line-height:18px;text-align:center;font-weight:600}
+.b.g{background:var(--dk);color:#fff}
+.b.a{background:#fff;box-shadow:inset 0 0 0 1.5px var(--dk)}
+.b.c{background:#bdbdbd}
+.dot{width:8px;height:8px;border-radius:50%;background:#888;display:inline-block}
+.shell{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.shell div{background:var(--s2);border-radius:12px;padding:12px 16px;box-shadow:0 1px 3px rgba(0,0,0,.12);flex:1 1 220px}
+.shell b{display:block;margin-bottom:4px}
+.shell small{color:var(--mut)}
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;align-items:start}
+.grp{background:var(--s1);border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.grp>h2{font-size:14px;margin:0 0 12px;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.grp>h2 span{display:block;font-weight:400;color:var(--mut);font-size:12px}
+.pg{background:var(--s2);border-radius:10px;padding:10px 12px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.pg.sub{margin-inline-start:14px}
+.pg.dim{opacity:.62}
+.pg .t{display:flex;justify-content:space-between;gap:6px;align-items:flex-start;font-weight:600}
+.pg .t i{font-style:normal;font-weight:400;color:var(--mut);display:block;font-size:12px}
+.bs{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.sv{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.sv em{font-style:normal;font-size:11px;background:var(--bg);border-radius:6px;padding:2px 7px;color:var(--dk)}
+.sv em.d::before{content:"\25E7 ";}
+.sv em.p::before{content:"\25A4 ";}
+.sv em.s::before{content:"\2192 ";}
+.sv em.k::before{content:"\25A1 ";}
+.sv em::before{margin-inline-end:5px}
+.note{margin-top:20px;color:var(--mut);font-size:12px}
+@media(max-width:1300px){.map{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.map{grid-template-columns:1fr}body{padding:14px}}
+[dir=rtl] .pg .t i,[dir=rtl] .t{text-align:start}
+</style>
+</head>
+<body>
+<header class="top">
+<h1><span data-t="title"></span><small data-t="sub"></small></h1>
+<button class="btn" id="dir"></button>
+</header>
+<div class="legend" id="legend"></div>
+<div class="shell" id="shell"></div>
+<div class="map" id="map"></div>
+<p class="note" data-t="note"></p>
+<script>
+const T={
+ en:{title:"CRM redesign: site map",sub:"Menu groups, pages and sub-views. Neutral greys only; plan, not drawings.",dir:"Switch to Arabic (RTL)",
+  note:"Rules for every page: AR complete RTL and EN first-class; 1440 and 375; no native controls; regions by space and elevation; primary action at the logical end of its region. Detail in 03b_PAGE_REDESIGN_REPORT.md.",
+  M:"Manager",P:"Rep",R:"Reader"},
+ ar:{title:"خريطة الموقع لإعادة تصميم النظام",sub:"مجموعات القائمة والصفحات والعروض الفرعية. ألوان رمادية فقط؛ خطة وليست رسومات.",dir:"التبديل إلى الإنجليزية (LTR)",
+  note:"قواعد كل صفحة: عربي RTL كامل وإنجليزي بنفس الأهمية؛ 1440 و375؛ بلا عناصر تحكم أصلية؛ فصل المناطق بالمساحة والارتفاع؛ الإجراء الأساسي في نهاية منطقته.",
+  M:"مدير",P:"مندوب",R:"قارئ"}
+};
+const L=[ // legend
+ ["g","G",{en:"Module-gated (absent when off)",ar:"مرتبط بوحدة (يختفي عند الإيقاف)"}],
+ ["c","C",{en:"Needs an ad connection",ar:"يحتاج ربط حساب إعلانات"}],
+ ["a","A",{en:"Agency only",ar:"للوكالة فقط"}],
+ ["d","",{en:"Coming soon (disabled, dot)",ar:"قريبًا (معطّل، نقطة)"}],
+ ["r","M P R",{en:"Roles allowed (Manager / Rep / Reader)",ar:"الأدوار المسموحة (مدير / مندوب / قارئ)"}],
+ ["k","",{en:"Sub-view kinds: ◧ drawer  ▤ full page/builder  → step  □ state",ar:"أنواع العروض الفرعية: ◧ درج  ▤ صفحة كاملة  → خطوة  □ حالة"}]
+];
+const SHELL=[
+ {n:{en:"Sidebar",ar:"الشريط الجانبي"},d:{en:"Workspace name, grouped nav, coming-soon dots",ar:"اسم مساحة العمل، قائمة مجمّعة، نقاط قريبًا"}},
+ {n:{en:"Top bar",ar:"الشريط العلوي"},d:{en:"Client switcher (agency), global search, Create, profile",ar:"مبدّل العميل (للوكالة)، بحث عام، إنشاء، الملف"}},
+ {n:{en:"Mobile bottom bar + More sheet",ar:"الشريط السفلي + قائمة المزيد"},d:{en:"Leads, Contacts, Deals, Tasks, More (all groups)",ar:"العملاء المحتملون، جهات الاتصال، الصفقات، المهام، المزيد"}},
+ {n:{en:"Sign-in",ar:"تسجيل الدخول"},d:{en:"Credentials, then 2FA, then workspace",ar:"بيانات الدخول ثم التحقق بخطوتين ثم مساحة العمل"}}
+];
+// k: d drawer, p page, s step, k state
+const G=[
+ {n:{en:"Overview",ar:"نظرة عامة"},pages:[
+  {n:{en:"Dashboard",ar:"لوحة المعلومات"},r:"MPR",sv:[["p",{en:"Client tier",ar:"مستوى العميل"}],["p",{en:"Agency roll-up (agency staff)",ar:"تجميع الوكالة (للوكالة)"}],["d",{en:"Client trend",ar:"اتجاه العميل"}],["k",{en:"Not connected tiles",ar:"بلا ربط"}]]}
+ ]},
+ {n:{en:"CRM",ar:"إدارة العملاء"},pages:[
+  {n:{en:"Leads",ar:"العملاء المحتملون"},r:"MPR",sv:[["d",{en:"Lead preview",ar:"معاينة"}],["p",{en:"Lead record + timeline",ar:"سجل العميل + الخط الزمني"}],["d",{en:"New lead",ar:"عميل جديد"}],["k",{en:"Missing contact",ar:"بلا وسيلة اتصال"}]]},
+  {n:{en:"Contacts",ar:"جهات الاتصال"},r:"MPR",sv:[["d",{en:"Preview",ar:"معاينة"}],["p",{en:"Contact record + journey",ar:"السجل + الرحلة"}],["s",{en:"Merge: queue",ar:"دمج: قائمة"}],["s",{en:"Merge: review",ar:"دمج: مراجعة"}],["s",{en:"Merge: confirm",ar:"دمج: تأكيد"}]]},
+  {n:{en:"Deals",ar:"الصفقات"},r:"MPR",sv:[["d",{en:"Deal preview",ar:"معاينة"}],["p",{en:"Deal record",ar:"سجل الصفقة"}],["d",{en:"Lost reason",ar:"سبب الخسارة"}]]},
+  {n:{en:"Pipeline",ar:"مسار المبيعات"},sub:1,r:"MPR",sv:[["d",{en:"Stage settings",ar:"إعدادات المراحل"}],["k",{en:"Drag to move",ar:"سحب للنقل"}]]},
+  {n:{en:"Tasks",ar:"المهام"},r:"MPR",sv:[["d",{en:"Task drawer",ar:"درج المهمة"}],["d",{en:"Outcome",ar:"النتيجة"}]]},
+  {n:{en:"Import",ar:"استيراد البيانات"},r:"M",sv:[["s",{en:"1 Upload",ar:"1 رفع"}],["s",{en:"2 Map",ar:"2 ربط"}],["s",{en:"3 Review",ar:"3 مراجعة"}],["s",{en:"4 Confirm",ar:"4 تأكيد"}],["s",{en:"5 Result",ar:"5 النتيجة"}],["p",{en:"History",ar:"السجل"}]]}
+ ]},
+ {n:{en:"Marketing",ar:"التسويق"},pages:[
+  {n:{en:"Ads",ar:"الإعلانات"},r:"M",flags:"C",sv:[["d",{en:"Delivery + sync",ar:"التسليم والمزامنة"}],["k",{en:"Not connected",ar:"غير متصل"}],["k",{en:"First sync pending",ar:"المزامنة الأولى"}]]},
+  {n:{en:"Ads insights",ar:"تحليلات الإعلانات"},r:"MPR",flags:"C",sv:[["p",{en:"Revenue by campaign (shared)",ar:"الإيراد حسب الحملة"}],["k",{en:"CRM-only mode",ar:"بيانات النظام فقط"}]]},
+  {n:{en:"Segments",ar:"الشرائح"},r:"MPR",sv:[["p",{en:"Segment builder",ar:"منشئ الشريحة"}],["d",{en:"Members preview",ar:"معاينة الأعضاء"}],["k",{en:"Platform sync",ar:"مزامنة المنصات"}]]},
+  {n:{en:"Forms",ar:"النماذج"},r:"MP",flags:"S",s:1,sv:[["d",{en:"Field map",ar:"ربط الحقول"}],["d",{en:"Submissions",ar:"الإرسالات"}]]},
+  {n:{en:"SEO",ar:"تحسين محركات البحث"},r:"MP",flags:"S",s:1,sv:[["k",{en:"Organic landing pages",ar:"صفحات الهبوط العضوية"}]]}
+ ]},
+ {n:{en:"Module groups",ar:"مجموعات الوحدات"},sub2:{en:"shown only when enabled",ar:"تظهر عند التفعيل فقط"},pages:[
+  {n:{en:"Commerce",ar:"التجارة"},r:"MPR",flags:"G",sv:[["p",{en:"Orders",ar:"الطلبات"}],["p",{en:"Products",ar:"المنتجات"}],["p",{en:"Customers (value)",ar:"العملاء (القيمة)"}]]},
+  {n:{en:"Restaurants",ar:"المطاعم"},r:"",flags:"GS",s:1,sv:[["k",{en:"Later: POS, KDS",ar:"لاحقًا"}]]}
+ ]},
+ {n:{en:"Insights",ar:"الرؤى"},pages:[
+  {n:{en:"Reports",ar:"التقارير"},r:"MPR",sv:[["p",{en:"Catalogue",ar:"الكتالوج"}],["p",{en:"Report view",ar:"عرض التقرير"}],["p",{en:"Dashboard",ar:"لوحة"}],["d",{en:"Share",ar:"مشاركة"}]]},
+  {n:{en:"Journeys & tracking",ar:"رحلات العملاء والتتبع"},r:"MPR",flags:"S",s:1,sv:[["p",{en:"Journey list",ar:"قائمة الرحلات"}],["p",{en:"Source health",ar:"صحة المصدر"}]]}
+ ]},
+ {n:{en:"Administration",ar:"الإدارة"},pages:[
+  {n:{en:"Integrations",ar:"التكاملات"},r:"M",sv:[["p",{en:"Connections",ar:"الاتصالات"}],["s",{en:"Connect flow",ar:"مسار الربط"}],["p",{en:"Event mapping",ar:"ربط الأحداث"}],["p",{en:"Delivery ledger",ar:"سجل التسليم"}],["d",{en:"Ledger row",ar:"صف السجل"}]]},
+  {n:{en:"Users & roles",ar:"المستخدمون والأدوار"},r:"M",flags:"S",s:1,sv:[["d",{en:"Invite / edit",ar:"دعوة / تعديل"}]]},
+  {n:{en:"Settings",ar:"الإعدادات"},r:"M",sv:[]},
+  {n:{en:"Properties",ar:"الخصائص"},sub:1,r:"MPR",sv:[["d",{en:"New property",ar:"خاصية جديدة"}]]},
+  {n:{en:"Security",ar:"الأمان"},sub:1,r:"M",flags:"S",s:1,sv:[["k",{en:"2FA, SLA, thresholds",ar:"التحقق، اتفاقية الخدمة"}]]},
+  {n:{en:"Modules & presets",ar:"الوحدات والقوالب"},r:"",flags:"A",sv:[["k",{en:"Preset summary",ar:"ملخص القالب"}],["k",{en:"Change log",ar:"سجل التغييرات"}]]}
+ ]}
+];
+const html=document.documentElement;
+function render(){
+ const lg=html.lang,o=lg==="en"?"ar":"en";
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=T[lg][e.dataset.t]);
+ document.getElementById("dir").textContent=T[lg].dir;
+ document.getElementById("legend").innerHTML=L.map(([k,s,t])=>{
+  let mark=k==="d"?'<i class="dot"></i>':k==="r"?'<span class="b">M P R</span>':k==="k"?"":`<span class="b ${k}">${s}</span>`;
+  return `<span>${mark}${t[lg]}</span>`}).join("");
+ document.getElementById("shell").innerHTML=SHELL.map(x=>`<div><b>${x.n[lg]}</b><small>${x.d[lg]}</small></div>`).join("");
+ document.getElementById("map").innerHTML=G.map(g=>`<section class="grp"><h2><div>${g.n[lg]}${g.sub2?`<span>${g.sub2[lg]}</span>`:""}<span>${g.n[o]}</span></div></h2>`+
+  g.pages.map(p=>{
+   const fl=(p.flags||"").split("").map(f=>f==="S"?'<i class="dot" title="Coming soon"></i>':`<span class="b ${f.toLowerCase()}">${f}</span>`).join("");
+   const rl=p.r?`<span class="b">${p.r.split("").join(" ")}</span>`:"";
+   return `<div class="pg${p.sub?" sub":""}${p.s?" dim":""}"><div class="t"><div>${p.n[lg]}<i>${p.n[o]}</i></div><div class="bs">${fl}${rl}</div></div>`+
+    (p.sv.length?`<div class="sv">${p.sv.map(([k,t])=>`<em class="${k}">${t[lg]}</em>`).join("")}</div>`:"")+`</div>`}).join("")+`</section>`).join("");
+}
+document.getElementById("dir").onclick=()=>{
+ const ar=html.lang==="en";html.lang=ar?"ar":"en";html.dir=ar?"rtl":"ltr";render();
+};
+render();
+</script>
+</body>
+</html>

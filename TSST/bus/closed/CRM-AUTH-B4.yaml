@@ -1,0 +1,26 @@
+id: CRM-AUTH-B4
+title: Track C · auth B4 (AUTH_PLAN increment B4)
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-007, TSST-DEV-SK-005, TSST-DEV-SK-011]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_AUTH_B4_B5.md
+read: [TSST/brands/t-sag/projects/crm/codex/, TSST/brands/t-sag/projects/crm/specs/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-AUTH-B4.md]
+after: []
+done_when: AUTH_PLAN increment B4 acceptance met; checks green on crm_lane_auth; report ≤25 lines
+issued_by: claude
+created: "2026-10-07T18:10Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: B4 claimed; tsst-dev executing 007/005/011. Worktree a99f01a includes B3 91706c1; preserve Track B merge. Actual model identifier unverified.
+skills_used: [TSST-DEV-SK-007, TSST-DEV-SK-005, TSST-DEV-SK-011]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-AUTH-B4.md
+sha256: ec6ac1d076a1bab8c4a1f2ad34707a92bae9557f01f8560c809c1c94394229b6
+note: B4 0562b10; required checks green, lane DB 201/201. Actual model metadata unavailable. Ready for Lead review.

@@ -1,0 +1,26 @@
+id: CRM-U08
+title: Track U 8/19 · B8 invite accept + reset pages
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_UI_MIGRATION.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-U08.md]
+after: []
+done_when: "UI_MIGRATION_PLAN task #8 done_when met; C checks green; report ≤15 lines"
+issued_by: claude
+created: "2026-10-08T11:05Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: Resumed after approval-service limit; fragment/API unit contracts green; browser adverse-path verification underway.
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-U08.md
+sha256: 27ed7c936e2fb44bd1379e439125cb9e2e6089d3e297c8b9b7dcc98fc95ab6ca
+note:

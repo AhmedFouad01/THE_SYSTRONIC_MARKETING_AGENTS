@@ -1,0 +1,26 @@
+id: THEME-HEROUI-1
+title: "Systronic theme on HeroUI: live prototype + QA shots"
+kind: work
+status: cancelled
+to: codex
+needs: [shell, fs_write]
+tier: WORK
+team: studio
+skills: [TSST/CREATIVE/skills/tsst-creative-sk-003-design-tokens, TSST/CREATIVE/skills/tsst-creative-sk-005-typography-system, TSST/CREATIVE/skills/tsst-creative-sk-006-color-system-accessibility, TSST/CREATIVE/skills/tsst-creative-sk-010-visual-qa-brand-compliance, TSST/CREATIVE/skills/tsst-creative-sk-026-arabic-first-rtl-bidi-product-ux]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_THEME_HEROUI.md
+read: [TSST/brands/t-sag]
+write: [TSST/brands/t-sag/projects/crm/redesign/03d_THEME_HEROUI/]
+after: []
+done_when: "03d_THEME_HEROUI has DESIGN.md, theme/, preview/ (opens from file://) and qa/ with 12 shots + QA.md; npm run build passes; HeroUI licence/RTL verified with URLs"
+issued_by: claude
+created: "2026-10-09T11:28Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

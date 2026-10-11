@@ -1,0 +1,14 @@
+{
+  "verbal_snapshot_equals_source_normalized_LF": true,
+  "verbal_source_sha256": "91a020e078ddbb78930f0325636e443632f5cb7a8158e128e873a37dfc75ba82",
+  "approved_logo_sha256": "f743a268847ed6e278274b43fd3ddb0b02bead64662f45be57cda4fe7ae697c7",
+  "approved_palette_sha256": "7f7d49eaf65b812971270984b334eaee2ab8c6161b466f6f972b63299c0aaaea",
+  "pdf_sha256": "c494015944d8953eeb77a41f1212c994a89507fa188354645e3a286d758123aa",
+  "page_png_count": 24,
+  "page_html_count": 24,
+  "pdf_page_count": 24,
+  "all_png_1920x1080": true,
+  "all_page_fonts_images_loaded_no_detected_overflow": true,
+  "all_application_images_loaded_no_detected_overflow": true,
+  "visual_inspection": "24 PNG and 24 actual PDF raster pages via contact boards, full-size weakest pages and native phones/crops. Coordinator internal inspection; not user acceptance."
+}

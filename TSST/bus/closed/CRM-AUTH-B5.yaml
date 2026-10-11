@@ -1,0 +1,26 @@
+id: CRM-AUTH-B5
+title: Track C · auth B5 (AUTH_PLAN increment B5)
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-007, TSST-DEV-SK-005, TSST-DEV-SK-011]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_AUTH_B4_B5.md
+read: [TSST/brands/t-sag/projects/crm/codex/, TSST/brands/t-sag/projects/crm/specs/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-AUTH-B5.md]
+after: []
+done_when: AUTH_PLAN increment B5 acceptance met; checks green on crm_lane_auth; report ≤25 lines
+issued_by: claude
+created: "2026-10-07T18:10Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "B5 focused10/10; lint/type/unit625/build/bootstrap green. First DB207/211: B1 inventory fixed; measured9.764s startup supports M1 harness30s. Final full DB rerun pending; stop after B5."
+skills_used: [TSST-DEV-SK-007, TSST-DEV-SK-005, TSST-DEV-SK-011]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-AUTH-B5.md
+sha256: b03d0fb2ae79f27d263f4e40b2993ac91d60cbb803e149d08025f91994dc7dca
+note: B5 5e65067; all required checks green; lane DB211/211 unit625/625. Model metadata unavailable. Stopped after B5; ready for Lead review.

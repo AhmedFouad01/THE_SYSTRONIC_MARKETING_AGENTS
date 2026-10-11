@@ -1,0 +1,26 @@
+id: CRM-I3R
+title: Track A 5/5 · I3 import commit + result ledger (/imports live)
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-I3R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task I3 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-I3R.md
+sha256: dbd8fb06368c2fd10e2aa918237141c8963ce41c50d9809483a0ec349cec77d2
+note: 7411549; C green lint317/typecheck/unit543 in51/build191. Atomic commit, identical retry, history50/ledger200, verified live nav gates. Final Track A task; stopped.

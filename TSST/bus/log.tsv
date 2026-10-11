@@ -101,3 +101,264 @@
 2026-10-05T17:48Z	C7-VILL-11	codex	progress	v1.1 identity written; all seven renders/phone/RTL reviewed. 40 text elements AA pass; integrated cover logo survives crops. Final handoff underway.
 2026-10-05T17:51Z	C7-VILL-11	codex	done	Identity v1.1 + scoped review + seven semantic renders/QA delivered. PREVIS concept gate/rights limits retained; independent Lead acceptance next.
 2026-10-05T18:03Z	C7-VILL-11	claude	close	Lead ACCEPT identity v1.1 (colours/contrast/renders verified). User acceptance pending. Open items in LEAD_REVIEW_C7-VILL-11.md
+2026-10-05T18:09Z	C7-VILL-12	claude	new	
+2026-10-05T18:14Z	C7-VILL-12	codex	claim on gpt-6.1-sol	
+2026-10-05T18:26Z	C7-VILL-12	codex	progress	24 first pages + native applications/PDF rendered. Measured V angle, AR-first type, 3-page critique saved; clipping/grid/diagram corrections rendered.
+2026-10-05T18:38Z	C7-VILL-12	codex	progress	Final24 PNG/HTML +24page PDF verified; fresh native phones/crops inspected. Three-page before/after, per-page QA, guidance, exact verbal integrity and hash inventory complete.
+2026-10-05T18:38Z	C7-VILL-12	codex	done	24page guide PDF/PNG/HTML; critique+actual render QA+native crops+integrity. Internal inspection recorded; execution/verbal draft, no release. Skills002/008/005/010 applied.
+2026-10-06T08:57Z	-	claude	limit codex	limited 2099-12-31T23:59Z
+2026-10-07T15:39Z	-	claude	limit codex	available 
+2026-10-07T15:39Z	CRM-PLAN-ADS	claude	new	
+2026-10-07T15:39Z	CRM-PLAN-UX	claude	new	
+2026-10-07T15:39Z	CRM-PLAN-BUILD	claude	new	
+2026-10-07T15:49Z	CRM-PLAN-ADS	codex	claim on gpt-6	
+2026-10-07T15:55Z	CRM-PLAN-ADS	codex	done	2222 words; sections 1-6. SPARK gpt-6.1-sol; Meta docs inaccessible, verification pending; Egypt legal validation gap recorded.
+2026-10-07T15:55Z	CRM-PLAN-ADS	claude	close	
+2026-10-07T16:08Z	CRM-PLAN-UX	codex	claim on gpt-6.1-sol	
+2026-10-07T16:12Z	CRM-PLAN-UX	codex	done	Spec sections 1-4 saved. No tests/renders/web. Model dispatched gpt-6.1-sol medium; worker actual ID not exposed. Saturday aggregation dependency noted.
+2026-10-07T16:12Z	CRM-PLAN-UX	claude	close	
+2026-10-07T16:19Z	CRM-PLAN-BUILD	codex	claim on gpt-6.1-sol	
+2026-10-07T16:26Z	CRM-PLAN-BUILD	codex	done	Plan only: 2641 words, five sections, 40 tasks. No code/installs/tests/web. Dispatched gpt-6.1-sol high; worker actual model not exposed.
+2026-10-07T16:38Z	CRM-PLAN-BUILD	claude	close	
+2026-10-07T16:38Z	CRM-N1	claude	new	
+2026-10-07T16:38Z	CRM-N2	claude	new	
+2026-10-07T16:38Z	CRM-I1	claude	new	
+2026-10-07T16:38Z	CRM-I2	claude	new	
+2026-10-07T16:38Z	CRM-I3	claude	new	
+2026-10-07T16:38Z	CRM-D3	claude	new	
+2026-10-07T16:38Z	CRM-D0	claude	new	
+2026-10-07T16:38Z	CRM-D1	claude	new	
+2026-10-07T16:38Z	CRM-D2	claude	new	
+2026-10-07T16:38Z	CRM-D4	claude	new	
+2026-10-07T16:38Z	CRM-D5	claude	new	
+2026-10-07T16:38Z	CRM-D6	claude	new	
+2026-10-07T17:18Z	CRM-D3	codex	claim	
+2026-10-07T17:18Z	CRM-N1	codex	claim on gpt-6.1-sol	
+2026-10-07T17:28Z	CRM-N1	codex	done	N1 eaaa351; C green lint293/typecheck/unit475 in41/build177. Session-to-nav contract audited unchanged. Visual deferred; capability projection gap reported.
+2026-10-07T17:29Z	CRM-D3	codex	done	Commit 3b71847; C green (467 unit), isolated D 164/164; Saturday/Cairo DST/Monday compatibility. tsst-dev assigned CODE model; actual model not exposed.
+2026-10-07T17:30Z	CRM-N1	claude	close	
+2026-10-07T17:30Z	CRM-D3	claude	close	
+2026-10-07T17:30Z	CRM-N2	claude	cancel	recreate without after-gate: tracks are sequential in one session
+2026-10-07T17:30Z	CRM-I1	claude	cancel	re-issued as CRM-I1r without after-gate
+2026-10-07T17:30Z	CRM-I2	claude	cancel	re-issued as CRM-I2r without after-gate
+2026-10-07T17:30Z	CRM-I3	claude	cancel	re-issued as CRM-I3r without after-gate
+2026-10-07T17:30Z	CRM-D0	claude	cancel	re-issued as CRM-D0r without after-gate
+2026-10-07T17:30Z	CRM-D1	claude	cancel	re-issued as CRM-D1r without after-gate
+2026-10-07T17:30Z	CRM-D2	claude	cancel	re-issued as CRM-D2r without after-gate
+2026-10-07T17:30Z	CRM-D4	claude	cancel	re-issued as CRM-D4r without after-gate
+2026-10-07T17:30Z	CRM-D5	claude	cancel	re-issued as CRM-D5r without after-gate
+2026-10-07T17:30Z	CRM-D6	claude	cancel	re-issued as CRM-D6r without after-gate
+2026-10-07T17:30Z	CRM-N2R	claude	new	
+2026-10-07T17:30Z	CRM-I1R	claude	new	
+2026-10-07T17:30Z	CRM-I2R	claude	new	
+2026-10-07T17:30Z	CRM-I3R	claude	new	
+2026-10-07T17:30Z	CRM-D0R	claude	new	
+2026-10-07T17:30Z	CRM-D1R	claude	new	
+2026-10-07T17:30Z	CRM-D2R	claude	new	
+2026-10-07T17:30Z	CRM-D4R	claude	new	
+2026-10-07T17:30Z	CRM-D5R	claude	new	
+2026-10-07T17:30Z	CRM-D6R	claude	new	
+2026-10-07T17:31Z	CRM-D0R	codex	claim	
+2026-10-07T17:31Z	CRM-N2R	codex	claim on gpt-6.1-sol	
+2026-10-07T17:44Z	CRM-N2R	codex	done	b261291; C green lint298/typecheck/unit496 in43/build180. Switches revalidate known tab contexts; catalog/name gap documented.
+2026-10-07T17:44Z	CRM-I1R	codex	claim on gpt-6.1-sol	
+2026-10-07T17:49Z	CRM-D0R	codex	done	Commit 074a9c1; C green: lint296, typecheck2, unit485/485, build183. Shared chart surface; exact approved pins. No UI smoke per brief.
+2026-10-07T17:49Z	CRM-D1R	codex	claim	
+2026-10-07T18:00Z	CRM-D1R	codex	done	Commit 2cd9a0c; C green: lint299,type2,unit495/495,build185. C1 stage ordering/terminal tones/exact currency payload; no primary currency field exposed.
+2026-10-07T18:00Z	CRM-D2R	codex	claim	
+2026-10-07T18:02Z	CRM-I1R	codex	done	63aa776; C green lint307/typecheck/unit516 in47/build185. Guarded writes-free inspect+fields authority added; imports staged, nav inert.
+2026-10-07T18:02Z	CRM-I2R	codex	claim on gpt-6.1-sol	
+2026-10-07T18:10Z	CRM-AUTH-B4	claude	new	
+2026-10-07T18:10Z	CRM-AUTH-B5	claude	new	
+2026-10-07T20:57Z	CRM-D2R	codex	done	Commit 61f8d4f; C green: lint302,type2,unit506/506,build187. C2 KPI strip and source/status stacks, localized Other(N), assigned scope.
+2026-10-07T20:57Z	CRM-D4R	codex	claim	
+2026-10-07T21:01Z	CRM-I2R	codex	progress	Resumed after usage limit. Preview/policy UI and locales implemented; focused tests+C checks+commit/report pending. Same Track A branch; I3R follows done.
+2026-10-07T21:08Z	CRM-I2R	codex	done	bbc25d0; C green lint310/typecheck/unit526 in48/build187. Revision-bound writes-free previews/policies; current authority gates readiness; nav staged.
+2026-10-07T21:08Z	CRM-I3R	codex	claim on gpt-6.1-sol	
+2026-10-07T21:18Z	CRM-D4R	codex	done	Commit 6f35fa1; C green: lint305,type2,unit518/518,build189. C3 month/Saturday week, browser tz, optional exact single-currency won line.
+2026-10-07T21:18Z	CRM-D5R	codex	claim	
+2026-10-07T21:27Z	CRM-D5R	codex	done	Commit 58b8275; C green: lint308,type2,unit529/529,build191. Exact W1/W2 and C4 share aggregate; next24h excluded from partition.
+2026-10-07T21:27Z	CRM-D6R	codex	claim	
+2026-10-07T21:37Z	CRM-I3R	codex	done	7411549; C green lint317/typecheck/unit543 in51/build191. Atomic commit, identical retry, history50/ledger200, verified live nav gates. Final Track A task; stopped.
+2026-10-07T21:38Z	CRM-N2R	claude	close	
+2026-10-07T21:38Z	CRM-I1R	claude	close	
+2026-10-07T21:38Z	CRM-I2R	claude	close	
+2026-10-07T21:38Z	CRM-I3R	claude	close	
+2026-10-07T21:38Z	CRM-D0R	claude	close	
+2026-10-07T21:38Z	CRM-D1R	claude	close	
+2026-10-07T21:38Z	CRM-D2R	claude	close	
+2026-10-07T21:38Z	CRM-D4R	claude	close	
+2026-10-07T21:38Z	CRM-D5R	claude	close	
+2026-10-07T21:39Z	CRM-D6R	codex	done	Commit 9034abe; C green: lint312,type2,unit542/542,build194. Five-series Saturday activity, server-scope order, theme contrast tests. Visual smoke deferred per brief.
+2026-10-07T22:15Z	CRM-D6R	claude	close	
+2026-10-07T22:19Z	CRM-AUTH-B4	codex	claim on gpt-6.1-sol	
+2026-10-07T22:20Z	CRM-AUTH-B4	codex	progress	B4 claimed; tsst-dev executing 007/005/011. Worktree a99f01a includes B3 91706c1; preserve Track B merge. Actual model identifier unverified.
+2026-10-07T22:37Z	CRM-AUTH-B4	codex	done	B4 0562b10; required checks green, lane DB 201/201. Actual model metadata unavailable. Ready for Lead review.
+2026-10-07T22:37Z	CRM-AUTH-B5	codex	claim on gpt-6.1-sol	
+2026-10-07T22:38Z	CRM-AUTH-B5	codex	progress	B4 done at 0562b10. Same tsst-dev continues B5 with 007/005/011; reset-by-email off, manager copy-links, hashed token invalidation. Actual model metadata unavailable.
+2026-10-07T22:51Z	CRM-AUTH-B5	codex	progress	B5 implemented; focused reset/tenant/session behaviors pass. Log-capture empty-cookie fix pending rerun; final checks pending. Auth-only migration019, no new deps; stop after B5.
+2026-10-07T23:01Z	CRM-AUTH-B5	codex	progress	B5 focused10/10; lint/type/unit625/build/bootstrap green. First DB207/211: B1 inventory fixed; measured9.764s startup supports M1 harness30s. Final full DB rerun pending; stop after B5.
+2026-10-07T23:07Z	CRM-AUTH-B5	codex	done	B5 5e65067; all required checks green; lane DB211/211 unit625/625. Model metadata unavailable. Stopped after B5; ready for Lead review.
+2026-10-07T23:17Z	CRM-AUTH-B4	claude	close	
+2026-10-07T23:17Z	CRM-AUTH-B5	claude	close	
+2026-10-07T23:41Z	CRM-PLAN-UIMIG	claude	new	
+2026-10-08T00:17Z	CRM-PLAN-UIMIG	codex	claim on gpt-6.1-sol	
+2026-10-08T00:24Z	CRM-PLAN-UIMIG	codex	done	Plan only; 2413 words; 5 sections; 20 tasks; npm pins verified; unavailable review/P0-P4 exports noted. tsst-dev gpt-6.1-sol.
+2026-10-08T11:05Z	CRM-PLAN-UIMIG	claude	close	
+2026-10-08T11:05Z	CRM-U01	claude	new	
+2026-10-08T11:05Z	CRM-U02	claude	new	
+2026-10-08T11:05Z	CRM-U03	claude	new	
+2026-10-08T11:05Z	CRM-U04	claude	new	
+2026-10-08T11:05Z	CRM-U05	claude	new	
+2026-10-08T11:05Z	CRM-U06	claude	new	
+2026-10-08T11:05Z	CRM-U07	claude	new	
+2026-10-08T11:05Z	CRM-U08	claude	new	
+2026-10-08T11:05Z	CRM-U09	claude	new	
+2026-10-08T11:05Z	CRM-U10	claude	new	
+2026-10-08T11:05Z	CRM-U11	claude	new	
+2026-10-08T11:05Z	CRM-U12	claude	new	
+2026-10-08T11:05Z	CRM-U13	claude	new	
+2026-10-08T11:05Z	CRM-U14	claude	new	
+2026-10-08T11:05Z	CRM-U15	claude	new	
+2026-10-08T11:05Z	CRM-U16	claude	new	
+2026-10-08T11:05Z	CRM-U17	claude	new	
+2026-10-08T11:05Z	CRM-U18	claude	new	
+2026-10-08T11:05Z	CRM-U19	claude	new	
+2026-10-08T11:10Z	CRM-U01	codex	claim on gpt-6.1-sol	
+2026-10-08T11:12Z	CRM-U01	codex	progress	DEV_AG applying stack/theme setup. Baseline missing local auth/chart deps; installing approved pins and restoring declared dependencies before C checks.
+2026-10-08T11:17Z	CRM-U01	codex	progress	Stack/theme implemented; utility probe fixture failed twice (injection order). Final C then WIP checkpoint; no further probe attempts under brief stop gate.
+2026-10-08T11:20Z	CRM-U01	codex	progress	WIP 7cbd198; C green (625 unit tests). Report CRM-U01.md. Utility fixture injection failed twice; correct scan fixture and verify AR/EN light/dark before U02.
+2026-10-08T11:20Z	CRM-U01	codex	block	WIP 7cbd198; C green. Utility probe failed twice. May corrected temporary on-disk fixture be used to verify AR/EN light/dark utilities? See reports/CRM-U01.md.
+2026-10-08T11:20Z	CRM-U02	codex	claim on gpt-6.1-sol	
+2026-10-08T11:20Z	CRM-U02	codex	release	No U02 work started. Resume at blocked U01 WIP 7cbd198/report CRM-U01.md: corrected utility fixture + AR/EN light/dark verification after Lead resolution; then U02.
+2026-10-08T11:40Z	CRM-U01	claude	reopen	YES: use a temporary on-disk fixture restored in finally; simplest = check built CSS contains the utilities. Do not over-verify; 1 run then continue U02.
+2026-10-08T11:41Z	CRM-U01	codex	claim on gpt-6.1-sol	
+2026-10-08T11:44Z	CRM-U01	codex	done	U01 production fixture PASS; fresh C green, 625 tests; existing 7cbd198 retained.
+2026-10-08T11:44Z	CRM-U02	codex	claim on gpt-6.1-sol	
+2026-10-08T11:47Z	CRM-U02	codex	block	WIP aab7398; typecheck failed twice: RAC generic vs native button events. May next round narrow onClick at DOM boundary, rerun C/scenario, then U03? Report CRM-U02.md.
+2026-10-08T11:48Z	CRM-U01	claude	close	
+2026-10-08T11:48Z	CRM-U02	claude	reopen	Fix the onClick/onPress typing yourself (adapter maps native onClick to RAC onPress or keep native button). Brief updated: fix normal type errors, block only on design questions.
+2026-10-08T11:54Z	CRM-U02	codex	claim on gpt-6.1-sol	
+2026-10-08T12:05Z	CRM-U02	codex	done	
+2026-10-08T12:05Z	CRM-U03	codex	claim on gpt-6.1-sol	
+2026-10-08T12:13Z	CRM-U03	codex	done	
+2026-10-08T12:13Z	CRM-U04	codex	claim on gpt-6.1-sol	
+2026-10-08T12:22Z	CRM-U04	codex	done	
+2026-10-08T12:22Z	CRM-U05	codex	claim on gpt-6.1-sol	
+2026-10-08T12:22Z	CRM-U05	codex	release	Context heavy: U02-U04 done, HEAD d6bd5e4; U05 untouched. Resume plan #5 DatePicker/Badge/States/PageHeader; updated brief + SK005/011/015; C lint/typecheck/test:unit/build + ISO/focus QA.
+2026-10-08T12:30Z	CRM-U02	claude	close	
+2026-10-08T12:30Z	CRM-U03	claude	close	
+2026-10-08T12:30Z	CRM-U04	claude	close	
+2026-10-08T12:35Z	CRM-U05	codex	claim on gpt-6.1-sol	
+2026-10-08T12:50Z	CRM-U05	codex	done	U05 56fa9d2; C green 625 tests; 121 browser assertions. Next U06 shell/nav.
+2026-10-08T12:50Z	CRM-U06	codex	claim on gpt-6.1-sol	
+2026-10-08T13:02Z	CRM-U06	codex	done	U06 19080fc; C green 625 tests; 161 browser assertions. Next U07 auth fresh context recommended.
+2026-10-08T13:03Z	CRM-U07	codex	claim on gpt-6.1-sol	
+2026-10-08T13:16Z	CRM-U07	codex	done	U07 7039e2b; C green 633 tests; cookie UI 11/11; inherited Menu 3 baseline failures proved. Next U08.
+2026-10-08T13:18Z	CRM-U08	codex	claim on gpt-6.1-sol	
+2026-10-08T16:29Z	CRM-U08	codex	progress	Resumed after approval-service limit; fragment/API unit contracts green; browser adverse-path verification underway.
+2026-10-08T16:37Z	CRM-U08	codex	done	
+2026-10-08T16:38Z	CRM-U09	codex	claim on gpt-6.1-sol	
+2026-10-08T16:59Z	CRM-U09	codex	done	
+2026-10-08T17:00Z	CRM-U10	codex	claim on gpt-6.1-sol	
+2026-10-08T17:00Z	CRM-U10	codex	release	Context heavy; U05-U09 done, HEAD a9f5b8e; U10 untouched. Resume Security sessions/password, SK005/011/015, cookie client; B6 deferred; C+authUI; 3 inherited Menu failures.
+2026-10-08T17:49Z	CRM-U05	claude	close	
+2026-10-08T17:49Z	CRM-U06	claude	close	
+2026-10-08T17:49Z	CRM-U07	claude	close	
+2026-10-08T17:49Z	CRM-U08	claude	close	
+2026-10-08T17:49Z	CRM-U09	claude	close	
+2026-10-08T17:53Z	CRM-U10	codex	claim on gpt-6.1-sol	
+2026-10-08T18:04Z	CRM-U10	codex	done	
+2026-10-08T18:04Z	CRM-U11	codex	claim on gpt-6.1-sol	
+2026-10-08T18:06Z	CRM-U11	codex	done	
+2026-10-08T18:06Z	CRM-U12	codex	claim on gpt-6.1-sol	
+2026-10-08T18:08Z	CRM-U12	codex	done	
+2026-10-08T18:08Z	CRM-U13	codex	claim on gpt-6.1-sol	
+2026-10-08T18:10Z	CRM-U13	codex	done	
+2026-10-08T18:10Z	CRM-U14	codex	claim on gpt-6.1-sol	
+2026-10-08T18:11Z	CRM-U14	codex	done	
+2026-10-08T18:11Z	CRM-U15	codex	claim on gpt-6.1-sol	
+2026-10-08T19:05Z	CRM-U15	codex	done	
+2026-10-08T19:05Z	CRM-U16	codex	claim on gpt-6.1-sol	
+2026-10-08T19:07Z	CRM-U16	codex	done	
+2026-10-08T19:07Z	CRM-U17	codex	claim on gpt-6.1-sol	
+2026-10-08T19:11Z	CRM-U17	codex	done	
+2026-10-08T19:11Z	CRM-U18	codex	claim on gpt-6.1-sol	
+2026-10-08T19:15Z	CRM-U18	codex	done	
+2026-10-08T19:15Z	CRM-U19	codex	claim on gpt-6.1-sol	
+2026-10-08T19:24Z	CRM-U19	codex	done	
+2026-10-08T19:49Z	CRM-U10	claude	close	
+2026-10-08T19:49Z	CRM-U11	claude	close	
+2026-10-08T19:49Z	CRM-U12	claude	close	
+2026-10-08T19:49Z	CRM-U13	claude	close	
+2026-10-08T19:49Z	CRM-U14	claude	close	
+2026-10-08T19:49Z	CRM-U15	claude	close	
+2026-10-08T19:49Z	CRM-U16	claude	close	
+2026-10-08T19:49Z	CRM-U17	claude	close	
+2026-10-08T19:49Z	CRM-U18	claude	close	
+2026-10-08T19:49Z	CRM-U19	claude	close	
+2026-10-08T19:50Z	CRM-LOCALAUTH	claude	new	
+2026-10-08T19:52Z	CRM-LOCALAUTH	codex	claim	
+2026-10-08T19:58Z	CRM-LOCALAUTH	codex	done	Committed 0692d0d; all checks and 4318 sign-in pass; 4317 untouched. Actual parent model ID unavailable; DEV model per dispatch.
+2026-10-08T19:58Z	CRM-LOCALAUTH	claude	close	
+2026-10-08T21:25Z	CRM-F1	claude	new	
+2026-10-08T21:25Z	CRM-F2	claude	new	
+2026-10-08T21:25Z	CRM-F3	claude	new	
+2026-10-08T21:25Z	CRM-F4	claude	new	
+2026-10-08T21:27Z	CRM-F1	codex	claim on gpt-6.1-sol	
+2026-10-08T21:31Z	CRM-F2	codex	claim on gpt-6.1-sol	
+2026-10-08T21:31Z	CRM-F2	codex	release	No F2 implementation begun. Restore strict sequencing: F1 completion citation rejected; correct before F2 claim.
+2026-10-08T21:31Z	CRM-F1	codex	done	
+2026-10-08T21:31Z	CRM-F2	codex	claim on gpt-6.1-sol	
+2026-10-08T21:35Z	CRM-F2	codex	done	
+2026-10-08T21:36Z	CRM-F3	codex	claim on gpt-6.1-sol	
+2026-10-08T21:38Z	CRM-F3	codex	release	No F3 implementation begun. F2 corrected d408c7f/C green; Lead must reopen F2, then Codex refresh report/done before F3.
+2026-10-08T21:39Z	CRM-F1	claude	close	
+2026-10-08T21:39Z	CRM-F2	claude	reopen	Lead reopen: copy corrected report (d408c7f, Chart.js fix) into reports/CRM-F2.md, bus done, then continue F3, F4 in order and stop.
+2026-10-08T21:40Z	CRM-F2	codex	claim on gpt-6.1-sol	
+2026-10-08T21:40Z	CRM-F2	codex	done	
+2026-10-08T21:41Z	CRM-F3	codex	claim on gpt-6.1-sol	
+2026-10-08T21:43Z	CRM-YKREUSE	claude	new	
+2026-10-08T21:45Z	CRM-YKREUSE	claude	cancel	Ahmed: Claude team does it instead of Codex
+2026-10-08T21:47Z	CRM-F3	codex	done	
+2026-10-08T21:48Z	CRM-F4	codex	claim on gpt-6.1-sol	
+2026-10-08T21:57Z	CRM-F4	codex	done	
+2026-10-08T21:58Z	CRM-F2	claude	close	
+2026-10-08T21:58Z	CRM-F3	claude	close	
+2026-10-08T21:58Z	CRM-F4	claude	close	
+2026-10-08T23:06Z	CRM-G1	claude	new	
+2026-10-08T23:06Z	CRM-G2	claude	new	
+2026-10-08T23:06Z	CRM-G3	claude	new	
+2026-10-08T23:12Z	CRM-G1	codex	claim	
+2026-10-08T23:13Z	CRM-G1	codex	progress	R08 inventory complete; tsst-dev implementing additive migration 027, single labels/names, API/UI updates and isolated lane checks.
+2026-10-08T23:28Z	CRM-G1	codex	done	24d1352; migration027; D green: unit686 DB213 on crm_lane_fix2. Dispatched tsst-dev gpt-6.1-sol/high; root model unexposed.
+2026-10-08T23:28Z	CRM-G2	codex	claim on gpt-6.1-sol	
+2026-10-08T23:30Z	C7-VILL-12	claude	rehash	1eef5074->68524b2f: Lead STALE banner 2026-10-08 (navy #040136 superseded by petrol #01304A); body unchanged, verified by hash of body without banner
+2026-10-08T23:38Z	CRM-G2	codex	progress	028 applied on isolated lane; protected system fields/types and grid/panel/dialog actions compile. Adding masking/write/rollback/collision regressions before D.
+2026-10-08T23:54Z	CRM-G2	codex	done	552d120; migration028; D green: unit693 DB219 on crm_lane_fix2. Dispatched tsst-dev gpt-6.1-sol/high.
+2026-10-08T23:54Z	CRM-G3	codex	claim on gpt-6.1-sol	
+2026-10-09T00:28Z	CRM-G1	claude	close	
+2026-10-09T00:28Z	CRM-G2	claude	close	
+2026-10-09T09:17Z	CRM-G3	codex	progress	Resumed: all prior WIP preserved in 4b79414; tsst-dev finishing R10 and fresh D checks on crm_lane_fix2.
+2026-10-09T09:35Z	VB-1	claude	new	
+2026-10-09T09:35Z	VB-2	claude	new	
+2026-10-09T09:39Z	CRM-G3	codex	done	R10 complete: WIP 4b79414 preserved; finish 9301f2f. D green: unit701, DB227 on crm_lane_fix2; clean branch. Stopped.
+2026-10-09T09:40Z	CRM-G3	claude	close	
+2026-10-09T09:42Z	VB-1	codex	claim on gpt-6.1-sol	
+2026-10-09T09:46Z	VB-1	codex	done	13 areas + 5-line summary; 39 paths checked; SCC diagrams/index gap noted. Actual model ID unverified. Await Lead close before VB-2.
+2026-10-09T09:46Z	VB-1	claude	close	
+2026-10-09T10:30Z	VB-3	claude	new	
+2026-10-09T10:34Z	VB-2	codex	claim	
+2026-10-09T10:35Z	VB-2	codex	progress	VB2_PLAN.md drafted: 13 proposed blueprint rows, P1 TSST, 10 one-pass rounds. Model mapping shown; actual model not independently exposed. Await Lead review; not done.
+2026-10-09T10:37Z	VB-2	codex	progress	Plan verified: 13 rows, 10 rounds, explicit teams/bus/review/friction loop, proposed architecture caveat. Bus check has unrelated CRM-PLAN-BUILD hash mismatch. Await review; model unverified.
+2026-10-09T10:37Z	VB-2	codex	done	13 areas; P1-P3, explicit nodes/arrows, SPARK flags, 10 rounds. Editorial proposals; detail expansion deferred. Model unverified. Await independent-runtime review.
+2026-10-09T10:42Z	VB-2	claude	close	Accepted P1 (TSST, Delivery, CRM) for drawing; P2/P3 placeholder chains deferred until scoped source reads
+2026-10-09T10:53Z	VB-3	codex	claim	
+2026-10-09T10:57Z	VB-3	codex	progress	Native map saved: project 459260283370766336, 63 shapes; report VB3_REPORT.md. No PNG/SVG or render QA. Resume same project for visual check/export; do not redraw.
+2026-10-09T10:57Z	VB-3	codex	block	Native map/report saved. Browser CUA reset still exits; no native export/render tool. Can browser controls be restored or the existing canvas exported manually? Reuse project 459260283370766336.
+2026-10-09T11:28Z	THEME-HEROUI-1	claude	new	
+2026-10-09T12:26Z	VB-3	claude	reopen	Round 2: legend as corner swatches + larger readable nodes; edit existing canvas; see brief Round 2
+2026-10-09T12:38Z	THEME-HEROUI-1	claude	cancel	Codex exec sandbox failing on G:\; Ahmed moved the work to Antigravity (ROLE B) 2026-10-09
+2026-10-09T12:41Z	VB-3	codex	claim on gpt-6.1-sol	
+2026-10-09T12:45Z	VB-3	codex	done	Round 2 saved in existing canvas; 24 arrows preserved. Browser render QA unavailable; PNG optional per brief, skipped. Ready for independent Lead review.
+2026-10-09T12:47Z	VB-3	claude	close	Lead visual QA in browser: labels readable, flow/legend/lifecycle correct; PNG optional skipped

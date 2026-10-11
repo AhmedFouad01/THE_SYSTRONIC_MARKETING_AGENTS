@@ -1,0 +1,26 @@
+id: CRM-G3
+title: Fix batch 2 · 3/3 · R10 lead requires phone or email + missing-contact flag
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-006, TSST-DEV-SK-005, TSST-DEV-SK-011]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_REVIEW_FIX2.md
+read: [TSST/brands/t-sag/projects/crm/review/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-G3.md]
+after: []
+done_when: BRIEF_REVIEW_FIX2 task 3 done; review row satisfied; D checks green on lane DB; report ≤12 lines
+issued_by: claude
+created: "2026-10-08T23:06Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress: "Resumed: all prior WIP preserved in 4b79414; tsst-dev finishing R10 and fresh D checks on crm_lane_fix2."
+skills_used: [TSST-DEV-SK-006, TSST-DEV-SK-005, TSST-DEV-SK-011]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-G3.md
+sha256: 61b54c738512f50c261bab7b79efddab4dd0f0cc191152609c3331aa7748e1e8
+note: "R10 complete: WIP 4b79414 preserved; finish 9301f2f. D green: unit701, DB227 on crm_lane_fix2; clean branch. Stopped."

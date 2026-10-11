@@ -1,0 +1,11 @@
+task,tag,model,wall_s,num_turns,is_error,timed_out
+T1,local,qwen3-14b-32k,113.4,2,False,False
+T1,haiku,haiku,1.8,1,True,False
+T2,haiku,haiku,2,1,True,False
+T3,haiku,haiku,2,1,True,False
+T4,haiku,haiku,1.9,1,True,False
+T5,haiku,haiku,1.9,1,True,False
+T2,local,qwen3-14b-32k,156.2,8,False,False
+T3,local,qwen3-14b-32k,58.8,2,False,False
+T4,local,qwen3-14b-32k,134.8,2,False,False
+T5,local,qwen3-14b-32k,74.8,3,False,False

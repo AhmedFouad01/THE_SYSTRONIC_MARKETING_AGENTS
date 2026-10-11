@@ -1,0 +1,26 @@
+id: CRM-I3
+title: Track A · I3 import commit + result ledger (/imports live)
+kind: work
+status: cancelled
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-I3.md]
+after: [CRM-I2]
+done_when: BUILD_PLAN_v3 §3 task I3 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T16:38Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

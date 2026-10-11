@@ -1,0 +1,271 @@
+[demo 2026-10-07T16:12:45.709Z] resetting local database and applying migrations/seed
+[setup-admin] Admin user admin@systronic.local configured.
+(node:6984) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[demo] PASS: setup-admin configured the admin; tenant resolved -- tenantId=11111111-1111-4111-8111-111111111111
+[api] {"level":30,"time":1791389569442,"pid":62740,"hostname":"AhmedFouad-PC11k","msg":"Server listening at http://127.0.0.1:4010"}
+[api] {"level":30,"time":1791389569442,"pid":62740,"hostname":"AhmedFouad-PC11k","msg":"Server listening at http://172.20.10.3:4010"}
+[api] {"level":30,"time":1791389569442,"pid":62740,"hostname":"AhmedFouad-PC11k","msg":"Server listening at http://172.25.48.1:4010"}
+[api] {"level":30,"time":1791389569442,"pid":62740,"hostname":"AhmedFouad-PC11k","msg":"Server listening at http://172.19.208.1:4010"}
+[api] {"level":30,"time":1791389569522,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1","req":{"method":"GET","url":"/health","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] PASS: API is up -- http://127.0.0.1:4010
+[api] {"level":30,"time":1791389569527,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1","res":{"statusCode":200},"responseTime":4.637499999999818,"msg":"request completed"}
+[worker] Worker started...
+[api] {"level":30,"time":1791389570055,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-2","req":{"method":"POST","url":"/api/v1/auth/login","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] PASS: admin login
+[api] {"level":30,"time":1791389570138,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-2","res":{"statusCode":200},"responseTime":83.44299999999998,"msg":"request completed"}
+[api] {"level":30,"time":1791389570141,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-3","req":{"method":"POST","url":"/api/v1/customers","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570161,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-3","res":{"statusCode":200},"responseTime":19.75070000000005,"msg":"request completed"}
+[api] {"level":30,"time":1791389570175,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-4","req":{"method":"POST","url":"/api/v1/branches","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570182,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-4","res":{"statusCode":200},"responseTime":7.072499999999991,"msg":"request completed"}
+[api] {"level":30,"time":1791389570190,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-5","req":{"method":"POST","url":"/api/v1/enrollment-tokens","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570199,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-5","res":{"statusCode":200},"responseTime":8.702600000000075,"msg":"request completed"}
+[api] {"level":30,"time":1791389570207,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-6","req":{"method":"POST","url":"/api/v1/enrollment-tokens","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] PASS: customer + branch + 2 enrollment tokens created
+[api] {"level":30,"time":1791389570215,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-6","res":{"statusCode":200},"responseTime":8.059799999999996,"msg":"request completed"}
+[api] {"level":30,"time":1791389570228,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-7","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570233,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-7","res":{"statusCode":200},"responseTime":4.601800000000139,"msg":"request completed"}
+[api] {"level":30,"time":1791389570519,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-8","req":{"method":"POST","url":"/device/v1/enrollments/exchange","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65337},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570522,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-9","req":{"method":"POST","url":"/device/v1/enrollments/exchange","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570536,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-8","res":{"statusCode":200},"responseTime":16.51110000000017,"msg":"request completed"}
+[dev1] Device 1 enrolled.
+[api] {"level":30,"time":1791389570546,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-9","res":{"statusCode":200},"responseTime":23.165900000000192,"msg":"request completed"}
+[dev2] Device 2 enrolled.
+[api] {"level":30,"time":1791389570554,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-a","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65337},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570567,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-a","res":{"statusCode":200},"responseTime":13.395100000000184,"msg":"request completed"}
+[api] {"level":30,"time":1791389570569,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-b","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[dev1] Device 1 sent heartbeat.
+[api] {"level":30,"time":1791389570581,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-b","res":{"statusCode":200},"responseTime":11.346100000000206,"msg":"request completed"}
+[api] {"level":30,"time":1791389570583,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-c","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65337},"msg":"incoming request"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389570588,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-c","res":{"statusCode":404},"responseTime":5.712500000000091,"msg":"request completed"}
+[api] {"level":30,"time":1791389570590,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-d","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389570594,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-d","res":{"statusCode":404},"responseTime":3.7071999999998297,"msg":"request completed"}
+[api] {"level":30,"time":1791389572252,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-e","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389572259,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-e","res":{"statusCode":200},"responseTime":6.82549999999992,"msg":"request completed"}
+[api] {"level":30,"time":1791389574287,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-f","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389574292,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-f","res":{"statusCode":200},"responseTime":4.919599999999264,"msg":"request completed"}
+[api] {"level":30,"time":1791389576322,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-g","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389576328,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-g","res":{"statusCode":200},"responseTime":6.289299999999457,"msg":"request completed"}
+[api] {"level":30,"time":1791389578346,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-h","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389578351,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-h","res":{"statusCode":200},"responseTime":4.914699999999357,"msg":"request completed"}
+[api] {"level":30,"time":1791389580380,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-i","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389580384,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-i","res":{"statusCode":200},"responseTime":4.04320000000007,"msg":"request completed"}
+[api] {"level":30,"time":1791389582415,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-j","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389582421,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-j","res":{"statusCode":200},"responseTime":5.918700000000172,"msg":"request completed"}
+[api] {"level":30,"time":1791389584444,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-k","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389584449,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-k","res":{"statusCode":200},"responseTime":5.352899999999863,"msg":"request completed"}
+[worker] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set. Logging to console:
+[worker] 📅 ملخص اليوم
+[worker] لا يوجد تنبيهات مفتوحة أو رخص تنتهي قريباً.
+[api] {"level":30,"time":1791389586469,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-l","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] /api/v1/home (initial):
+[
+  {
+    "label": "Simulator 2",
+    "ops_health": "GREEN",
+    "lastSeenAt": "2026-10-07T16:12:50.575Z",
+    "branchName": "Maadi",
+    "customerName": "Demo Cafe Group"
+  },
+  {
+    "label": "Simulator 1",
+    "ops_health": "GREEN",
+    "lastSeenAt": "2026-10-07T16:12:50.561Z",
+    "branchName": "Maadi",
+    "customerName": "Demo Cafe Group"
+  }
+]
+[demo] PASS: /api/v1/home shows both devices GREEN
+[demo] PASS: both simulators identified
+[api] {"level":30,"time":1791389586476,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-l","res":{"statusCode":200},"responseTime":6.252500000002328,"msg":"request completed"}
+[api] {"level":30,"time":1791389586485,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-m","req":{"method":"GET","url":"/api/v1/plans","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[api] {"level":30,"time":1791389586489,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-m","res":{"statusCode":200},"responseTime":3.757900000000518,"msg":"request completed"}
+[api] {"level":30,"time":1791389586502,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-n","req":{"method":"POST","url":"/api/v1/subscriptions","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389586526,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-n","res":{"statusCode":200},"responseTime":23.760299999998097,"msg":"request completed"}
+[api] {"level":30,"time":1791389586532,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-o","req":{"method":"GET","url":"/api/v1/devices?limit=50","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[demo] PASS: device 1 id resolved via API
+[api] {"level":30,"time":1791389586537,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-o","res":{"statusCode":200},"responseTime":4.459600000001956,"msg":"request completed"}
+[api] {"level":30,"time":1791389586548,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-p","req":{"method":"POST","url":"/api/v1/licenses","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389586562,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-p","res":{"statusCode":200},"responseTime":13.577099999998609,"msg":"request completed"}
+[demo] PASS: license issued for device 1 -- expiresAt=2027-01-05T16:13:06.555Z
+[demo 2026-10-07T16:13:06.575Z] stopping device 1
+[api] {"level":30,"time":1791389586594,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-q","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389586598,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-q","res":{"statusCode":200},"responseTime":4.020699999997305,"msg":"request completed"}
+[api] {"level":30,"time":1791389588629,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-r","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389588632,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-r","res":{"statusCode":200},"responseTime":3.0038000000022294,"msg":"request completed"}
+[api] {"level":30,"time":1791389590621,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-s","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389590640,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-s","res":{"statusCode":200},"responseTime":18.474699999998847,"msg":"request completed"}
+[api] {"level":30,"time":1791389590640,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-t","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389590643,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-t","res":{"statusCode":200},"responseTime":2.870500000000902,"msg":"request completed"}
+[api] {"level":30,"time":1791389590652,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-u","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389590657,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-u","res":{"statusCode":404},"responseTime":4.336800000000949,"msg":"request completed"}
+[api] {"level":30,"time":1791389592670,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-v","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389592674,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-v","res":{"statusCode":200},"responseTime":4.229500000001281,"msg":"request completed"}
+[api] {"level":30,"time":1791389594697,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-w","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389594700,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-w","res":{"statusCode":200},"responseTime":3.2242000000005646,"msg":"request completed"}
+[api] {"level":30,"time":1791389596727,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-x","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389596731,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-x","res":{"statusCode":200},"responseTime":4.4069000000017695,"msg":"request completed"}
+[api] {"level":30,"time":1791389598751,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-y","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389598756,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-y","res":{"statusCode":200},"responseTime":4.355799999997544,"msg":"request completed"}
+[api] {"level":30,"time":1791389600777,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-z","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389600781,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-z","res":{"statusCode":200},"responseTime":4.211599999998725,"msg":"request completed"}
+[api] {"level":30,"time":1791389602798,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-10","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389602803,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-10","res":{"statusCode":200},"responseTime":4.566599999998289,"msg":"request completed"}
+[api] {"level":30,"time":1791389604824,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-11","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389604829,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-11","res":{"statusCode":200},"responseTime":4.086999999999534,"msg":"request completed"}
+[api] {"level":30,"time":1791389606850,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-12","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389606855,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-12","res":{"statusCode":200},"responseTime":5.171999999998661,"msg":"request completed"}
+[api] {"level":30,"time":1791389608886,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-13","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389608891,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-13","res":{"statusCode":200},"responseTime":4.149700000001758,"msg":"request completed"}
+[api] {"level":30,"time":1791389610625,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-14","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389610638,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-14","res":{"statusCode":200},"responseTime":12.125299999999697,"msg":"request completed"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389610657,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-15","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389610663,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-15","res":{"statusCode":404},"responseTime":6.503799999998591,"msg":"request completed"}
+[api] {"level":30,"time":1791389610922,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-16","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389610927,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-16","res":{"statusCode":200},"responseTime":4.723500000000058,"msg":"request completed"}
+[api] {"level":30,"time":1791389612958,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-17","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389612963,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-17","res":{"statusCode":200},"responseTime":4.441600000005565,"msg":"request completed"}
+[api] {"level":30,"time":1791389614979,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-18","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389614984,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-18","res":{"statusCode":200},"responseTime":4.465199999998731,"msg":"request completed"}
+[api] {"level":30,"time":1791389617000,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-19","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389617004,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-19","res":{"statusCode":200},"responseTime":4.325300000004063,"msg":"request completed"}
+[api] {"level":30,"time":1791389619028,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1a","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389619034,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1a","res":{"statusCode":200},"responseTime":5.362300000000687,"msg":"request completed"}
+[api] {"level":30,"time":1791389621050,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1b","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389621055,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1b","res":{"statusCode":200},"responseTime":4.5020000000004075,"msg":"request completed"}
+[api] {"level":30,"time":1791389623079,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1c","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389623084,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1c","res":{"statusCode":200},"responseTime":4.483100000004924,"msg":"request completed"}
+[api] {"level":30,"time":1791389625103,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1d","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389625106,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1d","res":{"statusCode":200},"responseTime":3.4711000000024796,"msg":"request completed"}
+[api] {"level":30,"time":1791389627122,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1e","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389627126,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1e","res":{"statusCode":200},"responseTime":4.066700000003038,"msg":"request completed"}
+[api] {"level":30,"time":1791389629158,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1f","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389629163,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1f","res":{"statusCode":200},"responseTime":4.2167999999946915,"msg":"request completed"}
+[api] {"level":30,"time":1791389630636,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1g","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389630657,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1g","res":{"statusCode":200},"responseTime":21.24260000000504,"msg":"request completed"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389630666,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1h","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389630671,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1h","res":{"statusCode":404},"responseTime":4.280999999995402,"msg":"request completed"}
+[api] {"level":30,"time":1791389631193,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1i","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389631197,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1i","res":{"statusCode":200},"responseTime":3.4804999999978463,"msg":"request completed"}
+[api] {"level":30,"time":1791389633215,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1j","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389633219,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1j","res":{"statusCode":200},"responseTime":4.7203000000008615,"msg":"request completed"}
+[api] {"level":30,"time":1791389635250,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1k","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389635254,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1k","res":{"statusCode":200},"responseTime":4.493800000011106,"msg":"request completed"}
+[api] {"level":30,"time":1791389637283,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1l","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389637286,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1l","res":{"statusCode":200},"responseTime":3.2872000000061234,"msg":"request completed"}
+[api] {"level":30,"time":1791389639307,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1m","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389639311,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1m","res":{"statusCode":200},"responseTime":4.019899999999325,"msg":"request completed"}
+[api] {"level":30,"time":1791389641332,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1n","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389641336,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1n","res":{"statusCode":200},"responseTime":4.039999999993597,"msg":"request completed"}
+[api] {"level":30,"time":1791389643356,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1o","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389643360,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1o","res":{"statusCode":200},"responseTime":4.3870999999926426,"msg":"request completed"}
+[worker] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set. Logging to console:
+[worker] 🔴 حالة حرجة (RED)
+[worker] العميل: Demo Cafe Group
+[worker] الفرع: Maadi
+[worker] السبب: توقف لأكثر من 24 ساعة
+[worker] الرابط: http://localhost:5173
+[api] {"level":30,"time":1791389645376,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1p","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo 2026-10-07T16:14:05.379Z] device 1 turned RED after 59s
+[api] {"level":30,"time":1791389645379,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1p","res":{"statusCode":200},"responseTime":2.7563000000081956,"msg":"request completed"}
+[api] {"level":30,"time":1791389645391,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1q","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[demo] PASS: device 1 RED, device 2 still GREEN
+[api] {"level":30,"time":1791389645394,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1q","res":{"statusCode":200},"responseTime":3.201199999995879,"msg":"request completed"}
+[api] {"level":30,"time":1791389645407,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1r","req":{"method":"GET","url":"/api/v1/alerts","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] PASS: exactly one open alert row for device 1 -- [["offline_24h","open"]]
+[demo] PASS: exactly one RED console message -- count=1
+[api] {"level":30,"time":1791389645410,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1r","res":{"statusCode":200},"responseTime":3.1794000000081724,"msg":"request completed"}
+[api] {"level":30,"time":1791389645423,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1s","req":{"method":"POST","url":"/api/v1/alerts/f3113ecd-7094-48f4-8c6b-1bef1bbc595a/acknowledge","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[demo 2026-10-07T16:14:05.439Z] acknowledged; waiting 33s (two worker cycles)
+[api] {"level":30,"time":1791389645438,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1s","res":{"statusCode":200},"responseTime":15.055999999996857,"msg":"request completed"}
+[api] {"level":30,"time":1791389650643,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1t","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389650664,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1t","res":{"statusCode":200},"responseTime":21.27479999999923,"msg":"request completed"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389650674,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1u","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389650680,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1u","res":{"statusCode":404},"responseTime":5.574800000002142,"msg":"request completed"}
+[api] {"level":30,"time":1791389670655,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1v","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389670673,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1v","res":{"statusCode":200},"responseTime":17.737099999998463,"msg":"request completed"}
+[dev2] Device 2 sent heartbeat.
+[api] {"level":30,"time":1791389670676,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1w","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389670680,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1w","res":{"statusCode":404},"responseTime":3.4618999999947846,"msg":"request completed"}
+[api] {"level":30,"time":1791389678465,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1x","req":{"method":"GET","url":"/api/v1/alerts","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[demo] PASS: after acknowledge + cycles: still exactly ONE alert row (acknowledged) -- [["offline_24h","acknowledged"]]
+[demo] PASS: no second RED message -- count=1
+[demo 2026-10-07T16:14:38.470Z] restarting device 1
+[api] {"level":30,"time":1791389678469,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1x","res":{"statusCode":200},"responseTime":4.383799999995972,"msg":"request completed"}
+[api] {"level":30,"time":1791389678475,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1y","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[api] {"level":30,"time":1791389678479,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1y","res":{"statusCode":200},"responseTime":3.7062000000005355,"msg":"request completed"}
+[api] {"level":30,"time":1791389678754,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1z","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":59079},"msg":"incoming request"}
+[api] {"level":30,"time":1791389678766,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-1z","res":{"statusCode":200},"responseTime":11.679900000002817,"msg":"request completed"}
+[dev1b] Device 1 sent heartbeat.
+[api] {"level":30,"time":1791389678779,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-20","req":{"method":"GET","url":"/device/v1/license","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":59079},"msg":"incoming request"}
+[api] {"level":30,"time":1791389678784,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-20","res":{"statusCode":200},"responseTime":5.404399999999441,"msg":"request completed"}
+[api] {"level":30,"time":1791389680501,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-21","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389680505,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-21","res":{"statusCode":200},"responseTime":4.1759999999922,"msg":"request completed"}
+[api] {"level":30,"time":1791389682529,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-22","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389682533,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-22","res":{"statusCode":200},"responseTime":4.151100000002771,"msg":"request completed"}
+[api] {"level":30,"time":1791389684552,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-23","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389684557,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-23","res":{"statusCode":200},"responseTime":4.274299999990035,"msg":"request completed"}
+[api] {"level":30,"time":1791389686577,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-24","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389686581,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-24","res":{"statusCode":200},"responseTime":4.111199999999371,"msg":"request completed"}
+[api] {"level":30,"time":1791389688598,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-25","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389688602,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-25","res":{"statusCode":200},"responseTime":3.894000000000233,"msg":"request completed"}
+[worker] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set. Logging to console:
+[worker] 🟢 تعافي
+[worker] العميل: Demo Cafe Group
+[worker] الفرع: Maadi
+[worker] تم حل مشكلة: توقف لأكثر من 24 ساعة (استمرت 1 دقيقة).
+[api] {"level":30,"time":1791389690622,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-26","req":{"method":"GET","url":"/api/v1/home","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389690627,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-26","res":{"statusCode":200},"responseTime":4.329200000007404,"msg":"request completed"}
+[api] {"level":30,"time":1791389690638,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-27","req":{"method":"GET","url":"/api/v1/alerts","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65336},"msg":"incoming request"}
+[demo] PASS: device 1 GREEN again and alert resolved
+[demo] PASS: exactly one recovery console message -- count=1
+[api] {"level":30,"time":1791389690642,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-27","res":{"statusCode":200},"responseTime":4.131599999993341,"msg":"request completed"}
+[api] {"level":30,"time":1791389690654,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-28","req":{"method":"POST","url":"/api/v1/payments","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65332},"msg":"incoming request"}
+[api] {"level":30,"time":1791389690667,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-28","res":{"statusCode":200},"responseTime":13.234899999995832,"msg":"request completed"}
+[api] {"level":30,"time":1791389690669,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-29","req":{"method":"POST","url":"/device/v1/heartbeats:batch","host":"127.0.0.1:4010","remoteAddress":"127.0.0.1","remotePort":65338},"msg":"incoming request"}
+[api] {"level":30,"time":1791389690678,"pid":62740,"hostname":"AhmedFouad-PC11k","reqId":"req-29","res":{"statusCode":200},"responseTime":8.884200000000419,"msg":"request completed"}
+[demo] grant before: expiresAt=2027-01-05T16:13:06.555Z
+[demo] grant after : expiresAt=2027-02-04T16:13:06.555Z (delta 30.00 days)
+[demo] PASS: new signed grant has extended expiresAt (+30 days)
+
+[demo] SUMMARY: 16/16 expectations passed
+[demo] RESULT: PASS
+[dev2] Device 2 sent heartbeat.
+[demo 2026-10-07T16:14:50.712Z] all child processes stopped
+
+===== npm run build =====
+npm notice run systronic-control-center@0.1.0 build
+npm notice run npm run build -ws
+Exit prior to config file resolving
+cause
+-ws is not a valid single-hyphen cli flag. Did you mean --ws?
+build exit=1
+
+===== npm run build (after fixing -ws flag; first attempt failed: '-ws is not a valid single-hyphen cli flag') =====
+npm notice run systronic-control-center@0.1.0 build
+npm notice run npm run build --workspaces --if-present
+npm notice run @scc/api@0.1.0 build
+npm notice run tsc -b
+npm notice run @scc/dashboard@0.1.0 build
+npm notice run tsc -b && vite build
+[36mvite v7.3.6 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 37 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.46 kB[22m[1m[22m[2m │ gzip:  0.28 kB[22m
+[2mdist/[22m[35massets/index-D0tm1jNm.css  [39m[1m[2m  6.68 kB[22m[1m[22m[2m │ gzip:  2.38 kB[22m
+[2mdist/[22m[36massets/index-jiEReYaa.js   [39m[1m[2m213.65 kB[22m[1m[22m[2m │ gzip: 67.16 kB[22m
+[32m✓ built in 656ms[39m
+npm notice run @scc/adapters@0.1.0 build
+npm notice run @scc/client-sdk@0.1.0 build
+npm notice run @scc/shared@0.1.0 build
+build exit=0
+===== typecheck+lint+test (final) =====
+[2m Test Files [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+[2m      Tests [22m [1m[32m42 passed[39m[22m[90m (42)[39m

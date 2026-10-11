@@ -1,0 +1,26 @@
+id: VB-1
+title: Visual blueprint inventory
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write]
+tier: WORK
+team: marketing
+skills: [TSST/LENS/skills/tsst-lens-sk-001-research-planning]
+brand: t-sag
+spec: TSST/handoffs/visual-blueprints/BRIEF_VB1_INVENTORY.md
+read: [TSST/, CRM_APP/]
+write: [TSST/handoffs/visual-blueprints/VB1_INVENTORY.md]
+after: []
+done_when: inventory table + 5-line summary, paths cited
+issued_by: claude
+created: "2026-10-09T09:35Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-LENS-SK-001]
+result: TSST/handoffs/visual-blueprints/VB1_INVENTORY.md
+sha256: 1b1808009fea31c6571e18f30dc7d53abd175020d2d0cb0fe6331bcfc8fc991c
+note: 13 areas + 5-line summary; 39 paths checked; SCC diagrams/index gap noted. Actual model ID unverified. Await Lead close before VB-2.

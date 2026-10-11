@@ -1,0 +1,26 @@
+id: CRM-D2R
+title: Track B 4/7 · D2 C2 leads widget
+kind: work
+status: closed
+to: codex
+needs: [fs_read, fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+brand: t-sag
+spec: TSST/brands/t-sag/projects/crm/codex/BRIEF_BUILD_TRACKS.md
+read: [TSST/brands/t-sag/projects/crm/specs/, TSST/brands/t-sag/projects/crm/codex/]
+write: [TSST/brands/t-sag/projects/crm/codex/reports/CRM-D2R.md]
+after: []
+done_when: BUILD_PLAN_v3 §3 task D2 done_when met; its C/D checks green; report ≤25 lines with commit + check counts
+issued_by: claude
+created: "2026-10-07T17:30Z"
+rounds: 0
+max_rounds: 1
+claimed_by: codex
+lease_until:
+progress:
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/brands/t-sag/projects/crm/codex/reports/CRM-D2R.md
+sha256: ef659d4dbd59212a6e985d66191b6fd6a97e754d1c12e2d970a1c608d7d1872e
+note: "Commit 61f8d4f; C green: lint302,type2,unit506/506,build187. C2 KPI strip and source/status stacks, localized Other(N), assigned scope."
