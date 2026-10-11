@@ -6,9 +6,13 @@ Backup Lead (owner, 2026-10-09): while Claude is limited, Codex is Lead (`roles:
 
 Never hand off: ad spend, publishing or posting, account or settings actions, Magnific generation, git push.
 
-Last updated: 2026-10-09 by the Lead.
+Last updated: 2026-10-11 by the Lead.
 
 ---
+
+## T0 · Repo branch separation: OPEN 2026-10-11 → Codex (backup Lead)
+Prompt + limits: `TSST/handoffs/repo-cleanup/STEP3-CODEX.md` (no push; local branch/worktree cleanup only).
+
 
 ## T1 · Delivery System v1 (bilingual): DONE 2026-10-09 (CREATIVE; Lead-reviewed). Skip this track.
 **State:**
