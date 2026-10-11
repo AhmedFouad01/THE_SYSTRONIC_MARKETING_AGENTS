@@ -17,7 +17,9 @@ Rules: raw media = reference only · no slideshow · logos composited · Arabic 
 | short-form video edit | 002 |
 | sound / voice mix | 003 |
 | colour grading / shot matching | 004 |
-| (new skills: written by MOTION_AG in later rounds) | — |
+| script, JSON shot list, master frames, image-to-video prompts, credit quote | 005 |
+| Egyptian voice, A/B voice test, music/SFX rights, hook variants | 006 |
+| code-drawn Arabic/mixed text overlays, safe box, render QA | 007 |
 
 Final video also loads `TSST/CREATIVE/CREATIVE_PRODUCTION_STANDARD.md` and `TSST/CREATIVE/FINAL_ASSET_GATE.md`. Tools: `TSST/CREATIVE/tools/code-motion/`.
 Tiers: WORK for scripts, shot lists, prompts and edit maps; VIDEO / IMAGE only where the runtime has a verified capability; DEEP only for brand-critical acceptance conflicts.
