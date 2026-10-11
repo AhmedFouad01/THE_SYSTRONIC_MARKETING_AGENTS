@@ -71,6 +71,24 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
   (`add --owner-ok --swap <row>`), and the swapped row moves to tomorrow. Day end: `close`
   (unfinished → tomorrow) + project checkpoints (Must 6). Spec: `TSST/daily/README.md`.
 
+## Job home, delivery, sync (owner rule, 2026-10-11)
+- **R18 Job home.** Every client job lives in `TSST/brands/<id>/projects/<job>/` and is listed in that brand's project.md. Never create new work in `TSST/PILOTS/` (historical archive, read-only) or `TSST/projects/`. Layout: `TSST/services/delivery/JOB_LAYOUT.md`.
+- **R19 Delivery page.** Every job that reaches the owner or client ends with `<job>/DELIVERY.json` → `python TSST/services/delivery/build_delivery.py <job>` → `DELIVERY.html` (client) + `DELIVERY_INTERNAL.html`, per `TSST/services/delivery/README.md` (v1.0). The Lead sends the page, not a folder of markdown files.
+- **R20 Same-round sync.** In the same round as the deliverable, update: the job's DELIVERY.json statuses, the brand project.md (job + state), brand `status.md` (Current), and the brand line in `TSST/core/portfolio.yaml`. A job is not done until the four agree. Check: `python TSST/services/delivery/job_check.py <job>`; refresh the brand index with `python TSST/services/delivery/sync_jobs.py <brand>` (generates `TSST/brands/<id>/JOBS.md`; job_check f) fails if it is stale).
+
+## Branch per track (owner rule, 2026-10-11)
+- **R21 Branch first.** The moment a brand, product or track comes up (ANVIL, VILL, CRM, SCC,
+  skill validation, Motion…), whatever runtime acts as Lead checks `git branch --show-current`
+  and, if it doesn't match, proposes switching to that track's branch (or creating
+  `<brand|track>/<topic>`) before any commit. Never commit track X on track Y's branch;
+  parallel sessions each use their own branch or worktree. Applies to every runtime and agent.
+
+## One Lead memory (owner rule, 2026-10-11)
+- **R22 Owner rules live in TSST.** Whatever the owner tells the Lead, in any runtime (Claude,
+  Codex, Gemini, Antigravity…), is the same rule everywhere: the Lead writes it here in
+  `TSST/core/rules.md` in the same turn. Runtime-private memory (e.g. Claude auto-memory) may
+  only point to the rule number, never hold an owner rule that TSST doesn't have.
+
 ## Never (without explicit user approval in chat)
 - publish, post, spend budget, contact clients, deploy
 - durably apply Real Memory changes
