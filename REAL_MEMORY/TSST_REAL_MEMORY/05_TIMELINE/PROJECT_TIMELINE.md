@@ -18,3 +18,4 @@
 | 2026-10-11 | Job layout unified (`3fc8b57`); VILL active jobs moved into the brand (`2e42b03`) | Done | — |
 | 2026-10-11 | Delivery System v1.1 (plan sections, JOBS.md sync) + week-01 DELIVERY pages VILL/ANVIL (`0829776`, `9688160`) | Done | Owner review |
 | 2026-10-11 | JOB_LAYOUT owner-approved (`a54ca35`) + new_job.py scaffold (`5973ad7`) | Done | Use for every new job |
+| 2026-10-11 | Repo cleanup: mixed tracks / 122 unpushed CRM UI commits / 185 MB TIF → gitleaks no real secrets, CRM + spike backups pushed, ANVIL scrubbed, master linear, six merged local branches deleted; final two TSST commits relocated locally. R21 branch per track, R22 one Lead memory, R23–R40 migrated from Claude memory. Evidence: lessons.md L-006; TSST/handoffs/repo-cleanup/ | Done; local Step 4 | Lead reviews STEP4-RESULT; no CRM merge or new push |

@@ -1,5 +1,12 @@
 # TSST — CURRENT STATUS
 
+## Repo cleanup — 2026-10-11 (owner-approved apply)
+
+- **FACT / problem:** TSST core/delivery and ANVIL work shared the ANVIL branch; CRM UI (122 commits) and the auth spike had never been pushed as backups; a 185 MB rollup TIF blocked a normal ANVIL push.
+- **FACT / fixed:** historical cleanup verified gitleaks had no real secrets (one reviewed source-hash false positive), pushed CRM UI + spike, scrubbed ANVIL in a scratch clone, and advanced master linearly. Step 3 deleted six merged local branches and archived the retained spike with a local tag. Step 4 moved the last two unpushed TSST commits (5973ad7 / d97fb10) to tsst-core/owner-rules and reset only the local ANVIL ref with --mixed; pre-existing main-tree WIP hashes stayed unchanged. No push in Steps 3–4; CRM merge remains separate.
+- **DECISION:** R21 requires one branch per track; R22 makes TSST the single Lead memory across runtimes; R23–R40 were moved from Claude-private memory into TSST/core/rules.md. No readiness or skill-validation change.
+- **Sources:** TSST/core/lessons.md L-006; TSST/core/rules.md R21–R40; TSST/handoffs/repo-cleanup/ (STEP1-RESULT, STEP3-RESULT, STEP4-RESULT). This entry supersedes the older current-status assertion that the 185 MB TIF still blocks the scrubbed ANVIL branch; the original historical text is retained.
+
 ## Update 2026-10-11 (evening, owner-approved Real Memory apply)
 
 - **Problem found:** Codex (VILL Lead) ran `marketing-week-01` for VILL and ANVIL without The Systronic Delivery System: VILL work landed in `TSST/PILOTS/`, two different file shapes, no DELIVERY pages, portfolio not synced. Root cause: the Delivery System and the "jobs live inside the brand" agreement were written only in `TSST/services/`, outside the chain every runtime reads.

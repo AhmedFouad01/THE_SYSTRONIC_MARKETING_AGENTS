@@ -200,3 +200,12 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Source: `TSST/core/rules.md` R18–R20, commit `0f95d46`, `TSST/services/delivery/job_check.py`.
 - Amended `2026-10-11`: the owner APPROVED the job file layout `TSST/services/delivery/JOB_LAYOUT.md` (README + 00_BRIEF…08_LEAD_CHECKPOINT + DELIVERY.* + files/ work/ observations/) as the standard for every new job (commit `3fc8b57`).
 - Amended `2026-10-11`: owner asked for a command for every new job → `TSST/services/delivery/new_job.py` (commit `5973ad7`), wired into R18.
+
+## TSD-024 — Repo cleanup and one Lead memory (R21–R40)
+
+- Date: `2026-10-11`
+- Status: `APPROVED` (Ahmed explicitly approved repo cleanup and this durable TSST memory update in chat).
+- Problem: mixed TSST/ANVIL tracks, 122 local-only CRM UI commits without a remote backup, and a 185 MB TIF in ANVIL history.
+- Recorded outcome: gitleaks found no real secrets (reviewed source-hash false positive); CRM UI + spike were pushed; ANVIL was scrubbed; master advanced linearly; six merged local branches were deleted. The last two unpushed TSST commits were relocated locally to tsst-core/owner-rules; main-tree WIP was preserved. No CRM merge or new push authorized by this entry.
+- Decision: R21 branch per track; R22 one Lead memory in TSST; R23–R40 migrated from Claude-private memory into TSST/core/rules.md. Readiness remains NOT_READY and skills remain UNVALIDATED.
+- Evidence: `TSST/core/lessons.md` L-006; `TSST/core/rules.md` R21–R40; `TSST/handoffs/repo-cleanup/` STEP1-RESULT, STEP3-RESULT and STEP4-RESULT.
