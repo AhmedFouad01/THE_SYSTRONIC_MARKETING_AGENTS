@@ -1,8 +1,38 @@
 # TSST — CURRENT STATUS
 
+## State as of 2026-10-11 (owner-approved Real Memory apply)
+
+Overall readiness: `NOT_READY` (unchanged). Pointer-first; details live in the cited files.
+
+**Team roster (fixed, runtime agents in Claude Code + Codex, generated from `TSST/context/roster.yaml`):** Lead + `tsst-lens` (LENS_AG), `tsst-spark` (SPARK_AG), `tsst-creative` (CREATIVE_AG), `tsst-dev` (DEV_AG), `tsst-motion` (MOTION_AG, new) + `tsst-reader`.
+
+**Motion AG / MOTION_AG (new, TSST-ADR-005, commit `d5bb15e`, TSD-022):**
+- Independent team `motion`, a peer of CREATIVE. CREATIVE_AG no longer owns video or motion; it keeps static design, brand and UI and does the final brand check on video.
+- Skills TSST-MOTION-SK-001..004 (formerly TSST-CREATIVE-SK-015..018), all `UNVALIDATED`. Readiness `NOT_READY`.
+- Generation is manual through Ahmed (no spend, publication or client contact without approval).
+- v1 spec = Balanced setup, run Budget-first: `TSST/brands/t-sag/projects/tsst-ai/motion-ag/LENS-MO-001_*.md` and `SPARK-MO-001_*.md`, Lead-accepted 2026-10-10.
+- Next: MOTION_AG writes 6 new motion skills (2 rounds), then a pilot 15 s Egyptian teaser as its first job.
+
+**Work since 2026-10-08 (from `git log`):**
+- ANVIL campaign-01: folder, reveal v2 pack, AE text-scene script, Lead handoff to Codex; roll-up Pre-Hell in progress (`TSST/brands/anvil/projects/campaign-01/`).
+- Photo-bank tool (local CLIP, all brands) + VILL raw bank of 1,583 sorted photos (`TSST/CREATIVE/tools/`).
+- The Systronic Delivery System v1.0 (`TSST/services/delivery/`) and service playbooks SV-01..06 (`TSST/services/`).
+- Rules R15-R16 (Lead replies clear/short/exact; ask owner before dispatch) and R17 (locked daily board, "ابدأ اليوم"): `TSST/core/rules.md`, `TSST/daily/`.
+- VILL social-setup-01 HANDOVER (owner approved) + SV-01 first-job lessons.
+- Skill friction log + repeat detector (`TSST/core/friction-log.md`); code-drawn motion method + HTML-to-MP4 capture tool.
+- C7-VILL-12 Brand Guidelines v1.0: unchanged since 2026-10-05, Lead review says system accepted, book not client-ready, round 2 not yet issued (`LEAD_REVIEW_C7-VILL-12.md`).
+
+**Open items:**
+- `TSST-001A`: resolved 2026-10-11 — CLOSED 2026-10-05 (TSD-013); portfolio.yaml corrected.
+- Motion AG skills and first pilot; all skills remain `UNVALIDATED`.
+- C7-VILL-12 round 2; VILL OPEN_DATA_REQUESTS; ANVIL campaign-01 reveal re-run + QA.
+- Test baseline `validate_spine` 27/29: failing checks `neutrality` (provider model names in research files) and `bus` (hash mismatches on CRM-PLAN-BUILD, VB-1).
+
+---
+
 Project Key: `TSST`  
 Project Name: `The Systronic Smart Agents`  
-Last Updated: `2026-10-08`  
+Last Updated: `2026-10-11`  
 State: `BASELINE_FROZEN`  
 Confidence: `Operating Baseline v0.1 frozen; readiness NOT_READY until C7`
 

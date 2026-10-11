@@ -21,6 +21,7 @@
 | CREATIVE_AG — Creative Direction & Production | Build/protect identity and turn approved strategy into professional still and motion creative. | Brand systems, art direction, key visuals, social design, compositing, motion/video production, finishing and final visual QA. | Final rendered-asset quality + brand consistency + visual QA. | 18 |
 | LENS_AG — Strategy / Research / Presentation | Turn evidence into strategy, plans, research, and decision-ready presentations. | Research design, source grading, competitor and customer insight, positioning, planning, data narrative, executive presentation logic. | Evidence quality and decision clarity. | 6 |
 | SPARK_AG — Performance Ads | Plan, launch, measure, and optimize paid media with strong measurement discipline. | Paid-media strategy, tracking, attribution, platform structure, audience logic, testing, optimization, and reporting. | Tracking validity, KPI definition, and experiment logic. | 6 |
+| MOTION_AG — Video & Motion Production | Turn approved strategy into video and motion assets (Balanced setup, run Budget-first). | Video/motion/reel/animation, voice-over, shot lists, code-motion, ffmpeg finishing. Generation is manual through the owner. | Shot-list and render QA; CREATIVE does the final brand check. | 0 (4 moved skills TSST-MOTION-SK-001..004, `UNVALIDATED`) |
 
 
 TSST-CREATIVE-SK-001 is `VALIDATED`; TSST-CREATIVE-SK-002 is `LAB_VALIDATED`; the other 16 Phase-1 packages remain `UNVALIDATED`. Registered later-phase skills are not installed as working packages yet.
@@ -113,3 +114,7 @@ The four-agent registration above is the existing team baseline. Including the a
 
 
 User-authorized scope extension for the Systronic CRM MVP: CREATIVE_AG owns product UI/UX architecture, enterprise interaction patterns, Arabic-first RTL/bidi UX, data-workspace design, accessibility annotations, responsive behavior, reporting UX, usability evaluation and implemented-interface visual/UX QA under TSST Lead orchestration. This does not create a new top-level agent and does not authorize CREATIVE_AG to alter backend/product semantics silently. Skills SK-020–SK-030 are installed but `UNVALIDATED`.
+
+## Motion AG team — 2026-10-11
+
+MOTION_AG (team `motion`, runtime agent `tsst-motion`) is a top-level fixed-roster peer of CREATIVE, created by TSST-ADR-005 (commit `d5bb15e`). CREATIVE_AG no longer owns video or motion; the former CREATIVE internal worker `CREATIVE/MOTION_AG/AGENT.md` is a pointer stub. Identity: `TSST/MOTION/AGENT.md`; team map: `TSST/teams/motion/team.md`. Skills TSST-CREATIVE-SK-015..018 became TSST-MOTION-SK-001..004, all `UNVALIDATED`. Readiness `NOT_READY`.

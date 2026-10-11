@@ -183,3 +183,10 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
   - v3 (Inter + Alex Brush) is built and awaits owner review.
 - Source: commits `cb64934`, `d8abbf5`; `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/showcase-01/REVIEW_v1.md`; Lead review headers in `TSST/CREATIVE/gemini/GEM-CR-003_out.md`, `GEM-CR-005_out.md` and `GEM-CR-006_out.md`; `TSST/brands/vill-studio/assets/ASSETS.yaml`.
 - Amended `2026-10-08` (same day): the user APPROVED showcase-01 v3 and the Lens CHANGED lines. Captions are still open (AR lines, the LinkedIn "most clients" claim). Skill statuses stay `UNVALIDATED`; v3 is recorded as field evidence in `TSST/CREATIVE/TRAINING_STATUS.md`.
+
+## TSD-022 — Motion AG: independent video/motion team (MOTION_AG)
+
+- Date: `2026-10-11`
+- Status: `APPROVED` (owner approval in chat 2026-10-10/11; governance registration only).
+- Decision: new team `motion`, manager MOTION_AG (`tsst-motion`), peer of CREATIVE; skills TSST-CREATIVE-SK-015..018 became TSST-MOTION-SK-001..004 (`UNVALIDATED`); generation manual through the owner; MOTION_AG `NOT_READY`.
+- Source: `TSST/decisions/TSST-ADR-005.md`, commit `d5bb15e`.

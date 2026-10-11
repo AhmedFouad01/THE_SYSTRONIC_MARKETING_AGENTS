@@ -1,6 +1,10 @@
 # TSST Lead Marketing Team Readiness Report
 
 
+## MOTION_AG registration — 2026-10-11
+
+New independent team `motion` / MOTION_AG registered by TSST-ADR-005 (commit `d5bb15e`); spec per LENS-MO-001 / SPARK-MO-001 (Lead-accepted 2026-10-10). Skills TSST-MOTION-SK-001..004 (formerly CREATIVE-SK-015..018) are `UNVALIDATED`. MOTION_AG is `NOT_READY`; overall TSST stays `NOT_READY`. The Team row below is the historical 32-skill CREATIVE/LENS/SPARK roll-up and excludes MOTION_AG.
+
 ## CREATIVE production training update — 2026-09-24
 
 
@@ -57,6 +61,7 @@ Historical four-agent summary: see the TSST migration update below. Earlier tabl
 | CREATIVE_AG | 10 | 6 | 2 passed, 4 queued | 7 | 3 | `NOT_READY` | Four Phase-1 evaluations remain unrun; Critical TSST-CREATIVE-SK-009–10 remain backlog. |
 | LENS_AG | 10 | 6 | 6 queued | 10 | 4 | `NOT_READY` | All six Phase-1 evaluations are unrun; Critical TSST-LENS-SK-008–09 remain backlog. |
 | SPARK_AG | 12 | 6 | 6 queued | 12 | 6 | `NOT_READY` | All six Phase-1 evaluations are unrun; Critical TSST-SPARK-SK-008, TSST-SPARK-SK-009, TSST-SPARK-SK-011, and TSST-SPARK-SK-012 remain backlog. |
+| MOTION_AG | 4 | 0 | none run | 4 | 0 | `NOT_READY` | New team (TSST-ADR-005, 2026-10-11); skills TSST-MOTION-SK-001..004 `UNVALIDATED`; generation manual via owner; first job (pilot 15 s Egyptian teaser) not started. |
 | Team | 32 | 18 | 2 passed, 16 queued | 29 | 13 | `NOT_READY` | Sixteen Phase-1 evaluations remain unpassed. |
 
 

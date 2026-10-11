@@ -2,7 +2,7 @@
 # Paths starting with "drive:" are provider-neutral Google Drive addresses relative to
 # "My Drive/". Repo paths are relative to the repository root. Adapters map both.
 version: 1
-updated: 2026-10-06
+updated: 2026-10-11
 brands:
   t-sag:
     name: T.SAG (The Systronic)
@@ -16,9 +16,9 @@ brands:
         checkpoint: TSST/brands/t-sag/projects/crm/project.md
         next: PAUSED until TSST Core accepted; then CRM_UI_HANDOFF → implementation mapping → CRM_APP UI (no M3, no redesign)
       tsst-ai:
-        state: consolidation session 2 in progress; RM-CS-001 applied (D-012 APPROVED); TSST-001A OPEN; TSST NOT_READY
+        state: Motion AG team (MOTION_AG, TSST-ADR-005, d5bb15e) registered 2026-10-11, NOT_READY, skills UNVALIDATED; RM-CS-001 applied (D-012 APPROVED); TSST-001A CLOSED 2026-10-05 (TSD-013); TSST NOT_READY
         checkpoint: TSST/brands/t-sag/projects/tsst-ai/project.md
-        next: receive ChatGPT bridge exports → CRM_UI_HANDOFF normalisation, RM-CS-002, cold-starts
+        next: MOTION_AG writes 6 new motion skills (2 rounds), then pilot 15 s Egyptian teaser; ChatGPT bridge exports → CRM_UI_HANDOFF normalisation, RM-CS-002, cold-starts
   akyro-studio:
     name: AKYRO_STUDIO
     kind: client
