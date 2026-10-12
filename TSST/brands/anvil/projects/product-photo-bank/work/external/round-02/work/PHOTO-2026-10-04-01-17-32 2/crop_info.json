@@ -1,0 +1,33 @@
+{
+  "source_filename": "PHOTO-2026-10-04-01-17-32 2.jpg",
+  "source_dimensions": [
+    1156,
+    520
+  ],
+  "crop_bbox": [
+    251,
+    14,
+    911,
+    520
+  ],
+  "crop_size": [
+    660,
+    506
+  ],
+  "placement_scale": 1.25,
+  "placement_position": [
+    387,
+    484
+  ],
+  "placement_size": [
+    825,
+    632
+  ],
+  "canvas_dimensions": [
+    1600,
+    1600
+  ],
+  "status": "REVIEW",
+  "qa_outcome": "REVIEW_REQUIRED",
+  "unresolved_reason": "plastic_wrap_glare_and_camera_watermark"
+}

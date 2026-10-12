@@ -1,0 +1,9 @@
+{
+  "SourceJpgs": 95,
+  "ManifestRows": 95,
+  "UniqueManifestNames": 95,
+  "MappedCopies": 95,
+  "HashAndSizePass": 95,
+  "Issues": [],
+  "Verified": "Current source hashes equal recorded manifest and bank copy hashes; not an independent pre-execution baseline"
+}

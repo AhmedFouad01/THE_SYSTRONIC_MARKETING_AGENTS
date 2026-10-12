@@ -1,0 +1,33 @@
+{
+  "source_filename": "PHOTO-2026-10-04-01-17-31 4.jpg",
+  "source_dimensions": [
+    1280,
+    705
+  ],
+  "crop_bbox": [
+    42,
+    79,
+    1168,
+    615
+  ],
+  "crop_size": [
+    1126,
+    536
+  ],
+  "placement_scale": 1.1989,
+  "placement_position": [
+    125,
+    479
+  ],
+  "placement_size": [
+    1350,
+    642
+  ],
+  "canvas_dimensions": [
+    1600,
+    1600
+  ],
+  "status": "COMPLETED",
+  "qa_outcome": "PASS_WITH_RESERVATIONS",
+  "unresolved_reason": "clear_cellophane_wrap_present_on_all_units"
+}
