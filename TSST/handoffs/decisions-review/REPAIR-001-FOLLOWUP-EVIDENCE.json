@@ -1,0 +1,14 @@
+{
+  "base_commit": "e5579c7db081b18d5d0e8aa74f9f56f8af658625",
+  "scope": "Final bus source and diff only; local preparation, no egress yet",
+  "files": {
+    "bus.py": "d0c1e762fe62124b961457671353dab2b8aa6192d4d89717bd70e366e59f26b7",
+    "bus.diff": "910933591e5be82045b8343d10fd22b46787523b33402365553c3ca8bc097922"
+  },
+  "tests": {
+    "enforcement": 24,
+    "isolated_bus_assertions": 61,
+    "local_independent_review": "accepted; DEV010/011/015"
+  },
+  "claude_final_review": "pending explicit follow-up approval"
+}

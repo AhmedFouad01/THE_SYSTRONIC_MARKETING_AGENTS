@@ -1,0 +1,9 @@
+ROLE A: TSST DEV_AG independent reviewer under Codex Lead. Owner explicitly authorized sending the limited TSST source/governance files to Claude Code Pro in the current chat. Read-only review of saved repair e5579c7; current canonical branch stays vill-studio. No mutations, branch changes, evaluations, campaigns, external tools, extra agents or commands.
+TEAM: build
+AGENT: tsst-dev
+SKILLS: TSST-DEV-SK-010, TSST-DEV-SK-012, TSST-DEV-SK-015
+NOT_SELECTED: deployment, broader audit and unrelated brands.
+TIER: CODE
+ACCEPTANCE: material reproducible defects with exact file:line and trigger in this limited proposed repair; concise no-findings if none. State limits.
+SKILL_GAP: none
+The native generated tsst-dev contract is selected by the CLI. Read only the three skill bodies via TSST/skills/index.yaml and the commit snapshot at TSST/handoffs/decisions-review/CLAUDE-SNAPSHOT-e5579c7/. That snapshot contains preflight.py, hook, bus.py, status_sync.py, job_check.py, workflow/boot/rules/decision rights. Use snapshot source as authoritative repair content; current live vill-studio code has not adopted the feature commit. Do not read brand files, Real Memory, credentials or user/global settings. No shell capability is granted; host already ran the original-workspace gate before saving. Scope focus: incomplete/fail-open plan dispatch, requested/approved Windows/glob scope containment, named agent team escape, bus result path boundaries and derived manifest mirrors. Two previous bugs (TEAMlead and glob expansion) have fixes; review current snapshot critically. You may read existing relevant tests only if needed, but do not execute them. Finish once with Skills used:, skill_friction:, findings, limits and actual contract/model loading evidence if available. No readiness or blanket runtime enforcement claim.

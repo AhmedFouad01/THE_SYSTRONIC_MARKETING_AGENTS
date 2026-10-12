@@ -84,3 +84,6 @@
   - GEM-CR-003/005/006 with Lead reviews.
 - Repo commit `d8abbf5`: VILL showcase-01 v1→v3 (copy deck, owner reviews, layered build scripts); ASSETS.yaml fonts are Alexandria + Inter.
 - Readiness unchanged (`NOT_READY`).
+
+## 2026-10-12 — TSD-025 / external-production.md
+Owner-approved two-stage external creative workflow saved: English brief via Ahmed, Lead review, separate delivery authorization, readable communication evidence, and ANVIL reuse with isolated brand facts. Core R41 and adapter/role pointers added. No campaign generation, publication, git commit or readiness promotion.

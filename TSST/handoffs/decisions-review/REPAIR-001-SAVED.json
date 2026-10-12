@@ -1,0 +1,22 @@
+{
+  "commits": [
+    "e5579c7db081b18d5d0e8aa74f9f56f8af658625",
+    "80e94dc6a4d95311ccb1760ece1fcaf1440de92d"
+  ],
+  "repair_branch": "tsst-core/owner-rules",
+  "returned_branch": "vill-studio",
+  "master_merged": false,
+  "protected_wip_paths": 13,
+  "changed_protected_paths": [],
+  "review": "Initial owner-approved limited Claude Pro review complete; findings fixed;24 final regressions,61 protocol assertions and independent local review PASS. Final Claude delta egress awaits separate user reply after auto-review rejection.",
+  "backup": "C:\\Users\\10\\AppData\\Local\\Temp\\tsst-repair-001-review-pass-_7gmd9ol",
+  "skills_used": [
+    "TSST-LEAD-SK-029",
+    "TSST-CTX-SK-005",
+    "TSST-DEV-SK-010",
+    "TSST-DEV-SK-011",
+    "TSST-DEV-SK-012",
+    "TSST-DEV-SK-015"
+  ],
+  "skill_friction": "none; external skill-creator validator unavailable (PyYAML missing), no PASS claimed"
+}
