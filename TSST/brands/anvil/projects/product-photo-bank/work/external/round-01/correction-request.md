@@ -1,0 +1,29 @@
+# ROLE B — Round 01 correction request / same external conversation
+
+SURFACE: Antigravity (continue the same conversation; Ahmed manually passes this request).
+SOURCE, READ ONLY: `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/brands/anvil/assets/Anvil products/`.
+JOB ROOT: `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/brands/anvil/projects/product-photo-bank/work/external/round-01/`.
+READ SCOPE: the source images, this job's current packet and `review.md`, and the existing PhotoBank tool files already used. No broad brand/memory/cache scans.
+WRITE SCOPE: only the job root's `correction-01/`, existing `labels.json`, `PRODUCTS.csv`, `SOURCE_MANIFEST.csv`, `FIELD_EVIDENCE.csv`, `REPORT.md`, and necessary outputs inside `bank/` and `logs/`. Archive affected files first. Save any helper code under `correction-01/` for a readable audit trail; do not create private scratch artifacts. Leave Lead review/request files and original photos unchanged.
+BUDGET: zero image-generation calls, zero paid API calls, no downloads or automatic exploratory reruns. Reuse the existing Python environment and PhotoBank CLI. No `embed` or `group` calls.
+
+ROLE: EXTERNAL TOOL. Ahmed/TSST Lead retains review and decisions. This is a sorting/metadata correction pass only. No white-background production, generation, delivery, model changes/downloads, re-embedding, new indexing scripts or repository-wide edits.
+
+The current packet accounts for 95 files and preserves bytes, but its identity/variant verification is rejected. Preserve existing source images, copied bytes, embeddings, caches, logs and reports. Before changes, archive existing labels/CSVs/report/INDEX/catalog evidence inside round-01 `correction-01/pre-correction/`; never overwrite unexplained prior work. Write a correction change log and revised report under `correction-01/` with links to authoritative updated metadata.
+
+1. Open each of the 95 original images at full resolution and re-audit associations by **exact filename**, never truncated contact-sheet captions or assumed file order. Correct PRODUCTS, FIELD_EVIDENCE, labels and SOURCE_MANIFEST together. Review all images; the following are confirmed errors, not an exhaustive list. Filenames share prefix `PHOTO-2026-10-04-01-` and suffix `.jpg`:
+
+   - `17-17`: Spooky EAA+BCAA, 300g, 40 servings; `17-17 2`: Grap'N'Go Whey Protein, 245g, 07 servings.
+   - `17-19`: Creatine CGT, 400g, 80 servings; `17-19 2`: Mad Fuelgen V2, 660g, 20 servings. All four show related TAKE/SEND branding: separate printed brand from product-line names after inspection.
+   - `17-24`: Tractor Beta Alanine, 120 GM, 40 servings, unflavored; `17-23 3`: Tractor Creatine, 240 GM, 80 servings, unflavored; `17-24 2`: Tractor Citrulline Malate, 130 GM, 40 servings, Blueberry; `17-23`: Tractor Creatine, 480 GM, 160 servings, unflavored; `17-23 2`: Tractor Creatine, 120 GM, 40 servings, unflavored.
+   - `17-31`: four MET-Rx shakers; `17-31 2`: seven ON-printed shakers; `17-31 4`: four SPORTSIUM-printed shakers; `17-33`: UNDER ARMOUR-printed bag. These are observed object counts, not proof of sale bundles/capacities or brand authenticity. The submitted 3-pack row is false.
+
+2. Re-audit every non-unknown field and every goal/benefit claim using field-specific label text/location. TVN bar muscle-building/recovery goals are not supported by the supplied protein/sugar/box snippet; EN Citrulline pump/blood-flow/endurance goals are not supported by its supplied identity/weight snippet. Remove or mark unknown/unverified unsupported tags; do not fill gaps from CLIP, general knowledge or web research. Preserve printed values; do not calculate/recommend serving sizes from net weight divided by serving count. Apply confidence to the actual field finding and explain unknown/unverified/N/A distinctions.
+
+3. Replace `95 verified variants` with separate source-image count, verified identity count, verified distinct variant count, unresolved candidate count and multi-item display counts. Seven SP Premium Creatine entries share all listed SKU-defining facts while differing by packaging color: verify flavor/formula/size or keep unresolved packaging alternatives; never delete/merge images solely by similarity. Accessories need image-to-many-observed-item mapping without inventing sale bundles. Keep all 95 source rows and expose unresolved cases for review.
+
+4. Maintain immutable original bytes and existing embeddings. Where corrections change routing, preserve the current labels and destination map, record old→new mappings and update only the necessary job-local sorting/catalog stages after correcting metadata. Do not re-run embed/group or change the model. Native catalog may load the already-cached model during a necessary refresh; use existing verified offline setup and stop on missing cache. No additional paid calls/downloads. Preserve earlier bank evidence; do not delete sources, previous copies or caches. Do not mistake stale previous copies for new primary assignments. Reconcile the corrected primary map separately, with every source accounted once and destination hashes unchanged.
+
+5. Correct REPORT's inaccurate native-filter vocabulary to actual generated values, its incorrect grouping command transcription, blanket verification statements and contact-sheet paths (`G001.jpg`…`G015.jpg`, not `_sheet.jpg`). Document necessary native reruns accurately. Repeat duplicate/twin audit and prove each verified variant remains visible; include unresolved/hidden review counts. Keep background readiness separate: contact-sheet screening suggests 18 already-white assets and 77 retail/other-background assets, pending full-source QA.
+
+Return revised metadata, correction log, old→new association/destination mapping, corrected reconciliation/variant metrics, field-specific evidence and a readable report. List every unresolved value honestly. Stop for Ahmed/TSST Lead review; no image production or delivery.

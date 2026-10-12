@@ -1,0 +1,33 @@
+{
+  "source_filename": "PHOTO-2026-10-04-01-17-23 3.jpg",
+  "source_dimensions": [
+    960,
+    1280
+  ],
+  "crop_bbox": [
+    20,
+    240,
+    887,
+    1103
+  ],
+  "crop_size": [
+    867,
+    863
+  ],
+  "placement_scale": 1.25,
+  "placement_position": [
+    258,
+    261
+  ],
+  "placement_size": [
+    1083,
+    1078
+  ],
+  "canvas_dimensions": [
+    1600,
+    1600
+  ],
+  "status": "REVIEW",
+  "qa_outcome": "REVIEW_REQUIRED",
+  "unresolved_reason": "hand_holding_product_obscures_packaging_boundary"
+}
