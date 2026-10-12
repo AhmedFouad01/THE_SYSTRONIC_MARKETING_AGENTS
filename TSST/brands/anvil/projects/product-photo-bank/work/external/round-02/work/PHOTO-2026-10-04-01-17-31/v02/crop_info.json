@@ -1,0 +1,33 @@
+{
+  "source_filename": "PHOTO-2026-10-04-01-17-31.jpg",
+  "source_dimensions": [
+    1280,
+    741
+  ],
+  "crop_bbox": [
+    32,
+    147,
+    1218,
+    723
+  ],
+  "crop_size": [
+    1186,
+    576
+  ],
+  "placement_scale": 1.1383,
+  "placement_position": [
+    125,
+    472
+  ],
+  "placement_size": [
+    1350,
+    655
+  ],
+  "canvas_dimensions": [
+    1600,
+    1600
+  ],
+  "status": "REVIEW",
+  "qa_outcome": "REVIEW_REQUIRED",
+  "unresolved_reason": "multi_item_display_requires_lead_acceptance"
+}

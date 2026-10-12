@@ -1,0 +1,33 @@
+{
+  "source_filename": "PHOTO-2026-10-04-01-16-56 2.jpg",
+  "source_dimensions": [
+    462,
+    717
+  ],
+  "crop_bbox": [
+    0,
+    0,
+    462,
+    717
+  ],
+  "crop_size": [
+    462,
+    717
+  ],
+  "placement_scale": 1.25,
+  "placement_position": [
+    511,
+    352
+  ],
+  "placement_size": [
+    577,
+    896
+  ],
+  "canvas_dimensions": [
+    1600,
+    1600
+  ],
+  "status": "REUSED_CANVAS",
+  "qa_outcome": "PASS",
+  "unresolved_reason": "none"
+}

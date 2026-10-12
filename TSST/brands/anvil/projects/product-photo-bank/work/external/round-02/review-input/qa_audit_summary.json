@@ -1,0 +1,16 @@
+{
+  "total_audited": 95,
+  "source_hash_mismatches": 0,
+  "output_hash_mismatches": 0,
+  "dimension_errors": 0,
+  "opacity_errors": 0,
+  "canvas_color_errors": 0,
+  "scale_errors": 0,
+  "missing_work_files": 0,
+  "status_breakdown": {
+    "REUSED_CANVAS": 18,
+    "REVIEW": 74,
+    "COMPLETED": 3
+  },
+  "total_sum": 95
+}

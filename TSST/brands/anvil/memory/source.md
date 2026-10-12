@@ -18,3 +18,6 @@ Verified draft source pointer: https://drive.google.com/drive/folders/1jecbVT2EU
 Draft lists START_HERE, CURRENT_STATUS, PROJECT_MASTER, milestones, changelog, decisions, sync inbox, prompts, exports, assets and archive as structure. This does not prove status/decision contents: the repository inventory above found only assets. Import mode: POINTER-FIRST / CONTROLLED HANDOFF; do not duplicate the whole source tree.
 
 Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/memory/source.md`.
+
+## Approved external production method — 2026-10-12
+The canonical memory now also contains the owner-approved reusable method at `05_DECISIONS_ADR/TSST_EXTERNAL_PRODUCTION_WORKFLOW_2026-10-12.md`. Recover it for the next ANVIL creative brief; see `TSST/context/external-production.md` / R41 / TSD-025. This adds a workflow decision only; it does not establish campaign status or start production. The earlier "only assets present" inventory describes 2026-10-04.

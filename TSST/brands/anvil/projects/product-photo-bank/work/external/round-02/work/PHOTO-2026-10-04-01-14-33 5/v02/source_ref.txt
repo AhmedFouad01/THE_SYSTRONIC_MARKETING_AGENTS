@@ -1,0 +1,5 @@
+Filename: PHOTO-2026-10-04-01-14-33 5.jpg
+Source Path: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\anvil\assets\Anvil products\PHOTO-2026-10-04-01-14-33 5.jpg
+Source SHA256: 84d8b6c066c65b17b0324bdbd45fda6808ffb6b0beaa10ec4f46cdebdff1694b
+Output Path: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\anvil\projects\product-photo-bank\work\external\round-02\outputs\PHOTO-2026-10-04-01-14-33 5__white_v02.png
+Output SHA256: 29f70ffc54576ed9d5a3751330f9da8a1856efb5b83aaa4e3b71e0366139952a

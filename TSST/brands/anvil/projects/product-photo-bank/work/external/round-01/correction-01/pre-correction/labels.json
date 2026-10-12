@@ -1,0 +1,857 @@
+{
+  "L001_TVN-BAR-PEANUT-BUTTER-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/peanut-butter-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Peanut Butter flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-33.jpg"
+    ]
+  },
+  "L002_TVN-BAR-CHEESECAKE-STRAWBERRY-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/cheesecake-strawberry-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Cheesecake Strawberry flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-33 2.jpg"
+    ]
+  },
+  "L003_TVN-BAR-CARAMEL-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/caramel-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Caramel flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-33 3.jpg"
+    ]
+  },
+  "L004_TVN-BAR-VANILLA-ICE-CREAM-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/vanilla-ice-cream-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Vanilla Ice Cream flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-33 4.jpg"
+    ]
+  },
+  "L005_TVN-BAR-CHUNKY-CHOCOLATE-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/chunky-chocolate-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Chunky Chocolate flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-33 5.jpg"
+    ]
+  },
+  "L006_TVN-BAR-MOCHASHOT-COOKIES-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/mochashot-cookies-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Mochashot Cookies flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-34.jpg"
+    ]
+  },
+  "L007_TVN-BAR-STRAWBERRY-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/strawberry-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Strawberry flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-34 2.jpg"
+    ]
+  },
+  "L008_TVN-BAR-PISTACHIO-WHITE-CHOC-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/pistachio-white-chocolate-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Pistachio White Chocolate flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-34 3.jpg"
+    ]
+  },
+  "L009_TVN-BAR-VANILLA-BISCUITS-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/vanilla-biscuits-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Vanilla Biscuits flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-34 4.jpg"
+    ]
+  },
+  "L010_TVN-BAR-DARK-CHOC-COOKIES-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/dark-choc-cookies-cream-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Dark Choc Cookies & Cream flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-34 5.jpg"
+    ]
+  },
+  "L011_TVN-BAR-BIRTHDAY-CAKE-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/birthday-cake-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Birthday Cake flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-35.jpg"
+    ]
+  },
+  "L012_TVN-BAR-HAZELNUT-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/hazelnut-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Hazelnut flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-35 2.jpg"
+    ]
+  },
+  "L013_TVN-BAR-COOKIES-CREAM-WHITE-CHOC-16PK": {
+    "folder_name": "tvn/protein-bar/beyond-elite/cookies-cream-white-choc-16-bars",
+    "description": "TVN Beyond Elite Protein Bar 16-pack box Cookies N Cream White Choc flavor",
+    "space_type": "studio_packshot",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-14-35 3.jpg"
+    ]
+  },
+  "L014_NEXUS-CREATINE-CREANEW-500G": {
+    "folder_name": "nexus/creatine/crea-new-500g",
+    "description": "Nexus Crea New Creatine Monohydrate 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-54.jpg"
+    ]
+  },
+  "L015_EN-CITRULLINE-POWDER-150G": {
+    "folder_name": "en/amino-acids/l-citrulline-150g",
+    "description": "EN L-Citrulline pure amino acid powder 150g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-57 2.jpg"
+    ]
+  },
+  "L016_EN-CREA-POWER-150G": {
+    "folder_name": "en/creatine/crea-power-150g",
+    "description": "EN Crea Power Creatine Monohydrate powder 150g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-22.jpg"
+    ]
+  },
+  "L017_EN-CREA-POWER-400G": {
+    "folder_name": "en/creatine/crea-power-400g",
+    "description": "EN Crea Power Creatine Monohydrate powder 400g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-22 2.jpg"
+    ]
+  },
+  "L018_EN-CREA-POWER-250G": {
+    "folder_name": "en/creatine/crea-power-250g",
+    "description": "EN Crea Power Creatine Monohydrate powder 250g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-22 3.jpg"
+    ]
+  },
+  "L019_NOVOGEN-WHEY-VANILLA-1KG": {
+    "folder_name": "novogen/protein/whey-protein-vanilla-ice-cream-1kg",
+    "description": "Novogen Pharma 100% Whey Protein Vanilla Ice Cream 1kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-55.jpg"
+    ]
+  },
+  "L020_MT-PLAT-CREATINE-UNFLAV-400G": {
+    "folder_name": "muscletech/creatine/platinum-creatine-unflavored-400g",
+    "description": "MuscleTech Platinum 100% Creatine Monohydrate Unflavored 400g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-55 2.jpg"
+    ]
+  },
+  "L021_SUP14-CREATINE-UNFLAV-300G": {
+    "folder_name": "superior14/creatine/creatine-monohydrate-unflavored-300g",
+    "description": "Superior 14 100% Creatine Monohydrate Unflavoured 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-01.jpg"
+    ]
+  },
+  "L022_SUP14-CREATINE-STRAWBERRY-300G": {
+    "folder_name": "superior14/creatine/creatine-monohydrate-strawberry-300g",
+    "description": "Superior 14 100% Creatine Monohydrate Strawberry Flavour 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-02 3.jpg"
+    ]
+  },
+  "L023_SP-PROT-FRUITY-PEBBLES-30SRV": {
+    "folder_name": "sp-premium/protein/premium-protein-fruity-pebbles-30serv",
+    "description": "SP Premium Signature Messaed Premium Whey Protein Fruity Pebbles 30 servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-03.jpg"
+    ]
+  },
+  "L024_SP-PROT-KETKAT-WAFER-900G": {
+    "folder_name": "sp-premium/protein/premium-protein-ketkat-chocolate-wafer-900g",
+    "description": "SP Premium Signature Messaed Premium Protein KetKat Chocolate Wafer 900g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-03 2.jpg"
+    ]
+  },
+  "L025_SP-PROT-DUBAI-CHOC-900G": {
+    "folder_name": "sp-premium/protein/premium-protein-dubai-chocolate-900g",
+    "description": "SP Premium Signature Messaed Premium Protein Dubai Chocolate 900g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-03 3.jpg"
+    ]
+  },
+  "L026_SP-CREATINE-PURPLE-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-purple-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Purple Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-04.jpg"
+    ]
+  },
+  "L027_SP-CREATINE-BLUE-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-blue-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Blue Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-05.jpg"
+    ]
+  },
+  "L028_SP-CREATINE-YELLOW-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-yellow-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Yellow Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-06.jpg"
+    ]
+  },
+  "L029_SP-CREATINE-ORANGE-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-orange-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Orange Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-06 2.jpg"
+    ]
+  },
+  "L030_SP-CREATINE-BLACK-SILVER-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-black-silver-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Black/Silver Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-06 3.jpg"
+    ]
+  },
+  "L031_SP-CREATINE-CREAM-WHITE-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-cream-white-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Cream/White Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-07.jpg"
+    ]
+  },
+  "L032_SP-CREATINE-RED-500G": {
+    "folder_name": "sp-premium/creatine/premium-creatine-red-edition-500g",
+    "description": "SP Premium Signature Messaed Premium Creatine Red Edition 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-07 2.jpg"
+    ]
+  },
+  "L033_SUP14-OMEGA3-60CAPS": {
+    "folder_name": "superior14/health/omega-3-softgel-60caps",
+    "description": "Superior 14 Omega 3 Softgel 1000mg 60 softgel capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-11 2.jpg"
+    ]
+  },
+  "L034_KL-ANABOLIC-GLUTAMINE-300G": {
+    "folder_name": "kevin-levrone/amino-acids/anabolic-glutamine-unflavored-300g",
+    "description": "Kevin Levrone Signature Series Black Line Anabolic Glutamine Unflavoured 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-11 3.jpg"
+    ]
+  },
+  "L035_MS-CREATINE-UNFLAV-300G": {
+    "folder_name": "muscle-show/creatine/creatine-monohydrate-unflavored-300g",
+    "description": "Muscle Show Creatine Monohydrate 60 Servings 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-12.jpg"
+    ]
+  },
+  "L036_PUREGANIC-CREATINE-UNFLAV-500G": {
+    "folder_name": "pureganic/creatine/creatine-monohydrate-unflavored-500g",
+    "description": "Pureganic Creatine Monohydrate Micronized Formula 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-12 2.jpg"
+    ]
+  },
+  "L037_MT-NITROTECH-COOKIES-1-81KG": {
+    "folder_name": "muscletech/protein/nitro-tech-cookies-cream-1-81kg",
+    "description": "MuscleTech Nitro Tech Ultimate Muscle Building Whey Protein Cookies & Cream 4 lbs tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-12 3.jpg"
+    ]
+  },
+  "L038_ZOOMAD-CITRULLINE-300G": {
+    "folder_name": "zoomad-labs/amino-acids/one-raw-citrulline-dl-malate-neutral-300g",
+    "description": "Zoomad Labs One Raw Citrulline DL-Malate AKA Escualo 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-13.jpg"
+    ]
+  },
+  "L039_KL-ANABOLIC-CREATINE-300G": {
+    "folder_name": "kevin-levrone/creatine/anabolic-creatine-unflavored-300g",
+    "description": "Kevin Levrone Signature Series Black Line Anabolic Creatine Unflavoured 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-13 2.jpg"
+    ]
+  },
+  "L040_MARVELOUS-CREATINE-300G": {
+    "folder_name": "marvelous/creatine/creatine-monohydrate-unflavored-300g",
+    "description": "Marvelous Nutrition 100% Micronised Creatine Monohydrate 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-15.jpg"
+    ]
+  },
+  "L041_YAVA-CREATINE-300G": {
+    "folder_name": "yava-labs/creatine/pure-creatine-unflavored-300g",
+    "description": "Yava Labs Pure Creatine with L-Taurine and Vitamin B6 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-15 2.jpg"
+    ]
+  },
+  "L042_CHALL-CREATINE-300G": {
+    "folder_name": "challenger/creatine/creatine-5000mg-unflavored-300g",
+    "description": "Challenger Nutrition Creatine 5000mg 60 Servings 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-16.jpg"
+    ]
+  },
+  "L043_YAVA-OMEGA3-90CAPS": {
+    "folder_name": "yava-labs/health/omega-3-90caps",
+    "description": "Yava Labs Omega 3 Supports Heart Health 90 capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-16 2.jpg"
+    ]
+  },
+  "L044_DY-CREATINE-300G": {
+    "folder_name": "dy-nutrition/creatine/the-shadow-line-creatine-unflavored-300g",
+    "description": "DY Nutrition Dorian Yates The Shadow Line Creatine Monohydrate Unflavoured 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-18.jpg"
+    ]
+  },
+  "L045_KL-GOLD-WHEY-CHOC-2KG": {
+    "folder_name": "kevin-levrone/protein/gold-whey-chocolate-2kg",
+    "description": "Kevin Levrone Signature Series Gold Line Gold Whey Chocolate 2kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-20.jpg"
+    ]
+  },
+  "L046_NOVOGEN-ISO-CHOC-1KG": {
+    "folder_name": "novogen/protein/whey-protein-isolate-double-chocolate-1kg",
+    "description": "Novogen Pharma Whey Protein Isolate Double Chocolate 1kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-20 2.jpg"
+    ]
+  },
+  "L047_NUTREX-CREATINE-UNFLAV-300G": {
+    "folder_name": "nutrex/creatine/creatine-monohydrate-unflavored-300g",
+    "description": "Nutrex Research Pure & Micronized Creatine Monohydrate Unflavored 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-20 3.jpg"
+    ]
+  },
+  "L048_NOVOGEN-CARB-MANGO-1-05KG": {
+    "folder_name": "novogen/carbs/carb-plus-minerals-mango-1-05kg",
+    "description": "Novogen Pharma Carb+ Minerals Mango Flavour 1.05kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-21.jpg"
+    ]
+  },
+  "L049_CHALL-WHEY-STRAWBERRY-1-7KG": {
+    "folder_name": "challenger/protein/whey-protein-strawberry-1-7kg",
+    "description": "Challenger Nutrition 100% Whey Protein Strawberry 3.75 lbs tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-25 2.jpg"
+    ]
+  },
+  "L050_NUTREX-EAA-STRAW-WATERMELON-390G": {
+    "folder_name": "nutrex/amino-acids/eaa-hydration-strawberry-watermelon-390g",
+    "description": "Nutrex Research EAA+ Hydration Strawberry Watermelon 390g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-26.jpg"
+    ]
+  },
+  "L051_NUTREX-ARGININE-120CAPS": {
+    "folder_name": "nutrex/amino-acids/l-arginine-1000-120caps",
+    "description": "Nutrex Research L-Arginine 1000 Nitric Oxide Booster 120 capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-26 2.jpg"
+    ]
+  },
+  "L052_MARVELOUS-VITAMIN-60CAPS": {
+    "folder_name": "marvelous/vitamins/vitamin-loaded-ingredients-60caps",
+    "description": "Marvelous Nutrition Vitamin Loaded Ingredients 60 Veggie Capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-26 3.jpg"
+    ]
+  },
+  "L053_NOVOGEN-CREATINE-UNFLAV-300G": {
+    "folder_name": "novogen/creatine/micronized-creatine-unflavored-300g",
+    "description": "Novogen Pharma Micronized Creatine Monohydrate 60 Servings 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-27.jpg"
+    ]
+  },
+  "L054_WB-CORE-HYDROLYSATE-60SRV": {
+    "folder_name": "william-bonac/protein/core-hydrolysate-60serv",
+    "description": "William Bonac Signature Core Hydrolysate CFM Whey Protein Hydrolysate 60 servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-28.jpg"
+    ]
+  },
+  "L055_MT-HYDROXYCUT-ELITE-110CAPS": {
+    "folder_name": "muscletech/fat-burner/hydroxycut-hardcore-elite-110caps",
+    "description": "MuscleTech Hydroxycut Hardcore Elite 110 Rapid-Release Thermo Caps bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-28 3.jpg"
+    ]
+  },
+  "L056_ULT-WHEY-CHOC-2KG": {
+    "folder_name": "ultimate/protein/ultimate-whey-protein-chocolate-2kg",
+    "description": "Ultimate Supplement Ultimate Whey Protein Chocolate 2kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-30.jpg"
+    ]
+  },
+  "L057_ZOOMAD-CREATINE-300G": {
+    "folder_name": "zoomad-labs/creatine/one-raw-creatine-neutral-300g",
+    "description": "Zoomad Labs One Raw 100% Creatine Ultra Pure 200 Mesh Neutral Flavour 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-30 2.jpg"
+    ]
+  },
+  "L058_FARAH-GAINSECRET-5KG": {
+    "folder_name": "farah-secrets/mass-gainer/gainsecret-5kg",
+    "description": "Farah Secrets Gainsecret Mass Gainer 5kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-54 2.jpg"
+    ]
+  },
+  "L059_NOVOGEN-MASS-5-4KG": {
+    "folder_name": "novogen/mass-gainer/mass-gainer-5-4kg",
+    "description": "Novogen Pharma Mass Gainer 5.4kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-55 3.jpg"
+    ]
+  },
+  "L060_TVN-THE-GAINER-5KG": {
+    "folder_name": "tvn/mass-gainer/the-gainer-5kg",
+    "description": "TVN The Gainer Mass Gainer 5kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-56 2.jpg"
+    ]
+  },
+  "L061_TVN-CARBOFIT-1-5KG": {
+    "folder_name": "tvn/carbs/carbofit-1-5kg",
+    "description": "TVN Carbofit Carbohydrate Powder 1.5kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-56.jpg"
+    ]
+  },
+  "L062_TVN-CREATINE-300G": {
+    "folder_name": "tvn/creatine/creatine-monohydrate-300g",
+    "description": "TVN Creatine Monohydrate 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-56 3.jpg"
+    ]
+  },
+  "L063_TVN-CREAM-OF-RICE-500G": {
+    "folder_name": "tvn/carbs/cream-of-rice-500g",
+    "description": "TVN Cream of Rice Complex Carbohydrates 500g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-16-57.jpg"
+    ]
+  },
+  "L064_REDREX-BEEF-AMINOS-300TABS": {
+    "folder_name": "red-rex/amino-acids/beef-aminos-300tabs",
+    "description": "Red Rex Beef Aminos 300 Tablets bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-02.jpg"
+    ]
+  },
+  "L065_NUTRIV-AMINO-350TABS": {
+    "folder_name": "nutriversum/amino-acids/amino-tablet-350tabs",
+    "description": "Nutriversum Amino Tablet 350 Tablets bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-25.jpg"
+    ]
+  },
+  "L066_ULT-CARBO-RELEASE-2KG": {
+    "folder_name": "ultimate/carbs/carbo-release-2kg",
+    "description": "Ultimate Supplement Carbo Release Carbohydrate Formula 2kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-00.jpg"
+    ]
+  },
+  "L067_ULT-FURIUX-CHOC-3KG": {
+    "folder_name": "ultimate/mass-gainer/furiux-mass-chocolate-milkshake-3kg",
+    "description": "Ultimate Supplement Furiux Mass Chocolate Milk Shake 3kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-10.jpg"
+    ]
+  },
+  "L068_ULT-FURIUX-STRAW-3KG": {
+    "folder_name": "ultimate/mass-gainer/furiux-mass-strawberry-3kg",
+    "description": "Ultimate Supplement Furiux Mass Strawberry 3kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-10 2.jpg"
+    ]
+  },
+  "L069_ULT-FURIUX-VANILLA-3KG": {
+    "folder_name": "ultimate/mass-gainer/furiux-mass-vanilla-3kg",
+    "description": "Ultimate Supplement Furiux Mass Vanilla 3kg tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-11.jpg"
+    ]
+  },
+  "L070_SP-PREHELL-MOONSTER": {
+    "folder_name": "sp-premium/pre-workout/pre-hell-moonster-energy",
+    "description": "SP Premium Signature Messaed Pre-Hell Pre-Workout Moonster Energy tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-02 2.jpg"
+    ]
+  },
+  "L071_SP-PREHELL-PINK-LEMONADE": {
+    "folder_name": "sp-premium/pre-workout/pre-hell-pink-lemonade",
+    "description": "SP Premium Signature Messaed Pre-Hell Pre-Workout Pink Lemonade tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-09.jpg"
+    ]
+  },
+  "L072_SP-PREHELL-SOUR-STRIPS": {
+    "folder_name": "sp-premium/pre-workout/pre-hell-sour-strips",
+    "description": "SP Premium Signature Messaed Pre-Hell Pre-Workout Sour Strips tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-09 2.jpg"
+    ]
+  },
+  "L073_SP-PREHELL-TEQUILLE": {
+    "folder_name": "sp-premium/pre-workout/pre-hell-tequille",
+    "description": "SP Premium Signature Messaed Pre-Hell Pre-Workout Tequille tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-09 3.jpg"
+    ]
+  },
+  "L074_REDCON1-TOTAL-WAR-PUNCH-435G": {
+    "folder_name": "redcon1/pre-workout/total-war-primetime-punch-435g",
+    "description": "Redcon1 Total War Pre-Workout Primetime Punch 435g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-28 2.jpg"
+    ]
+  },
+  "L075_NUTREX-LIPO6-HERS-60CAPS": {
+    "folder_name": "nutrex/fat-burner/lipo-6-hers-60caps",
+    "description": "Nutrex Research Lipo 6 Hers Weight Loss Support 60 capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-12 4.jpg"
+    ]
+  },
+  "L076_NUTREX-LIPO6-BLACK-INTENSE-60CAPS": {
+    "folder_name": "nutrex/fat-burner/lipo-6-black-intense-60caps",
+    "description": "Nutrex Research Lipo 6 Black Intense Ultra Concentrate 60 capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-29 2.jpg"
+    ]
+  },
+  "L077_TRACTOR-CREA-RED-60SRV": {
+    "folder_name": "tractor/creatine/crea-red-60serv",
+    "description": "Tractor Crea Red Creatine Formula 60 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-14.jpg"
+    ]
+  },
+  "L078_TRACTOR-CITRULLINE-130G": {
+    "folder_name": "tractor/amino-acids/citrulline-malate-130g-40serv",
+    "description": "Tractor Citrulline Malate 130g 40 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-23.jpg"
+    ]
+  },
+  "L079_TRACTOR-CREATINE-240G-80SRV": {
+    "folder_name": "tractor/creatine/creatine-monohydrate-240g-80serv",
+    "description": "Tractor Creatine Monohydrate 240g 80 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-23 2.jpg"
+    ]
+  },
+  "L080_TRACTOR-BETA-ALANINE-40SRV": {
+    "folder_name": "tractor/amino-acids/beta-alanine-40serv",
+    "description": "Tractor Beta Alanine Endurance Powder 40 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-23 3.jpg"
+    ]
+  },
+  "L081_TRACTOR-CREATINE-480G-160SRV": {
+    "folder_name": "tractor/creatine/creatine-monohydrate-480g-160serv",
+    "description": "Tractor Creatine Monohydrate 480g 160 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-24.jpg"
+    ]
+  },
+  "L082_TRACTOR-CREATINE-120G-40SRV": {
+    "folder_name": "tractor/creatine/creatine-monohydrate-120g-40serv",
+    "description": "Tractor Creatine Monohydrate 120g 40 Servings tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-24 2.jpg"
+    ]
+  },
+  "L083_TRACTOR-CARB-LEMON-MINT-2250G": {
+    "folder_name": "tractor/carbs/carb-lemon-mint-2250g",
+    "description": "Tractor Carb Complex Lemon Mint 2250g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-31 3.jpg"
+    ]
+  },
+  "L084_NUTREX-ISOFIT-VANILLA-971G": {
+    "folder_name": "nutrex/protein/isofit-vanilla-bean-ice-cream-971g",
+    "description": "Nutrex Research Isofit Whey Isolate Vanilla Bean Ice Cream 2.14 lbs tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-14 2.jpg"
+    ]
+  },
+  "L085_GRAPNGO-WHEY-245G": {
+    "folder_name": "grapngo/protein/whey-protein-245g",
+    "description": "Grap'N'Go Whey Protein powder 245g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-17.jpg"
+    ]
+  },
+  "L086_TISI-SPOOKY-EAA-BCAA-300G": {
+    "folder_name": "take-it-send-it/amino-acids/spooky-eaa-bcaa-300g",
+    "description": "Take It Send It Spooky EAA+BCAA 300g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-17 2.jpg"
+    ]
+  },
+  "L087_MAD-FUELGEN-V2-660G": {
+    "folder_name": "mad/carbs/fuelgen-v2-660g",
+    "description": "Mad Fuelgen V2 Glycogen Fuel 660g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-19.jpg"
+    ]
+  },
+  "L088_GEN-CREATINE-CGT-400G": {
+    "folder_name": "generic/creatine/creatine-cgt-400g",
+    "description": "Creatine CGT Complex Stack 400g tub",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-19 2.jpg"
+    ]
+  },
+  "L089_CLOMA-BLACK-SPIDER-100CAPS": {
+    "folder_name": "cloma-pharma/fat-burner/black-spider-25-100caps",
+    "description": "Cloma Pharma Black Spider 25 Thermogenic 100 capsules bottle",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-29.jpg"
+    ]
+  },
+  "L090_ON-SHAKER-NEON-700ML": {
+    "folder_name": "on/accessories/shaker-bottle-neon-green-700ml",
+    "description": "Optimum Nutrition Neon Green / Clear Shaker Bottle 700ml",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-31.jpg"
+    ]
+  },
+  "L091_METRX-SHAKER-BLACK-800ML": {
+    "folder_name": "met-rx/accessories/shaker-bottle-black-red-800ml",
+    "description": "MET-Rx Black and Red Shaker Bottle 800ml",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-31 2.jpg"
+    ]
+  },
+  "L092_UA-DUFFLE-BAG-BLACK": {
+    "folder_name": "under-armour/accessories/gym-duffle-bag-black",
+    "description": "Under Armour Gym Duffle Bag Black with white logo",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-31 4.jpg"
+    ]
+  },
+  "L093_MT-SHAKER-BLUE-700ML": {
+    "folder_name": "muscletech/accessories/shaker-bottle-blue-700ml",
+    "description": "MuscleTech Shaker Bottle Clear with Blue Lid 700ml",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-32.jpg"
+    ]
+  },
+  "L094_SHARK-DUFFLE-BAG-BLACK": {
+    "folder_name": "shark/accessories/gym-duffle-bag-black",
+    "description": "Shark Sports Gym Duffle Bag Black",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-32 2.jpg"
+    ]
+  },
+  "L095_SPORTIUM-SHAKER-3PK": {
+    "folder_name": "sportium/accessories/shaker-bottles-3-pack",
+    "description": "Sportium Shaker Bottles 3-Pack Bundle (Green, Pink, Blue)",
+    "space_type": "retail_shelf",
+    "stage": "finished_goods",
+    "include_files": [
+      "PHOTO-2026-10-04-01-17-33.jpg"
+    ]
+  }
+}

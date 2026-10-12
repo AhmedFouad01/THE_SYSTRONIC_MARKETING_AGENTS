@@ -1,0 +1,19 @@
+# ANVIL Round 02 scope checkpoint — 2026-10-12
+
+State: production brief prepared; no execution by this agent. NOT_READY.
+
+Ahmed accepted the proposed 1600 × 1600 PNG format and one output per each of 95 source images, preserving multi-shaker displays intact. No further format confirmation is needed. Approved direction: clean products against white. Delivery remains separate after review/approval.
+
+Source selection is the corrected round-01 manifest's 95 original filenames, not the bank's 147 physical copies. The 13 prior identity swaps and revised TVN flavor assignments were reviewed. Round-01 hashes were independently checked by Lead. Nutritional sidecars remain qualified and must never drive reconstructed label text. Round-01 documents/caches/sources are read-only for this production task.
+
+Round-02 write root: `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/brands/anvil/projects/product-photo-bank/work/external/round-02/`. Local request/scope files are the only artifacts owned by this preparing agent; canonical sync/dispatch belongs to Lead/Ahmed. No production, source mutation, upload, paid call or durable memory write executed here.
+
+Workflow: prefer existing offline local masking and restrained image correction; assess/reuse about 18 already-white sources and extract the other approximately 77, with per-file verification. Existing native included-plan Antigravity/Gemini editing of actual photos is allowed only where available, at most one call per source and 95 total, with no rerolls/variants/retries. Preserve literal product appearance, wrapping, marks and all displayed items. No product regeneration, new logos/text, invented hidden parts or unauthorized watermark removal. Unfaithful extraction or changed label pixels is REVIEW/BLOCKED, not fabricated completion. No model install/download, CLIP or sorting rerun. No paid external purchases/new setup/credentials; required payment or credit purchase blocks only affected calls. Actual tool/call usage and displayed credits are reported; undisclosed costs remain UNKNOWN.
+
+Output: opaque sRGB 1600-square PNG on #FFFFFF, source aspect preserved, consistent centering/margins and credible contact shadow. Maximum product-crop enlargement 1.25×; white canvas absorbs dimensional differences. Deterministic original-stem filenames, recoverable masks/settings, all-file 100% and small-view QA, paired before/after evidence and one report. Completed/reused/review/blocked counts must sum to 95; source hashes remain unchanged.
+
+Skills used: TSST-CREATIVE-SK-013 (non-destructive source preservation, light/color/edges and product truth); TSST-CREATIVE-SK-019 (manifest, source/export separation, deterministic names and accounting); TSST-CREATIVE-SK-010 (actual-render QA, defect/status evidence and review boundary). Production standard, final asset gate and intake gate read. Skills skipped: none. Skills remain UNVALIDATED; this brief does not change readiness or validate them.
+
+Intake application: product-cleanup assets, source angles retained, known exact originals, opaque PNG format/dimensions and white direction explicitly approved; no campaign message/copy/CTA/new brand treatment. Those campaign fields and multi-reference concept exploration do not apply to this faithful product cleanup. Rights provenance stays explicitly pending where undocumented; blocked watermark/occlusion issues are reported per file. External execution stops at production draft/report for independent Lead review.
+
+skill_friction: campaign-focused intake/scoring and mandatory generic text/logo layer examples need applicability notes for a 95-image product-cleanup batch. No capability gap is presumed; missing local masking dependencies are runtime preflight findings, resolved by available faithful local paths or per-file blockers.
