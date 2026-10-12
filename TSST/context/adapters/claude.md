@@ -24,9 +24,11 @@ Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated fr
 | TSST Lead | main conversation (current Opus) | DEEP — Skill Plan, architecture, conflict, acceptance |
 | IMAGE / VIDEO | not native — route to a runtime/tool that has them (e.g. `gemini-desktop.md`, manual); never fake | — |
 
-- Dispatch guard: `.claude/settings.json` PreToolUse hook on `Agent` →
-  `TSST/context/hooks/agent_dispatch_guard.py` (team agents need `TEAM:` + indexed `SKILLS:`;
-  generic/retired agents refused; fails open on internal error).
+- Shared method: `TSST/context/workflow.md`; explicit preflight before mutation uses the same plan as the dispatch.
+- Dispatch guard: `.claude/settings.json` PreToolUse hook on `Agent|Task` →
+  `TSST/context/hooks/agent_dispatch_guard.py` (complete Skill Plan, team/skill validation, skill cap;
+  generic/retired agents refused; validation/internal errors fail closed for that dispatch).
+  It does not intercept ordinary main-session shell/edit calls; do not claim blanket enforcement.
 - New/edited `.claude/agents/*` files are picked up by the running session after a short delay
   (observed 2026-10-05); if a dispatch says "agent type not found", wait or start a new session.
 - `.claude/settings.json` `CLAUDE_CODE_SUBAGENT_MODEL=sonnet` is a fallback only.

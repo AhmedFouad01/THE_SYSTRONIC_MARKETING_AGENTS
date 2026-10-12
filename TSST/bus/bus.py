@@ -7,6 +7,7 @@ Rules are enforced here, not trusted to prose: scopes, leases, rounds, roles, ha
 import argparse
 import datetime as dt
 import hashlib
+import fnmatch
 import json
 import os
 import re
@@ -130,13 +131,13 @@ def die(msg):
 
 def sha(rel):
     # Line endings are normalised so a git checkout (CRLF on Windows) never looks like an edit.
-    with open(os.path.join(ROOT, rel), "rb") as f:
+    with open(repo_path(rel), "rb") as f:
         return hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def same(rel, recorded):
     """Result unchanged since done? Accepts hashes recorded before EOL normalisation."""
-    with open(os.path.join(ROOT, rel), "rb") as f:
+    with open(repo_path(rel), "rb") as f:
         raw = f.read()
     return recorded in (sha(rel), hashlib.sha256(raw).hexdigest())
 
@@ -161,21 +162,74 @@ def skills_unused(skills, used):
 
 
 def prefix(pattern):
+    pattern = norm_scope(pattern).casefold()
     cut = min([i for i, c in enumerate(pattern) if c in "*?["] + [len(pattern)])
     return pattern[:cut].split("#", 1)[0]
 
 
 def overlaps(a, b):
     pa, pb = prefix(a), prefix(b)
-    return pa.startswith(pb) or pb.startswith(pa)
+    # Globs conservatively overlap literal prefixes; exact files need a component boundary.
+    ga, gb = any(c in a for c in '*?['), any(c in b for c in '*?[')
+    return (pa == pb or pa.startswith(pb.rstrip('/') + '/') or pb.startswith(pa.rstrip('/') + '/')
+            or (ga and pb.startswith(pa)) or (gb and pa.startswith(pb)))
+
+
+def norm_scope(path, allow_drive=False):
+    """Canonical repository-relative spelling. Reject traversal before any filesystem access."""
+    if not isinstance(path, str) or not path.strip():
+        raise ValueError('empty scope')
+    path = path.strip().replace('\\', '/')
+    if allow_drive and path.startswith('drive:'):
+        return path
+    if path.startswith('/') or ':' in path or '\x00' in path:
+        raise ValueError('path outside repo: ' + path)
+    parts = []
+    for part in path.split('/'):
+        if part in ('', '.'):
+            continue
+        if part == '..' or part.endswith((' ', '.')):
+            raise ValueError('unsafe path component: ' + path)
+        if part.split('.')[0].upper() in {'CON', 'PRN', 'AUX', 'NUL', *('COM' + str(i) for i in range(1, 10)),
+                                         *('LPT' + str(i) for i in range(1, 10))}:
+            raise ValueError('Windows device path refused: ' + path)
+        parts.append(part)
+    if not parts:
+        raise ValueError('empty scope')
+    return '/'.join(parts)
+
+
+def repo_path(relative):
+    rel = norm_scope(relative)
+    if any(c in rel for c in '*?['):
+        raise ValueError('file path cannot contain glob: ' + rel)
+    path = os.path.realpath(os.path.join(ROOT, rel))
+    if os.path.normcase(os.path.commonpath([ROOT, path])) != os.path.normcase(ROOT):
+        raise ValueError('resolved path outside repo: ' + rel)
+    return path
+
+
+def result_in_scope(result, scope):
+    r, s = norm_scope(result).casefold(), norm_scope(scope).casefold()
+    return r == s or r.startswith(s.rstrip('/') + '/') or fnmatch.fnmatchcase(r, s)
 
 
 def scope_errors(paths, writing):
     errs = []
     for p in paths:
-        if p.startswith(("/", "\\")) or ":" in p.split("/")[0] or ".." in p.split("/"):
-            if not (not writing and p.startswith("drive:")):
-                errs.append(f"path outside repo: {p}")
+        try:
+            p = norm_scope(p, allow_drive=not writing)
+        except ValueError as exc:
+            errs.append(str(exc))
+            continue
+        if p.startswith('drive:') and not writing:
+            continue
+        # Resolve only a literal prefix to reject symlink/junction escapes without glob expansion.
+        literal = prefix(p).rstrip('/')
+        if literal:
+            path = os.path.realpath(os.path.join(ROOT, literal))
+            if os.path.normcase(os.path.commonpath([ROOT, path])) != os.path.normcase(ROOT):
+                errs.append(f'resolved path outside repo: {p}')
         if writing and any(overlaps(p, x) for x in PROTECTED):
             errs.append(f"protected path not delegable: {p}")
     return errs
@@ -338,6 +392,8 @@ def cmd_ls(a):
 
 def claim_errors(t, me):
     errs = []
+    errs += scope_errors(t.get('read') or [], False)
+    errs += scope_errors(t.get('write') or [], True)
     r = runtimes().get(me) or {}
     if t["status"] == "claimed" and not expired(t):
         errs.append(f"claimed by {t['claimed_by']} until {t['lease_until']}")
@@ -384,6 +440,11 @@ def cmd_new(a):
         errs.append(f"{a.to} is retired (TSST-ADR-004)")
     if errs:
         die("; ".join(errs))
+    # Only newly issued envelopes are canonicalized; historical rows remain readable.
+    t['read'] = [norm_scope(p, allow_drive=True) for p in t['read']]
+    t['write'] = [norm_scope(p) for p in t['write']]
+    spec, sep, anchor = t['spec'].partition('#')
+    t['spec'] = norm_scope(spec) + (sep + anchor if sep else '')
     with Lock():
         save(t, a.me, "new")
 
@@ -444,12 +505,19 @@ def cmd_done(a):
             if missing:
                 die(f"--skills-used must cite every task skill; missing: {', '.join(missing)}")
             t["skills_used"] = used
-        res = a.result.replace("\\", "/")
-        if not os.path.isfile(os.path.join(ROOT, res)):
+        try:
+            res = norm_scope(a.result)
+            result_path = repo_path(res)
+            invalid = scope_errors(t.get('write') or [], True)
+            if invalid:
+                die('; '.join(invalid))
+        except ValueError as exc:
+            die(str(exc))
+        if not os.path.isfile(result_path):
             die(f"result file missing: {res}")
-        if not (res.startswith(OUT_REL) or any(overlaps(res, w) for w in t.get("write") or [])):
+        if not (result_in_scope(res, OUT_REL) or any(result_in_scope(res, w) for w in t.get("write") or [])):
             die(f"result outside write scope: {res}")
-        if res.startswith(OUT_REL) and os.path.getsize(os.path.join(ROOT, res)) > MAX_OUT_BYTES:
+        if result_in_scope(res, OUT_REL) and os.path.getsize(result_path) > MAX_OUT_BYTES:
             die(f"result file > {MAX_OUT_BYTES} bytes — compress it")
         t.update(status="done", result=res, sha256=sha(res), lease_until="", note=a.note or "")
         save(t, a.me, "done", a.note or "")
@@ -509,7 +577,7 @@ def cmd_rehash(a):
         res, old = t.get("result"), t.get("sha256")
         if not res or not old:
             die(f"{a.id} has no recorded result/sha256")
-        if not os.path.isfile(os.path.join(ROOT, res)):
+        if not os.path.isfile(repo_path(res)):
             die(f"result file missing: {res}")
         if same(res, old):
             print(f"OK {a.id} rehash no-op — sha256 already matches")
@@ -643,8 +711,12 @@ def task_errors(t):
     if t.get("status") not in STATUSES:
         e.append(f"{tid}: bad status")
     spec = (t.get("spec") or "").split("#", 1)[0]
-    if spec and not os.path.exists(os.path.join(ROOT, spec)):
-        e.append(f"{tid}: spec not found {spec}")
+    if spec:
+        try:
+            if not os.path.exists(repo_path(spec)):
+                e.append(f"{tid}: spec not found {spec}")
+        except ValueError as exc:
+            e.append(f'{tid}: {exc}')
     e += [f"{tid}: {x}" for x in scope_errors(t.get("read") or [], False)]
     e += [f"{tid}: {x}" for x in scope_errors(t.get("write") or [], True)]
     if t.get("kind") in NEED_SKILLS and (t.get("created") or "") >= SKILLS_FROM and t.get("status") != "cancelled":
@@ -735,10 +807,13 @@ def check_all():
             continue
         errs += task_errors(t)
         if t["status"] in ("done", "closed") and t.get("result"):
-            if not os.path.isfile(os.path.join(ROOT, t["result"])):
-                errs.append(f"{t['id']}: result missing")
-            elif not same(t["result"], t.get("sha256")):
-                errs.append(f"{t['id']}: result sha256 mismatch (edited after done)")
+            try:
+                if not os.path.isfile(repo_path(t['result'])):
+                    errs.append(f"{t['id']}: result missing")
+                elif not same(t['result'], t.get('sha256')):
+                    errs.append(f"{t['id']}: result sha256 mismatch (edited after done)")
+            except ValueError as exc:
+                errs.append(f"{t['id']}: {exc}")
         if t["status"] == "claimed":
             if expired(t):
                 warns.append(f"{t['id']}: lease expired ({t['claimed_by']}) — reclaimable")

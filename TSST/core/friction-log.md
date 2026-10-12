@@ -1,6 +1,7 @@
 # TSST skill friction log
 
 Every `skill_friction` other than `none` from an agent report packet, appended by the Lead. Generalised wording only — no client names, private facts, prices, or customer data (same rule as `lessons.md`).
+Use the five-column table for every active record (dated bullets are errors). An optional leading `[gap:lowercase-slug]` in friction is an explicit shared category; use it only after human classification. Repeats require distinct task identifiers. Fenced historical originals are inactive.
 Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (read-only). Promotion follows the `lessons.md` promotion_gate.
 
 | date | team | skill_id | friction | task |
@@ -54,19 +55,37 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 | 2026-10-11 | core | TSST-CTX-SK-023 | intake template (Objective/Triggers/Principles/Workflow/Changelog) differs from the team skill format (Objective/Method/Failure patterns/Validation); no rule on which wins or on frontmatter ids | Motion skills 005-007 |
 | 2026-10-11 | core | TSST-CTX-SK-018 | evaluator is a 6-line stub: no scoring bands, no lab-vs-real evidence tiers, no retro-scoring, re-validation or scorer-independence rules; status ladder split across 3 files | skill validation plan |
 
-- 2026-10-11 | DEV_AG | repo-cleanup assessment | no git/branch-hygiene skill in DEV set; SK-011/SK-006 mismatched -> propose git-repo-hygiene skill
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] [owner:DEV_AG] [state:OPEN] [next:Lead skill intake] no git/branch-hygiene skill in DEV set; SK-011/SK-006 mismatched -> propose git-repo-hygiene skill | repo-cleanup assessment |
 | 2026-10-11 | marketing | TSST-LENS-SK-006 | workflow and output contract hardcode a 90-day roadmap although the skill supports time-bounded plans; adapted to the owner-approved one-week horizon | weekly organic planning observation |
 | 2026-10-11 | marketing | TSST-LENS-SK-011 | approved-message prerequisite lacks a draft-review path for a combined strategy and copy brief; conditional drafts required explicit scope clarification | integrated strategy-copy draft |
 | 2026-10-11 | marketing | TSST-SPARK-SK-002 | conversion architecture method lacks a lightweight organic observation template and current native Meta metric dictionary; scope narrowed, raw-label human check retained, detailed schema made optional by Lead | weekly organic planning observation |
 | 2026-10-11 | marketing | TSST-SPARK-SK-002 | generated specialist contract and team map disagree on marketing manager ownership; runtime template ambiguity, not a measurement-method change | weekly organic planning observation |
 | 2026-10-11 | marketing | TSST-SPARK-SK-002 | source declares no semantic skill version; exact source SHA-256 used to identify observed method | weekly organic planning observation |
+| 2026-10-11 | marketing | TSST-LENS-SK-002 | [gap:repo-health-grading] [owner:LENS_AG] [state:OPEN] [next:Lead skill intake] SK-002 lacks a tool/repo-health grading template (stars, pushed_at, CVE) and a live API spot-check step | GEM-REPO-001 grading |
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] [owner:DEV_AG] [state:OPEN] [next:Lead skill intake] SK-011 no guidance for repo hygiene/security scans; pre-push needs >100MB blob check in future git-hygiene skill | repo-cleanup step1 |
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:governance-wiring] [owner:DEV_AG] [state:OPEN] [next:Lead skill intake] no DEV skill for governance/docs wiring (SKILL_GAP); gen_runtime_agents.py has no dry-run and rewrites 12 files silently -> a broken f-string reached the working tree before --check caught it | Track A rule wiring (R18-R20) |
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] [owner:DEV_AG] [state:OPEN] [next:Lead skill intake] git-hygiene skill must cover: filter-repo drops signed-merge sigs (use 147db3f..branch --refs), fresh-clone check fails if extra remote added first, pip Scripts PATH on Windows | repo-cleanup step1b |
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:job-move-checklist] [owner:DEV_AG] [state:OPEN] [next:Lead move-checklist intake] no move checklist: moving a job under brands/*/projects/ triggers .gitignore (_qa/, files/) and silently untracks media; build.py ROOT depth hard-coded -> add move checklist to JOB_LAYOUT | Track B VILL move into brand |
+| 2026-10-11 | marketing | TSST-LENS-SK-006 | no step for mapping an existing approved plan into a delivery manifest schema (skill assumes authoring a new plan); agent adapted | Track D2 week-01 DELIVERY.json |
+| 2026-10-11 | studio | TSST-CREATIVE-SK-026 | text is CRM-screen focused; no static bilingual document/delivery-page fixtures (trailing punctuation inside LTR isolates, Arabic comma in number lists); workflow still applied | Track D3 delivery page QA |
+| 2026-10-11 | studio | TSST-CREATIVE-SK-028 | viewport skill worded for CRM shells/tables; no static long-document checks (inline tag wrap, brand-name wrap at 390); workflow still applied | Track D3 delivery page QA |
+| 2026-10-11 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] [owner:DEV_AG] [state:OPEN] [next:Lead skill intake] no git-hygiene skill: split mixed commits by path (diff --binary -M / apply --3way), keep-ours rules.md conflicts, gitleaks docker needs safe.directory env on ro mount, Git Bash mangles robocopy flags, long push hits 120s timeout | repo-cleanup step2 sync |
+| 2026-10-11 | build | TSST-DEV-SK-015 | [gap:delivery-semantic-sync] [owner:DEV_AG] [state:OPEN] [next:verify bounded checker repair; builder issue remains open] job_check d) name-matches loosely (a nested job name can match any brand project.md); build_delivery flags missing ar.title even when default_lang=en | new_job.py |
+
+
+| 2026-10-12 | build | TSST-DEV-SK-010 | diagnosis workflow assumes repair follows investigation; read-only review requires stopping before repair and regression implementation | TSST decisions review REVIEW-001 |
+
+## Recovered legacy records — original history (inactive)
+
+The eight dated bullets were migrated into the table on 2026-10-12. Original wording follows verbatim; this fenced history is not active parser input. Missing skill coverage routes to TSST-CTX-SK-023 intake rather than implying a mismatched DEV skill covers it. Explicit gap IDs group known equivalent gaps; owner/state/next labels preserve open follow-up, not closure or skill validation.
+
+```text
+- 2026-10-11 | DEV_AG | repo-cleanup assessment | no git/branch-hygiene skill in DEV set; SK-011/SK-006 mismatched -> propose git-repo-hygiene skill
 - 2026-10-11 | LENS_AG | GEM-REPO-001 grading | SK-002 lacks a tool/repo-health grading template (stars, pushed_at, CVE) and a live API spot-check step
 - 2026-10-11 | DEV_AG | repo-cleanup step1 | SK-011 no guidance for repo hygiene/security scans; pre-push needs >100MB blob check in future git-hygiene skill
 - 2026-10-11 | DEV_AG | Track A rule wiring (R18-R20) | no DEV skill for governance/docs wiring (SKILL_GAP); gen_runtime_agents.py has no dry-run and rewrites 12 files silently -> a broken f-string reached the working tree before --check caught it
 - 2026-10-11 | DEV_AG | repo-cleanup step1b | git-hygiene skill must cover: filter-repo drops signed-merge sigs (use 147db3f..branch --refs), fresh-clone check fails if extra remote added first, pip Scripts PATH on Windows
 - 2026-10-11 | DEV_AG | Track B VILL move into brand | no move checklist: moving a job under brands/*/projects/ triggers .gitignore (_qa/, files/) and silently untracks media; build.py ROOT depth hard-coded -> add move checklist to JOB_LAYOUT
-| 2026-10-11 | marketing | TSST-LENS-SK-006 | no step for mapping an existing approved plan into a delivery manifest schema (skill assumes authoring a new plan); agent adapted | Track D2 week-01 DELIVERY.json |
-| 2026-10-11 | studio | TSST-CREATIVE-SK-026 | text is CRM-screen focused; no static bilingual document/delivery-page fixtures (trailing punctuation inside LTR isolates, Arabic comma in number lists); workflow still applied | Track D3 delivery page QA |
-| 2026-10-11 | studio | TSST-CREATIVE-SK-028 | viewport skill worded for CRM shells/tables; no static long-document checks (inline tag wrap, brand-name wrap at 390); workflow still applied | Track D3 delivery page QA |
 - 2026-10-11 | DEV_AG | repo-cleanup step2 sync | no git-hygiene skill: split mixed commits by path (diff --binary -M | apply --3way), keep-ours rules.md conflicts, gitleaks docker needs safe.directory env on ro mount, Git Bash mangles robocopy flags, long push hits 120s timeout
 - 2026-10-11 | DEV_AG | new_job.py | job_check d) name-matches loosely (a nested job name can match any brand project.md); build_delivery flags missing ar.title even when default_lang=en
+```

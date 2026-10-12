@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Surface repeated skill friction as lesson CANDIDATE lines (read-only, stdlib only).
 
-Reads TSST/core/friction-log.md, groups rows by skill_id + normalised friction text, and prints a
-lessons.md-format candidate line for every group seen >= 2 times. The next free L-id comes from
+Reads TSST/core/friction-log.md, groups rows by skill_id + explicit gap ID (when present), otherwise normalised friction text, and prints a
+lessons.md-format candidate line for every group seen in >= 2 distinct tasks. The next free L-id comes from
 TSST/core/lessons.md. Never writes to lessons.md or any skill; the Lead/user still approve
 (lessons.md promotion_gate).
 
@@ -23,6 +23,8 @@ SKILL_RE = re.compile(r"^TSST-[A-Z]+-SK-\d{3}$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 NOT_FRICTION = {"", "none", "n/a", "n-a", "na", "-"}
 THRESHOLD = 2
+GAP_RE = re.compile(r"^\[gap:([a-z][a-z0-9-]*)\](?:\s|$)")
+DATED_RECORD_RE = re.compile(r"^(?:[-*+]\s+)?\d{4}-")
 
 
 def norm(text):
@@ -41,8 +43,22 @@ def split_row(line):
 def parse(text):
     """Return (rows, errors). rows = list of dicts; errors = list of 'line N: reason'."""
     rows, errors = [], []
+    fence = None
     for n, line in enumerate(text.splitlines(), 1):
-        if not line.lstrip().startswith("|"):
+        stripped = line.strip()
+        opening = re.match(r"^(`{3,}|~{3,})", stripped)
+        if opening:
+            token = opening.group(1)
+            if fence is None:
+                fence = token
+            elif token[0] == fence[0] and len(token) >= len(fence):
+                fence = None
+            continue
+        if fence:
+            continue  # clearly fenced historical originals/examples are inactive
+        if not stripped.startswith("|"):
+            if DATED_RECORD_RE.match(stripped):
+                errors.append(f"line {n}: dated record outside five-column table schema")
             continue
         cells = split_row(line)
         if [c.lower() for c in cells] == COLUMNS:
@@ -67,7 +83,17 @@ def parse(text):
         if norm(row["friction"]) in NOT_FRICTION:
             errors.append(f"line {n}: friction is empty/none/n-a - only real friction is logged")
             continue
+        if not row["team"] or norm(row["task"]) in NOT_FRICTION:
+            errors.append(f"line {n}: team and task must be nonempty identifiers")
+            continue
+        gap = GAP_RE.match(row["friction"])
+        if row["friction"].startswith("[gap:") and gap is None:
+            errors.append(f"line {n}: malformed explicit gap ID (want [gap:lowercase-slug])")
+            continue
+        row["gap_id"] = gap.group(1) if gap else None
         rows.append(row)
+    if fence:
+        errors.append("unclosed fenced history/example block; active records may be hidden")
     return rows, errors
 
 
@@ -79,13 +105,16 @@ def next_lesson_id(lessons_text):
 def candidates(rows):
     groups = {}
     for r in rows:
-        groups.setdefault((r["skill_id"], norm(r["friction"])), []).append(r)
-    return [g for g in groups.values() if len(g) >= THRESHOLD]
+        key = (r["skill_id"], ("gap", r["gap_id"]) if r.get("gap_id") else ("text", norm(r["friction"])))
+        # Repeated records from one task are one observation, even on different dates.
+        groups.setdefault(key, {}).setdefault(norm(r["task"]), r)
+    return [list(g.values()) for g in groups.values() if len(g) >= THRESHOLD]
 
 
 def candidate_line(lid, group):
     first = group[0]
-    friction = re.sub(r"\s+", " ", first["friction"]).strip()
+    friction = (f"[gap:{first['gap_id']}] explicit gap repeats; review all task evidence" if first.get("gap_id")
+                else re.sub(r"\s+", " ", first["friction"]).strip())
     tasks = ", ".join(r["task"] for r in group)
     dates = sorted(r["date"] for r in group)
     evidence = f"friction-log x{len(group)} ({dates[0]}..{dates[-1]}; tasks: {tasks})"
@@ -109,7 +138,13 @@ def main(argv=None):
             print(f"MALFORMED {args.path.name} {e}", file=sys.stderr)
         return 1
     groups = candidates(rows)
-    print(f"friction rows: {len(rows)} | repeated (>= {THRESHOLD}): {len(groups)}")
+    print(f"friction rows: {len(rows)} | repeated (>= {THRESHOLD} distinct tasks): {len(groups)}")
+    gaps = {}
+    for row in rows:
+        if row.get("gap_id"):
+            gaps.setdefault((row["skill_id"], row["gap_id"]), set()).add(norm(row["task"]))
+    for (skill, gap), tasks in sorted(gaps.items()):
+        print(f"GAP {gap} | skill={skill} | distinct tasks={len(tasks)} | evidence only; closure not inferred")
     lid = next_lesson_id(lessons_text)
     for g in groups:
         print(candidate_line(lid, g))

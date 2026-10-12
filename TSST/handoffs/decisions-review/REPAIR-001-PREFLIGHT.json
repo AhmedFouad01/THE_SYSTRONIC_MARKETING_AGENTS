@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "mode": "mutate",
+  "errors": [],
+  "warnings": [
+    "Explicit contract mode records the named contract; native auto-loading is unverified."
+  ],
+  "workspace": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS",
+  "branch": "tsst-core/owner-rules",
+  "hashes": {
+    "TSST/LEAD/AGENT.md": "d32fde0b3ee9b77ba7e117c1c0f5521e5c3bc7bb52b2da973200fa318ffffb83",
+    "TSST/core/rules.md": "ce2d61bbc658b4d249bb835a8101c70d5e42be9c20b2ab7d2686876e04f2747a",
+    "TSST/LEAD/skills/tsst-lead-sk-029-ai-orchestration-cross-agent-review-and-quality/SKILL.md": "9a694d0dba4600ca92c9839d5defc7395da4ffc37b6cecc93f9fcfbd315e6972",
+    "TSST/context_os/skills/TSST-CTX-SK-005-memory-write-gate/SKILL.md": "e59b01940b3a692fae86f8c06e2766e595b19305dfcea52161328f3acadbc392"
+  },
+  "native_registration": "unverified",
+  "limitations": [
+    "Authority is a recorded reference, not human authentication.",
+    "Hashes identify files; they do not prove reading, method use or approval.",
+    "Preflight does not intercept shell tools or enforce subsequent execution."
+  ],
+  "contract_mode": "explicit",
+  "authority_source": "Ahmed explicit repair and complexity-reduction request in current chat 2026-10-12; canonical TSST-memory instruction persists.; owner selected save-core-then-return-vill branch order in async reply.",
+  "scope": {
+    "read": [
+      "TSST/**",
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".agents/skills/tsst-router/SKILL.md",
+      "REAL_MEMORY/TSST_REAL_MEMORY/**",
+      ".claude/agents/tsst-*",
+      ".codex/agents/tsst-*"
+    ],
+    "write": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      ".agents/skills/tsst-router/SKILL.md",
+      "TSST/context/**",
+      "TSST/bus/bus.py",
+      "TSST/core/rules.md",
+      "TSST/core/friction-log.md",
+      "TSST/services/delivery/job_check.py",
+      "TSST/services/delivery/sync_jobs.py",
+      "TSST/services/delivery/status_sync.py",
+      "TSST/services/delivery/README.md",
+      "TSST/services/delivery/JOB_LAYOUT.md",
+      "TSST/services/delivery/test*",
+      "TSST/LEAD/AGENT.md",
+      "TSST/skills/README.md",
+      "TSST/TSST_OPERATING_PROFILE.md",
+      "TSST/handoffs/decisions-review/**",
+      "REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md",
+      "REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md",
+      "REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md",
+      ".claude/agents/tsst-*",
+      ".codex/agents/tsst-*",
+      "TSST/TEAM_CONSTITUTION.md",
+      "TSST/decisions/TSST-ADR-006.md"
+    ]
+  }
+}

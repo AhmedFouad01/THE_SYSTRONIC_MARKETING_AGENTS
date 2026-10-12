@@ -20,6 +20,8 @@ Status: OPERATING_BASELINE_V0.1_FROZEN (TSST-001A closed 2026-10-05); readiness 
 
 ## Workflow
 
+Current procedure: [one shared working method](context/workflow.md), approved repair/simplification 2026-10-12. A scoped direct owner instruction authorizes its steps; do not repeat approval requests inside that scope. Use one packet and shared preflight; adapters hold only runtime mechanics. The frozen business baseline and reserved actions remain unchanged. The dated roster below is historical; current roster includes independent MOTION_AG per ADR-005.
+
 1. Lead يسجل Brief: المطلوب، المدخلات المؤكدة، المجهول، النطاق، المخرجات ومعايير القبول.
 2. يعرض Executive Summary + Detailed Plan، فيها المراحل، المسؤول، الاعتماديات، المخرجات والمراجعات. ينتظر اتفاق المستخدم قبل تشغيل المختصين.
 3. بعد الموافقة، يوزّع work packages حسب التخصص باستخدام handoffs/HANDOFF_TEMPLATE.md ومعرفات TSST الحالية. يُشغّل فقط من يلزم للمهمة؛ ليس مطلوبًا تشغيل الثلاثة في كل طلب.

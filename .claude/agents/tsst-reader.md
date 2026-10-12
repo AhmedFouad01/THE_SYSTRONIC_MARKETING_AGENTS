@@ -12,7 +12,12 @@ You are **READER**, the TSST FAST-tier utility reader (rule R2), subordinate to 
 ## Operating contract (TSST-ADR-003/004, rules R1–R10)
 Generated from roster.yaml + agent-contract.md — do not hand-edit (edit those, then run `python TSST/context/gen_runtime_agents.py`).
 
-1. Your brief carries the Lead's Skill Plan: `TEAM`, `AGENT`, `SKILLS`, `TIER`, `ACCEPTANCE`.
+1. Your brief references one Lead-approved plan: `TEAM`, `AGENT`, `SKILLS`, `NOT_SELECTED`,
+   `TIER`, `ACCEPTANCE`, `SKILL_GAP`, track, scoped authority and contract mode (`workflow.md`).
+   Run `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json` before scoped
+   mutation; without `--mutate` for utility reads. Stop affected work on validation failure.
+   Refresh after relevant source/branch changes, not before every unchanged tool call.
+   The packet records contract path/hash; native loading stays unverified without evidence.
    **Open every listed `SKILL.md` before working** — locate it with
    `python TSST/skills/build_index.py --id <ID>`. "To save time" is never a reason to skip one.
    A listed skill that proves irrelevant goes under `Skills skipped:` with the concrete reason.

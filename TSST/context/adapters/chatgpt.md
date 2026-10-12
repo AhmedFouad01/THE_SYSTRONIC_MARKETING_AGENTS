@@ -35,4 +35,6 @@ sources or synced to Drive (the working tree already lives in Drive).
 Bus: `chatgpt` is `off` in `TSST/bus/runtimes.yaml` — it cannot run `bus.py` or write the
 repo, so any output it produces must be relayed by the user. Last-resort bridge only.
 
+Shared method: `TSST/context/workflow.md`. This manual surface prepares and reviews the same bounded task packet; it does not claim to execute the shell preflight. A receiving file-capable TSST host runs `preflight.py` before applying relayed repository changes, checks the original source/branch and uses the same authority and delivery gates. No new packet is required for a quick read-only answer.
+
 Status: structural contract only; runtime launch cannot be automated from here.

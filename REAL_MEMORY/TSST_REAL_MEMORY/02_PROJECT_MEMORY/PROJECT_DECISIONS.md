@@ -209,3 +209,28 @@ Note: RM-CS-001 labels these D-007..D-012; they are numbered TSD-007..TSD-012 he
 - Recorded outcome: gitleaks found no real secrets (reviewed source-hash false positive); CRM UI + spike were pushed; ANVIL was scrubbed; master advanced linearly; six merged local branches were deleted. The last two unpushed TSST commits were relocated locally to tsst-core/owner-rules; main-tree WIP was preserved. No CRM merge or new push authorized by this entry.
 - Decision: R21 branch per track; R22 one Lead memory in TSST; R23–R40 migrated from Claude-private memory into TSST/core/rules.md. Readiness remains NOT_READY and skills remain UNVALIDATED.
 - Evidence: `TSST/core/lessons.md` L-006; `TSST/core/rules.md` R21–R40; `TSST/handoffs/repo-cleanup/` STEP1-RESULT, STEP3-RESULT and STEP4-RESULT.
+
+## TSD-025 — Owner-approved external production with two-stage delivery
+- Date: 2026-10-12. Status: APPROVED working method by Ahmed in chat.
+- Decision: Lead retains direction, difficult judgment and final review. Ahmed manually bridges concise English briefs to Antigravity/Gemini for bounded execution and returns reports. Stage 1 creates the agreed images plus original/final comparison; stage 2 integrates only owner-approved outputs into the existing brand Delivery System under a separately authorized delivery brief.
+- Reuse: applies across brands, expressly including ANVIL SUPPS. Load each brand's own approved identity and preserve actual product/packaging details. No ANVIL production authorized by this memory save.
+- Efficiency: reuse completed outputs, fixed brief-specific call cap, no automatic rerolls, one compact report/review. Savings are an objective; no measured percentage or zero-cost assertion.
+- Audit: persist English requests, reports, corrections and Lead decisions as readable job files, not only runtime chat. Historical encrypted content remains marked incomplete.
+- Authority reconciliation: Antigravity/Gemini remain ROLE B external tools. Owner-approved delivery may name an exact file/script allowlist; no broad repo, commit, publishing or main-memory authority. Skill/readiness states unchanged.
+- Operational source: `TSST/context/external-production.md`, core R41; `TSST/context/request-role.md` scoped delivery exception.
+- Evidence: owner "الطريقة دي مفيدة جدا" and explicit main/TSST memory approval for ANVIL reuse; Codex chat `01a12cb9-9d96-7ca1-8cef-b27c6291cf2e`, 2026-10-12. VILL sofa external report + Lead contact-sheet and five-pair delivery verification.
+## TSD-026 — Canonical workspace and one working method across runtimes
+- Date: 2026-10-12 (Africa/Cairo). Status: APPROVED by Ahmed's explicit instruction in this chat.
+- Decision: use the original Drive repository and canonical TSST/Real Memory. The active track branch must be visible beside the repository in the app. Codex and Claude use the same TSST workflow, team/skill routing, authority, delivery and memory rules; runtime adapters describe only access/tool mechanics.
+- Evidence: owner: "خلي البرانش اللي شغالين عليه هنا جنب الريبو وشغلك كله ف الريبو الميموري الرئيسية ل TSST ,, الشغل وطريقته عامة مينفعش يتغير من كوديكس لكلود او العكس".
+- Operational rule: TSST/core/rules.md R42, reinforcing R21/R22.
+- Checkpoint: canonical workspace verified on G:. Main tree remains on vill-studio with pre-existing WIP; direct ANVIL switch was previously refused due to modified campaign delivery pages. Separate anvil-worktree exists on anvil/campaign-01-reveal; it does not contain canonical uncommitted changes and is not the new canonical source. Branch/UI switch is pending safe preservation of WIP. No commit, stash, reset, publish or readiness promotion in this rule save.
+- Skills used: tsst-router (Lead routing); TSST-CTX-SK-005 (classification DECISION, scope, source, duplication and explicit memory approval). skill_friction: none.
+
+## TSD-027 — Repair decision enforcement and use one bounded workflow
+- Date: 2026-10-12 (Africa/Cairo). Status: implementation AUTHORIZED by Ahmed's explicit request to fix REVIEW-001 and simplify recent TSST work across Claude/Codex/other surfaces; not production validation or master-merge approval.
+- Decision: `TSST/context/workflow.md` is the shared method: one existing task packet/checkpoint, complete routed Skill Plan, original-source/branch preflight, reused scoped authority, minimal context, resumed specialists and relevant checks. Runtime adapters describe capabilities/loading only; shell-less surfaces hand the packet to a file-capable TSST host for application.
+- Enforcement: close hook fail-open/incomplete-plan and Windows path boundary gaps; reject specialist TEAM-lead and unproven wildcard scope expansion; recover eight silently ignored friction records; strict delivery comparison uses generated manifest-bound mirrors. Markers/hashes establish structured agreement only, never comprehension, narrative truth, native registration, practical skill validation or publication approval.
+- Branch instruction: owner selected "احفظ الإصلاحات ثم ارجع vill-studio" after learning two chats share the original checkout. Save only repair scope on `tsst-core/owner-rules`, then restore `vill-studio`; preserve unrelated WIP. Feature commit distribution/master merge stays separate.
+- Evidence: `TSST/decisions/TSST-ADR-006.md`; `TSST/handoffs/decisions-review/REVIEW-001.md` and `REPAIR-001-RESULT.md`. Recent review window 2026-10-06..12 covers bounded repo/chat evidence; full Claude histories unavailable, no savings percentage measured.
+- Skills used: TSST-LEAD-SK-029 and TSST-CTX-SK-005; DEV workers used 010/011/015. Skills remain UNVALIDATED and team readiness NOT_READY.

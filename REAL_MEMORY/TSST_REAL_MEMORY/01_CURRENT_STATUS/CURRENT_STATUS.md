@@ -1,5 +1,13 @@
 # TSST — CURRENT STATUS
 
+## TSST workflow repair — 2026-10-12 (owner-authorized, TSD-027 / ADR-006)
+
+- **FACT:** REVIEW-001 findings implemented in the canonical Drive repository on `tsst-core/owner-rules`. One shared `TSST/context/workflow.md`, complete seven-field plan checks, canonical workspace/branch preflight, normalized path boundaries, strict friction parsing and manifest-bound delivery status checks replace divergent/incomplete instructions. Actual native agent loading and cross-runtime end-to-end enforcement remain unverified.
+- **DECISION:** reuse existing explicit scoped authority; one packet, minimum context, same unfinished specialists, one checkpoint. Manual surfaces without repo/shell prepare the packet; the receiving file-capable host validates before applying it. Direct Lead work needs no dummy bus task; no automatic daily-board startup. No readiness/skill promotion, spend or publication.
+- **Branch coordination:** all chats sharing G: share one checkout/branch. Another chat's owner-requested switch to `vill-studio` interrupted the repair branch. The current owner instructed: save the repairs on TSST's feature branch, then return `vill-studio`. This is not evidence of per-chat branches. Core merge/propagation remains a separate reserved action; old checkouts do not automatically receive a feature commit.
+- **Evidence and next:** `TSST/handoffs/decisions-review/REPAIR-001-RESULT.md`; `TSST/decisions/TSST-ADR-006.md`. Review the scoped repair commit for integration into the common branch; exercise the actual Claude runtime before claiming end-to-end parity. Existing brand jobs need their next authorized mirror sync for strict delivery PASS; no live brand state was regenerated in this repair.
+- **do_not_repeat:** do not rerun historical evaluations, redo completed client work, launch full onboarding or reinstall dependencies for this checkpoint. Earlier dated status/PASS statements below are historical, not fresh validation under the new checker.
+
 ## Repo cleanup — 2026-10-11 (owner-approved apply)
 
 - **FACT / problem:** TSST core/delivery and ANVIL work shared the ANVIL branch; CRM UI (122 commits) and the auth spike had never been pushed as backups; a 185 MB rollup TIF blocked a normal ANVIL push.

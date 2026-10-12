@@ -7,6 +7,9 @@ same sequence.
 Principle: **pointer first, context second.** Load the smallest authoritative slice that
 answers the current task. Large context is not better context.
 
+Execution procedure: [workflow.md](workflow.md), one task packet and one shared preflight.
+Run once for a task, then refresh only changed evidence; not a full boot for every tool call.
+
 ## Boot sequence
 
 | # | Step | Read | Stop condition |
@@ -23,11 +26,11 @@ answers the current task. Large context is not better context.
 | 8 | Apply do_not_repeat | `project.md#do_not_repeat` + `status.md#do_not_repeat` | — |
 | 9 | Apply rules | `TSST/core/rules.md`, then `TSST/brands/<id>/rules.md` | brand rule never overrides a core safety rule |
 | 10 | Build minimum context pack | only files named by steps 3–9 for this task | budget: `router.yaml#context_budget` |
-| 11 | Route team | `router.yaml#team_routing` → `TSST/teams/<team>/team.md` (team `lead` → `TSST/LEAD/AGENT.md`) | fixed roster only (rules R1–R2); runtime agent per adapter |
+| 11 | Route team | `router.yaml#team_routing` → team map from roster.yaml; `lead` uses `TSST/LEAD/AGENT.md` directly (no teams/lead folder) | fixed roster only (rules R1–R2); runtime agent per adapter |
 | 12 | Route skills | `TSST/skills/index.yaml` (team slice) + team map → Skill Plan; load only the matched skill(s) | never load a whole registry; **mandatory — no ad-hoc work without team + skills** (`TSST/core/rules.md` 9) |
 | 13 | Route logical model tier | `TSST/context/models.yaml` (FAST/WORK/CODE/DEEP/IMAGE/VIDEO) | adapter maps tier → actual model |
 | 14 | Verify authority | `TSST/TSST_DECISION_RIGHTS.md` (relevant row only) | not authorised → ask user |
-| 15 | Execute | — | — |
+| 15 | Execute | file-capable host: `preflight.py --plan <existing-plan.json> --mutate --json` before scoped mutation (`workflow.md`); manual surface sends the same packet to that host; reads need no mutation gate/new JSON | validation error → stop affected mutation; preserve existing authority |
 | 16 | Checkpoint | update `status.md` / project checkpoint pointer (repo); job delivered → R19 `DELIVERY.json` → `build_delivery.py`, R20 four-way sync (DELIVERY.json, project.md, status.md, portfolio.yaml) + `python TSST/services/delivery/job_check.py <job>` | durable Real Memory writes need approval |
 | 17 | Learning / memory gate | `TSST/core/lessons.md#promotion_gate` | brand-specific → brand `rules.md`; reusable → global lesson candidate |
 

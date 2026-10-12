@@ -1,0 +1,19 @@
+{
+  "branch": "vill-studio",
+  "protected_preexisting_wip": {
+    "TSST/brands/anvil/memory/source.md": "038c2a9d1f00d7c54c34f3fbcc2ed272bda317f0f7cb630339d694acb7a398d0",
+    "TSST/brands/vill-studio/JOBS.md": "5d6a41bf57d1ed579da47ff2b995abf1dfdc57e08f47627ab860bb539a84912b",
+    "TSST/brands/vill-studio/memory/source.md": "0d221eef92fd8717352846db4390039e35d88012bd2344a7477d764c7e5eb9c1",
+    "TSST/brands/vill-studio/projects/marketing-week-01/DELIVERY.html": "c430c2ae6c3386a3ee3f49549b1dd9a3a5c9621c7b1455f8e2b94d36b49125c1",
+    "TSST/brands/vill-studio/projects/marketing-week-01/DELIVERY_INTERNAL.html": "9a866d09bcff04f62307b93d07a6227874458308a0efa6521f1d4078fb64f03a",
+    "TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.html": "6fda8110b934bd00004c3825db4250777d85b84ec80a5ef9ea0a301d7a275c3f",
+    "TSST/brands/vill-studio/projects/social-setup-01/DELIVERY_INTERNAL.html": "d2f7c042e61bc917d5123ff4851889d48e659fc5efa47569fc07304b70929d81",
+    "TSST/brands/vill-studio/rules.md": "ebe02391f33d5ea15ea23b3b2a631b2ea4af1b1e64eb9fd750aa6f40d76b0d93",
+    "TSST/brands/vill-studio/status.md": "d052b140b060e4db1a9885c582c6236dd9e3627bff095fb29d4db677098e2bb8",
+    "TSST/core/portfolio.yaml": "d2cc733f4a102fb596e54d25da8577748a74ab34433706ce96405870d53aece3",
+    "TSST/services/delivery/build_delivery.py": "d234a2941de82b0c9df165924faacee010d8aa2f0d6b57a93413347bc827f486",
+    "TSST/services/delivery/i18n/ar.json": "32be3fb422ba479646b32e9feb795545dc9134d46478d574d9445cdda514639f",
+    "TSST/services/delivery/i18n/en.json": "e6610b9ee76ee6224a345b773b636f22a6934b410087191c5f7da7f44b0febe7"
+  },
+  "note": "No brand files or unrelated delivery renderer WIP may be changed by repair."
+}

@@ -2,7 +2,7 @@
 
 Entry: root `AGENTS.md` (Universal task routing) → `TSST/context/boot.md`.
 
-Request role: every request to Codex states ROLE A (team runtime) or ROLE B (external tool) — `TSST/context/request-role.md`. Codex is ROLE A only for a claimed bus task; ad-hoc use is ROLE B.
+Request role: ROLE A is a scoped TSST Lead session or routed specialist task in the registered runtime; a bus task is used when actually queued/claimed, not fabricated for a direct session. ROLE B is a bounded external-tool request. See `TSST/context/request-role.md` and the shared `workflow.md`.
 
 Bus runtime id: `codex`. Run locally on this working tree (a cloud sandbox sees only
 pushed commits, not the bus). First bus task is its cold-start probe (`REVIEW-001`).
@@ -12,7 +12,7 @@ Jobs: R18–R20 (`TSST/core/rules.md`) — job in `brands/<id>/projects/<job>/`,
 ## Plan: ChatGPT Plus — roster → Codex agent (ADR-004)
 Routing follows `AGENTS.md#universal-task-routing`. The main Codex session is the **Lead**
 (boot, Skill Plan, acceptance) on the default `work` profile. Team work is done only by the
-generated custom agents in `.codex/agents/` — each file already pins its model:
+generated contracts in `.codex/agents/` — each file pins its runtime model. Prefer verified native custom-agent selection. If the exposed interface has no config selector, explicit-contract mode opens that contract and the indexed skill bodies, carries the same scoped plan and records path/hash; native registration remains unverified. A task name alone is not proof of native loading:
 
 | TSST agent | Codex agent | tier | model · effort (`TSST/bus/runtimes.yaml#codex`) |
 |---|---|---|---|
@@ -39,7 +39,8 @@ generated custom agents in `.codex/agents/` — each file already pins its model
 - Filesystem: repo working tree; `drive:` paths only if the Drive folder is mounted.
 - `.gdoc` → `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`: use the repo-native export if its
   `EXPORTS.yaml` row exists, else ask the lead for a `source-read` bus task.
-- No push, merge or deploy without user approval.
+- Git authority comes from `TSST/TSST_DECISION_RIGHTS.md`: feature-branch commit/push/PR only within approved scope; merging to master, deployment and publication remain reserved. The adapter grants no extra rights.
+- Call `python -B TSST/context/preflight.py --plan <existing-plan.json> --mutate --json` explicitly. No automatic Codex hook is claimed; this verifies the shared plan/source, not platform interception.
 - Write files with LF line endings (repo files are hashed byte-exact; CRLF rewrites whole files).
 - Fresh clones on Windows: `git clone -c core.longpaths=true …`
 

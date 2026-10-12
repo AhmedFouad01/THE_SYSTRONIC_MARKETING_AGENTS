@@ -4,6 +4,7 @@
 Run: python TSST/context/tests/test_friction_check.py   (never touches the live friction log or lessons.md)
 """
 import os
+import runpy
 import shutil
 import subprocess
 import sys
@@ -63,7 +64,23 @@ def main():
         with open(les_path, encoding="utf-8") as f:
             expect("lessons.md untouched (read-only)", f.read() == LESSONS)
 
+        r = run(tmp, one + "| 2026-10-10 | build | TSST-DEV-SK-011 | no fixture guidance | T-1 |\n")
+        expect("duplicate task cannot establish repetition", r.returncode == 0 and "CANDIDATE" not in r.stdout)
+
+        categorized = HEADER + ("| 2026-10-09 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] missing branch guidance | T-1 |\n"
+                                "| 2026-10-10 | core | TSST-CTX-SK-023 | [gap:git-repo-hygiene] Windows remote cleanup absent | T-2 |\n")
+        r = run(tmp, categorized)
+        expect("explicit gap ID groups different wording", r.returncode == 0 and "CANDIDATE" in r.stdout and "git-repo-hygiene" in r.stdout)
+        history = HEADER + "```text\n- 2026-10-11 | DEV_AG | historical task | original note\n```\n"
+        r = run(tmp, history)
+        expect("clearly fenced historical bullets are inactive", r.returncode == 0 and "friction rows: 0" in r.stdout)
+
         bad = {
+            "dated bullet outside schema": HEADER + "- 2026-10-11 | DEV_AG | lost task | lost note\n",
+            "dated record without leading pipe": HEADER + "2026-10-11 | build | TSST-DEV-SK-011 | x | T-1 |\n",
+            "unclosed history fence": HEADER + "```text\n- 2026-10-11 | DEV_AG | hidden task | note\n",
+            "invalid gap ID": HEADER + "| 2026-10-11 | build | TSST-DEV-SK-011 | [gap:Bad ID] x | T-1 |\n",
+            "empty task": HEADER + "| 2026-10-11 | build | TSST-DEV-SK-011 | x | |\n",
             "wrong column count": HEADER + "| 2026-10-09 | build | TSST-DEV-SK-011 | only four |\n",
             "bad date": HEADER + "| 09-10-2026 | build | TSST-DEV-SK-011 | x | T-1 |\n",
             "impossible date": HEADER + "| 2026-13-40 | build | TSST-DEV-SK-011 | x | T-1 |\n",
@@ -78,6 +95,14 @@ def main():
         shutil.rmtree(tmp, ignore_errors=True)
     live = subprocess.run([sys.executable, SCRIPT], capture_output=True, text=True, encoding="utf-8")
     expect("live (default paths) log parses clean, exit 0", live.returncode == 0)
+    module = runpy.run_path(SCRIPT)
+    with open(os.path.join(REPO, "TSST/core/friction-log.md"), encoding="utf-8") as stream:
+        rows, errors = module["parse"](stream.read())
+    recovered = {"repo-cleanup assessment", "GEM-REPO-001 grading", "repo-cleanup step1",
+                 "Track A rule wiring (R18-R20)", "repo-cleanup step1b", "Track B VILL move into brand",
+                 "repo-cleanup step2 sync", "new_job.py"}
+    expect("all eight recovered legacy tasks are active valid rows", not errors and recovered.issubset({r["task"] for r in rows}))
+    expect("recovered gaps retain open follow-up ownership", all("[owner:" in r["friction"] and "[state:OPEN]" in r["friction"] and "[next:" in r["friction"] for r in rows if r["task"] in recovered))
     print(f"\n{'all friction_check tests passed' if not FAILS else str(len(FAILS)) + ' FAILED'}")
     for f in FAILS:
         print("  " + f)

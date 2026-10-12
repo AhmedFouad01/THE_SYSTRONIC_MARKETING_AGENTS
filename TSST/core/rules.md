@@ -21,14 +21,15 @@ may never relax these. Historical governance remains in `TSST/TEAM_CONSTITUTION.
    On the bus this is enforced by `team`/`skills` fields and `done --skills-used`.
 
 ## Team roster & skills (TSST-ADR-003, 2026-10-05)
-- **R1 Fixed roster, every runtime.** Deliverables come only from LENS_AG, SPARK_AG, CREATIVE_AG, DEV_AG
-  (runtime agents `tsst-lens|spark|creative|dev`) under the Lead. No temporary or generic
+- **R1 Fixed roster, every runtime.** Deliverables come only from LENS_AG, SPARK_AG, CREATIVE_AG, MOTION_AG, DEV_AG
+  (runtime agents `tsst-lens|spark|creative|motion|dev`) under the Lead. No temporary or generic
   agent delivers TSST work. Roster changes need an ADR.
 - **R2 Utility readers.** `tsst-reader` (Claude: also `Explore`) only read, inventory, classify;
   their output is input, never a deliverable.
 - **R3 Skill Plan first.** No dispatch without `TEAM / AGENT / SKILLS / NOT_SELECTED / TIER /
-  ACCEPTANCE / SKILL_GAP` (template: `TSST/skills/README.md`). Enforced by the dispatch hook
-  and the bus.
+  ACCEPTANCE / SKILL_GAP` (template: `TSST/skills/README.md`). Keep one plan; shared preflight
+  and runtime-specific enforcement are described in `TSST/context/workflow.md`. A generated
+  contract or a bus declaration alone is not proof of loading or method application.
 - **R4 ≤3 skills** per dispatch unless the plan names and justifies more.
 - **R5 Index only.** Find skills through `TSST/skills/index.yaml` (team slice). Never load a
   whole registry or every agent file.
@@ -61,6 +62,9 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
   and precisely: verdict first, no padding, nothing unverified stated as fact.
 - **R16 Ask before dispatch.** While discussing, the Lead asks the owner the open questions and
   confirms scope + cost before delegating to any agent or runtime; no dispatch mid-discussion.
+  A direct instruction approving the identified scope satisfies that approval; do not ask
+  again for steps already inside it. Disclose usage/cash limits; ask only for missing
+  material scope, a new commitment or reserved action. See `TSST/context/workflow.md`.
 
 ## Daily board (owner rule, 2026-10-09)
 - **R17 Locked daily board.** A working day starts when the owner says "ابدأ اليوم":
@@ -92,7 +96,7 @@ Evidence: CRM MVP session audit 2026-10-06 — cost came from re-read context (c
 ## Owner rules moved from runtime memory (owner rule, 2026-10-11, R22)
 Lead conversation
 - **R23 Arabic owner replies.** Every reply to the owner is plain Egyptian Arabic; English only for unavoidable identifiers (paths, IDs, commands), in code spans. Agent English never changes the reply language.
-- **R24 Audit scope first.** No audit/review/fix round starts before the owner sees a numbered fix list (item, done-when, rough cost) and says OK. Never open-ended.
+- **R24 Audit scope first.** A proposed audit/review/fix round needs a numbered list (item, done-when, rough cost) and owner approval. The owner's direct request to perform the bounded review or identified fixes is authority for that scope; state the list and continue without repeated confirmation. Expansion remains a separate decision. Never open-ended.
 - **R25 One next step.** A finished track ends with a short state + at most one proposed next step, not a menu. State token cost before spawning several agents.
 - **R26 Lead spends on analysis.** Lead tokens go to understanding, replying, reviewing team packets and skill validation; all doable work goes to the team.
 - **R27 Visual first.** Systems, plans and roadmaps are explained with a diagram first; big projects keep a live visual blueprint (CREATIVE-SK-031).
@@ -129,3 +133,10 @@ Creative, product, delivery
 ## Naming
 - Folders: lowercase-kebab-case. Daily files: short semantic names (`status.md`,
   `project.md`, `checkpoint.yaml`). Long IDs only for immutable audit/history artifacts.
+
+## External production with Lead review (owner rule, 2026-10-12; R22)
+- **R41 Owner-approved external production.** Use the accepted method in `TSST/context/external-production.md`: confirm the brief with Ahmed; Lead handles direction and review; Ahmed bridges an English bounded request to Antigravity/Gemini. Stage 1 produces images and a comparison report only. Stage 2 integrates approved images into the existing brand Delivery System only after separate owner approval/request. Save readable requests, reports and review decisions. Reuse across brands, including ANVIL, with their own approved identities and product invariants. No automatic rerolls, unrestricted external writes, publication or unmeasured savings claims. External tools remain ROLE B, not TSST runtimes.
+
+## Canonical workspace and runtime parity (owner rule, 2026-10-12; R22)
+- **R42 Canonical workspace and runtime parity.** Ahmed requires work in the original repository `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS` and its canonical TSST/Real Memory, with the active track branch visible beside the repository in the app. A runtime-local copy or worktree is not a replacement for the canonical workspace or its uncommitted state. TSST workflow, team routing, skills, approvals, delivery and memory rules are the same in Codex and Claude; only documented runtime access/tool mechanics may differ. Verify the actual workspace and branch; never claim that a shell working-directory change or a separate worktree changed the app binding. Preserve existing WIP; if it prevents switching, report the blocker before changing or hiding that WIP.
+Source: Ahmed's explicit instruction in Codex chat, 2026-10-12 (Africa/Cairo): show the working branch beside the repo; keep work and memory in main TSST; the general working method must not change between Codex and Claude.

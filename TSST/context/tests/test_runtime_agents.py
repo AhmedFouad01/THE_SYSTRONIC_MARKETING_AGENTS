@@ -51,6 +51,8 @@ def frontmatter(text):
 
 
 def guard(subagent, prompt):
+    utility = subagent.lower() in ('tsst-reader', 'explore')
+    prompt += f'\nAGENT: {subagent}\nSKILLS: none\nNOT_SELECTED: none\nTIER: FAST\nACCEPTANCE: read-only fixture\nSKILL_GAP: none' if utility else ''
     payload = {"tool_name": "Agent", "tool_input": {"subagent_type": subagent, "prompt": prompt}}
     r = py(HOOK, stdin=json.dumps(payload))
     return r.returncode, r.stderr
