@@ -8,8 +8,8 @@
   "workspace": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS",
   "branch": "tsst-core/owner-rules",
   "hashes": {
-    "TSST/LEAD/AGENT.md": "d32fde0b3ee9b77ba7e117c1c0f5521e5c3bc7bb52b2da973200fa318ffffb83",
-    "TSST/core/rules.md": "ce2d61bbc658b4d249bb835a8101c70d5e42be9c20b2ab7d2686876e04f2747a",
+    "TSST/LEAD/AGENT.md": "3f32997457ed13dd8f9dd58286fe0db307f196b5f163339dfd1053628c9d56f2",
+    "TSST/core/rules.md": "d3371933a6b430fdca802a4efb426a8c730feab6aa6e41ec58267e335505c3ec",
     "TSST/LEAD/skills/tsst-lead-sk-029-ai-orchestration-cross-agent-review-and-quality/SKILL.md": "9a694d0dba4600ca92c9839d5defc7395da4ffc37b6cecc93f9fcfbd315e6972",
     "TSST/context_os/skills/TSST-CTX-SK-005-memory-write-gate/SKILL.md": "e59b01940b3a692fae86f8c06e2766e595b19305dfcea52161328f3acadbc392"
   },

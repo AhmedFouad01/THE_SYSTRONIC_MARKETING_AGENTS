@@ -8,6 +8,8 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
+import importlib.util
 
 ROOT = Path(__file__).resolve().parents[3]
 HOOK = ROOT / 'TSST/context/hooks/agent_dispatch_guard.py'
@@ -109,6 +111,127 @@ class EnforcementTests(unittest.TestCase):
                 b[name](r'..\outside.txt')
         self.assertTrue(b['result_in_scope'](r'out\a.md', 'out/*.md'))
         self.assertFalse(b['result_in_scope']('out/a.md.extra', 'out/a.md'))
+
+
+class BusResolvedBoundaryTests(unittest.TestCase):
+    """All links, tasks and protected targets below are disposable fixtures, never live paths."""
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='tsst-resolved-bus-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+        self.bus = self.root / 'TSST/bus'
+        for relative in ['TSST/bus/tasks', 'TSST/bus/closed', 'TSST/bus/out', 'TSST/core', 'docs', 'out', 'elsewhere']:
+            (self.root / relative).mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / 'TSST/bus/bus.py', self.bus / 'bus.py')
+        (self.root / 'TSST/core/rules.md').write_text('protected fixture', encoding='utf-8')
+        (self.root / 'docs/spec.md').write_text('fixture spec', encoding='utf-8')
+        (self.root / 'elsewhere/result.md').write_text('fixture result', encoding='utf-8')
+        (self.bus / 'runtimes.yaml').write_text('claude:\n  roles: [lead]\n  status: available\n  caps: [fs_read]\ncodex:\n  roles: [worker]\n  status: available\n  caps: [fs_read]\n', encoding='utf-8')
+        (self.bus / 'log.tsv').write_text('', encoding='utf-8')
+        spec = importlib.util.spec_from_file_location('isolated_resolved_bus', self.bus / 'bus.py')
+        self.b = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.b)
+
+    def task(self, tid='T-1', **updates):
+        task = dict(id=tid, title='fixture', kind='probe', status='claimed', to='any', tier='CODE',
+                    spec='docs/spec.md', done_when='fixture check', issued_by='claude', created='2026-10-12T00:00Z',
+                    read=[], write=[], needs=[], after=[], claimed_by='codex', lease_until='2099-01-01T00:00Z')
+        task.update(updates)
+        (self.bus / 'tasks' / (tid + '.yaml')).write_text(self.b.dump(task), encoding='utf-8')
+        return task
+
+    def run_bus(self, *args):
+        return subprocess.run([sys.executable, '-B', str(self.bus / 'bus.py'), *args], cwd=self.root,
+                              capture_output=True, text=True)
+
+    def link(self, relative, target):
+        alias = self.root / relative
+        destination = self.root / target
+        try:
+            alias.symlink_to(destination, target_is_directory=True)
+            self.addCleanup(alias.unlink)
+        except OSError:
+            if os.name != 'nt':
+                self.skipTest('directory links unavailable in isolated fixture')
+            r = subprocess.run(['cmd', '/c', 'mklink', '/J', str(alias), str(destination)], capture_output=True, text=True)
+            if r.returncode:
+                self.skipTest('isolated junction unavailable: ' + r.stderr)
+            self.addCleanup(os.rmdir, alias)  # remove the junction itself before temp cleanup, never its target
+        self.assertTrue(alias.resolve().is_relative_to(self.root))
+        return alias
+
+    def test_link_to_protected_scope_is_rejected(self):
+        self.link('TSST/bus/out/p', 'TSST/core')
+        self.assertTrue(self.b.scope_errors(['TSST/bus/out/p/**'], True))
+
+    def test_link_to_protected_result_is_rejected(self):
+        self.link('TSST/bus/out/p', 'TSST/core')
+        self.task()
+        r = self.run_bus('done', 'T-1', '--me', 'codex', '--result', 'TSST/bus/out/p/rules.md')
+        self.assertEqual(r.returncode, 2, r.stdout + r.stderr)
+        self.assertEqual((self.root / 'TSST/core/rules.md').read_text(), 'protected fixture')
+
+    def test_link_cannot_escape_declared_result_scope(self):
+        self.link('out/p', 'elsewhere')
+        self.task(write=['out'])
+        r = self.run_bus('done', 'T-1', '--me', 'codex', '--result', 'out/p/result.md')
+        self.assertEqual(r.returncode, 2, r.stdout + r.stderr)
+
+    def test_explicit_safe_link_scope_records_resolved_result(self):
+        self.link('out/p', 'elsewhere')
+        self.task(write=['out/p'])
+        r = self.run_bus('done', 'T-1', '--me', 'codex', '--result', 'out/p/result.md')
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertEqual(self.b.load('T-1')['result'], 'elsewhere/result.md')
+        checked = self.run_bus('check')
+        self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
+
+    def test_check_rejects_forged_protected_result_even_with_matching_hash(self):
+        self.task(status='done', result='TSST/core/rules.md', sha256=self.b.sha('TSST/core/rules.md'))
+        r = self.run_bus('check')
+        self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
+        self.assertIn('protected', r.stdout)
+
+    def test_check_rejects_forged_result_outside_scope(self):
+        self.task(status='done', write=['out'], result='elsewhere/result.md', sha256=self.b.sha('elsewhere/result.md'))
+        r = self.run_bus('check')
+        self.assertEqual(r.returncode, 1, r.stdout + r.stderr)
+        self.assertIn('scope', r.stdout)
+
+    def test_malformed_overlap_is_conservative_conflict(self):
+        self.assertTrue(self.b.overlaps('C:/legacy', 'out'))
+
+    def test_legacy_invalid_scope_cli_remains_diagnostic(self):
+        self.task('BAD-1', write=['C:/legacy'])
+        self.task('GOOD-1', write=['out'])
+        for args, code in [(('check',), 1), (('ls', '--me', 'codex'), 0), (('claim', 'GOOD-1', '--me', 'codex'), 2)]:
+            with self.subTest(args=args):
+                r = self.run_bus(*args)
+                self.assertEqual(r.returncode, code, r.stdout + r.stderr)
+                self.assertNotIn('Traceback', r.stderr)
+                self.assertTrue(any(word in r.stdout for word in ('FAIL', 'WARN', 'REFUSED')), r.stdout)
+
+    def test_nonarray_historical_scope_remains_diagnostic_at_all_entrypoints(self):
+        for value in (1, {'invalid': 'scope'}, 0, {}, None):
+            self.assertTrue(self.b.scope_errors(value, True))
+            self.assertTrue(any(self.b.overlaps(item, 'out') for item in self.b.scope_items(value)))
+            self.task('BAD-1', write=value)
+            self.task('GOOD-1', write=['out'])
+            for args, code in [(('check',), 1), (('ls', '--me', 'codex'), 0), (('claim', 'GOOD-1', '--me', 'codex'), 2)]:
+                with self.subTest(value=value, args=args):
+                    r = self.run_bus(*args)
+                    self.assertEqual(r.returncode, code, r.stdout + r.stderr)
+                    self.assertNotIn('Traceback', r.stderr)
+                    self.assertTrue(any(word in r.stdout for word in ('FAIL', 'WARN', 'REFUSED')), r.stdout)
+                    if args[0] == 'claim':
+                        self.assertIn('write scope locked by BAD-1', r.stdout)
+
+    def test_cross_drive_containment_error_is_refused(self):
+        with mock.patch.object(self.b.os.path, 'commonpath', side_effect=ValueError('Paths on different drives')):
+            self.assertTrue(self.b.scope_errors(['docs/a.md'], False))
+
+    def test_plausible_shortname_spelling_is_rejected_without_os_assumption(self):
+        self.assertTrue(self.b.scope_errors(['TSST/CONTEX~1/boot.md'], True))
 
 
 if __name__ == '__main__':
