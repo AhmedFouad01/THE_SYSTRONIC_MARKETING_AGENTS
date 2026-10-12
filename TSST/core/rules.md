@@ -129,3 +129,20 @@ Creative, product, delivery
 ## Naming
 - Folders: lowercase-kebab-case. Daily files: short semantic names (`status.md`,
   `project.md`, `checkpoint.yaml`). Long IDs only for immutable audit/history artifacts.
+
+## Scoped owner rule — VILL image delivery (2026-10-12; R22)
+For VILL transformed-photo deliveries, show each original source image followed by its final image, clearly paired/grouped and labeled. This requirement is scoped to VILL image work; it does not change unrelated jobs.
+
+Scoped VILL imagery clarification (2026-10-12, R22): premium kitchen finish colors may vary; keep brand color feeling in lighting/grading/accents, not identical literal cabinetry colors. Owner authority and economical image-production preference recorded in `TSST/brands/vill-studio/rules.md`.
+
+Scoped VILL next-round image direction (2026-10-12, R22): distinct bold cinematic concept per kitchen image, unusual camera angles and eye-catching composition; preserve recognizable design/premium brand feeling. Exact owner instruction in VILL brand rules.
+
+## Unified brand delivery (owner rule, 2026-10-12; R22)
+All brand work belongs in its canonical project/job under the brand and is shown, with its current status, in the shared brand Delivery System. New campaigns extend that system; they must not introduce a separate campaign-specific delivery system. The brand entry pages link to the shared job pages; refresh them with the job inventory whenever work is added or its status changes.
+
+## External production with Lead review (owner rule, 2026-10-12; R22)
+- **R41 Owner-approved external production.** Use the accepted method in `TSST/context/external-production.md`: confirm the brief with Ahmed; Lead handles direction and review; Ahmed bridges an English bounded request to Antigravity/Gemini. Stage 1 produces images and a comparison report only. Stage 2 integrates approved images into the existing brand Delivery System only after separate owner approval/request. Save readable requests, reports and review decisions. Reuse across brands, including ANVIL, with their own approved identities and product invariants. No automatic rerolls, unrestricted external writes, publication or unmeasured savings claims. External tools remain ROLE B, not TSST runtimes.
+
+## Canonical workspace and runtime parity (owner rule, 2026-10-12; R22)
+- **R42 Canonical workspace and runtime parity.** Ahmed requires work in the original repository `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS` and its canonical TSST/Real Memory, with the active track branch visible beside the repository in the app. A runtime-local copy or worktree is not a replacement for the canonical workspace or its uncommitted state. TSST workflow, team routing, skills, approvals, delivery and memory rules are the same in Codex and Claude; only documented runtime access/tool mechanics may differ. Verify the actual workspace and branch; never claim that a shell working-directory change or a separate worktree changed the app binding. Preserve existing WIP; if it prevents switching, report the blocker before changing or hiding that WIP.
+Source: Ahmed's explicit instruction in Codex chat, 2026-10-12 (Africa/Cairo): show the working branch beside the repo; keep work and memory in main TSST; the general working method must not change between Codex and Claude.

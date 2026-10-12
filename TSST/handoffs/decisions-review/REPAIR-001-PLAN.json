@@ -1,0 +1,91 @@
+{
+  "team": "lead",
+  "agent": "tsst-lead",
+  "skills": [
+    "TSST-LEAD-SK-029",
+    "TSST-CTX-SK-005"
+  ],
+  "not_selected": "Marketing, creative, paid-media skills: internal governance repair only.",
+  "tier": "WORK",
+  "acceptance": "Regression checks reject prior failures; current policy conflicts resolved; original brand WIP unchanged; no readiness claim.",
+  "skill_gap": "none",
+  "track": "tsst-core",
+  "read": [
+    "TSST/**",
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".agents/skills/tsst-router/SKILL.md",
+    "REAL_MEMORY/TSST_REAL_MEMORY/**",
+    ".claude/agents/tsst-*",
+    ".codex/agents/tsst-*"
+  ],
+  "write": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".agents/skills/tsst-router/SKILL.md",
+    "TSST/context/**",
+    "TSST/bus/bus.py",
+    "TSST/core/rules.md",
+    "TSST/core/friction-log.md",
+    "TSST/services/delivery/job_check.py",
+    "TSST/services/delivery/sync_jobs.py",
+    "TSST/services/delivery/status_sync.py",
+    "TSST/services/delivery/README.md",
+    "TSST/services/delivery/JOB_LAYOUT.md",
+    "TSST/services/delivery/test*",
+    "TSST/LEAD/AGENT.md",
+    "TSST/skills/README.md",
+    "TSST/TSST_OPERATING_PROFILE.md",
+    "TSST/handoffs/decisions-review/**",
+    "REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md",
+    "REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md",
+    "REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md",
+    ".claude/agents/tsst-*",
+    ".codex/agents/tsst-*",
+    "TSST/TEAM_CONSTITUTION.md",
+    "TSST/decisions/TSST-ADR-006.md"
+  ],
+  "authority": {
+    "source": "Ahmed explicit repair and complexity-reduction request in current chat 2026-10-12; canonical TSST-memory instruction persists.; owner selected save-core-then-return-vill branch order in async reply.",
+    "approved_scope": {
+      "read": [
+        "TSST/**",
+        "AGENTS.md",
+        "CLAUDE.md",
+        ".agents/skills/tsst-router/SKILL.md",
+        "REAL_MEMORY/TSST_REAL_MEMORY/**",
+        ".claude/agents/tsst-*",
+        ".codex/agents/tsst-*"
+      ],
+      "write": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        ".agents/skills/tsst-router/SKILL.md",
+        "TSST/context/**",
+        "TSST/bus/bus.py",
+        "TSST/core/rules.md",
+        "TSST/core/friction-log.md",
+        "TSST/services/delivery/job_check.py",
+        "TSST/services/delivery/sync_jobs.py",
+        "TSST/services/delivery/status_sync.py",
+        "TSST/services/delivery/README.md",
+        "TSST/services/delivery/JOB_LAYOUT.md",
+        "TSST/services/delivery/test*",
+        "TSST/LEAD/AGENT.md",
+        "TSST/skills/README.md",
+        "TSST/TSST_OPERATING_PROFILE.md",
+        "TSST/handoffs/decisions-review/**",
+        "REAL_MEMORY/TSST_REAL_MEMORY/01_CURRENT_STATUS/CURRENT_STATUS.md",
+        "REAL_MEMORY/TSST_REAL_MEMORY/02_PROJECT_MEMORY/PROJECT_DECISIONS.md",
+        "REAL_MEMORY/TSST_REAL_MEMORY/05_TIMELINE/PROJECT_TIMELINE.md",
+        ".claude/agents/tsst-*",
+        ".codex/agents/tsst-*",
+        "TSST/TEAM_CONSTITUTION.md",
+        "TSST/decisions/TSST-ADR-006.md"
+      ]
+    }
+  },
+  "runtime": "codex",
+  "contract_mode": "explicit",
+  "contract_path": "TSST/LEAD/AGENT.md"
+}

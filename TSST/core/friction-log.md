@@ -70,3 +70,8 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 | 2026-10-11 | studio | TSST-CREATIVE-SK-028 | viewport skill worded for CRM shells/tables; no static long-document checks (inline tag wrap, brand-name wrap at 390); workflow still applied | Track D3 delivery page QA |
 - 2026-10-11 | DEV_AG | repo-cleanup step2 sync | no git-hygiene skill: split mixed commits by path (diff --binary -M | apply --3way), keep-ours rules.md conflicts, gitleaks docker needs safe.directory env on ro mount, Git Bash mangles robocopy flags, long push hits 120s timeout
 - 2026-10-11 | DEV_AG | new_job.py | job_check d) name-matches loosely (a nested job name can match any brand project.md); build_delivery flags missing ar.title even when default_lang=en
+
+| 2026-10-12 | studio | TSST-CREATIVE-SK-019 | production intake assumes final ad copy and CTA; no explicit image-only experiment path | source-based image experiments |
+| 2026-10-12 | studio | TSST-CREATIVE-SK-014 | exact product fidelity assumes immutable finishes; no explicit scope for owner-authorized recolor and studio-background transformation | source-based image experiments |
+
+| 2026-10-12 | build | TSST-DEV-SK-010 | diagnosis workflow assumes repair follows investigation; read-only review requires stopping before repair and regression implementation | TSST decisions review REVIEW-001 |

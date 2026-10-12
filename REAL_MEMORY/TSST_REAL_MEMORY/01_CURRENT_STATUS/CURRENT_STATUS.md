@@ -1,5 +1,9 @@
 # TSST — CURRENT STATUS
 
+## Workflow repair checkpoint — 2026-10-12
+
+Owner-authorized repairs are saved in `e5579c7` and follow-up `80e94dc` on `tsst-core/owner-rules`. Canonical checkout returned to `vill-studio` by Ahmed's explicit choice; original brand/hub WIP retained and13 protected files hash-matched. The repair code is **not merged into master or this branch**. Initial owner-approved limited Claude Pro read-only review completed; its bus findings were reproduced/fixed, with24 final regressions,61 protocol assertions and independent local review passing. Final changed-bus Claude delta review awaits a separate sending-permission reply after automatic approval review rejected the extra payload; silence is not approval. Evidence/next: `TSST/handoffs/decisions-review/REPAIR-001-RESULT.md` and `REPAIR-001-SAVED.json`. End-to-end runtime parity remains unverified. No client work/historical evaluations to repeat.
+
 ## Repo cleanup — 2026-10-11 (owner-approved apply)
 
 - **FACT / problem:** TSST core/delivery and ANVIL work shared the ANVIL branch; CRM UI (122 commits) and the auth spike had never been pushed as backups; a 185 MB rollup TIF blocked a normal ANVIL push.

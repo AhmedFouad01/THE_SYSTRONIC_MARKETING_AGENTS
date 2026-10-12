@@ -64,3 +64,6 @@ ACCEPTANCE:      checks the agent will run on return
   product info) needs no per-request approval. Sensitive = customer lists/CRM data,
   contracts, internal prices, internal sales/ad numbers, embargoed campaigns.
 - Gemini output never writes Real Memory directly; facts in it are proposals.
+
+## Approved two-stage production bridge — 2026-10-12
+For bounded creative execution via Ahmed, follow `TSST/context/external-production.md` (core R41): English request, production/report first, owner review, then a separate delivery-only request with explicit write scope. Antigravity remains an external tool; the Gemini app and file-capable Antigravity surfaces are not interchangeable. Preserve readable request/report/review files.

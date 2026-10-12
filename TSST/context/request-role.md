@@ -32,3 +32,6 @@ Your output is INPUT for <responsible agent>; the Lead reviews it before anythin
 3. Role A is only for runtimes in `TSST/bus/runtimes.yaml` with the role they hold there.
    Anything else is Role B.
 4. The role grants no authority. Boundaries in `boot.md` and `TSST_DECISION_RIGHTS.md` apply.
+
+## Owner-approved production/delivery bridge — 2026-10-12
+See `external-production.md` (R41). A separately owner-authorized delivery request may explicitly allow ROLE B to update named packaging/index files via existing delivery scripts after visual review. State the exact allowlist; all other team files remain outside its write scope. This narrow exception does not reinstate a runtime, permit boot/roster claims, or authorize commits, memory changes or publication. The production-stage request never includes delivery integration authority.

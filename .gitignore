@@ -62,3 +62,12 @@ TSST/brands/anvil/projects/rollup-pre-hell/plates/plate-b.png
 TSST/brands/anvil/projects/rollup-pre-hell/plates/plate-b-4x.jpg
 TSST/brands/anvil/projects/rollup-pre-hell/ai-pass/v1.png
 TSST/brands/anvil/projects/rollup-pre-hell/ai-pass/v2.png
+
+# Project image/media outputs stay on Drive; manifests, source and evidence stay in Git
+TSST/brands/*/projects/**/*.png
+TSST/brands/*/projects/**/*.jpg
+TSST/brands/*/projects/**/*.jpeg
+TSST/brands/*/projects/**/*.webp
+TSST/brands/*/projects/**/*.npy
+# External temporary test output (not campaign source or evidence)
+TSST/brands/anvil/projects/product-photo-bank/work/external/round-02/test_out/
