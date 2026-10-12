@@ -1,0 +1,352 @@
+{
+  "client": "VILL Studio",
+  "service": "Kitchen image production",
+  "job": "kitchen-campaign-01",
+  "date": "2026-10-12",
+  "default_lang": "en",
+  "title": "Kitchen Campaign Concepts",
+  "subtitle": "Originals and cinematic kitchen finals",
+  "status": "review",
+  "status_label": "Four bold new shots for review",
+  "status_detail": "Six earlier images remain approved. Four new cinematic angles await your review.",
+  "logo": "auto",
+  "about": {
+    "paragraphs": [
+      "Six kitchen designs from the photo bank. Six earlier images remain accepted; four new shots explore bold cinematic angles, wide-lens depth and foreground framing. Each source is paired with its approved earlier shot and new shot where available.",
+      "The first two images retain their earlier 5/5 review. New shots await approval."
+    ]
+  },
+  "items": [
+    {
+      "id": "kitchen-01-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 01 — Sage Island",
+      "file": "work/creative/inputs/20171231_102758.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-01",
+      "title": "Final — Sage Island",
+      "desc": "Cinematic marketing concept derived from a selected kitchen design.",
+      "group": "Kitchen 01 — Sage Island",
+      "file": "work/creative/exports/vill-kitchen-01-sage-terracotta-v2.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 02 — Forest Corner",
+      "file": "work/creative/inputs/IMG-20180815-WA0048.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-02",
+      "title": "Final — Forest Corner",
+      "desc": "Cinematic marketing concept derived from a selected kitchen design.",
+      "group": "Kitchen 02 — Forest Corner",
+      "file": "work/creative/exports/vill-kitchen-02-forest-orange-v1.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-03-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 03 — Oak Architecture",
+      "file": "work/creative/round-02/kitchen-03/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-03",
+      "title": "Approved earlier shot — Oak Architecture",
+      "desc": "Cinematic marketing concept with premium finishes and studio staging.",
+      "group": "Kitchen 03 — Oak Architecture",
+      "file": "work/creative/round-02/kitchen-03/final.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-03-round03",
+      "title": "New shot — Low Ultra-wide Hero",
+      "desc": "Bold cinematic camera concept; intentional lens perspective.",
+      "group": "Kitchen 03 — Oak Architecture",
+      "file": "work/creative/round-03/kitchen-03/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "kitchen-04-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 04 — Walnut Ribbon",
+      "file": "work/creative/round-02/kitchen-04/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-04",
+      "title": "Approved earlier shot — Walnut Ribbon",
+      "desc": "Cinematic marketing concept with premium finishes and studio staging.",
+      "group": "Kitchen 04 — Walnut Ribbon",
+      "file": "work/creative/round-02/kitchen-04/final.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-04-round03",
+      "title": "New shot — Through the Shelf",
+      "desc": "Bold cinematic camera concept; intentional lens perspective.",
+      "group": "Kitchen 04 — Walnut Ribbon",
+      "file": "work/creative/round-03/kitchen-04/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "kitchen-05-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 05 — Graphite & Ivory",
+      "file": "work/creative/round-02/kitchen-05/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-05",
+      "title": "Approved earlier shot — Graphite & Ivory",
+      "desc": "Cinematic marketing concept with premium finishes and studio staging.",
+      "group": "Kitchen 05 — Graphite & Ivory",
+      "file": "work/creative/round-02/kitchen-05/final.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-05-round03",
+      "title": "New shot — High Oblique Geometry",
+      "desc": "Bold cinematic camera concept; intentional lens perspective.",
+      "group": "Kitchen 05 — Graphite & Ivory",
+      "file": "work/creative/round-03/kitchen-05/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "kitchen-06-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Source image for comparison with the final below.",
+      "group": "Kitchen 06 — Walnut Peninsula",
+      "file": "work/creative/round-02/kitchen-06/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "kitchen-06",
+      "title": "Approved earlier shot — Walnut Peninsula",
+      "desc": "Cinematic marketing concept with premium finishes and studio staging.",
+      "group": "Kitchen 06 — Walnut Peninsula",
+      "file": "work/creative/round-02/kitchen-06/final.png",
+      "type": "image",
+      "status": "approved",
+      "who": "Owner",
+      "date": "2026-10-12"
+    },
+    {
+      "id": "kitchen-06-round03",
+      "title": "New shot — Forced Perspective Bar",
+      "desc": "Bold cinematic camera concept; intentional lens perspective.",
+      "group": "Kitchen 06 — Walnut Peninsula",
+      "file": "work/creative/round-03/kitchen-06/final.png",
+      "type": "image",
+      "status": "review"
+    }
+  ],
+  "next": [
+    "Review the four new bold cinematic shots."
+  ],
+  "checks": [
+    {
+      "title": "Actual renders inspected",
+      "state": "pass",
+      "note": "Four new actual renders individually inspected; prior six approvals retained; new four await owner approval. K05 lens curvature is controlled/mild rather than extreme."
+    },
+    {
+      "title": "Release approval",
+      "state": "open",
+      "note": "No publication authorized."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Creative source map and exact prompts",
+      "path": "work/creative/MANIFEST.json"
+    },
+    {
+      "label": "Round 02 sources, prompts and remaining queue",
+      "path": "work/creative/round-02/MANIFEST.json"
+    },
+    {
+      "label": "Round 03 exact prompts and source mapping",
+      "path": "work/creative/round-03/MANIFEST.json"
+    }
+  ],
+  "ar": {
+    "title": "تجارب صور كامبين المطابخ",
+    "subtitle": "أصل الصور والشوتات السينمائية",
+    "status_label": "4 شوتات جريئة جديدة للمراجعة",
+    "status_detail": "الست صور السابقة معتمدين. الأربع شوتات السينمائية الجديدة جاهزين لمراجعتك.",
+    "about": {
+      "paragraphs": [
+        "6 تصميمات مطابخ من بنك الصور. الست صور السابقة معتمدين، والأربع شوتات الجديدة بتجرب زوايا سينمائية جريئة وعمق بعدسات واسعة وكادرات من خلال عناصر قريبة. كل أصل معاه الشوت المعتمد والشوت الجديد لو موجود.",
+        "تقييم أول صورتين 5 من 5 محفوظ. الشوتات الجديدة لسه للمراجعة."
+      ]
+    },
+    "items": {
+      "kitchen-01": {
+        "title": "الفاينال — جزيرة مطبخ بالأخضر الهادئ",
+        "desc": "تصوّر تسويقي بإضاءة سينمائية مبني على تصميم مطبخ مختار.",
+        "group": "المطبخ الأول — الأخضر الهادئ",
+        "who": "المالك"
+      },
+      "kitchen-02": {
+        "title": "الفاينال — مطبخ بالأخضر الغامق",
+        "desc": "تصوّر تسويقي بإضاءة سينمائية مبني على تصميم مطبخ مختار.",
+        "group": "المطبخ الثاني — الأخضر الغامق",
+        "who": "المالك"
+      },
+      "kitchen-01-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ الأول — الأخضر الهادئ"
+      },
+      "kitchen-02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ الثاني — الأخضر الغامق"
+      },
+      "kitchen-03-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ 03 — خشب طبيعي وجزيرة بخطوط مميزة"
+      },
+      "kitchen-03": {
+        "title": "الشوت السابق المعتمد — خشب طبيعي وجزيرة بخطوط مميزة",
+        "desc": "شوت تسويقي سينمائي بخامات وألوان بريميم وخلفية استوديو.",
+        "group": "المطبخ 03 — خشب طبيعي وجزيرة بخطوط مميزة",
+        "who": "المالك"
+      },
+      "kitchen-04-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ 04 — خشب ورفوف بشريط علوي غامق"
+      },
+      "kitchen-04": {
+        "title": "الشوت السابق المعتمد — خشب ورفوف بشريط علوي غامق",
+        "desc": "شوت تسويقي سينمائي بخامات وألوان بريميم وخلفية استوديو.",
+        "group": "المطبخ 04 — خشب ورفوف بشريط علوي غامق",
+        "who": "المالك"
+      },
+      "kitchen-05-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ 05 — جرافيت وأوف وايت"
+      },
+      "kitchen-05": {
+        "title": "الشوت السابق المعتمد — جرافيت وأوف وايت",
+        "desc": "شوت تسويقي سينمائي بخامات وألوان بريميم وخلفية استوديو.",
+        "group": "المطبخ 05 — جرافيت وأوف وايت",
+        "who": "المالك"
+      },
+      "kitchen-06-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية للمقارنة بالفاينال اللي بعدها.",
+        "group": "المطبخ 06 — بار مطبخ بالخشب الدافي"
+      },
+      "kitchen-06": {
+        "title": "الشوت السابق المعتمد — بار مطبخ بالخشب الدافي",
+        "desc": "شوت تسويقي سينمائي بخامات وألوان بريميم وخلفية استوديو.",
+        "group": "المطبخ 06 — بار مطبخ بالخشب الدافي",
+        "who": "المالك"
+      },
+      "kitchen-03-round03": {
+        "title": "الشوت الجديد — زاوية منخفضة وعدسة واسعة",
+        "desc": "فكرة سينمائية جريئة بزوايا ومنظور عدسة مقصود.",
+        "group": "المطبخ 03 — خشب طبيعي وجزيرة بخطوط مميزة"
+      },
+      "kitchen-04-round03": {
+        "title": "الشوت الجديد — من خلال الرف",
+        "desc": "فكرة سينمائية جريئة بزوايا ومنظور عدسة مقصود.",
+        "group": "المطبخ 04 — خشب ورفوف بشريط علوي غامق"
+      },
+      "kitchen-05-round03": {
+        "title": "الشوت الجديد — زاوية علوية مائلة",
+        "desc": "فكرة سينمائية جريئة بزوايا ومنظور عدسة مقصود.",
+        "group": "المطبخ 05 — جرافيت وأوف وايت"
+      },
+      "kitchen-06-round03": {
+        "title": "الشوت الجديد — عمق البار ومنظور جريء",
+        "desc": "فكرة سينمائية جريئة بزوايا ومنظور عدسة مقصود.",
+        "group": "المطبخ 06 — بار مطبخ بالخشب الدافي"
+      }
+    },
+    "next": [
+      "راجع الأربع شوتات السينمائية الجديدة."
+    ],
+    "checks": [
+      {
+        "title": "مراجعة الصور",
+        "note": "تمت مراجعة الأربع شوتات الجديدة؛ الست صور السابقة معتمدين والجديد لسه لمراجعتك. انحناء العدسة في المطبخ05 متحكم فيه وخفيف."
+      },
+      {
+        "title": "اعتماد النشر",
+        "note": "لسه مفيش تصريح بالنشر."
+      }
+    ],
+    "sources": {
+      "Creative source map and exact prompts": "المصادر والبرومبتات",
+      "Round 02 sources, prompts and remaining queue": "مصادر الجولة الثانية والبرومبتات وباقي المطابخ",
+      "Round 03 exact prompts and source mapping": "برومبتات الجولة الثالثة وربط المصادر"
+    },
+    "decisions": [
+      {
+        "item": "الصورتين الفاينال للمطابخ",
+        "who": "المالك",
+        "int_note": "نص المراجعة: المراجعة : ممتاز *****. طلب عرض الأصل والفاينال مع بعض. اعتماد للصور؛ النشر غير مصرح به."
+      },
+      {
+        "item": "الصور الجديدة للمطابخ 03–06",
+        "who": "المالك",
+        "int_note": "نص القبول: ماشي الصور مقبولة. بدون تقييم نجوم جديد. توجيه الجولة الجاية محفوظ؛ مفيش صور جديدة اتولدت ولا تصريح نشر."
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "date": "2026-10-12",
+      "item": "Both final kitchen images",
+      "status": "Approved",
+      "who": "Owner",
+      "int_note": "Exact user review: المراجعة : ممتاز *****. User requests originals and finals paired in delivery. Visual approval only; no publication authorization."
+    },
+    {
+      "date": "2026-10-12",
+      "item": "New kitchen images 03–06",
+      "status": "Approved",
+      "who": "Owner",
+      "int_note": "Exact owner acceptance: ماشي الصور مقبولة. No new star rating. Future steering: الجولة الجاية شوتات سينيمائية جريئة بزوايا مختلفة وغريبة وتخطف العين / فكرة جريئة لكل صورة منهم. No new render executed and no publication authorization."
+    }
+  ]
+}

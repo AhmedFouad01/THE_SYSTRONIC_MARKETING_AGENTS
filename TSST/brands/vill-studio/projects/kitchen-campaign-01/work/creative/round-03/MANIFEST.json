@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-12",
+  "authorization": "Owner says ابدأ after wide/fisheye/forced-perspective direction.",
+  "tool": "built-in image_gen",
+  "calls": 4,
+  "rerolls": 0,
+  "semantic_search_calls": 0,
+  "fidelity_calls": 0,
+  "outputs": [
+    {
+      "id": "kitchen-03-round03",
+      "source_id": "K040",
+      "original": "20180507_155719.jpg",
+      "approved_identity_reference": "work/creative/round-02/kitchen-03/final.png",
+      "new_render": "kitchen-03/final.png",
+      "state": "PRODUCTION_DRAFT / owner review pending",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "concept": "Low Ultra-wide Hero"
+    },
+    {
+      "id": "kitchen-04-round03",
+      "source_id": "K050",
+      "original": "20200511_165552.jpg",
+      "approved_identity_reference": "work/creative/round-02/kitchen-04/final.png",
+      "new_render": "kitchen-04/final.png",
+      "state": "PRODUCTION_DRAFT / owner review pending",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "concept": "Through the Shelf"
+    },
+    {
+      "id": "kitchen-05-round03",
+      "source_id": "K034",
+      "original": "20171206_181627.jpg",
+      "approved_identity_reference": "work/creative/round-02/kitchen-05/final.png",
+      "new_render": "kitchen-05/final.png",
+      "state": "PRODUCTION_DRAFT / owner review pending",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "concept": "High Oblique Geometry"
+    },
+    {
+      "id": "kitchen-06-round03",
+      "source_id": "K108",
+      "original": "20190810_084344_IMG_3104.JPG",
+      "approved_identity_reference": "work/creative/round-02/kitchen-06/final.png",
+      "new_render": "kitchen-06/final.png",
+      "state": "PRODUCTION_DRAFT / owner review pending",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "concept": "Forced Perspective Bar"
+    }
+  ],
+  "exact_prompts": "prompts.json",
+  "qa": "Actual images inspected individually from generation tool. No focal defects. Recognizable designs preserved with intentional projected perspective. K03 niche placement/proportions generatively adapted; K05 curvature mild, high oblique angle clearly achieved. No exact dimensional fidelity claim under distorted projection.",
+  "skills": [
+    "TSST-CREATIVE-SK-008",
+    "TSST-CREATIVE-SK-014",
+    "TSST-CREATIVE-SK-019",
+    "imagegen"
+  ],
+  "skill_friction": "none",
+  "queue": "15 existing designs untouched",
+  "status": "new4 REVIEW; old6 approvals retained; no publication authority"
+}

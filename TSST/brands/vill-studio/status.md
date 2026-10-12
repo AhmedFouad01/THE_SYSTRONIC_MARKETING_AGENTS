@@ -74,3 +74,19 @@ See `projects/strategy-baseline/project.md#do_not_repeat`. Closed: C7-VILL-11 (a
 Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not establish an active TSST project or current workstream; recover that state from the canonical source.
 
 Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/status.md`.
+
+## New jobs (new_job.py)
+- 2026-10-12: new job `kitchen-campaign-01` (Kitchen image production), state draft. README: `TSST/brands/vill-studio/projects/kitchen-campaign-01/README.md`
+
+- 2026-10-12: kitchen-campaign-01 — two cinematic kitchen concept images ready for owner review; source mapping and QA in work/creative; no publication.
+
+- 2026-10-12: kitchen-campaign-01 — owner approved both final kitchen visuals: «ممتاز *****» (5/5); DELIVERY shows original then final per kitchen. No publication authorization.
+
+- 2026-10-12: kitchen-campaign-01 round-02 — 4 new premium cinematic kitchen drafts ready for review; total6, earlier2 approved; original/final pairs supplied; 15 remaining designs queued. Four generation calls, no rerolls.
+
+- 2026-10-12: kitchen-campaign-01 — all6 visuals accepted; new4 acceptance has no star rating. Next-round unusual cinematic angles and distinct bold concepts saved in 04_CREATIVE_BRIEFS.md; no new renders.
+
+- 2026-10-12: kitchen-campaign-01 round03 — 4 bold cinematic shots REVIEW, prior6 approved retained; grouped source/previous/new images. 4 calls, zero rerolls; queue15 untouched.
+- 2026-10-12: new job `sofa-studio-01` (Sofa studio image production), state draft. README: `TSST/brands/vill-studio/projects/sofa-studio-01/README.md`
+
+- 2026-10-12: sofa-studio-01 round-02 — 5 standalone sofa studio drafts REVIEW; 3 new generation calls (5 total for round 02, zero rerolls); curved sofa set framing resolved (both pieces shown fully); original/final pairs supplied in DELIVERY.

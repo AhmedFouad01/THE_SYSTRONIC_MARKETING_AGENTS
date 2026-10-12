@@ -3,5 +3,7 @@
 
 | Job | Service | Title | Status | Date | Client page | Internal page | job_check |
 |---|---|---|---|---|---|---|---|
+| `kitchen-campaign-01` | Kitchen image production | Kitchen Campaign Concepts | review | 2026-10-12 | [DELIVERY.html](projects/kitchen-campaign-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/kitchen-campaign-01/DELIVERY_INTERNAL.html) | PASS |
 | `marketing-week-01` | Marketing week 01 | First-Week Marketing Plan | review | 2026-10-11 | [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html) | PASS, 1 warn |
 | `social-setup-01` | SV-01 Social profile setup | Social Media Profile Setup | approved | 2026-10-09 | [DELIVERY.html](projects/social-setup-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/social-setup-01/DELIVERY_INTERNAL.html) | PASS, 2 warn |
+| `sofa-studio-01` | Sofa studio image production | Sofa Studio Concepts — Round 02 | review | 2026-10-12 | [DELIVERY.html](projects/sofa-studio-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/sofa-studio-01/DELIVERY_INTERNAL.html) | PASS |

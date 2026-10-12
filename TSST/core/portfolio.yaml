@@ -40,6 +40,14 @@ brands:
         state: LENS + SPARK week-one organic plan (FB/IG/LinkedIn) REVIEW DRAFT 2026-10-11; no DELIVERY page yet
         checkpoint: TSST/brands/vill-studio/projects/marketing-week-01/README.md
         next: DELIVERY page built 2026-10-11 (in review) → owner review of page + Arabic captions + LinkedIn language
+      kitchen-campaign-01:
+        state: six kitchen visuals accepted plus four new bold-angle shots REVIEW 2026-10-12; 5/5 only first two
+        checkpoint: TSST/brands/vill-studio/projects/kitchen-campaign-01/README.md
+        next: owner reviews four new bold-angle shots; fifteen designs queued; no publication
+      sofa-studio-01:
+        state: five standalone sofa studio images REVIEW 2026-10-12; Round 02 source-final pairs; curved sofa set framing resolved
+        checkpoint: TSST/brands/vill-studio/projects/sofa-studio-01/README.md
+        next: owner reviews five Round 02 images; no publication
     next: C7 pilot strategy-baseline (canonical source readable via in-place .md exports)
   yakebda-ms:
     name: YAKEBDA_MS

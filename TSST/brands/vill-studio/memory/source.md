@@ -31,3 +31,6 @@ Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/memory/source.md`.
 
 ## Brand assets — 2026-10-05
 Local folder (user's disk, not Drive): `D:\Work v2\VILL STUDIO\` — `Logo.png` / `Logo.psd` (primary logo, user decision 2026-10-05), `VI/` (identity deck "Dark Luxury DNA"), `Company profile/`, `SM_Camp/`, strategy PDFs. Working copies for the C7 pilot: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/inputs/`. The folder also holds an ANVIL file — never load it for VILL.
+
+## Canonical memory sync — 2026-10-12
+Owner explicitly authorized saving kitchen-campaign-01 and its method as "ناجحة بامتياز". Applied directly to native CURRENT_STATUS, DECISIONS, PROJECT_MASTER, MILESTONE_LOG and CHANGELOG; all five read back, prior content preserved. Companion .md exports refreshed from native readback. Scope: VILL kitchen creative method and owner feedback; no publication or readiness promotion. Evidence receipt: `projects/kitchen-campaign-01/work/memory-sync/2026-10-12-native-applied.json`. Reusable method is in native DECISIONS, dated 2026-10-12; exact prompts/assets remain in the job home.

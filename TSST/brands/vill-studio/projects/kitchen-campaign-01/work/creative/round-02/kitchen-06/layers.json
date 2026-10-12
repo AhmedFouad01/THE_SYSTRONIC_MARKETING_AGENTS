@@ -1,0 +1,12 @@
+{
+  "layers": [
+    {
+      "order": 1,
+      "file": "01_photo.png",
+      "blend": "normal",
+      "opacity": 1,
+      "scale": 1
+    }
+  ],
+  "output": "render.png"
+}

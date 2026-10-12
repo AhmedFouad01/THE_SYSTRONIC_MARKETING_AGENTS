@@ -1,0 +1,73 @@
+{
+  "state": "PRODUCTION_DRAFT; ready for owner visual review; no release permission",
+  "purpose": "Two kitchen concept recolor experiments; not executed VILL projects; not approved campaign posts",
+  "owner": "VILL source portfolio; user supplied benchmark references",
+  "rights": "Source bank available under current owner request; release clearance pending",
+  "outputs": [
+    {
+      "id": "kitchen-01",
+      "source": "inputs/20171231_102758.jpg",
+      "render": "exports/vill-kitchen-01-sage-terracotta-v2.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "aspect": "approximately 4:5",
+      "concept": "Sage Island"
+    },
+    {
+      "id": "kitchen-02",
+      "source": "inputs/IMG-20180815-WA0048.jpg",
+      "render": "exports/vill-kitchen-02-forest-orange-v1.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "aspect": "approximately 4:5",
+      "concept": "Forest Corner"
+    }
+  ],
+  "text": "none",
+  "logo": "none",
+  "cta": "none",
+  "audience": "prospective kitchen customers; exploratory image selection only",
+  "constraints": [
+    "Preserve cabinet layout and appliance positions",
+    "No copied reference furniture or marks",
+    "Label concept recolor outside imagery"
+  ],
+  "authorization": "2026-10-12 user allows changed colors and studio backgrounds; choose kitchen design and produce cinematic shots.",
+  "tool": "built-in image_gen; no API key or external paid tool",
+  "prompts": "prompts.json contains exact final prompts",
+  "source_preservation": "Recognizable cabinetry silhouette/layout, not exact dimensional fidelity. K01 fitted cavities, sink/tap and panel divisions adapted. K02 lower widths and finish details adapted. Not executed projects.",
+  "superseded": "K01 v1 retained in exports; superseded after user studio-staging clarification.",
+  "scores": {
+    "kitchen-01": {
+      "thumbnail": 3,
+      "focal": 3,
+      "realism": 3,
+      "safe_zones": 3,
+      "cta": "na",
+      "type": "na",
+      "placement": 3,
+      "variation": 3,
+      "total": "18/18 applicable",
+      "clip": 0.7795,
+      "phash": 36
+    },
+    "kitchen-02": {
+      "thumbnail": 3,
+      "focal": 3,
+      "realism": 3,
+      "safe_zones": 3,
+      "cta": "na",
+      "type": "na",
+      "placement": 3,
+      "variation": 3,
+      "total": "18/18 applicable",
+      "clip": 0.8323,
+      "phash": 28
+    }
+  },
+  "metric_limit": "CLIP/pHash are source-relation diagnostics, not product geometry validation or acceptance."
+}

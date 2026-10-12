@@ -1,0 +1,286 @@
+{
+  "client": "VILL Studio",
+  "service": "Sofa studio image production",
+  "job": "sofa-studio-01",
+  "date": "2026-10-12",
+  "default_lang": "en",
+  "title": "Sofa Studio Concepts — Round 02",
+  "subtitle": "Five sofas in unified matte petrol studio with original comparisons",
+  "status": "review",
+  "status_label": "Round 02 for your review",
+  "status_detail": "Five standalone studio sofa concepts in unified matte petrol and orange lighting, paired with photo-bank originals.",
+  "logo": "auto",
+  "about": {
+    "paragraphs": [
+      "Round 02 expands the sofa campaign to five distinct designs set in a unified luxury matte petrol (#01304A) cyclorama environment with sculpted directional lighting and controlled orange (#F58021) accents.",
+      "The curved gray sofa set (Sofa 03) now features both matching curved pieces fully inside the frame with comfortable margins, resolving the Round 01 edge crop. Two new designs (White U-shaped sectional and Light-blue curved arm sofa with wood base) have been introduced.",
+      "Original photo-bank sources are paired directly with the final studio renders for comparison. Prior Round 01 drafts are preserved below."
+    ]
+  },
+  "items": [
+    {
+      "id": "sofa-01-r02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Original source photo from portfolio folder 15.",
+      "group": "Sofa 01 — Classic Rolled Arms (Round 02)",
+      "file": "work/creative/round-02/sofa-01/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-01-r02",
+      "title": "Studio final — Classic Rolled Arms",
+      "desc": "Low 20mm ultra-wide hero in matte petrol studio with orange rim reflection.",
+      "group": "Sofa 01 — Classic Rolled Arms (Round 02)",
+      "file": "work/creative/round-02/sofa-01/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "sofa-02-r02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Original source photo from portfolio folder 02.",
+      "group": "Sofa 02 — Sculptural Tufted Sofa (Round 02)",
+      "file": "work/creative/round-02/sofa-02/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-02-r02",
+      "title": "Studio final — Sculptural Tufted Sofa",
+      "desc": "Elevated 40-degree oblique architectural angle revealing tufted seat depth.",
+      "group": "Sofa 02 — Sculptural Tufted Sofa (Round 02)",
+      "file": "work/creative/round-02/sofa-02/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "sofa-03-r02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Original source photo from portfolio folder 42 showing the curved salon set.",
+      "group": "Sofa 03 — Curved Gray & Gold Set (Round 02)",
+      "file": "work/creative/round-02/sofa-03/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-03-r02",
+      "title": "Studio final — Curved Gray & Gold Set",
+      "desc": "Both matching curved sofa pieces included fully in frame with generous safety margins; gold plinths grounded in petrol studio.",
+      "group": "Sofa 03 — Curved Gray & Gold Set (Round 02)",
+      "file": "work/creative/round-02/sofa-03/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "sofa-04-r02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Original source photo from portfolio folder 36.",
+      "group": "Sofa 04 — White U-Shaped Sectional (Round 02)",
+      "file": "work/creative/round-02/sofa-04/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-04-r02",
+      "title": "Studio final — White U-Shaped Sectional",
+      "desc": "Elevated high oblique architectural perspective displaying the full U-shaped geometry with dual extended chaises and orange accent cushion.",
+      "group": "Sofa 04 — White U-Shaped Sectional (Round 02)",
+      "file": "work/creative/round-02/sofa-04/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "sofa-05-r02-original",
+      "title": "Original — Photo-bank source",
+      "desc": "Original source photo from portfolio folder 24.",
+      "group": "Sofa 05 — Light-Blue Curved Arm Sofa (Round 02)",
+      "file": "work/creative/round-02/sofa-05/original.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-05-r02",
+      "title": "Studio final — Light-Blue Curved Arm Sofa",
+      "desc": "Daring low-angle three-quarter perspective highlighting the sculpted curved arms, exposed natural wood base, and orange accent cushion.",
+      "group": "Sofa 05 — Light-Blue Curved Arm Sofa (Round 02)",
+      "file": "work/creative/round-02/sofa-05/final.png",
+      "type": "image",
+      "status": "review"
+    },
+    {
+      "id": "round02-contact",
+      "title": "Round 02 — Comparison Contact Sheet",
+      "desc": "5-sofa side-by-side comparison matrix showing original sources vs final studio renders.",
+      "group": "Comparison Matrix",
+      "file": "work/creative/round-02/round02-comparison-contact.jpg",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-01-r01-draft",
+      "title": "Round 01 Draft — Classic Rolled Arms",
+      "desc": "Initial studio concept from Round 01.",
+      "group": "Round 01 Drafts (Preserved)",
+      "file": "work/creative/sofa-01/final.png",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-02-r01-draft",
+      "title": "Round 01 Draft — Sculptural Tufted Sofa",
+      "desc": "Initial studio concept from Round 01.",
+      "group": "Round 01 Drafts (Preserved)",
+      "file": "work/creative/sofa-02/final.png",
+      "type": "image",
+      "status": "noted"
+    },
+    {
+      "id": "sofa-03-r01-draft",
+      "title": "Round 01 Draft — Curved Gray & Gold",
+      "desc": "Initial studio concept from Round 01 (noted right-arm edge crop and single piece).",
+      "group": "Round 01 Drafts (Preserved)",
+      "file": "work/creative/sofa-03/final.png",
+      "type": "image",
+      "status": "noted"
+    }
+  ],
+  "next": [
+    "Review the five Round 02 sofa studio images.",
+    "Confirm approval on the curved sofa set framing (both pieces included)."
+  ],
+  "checks": [
+    {
+      "title": "Actual images inspected",
+      "state": "pass",
+      "note": "Five Round 02 actual renders inspected. Standalone sofas in cohesive matte petrol studio, orange accent lighting/cushion, grounded contact shadows."
+    },
+    {
+      "title": "Curved sofa set framing",
+      "state": "pass",
+      "note": "Both matching curved sofa pieces included fully in frame with generous safety margins; Round 01 edge crop resolved."
+    },
+    {
+      "title": "Release approval",
+      "state": "open",
+      "note": "Owner review and publication clearance pending."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Round 02 sources, prompts and QA",
+      "path": "work/creative/round-02/MANIFEST.json"
+    },
+    {
+      "label": "Round 01 archive",
+      "path": "work/creative/MANIFEST.json"
+    }
+  ],
+  "ar": {
+    "title": "تجارب الكنب في الاستوديو — الجولة الثانية",
+    "subtitle": "5 تصميمات كنب في استوديو موحد بالبترولي مع مقارنة بالصور الأصلية",
+    "status_label": "الجولة الثانية لمراجعتك",
+    "status_detail": "5 صور استوديو سينمائية للكنب بإضاءة موحدة بالبترولي والبرتقالي، مع أصل الصور للمقارنة.",
+    "about": {
+      "paragraphs": [
+        "الجولة الثانية توسع حملة الكنب إلى 5 تصميمات مختلفة في بيئة استوديو سينمائي موحد باللون البترولي المطفي (#01304A) مع إضاءة موجهة وتطعيمات برتقالية (#F58021).",
+        "طقم الكنب المنحني (الكنبة 03) يظهر الآن بالقطعتين المتطابقتين كاملتين داخل الكادر مع هوامش أمان مريحة، مما يعالج ضيق الكادر في الجولة الأولى. تمت إضافة تصميمين جديدين (ركنة حرف U بيضاء وكنبة لبني بأذرع منحنية وقاعدة خشبية).",
+        "الصور الأصلية من بنك الصور معروضة مباشرة بجانب التصورات النهائية للمقارنة. تم الاحتفاظ بمسودات الجولة الأولى بالأسفل."
+      ]
+    },
+    "items": {
+      "sofa-01-r02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية من مجلد البورتفوليو 15.",
+        "group": "الكنبة 01 — كنبة كلاسيك بأذرع ملفوفة (الجولة الثانية)"
+      },
+      "sofa-01-r02": {
+        "title": "فاينال الاستوديو — كنبة كلاسيك بأذرع ملفوفة",
+        "desc": "شوت واسع 20 مم بزاوية منخفضة في استوديو بترولي مع انعكاس برتقالي هادئ.",
+        "group": "الكنبة 01 — كنبة كلاسيك بأذرع ملفوفة (الجولة الثانية)"
+      },
+      "sofa-02-r02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية من مجلد البورتفوليو 02.",
+        "group": "الكنبة 02 — كنبة كابيتوني منحوتة (الجولة الثانية)"
+      },
+      "sofa-02-r02": {
+        "title": "فاينال الاستوديو — كنبة كابيتوني منحوتة",
+        "desc": "زاوية معمارية مائلة 40 درجة توضح عمق الشلتة الكابيتوني والتفاف الظهر.",
+        "group": "الكنبة 02 — كنبة كابيتوني منحوتة (الجولة الثانية)"
+      },
+      "sofa-03-r02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية من مجلد البورتفوليو 42 لطقم الصالون المنحني.",
+        "group": "الكنبة 03 — طقم كنب منحني رمادي ودهبي (الجولة الثانية)"
+      },
+      "sofa-03-r02": {
+        "title": "فاينال الاستوديو — طقم كنب منحني رمادي ودهبي",
+        "desc": "القطعتان المتطابقتان تظهران كاملتين داخل الكادر مع هوامش أمان؛ قاعدة دهبية وظلال متصلة بالأرضية.",
+        "group": "الكنبة 03 — طقم كنب منحني رمادي ودهبي (الجولة الثانية)"
+      },
+      "sofa-04-r02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية من مجلد البورتفوليو 36.",
+        "group": "الكنبة 04 — ركنة حرف U بيضاء مع شيزلونج مزدوج (الجولة الثانية)"
+      },
+      "sofa-04-r02": {
+        "title": "فاينال الاستوديو — ركنة حرف U بيضاء مع شيزلونج مزدوج",
+        "desc": "زاوية معمارية علوية توضح التكوين الكامل للشيزلونج المزدوج مع وسادة برتقالية.",
+        "group": "الكنبة 04 — ركنة حرف U بيضاء مع شيزلونج مزدوج (الجولة الثانية)"
+      },
+      "sofa-05-r02-original": {
+        "title": "الأصل — صورة من بنك الصور",
+        "desc": "الصورة الأصلية من مجلد البورتفوليو 24.",
+        "group": "الكنبة 05 — كنبة لبني بأذرع منحنية وقاعدة خشبية (الجولة الثانية)"
+      },
+      "sofa-05-r02": {
+        "title": "فاينال الاستوديو — كنبة لبني بأذرع منحنية وقاعدة خشبية",
+        "desc": "زاوية منخفضة تبرز انحناء الأذرع وقاعدة الخشب الطبيعي وظلال الاستوديو مع وسادة برتقالية.",
+        "group": "الكنبة 05 — كنبة لبني بأذرع منحنية وقاعدة خشبية (الجولة الثانية)"
+      },
+      "round02-contact": {
+        "title": "الجولة الثانية — لوحة مقارنة التصميمات",
+        "desc": "مقارنة مباشرة بين الصور الأصلية والفاينال لكل الكنبات الخمسة.",
+        "group": "لوحة المقارنة"
+      },
+      "sofa-01-r01-draft": {
+        "title": "مسودة الجولة الأولى — كنبة كلاسيك بأذرع ملفوفة",
+        "desc": "التصور الأولي من الجولة الأولى.",
+        "group": "مسودات الجولة الأولى السابقة (أرشيف)"
+      },
+      "sofa-02-r01-draft": {
+        "title": "مسودة الجولة الأولى — كنبة كابيتوني منحوتة",
+        "desc": "التصور الأولي من الجولة الأولى.",
+        "group": "مسودات الجولة الأولى السابقة (أرشيف)"
+      },
+      "sofa-03-r01-draft": {
+        "title": "مسودة الجولة الأولى — كنبة منحنية بالرمادي والدهبي",
+        "desc": "التصور الأولي من الجولة الأولى (كادر ضيق عند الطرف اليمين).",
+        "group": "مسودات الجولة الأولى السابقة (أرشيف)"
+      }
+    },
+    "next": [
+      "راجع صور الكنب الخمسة للجولة الثانية.",
+      "تأكيد الاعتماد على كادر طقم الكنب المنحني (ظهور القطعتين بالكامل)."
+    ],
+    "checks": [
+      {
+        "title": "مراجعة الصور",
+        "note": "تمت مراجعة الصور الخمسة للجولة الثانية في استوديو بترولي موحد مع إضاءة برتقالية وظلال واقعية."
+      },
+      {
+        "title": "كادر طقم الكنب المنحني",
+        "note": "القطعتان المتطابقتان كاملتان داخل الكادر بهوامش أمان كافية، وتم حل مشكلة قص الطرف."
+      },
+      {
+        "title": "اعتماد النشر",
+        "note": "مراجعتك واعتماد النشر لسه مطلوبين."
+      }
+    ],
+    "sources": {
+      "Round 02 sources, prompts and QA": "مصادر الجولة الثانية والبرومبتات والمراجعة",
+      "Round 01 archive": "أرشيف الجولة الأولى"
+    }
+  }
+}

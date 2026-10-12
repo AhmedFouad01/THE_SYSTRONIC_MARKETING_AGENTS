@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-12",
+  "tool": "built-in image_gen",
+  "generation_calls": 4,
+  "rerolls": 0,
+  "semantic_search_calls": 0,
+  "fidelity_calls": 0,
+  "outputs": [
+    {
+      "final_id": "kitchen-03",
+      "source_id": "K040",
+      "canonical_source": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\source\\portfolio\\07-custom-kitchens-walkin-dressing-rooms\\20180507_155719.jpg",
+      "working_original": "20180507_155719.jpg",
+      "render": "vill-kitchen-03-oak-v1.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "status": "PRODUCTION_DRAFT / owner review pending",
+      "qa": "Actual generated image visually inspected. Cabinet design silhouette and layout recognizable; studio/finish adaptation intentional, not exact executed-project photo."
+    },
+    {
+      "final_id": "kitchen-04",
+      "source_id": "K050",
+      "canonical_source": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\source\\portfolio\\07-custom-kitchens-walkin-dressing-rooms\\20200511_165552.jpg",
+      "working_original": "20200511_165552.jpg",
+      "render": "vill-kitchen-04-ribbon-v1.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "status": "PRODUCTION_DRAFT / owner review pending",
+      "qa": "Actual generated image visually inspected. Cabinet design silhouette and layout recognizable; studio/finish adaptation intentional, not exact executed-project photo."
+    },
+    {
+      "final_id": "kitchen-05",
+      "source_id": "K034",
+      "canonical_source": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\source\\portfolio\\04-luxury-duplex-reception-staircase-furniture-handover\\20171206_181627.jpg",
+      "working_original": "20171206_181627.jpg",
+      "render": "vill-kitchen-05-graphite-v1.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "status": "PRODUCTION_DRAFT / owner review pending",
+      "qa": "Actual generated image visually inspected. Cabinet design silhouette and layout recognizable; studio/finish adaptation intentional, not exact executed-project photo."
+    },
+    {
+      "final_id": "kitchen-06",
+      "source_id": "K108",
+      "canonical_source": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\source\\portfolio\\17-residential-handover-open-kitchen-salon-spiderman-room\\20190810_084344_IMG_3104.JPG",
+      "working_original": "20190810_084344_IMG_3104.JPG",
+      "render": "vill-kitchen-06-walnut-v1.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "status": "PRODUCTION_DRAFT / owner review pending",
+      "qa": "Actual generated image visually inspected. Cabinet design silhouette and layout recognizable; studio/finish adaptation intentional, not exact executed-project photo."
+    }
+  ],
+  "queue_count": 15,
+  "queue_source_ids": [
+    "K007",
+    "K013",
+    "K021",
+    "K028",
+    "K090",
+    "K071",
+    "K132",
+    "K091",
+    "K094",
+    "K097",
+    "K122",
+    "K133",
+    "K138",
+    "K141",
+    "K136"
+  ],
+  "holds": [
+    "K037",
+    "K117",
+    "K118",
+    "K119",
+    "K115"
+  ],
+  "exact_prompts": "prompts.json",
+  "owner_authority": [
+    "User chose strongest four kitchens this round; remaining designs retained in queue.",
+    "ومش لازم كل المطابخ نفسها بألوان البراند بس ال Color mode وال Color feelings يبقى بألواننا والمطابخ بألوان بريندي بريميم"
+  ],
+  "qa": "One actual visual inspection per new render; no focal defects, no people/UI/added copy. Distinct cabinetry and framing. Source original/final pairs supplied. No exact geometry claims. No publication authority.",
+  "skill_friction": "none additional; prior friction already logged centrally"
+}

@@ -1,0 +1,265 @@
+{
+  "project": "tables-studio-01",
+  "brand": "vill-studio",
+  "round": 2,
+  "created_utc": "2026-10-12T01:46:31.917775+00:00",
+  "status": "OWNER_REVIEW_PENDING",
+  "path_base": "G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS/TSST/brands/vill-studio/projects/tables-studio-01",
+  "task": "Byte-preserving organization of five owner-generated ChatGPT images and comparison-sheet refresh",
+  "branch_context": {
+    "known_branch": "tsst-core/owner-rules",
+    "target_branch": "vill-studio",
+    "blocker": "Parent reported git switch refused by external uncommitted REPAIR-001 handoff edits; owner instructed leaving repairs alone.",
+    "git_mutations_by_this_task": 0
+  },
+  "generation": {
+    "calls_by_this_task": 0,
+    "external_chatgpt_assets": "User generated and downloaded",
+    "external_generation_count": null,
+    "external_generation_cost": null
+  },
+  "owner": "Ahmed / VILL Studio",
+  "rights": "Owner-provided originals and ChatGPT downloads; no new rights determination made.",
+  "rename_method": "pathlib.Path.rename; existing destinations refused; no PNG re-encoding",
+  "composition": {
+    "columns": [
+      "ORIGINAL",
+      "ROUND 01",
+      "CHATGPT ROUND 02"
+    ],
+    "rows": 5,
+    "fit": "Contain without crop or stretch",
+    "orientation": "EXIF transpose for display only",
+    "destination": "exports/tables-comparison-chatgpt-r02.jpg",
+    "current_alias": "exports/tables-comparison-contact.jpg"
+  },
+  "root_manifest_preservation": {
+    "path": "MANIFEST.json",
+    "sha256_before": "5c82db52089b3c41d11434d7548020340059e3e32c6a936356d0f6ea6d98b9ec",
+    "sha256_after": "5c82db52089b3c41d11434d7548020340059e3e32c6a936356d0f6ea6d98b9ec",
+    "unchanged": true
+  },
+  "previous_contact_sheet": {
+    "original_path": "exports/tables-comparison-contact.jpg",
+    "archive_path": "exports/round-01/tables-comparison-contact.jpg",
+    "sha256_before": "4242c3a07b364b43bd2b35f4e6bdfef8b796be4470dbee3b726df934b0cff914",
+    "sha256_archive": "4242c3a07b364b43bd2b35f4e6bdfef8b796be4470dbee3b726df934b0cff914"
+  },
+  "assets": [
+    {
+      "id": "table-01",
+      "title": "Faceted coffee table",
+      "original": {
+        "path": "inputs/table-01-original.jpg",
+        "dimensions": [
+          1908,
+          4032
+        ],
+        "format": "JPEG",
+        "sha256": "7dab3123800c4ad130b259d8f9533b641f9675c8cfbc8e8253d30a318c0c0e4f",
+        "bytes": 2268798
+      },
+      "round_01": {
+        "path": "exports/table-01.png",
+        "recovered_from": "C:/Users/10/.gemini/antigravity/brain/69cef930-358b-402b-a707-2efb50aa4452/table-01.png",
+        "sha256_source": "42aca1084eefd0a2c11b000f375b44b8b0d379cf5ab97ddb77e123dac024a1f5",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "sha256_destination": "42aca1084eefd0a2c11b000f375b44b8b0d379cf5ab97ddb77e123dac024a1f5",
+        "bytes_unchanged": true
+      },
+      "round_02": {
+        "path": "exports/table-01-chatgpt-r02.png",
+        "original_download_filename": "ChatGPT Image Oct 12, 2026, 04_33_53 AM-1.png",
+        "renamed_filename": "table-01-chatgpt-r02.png",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "bytes": 1930278,
+        "sha256_before": "a076158c97f082c9be5614f6083ab6d4d66b37a7aa2cf2a2bcafbec7b805d7fc",
+        "sha256_after": "a076158c97f082c9be5614f6083ab6d4d66b37a7aa2cf2a2bcafbec7b805d7fc",
+        "bytes_unchanged": true
+      }
+    },
+    {
+      "id": "table-02",
+      "title": "Organic coffee table",
+      "original": {
+        "path": "inputs/table-02-original.jpg",
+        "dimensions": [
+          4608,
+          2184
+        ],
+        "format": "JPEG",
+        "sha256": "f0e35b3713daee16d97021e6990f6818d9865834265e4903c872c5c5a997c625",
+        "bytes": 2545734
+      },
+      "round_01": {
+        "path": "exports/table-02.png",
+        "recovered_from": "C:/Users/10/.gemini/antigravity/brain/69cef930-358b-402b-a707-2efb50aa4452/table-02.png",
+        "sha256_source": "649360c83eaedee3ee18b9d464b5ce01bfbcaf9e01c30faa5dd38cab0091c63a",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "sha256_destination": "649360c83eaedee3ee18b9d464b5ce01bfbcaf9e01c30faa5dd38cab0091c63a",
+        "bytes_unchanged": true
+      },
+      "round_02": {
+        "path": "exports/table-02-chatgpt-r02.png",
+        "original_download_filename": "ChatGPT Image Oct 12, 2026, 04_33_53 AM-2.png",
+        "renamed_filename": "table-02-chatgpt-r02.png",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "bytes": 1974184,
+        "sha256_before": "6187c48827871ff560252a1b159624b827fa77fce7ae1ae2a12b8abe1750c65a",
+        "sha256_after": "6187c48827871ff560252a1b159624b827fa77fce7ae1ae2a12b8abe1750c65a",
+        "bytes_unchanged": true
+      }
+    },
+    {
+      "id": "table-03",
+      "title": "Rectangular dining table",
+      "original": {
+        "path": "inputs/table-03-original.jpg",
+        "dimensions": [
+          864,
+          1152
+        ],
+        "format": "JPEG",
+        "sha256": "11a8a716d97a077d28f87c5f016266afa7c27e2d92e7d2c883ca7850d5b411c0",
+        "bytes": 155492
+      },
+      "round_01": {
+        "path": "exports/table-03.png",
+        "recovered_from": "C:/Users/10/.gemini/antigravity/brain/69cef930-358b-402b-a707-2efb50aa4452/table-03.png",
+        "sha256_source": "f68679f6839f9c9a68bd5b54c2e446fc43ee77a45d88921cd5212ed80ed79230",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "sha256_destination": "f68679f6839f9c9a68bd5b54c2e446fc43ee77a45d88921cd5212ed80ed79230",
+        "bytes_unchanged": true
+      },
+      "round_02": {
+        "path": "exports/table-03-chatgpt-r02.png",
+        "original_download_filename": "ChatGPT Image Oct 12, 2026, 04_33_54 AM-3.png",
+        "renamed_filename": "table-03-chatgpt-r02.png",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "bytes": 2068079,
+        "sha256_before": "eab71a8838e08a3023a40e764375d5e4cd334df4eeefb0558ba96bd86fade5d5",
+        "sha256_after": "eab71a8838e08a3023a40e764375d5e4cd334df4eeefb0558ba96bd86fade5d5",
+        "bytes_unchanged": true
+      }
+    },
+    {
+      "id": "table-04",
+      "title": "Circular pipe-leg table",
+      "original": {
+        "path": "inputs/table-04-original.jpg",
+        "dimensions": [
+          1836,
+          3264
+        ],
+        "format": "JPEG",
+        "sha256": "99bbdfb14b170fe267c97ff83e1b57d0d3295961e62df60b361b129980954d2d",
+        "bytes": 1202388
+      },
+      "round_01": {
+        "path": "exports/table-04.png",
+        "recovered_from": "C:/Users/10/.gemini/antigravity/brain/69cef930-358b-402b-a707-2efb50aa4452/table-04.png",
+        "sha256_source": "7f16fd3dc2f5c409564834733daadd7e177ced64e24babceed884d420e36687a",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "sha256_destination": "7f16fd3dc2f5c409564834733daadd7e177ced64e24babceed884d420e36687a",
+        "bytes_unchanged": true
+      },
+      "round_02": {
+        "path": "exports/table-04-chatgpt-r02.png",
+        "original_download_filename": "ChatGPT Image Oct 12, 2026, 04_33_55 AM-4.png",
+        "renamed_filename": "table-04-chatgpt-r02.png",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "bytes": 1772457,
+        "sha256_before": "b8b46428d9418558e458f4a8be4bb03ecfdf1e0ab51e4334292655fa93de766a",
+        "sha256_after": "b8b46428d9418558e458f4a8be4bb03ecfdf1e0ab51e4334292655fa93de766a",
+        "bytes_unchanged": true
+      }
+    },
+    {
+      "id": "table-05",
+      "title": "Geometric frame table",
+      "original": {
+        "path": "inputs/table-05-original.jpg",
+        "dimensions": [
+          3264,
+          1836
+        ],
+        "format": "JPEG",
+        "sha256": "931cfb60fe6e21b54e1c8099c217aad88a82c3ffb49f5dc6e26b91b38762616f",
+        "bytes": 1059315
+      },
+      "round_01": {
+        "path": "exports/table-05.png",
+        "recovered_from": "C:/Users/10/.gemini/antigravity/brain/69cef930-358b-402b-a707-2efb50aa4452/table-05.png",
+        "sha256_source": "3447862016268828324306e7cff2dc13956aa08a508679b5ac7be30d3d2c4f10",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "sha256_destination": "3447862016268828324306e7cff2dc13956aa08a508679b5ac7be30d3d2c4f10",
+        "bytes_unchanged": true
+      },
+      "round_02": {
+        "path": "exports/table-05-chatgpt-r02.png",
+        "original_download_filename": "ChatGPT Image Oct 12, 2026, 04_33_55 AM-5.png",
+        "renamed_filename": "table-05-chatgpt-r02.png",
+        "dimensions": [
+          1122,
+          1402
+        ],
+        "bytes": 2067725,
+        "sha256_before": "3075bd88972361c83b5e82dafab788647f89e4e0c0410eba85cf0381131307dc",
+        "sha256_after": "3075bd88972361c83b5e82dafab788647f89e4e0c0410eba85cf0381131307dc",
+        "bytes_unchanged": true
+      }
+    }
+  ],
+  "qa": {
+    "layout_visual_check": "PASS: one visual inspection of final 1896 x 4258 sheet; all five rows, three column headers, neutral titles and complete proportionally fitted images are readable; no blank bottom; no layout repair needed.",
+    "owner_visual_approval": "PENDING",
+    "hash_preservation": "PASS: all five ChatGPT renames, five recovered round 01 PNGs, archived old sheet and root MANIFEST verified"
+  },
+  "comparison_sheet": {
+    "path": "exports/tables-comparison-chatgpt-r02.jpg",
+    "dimensions": [
+      1896,
+      4258
+    ],
+    "format": "JPEG",
+    "sha256": "ada70d492ce069977163b8a089066a7d07c5a4c7b11c131af37245d891e892b9",
+    "bytes": 1901571
+  },
+  "comparison_alias": {
+    "path": "exports/tables-comparison-contact.jpg",
+    "dimensions": [
+      1896,
+      4258
+    ],
+    "format": "JPEG",
+    "sha256": "ada70d492ce069977163b8a089066a7d07c5a4c7b11c131af37245d891e892b9",
+    "bytes": 1901571
+  }
+}
