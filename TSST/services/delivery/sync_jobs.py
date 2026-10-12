@@ -63,7 +63,23 @@ def sync(brand):
     if not (BRANDS / brand / "projects").is_dir():
         print(f"{brand}: no projects folder, skipped")
         return 1
+    from build_brand import build_brand
+    build_brand(brand)
     rows = scan(brand)
+    # Existing detail pages receive navigation on first adoption. Do not fabricate
+    # detail pages for new/unbuilt jobs or regenerate already connected pages.
+    from build_delivery import build, Chk, leaks
+    for row in rows:
+        for audience, filename in (("client", "DELIVERY.html"), ("internal", "DELIVERY_INTERNAL.html")):
+            detail = row["dir"] / filename
+            if detail.is_file() and 'data-brand-link' not in detail.read_text(encoding="utf-8"):
+                _, doc = build(str(row["dir"]), audience, write=False)
+                check = Chk()
+                check.feed(doc)
+                check.close()
+                if check.err or check.stack or (audience == "client" and leaks(doc)):
+                    raise ValueError(f"Cannot connect invalid delivery page: {detail}")
+                detail.write_text(doc, encoding="utf-8", newline="\n")
     target = BRANDS / brand / "JOBS.md"
     target.write_text(render(brand, rows, {}), encoding="utf-8", newline="\n")  # pass 1: job_check f) needs the listing
     results = {r["rel"]: check_result(r["dir"]) for r in rows}

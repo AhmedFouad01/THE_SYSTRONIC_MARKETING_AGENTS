@@ -2,6 +2,33 @@
 
 One manifest per job -> two pages in the job folder, one template, two languages in each file.
 
+## Unified brand view (owner requirement, 2026-10-12)
+
+The brand is the entry point: `TSST/brands/<id>/DELIVERY.html` and
+`DELIVERY_INTERNAL.html` show all canonical projects, campaigns and jobs, with each
+workstream's own recorded status and a link to its existing shared-template page.
+A campaign is work inside the brand's project structure; do not create a separate
+delivery application for it. Nested jobs show their ancestor project title.
+No campaign completion or publication is inferred from approved individual assets.
+
+`sync_jobs.py <brand>|--all` now refreshes both entry pages as well as `JOBS.md`;
+`new_job.py` uses that same flow. `build_brand.py <brand>` builds only the entry pages.
+Both use the existing `build_delivery.py` renderer, fonts, bilingual switch and
+audience rules. The hub reads `DELIVERY.json` directly; it has no duplicate status store.
+Malformed manifests fail the build rather than silently dropping work.
+Jobs marked `internal: true` and rejected work are omitted from the client hub.
+Unknown statuses are shown as awaiting confirmation, never approved.
+Missing detail pages retain their work row without a broken link.
+
+Synchronization adds matching back-to-brand navigation to existing detail pages
+on first adoption; newly built job pages include it when their brand hub exists.
+For a client package, include only the brand `DELIVERY.html`, each visible job's
+`DELIVERY.html`, and its client `files/`, retaining the relative `projects/` paths.
+Never share the raw brand folder, internal pages, manifests or `work/` files.
+A standalone job package still shows its content, but its brand navigation needs
+the parent client entry page. These local pages
+are reviewable artifacts; client publication remains a separate approval.
+
 - `DELIVERY.html`: formal client page. Omits everything marked `internal: true`, all checks and sources, every `int_note`, internal about/next text. Media is copied to `<job>/files/<id>.<ext>` and linked from there (neutral names). Send the page together with `files/`.
 - `DELIVERY_INTERNAL.html`: full detail for the team (checks, sources, rejected items, tool links, who approved, internal notes), same design plus a red "Internal copy" band.
 - Each file holds English and Arabic. The header switch (EN | ع) flips `lang`/`dir` on `<html>` with no reload (full RTL mirror, the contents nav enters from the right). Opening language: `?lang=en|ar` override, then the visitor's saved choice (localStorage, per job), then the manifest `default_lang` (the client's language: ANVIL = ar, VILL = en).

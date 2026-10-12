@@ -912,12 +912,12 @@ def card(n, it, job, internal, cx):
             f'<div class="cf">{sdot(st)}{cf}</div></div></article>')
 
 
-def build(job, audience="client", link_logo=False):
+def build(job, audience="client", link_logo=False, manifest=None, write=True):
     del missing[:]
     del missing_ar[:]
     del brand_sync[:]
     internal = audience == "internal"
-    m = json.load(open(os.path.join(job, "DELIVERY.json"), encoding="utf-8"))
+    m = manifest if manifest is not None else json.load(open(os.path.join(job, "DELIVERY.json"), encoding="utf-8"))
     brand = brand_of(job)
     if not m.get("client"):  # brand sync: the manifest value always wins
         nm = portfolio_name(brand) if brand else None
@@ -963,6 +963,11 @@ def build(job, audience="client", link_logo=False):
       f'<button type="button" data-lang="ar" lang="ar" aria-pressed="{str(dl == "ar").lower()}">ع</button></div></div></div>'
       f'<div class="hero-body"><div><div class="bar"></div><p class="eyebrow">{S("prepared_for")} <bdi dir="ltr" class="nw">{e(m["client"])}</bdi></p>'
       f'<h1>{cx.bi(m.get("title") or m["job"], ar.get("title"), "title")}</h1>')
+    if manifest is None and brand:
+        from pathlib import Path
+        home = next((p for p in Path(job).resolve().parents if p.name == brand and p.parent.name == "brands"), None)
+        if home and (home / out).is_file():
+            a(f'<p><a class="lk" style="color:inherit" href="{e(url(os.path.relpath(home / out, job)))}" data-brand-link>{S("brand_back")}</a></p>')
     if m.get("subtitle"):
         a(f'<p class="sub">{cx.bi(m["subtitle"], ar.get("subtitle"), "subtitle")}</p>')
     a('</div>')
@@ -971,6 +976,8 @@ def build(job, audience="client", link_logo=False):
     refs.update({"text:" + t["id"]: (t.get("title", ""), lookup(ar, "texts", t["id"], "title")) for t in texts if t.get("id")})
     jf = jobfiles(job) if internal else []
     secs = []
+    if m.get("brand_work") is not None:
+        secs.append(("work", "brand_work", len(m["brand_work"])))
     if ab.get("paragraphs") or ab.get("facts"):
         secs.append(("overview", "sec_overview", None))
     if pl["show_mp"]:
@@ -1013,6 +1020,21 @@ def build(job, audience="client", link_logo=False):
         return (f'<section id="{sid}"><div class="wrap"><div class="sh"><span class="n">{num[0]:02d}</span>'
                 f'<h2>{S(key)}</h2>{"<span class=ct>" + count + "</span>" if count else ""}</div>')
 
+    # Brand landing pages use the same chrome, typography and audience renderer.
+    if m.get("brand_work") is not None:
+        a(sec("work", "brand_work"))
+        a('<ul class="pl">')
+        for row in m["brand_work"]:
+            title = T(rich(row["title"]), lat(row["title_ar"]))
+            status = row["status"]
+            label = T(rich(row["label"]), lat(row["label_ar"]))
+            details = T(rich(row.get("detail", "")), lat(row.get("detail_ar", "")))
+            group = T(rich(row.get("group", "")), lat(row.get("group_ar", "")))
+            link = f'<a class="ti lk" href="{e(row["href"])}" data-work-link>{title}</a>' if row.get("href") else f'<span class="ti">{title}</span>'
+            a(f'<li class="pr t"><div>{group}<br>{link}<span class="sm">{details}</span></div>'
+              f'<div class="dt2">{D(row.get("date", ""))}</div>'
+              f'<div class="ps"><i class="d {ST_CLS.get(status, "d-prod")}"></i>{label}</div></li>')
+        a('</ul></div></section>')
     # overview
     if ab.get("paragraphs") or ab.get("facts"):
         a(sec("overview", "sec_overview"))
@@ -1188,8 +1210,9 @@ def build(job, audience="client", link_logo=False):
       f'<button class="rb" id="rb" aria-expanded="false" aria-controls="rail"><img src="{asset("mark_white_96.png")}" alt="">{S("contents")}</button><div class="scrim" id="scrim"></div>'
       f'<script>{JS}</script></body></html>')
     doc = "".join(P)
-    with open(os.path.join(job, out), "w", encoding="utf-8") as fh:
-        fh.write(doc)
+    if write:
+        with open(os.path.join(job, out), "w", encoding="utf-8") as fh:
+            fh.write(doc)
     return out, doc
 
 
