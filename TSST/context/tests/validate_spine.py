@@ -563,7 +563,8 @@ def source_semantics():
           "bridge" in read("TSST/context/adapters/chatgpt.md").lower())
 
 
-MANIFESTS = ["CRM_UI_HANDOFF/EXPORTS.yaml", "CRM_APP/EXPORTS.yaml",
+# CRM manifests moved with CRM to github.com/AhmedFouad01/tsst-crm on 2026-10-16 (R48).
+MANIFESTS = [
              "REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/EXPORTS.yaml",
              "REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/EXPORTS.yaml", "TSST/CREATIVE/EXPORTS.yaml",
              "REAL_MEMORY/THE_SYSTRONIC_LEGACY_REAL_MEMORY/EXPORTS.yaml"]

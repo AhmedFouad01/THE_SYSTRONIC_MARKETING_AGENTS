@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CANONICAL_ROOT = Path('G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS')
+CANONICAL_ROOT = Path('C:/Work/TSST')  # moved from G: Drive 2026-10-16 (R42/R48)
 TEAM_AGENTS = {'tsst-lens': 'marketing', 'tsst-spark': 'marketing',
                'tsst-creative': 'studio', 'tsst-motion': 'motion', 'tsst-dev': 'build'}
 UTILITY = {'tsst-reader', 'explore'}

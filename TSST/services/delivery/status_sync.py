@@ -17,6 +17,7 @@ import argparse
 import difflib
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -33,7 +34,7 @@ def read(path):
 
 
 def manifest_evidence(job, root=ROOT):
-    job, root = Path(job).resolve(), Path(root).resolve()
+    job, root = Path(os.path.abspath(job)), Path(root).resolve()  # TSST/brands may be a folder link (R48)
     parts = job.relative_to(root / "TSST/brands").parts
     if len(parts) < 3 or parts[1] != "projects":
         raise ValueError("job must be under TSST/brands/<brand>/projects/")

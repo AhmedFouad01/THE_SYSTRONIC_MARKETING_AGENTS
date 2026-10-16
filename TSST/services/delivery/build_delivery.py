@@ -968,7 +968,7 @@ def build(job, audience="client", link_logo=False, manifest=None, write=True):
       f'<h1>{cx.bi(m.get("title") or m["job"], ar.get("title"), "title")}</h1>')
     if manifest is None and brand:
         from pathlib import Path
-        home = next((p for p in Path(job).resolve().parents if p.name == brand and p.parent.name == "brands"), None)
+        home = next((p for p in Path(os.path.abspath(job)).parents if p.name == brand and p.parent.name == "brands"), None)
         if home and (home / out).is_file():
             a(f'<p><a class="lk" style="color:inherit" href="{e(url(os.path.relpath(home / out, job)))}" data-brand-link>{S("brand_back")}</a></p>')
     if m.get("subtitle"):

@@ -127,4 +127,4 @@ Round 1 expected: dossiers by `tsst-reader` (FAST), one Codex run, Lead scoring 
 - Arabic/Egyptian dialect + tone = Ahmed only; LLM judge checks structure.
 - Ahmed reviews all FAILs + all Arabic; Claude samples PASSes + disagreements; >2 disagreements on a skill -> full manual review.
 - Re-run the same tests after any skill edit (regression).
-- Runner: `TSST/brands/t-sag/projects/tsst-ai/gemini/GEM-SKV-001.md` (one round per paste).
+- Runner: `TSST/archive/research/tsst-ai/gemini/GEM-SKV-001.md` (one round per paste).

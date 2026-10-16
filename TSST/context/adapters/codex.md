@@ -33,7 +33,7 @@ generated contracts in `.codex/agents/` — each file pins its runtime model. Pr
   workspace; approval settings are the user's choice in `~/.codex/config.toml` (TSST never edits it).
 
 ## Memory access
-- Filesystem: repo working tree; `drive:` paths only if the Drive folder is mounted.
+- Filesystem: open the project at `C:\Work\TSST` in Local mode (no worktrees). `TSST/brands` is a junction to `G:\My Drive\TSST-Clients`; `drive:` paths need the Drive mounted.
 - `.gdoc` → `SOURCE_UNREADABLE_IN_CURRENT_RUNTIME`: use the repo-native export if its
   `EXPORTS.yaml` row exists, else ask the lead for a `source-read` bus task.
 - Git authority comes from `TSST/TSST_DECISION_RIGHTS.md`: feature-branch commit/push/PR only within approved scope; merging to master, deployment and publication remain reserved. The adapter grants no extra rights.

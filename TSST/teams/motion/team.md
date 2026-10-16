@@ -4,7 +4,7 @@ Scope: AI-shots-first short-form video · motion · reels · animation · voice-
 Peer of STUDIO (not under it). Generation is MANUAL through Ahmed; the team prepares prompts and one credit quote.
 
 Agent: `TSST/MOTION/AGENT.md` (governance APPROVED, NOT_READY, 4 UNVALIDATED skills; `TSST/decisions/TSST-ADR-005.md`).
-Spec: LENS/SPARK "Balanced setup, run Budget-first" — `TSST/brands/t-sag/projects/tsst-ai/motion-ag/` (LENS-MO-001 §4–5, SPARK-MO-001 §4).
+Spec: LENS/SPARK "Balanced setup, run Budget-first" — `TSST/archive/research/tsst-ai/motion-ag/` (LENS-MO-001 §4–5, SPARK-MO-001 §4).
 
 Pipeline: brief → Egyptian script → JSON shot list → master frame → shots → voice → code-motion text → ffmpeg.
 Flow: LENS story → Motion AG pipeline → CREATIVE brand check → SPARK ad specs.

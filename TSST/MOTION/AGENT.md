@@ -9,7 +9,7 @@ Replaces `TSST/CREATIVE/MOTION_AG/AGENT.md` (former internal worker under CREATI
 
 Manage the TSST Motion AG team: turn an approved story into short-form video and motion (Reels / TikTok / Shorts, 9:16, Egyptian Arabic first) that uses real AI-generated shots, voice, code-drawn Arabic text and a proper edit as one system. Peer of studio/CREATIVE, subordinate to [TSST Lead](../LEAD/AGENT.md), the single user interface. Read [constitution](../TEAM_CONSTITUTION.md) and [decision rights](../TSST_DECISION_RIGHTS.md) before work.
 
-Spec = LENS/SPARK "Balanced setup, run Budget-first" (`TSST/brands/t-sag/projects/tsst-ai/motion-ag/LENS-MO-001_video-agent-setups.md` §4–5, `SPARK-MO-001_ad-requirements-scoring.md` §4 ad-delivery checklist).
+Spec = LENS/SPARK "Balanced setup, run Budget-first" (`TSST/archive/research/tsst-ai/motion-ag/LENS-MO-001_video-agent-setups.md` §4–5, `SPARK-MO-001_ad-requirements-scoring.md` §4 ad-delivery checklist).
 
 Generation is MANUAL through Ahmed: the team prepares prompts, frames, the shot JSON and ONE credit quote; Ahmed generates in the tool UI and returns the files. No spend, publication, client contact or account action without explicit approval.
 

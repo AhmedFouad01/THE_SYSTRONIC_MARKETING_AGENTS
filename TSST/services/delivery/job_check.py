@@ -15,6 +15,7 @@ SEMANTIC_SYNC_UNVERIFIED; it never asserts full R20 semantic consistency.
 Missing/unknown manifest status fails in both modes. Exit 1 on any failure.
 """
 import argparse
+import os
 import json
 import re
 import sys
@@ -25,6 +26,9 @@ ROOT = Path(__file__).resolve().parents[3]  # TSST/services/delivery/job_check.p
 results = []
 LAYOUT_FILE = re.compile(r"^0[0-8]b?_[A-Z0-9_]+\.(md|csv)$")
 LAYOUT_DIRS = {"final", "work", "files", "observations"}  # files/, observations/ = legacy
+BRAND_TOP_DIRS = {"photos", "approved", "projects", "archive", "memory"}  # R48 brand template
+BRAND_TOP_FILES = {"brand.md", "status.md", "status-history.md", "rules.md", "scope.md", "project.md", "jobs.md",
+                   "delivery.html", "delivery_internal.html", "desktop.ini"}
 
 
 def check(name, ok, detail=""):
@@ -45,7 +49,7 @@ def main(argv=None):
     parser.add_argument("--structure-only", action="store_true")
     args = parser.parse_args(argv)
     results.clear()
-    job = args.job_folder.resolve()
+    job = Path(os.path.abspath(args.job_folder))  # keep TSST/brands even when it is a folder link (R48)
     print(f"job: {job}")
     check("job folder exists", job.is_dir())
 
@@ -152,6 +156,14 @@ def main(argv=None):
         else:
             check("f) brand JOBS.md lists this job with the same status", len(cells) > 3 and cells[3] == status,
                   f"JOBS.md={cells[3] if len(cells) > 3 else '?'} DELIVERY.json={status}" + ("" if len(cells) > 3 and cells[3] == status else " - run sync_jobs.py " + brand))
+
+    # g) brand folder template (R48): nothing outside the fixed brand layout
+    if brand is not None:
+        bdir = ROOT / "TSST" / "brands" / brand
+        stray = sorted(p.name for p in bdir.iterdir() if p.name.lower() not in BRAND_TOP_FILES and
+                       not (p.is_dir() and p.name in BRAND_TOP_DIRS))
+        check("g) brand folder matches the template (R48)", not stray,
+              "unexpected: " + ", ".join(stray) + " - allowed: " + " ".join(sorted(BRAND_TOP_DIRS)) + " + brand files")
 
     ok = all(results)
     if args.structure_only:

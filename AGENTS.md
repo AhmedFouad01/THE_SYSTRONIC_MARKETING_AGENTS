@@ -1,5 +1,7 @@
 # The Systronic Smart Team (TSST) — start here
 
+Workspace: `C:\Work\TSST` on `master`; client work in `TSST/brands` (= `G:\My Drive\TSST-Clients`). CRM has its own repo.
+
 Every runtime (Claude, Codex, any future one) starts with this page and then
 [TSST/core/rules.md](TSST/core/rules.md). That is the whole start. Load anything else only when
 the task needs it. Previous version of this page: `TSST/decisions/rules-history.md` (section B).

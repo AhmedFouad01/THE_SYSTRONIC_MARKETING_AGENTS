@@ -36,9 +36,11 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R21 One branch: `master`** (owner rule 2026-10-16, replaces branch-per-track). All work is on
   `master`. A short-lived branch only for risky code, merged or dropped the same day. Old branch
   heads are kept as tags `backup/2026-10-16/*`.
-- **R42 One workspace.** Work in the original repo `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS`
-  until R48 round 2 moves it; no side copies or worktrees. Check `git branch --show-current` = `master`
-  before any write or commit. Preserve other sessions' WIP. Same method in every runtime.
+- **R42 One workspace** (updated 2026-10-17). TSST system = `C:/Work/TSST` (GitHub
+  `AhmedFouad01/THE_SYSTRONIC_MARKETING_AGENTS`, `master`). Client work = `G:/My Drive/TSST-Clients`,
+  reached in the clone as `TSST/brands` (a folder link; not in git). CRM = `C:/Work/tsst-crm`
+  (private repo `AhmedFouad01/tsst-crm`). No side copies or worktrees; the old G: repo folder is a
+  backup only. Check `git branch --show-current` = `master` before any commit. Same method in every runtime.
 - **R46 System freeze until 2026-11-15** (owner rule 2026-10-16). No new tools, layers, rule files,
   folder systems or process steps unless real client work is blocked; Ahmed OKs each exception.
   A new owner rule = one line here.

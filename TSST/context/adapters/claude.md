@@ -46,6 +46,6 @@ Routing follows root `AGENTS.md`. Agent files are generated from
 - Never trash/share/move Drive files as part of memory recovery.
 
 ## Git
-Working tree in Drive; gitdir external `C:\GitMetadata\THE_SYSTRONIC_MARKETING_AGENTS.git`.
-Never recreate `.git` in Drive; `desktop.ini` stays ignored.
+Working tree `C:\Work\TSST` (own `.git`). `TSST/brands` is a junction to `G:\My Drive\TSST-Clients`
+(client work, not in git; media stays on Drive). Never put a `.git` inside Drive.
 Fresh clones on Windows: `git clone -c core.longpaths=true …`
