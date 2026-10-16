@@ -95,6 +95,11 @@ def main(argv=None):
         check("d) job named in a brand project.md", bool(in_project), name)
         status_text = read(bdir / "status.md")
         check("d) job named in brand status.md", name in status_text or job.name in status_text, name)
+        # R43 soft guard: brand status.md = current state only (<=250 words). Warn, never fail.
+        status_words = sum(len(line.split()) for line in status_text.splitlines()
+                           if not status_sync.MARKER_RE.fullmatch(line.strip()))
+        if status_words > 300:
+            print(f"WARN  d) brand status.md {status_words} words > 300 (R43: current state only, <=250)")
         portfolio = read(ROOT / "TSST" / "core" / "portfolio.yaml")
         check("d) brand has entry in core/portfolio.yaml",
               re.search(rf"^\s+{re.escape(brand)}:", portfolio, re.M) is not None, brand)

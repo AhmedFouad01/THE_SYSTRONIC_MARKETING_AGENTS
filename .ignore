@@ -1,0 +1,3 @@
+# Search tools (ripgrep and tools built on it) skip these; open them by name when needed.
+# Generated client pages: read DELIVERY.json instead (TSST/core/rules.md §3).
+DELIVERY*.html

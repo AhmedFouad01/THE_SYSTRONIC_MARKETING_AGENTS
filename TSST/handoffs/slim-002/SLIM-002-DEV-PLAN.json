@@ -1,0 +1,47 @@
+{
+  "team": "build",
+  "agent": "tsst-dev",
+  "skills": [
+    "TSST-DEV-SK-011",
+    "TSST-DEV-SK-016"
+  ],
+  "not_selected": "Architecture/API/data skills: one small warning in an existing checker.",
+  "tier": "CODE",
+  "acceptance": "job_check prints a non-failing WARN when brand status.md exceeds 300 words (job-sync marker lines excluded); exit code unchanged; regression test added and passing; all existing delivery tests pass.",
+  "skill_gap": "none",
+  "track": "tsst-core",
+  "read": [
+    "TSST/services/delivery/**",
+    "TSST/core/rules.md",
+    "TSST/brands/**",
+    "TSST/handoffs/slim-002/**",
+    "TSST/DEV/**",
+    "TSST/skills/**"
+  ],
+  "write": [
+    "TSST/services/delivery/job_check.py",
+    "TSST/services/delivery/test_job_check.py",
+    "TSST/handoffs/slim-002/SLIM-002-DEV-RESULT.md"
+  ],
+  "authority": {
+    "source": "Ahmed explicit approval in Claude chat 2026-10-16: 'اعملهم' (items A + B1, B1 = status size check by DEV_AG).",
+    "approved_scope": {
+      "read": [
+        "TSST/services/delivery/**",
+        "TSST/core/rules.md",
+        "TSST/brands/**",
+        "TSST/handoffs/slim-002/**",
+        "TSST/DEV/**",
+        "TSST/skills/**"
+      ],
+      "write": [
+        "TSST/services/delivery/job_check.py",
+        "TSST/services/delivery/test_job_check.py",
+        "TSST/handoffs/slim-002/SLIM-002-DEV-RESULT.md"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": ".claude/agents/tsst-dev.md"
+}

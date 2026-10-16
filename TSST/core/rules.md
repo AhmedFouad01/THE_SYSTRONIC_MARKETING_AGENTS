@@ -43,6 +43,11 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R34** Handoff and bus files are pointer-first, no recaps `[code]` bus size limits.
 - **R32** Near a usage limit keep `TSST/handoffs/LIMIT_FALLBACK.md` current; never hand off
   spend, publishing, account actions or paid generation.
+- **R43 Status = current only** (owner rule 2026-10-16). Brand `status.md` holds only the current
+  state, every open job's name, next action and `do_not_repeat`, ≤250 words. Durable brand facts
+  → `brand.md`; past checkpoints → `status-history.md` verbatim. Template: `TSST/brands/_template/status.md`.
+- **R44 Don't search generated pages** (owner rule 2026-10-16). Never search inside
+  `DELIVERY*.html`; job state is in `DELIVERY.json`. `[code]` root `.ignore` (ripgrep skips them).
 - **Naming** Folders lowercase-kebab-case; daily files short (`status.md`, `project.md`).
 - **R17** The daily board starts only when Ahmed says "ابدأ اليوم"; while locked, work only on
   board rows and park new requests (`TSST/daily/README.md`).

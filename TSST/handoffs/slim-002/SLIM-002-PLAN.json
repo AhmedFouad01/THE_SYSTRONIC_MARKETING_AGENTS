@@ -1,0 +1,44 @@
+{
+  "team": "lead",
+  "agent": "tsst-lead",
+  "skills": [
+    "TSST-CTX-SK-007"
+  ],
+  "not_selected": "Marketing/creative/paid skills: governance text only; code change delegated to DEV_AG separately.",
+  "tier": "DEEP",
+  "acceptance": "rg/Grep skip DELIVERY*.html by default; core rule line added; template states status.md current-only <=250 words with history file; checks no worse than baseline.",
+  "skill_gap": "none",
+  "track": "tsst-core",
+  "read": [
+    "TSST/**",
+    "AGENTS.md",
+    ".ignore",
+    ".gitignore"
+  ],
+  "write": [
+    ".ignore",
+    "TSST/core/rules.md",
+    "TSST/brands/_template/status.md",
+    "TSST/handoffs/slim-002/**"
+  ],
+  "authority": {
+    "source": "Ahmed explicit approval in Claude chat 2026-10-16: 'اعملهم' (items A + B1 of the status-slimming proposal).",
+    "approved_scope": {
+      "read": [
+        "TSST/**",
+        "AGENTS.md",
+        ".ignore",
+        ".gitignore"
+      ],
+      "write": [
+        ".ignore",
+        "TSST/core/rules.md",
+        "TSST/brands/_template/status.md",
+        "TSST/handoffs/slim-002/**"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": "TSST/LEAD/AGENT.md"
+}

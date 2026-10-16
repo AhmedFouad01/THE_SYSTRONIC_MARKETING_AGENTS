@@ -122,6 +122,39 @@ class JobCheckTests(JobFixture):
         self.assertEqual(code, 0, out)
         self.assertIn("structured_status_sync verified; narrative review separate", out)
 
+    def status_words_run(self, body):
+        self.status.write_text("campaign/week-01\n" + body, encoding="utf-8")
+        self.project.write_text("campaign/week-01\n", encoding="utf-8")
+        self.portfolio.write_text("brands:\n  example:\n", encoding="utf-8")
+        self.mirrors()
+        return self.run_check()
+
+    def test_r43_long_status_warns_without_changing_exit_code(self):
+        base_code, base_out = self.status_words_run("")
+        code, out = self.status_words_run("word " * 400 + "\n")
+        self.assertEqual(code, base_code, out)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("WARN  d) brand status.md", base_out)
+        self.assertIn("WARN  d) brand status.md ", out)
+        self.assertIn("words > 300 (R43", out)
+        self.assertNotIn("FAIL", out)
+
+    def test_r43_marker_lines_are_not_counted(self):
+        self.status_words_run("word " * 100 + "\n")
+        with self.status.open("a", encoding="utf-8") as stream:
+            for index in range(20):
+                stream.write("<!-- TSST_JOB_SYNC " + self.marker(job="pad/%d" % index, status="draft") + " -->\n")
+        self.assertGreater(len(self.status.read_text(encoding="utf-8").split()), 300)  # raw count would warn
+        code, out = self.run_check()
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("WARN  d) brand status.md", out)
+
+    def test_r43_status_at_or_under_limit_does_not_warn(self):
+        code, out = self.status_words_run("word " * 250 + "\n")
+        self.assertNotIn("WARN  d) brand status.md", out)
+        code, out = self.status_words_run("word " * 298 + "\n")  # 299 incl. job name line
+        self.assertNotIn("WARN  d) brand status.md", out)
+
     def test_all_renderer_statuses_accepted(self):
         for status in ("approved", "review", "production", "published", "rejected", "progress", "noted", "draft"):
             with self.subTest(status=status):
