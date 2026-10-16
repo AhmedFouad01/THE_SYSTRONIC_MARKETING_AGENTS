@@ -1,9 +1,0 @@
-{
-  "commit": "42f630db39cc91fa2520027585c7756b5f58ae78",
-  "probe": "Bind a new retry key presented during durable command replay",
-  "steps": ["A with K1 succeeds", "A replay with K2 returns original result", "B with K2 and a different body is submitted"],
-  "expected": {"status": 409, "code": "IDEMPOTENCY_CONFLICT", "transitionCount": 1},
-  "observed": {"accepted": true, "version": 2, "replayed": false, "transitionCount": 2},
-  "verdict": "FAIL",
-  "environment": "Real local PostgreSQL 17.10, exact source mirror verified against audited commit"
-}

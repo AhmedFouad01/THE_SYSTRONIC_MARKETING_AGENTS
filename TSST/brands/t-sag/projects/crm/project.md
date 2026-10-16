@@ -1,5 +1,8 @@
 # crm — project manifest
 
+> **Moved 2026-10-16 (R48):** the CRM code and all CRM docs now live in the private repo `github.com/AhmedFouad01/tsst-crm` (local: `C:\Work	sst-crm`). This file stays as the TSST checkpoint pointer.
+
+
 brand: t-sag · team: build (DEV) with studio (CREATIVE) for UI fidelity
 Logical location only — the physical folders stay where they are.
 
