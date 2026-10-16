@@ -101,5 +101,39 @@ class BrandViewTests(unittest.TestCase):
             self.assertEqual(call.call_count, 2)
 
 
+    def publish_item(self, folder):
+        (folder / 'shot.png').write_bytes(b'png-bytes')
+        return build_brand.delivery.publish(str(folder), {'id': 'shot-1', 'file': 'shot.png'}, 1)
+
+    def test_publish_writes_to_final_for_new_layout(self):
+        folder = self.job('new')
+        self.assertEqual(self.publish_item(folder), 'final/shot-1.png')
+        self.assertTrue((folder / 'final' / 'shot-1.png').is_file())
+        self.assertFalse((folder / 'files').exists())
+
+    def test_publish_keeps_files_for_legacy_job_without_final(self):
+        folder = self.job('legacy')
+        (folder / 'files').mkdir()
+        self.assertEqual(self.publish_item(folder), 'files/shot-1.png')
+        self.assertTrue((folder / 'files' / 'shot-1.png').is_file())
+        self.assertFalse((folder / 'final').exists())
+
+    def test_publish_prefers_final_when_both_exist(self):
+        folder = self.job('both')
+        (folder / 'files').mkdir()
+        (folder / 'final').mkdir()
+        self.assertEqual(self.publish_item(folder), 'final/shot-1.png')
+
+    def test_jobfiles_lists_brief_and_final(self):
+        folder = self.job('lay')
+        (folder / 'brief.md').write_text('b', encoding='utf-8')
+        (folder / 'final').mkdir()
+        (folder / 'work').mkdir()
+        names = [n for n, _ in build_brand.delivery.jobfiles(str(folder))]
+        self.assertEqual(names[0], 'brief.md')
+        self.assertIn('final/', names)
+        self.assertIn('work/', names)
+
+
 if __name__ == '__main__':
     unittest.main()

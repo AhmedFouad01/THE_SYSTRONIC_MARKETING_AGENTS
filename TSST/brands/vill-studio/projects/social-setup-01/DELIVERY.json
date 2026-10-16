@@ -44,7 +44,7 @@
    "id": "profile_mock",
    "title": "Profile preview, all platforms",
    "desc": "Composite preview of the four profiles, PNG. For reference only; not for upload.",
-   "file": "build/_qa/profile_mock.png",
+   "file": "work/build/_qa/profile_mock.png",
    "status": "approved",
    "group": "Preview",
    "date": "2026-10-09",
@@ -55,7 +55,7 @@
    "id": "ig_profile_picture",
    "title": "Profile picture",
    "desc": "1080 x 1080 px, PNG. Cropped to a circle from the centre.",
-   "file": "handover/instagram/01_profile-picture_1080.png",
+   "file": "work/handover/instagram/01_profile-picture_1080.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -65,7 +65,7 @@
    "id": "ig_highlight_1",
    "title": "Highlight cover: Projects",
    "desc": "1080 x 1920 px, PNG. Highlight name: Projects.",
-   "file": "handover/instagram/highlight-cover_1_projects.png",
+   "file": "work/handover/instagram/highlight-cover_1_projects.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -76,7 +76,7 @@
    "id": "ig_highlight_2",
    "title": "Highlight cover: Before & After",
    "desc": "1080 x 1920 px, PNG. Highlight name: Before & After. If the name is truncated in the app, use Before/After.",
-   "file": "handover/instagram/highlight-cover_2_before-after.png",
+   "file": "work/handover/instagram/highlight-cover_2_before-after.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -86,7 +86,7 @@
    "id": "ig_highlight_3",
    "title": "Highlight cover: Furniture",
    "desc": "1080 x 1920 px, PNG. Highlight name: Furniture.",
-   "file": "handover/instagram/highlight-cover_3_furniture.png",
+   "file": "work/handover/instagram/highlight-cover_3_furniture.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -97,7 +97,7 @@
    "id": "ig_template_story",
    "title": "Story template",
    "desc": "1080 x 1920 px, PNG. Template for future Stories; not for publication as supplied.",
-   "file": "handover/instagram/template_story.png",
+   "file": "work/handover/instagram/template_story.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -107,7 +107,7 @@
    "id": "ig_template_reel",
    "title": "Reel cover template",
    "desc": "1080 x 1920 px, PNG. Template for future Reels; not for publication as supplied.",
-   "file": "handover/instagram/template_reel-cover.png",
+   "file": "work/handover/instagram/template_reel-cover.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -117,7 +117,7 @@
    "id": "ig_template_feed",
    "title": "Feed post template",
    "desc": "1080 x 1350 px, PNG. Template for future feed posts; not for publication as supplied.",
-   "file": "handover/instagram/template_feed-post.png",
+   "file": "work/handover/instagram/template_feed-post.png",
    "status": "approved",
    "group": "Instagram",
    "date": "2026-10-09",
@@ -127,7 +127,7 @@
    "id": "fb_profile_picture",
    "title": "Profile picture",
    "desc": "320 x 320 px, PNG.",
-   "file": "handover/facebook/01_profile-picture_320.png",
+   "file": "work/handover/facebook/01_profile-picture_320.png",
    "status": "approved",
    "group": "Facebook",
    "date": "2026-10-09",
@@ -138,7 +138,7 @@
    "id": "fb_cover",
    "title": "Cover image",
    "desc": "1640 x 924 px, JPG.",
-   "file": "handover/facebook/02_cover_1640x924.jpg",
+   "file": "work/handover/facebook/02_cover_1640x924.jpg",
    "status": "approved",
    "group": "Facebook",
    "date": "2026-10-09",
@@ -149,7 +149,7 @@
    "id": "tt_profile_picture",
    "title": "Profile picture",
    "desc": "200 x 200 px, PNG.",
-   "file": "handover/tiktok/01_profile-picture_200.png",
+   "file": "work/handover/tiktok/01_profile-picture_200.png",
    "status": "approved",
    "group": "TikTok",
    "date": "2026-10-09",
@@ -159,7 +159,7 @@
    "id": "li_logo",
    "title": "Company logo",
    "desc": "400 x 400 px, PNG.",
-   "file": "handover/linkedin/01_logo_400.png",
+   "file": "work/handover/linkedin/01_logo_400.png",
    "status": "approved",
    "group": "LinkedIn",
    "date": "2026-10-09",
@@ -170,7 +170,7 @@
    "id": "li_cover",
    "title": "Cover image",
    "desc": "1512 x 256 px, PNG.",
-   "file": "handover/linkedin/02_cover_1512x256.png",
+   "file": "work/handover/linkedin/02_cover_1512x256.png",
    "status": "approved",
    "group": "LinkedIn",
    "date": "2026-10-09",
@@ -336,23 +336,23 @@
  "sources": [
   {
    "label": "HANDOVER.md",
-   "path": "handover/HANDOVER.md"
+   "path": "work/handover/HANDOVER.md"
   },
   {
    "label": "COPY.md",
-   "path": "COPY.md"
+   "path": "work/COPY.md"
   },
   {
    "label": "INTAKE.md",
-   "path": "INTAKE.md"
+   "path": "brief.md"
   },
   {
    "label": "GATE_REVIEW.md",
-   "path": "build/_qa/GATE_REVIEW.md"
+   "path": "work/build/_qa/GATE_REVIEW.md"
   },
   {
    "label": "Contact sheet",
-   "path": "build/contact-sheet.png"
+   "path": "work/build/contact-sheet.png"
   }
  ],
  "default_lang": "en",
@@ -587,8 +587,8 @@
   ],
   "sources": {
    "HANDOVER.md": "HANDOVER.md",
-   "COPY.md": "COPY.md",
-   "INTAKE.md": "INTAKE.md",
+   "COPY.md": "work/COPY.md",
+   "INTAKE.md": "brief.md",
    "GATE_REVIEW.md": "GATE_REVIEW.md",
    "Contact sheet": "ورقة المعاينة"
   },

@@ -672,39 +672,39 @@
  "sources": [
   {
    "label": "README.md",
-   "path": "README.md"
+   "path": "work/README.md"
   },
   {
    "label": "00_BRIEF.md",
-   "path": "00_BRIEF.md"
+   "path": "brief.md"
   },
   {
    "label": "01_STRATEGY.md",
-   "path": "01_STRATEGY.md"
+   "path": "work/01_STRATEGY.md"
   },
   {
    "label": "02_PLAN.md",
-   "path": "02_PLAN.md"
+   "path": "work/02_PLAN.md"
   },
   {
    "label": "03_COPY.md",
-   "path": "03_COPY.md"
+   "path": "work/03_COPY.md"
   },
   {
    "label": "04_CREATIVE_BRIEFS.md",
-   "path": "04_CREATIVE_BRIEFS.md"
+   "path": "work/04_CREATIVE_BRIEFS.md"
   },
   {
    "label": "05_MEASUREMENT.md",
-   "path": "05_MEASUREMENT.md"
+   "path": "work/05_MEASUREMENT.md"
   },
   {
    "label": "06b_SCORECARD_GUIDE.md",
-   "path": "06b_SCORECARD_GUIDE.md"
+   "path": "work/06b_SCORECARD_GUIDE.md"
   },
   {
    "label": "08_LEAD_CHECKPOINT.md",
-   "path": "08_LEAD_CHECKPOINT.md"
+   "path": "work/08_LEAD_CHECKPOINT.md"
   }
  ],
  "default_lang": "en",
@@ -902,15 +902,15 @@
    }
   ],
   "sources": {
-   "README.md": "README.md",
-   "00_BRIEF.md": "00_BRIEF.md",
-   "01_STRATEGY.md": "01_STRATEGY.md",
-   "02_PLAN.md": "02_PLAN.md",
-   "03_COPY.md": "03_COPY.md",
-   "04_CREATIVE_BRIEFS.md": "04_CREATIVE_BRIEFS.md",
-   "05_MEASUREMENT.md": "05_MEASUREMENT.md",
-   "06b_SCORECARD_GUIDE.md": "06b_SCORECARD_GUIDE.md",
-   "08_LEAD_CHECKPOINT.md": "08_LEAD_CHECKPOINT.md"
+   "README.md": "work/README.md",
+   "00_BRIEF.md": "brief.md",
+   "01_STRATEGY.md": "work/01_STRATEGY.md",
+   "02_PLAN.md": "work/02_PLAN.md",
+   "03_COPY.md": "work/03_COPY.md",
+   "04_CREATIVE_BRIEFS.md": "work/04_CREATIVE_BRIEFS.md",
+   "05_MEASUREMENT.md": "work/05_MEASUREMENT.md",
+   "06b_SCORECARD_GUIDE.md": "work/06b_SCORECARD_GUIDE.md",
+   "08_LEAD_CHECKPOINT.md": "work/08_LEAD_CHECKPOINT.md"
   },
   "marketing_plan": {
    "objective": "التعريف باستوديو VILL Studio وبناء الثقة المبدئية على Facebook وInstagram وLinkedIn، انطلاقًا من مشروع حقيقي واحد.",

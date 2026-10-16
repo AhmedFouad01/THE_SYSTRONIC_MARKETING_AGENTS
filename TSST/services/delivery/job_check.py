@@ -24,7 +24,7 @@ import status_sync
 ROOT = Path(__file__).resolve().parents[3]  # TSST/services/delivery/job_check.py -> repo root
 results = []
 LAYOUT_FILE = re.compile(r"^0[0-8]b?_[A-Z0-9_]+\.(md|csv)$")
-LAYOUT_DIRS = {"files", "work", "observations"}
+LAYOUT_DIRS = {"final", "work", "files", "observations"}  # files/, observations/ = legacy
 
 
 def check(name, ok, detail=""):
@@ -120,21 +120,22 @@ def main(argv=None):
                       detail if valid else "SEMANTIC_SYNC_UNVERIFIED: " + detail)
         print("INFO  structured markers compare identity/status/source/hash only; narrative review separate")
 
-    # e) layout (JOB_LAYOUT.md)
-    check("e) README.md exists", (job / "README.md").is_file(),
-          "" if (job / "README.md").is_file() else "missing - start-here file")
+    # e) layout (JOB_LAYOUT.md): new = brief.md + work/ + final/; legacy = README.md + NN_NAME slots + files/ observations/
+    start = next((n for n in ("brief.md", "README.md") if (job / n).is_file()), None)
+    check("e) start-here file (brief.md or README.md) exists", start is not None,
+          start or "missing - start-here file")
     top = sorted(job.iterdir(), key=lambda f: f.name) if job.is_dir() else []
-    bad = [f.name for f in top if f.is_file() and f.name != "README.md"
+    bad = [f.name for f in top if f.is_file() and f.name not in ("brief.md", "README.md")
            and not f.name.startswith("DELIVERY") and f.name != "desktop.ini"
            and not LAYOUT_FILE.match(f.name)]
     legacy = re.search(r"layout:\s*legacy", read(job / "README.md")) is not None
     if bad and legacy:
         print("WARN  e) legacy layout (pre R18, not re-laid out); file names not NN_NAME.ext: " + ", ".join(bad))
     else:
-        check("e) top-level file names match NN_NAME.ext", not bad, ", ".join(bad))
+        check("e) top-level files are brief.md / README.md / DELIVERY.* / NN_NAME.ext", not bad, ", ".join(bad))
     stray = [f.name for f in top if f.is_dir() and f.name not in LAYOUT_DIRS]
     if stray:
-        print("WARN  e) unexpected top-level folders (allowed: files/ work/ observations/): " + ", ".join(stray))
+        print("WARN  e) unexpected top-level folders (allowed: final/ work/; legacy files/ observations/): " + ", ".join(stray))
 
     # f) JOBS.md index (R20)
     if brand is None:

@@ -5,7 +5,8 @@ Usage:  python build_delivery.py <job_folder> [--audience client|internal|both] 
         reads  <job>/DELIVERY.json, i18n/{en,ar}.json, systronic.json
         writes <job>/DELIVERY.html           (audience client:   formal, safe to send)
                <job>/DELIVERY_INTERNAL.html  (audience internal: everything, for the team)
-               <job>/files/                  (client media under neutral names; the client page links here)
+               <job>/final/                  (client media under neutral names; the client page links here;
+                                              legacy jobs without final/ but with files/ keep using files/)
         default audience = both. Prints missing files, missing Arabic fields, an HTML structure check and,
         for the client page, a leak scan of internal terms (exit code 1 on a leak).
         v1.1: brand sync (client name from core/portfolio.yaml when the manifest omits "client"), optional plan
@@ -535,11 +536,13 @@ def sdot(st):
 def publish(job, it, n):
     src = os.path.join(job, it["file"])
     name = (it.get("id") or f"item{n}") + os.path.splitext(it["file"])[1].lower()
-    dst = os.path.join(job, "files", name)
+    legacy = os.path.isdir(os.path.join(job, "files")) and not os.path.isdir(os.path.join(job, "final"))
+    sub = "files" if legacy else "final"  # R48: final/ is the target; files/ only for jobs not yet moved
+    dst = os.path.join(job, sub, name)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src) or os.path.getmtime(dst) < os.path.getmtime(src):
         shutil.copyfile(src, dst)
-    return "files/" + name
+    return sub + "/" + name
 
 
 # ---------------------------------------------------------------- brand sync (v1.1)
@@ -577,7 +580,7 @@ PLAN_ST = {"approved": "d-ok", "review": "d-rev", "progress": "d-rev", "producti
 ROAD_ST = ("approved", "review", "progress", "production", "published", "planned")
 TASK_ST = ("open", "done", "blocked")
 LAYOUT_FILE = re.compile(r"^0[0-8]b?_[A-Z0-9_]+\.(md|csv)$")
-LAYOUT_DIRS = ("files", "work", "observations")
+LAYOUT_DIRS = ("final", "files", "work", "observations")
 plan_warn, REF_IDS = [], set()
 
 
@@ -832,16 +835,16 @@ def r_tasks(pl, cx, internal, sec, refs):
 
 
 def jobfiles(job):
-    """layout files that exist in the job folder (JOB_LAYOUT.md): README, 00-08 slots, files/ work/ observations/"""
+    """layout files that exist in the job folder (JOB_LAYOUT.md): brief.md/README.md, 00-08 slots (legacy), final/ files/ work/ observations/"""
     out = []
     for n in sorted(os.listdir(job)):
         p = os.path.join(job, n)
-        if n == "README.md":
+        if n in ("README.md", "brief.md"):
             out.append((n, "jf_readme"))
         elif os.path.isfile(p) and LAYOUT_FILE.match(n):
             out.append((n, "jf_" + n[:2]))
         elif os.path.isdir(p) and n in LAYOUT_DIRS:
-            out.append((n + "/", "jf_dir_" + n))
+            out.append((n + "/", "jf_dir_files" if n == "final" else "jf_dir_" + n))  # final/ shares the "Built client media" label
     out.sort(key=lambda t: (t[1] != "jf_readme", t[0]))
     return out
 

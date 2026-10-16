@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "mode": "mutate",
+  "errors": [],
+  "warnings": [
+    "Explicit contract mode records the named contract; native auto-loading is unverified."
+  ],
+  "workspace": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS",
+  "branch": "master",
+  "hashes": {
+    ".claude/agents/tsst-dev.md": "7fb2a7f1459a9303bb781d791547c620e28aae6b8cae9aed646d1e598b0d573f",
+    "TSST/core/rules.md": "a6686b5f5a6ca3d4cccc9f52adcec48b3eafde12accc316d6376b977e359fdaf",
+    "TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering/SKILL.md": "1def9f2d619faa17332618c849d4e75e436973be044adcedfd105fc3e188da6f",
+    "TSST/DEV/skills/tsst-dev-sk-016-technical-solution-communication/SKILL.md": "3ac44810477fd5d6600c53ec8caf9f6c6ce21e597170334ca75356f0fae254a6"
+  },
+  "native_registration": "unverified",
+  "limitations": [
+    "Authority is a recorded reference, not human authentication.",
+    "Hashes identify files; they do not prove reading, method use or approval.",
+    "Preflight does not intercept shell tools or enforce subsequent execution."
+  ],
+  "contract_mode": "explicit",
+  "authority_source": "Ahmed explicit approval in Claude chat 2026-10-16: 'موافق على خريطة VILL زي ما هي ... نفّذ جولة 2 لـ VILL، من غير push' (map included tool updates).",
+  "scope": {
+    "read": [
+      "TSST/services/delivery/**",
+      "TSST/core/**",
+      "TSST/brands/vill-studio/**",
+      "TSST/brands/anvil/**",
+      "TSST/skills/**",
+      "TSST/DEV/**",
+      "TSST/handoffs/round2-vill/**"
+    ],
+    "write": [
+      "TSST/services/delivery/build_delivery.py",
+      "TSST/services/delivery/job_check.py",
+      "TSST/services/delivery/JOB_LAYOUT.md",
+      "TSST/services/delivery/test_job_check.py",
+      "TSST/services/delivery/test_brand.py",
+      "TSST/brands/vill-studio/DELIVERY.html",
+      "TSST/brands/vill-studio/DELIVERY_INTERNAL.html",
+      "TSST/brands/vill-studio/JOBS.md",
+      "TSST/brands/vill-studio/status.md",
+      "TSST/brands/vill-studio/project.md",
+      "TSST/core/portfolio.yaml",
+      "TSST/brands/vill-studio/projects/*/DELIVERY.html",
+      "TSST/brands/vill-studio/projects/*/DELIVERY_INTERNAL.html",
+      "TSST/brands/vill-studio/projects/*/final/**",
+      "TSST/handoffs/round2-vill/**"
+    ]
+  }
+}

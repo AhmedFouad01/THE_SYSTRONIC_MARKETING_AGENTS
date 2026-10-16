@@ -73,3 +73,29 @@ TSST/brands/*/projects/**/*.npy
 TSST/brands/anvil/projects/product-photo-bank/work/external/round-02/test_out/
 # SCC is its own repo (github.com/AhmedFouad01/systronic-control-center)
 systronic-control-center/
+
+# Brand template (2026-10-16, R48): media stays on Drive in every brand folder
+# (photos/, approved/, projects/, archive/). Already-tracked files stay tracked.
+TSST/brands/**/*.png
+TSST/brands/**/*.PNG
+TSST/brands/**/*.jpg
+TSST/brands/**/*.JPG
+TSST/brands/**/*.jpeg
+TSST/brands/**/*.webp
+TSST/brands/**/*.heic
+TSST/brands/**/*.tif
+TSST/brands/**/*.tiff
+TSST/brands/**/*.psd
+TSST/brands/**/*.psb
+TSST/brands/**/*.ai
+TSST/brands/**/*.pdf
+TSST/brands/**/*.mp4
+TSST/brands/**/*.mov
+TSST/brands/**/*.zip
+TSST/brands/**/*.npy
+TSST/brands/*/photos/**/*.json
+TSST/brands/*/photos/**/BANK.html
+TSST/brands/*/archive/photo-bank/**/*.json
+TSST/brands/*/projects/*/final/
+TSST/brands/*/projects/*/work/qa/
+**/__pycache__/

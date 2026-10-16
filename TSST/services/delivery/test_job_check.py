@@ -71,6 +71,35 @@ class JobCheckTests(JobFixture):
         self.assertIn("SEMANTIC_SYNC_UNVERIFIED", out)
         self.assertNotIn("RESULT: PASS", out)
 
+    def test_new_layout_brief_work_final_passes_check_e(self):
+        (self.job / "README.md").unlink()
+        (self.job / "brief.md").write_text("brief", encoding="utf-8")
+        (self.job / "work").mkdir()
+        (self.job / "final").mkdir()
+        code, out = self.run_check("--structure-only")
+        self.assertEqual(code, 0, out)
+        self.assertIn("PASS  e) start-here file (brief.md or README.md) exists - brief.md", out)
+        self.assertNotIn("WARN  e)", out)
+        self.assertNotIn("FAIL  e)", out)
+
+    def test_legacy_layout_still_passes_check_e(self):
+        (self.job / "00_BRIEF.md").write_text("x", encoding="utf-8")
+        for d in ("files", "work", "observations"):
+            (self.job / d).mkdir()
+        code, out = self.run_check("--structure-only")
+        self.assertEqual(code, 0, out)
+        self.assertIn("PASS  e) start-here file (brief.md or README.md) exists - README.md", out)
+        self.assertNotIn("WARN  e)", out)
+
+    def test_missing_start_file_and_stray_top_level_file_fail_check_e(self):
+        (self.job / "README.md").unlink()
+        (self.job / "notes.txt").write_text("x", encoding="utf-8")
+        code, out = self.run_check("--structure-only")
+        self.assertEqual(code, 1, out)
+        self.assertIn("FAIL  e) start-here file", out)
+        self.assertIn("FAIL  e) top-level files", out)
+        self.assertIn("notes.txt", out)
+
     def test_matching_markers_pass_with_scope_limit(self):
         self.mirrors()
         code, out = self.run_check()

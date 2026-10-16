@@ -1,0 +1,73 @@
+{
+  "team": "build",
+  "agent": "tsst-dev",
+  "skills": [
+    "TSST-DEV-SK-011",
+    "TSST-DEV-SK-016"
+  ],
+  "not_selected": "Architecture/API/data skills: small path change in existing delivery tools.",
+  "tier": "CODE",
+  "acceptance": "Builder writes client media to final/ (files/ kept for jobs not yet moved); final/ and brief.md recognised as layout; VILL pages rebuilt; sync_jobs vill-studio OK; job_check per VILL job no new FAIL vs baseline; delivery tests pass; ANVIL untouched.",
+  "skill_gap": "none",
+  "track": "master",
+  "read": [
+    "TSST/services/delivery/**",
+    "TSST/core/**",
+    "TSST/brands/vill-studio/**",
+    "TSST/brands/anvil/**",
+    "TSST/skills/**",
+    "TSST/DEV/**",
+    "TSST/handoffs/round2-vill/**"
+  ],
+  "write": [
+    "TSST/services/delivery/build_delivery.py",
+    "TSST/services/delivery/job_check.py",
+    "TSST/services/delivery/JOB_LAYOUT.md",
+    "TSST/services/delivery/test_job_check.py",
+    "TSST/services/delivery/test_brand.py",
+    "TSST/brands/vill-studio/DELIVERY.html",
+    "TSST/brands/vill-studio/DELIVERY_INTERNAL.html",
+    "TSST/brands/vill-studio/JOBS.md",
+    "TSST/brands/vill-studio/status.md",
+    "TSST/brands/vill-studio/project.md",
+    "TSST/core/portfolio.yaml",
+    "TSST/brands/vill-studio/projects/*/DELIVERY.html",
+    "TSST/brands/vill-studio/projects/*/DELIVERY_INTERNAL.html",
+    "TSST/brands/vill-studio/projects/*/final/**",
+    "TSST/handoffs/round2-vill/**"
+  ],
+  "authority": {
+    "source": "Ahmed explicit approval in Claude chat 2026-10-16: 'موافق على خريطة VILL زي ما هي ... نفّذ جولة 2 لـ VILL، من غير push' (map included tool updates).",
+    "approved_scope": {
+      "read": [
+        "TSST/services/delivery/**",
+        "TSST/core/**",
+        "TSST/brands/vill-studio/**",
+        "TSST/brands/anvil/**",
+        "TSST/skills/**",
+        "TSST/DEV/**",
+        "TSST/handoffs/round2-vill/**"
+      ],
+      "write": [
+        "TSST/services/delivery/build_delivery.py",
+        "TSST/services/delivery/job_check.py",
+        "TSST/services/delivery/JOB_LAYOUT.md",
+        "TSST/services/delivery/test_job_check.py",
+        "TSST/services/delivery/test_brand.py",
+        "TSST/brands/vill-studio/DELIVERY.html",
+        "TSST/brands/vill-studio/DELIVERY_INTERNAL.html",
+        "TSST/brands/vill-studio/JOBS.md",
+        "TSST/brands/vill-studio/status.md",
+        "TSST/brands/vill-studio/project.md",
+        "TSST/core/portfolio.yaml",
+        "TSST/brands/vill-studio/projects/*/DELIVERY.html",
+        "TSST/brands/vill-studio/projects/*/DELIVERY_INTERNAL.html",
+        "TSST/brands/vill-studio/projects/*/final/**",
+        "TSST/handoffs/round2-vill/**"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": ".claude/agents/tsst-dev.md"
+}
