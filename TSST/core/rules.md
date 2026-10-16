@@ -33,10 +33,22 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   `TSST/core/friction-log.md` `[code]` `friction_check.py`.
 
 ## 3. Workspace, branches, files
-- **R42 / R21** Work in the original repo `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS` on the
-  track's branch. Check `git branch --show-current` before any write or commit; never commit
-  track X on track Y's branch. A shared folder has one branch for every chat in it: coordinate
-  before switching, recheck before writing. Preserve other sessions' WIP. Same method in every runtime.
+- **R21 One branch: `master`** (owner rule 2026-10-16, replaces branch-per-track). All work is on
+  `master`. A short-lived branch only for risky code, merged or dropped the same day. Old branch
+  heads are kept as tags `backup/2026-10-16/*`.
+- **R42 One workspace.** Work in the original repo `G:/My Drive/THE_SYSTRONIC_MARKETING_AGENTS`
+  until R48 round 2 moves it; no side copies or worktrees. Check `git branch --show-current` = `master`
+  before any write or commit. Preserve other sessions' WIP. Same method in every runtime.
+- **R46 System freeze until 2026-11-15** (owner rule 2026-10-16). No new tools, layers, rule files,
+  folder systems or process steps unless real client work is blocked; Ahmed OKs each exception.
+  A new owner rule = one line here.
+- **R47 No per-task process files** (owner rule 2026-10-16). The job brief is the plan;
+  `DELIVERY.json` is the record. Plan/preflight/observation/handoff files only when work moves to
+  another runtime or changes TSST code. Agents write only inside their job's `work/` and `final/`.
+- **R48 Three boxes** (owner direction 2026-10-16, rounds 2–3 pending): TSST system on GitHub
+  (`C:\Work`); client work on Drive `TSST-Clients/<brand>/` with one template
+  (brand.md, status.md, photos/, approved/, jobs/<job>/{brief.md, work/, final/}, archive/);
+  products (CRM, SCC) each in its own repo. Nothing is deleted; old material goes to archive.
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.

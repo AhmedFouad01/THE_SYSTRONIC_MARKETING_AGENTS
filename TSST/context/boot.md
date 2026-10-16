@@ -8,7 +8,7 @@ Pointer first, context second: load the smallest slice that answers the current 
 
 | # | Step | Read / run | Notes |
 |---|------|-----------|-------|
-| 1 | Branch | `git branch --show-current` | must match the track (R21/R42); shared folder = one branch for all chats |
+| 1 | Branch | `git branch --show-current` | must be `master` (R21/R42); shared folder = one branch for all chats |
 | 2 | Brand → project → state | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` → `TSST/brands/<id>/status.md` → project checkpoint | ambiguous brand → one question; apply `do_not_repeat`; conflicts → `router.yaml#source_authority` (newest verified evidence wins); job home R18 |
 | 3 | Route | `router.yaml#team_routing` + `TSST/context/roster.yaml`; skills via `TSST/skills/build_index.py`; tier via `TSST/context/models.yaml` | ≤3 skills; matching rules pack; authority row in `TSST/TSST_DECISION_RIGHTS.md` only when unsure |
 | 4 | Before mutation | `preflight.py --plan <plan.json> --mutate --json` (`workflow.md`) | failure stops the affected write; reads need no plan file |

@@ -17,13 +17,14 @@ plan, review and accept. Specialists do the work. Lead record: [TSST/LEAD/AGENT.
 5. Nothing unverified stated as fact.
 
 ## Start a task in five steps
-1. **Branch.** `git branch --show-current` must match the track (R21/R42). If not, propose the switch.
+1. **Branch.** `git branch --show-current` must be `master` (R21/R42). If not, stop and tell Ahmed.
 2. **Brand and state.** [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml) → `TSST/brands/<id>/status.md`
    → the project's `project.md` checkpoint. Respect `do_not_repeat`. Unclear brand → one question.
 3. **Route.** Pick the team below; find ≤3 skills with `python TSST/skills/build_index.py --team <team>`,
    then `--id <ID>`, and open their bodies. Load the matching rules pack (core rules §5).
-4. **Before writing files.** `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json`.
-   Read-only answers need no plan file.
+4. **Before writing files.** Client job: write only in that job's `work/` and `final/`; the brief is
+   the plan (R47). TSST code or cross-runtime work: `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json`.
+   The system is frozen until 2026-11-15 (R46).
 5. **Finish.** One checkpoint (status / project). Client jobs: delivery pack (R18–R20).
 
 | Work | Team → agent |
