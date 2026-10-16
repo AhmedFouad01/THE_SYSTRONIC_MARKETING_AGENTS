@@ -1,16 +1,15 @@
 # Runtime adapter — Claude (Claude Code desktop/CLI)
 
-Entry: root `AGENTS.md` / `CLAUDE.md` → `TSST/context/boot.md`. This file only maps
-runtime mechanics; the operating method lives in boot.md.
+Entry: `CLAUDE.md` → root `AGENTS.md` → `TSST/core/rules.md`. This file only maps runtime
+mechanics; read it when you need model, agent, Drive or Git details.
 
 Bus runtime id: `claude` (lead).
 Requests the Lead sends to other tools/runtimes carry a ROLE block: `TSST/context/request-role.md`.
 Near a usage limit: `release` open claims with a resume
 note and `limit claude --until <UTC>` (`TSST/context/bus.md`).
-Jobs: R18–R20 (`TSST/core/rules.md`) — job in `brands/<id>/projects/<job>/`, DELIVERY page, four-way sync; check with `python TSST/services/delivery/job_check.py <job>`.
 
 ## Plan: Claude Pro — roster → runtime agent (ADR-003/004)
-Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated from
+Routing follows root `AGENTS.md`. Agent files are generated from
 `TSST/context/roster.yaml` (`gen_runtime_agents.py`); never hand-edit them.
 
 | TSST agent | Claude subagent | default tier |
@@ -24,7 +23,6 @@ Routing follows `AGENTS.md#universal-task-routing`. Agent files are generated fr
 | TSST Lead | main conversation (current Opus) | DEEP — Skill Plan, architecture, conflict, acceptance |
 | IMAGE / VIDEO | not native — route to a runtime/tool that has them (e.g. `gemini-desktop.md`, manual); never fake | — |
 
-- Shared method: `TSST/context/workflow.md`; explicit preflight before mutation uses the same plan as the dispatch.
 - Dispatch guard: `.claude/settings.json` PreToolUse hook on `Agent|Task` →
   `TSST/context/hooks/agent_dispatch_guard.py` (complete Skill Plan, team/skill validation, skill cap;
   generic/retired agents refused; validation/internal errors fail closed for that dispatch).

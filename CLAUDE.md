@@ -1,4 +1,4 @@
 # TSST — Claude entry
 
-Follow `AGENTS.md` → `TSST/context/boot.md`. Claude runtime mapping (tiers, workers, Drive
-access, `.gdoc` limits): `TSST/context/adapters/claude.md`. Keep this file thin.
+Start with root `AGENTS.md` → `TSST/core/rules.md` (same start as every runtime).
+Claude mechanics (agents, tiers, Drive, `.gdoc`, Git): `TSST/context/adapters/claude.md`, only when needed.

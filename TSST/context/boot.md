@@ -1,38 +1,21 @@
-# TSST Boot — portable operating entry point
+# TSST Boot — reference
 
-Provider-neutral. No model names, no provider tools. Runtime specifics live only in
-`TSST/context/adapters/<runtime>.md`. Every runtime (and every future runtime) runs this
-same sequence.
+Provider-neutral. Model names live only in `TSST/context/adapters/<runtime>.md`.
+The short start is root `AGENTS.md` + `TSST/core/rules.md`; this file is the reference behind it.
+Pointer first, context second: load the smallest slice that answers the current task.
 
-Principle: **pointer first, context second.** Load the smallest authoritative slice that
-answers the current task. Large context is not better context.
+## Start sequence (same five steps as `AGENTS.md`)
 
-Execution procedure: [workflow.md](workflow.md), one task packet and one shared preflight.
-Run once for a task, then refresh only changed evidence; not a full boot for every tool call.
+| # | Step | Read / run | Notes |
+|---|------|-----------|-------|
+| 1 | Branch | `git branch --show-current` | must match the track (R21/R42); shared folder = one branch for all chats |
+| 2 | Brand → project → state | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` → `TSST/brands/<id>/status.md` → project checkpoint | ambiguous brand → one question; apply `do_not_repeat`; conflicts → `router.yaml#source_authority` (newest verified evidence wins); job home R18 |
+| 3 | Route | `router.yaml#team_routing` + `TSST/context/roster.yaml`; skills via `TSST/skills/build_index.py`; tier via `TSST/context/models.yaml` | ≤3 skills; matching rules pack; authority row in `TSST/TSST_DECISION_RIGHTS.md` only when unsure |
+| 4 | Before mutation | `preflight.py --plan <plan.json> --mutate --json` (`workflow.md`) | failure stops the affected write; reads need no plan file |
+| 5 | Checkpoint | brand `status.md` / project checkpoint; client job → delivery pack (R18–R20) | durable Real Memory writes need approval; lessons gate `TSST/core/lessons.md#promotion_gate` |
 
-## Boot sequence
-
-| # | Step | Read | Stop condition |
-|---|------|------|----------------|
-| 0 | Bus check | `python TSST/bus/bus.py ls --me <runtime-id>` (`TSST/context/bus.md`) | user said continue → claim top `*` task; else continue with the user's task |
-| 0b | Daily board | `python TSST/daily/day.py show` (`TSST/daily/README.md`) | no board today → owner says "ابدأ اليوم" → collect → Lead plans → owner OK → lock; locked → work only on board rows; new request → `park` (core rule R17) |
-| 1 | Resolve TSST | this file + `TSST/context/router.yaml` | — |
-| 2 | Resolve brand | `TSST/core/portfolio.yaml` → `router.yaml#brand_aliases` | ambiguous brand → ask user (one question); brand but no task → `router.yaml#brand_only_entry` |
-| 3 | Resolve project / workstream | `portfolio.yaml#brands.<id>.projects` → `TSST/brands/<id>/projects/<p>/project.md` | job home = `brands/<id>/projects/<job>/`, never `PILOTS/` or `projects/` (R18) |
-| 4 | Load portfolio pointer | the single brand + project entry only | never read other brand entries in depth |
-| 5 | Resolve canonical memory source | `TSST/brands/<id>/memory/source.md` | access state per runtime (see Memory resolution) |
-| 6 | Recover current status / checkpoint | `TSST/brands/<id>/status.md`, then the project's `checkpoint` pointer | — |
-| 7 | Apply source authority | `router.yaml#source_authority` | conflict → newest verified evidence wins; record it |
-| 8 | Apply do_not_repeat | `project.md#do_not_repeat` + `status.md#do_not_repeat` | — |
-| 9 | Apply rules | `TSST/core/rules.md`, then `TSST/brands/<id>/rules.md` | brand rule never overrides a core safety rule |
-| 10 | Build minimum context pack | only files named by steps 3–9 for this task | budget: `router.yaml#context_budget` |
-| 11 | Route team | `router.yaml#team_routing` → team map from roster.yaml; `lead` uses `TSST/LEAD/AGENT.md` directly (no teams/lead folder) | fixed roster only (rules R1–R2); runtime agent per adapter |
-| 12 | Route skills | `TSST/skills/index.yaml` (team slice) + team map → Skill Plan; load only the matched skill(s) | never load a whole registry; **mandatory — no ad-hoc work without team + skills** (`TSST/core/rules.md` 9) |
-| 13 | Route logical model tier | `TSST/context/models.yaml` (FAST/WORK/CODE/DEEP/IMAGE/VIDEO) | adapter maps tier → actual model |
-| 14 | Verify authority | `TSST/TSST_DECISION_RIGHTS.md` (relevant row only) | not authorised → ask user |
-| 15 | Execute | file-capable host: `preflight.py --plan <existing-plan.json> --mutate --json` before scoped mutation (`workflow.md`); manual surface sends the same packet to that host; reads need no mutation gate/new JSON | validation error → stop affected mutation; preserve existing authority |
-| 16 | Checkpoint | update `status.md` / project checkpoint pointer (repo); job delivered → R19 `DELIVERY.json` → `build_delivery.py`, R20 four-way sync (DELIVERY.json, project.md, status.md, portfolio.yaml) + `python TSST/services/delivery/job_check.py <job>` | durable Real Memory writes need approval |
-| 17 | Learning / memory gate | `TSST/core/lessons.md#promotion_gate` | brand-specific → brand `rules.md`; reusable → global lesson candidate |
+Conditional: queued cross-runtime work → `python TSST/bus/bus.py ls --me <runtime-id>` (`bus.md`);
+daily board → `python TSST/daily/day.py show` only after Ahmed says "ابدأ اليوم" (R17).
 
 ## Memory resolution (mandatory)
 
