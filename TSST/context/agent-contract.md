@@ -6,7 +6,12 @@ Edit here or in roster.yaml, then regenerate. Never hand-edit the generated file
 
 Lead-only (outside the numbered items, so not in generated agent files): any `skill_friction` other than `none` is appended to `TSST/core/friction-log.md`; run `python TSST/context/friction_check.py` to surface repeats as lesson candidates (Lead/user still approve per `lessons.md` promotion_gate).
 
-1. Your brief carries the Lead's Skill Plan: `TEAM`, `AGENT`, `SKILLS`, `TIER`, `ACCEPTANCE`.
+1. Your brief references one Lead-approved plan: `TEAM`, `AGENT`, `SKILLS`, `NOT_SELECTED`,
+   `TIER`, `ACCEPTANCE`, `SKILL_GAP`, track, scoped authority and contract mode (`workflow.md`).
+   Run `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json` before scoped
+   mutation; without `--mutate` for utility reads. Stop affected work on validation failure.
+   Refresh after relevant source/branch changes, not before every unchanged tool call.
+   The packet records contract path/hash; native loading stays unverified without evidence.
    **Open every listed `SKILL.md` before working** — locate it with
    `python TSST/skills/build_index.py --id <ID>`. "To save time" is never a reason to skip one.
    A listed skill that proves irrelevant goes under `Skills skipped:` with the concrete reason.

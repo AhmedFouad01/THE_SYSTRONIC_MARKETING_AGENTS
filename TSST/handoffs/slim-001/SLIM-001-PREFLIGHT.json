@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "mode": "mutate",
+  "errors": [],
+  "warnings": [
+    "Explicit contract mode records the named contract; native auto-loading is unverified."
+  ],
+  "workspace": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS",
+  "branch": "tsst-core/owner-rules",
+  "hashes": {
+    "TSST/LEAD/AGENT.md": "3f32997457ed13dd8f9dd58286fe0db307f196b5f163339dfd1053628c9d56f2",
+    "TSST/core/rules.md": "4c99838e3313acc36d14a2235d6fd73378a93139bdaf6ff05a834532efe475f5",
+    "TSST/context_os/skills/TSST-CTX-SK-007-context-budget-manager/SKILL.md": "ff1b76cafff31e6fbc0bd8c4c7b01a9e5e07414307fd8f940373a78a2ef1ad63",
+    "TSST/context_os/skills/TSST-CTX-SK-001-context-router/SKILL.md": "c11454f120745f3de4e30afd2bda38798b50d34708c0d6354b6c35fe7a28396a"
+  },
+  "native_registration": "unverified",
+  "limitations": [
+    "Authority is a recorded reference, not human authentication.",
+    "Hashes identify files; they do not prove reading, method use or approval.",
+    "Preflight does not intercept shell tools or enforce subsequent execution."
+  ],
+  "contract_mode": "explicit",
+  "authority_source": "Ahmed explicit approval in Claude chat 2026-10-16: 'موافق على الخطة ... حوّل لـ tsst-core/owner-rules وابدأ' (slimming plan steps 1-7).",
+  "scope": {
+    "read": [
+      "TSST/**",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      ".agents/skills/tsst-router/SKILL.md"
+    ],
+    "write": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "TSST/core/rules.md",
+      "TSST/core/rules/**",
+      "TSST/decisions/rules-history.md",
+      "TSST/context/boot.md",
+      "TSST/context/workflow.md",
+      "TSST/context/adapters/claude.md",
+      "TSST/context/adapters/codex.md",
+      ".agents/skills/tsst-router/SKILL.md",
+      "TSST/handoffs/slim-001/**"
+    ]
+  }
+}

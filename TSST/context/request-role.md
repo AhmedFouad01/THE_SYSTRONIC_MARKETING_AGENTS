@@ -24,6 +24,8 @@ DO NOT: edit, move or delete any other file; create bus tasks; commit.
 Your output is INPUT for <responsible agent>; the Lead reviews it before anything enters TSST.
 ```
 
+Direct Lead sessions and explicitly loaded TSST specialist contracts use the same plan and preflight (`workflow.md`). A bus ID is supplied only for a real bus task; no dummy claim is required. Native registration and explicit contract loading are reported separately.
+
 ## Rules
 1. No role line means the request is not ready. Fix it before sending.
 2. Role B output never edits team files directly. A useful change is applied by the

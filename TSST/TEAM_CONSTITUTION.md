@@ -4,6 +4,10 @@ Version: 0.1
 Bootstrap date: 2026-09-20  
 Current team status: `NOT_READY`
 
+## Current routing amendment — 2026-10-12
+
+Use `context/workflow.md` for current execution and `context/roster.yaml` for the fixed roster, including independent MOTION_AG (ADR-005). The dated bootstrap sections below preserve their historical scope; they do not remove later registered roles or reopen onboarding. Existing quality/readiness and reserved-action gates remain in force.
+
 ## Purpose and current operating limit
 
 TSST means The Systronic Smart Team. TSST Lead is the executive Mini CEO/CMO and the user’s single direct interface, supported by CREATIVE_AG, LENS_AG, SPARK_AG and DEV_AG. Lead owns integrated commercial, strategic, financial, sales, operations, growth and creative recommendations within the user’s mandate. The team may define roles, install skills, prepare evaluations, and maintain governance artifacts. It must not start, simulate as completed, publish, fund, or optimize a marketing campaign during bootstrap.

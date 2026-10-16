@@ -1,0 +1,61 @@
+{
+  "team": "lead",
+  "agent": "tsst-lead",
+  "skills": [
+    "TSST-CTX-SK-007",
+    "TSST-CTX-SK-001"
+  ],
+  "not_selected": "Marketing, creative, paid-media, build skills: governance text restructuring only; code untouched.",
+  "tier": "DEEP",
+  "acceptance": "Startup read <=1,500 words; core rules ~15; every original rule kept verbatim in rules-history.md and reachable by its R-number; spine/bus/preflight/enforcement checks no worse than baseline (25/29 spine); no code change; no readiness claim.",
+  "skill_gap": "none",
+  "track": "tsst-core",
+  "read": [
+    "TSST/**",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".agents/skills/tsst-router/SKILL.md"
+  ],
+  "write": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "TSST/core/rules.md",
+    "TSST/core/rules/**",
+    "TSST/decisions/rules-history.md",
+    "TSST/context/boot.md",
+    "TSST/context/workflow.md",
+    "TSST/context/adapters/claude.md",
+    "TSST/context/adapters/codex.md",
+    ".agents/skills/tsst-router/SKILL.md",
+    "TSST/handoffs/slim-001/**"
+  ],
+  "authority": {
+    "source": "Ahmed explicit approval in Claude chat 2026-10-16: 'موافق على الخطة ... حوّل لـ tsst-core/owner-rules وابدأ' (slimming plan steps 1-7).",
+    "approved_scope": {
+      "read": [
+        "TSST/**",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md",
+        ".agents/skills/tsst-router/SKILL.md"
+      ],
+      "write": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "TSST/core/rules.md",
+        "TSST/core/rules/**",
+        "TSST/decisions/rules-history.md",
+        "TSST/context/boot.md",
+        "TSST/context/workflow.md",
+        "TSST/context/adapters/claude.md",
+        "TSST/context/adapters/codex.md",
+        ".agents/skills/tsst-router/SKILL.md",
+        "TSST/handoffs/slim-001/**"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": "TSST/LEAD/AGENT.md"
+}

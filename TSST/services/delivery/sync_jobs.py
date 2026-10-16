@@ -4,7 +4,9 @@
 Usage: python TSST/services/delivery/sync_jobs.py <brand-id> | --all
 Scans TSST/brands/<id>/projects/**/DELIVERY.json and writes TSST/brands/<id>/JOBS.md (generated - do not edit):
 job path, service, title, status, date, client page, internal page, job_check result. Stdlib only.
-Run it after every DELIVERY.json status change; job_check.py (check f) fails when JOBS.md is stale.
+Run it after every DELIVERY.json change; it refreshes derived status_sync.py comments
+in existing project/status/portfolio pointers. Missing pointers or malformed mirrors fail.
+Structured sync does not review narrative prose; job_check.py verifies exact source hashes.
 """
 import json
 import re
@@ -80,6 +82,13 @@ def sync(brand):
                 if check.err or check.stack or (audience == "client" and leaks(doc)):
                     raise ValueError(f"Cannot connect invalid delivery page: {detail}")
                 detail.write_text(doc, encoding="utf-8", newline="\n")
+    # Derived mirrors only: DELIVERY.json remains the authoritative status source.
+    from status_sync import sync_brand
+    try:
+        sync_brand(brand, root=ROOT, write=True)
+    except (OSError, UnicodeError, ValueError) as exc:
+        print(f"{brand}: status mirrors failed: {exc}")
+        return 1
     target = BRANDS / brand / "JOBS.md"
     target.write_text(render(brand, rows, {}), encoding="utf-8", newline="\n")  # pass 1: job_check f) needs the listing
     results = {r["rel"]: check_result(r["dir"]) for r in rows}

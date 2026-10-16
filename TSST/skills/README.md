@@ -7,8 +7,7 @@ registered-but-unpackaged IDs). It is GENERATED - never edit it by hand.
 - Lead reads only the needed team slice of `index.yaml` (grep `team: marketing|studio|motion|build|lead|core`).
 - Read-only lookups (never rewrite the index): `python TSST/skills/build_index.py --team <team>` prints compact `ID | status | trigger` rows; `--id <ID>` prints that skill's path + full trigger.
 - Agents load at most 3 `SKILL.md` files, by path from the index. Do not scan skill folders.
-- Every dispatch carries a Skill Plan (`TEAM:` + `SKILLS:` IDs); enforced by
-  `TSST/context/hooks/agent_dispatch_guard.py` and `TSST/bus/bus.py` against this index.
+- Every dispatch references one complete Skill Plan: TEAM / AGENT / SKILLS / NOT_SELECTED / TIER / ACCEPTANCE / SKILL_GAP. See `TSST/context/workflow.md` and shared preflight; the hook checks plan fields, the bus checks its own envelope. Neither citation nor hash alone proves skill application.
 - DEPRECATED skills are refused. Team must match the task team (or be `core`; `lead` may use any).
 
 ## Add or change a skill

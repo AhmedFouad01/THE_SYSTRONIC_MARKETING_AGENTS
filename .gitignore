@@ -71,3 +71,5 @@ TSST/brands/*/projects/**/*.webp
 TSST/brands/*/projects/**/*.npy
 # External temporary test output (not campaign source or evidence)
 TSST/brands/anvil/projects/product-photo-bank/work/external/round-02/test_out/
+# SCC is its own repo (github.com/AhmedFouad01/systronic-control-center)
+systronic-control-center/

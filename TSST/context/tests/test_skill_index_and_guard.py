@@ -30,11 +30,22 @@ def py(*args, stdin=None):
 
 
 def guard(subagent, prompt):
+    prompt = complete_plan(subagent, prompt)
     payload = {"tool_name": "Agent", "tool_input": {"prompt": prompt}}
     if subagent is not None:
         payload["tool_input"]["subagent_type"] = subagent
     r = py(HOOK, stdin=json.dumps(payload))
     return r.returncode, r.stderr
+
+
+def complete_plan(subagent, prompt):
+    utility = (subagent or '').lower() in ('explore', 'tsst-reader')
+    extra = f'\nAGENT: {subagent or "general-purpose"}\nNOT_SELECTED: none\nACCEPTANCE: bounded fixture check\nSKILL_GAP: none'
+    if 'TIER:' not in prompt:
+        extra += '\nTIER: ' + ('FAST' if utility else 'CODE')
+    if utility and 'SKILLS:' not in prompt:
+        extra += '\nSKILLS: none'
+    return prompt + extra
 
 
 def load(path, name):
@@ -88,7 +99,7 @@ def test_guard():
     rc, _ = guard("tsst-dev", "TEAM: build\nSKILLS: TSST-DEV-SK-005, TSST-CTX-SK-008")
     expect("core skill allowed for any team", rc == 0)
     rc, _ = guard("tsst-dev", "TEAM: lead\nSKILLS: TSST-LENS-SK-001")
-    expect("TEAM: lead may use any team's skills", rc == 0)
+    expect("specialist cannot bypass fixed routing through TEAM: lead", rc == 2)
     rc, _ = guard("tsst-lens", "TEAM: marketing\nSKILLS: TSST-LENS-SK-001")
     expect("lens/marketing allow", rc == 0)
     rc, _ = guard("tsst-spark", "TEAM: marketing\nSKILLS: TSST-SPARK-SK-001")
@@ -130,22 +141,22 @@ def test_guard():
         rc, _ = guard(free, "anything")
         expect(f"{free} allowed without checks", rc == 0)
     r = py(HOOK, stdin="not json")
-    expect("garbage stdin -> fail-open with warning", r.returncode == 0 and "WARNING" in r.stderr)
+    expect("garbage stdin -> fail-closed with reason", r.returncode == 2 and "DENIED" in r.stderr)
     g = load(HOOK, "guard")
 
     def boom():
         raise OSError("index missing")
 
     try:
-        g.decide({"tool_input": {"subagent_type": "tsst-dev", "prompt": ok}}, index_loader=boom)
-        expect("index loader error propagates to main (fail-open there)", False)
+        g.decide({"tool_input": {"subagent_type": "tsst-dev", "prompt": complete_plan('tsst-dev', ok)}}, index_loader=boom)
+        expect("index loader error propagates to main (fail-closed there)", False)
     except OSError:
-        expect("index loader error propagates to main (fail-open there)", True)
+        expect("index loader error propagates to main (fail-closed there)", True)
 
     def dep():
         return {"TSST-DEV-SK-005": ("build", "DEPRECATED"), "TSST-DEV-SK-011": ("build", "UNVALIDATED")}
 
-    res = g.decide({"tool_input": {"subagent_type": "tsst-dev", "prompt": ok}}, index_loader=dep)
+    res = g.decide({"tool_input": {"subagent_type": "tsst-dev", "prompt": complete_plan('tsst-dev', ok)}}, index_loader=dep)
     expect("DEPRECATED skill -> deny", bool(res) and "DEPRECATED" in res and "TSST-DEV-SK-005" in res)
 
 

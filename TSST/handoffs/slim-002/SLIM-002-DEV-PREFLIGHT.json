@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "mode": "mutate",
+  "errors": [],
+  "warnings": [
+    "Explicit contract mode records the named contract; native auto-loading is unverified."
+  ],
+  "workspace": "G:\\My Drive\\THE_SYSTRONIC_MARKETING_AGENTS",
+  "branch": "tsst-core/owner-rules",
+  "hashes": {
+    ".claude/agents/tsst-dev.md": "7fb2a7f1459a9303bb781d791547c620e28aae6b8cae9aed646d1e598b0d573f",
+    "TSST/core/rules.md": "62033400f9109285dbc4561657253eacdaabeeeb8eab94e34d4685c3dcd59a61",
+    "TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering/SKILL.md": "1def9f2d619faa17332618c849d4e75e436973be044adcedfd105fc3e188da6f",
+    "TSST/DEV/skills/tsst-dev-sk-016-technical-solution-communication/SKILL.md": "3ac44810477fd5d6600c53ec8caf9f6c6ce21e597170334ca75356f0fae254a6"
+  },
+  "native_registration": "unverified",
+  "limitations": [
+    "Authority is a recorded reference, not human authentication.",
+    "Hashes identify files; they do not prove reading, method use or approval.",
+    "Preflight does not intercept shell tools or enforce subsequent execution."
+  ],
+  "contract_mode": "explicit",
+  "authority_source": "Ahmed explicit approval in Claude chat 2026-10-16: 'اعملهم' (items A + B1, B1 = status size check by DEV_AG).",
+  "scope": {
+    "read": [
+      "TSST/services/delivery/**",
+      "TSST/core/rules.md",
+      "TSST/brands/**",
+      "TSST/handoffs/slim-002/**",
+      "TSST/DEV/**",
+      "TSST/skills/**"
+    ],
+    "write": [
+      "TSST/services/delivery/job_check.py",
+      "TSST/services/delivery/test_job_check.py",
+      "TSST/handoffs/slim-002/SLIM-002-DEV-RESULT.md"
+    ]
+  }
+}

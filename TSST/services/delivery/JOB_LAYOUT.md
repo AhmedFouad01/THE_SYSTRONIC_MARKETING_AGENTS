@@ -45,3 +45,7 @@ A job that was not re-laid out has a README with the line `layout: legacy (pre R
 3. Build scripts under the job have a hard-coded `ROOT` depth (number of `..` / `parents[n]`): fix it after the move and rebuild.
 4. Hashed evidence (`work/`, `observations/`, bus task files, `log.tsv`) is never edited. Record old -> new paths in a `MOVED.md` next to the README instead.
 5. Update the brand `project.md`, `status.md` and `portfolio.yaml` paths, rebuild the delivery pages, then run `python TSST/services/delivery/sync_jobs.py <brand>` and `python TSST/services/delivery/job_check.py <job>`.
+
+## Status agreement
+
+After a manifest change, run the approved brand sync and strict `job_check.py`; the helper derives hash-bound `TSST_JOB_SYNC` comments in existing project/status/portfolio pointers. Missing pointers need an explicit scoped correction; they are never invented. See README.md, Strict status agreement. `--structure-only` is an incomplete legacy inspection and cannot establish R20.

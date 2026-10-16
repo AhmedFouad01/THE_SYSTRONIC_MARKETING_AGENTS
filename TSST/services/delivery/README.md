@@ -82,3 +82,11 @@ Add `i18n/<code>.json` with the same keys as `en.json`, add the code to `LANGS` 
 - v1.1 (2026-10-11): plan sections (marketing_plan, roadmap, milestones, tasks) with leak rules, brand sync from `portfolio.yaml`, internal "Job files" section, fileless items as text cards, `sync_jobs.py` + brand `JOBS.md`, `job_check.py` checks f) (JOBS.md in sync) and e) legacy WARN (`layout: legacy` in README), Arabic table-label fix on wide screens.
 - v1.0 (2026-10-09): bilingual single file with header switch, full RTL mirror, i18n dictionaries, per-job default language, iconic-mark placeholder and favicon, agency footer (`systronic.json`), contents rail/sheet, client and internal audiences, leak scan.
 - v0.x: Arabic-only RTL pages (rejected); English editorial redesign; footer and contents nav.
+
+## Strict status agreement (2026-10-12, ADR-006)
+
+`DELIVERY.json` is the sole job-status source. Normal `sync_jobs.py <brand>` also refreshes derived `TSST_JOB_SYNC` comments in the nearest existing ancestor `project.md` (fallback: brand `project.md`), brand `status.md`, and `TSST/core/portfolio.yaml`. Missing pointers fail; the helper does not invent them or rewrite narrative. All planned mirror edits are checked before any mirror file is written.
+
+Inspect changes with `python TSST/services/delivery/status_sync.py <brand>` (default dry-run). Use `--write` within the existing approved write scope to apply them. Markdown uses `<!-- TSST_JOB_SYNC {JSON} -->`; YAML uses `# TSST_JOB_SYNC {JSON}`. Each standalone record contains exactly `version: 1`, `brand`, `job` (relative to brand/projects), `status`, `source` (repo-relative DELIVERY.json), and `manifest_sha256` (raw source bytes). These are generated evidence, not a second editable status store.
+
+`job_check.py <job>` rejects missing, duplicate, malformed, stale or mismatched records and requires one JOBS.md row with the same known status. PASS means structured agreement; narrative truth, visual QA, actual approval and publication remain separately reviewed. Page mtime checks do not prove rendering/content freshness. `--structure-only` is a legacy inspection returning `STRUCTURE_PASS | SEMANTIC_SYNC_UNVERIFIED`, never a full delivery PASS. Existing jobs need a scoped sync before they can pass the stricter checker; this repair did not mutate live brand pointers or reapprove past jobs.

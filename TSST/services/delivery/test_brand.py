@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import build_brand
+import status_sync
 import sync_jobs
 
 
@@ -92,6 +93,7 @@ class BrandViewTests(unittest.TestCase):
             return '', '<html><body><a data-brand-link href="../../DELIVERY.html">Brand</a></body></html>'
         with patch.object(sync_jobs, 'BRANDS', self.brands), patch.object(sync_jobs, 'ROOT', self.brands), \
              patch.object(build_brand, 'build_brand'), patch.object(sync_jobs, 'check_result', return_value='PASS'), \
+             patch.object(status_sync, 'sync_brand', return_value={}), \
              patch.object(build_brand.delivery, 'build', side_effect=render) as call:
             self.assertEqual(sync_jobs.sync('brand'), 0)
             self.assertEqual(call.call_count, 2)
