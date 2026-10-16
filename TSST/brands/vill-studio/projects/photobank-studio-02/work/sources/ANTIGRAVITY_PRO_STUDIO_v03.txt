@@ -1,0 +1,96 @@
+ROLE B: EXTERNAL TOOL — professional photographic image production.
+SURFACE: Antigravity.
+Owner authorizes the next professional image-edit/generation stage using already available included tools. V02 achieved basic cleanup/product isolation only; this task adds real photographic light, depth and studio art direction. V02 preliminary acceptance covered contact sheet + two comparisons, not full-resolution release approval.
+Do not run TSST boot/router/team/bus/memory/delivery operations; do not edit repository tracking, commit, publish, contact others or change credentials/accounts. No new paid service, purchase or external-account credit spending. Native image editing/generation with available included capability IS authorized; it is not prohibited by the no-new-spend boundary.
+
+CAPABILITY REQUIREMENT
+Use a native/reference-based IMAGE-EDIT capability to edit the supplied photographs. Code may support QA, comparisons, format conversion and safe crops only. A Pillow filter, flat gradient, polygon cutout or blurred patch is NOT professional image production. Do not silently substitute those methods. If native image editing is unavailable or requires unauthorized paid credits, STOP and return the exact capability/payment blocker; do not fabricate files or completion.
+
+READ/WRITE
+Read the exact originals and matching v02 masters listed below. Original photograph is highest authority for geometry, material colors, camera and part counts if v02 disagrees. Inspect actual inputs; do not use an earlier dresser render as geometry truth. Never use dresser-01_P1f_v1_APPROVED.png or rejected studio rounds. Prior dresser method/direction informs LIGHT AND SET only, never furniture design.
+Write ONLY new v03 files under:
+C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output
+Do not overwrite v01/v02 or their manifests. Required: ten vill_<ID>_professional_v03.png masters; valid optional vill_<ID>_professional_4x5_v03.png crops; sample_04-03_before_after_v03.png; sample_38-12_before_after_v03.png; contact_sheet_v03.png; manifest_v03.json. If a v03 name exists, report conflict without overwriting. If destination inaccessible, attach exact named files and explain fallback.
+
+ART DIRECTION — FOUR STANDALONE PRODUCTS
+IDs38-27 sideboard,38-34 dining chair,04-03 tufted armchair,04-13 geometric coffee table.
+Direction B: cream seamless cyclorama/cove #EFE6D6, continuous floor-to-background curve, no visible room corner/horizon/skirting. ONE warm golden shaft from upper left, about35–40degrees and3000K, with a believable hard directional edge and natural falloff on cove/floor. Product is the brightest focal point where struck by light, while surrounding cream recedes softly. Grounded contact shadows, soft ambient fill preserving detail; never black blobs. Gold metal keeps real metallic reflection/roughness, not yellow plastic; fabric retains real texture, seams and source grey. Black sideboard/table keep glossy surface detail and tonal separation. No haze, glow, flare, props, plants, logos or text. If Lugar Nefertiti style references already available, borrow light/cove/camera FEEL only; never copy furniture, composition or branding.
+Preserve exact source camera yaw/view, silhouette, dimensions/ratios, all visible part counts, upholstery tufts, seams, rails, joints and holes. Do not redesign hidden structure. Source protective wrapping on metal is a real detail: do not automatically invent unwrapped metal underneath. Preserve it or report a limitation if references cannot establish actual finish.
+
+ART DIRECTION — SIX REAL INTERIORS
+IDs38-12 kitchen,38-17 bedroom,38-24 vanity,38-31 dining,38-35 reception,38-36 TV/reception.
+Stay in the actual room with identical architecture, furniture positions, camera view, openings, mirror divisions, cabinetry seams and material colors. Produce professional architectural exposure: plausible motivated daylight/warm light, controlled highlights, legible dark cabinetry, natural shadow detail, clean color separation and realistic texture. Avoid a blanket yellow tint, HDR halos, over-sharpening or flat filter grading. Light should guide attention and create depth. Keep real fixtures and electrical fittings. Do not add missing furniture, mattress, bedding, art, plants or completion details. Bare bed remains bare. Sofa protective film remains unless real reference supports faithful removal; report it. Mirror photographer cleanup from v02 stays clean without changing mirror geometry. Do not turn interiors into cream studios.
+
+SAMPLE GATE BEFORE BATCH
+1. Start with04-03 armchair and38-12 kitchen only. Use v02 as edit base, checked against REAL original. Do not regenerate product from text; edit from source/reference.
+2. Preserve geometry first; apply lighting/set in a separate stage within one continuous edit context per asset. For chair, source-faithful product first, cove/light second. Compare actual output side by side with original AND v02. At full size and thumbnail inspect silhouette, parts/frame holes, textures/colors, seams, reflections, contact shadows and genuine photographic depth. Kitchen must improve dark detail and motivated light, not merely remove clutter again.
+3. Both samples must visually pass internal geometry AND professional-light gates before the remaining8. Max3 rounds per stage; name exact failed geometry/light defect before rerun. Do not repeat a failed approach. If unable to pass, stop downstream and report blocker. No new owner prompt required for this internal gate.
+4. Apply successful visual language consistently to remaining images, separately for studio/room tracks. Preserve source aspect ratio. Deliver honest high-resolution PNG, sRGB, at least original pixel dimensions only where true image-edit capability supports it; never upsample solely to pretend detail. If actual native output is smaller, report actual dimensions and limitation rather than fabricate resolution. Optional4:5 crop only if full piece + margin fit without stretching/invented canvas; otherwise omit with reason.
+
+EXACT INPUT / MASTER OUTPUT LIST
+
+ID38-12 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_130545_IMG_3506.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-12_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-12_professional_v03.png
+
+ID38-17 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131146_IMG_3512.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-17_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-17_professional_v03.png
+
+ID38-24 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131222_IMG_3519.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-24_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-24_professional_v03.png
+
+ID38-27 | STUDIO
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131332_IMG_3522.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-27_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-27_professional_v03.png
+
+ID38-31 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131345_IMG_3526.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-31_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-31_professional_v03.png
+
+ID38-34 | STUDIO
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131405_IMG_3529.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-34_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-34_professional_v03.png
+
+ID38-35 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131408_IMG_3530.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-35_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-35_professional_v03.png
+
+ID38-36 | REAL INTERIOR
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\38-luxury-apartment-fluted-wood-kitchen-handover\20190907_131419_IMG_3531.JPG
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_38-36_professional_v02.png
+ORIGINAL SIZE: 2448x3264
+OUTPUT: vill_38-36_professional_v03.png
+
+ID04-03 | STUDIO
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\04-luxury-duplex-reception-staircase-furniture-handover\20171206_181609.jpg
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_04-03_professional_v02.png
+ORIGINAL SIZE: 2988x5312
+OUTPUT: vill_04-03_professional_v03.png
+
+ID04-13 | STUDIO
+ORIGINAL: G:\My Drive\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\assets\source\portfolio\04-luxury-duplex-reception-staircase-furniture-handover\20171209_193109.jpg
+V02 INPUT: C:\Users\10\.codex\worktrees\51c1\THE_SYSTRONIC_MARKETING_AGENTS\TSST\brands\vill-studio\projects\photobank-studio-02\files\antigravity-output\vill_04-13_professional_v02.png
+ORIGINAL SIZE: 3264x1836
+OUTPUT: vill_04-13_professional_v03.png
+
+QA AND RETURN
+Before marking pass, OPEN every actual master and crop. Check no v01-style chopped silhouette/frame, floor fragments through holes, rectangular blur patches or fake shadow blocks. Numeric comparisons only if actually run; record unavailable numeric tool honestly, not as pass. Actual codec must match .png; successful open/dimensions required.
+manifest_v03.json: one entry per10IDs with exact originals/v02 input/output filenames, native image-edit tool actually used, actual dimensions/codec, studio/interior classification, edit stages and round counts, preserved source form/parts/camera, lighting/set changes, source-vs-output findings, actual numeric values if run, full-size and thumbnail QA, optional crop filename/reason omitted, unresolved defects/blockers. No blanket invented "all exact/no defects" statements. Enhanced rooms labelled internally enhanced photography; restaged products labelled hyper-real product renders, never physical studio photos.
+Return actual10masters, valid crops, both before-after sample images, contact_sheet_v03.png and manifest_v03.json. If blocked, list incomplete IDs and exact cause. Outputs remain PRODUCTION_DRAFT pending independent visual acceptance, no self-granted publication/release.
+INVARIANT: preserve geometry, source materials/colors and built elements; no new people, text/logos; keep original ratio.

@@ -1,0 +1,42 @@
+{
+  "client": "VILL Studio",
+  "service": "Studio photo selection",
+  "job": "photobank-studio-02",
+  "date": "2026-10-13",
+  "title": "Project and furniture source worksheet",
+  "subtitle": "Three inspected candidates and a proposed two-day workflow",
+  "status": "review",
+  "default_lang": "ar",
+  "status_label": "Source selection for review",
+  "status_detail": "Planning worksheet; professional image production has not started.",
+  "items": [
+    {
+      "id": "worksheet",
+      "title": "Open the visual worksheet",
+      "desc": "108 source thumbnails reviewed; preferred set 38 plus furniture alternatives. Includes selected images and proposed two-day scope.",
+      "group": "Source selection",
+      "href": "work/sources/worksheet.html",
+      "type": "link",
+      "status": "review"
+    }
+  ],
+  "next": [
+    "Confirm the source project and piece selection before the first image edit."
+  ],
+  "ar": {
+    "title": "ورقة اختيار مشروع وقطع أثاث",
+    "subtitle": "ثلاث مجموعات صور مفحوصة وخطة عمل مقترحة ليومين",
+    "status_label": "اختيار الصور للمراجعة",
+    "status_detail": "ورقة تخطيط واختيار؛ إنتاج الصور الاحترافية لم يبدأ بعد.",
+    "items": {
+      "worksheet": {
+        "title": "افتح ورقة العمل المصورة",
+        "desc": "راجعنا 108 صور أصلية؛ ترشيح مجموعة 38 مع بدائل للأثاث. تشمل الصور المختارة وخطة اليومين المقترحة.",
+        "group": "اختيار المصادر"
+      }
+    },
+    "next": [
+      "تأكيد المشروع والقطع المختارة قبل تعديل أول صورة."
+    ]
+  }
+}

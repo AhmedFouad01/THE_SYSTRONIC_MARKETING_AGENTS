@@ -16,6 +16,7 @@ updated: 2026-10-16
 - `showcase-01` — carousel v3 approved; open: AR captions, LinkedIn claim, CTA channel.
 - `showcase-01-reel` — paused; Ahmed finishes it in After Effects.
 - `tables-studio-01` — stage-1 images waiting for review.
+- `photobank-studio-02` — project/furniture source worksheet + external v02 image corrections (`work/sources/antigravity-output/`); in review.
 - `logo-sting-01` — concept A approved 2026-10-08; renders exist.
 - `social-setup-01` — approved 2026-10-09 (not published). `strategy-baseline` — approved 2026-10-05.
 - Deferred, owner OK first: guidelines round 2 (C7-VILL-12), verbal identity native review, VILL-001 data, dresser studio set.
@@ -30,3 +31,4 @@ Ahmed reviews kitchen round 03, sofa round 02 and the week-one pack.
 <!-- TSST_JOB_SYNC {"brand":"vill-studio","job":"marketing-week-01","manifest_sha256":"ed5718306c6b817fc39b3d0ad48e1b81024e3c5a50693afac628d6f5f4a7951b","source":"TSST/brands/vill-studio/projects/marketing-week-01/DELIVERY.json","status":"review","version":1} -->
 <!-- TSST_JOB_SYNC {"brand":"vill-studio","job":"social-setup-01","manifest_sha256":"60c0682e00bd0086794c8d9e143c007516bda05c0f4739394f7cda3ccb3fcf0a","source":"TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.json","status":"approved","version":1} -->
 <!-- TSST_JOB_SYNC {"brand":"vill-studio","job":"sofa-studio-01","manifest_sha256":"99c3afbd507f5860bd30e6dee8bb74d2ce6feed0e2ed7cfa3c6d0dc7ac66a1d7","source":"TSST/brands/vill-studio/projects/sofa-studio-01/DELIVERY.json","status":"review","version":1} -->
+<!-- TSST_JOB_SYNC {"brand":"vill-studio","job":"photobank-studio-02","manifest_sha256":"6b73edc20f4f19e9139a1a2ba73619053f8106b702995ff210cbff0f95cab1e4","source":"TSST/brands/vill-studio/projects/photobank-studio-02/DELIVERY.json","status":"review","version":1} -->

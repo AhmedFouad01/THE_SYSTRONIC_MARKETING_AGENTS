@@ -1,0 +1,576 @@
+{
+  "manifest_version": "v02",
+  "role": "ROLE B: EXTERNAL TOOL",
+  "surface": "Antigravity",
+  "project": "vill-studio / photobank-studio-02",
+  "output_directory": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\projects\\photobank-studio-02\\files\\antigravity-output",
+  "v01_preserved": true,
+  "paid_credits_used": 0,
+  "selection_basis": {
+    "working_selection": "candidate-38 (8-image visually consistent installation/handover sequence)",
+    "independent_alternatives": [
+      "04-03 (source-04 grey tufted armchair - independent furniture alternative, never represented as belonging to candidate-38 project)",
+      "04-13 (source-04 black-glass/gold-wireframe coffee table - independent furniture alternative, never represented as belonging to candidate-38 project)"
+    ],
+    "prohibited_inputs_excluded": [
+      "dresser-01_P1f_v1_APPROVED.png",
+      "rejected P3 dresser generations",
+      "candidate-17"
+    ]
+  },
+  "internal_sample_gate": {
+    "status": "PASS",
+    "samples": {
+      "04-03": {
+        "sample_master": "vill_04-03_professional_v02.png",
+        "before_after_comparison": "sample_04-03_before_after_v02.png",
+        "rounds_completed": 3,
+        "status": "PASS",
+        "summary": "Recovered full rounded backrest crest and right arm silhouette, preserved all brushed-gold cantilever sled base members and open floor/leg spaces, removed trapped original floor/wall triangles and hard rectangular shadow block, placed on warm-cream studio cove with grounded contact shadow."
+      },
+      "38-12": {
+        "sample_master": "vill_38-12_professional_v02.png",
+        "before_after_comparison": "sample_38-12_before_after_v02.png",
+        "rounds_completed": 3,
+        "status": "PASS",
+        "summary": "Removed v01 dark/blurred rectangular worktop patches and floor debris; reconstructed continuous white countertop edge, back counter surface, dark waterfall island reflections, and foreground marble floor while preserving all cabinetry seams, outlets, window, and fixtures at native 2448x3264."
+      }
+    }
+  },
+  "contact_sheet": "contact_sheet_v02.png",
+  "items": [
+    {
+      "id": "04-03",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\source-04\\source04-03.jpg",
+      "source_group": "source04_independent_alternative",
+      "category": "standalone_studio",
+      "status": "corrected",
+      "master_file": "vill_04-03_professional_v02.png",
+      "crop_4x5_file": "vill_04-03_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_04-03_professional_v01.png",
+      "dimensions": {
+        "width": 2988,
+        "height": 5312
+      },
+      "crop_4x5_dimensions": {
+        "width": 2988,
+        "height": 3735,
+        "crop_box": [
+          0,
+          1180,
+          2988,
+          4915
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Deep diamond-tufted velvet armchair with sloped armrests and brushed-gold tubular cantilever sled frame",
+        "visible_part_counts": "10 back diamond-tuft buttons, 12 seat buttons, 3 inner right-arm buttons; continuous tubular gold frame with 2 side armrest-to-floor verticals, 1 front cross-rail, 2 floor runners, 1 rear cross-rail",
+        "camera_yaw_perspective": "Three-quarter front-left high-angle view (~35 deg yaw)",
+        "material_color": "Cool-neutral grey velvet upholstery with brushed warm-gold metal frame"
+      },
+      "v01_defects_corrected": [
+        "Recovered top backrest crest and right outer arm curve clipped in v01",
+        "Removed trapped original floor/wall triangles inside left leg opening, under-seat opening, and behind backrest",
+        "Replaced artificial rectangular dark shadow block with soft geometry-hugging contact and ambient shadows on warm-cream studio cove"
+      ],
+      "retained_source_truth_flags": [
+        "Independent source-04 furniture piece; does not belong to candidate-38 apartment project"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2988,
+          5312
+        ],
+        "output_dimensions": [
+          2988,
+          5312
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.8109
+      }
+    },
+    {
+      "id": "04-13",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\source-04\\source04-13.jpg",
+      "source_group": "source04_independent_alternative",
+      "category": "standalone_studio",
+      "status": "corrected",
+      "master_file": "vill_04-13_professional_v02.png",
+      "crop_4x5_file": "vill_04-13_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_04-13_professional_v01.png",
+      "dimensions": {
+        "width": 3264,
+        "height": 1836
+      },
+      "crop_4x5_dimensions": {
+        "width": 1468,
+        "height": 1835,
+        "crop_box": [
+          922,
+          0,
+          2390,
+          1835
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Octagonal black glass-top coffee table with faceted geometric brushed-gold wireframe base",
+        "visible_part_counts": "8-sided beveled black glass top, 8-sided gold top rim, 8-sided ground base perimeter, triangulated diagonal wireframe struts",
+        "camera_yaw_perspective": "High-angle front-three-quarter perspective",
+        "material_color": "Reflective obsidian/black glass top with brushed warm-gold wireframe rods"
+      },
+      "v01_defects_corrected": [
+        "Removed trapped original marble floor islands from all wireframe openings so studio cove shows cleanly through every opening",
+        "Replaced flat rectangular gray patch on left tabletop with smooth, continuous black-glass reflection gradient preserving glass bevels",
+        "Preserved all front and rear wireframe bars and junctions at exact source coordinates"
+      ],
+      "retained_source_truth_flags": [
+        "Independent source-04 furniture piece; does not belong to candidate-38 apartment project"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          3264,
+          1836
+        ],
+        "output_dimensions": [
+          3264,
+          1836
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.7656
+      }
+    },
+    {
+      "id": "38-12",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-12.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "corrected",
+      "master_file": "vill_38-12_professional_v02.png",
+      "crop_4x5_file": "vill_38-12_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-12_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Apartment kitchen installation with dark high-gloss waterfall island and cream/white upper/lower cabinetry",
+        "visible_part_counts": "Foreground waterfall island, 2 pendant globes, recessed ceiling LEDs, window, 4 wall outlets/switches, marble tile floor",
+        "camera_yaw_perspective": "Eye-level straight-on view looking into kitchen across island",
+        "material_color": "High-gloss cream upper cabinets, white quartz countertops, dark obsidian waterfall island, white/grey veined marble floor"
+      },
+      "v01_defects_corrected": [
+        "Eliminated v01 conspicuous black/gray blurred rectangles on foreground island and rear counter",
+        "Reconstructed continuous white countertop edge, cabinetry seams, and natural glossy surface reflections",
+        "Removed loose white floor debris specks near island base"
+      ],
+      "retained_source_truth_flags": [
+        "Installation/handover state preserved; all electrical outlets, switches, window, and cabinet seams retained"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9604
+      }
+    },
+    {
+      "id": "38-17",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-17.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "inspected-no-change",
+      "master_file": "vill_38-17_professional_v02.png",
+      "crop_4x5_file": "vill_38-17_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-17_professional_v01.png",
+      "preserved_v01_crop_4x5": "vill_38-17_professional_4x5_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Bedroom installation showing bare wooden bed-slat frame, white lower headboard panel, fluted wood upper wall, and 2 floating nightstands",
+        "visible_part_counts": "12 wooden bed slats, 2 floating white/walnut nightstands, vertical fluted wood wall slats, recessed ceiling lights",
+        "camera_yaw_perspective": "High-angle corner view looking toward bed frame and headboard wall",
+        "material_color": "Warm natural fluted wood paneling, matte white headboard/nightstand cases, raw pine bed slats"
+      },
+      "v01_defects_corrected": [
+        "Inspected at full resolution; v01 contained no rectangular patches or geometric drift and passed QA unchanged"
+      ],
+      "retained_source_truth_flags": [
+        "Installation/handover state: bare wooden bed slats retained without inventing mattress or bedding"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.7346
+      }
+    },
+    {
+      "id": "38-24",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-24.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "corrected",
+      "master_file": "vill_38-24_professional_v02.png",
+      "crop_4x5_file": "vill_38-24_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-24_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Bedroom floating vanity/desk unit with diamond-beveled mirror wall on left and fluted wood TV panel on right",
+        "visible_part_counts": "Diamond-beveled mirror segments, floating two-tier vanity/media unit, split AC unit at upper left, fluted wood panel wall",
+        "camera_yaw_perspective": "Straight-on eye-level view facing mirror and fluted wood wall",
+        "material_color": "Beveled clear mirror, warm fluted wood slats, matte white and walnut floating drawers"
+      },
+      "v01_defects_corrected": [
+        "Removed v01 stretched wood-slat smear and artificial drawn grey X-lines over the mirror",
+        "Cleanly removed photographer reflection while reconstructing true room reflection (fluted wood upper wall, white lower headboard panel, nightstand, and continuous beveled diamond mirror joints)"
+      ],
+      "retained_source_truth_flags": [
+        "Wall switches/outlets, AC unit, and reflection of bare bed slats in lower mirror faithfully preserved"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9744
+      }
+    },
+    {
+      "id": "38-27",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-27.jpg",
+      "source_group": "source38_sequence",
+      "category": "standalone_studio",
+      "status": "corrected",
+      "master_file": "vill_38-27_professional_v02.png",
+      "crop_4x5_file": "vill_38-27_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-27_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Asymmetric high-gloss black sideboard with curved fluted left drum and recessed brushed-gold trim/plinth",
+        "visible_part_counts": "1 curved left drum pedestal, 3 upper drawer/door sections, 3 lower cabinet doors, continuous gold inlay strips and angled gold plinth",
+        "camera_yaw_perspective": "Three-quarter front-left view (~30 deg yaw)",
+        "material_color": "Mirror-gloss black lacquer and brushed warm-gold metal trim"
+      },
+      "v01_defects_corrected": [
+        "Trimmed left wall/baseboard strip, top wall wedge, and right green-wall bulge from outer silhouette",
+        "Corrected bottom drum curve and gold plinth contact line with grounded studio shadow on warm-cream cove"
+      ],
+      "retained_source_truth_flags": [
+        "Real glossy reflections on curved left drum preserved without artificial blurring"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9175
+      }
+    },
+    {
+      "id": "38-31",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-31.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "corrected",
+      "master_file": "vill_38-31_professional_v02.png",
+      "crop_4x5_file": "vill_38-31_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-31_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Dining table with 6 barrel-back grey velvet and gold dining chairs in apartment reception",
+        "visible_part_counts": "1 glass/gold dining table, 6 dining chairs with curved gold bases, crystal chandelier, split AC unit, teal geometric wall, kitchen pass-through with gold X-frame",
+        "camera_yaw_perspective": "Eye-level diagonal room view across dining set toward kitchen doorway",
+        "material_color": "Dove-grey velvet chairs, gold metal frames with clear protective wrap, teal marble-patterned accent wall, white veined marble floor"
+      },
+      "v01_defects_corrected": [
+        "Eliminated v01 stretched ceiling/pendant rectangle that duplicated a giant floating lamp over the doorway while leaving worker legs visible",
+        "Cleanly removed standing worker in right doorway and loose tape/trays on background kitchen counter while preserving the right dining chair and gold legs"
+      ],
+      "retained_source_truth_flags": [
+        "Clear protective plastic film on gold dining table and chair frames preserved as authentic installation truth"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9524
+      }
+    },
+    {
+      "id": "38-34",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-34.jpg",
+      "source_group": "source38_sequence",
+      "category": "standalone_studio",
+      "status": "corrected",
+      "master_file": "vill_38-34_professional_v02.png",
+      "crop_4x5_file": "vill_38-34_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-34_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          204,
+          2448,
+          3264
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Standalone barrel-back dining chair with vertical channel seam, gold under-seat apron, 2 front/left vertical legs, and curved C-loop floor base",
+        "visible_part_counts": "2-panel curved backrest, upholstered seat cushion, gold apron collar, 2 vertical front legs, 1 continuous curved floor loop (3 open frame holes)",
+        "camera_yaw_perspective": "Three-quarter front-left studio view",
+        "material_color": "Cool grey micro-velvet upholstery, brushed gold base frame wrapped in clear protective installation film"
+      },
+      "v01_defects_corrected": [
+        "Removed left background gold table frame strip and upper/right blocky background remnants",
+        "Isolated all 3 interior openings between the vertical legs and curved floor loop so studio cove and soft grounded shadow show through cleanly"
+      ],
+      "retained_source_truth_flags": [
+        "Clear protective plastic wrap on gold base legs retained faithfully without inventing hidden metal texture underneath"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.6989
+      }
+    },
+    {
+      "id": "38-35",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-35.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "corrected",
+      "master_file": "vill_38-35_professional_v02.png",
+      "crop_4x5_file": "vill_38-35_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-35_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Wide reception view looking across dining group toward open kitchen and mirror/gold X-frame partition, with blue-wrapped sofa corner in bottom-right foreground",
+        "visible_part_counts": "Dining group in left foreground, kitchen island and cabinetry in background, decorative wood/gold X-frame partition, blue-wrapped sofa edge at bottom right",
+        "camera_yaw_perspective": "Wide eye-level room perspective",
+        "material_color": "Warm white ceiling/walls, grey/gold dining set, dark island, white veined marble floor, blue protective plastic film on foreground sofa"
+      },
+      "v01_defects_corrected": [
+        "Removed v01 false dark rectangular ceiling patch in upper-right corner, restoring 100% continuous real ceiling",
+        "Cleanly removed upright silicone caulk tube and tool on left corner of kitchen counter and plastic bottle at right pillar base"
+      ],
+      "retained_source_truth_flags": [
+        "Blue protective plastic wrap on bottom-right foreground sofa edge and protective film on dining chairs preserved as installation truth"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9979
+      }
+    },
+    {
+      "id": "38-36",
+      "source_path": "C:\\Users\\10\\.codex\\worktrees\\51c1\\THE_SYSTRONIC_MARKETING_AGENTS\\TSST\\brands\\vill-studio\\assets\\photo-bank\\candidate-38\\source38-36.jpg",
+      "source_group": "source38_sequence",
+      "category": "room_installation",
+      "status": "corrected",
+      "master_file": "vill_38-36_professional_v02.png",
+      "crop_4x5_file": "vill_38-36_professional_4x5_v02.png",
+      "preserved_v01_master": "vill_38-36_professional_v01.png",
+      "dimensions": {
+        "width": 2448,
+        "height": 3264
+      },
+      "crop_4x5_dimensions": {
+        "width": 2448,
+        "height": 3060,
+        "crop_box": [
+          0,
+          102,
+          2448,
+          3162
+        ]
+      },
+      "codec": "PNG",
+      "color_space": "sRGB",
+      "form_structure_card": {
+        "silhouette": "Reception living area facing curved-inlay black/gold TV wall with blue-wrapped sofa in foreground and circular ceiling cove",
+        "visible_part_counts": "Curved ceiling cove with recessed spots, black/gold/wood TV feature wall, split AC unit, large sofa in blue protective wrap, armchair edge at bottom left",
+        "camera_yaw_perspective": "Straight-on wide room view facing TV wall",
+        "material_color": "Glossy black and gold feature wall, warm circular ceiling, white veined marble tile floor, blue protective sofa wrap"
+      },
+      "v01_defects_corrected": [
+        "Removed v01 misaligned floor tile patch that broke the diagonal tile grout line and left the worker's sandal toe visible",
+        "Cleanly removed worker's foot/sandal and pant cuff in bottom-right corner with continuous marble veining and unbroken diagonal tile grout line"
+      ],
+      "retained_source_truth_flags": [
+        "Blue protective plastic wrap covering the sofa is faithfully preserved and never replaced with invented upholstery"
+      ],
+      "numeric_geometry_fidelity": {
+        "source_dimensions": [
+          2448,
+          3264
+        ],
+        "output_dimensions": [
+          2448,
+          3264
+        ],
+        "aspect_ratio_delta_pct": 0.0,
+        "proportion_drift_pct": 0.0,
+        "part_count_delta": 0,
+        "structural_edge_coincidence": 0.9975
+      }
+    }
+  ]
+}
