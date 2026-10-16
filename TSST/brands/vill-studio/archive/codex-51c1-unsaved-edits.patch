@@ -1,0 +1,252 @@
+diff --git a/TSST/brands/vill-studio/JOBS.md b/TSST/brands/vill-studio/JOBS.md
+index 4c736df..08b01c6 100644
+--- a/TSST/brands/vill-studio/JOBS.md
++++ b/TSST/brands/vill-studio/JOBS.md
+@@ -3,5 +3,6 @@
+ 
+ | Job | Service | Title | Status | Date | Client page | Internal page | job_check |
+ |---|---|---|---|---|---|---|---|
+-| `marketing-week-01` | Marketing week 01 | First-Week Marketing Plan | review | 2026-10-11 | [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html) | PASS, 1 warn |
+-| `social-setup-01` | SV-01 Social profile setup | Social Media Profile Setup | approved | 2026-10-09 | [DELIVERY.html](projects/social-setup-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/social-setup-01/DELIVERY_INTERNAL.html) | PASS, 2 warn |
++| `marketing-week-01` | Marketing week 01 | First-Week Marketing Plan | review | 2026-10-11 | [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html) | FAIL (1) |
++| `photobank-studio-02` | Studio photo selection | Project and furniture source worksheet | review | 2026-10-13 | [DELIVERY.html](projects/photobank-studio-02/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/photobank-studio-02/DELIVERY_INTERNAL.html) | PASS |
++| `social-setup-01` | SV-01 Social profile setup | Social Media Profile Setup | approved | 2026-10-09 | [DELIVERY.html](projects/social-setup-01/DELIVERY.html) | [DELIVERY_INTERNAL.html](projects/social-setup-01/DELIVERY_INTERNAL.html) | FAIL (1), 2 warn |
+diff --git a/TSST/brands/vill-studio/projects/strategy-baseline/project.md b/TSST/brands/vill-studio/projects/strategy-baseline/project.md
+index ec08040..fae8cb3 100644
+--- a/TSST/brands/vill-studio/projects/strategy-baseline/project.md
++++ b/TSST/brands/vill-studio/projects/strategy-baseline/project.md
+@@ -1,27 +1,30 @@
+-# strategy-baseline — project manifest
+-
+-brand: vill-studio · id: TSST-PILOT-002 (C7 live-project pilot)
+-implementation: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/`
+-PILOTS = historical archive (R18). New jobs → `TSST/brands/vill-studio/projects/<job>/`.
+-Jobs (R18), all under `TSST/brands/vill-studio/projects/`: `marketing-week-01/` · `social-setup-01/` · `showcase-01/` · `products/` (incl. `dresser-01/`). `showcase-01-reel`: still in PILOTS, AE by Ahmed. See `PILOTS/.../MOVED.md`.
+-checkpoint: `TSST/brands/vill-studio/projects/marketing-week-01/README.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
+-memory: `TSST/brands/vill-studio/memory/source.md`
+-teams: marketing (LENS lead, SPARK capability), studio (CREATIVE — identity production in phase 2c)
+-
+-## Latest — 2026-10-11 marketing week 01
+-Owner approved first-week organic planning for FB/IG/LinkedIn, introduction and trust, with exactly two specialist runs and passive skill-result documentation. LENS plan/calendar/full copy/briefs and SPARK review/manual measurement are delivered as DRAFT; Lead integration complete. No publish/spend/generation or skill validation. Review packet: checkpoint above; per-skill observations in its sibling observations/ folder. Pending: Ahmed native/final acceptance, LinkedIn language, launch/operator and production/preview of derivatives; actual metrics unknown.
+-
+-## State — prior strategy/identity
+-Phase 1 DELIVERED 2026-10-05: Strategy Baseline v0.2 + Brand Look Direction v0.2 approved by user (`ACCEPTANCE.md`).
+-Phase 2 (C7-VILL-07..10, brand look v0.3/v1.0) cancelled/superseded. Phase 2c: `C7-VILL-11` final identity from approved `assets/final/Logo.png` — delivered by codex, Lead-accepted
+-2026-10-05 (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`); user approved colour direction, template execution NOT approved (`status.md`). `C7-VILL-12` Brand Guidelines v1.0 (24 pp.): codex done 2026-10-05T18:38Z; Lead review: system accepted as base, book not client-ready → round 2 needed, not yet issued (`LEAD_REVIEW_C7-VILL-12.md`, `bus/tasks/C7-VILL-12.yaml`). `VERBAL_IDENTITY_v1.0.md` = LENS draft, native review pending. VILL-CS-001 APPLIED to the canonical Docs (exports verified). VILL-001 open until actual economics/capacity. No spend or publication.
+-
+-## do_not_repeat
+-C7-VILL-01..06 (strategy v0.1/v0.2, reviews, brand look v0.1/v0.2); C7-VILL-07..10 (superseded brand-look rounds); C7-VILL-11 (accepted/closed).
+-VILL-001 strategy work already in canonical PROJECT_MASTER (consolidate, do not redo discovery).
+-
+-## Next
+-marketing-week-01 DELIVERY page built 2026-10-11 (in review): `../marketing-week-01/DELIVERY.html` (+ internal). Ahmed reviews marketing-week-01/README.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
+-
+-## Other backlog — previous next, deferred
+-Lead issues C7-VILL-12 round 2 per `LEAD_REVIEW_C7-VILL-12.md`; user native-reviews `VERBAL_IDENTITY_v1.0.md`. Then: user supplies OPEN_DATA_REQUESTS → VILL-001 close → W1 Foundation (needs implementation mandate).
++# strategy-baseline — project manifest
++
++brand: vill-studio · id: TSST-PILOT-002 (C7 live-project pilot)
++implementation: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/`
++PILOTS = historical archive (R18). New jobs → `TSST/brands/vill-studio/projects/<job>/`.
++Jobs (R18), all under `TSST/brands/vill-studio/projects/`: `marketing-week-01/` · `social-setup-01/` · `showcase-01/` · `products/` (incl. `dresser-01/`). `showcase-01-reel`: still in PILOTS, AE by Ahmed. See `PILOTS/.../MOVED.md`.
++checkpoint: `TSST/brands/vill-studio/projects/marketing-week-01/README.md` (2026-10-11 marketing draft handoff; original strategy brief retained)
++memory: `TSST/brands/vill-studio/memory/source.md`
++teams: marketing (LENS lead, SPARK capability), studio (CREATIVE — identity production in phase 2c)
++
++## Latest — 2026-10-11 marketing week 01
++Owner approved first-week organic planning for FB/IG/LinkedIn, introduction and trust, with exactly two specialist runs and passive skill-result documentation. LENS plan/calendar/full copy/briefs and SPARK review/manual measurement are delivered as DRAFT; Lead integration complete. No publish/spend/generation or skill validation. Review packet: checkpoint above; per-skill observations in its sibling observations/ folder. Pending: Ahmed native/final acceptance, LinkedIn language, launch/operator and production/preview of derivatives; actual metrics unknown.
++
++## State — prior strategy/identity
++Phase 1 DELIVERED 2026-10-05: Strategy Baseline v0.2 + Brand Look Direction v0.2 approved by user (`ACCEPTANCE.md`).
++Phase 2 (C7-VILL-07..10, brand look v0.3/v1.0) cancelled/superseded. Phase 2c: `C7-VILL-11` final identity from approved `assets/final/Logo.png` — delivered by codex, Lead-accepted
++2026-10-05 (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`); user approved colour direction, template execution NOT approved (`status.md`). `C7-VILL-12` Brand Guidelines v1.0 (24 pp.): codex done 2026-10-05T18:38Z; Lead review: system accepted as base, book not client-ready → round 2 needed, not yet issued (`LEAD_REVIEW_C7-VILL-12.md`, `bus/tasks/C7-VILL-12.yaml`). `VERBAL_IDENTITY_v1.0.md` = LENS draft, native review pending. VILL-CS-001 APPLIED to the canonical Docs (exports verified). VILL-001 open until actual economics/capacity. No spend or publication.
++
++## do_not_repeat
++C7-VILL-01..06 (strategy v0.1/v0.2, reviews, brand look v0.1/v0.2); C7-VILL-07..10 (superseded brand-look rounds); C7-VILL-11 (accepted/closed).
++VILL-001 strategy work already in canonical PROJECT_MASTER (consolidate, do not redo discovery).
++
++## Next
++marketing-week-01 DELIVERY page built 2026-10-11 (in review): `../marketing-week-01/DELIVERY.html` (+ internal). Ahmed reviews marketing-week-01/README.md and 03_COPY.md, chooses LinkedIn language, then confirms execution date/operator and derivative scope as needed. No extra specialist or validation run is implied.
++
++## Other backlog — previous next, deferred
++Lead issues C7-VILL-12 round 2 per `LEAD_REVIEW_C7-VILL-12.md`; user native-reviews `VERBAL_IDENTITY_v1.0.md`. Then: user supplies OPEN_DATA_REQUESTS → VILL-001 close → W1 Foundation (needs implementation mandate).
++
++## 2026-10-13 — photo-bank source worksheet
++`photobank-studio-02`: REVIEW / PREVIS, three visually inspected candidates and proposed two-day source plan. See `../photobank-studio-02/DELIVERY.html`. Existing marketing active state retained. No generation.
+diff --git a/TSST/brands/vill-studio/status.md b/TSST/brands/vill-studio/status.md
+index 869b74f..8cb6f5f 100644
+--- a/TSST/brands/vill-studio/status.md
++++ b/TSST/brands/vill-studio/status.md
+@@ -1,76 +1,81 @@
+-# vill-studio — status
+-
+-Jobs index (generated): [JOBS.md](JOBS.md)
+-
+-updated: 2026-10-11
+-
+-## Current — Lead handover 2026-10-11
+-Lead: Codex for `vill-studio` only (owner request in chat: «استلم الليد في VILL Studio»).
+-Source: `TSST/handoffs/VILL_NEXT_SESSION_CODEX.md`; newer state supersedes the dated notes below.
+-Project: `strategy-baseline` — `projects/strategy-baseline/project.md`.
+-- Strategy Baseline v0.2 + Brand Look v0.2: delivered and user-approved 2026-10-05.
+-- Identity `C7-VILL-11`: accepted. Main colour PETROL `#01304A`; fonts Alexandria (AR) + Inter (EN), per `assets/ASSETS.yaml`. Navy/Cairo/Barlow in the guidelines draft are superseded/wrong.
+-- `social-setup-01` (SV-01): all 13 items APPROVED; handover 2026-10-09, verified in `TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.json`. Approval/handover does not mean published.
+-- `showcase-01`: carousel v3 APPROVED. Open: AR captions, unverified LinkedIn "most clients" claim, CTA channel.
+-- `showcase-01-reel` (New Alamein): AI route paused; Ahmed finishes manually in After Effects. Do not restart without his request.
+-- `dresser-01`: METHOD CLOSED AS WORKING (owner 2026-10-10; `products/dresser-01/RECIPES.md` header). True approved file: `assets/source/products-rendered/dresser-01_P1f_TRUE-APPROVED.webp` (Drive). `dresser-01_P1f_v1_APPROVED.png` is not the truth. Studio set awaits Ahmed's go and side-by-side confirmation against the real photo; max 3 rounds.
+-- Raw portfolio bank: 1,583 source files / 54 project folders in `assets/source/portfolio/` (`INDEX.md`, `CATALOG.csv`, `STUDIO_PICKS.md`, `_catalog/BANK.html`). Index accounts for 1,432 sorted + 53 duplicates + 98 review. New campaign images start here; trust piece tags/text search, treat material/stage tags cautiously.
+-
+-## Active marketing — owner request 2026-10-11
+-- DELIVERY page (R19) built 2026-10-11, in review: client [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) · internal [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html); render QA passed after 5 generator fixes.
+-- Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/brands/vill-studio/projects/marketing-week-01/README.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
+-
+-## Other open workstreams — do not auto-start
+-1. `C7-VILL-12` round 2: not issued; review fix list + correct petrol/fonts. Exact scope and cost require owner OK before dispatch.
+-2. `VERBAL_IDENTITY_v1.0.md`: Ahmed's native review pending.
+-3. `showcase-01`: close AR captions, verify/drop LinkedIn claim, choose CTA channel.
+-4. Next content from `STUDIO_PICKS.md`: LENS story → SPARK formats → CREATIVE, after scope/cost approval.
+-5. `dresser-01` studio set: true approved file only, subject to the confirmation gate above.
+-6. `VILL-001`: `OPEN_DATA_REQUESTS.md` awaits client economics/capacity.
+-
+-Session checkpoint: week-one marketing planning delivered with exactly two approved specialist runs (LENS then SPARK), passive skill observations and Lead integration. VILL-W1-LENS and VILL-W1-SPARK are done pending final acceptance; no cross-runtime independent acceptance claimed. No publication/visual generation. No daily-board mutation.
+-Skills used: Lead SK-024/029; LENS SK-006/013/011/012; SPARK SK-002. Per-skill results and friction are recorded in the observation packet and generalized friction-log entries.
+-
+-## Historical checkpoints (superseded where Current differs)
+-Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
+-- Phase 1 (C7-VILL-01..06): **DELIVERED 2026-10-05** — Strategy Baseline v0.2 + Brand Look Direction v0.2
+-  approved by user (`ACCEPTANCE.md`).
+-- Phase 2 brand look v0.3/v1.0 (C7-VILL-07..10): **cancelled / superseded** by the logo-only direction.
+-- Phase 2c final identity from the approved logo: `C7-VILL-11` **done by codex, Lead-accepted 2026-10-05**
+-  (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`). User approved the colour direction (palette in `assets/final/`);
+-  template execution NOT approved.
+-- Brand guidelines: verbal identity `VERBAL_IDENTITY_v1.0.md` (LENS, draft, native review pending);
+-  visual + layout `C7-VILL-12` **done by codex 2026-10-05T18:38Z; Lead review: system accepted as base, book NOT client-ready → round 2 needed** (`BRIEF_C7-VILL-12.md`, `LEAD_REVIEW_C7-VILL-12.md`).
+-Durable detail stays in the canonical memory source (`memory/source.md`).
+-
+-## Active (2026-10-06)
+-`C7-VILL-12` Brand Guidelines v1.0 (24 pp.): codex done; Lead review = round 2 required (max_rounds 2).
+-Bus: `TSST/bus/tasks/C7-VILL-12.yaml` (status done, rounds 0 — round 2 not yet issued per bus/log.tsv).
+-Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-12.md`.
+-
+-## 2026-10-07 — Creative live training (TSD-019)
+-- Brand main colour = PETROL `#01304A` (not navy). Palette v2 approved: the logo 3 plus deep petrol, terracotta, stone and cream. Logo variants are in `assets/final/logo/` and recorded in `assets/ASSETS.yaml`.
+-- Direction B, "light leads the eye". Benchmark: Lugar Nefertiti set-up. English, minimal text. Logo small. First post: a 4:5 carousel of the place and sea, then details.
+-- `DIRECTION_SHEET_v0.1.md` (v0.2 content), post-01 layered carousel (PREVIS; relight requests in `RETOUCH_REQUESTS.md`, not yet run).
+-- dresser-01 product track: `products/dresser-01/`. PAUSED by the user after studio round 2. The round-3 single-chat edit script is ready.
+-
+-## 2026-10-08 — showcase-01 + craft skills (TSD-021)
+-- **Brand fonts: Alexandria (AR) + Inter (EN).** Cairo/Barlow in the `BRAND_GUIDELINES_v1.0` draft are wrong; that draft also still says navy. The source of truth is `assets/ASSETS.yaml`.
+-- showcase-01 (`TSST/brands/vill-studio/projects/showcase-01/`):
+-  - v1 REJECTED (overlays, template look).
+-  - v2 direction APPROVED: 7 slides, no overlays, logo on the cover and the last slide only.
+-  - Slide-5 retouch APPROVED.
+-  - **v3 APPROVED by the user** (Inter + Alex Brush accent, lockup C). The Lens CHANGED lines are approved too.
+-- Still open: the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
+-
+-## Next action
+-Ahmed reviews the week-one pack and Arabic captions, chooses LinkedIn language and sets execution date/operator after content approval. Other workstreams stay deferred; no automatic guidelines round 2 or extra specialist run.
+-
+-## do_not_repeat
+-See `projects/strategy-baseline/project.md#do_not_repeat`. Closed: C7-VILL-11 (accepted; do not redo), social-setup-01 (approved), dresser-01 product method (working). Do not restart the paused AI reel or use the false approved dresser PNG.
+-
+-## Verified draft fold — 2026-10-04
+-
+-Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not establish an active TSST project or current workstream; recover that state from the canonical source.
+-
+-Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/status.md`.
++# vill-studio — status
++
++Jobs index (generated): [JOBS.md](JOBS.md)
++
++updated: 2026-10-11
++
++## Current — Lead handover 2026-10-11
++
++Parallel studio workstream (2026-10-13): `photobank-studio-02` REVIEW / PREVIS; three photo-bank candidates inspected, preferred 38 same-date sequence; proposed two-day plan. `projects/photobank-studio-02/DELIVERY.html`. Await source/project choice and product cards; no professional image production or spend. Existing marketing workstream retained.
++Lead: Codex for `vill-studio` only (owner request in chat: «استلم الليد في VILL Studio»).
++Source: `TSST/handoffs/VILL_NEXT_SESSION_CODEX.md`; newer state supersedes the dated notes below.
++Project: `strategy-baseline` — `projects/strategy-baseline/project.md`.
++- Strategy Baseline v0.2 + Brand Look v0.2: delivered and user-approved 2026-10-05.
++- Identity `C7-VILL-11`: accepted. Main colour PETROL `#01304A`; fonts Alexandria (AR) + Inter (EN), per `assets/ASSETS.yaml`. Navy/Cairo/Barlow in the guidelines draft are superseded/wrong.
++- `social-setup-01` (SV-01): all 13 items APPROVED; handover 2026-10-09, verified in `TSST/brands/vill-studio/projects/social-setup-01/DELIVERY.json`. Approval/handover does not mean published.
++- `showcase-01`: carousel v3 APPROVED. Open: AR captions, unverified LinkedIn "most clients" claim, CTA channel.
++- `showcase-01-reel` (New Alamein): AI route paused; Ahmed finishes manually in After Effects. Do not restart without his request.
++- `dresser-01`: METHOD CLOSED AS WORKING (owner 2026-10-10; `products/dresser-01/RECIPES.md` header). True approved file: `assets/source/products-rendered/dresser-01_P1f_TRUE-APPROVED.webp` (Drive). `dresser-01_P1f_v1_APPROVED.png` is not the truth. Studio set awaits Ahmed's go and side-by-side confirmation against the real photo; max 3 rounds.
++- Raw portfolio bank: 1,583 source files / 54 project folders in `assets/source/portfolio/` (`INDEX.md`, `CATALOG.csv`, `STUDIO_PICKS.md`, `_catalog/BANK.html`). Index accounts for 1,432 sorted + 53 duplicates + 98 review. New campaign images start here; trust piece tags/text search, treat material/stage tags cautiously.
++
++## Active marketing — owner request 2026-10-11
++- DELIVERY page (R19) built 2026-10-11, in review: client [DELIVERY.html](projects/marketing-week-01/DELIVERY.html) · internal [DELIVERY_INTERNAL.html](projects/marketing-week-01/DELIVERY_INTERNAL.html); render QA passed after 5 generator fixes.
++- Active `marketing-week-01`: scope/usage owner-approved 2026-10-11; LENS + SPARK drafts delivered and Lead-integrated (3 FB + 3 IG + 2 LinkedIn captions, 3 Story sets). Goal: introduction/trust; owner reports Facebook first post not published. Start: `TSST/brands/vill-studio/projects/marketing-week-01/README.md`. Owner/native/language and execution/preview gates pending; no publication. Passive results for all 7 skills in `marketing-week-01/observations/`; no extra validation run/status promotion.
++
++## Other open workstreams — do not auto-start
++1. `C7-VILL-12` round 2: not issued; review fix list + correct petrol/fonts. Exact scope and cost require owner OK before dispatch.
++2. `VERBAL_IDENTITY_v1.0.md`: Ahmed's native review pending.
++3. `showcase-01`: close AR captions, verify/drop LinkedIn claim, choose CTA channel.
++4. Next content from `STUDIO_PICKS.md`: LENS story → SPARK formats → CREATIVE, after scope/cost approval.
++5. `dresser-01` studio set: true approved file only, subject to the confirmation gate above.
++6. `VILL-001`: `OPEN_DATA_REQUESTS.md` awaits client economics/capacity.
++
++Session checkpoint: week-one marketing planning delivered with exactly two approved specialist runs (LENS then SPARK), passive skill observations and Lead integration. VILL-W1-LENS and VILL-W1-SPARK are done pending final acceptance; no cross-runtime independent acceptance claimed. No publication/visual generation. No daily-board mutation.
++Skills used: Lead SK-024/029; LENS SK-006/013/011/012; SPARK SK-002. Per-skill results and friction are recorded in the observation packet and generalized friction-log entries.
++
++## Historical checkpoints (superseded where Current differs)
++Project `strategy-baseline` (TSST-PILOT-002 / C7) — manifest `projects/strategy-baseline/project.md`.
++- Phase 1 (C7-VILL-01..06): **DELIVERED 2026-10-05** — Strategy Baseline v0.2 + Brand Look Direction v0.2
++  approved by user (`ACCEPTANCE.md`).
++- Phase 2 brand look v0.3/v1.0 (C7-VILL-07..10): **cancelled / superseded** by the logo-only direction.
++- Phase 2c final identity from the approved logo: `C7-VILL-11` **done by codex, Lead-accepted 2026-10-05**
++  (`BRAND_LOOK_v1.1.md`, `LEAD_REVIEW_C7-VILL-11.md`). User approved the colour direction (palette in `assets/final/`);
++  template execution NOT approved.
++- Brand guidelines: verbal identity `VERBAL_IDENTITY_v1.0.md` (LENS, draft, native review pending);
++  visual + layout `C7-VILL-12` **done by codex 2026-10-05T18:38Z; Lead review: system accepted as base, book NOT client-ready → round 2 needed** (`BRIEF_C7-VILL-12.md`, `LEAD_REVIEW_C7-VILL-12.md`).
++Durable detail stays in the canonical memory source (`memory/source.md`).
++
++## Active (2026-10-06)
++`C7-VILL-12` Brand Guidelines v1.0 (24 pp.): codex done; Lead review = round 2 required (max_rounds 2).
++Bus: `TSST/bus/tasks/C7-VILL-12.yaml` (status done, rounds 0 — round 2 not yet issued per bus/log.tsv).
++Review: `TSST/PILOTS/TSST-PILOT-002_VILL_STRATEGY_BASELINE/LEAD_REVIEW_C7-VILL-12.md`.
++
++## 2026-10-07 — Creative live training (TSD-019)
++- Brand main colour = PETROL `#01304A` (not navy). Palette v2 approved: the logo 3 plus deep petrol, terracotta, stone and cream. Logo variants are in `assets/final/logo/` and recorded in `assets/ASSETS.yaml`.
++- Direction B, "light leads the eye". Benchmark: Lugar Nefertiti set-up. English, minimal text. Logo small. First post: a 4:5 carousel of the place and sea, then details.
++- `DIRECTION_SHEET_v0.1.md` (v0.2 content), post-01 layered carousel (PREVIS; relight requests in `RETOUCH_REQUESTS.md`, not yet run).
++- dresser-01 product track: `products/dresser-01/`. PAUSED by the user after studio round 2. The round-3 single-chat edit script is ready.
++
++## 2026-10-08 — showcase-01 + craft skills (TSD-021)
++- **Brand fonts: Alexandria (AR) + Inter (EN).** Cairo/Barlow in the `BRAND_GUIDELINES_v1.0` draft are wrong; that draft also still says navy. The source of truth is `assets/ASSETS.yaml`.
++- showcase-01 (`TSST/brands/vill-studio/projects/showcase-01/`):
++  - v1 REJECTED (overlays, template look).
++  - v2 direction APPROVED: 7 slides, no overlays, logo on the cover and the last slide only.
++  - Slide-5 retouch APPROVED.
++  - **v3 APPROVED by the user** (Inter + Alex Brush accent, lockup C). The Lens CHANGED lines are approved too.
++- Still open: the AR caption lines, the LinkedIn "most clients" claim (unverified), and the CTA channel.
++
++## Next action
++Ahmed reviews the week-one pack and Arabic captions, chooses LinkedIn language and sets execution date/operator after content approval. Other workstreams stay deferred; no automatic guidelines round 2 or extra specialist run.
++
++## do_not_repeat
++See `projects/strategy-baseline/project.md#do_not_repeat`. Closed: C7-VILL-11 (accepted; do not redo), social-setup-01 (approved), dresser-01 product method (working). Do not restart the paused AI reel or use the false approved dresser PNG.
++
++## Verified draft fold — 2026-10-04
++
++Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not establish an active TSST project or current workstream; recover that state from the canonical source.
++
++Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/VILL_STUDIO/status.md`.
++
++## New jobs (new_job.py)
++- 2026-10-13: new job `photobank-studio-02` (Studio photo selection), state draft. README: `TSST/brands/vill-studio/projects/photobank-studio-02/README.md`
+diff --git a/TSST/core/portfolio.yaml b/TSST/core/portfolio.yaml
+index fe38370..974d069 100644
+--- a/TSST/core/portfolio.yaml
++++ b/TSST/core/portfolio.yaml
+@@ -36,6 +36,10 @@ brands:
+         state: TSST-PILOT-002 (C7) delivered — strategy v0.2 + brand look v0.2 user-approved 2026-10-05
+         checkpoint: TSST/brands/vill-studio/projects/strategy-baseline/project.md
+         next: user supplies OPEN_DATA_REQUESTS → close VILL-001 → W1 Foundation
++      photobank-studio-02:
++        state: REVIEW PREVIS 2026-10-13; three source candidates inspected; no generation
++        checkpoint: TSST/brands/vill-studio/projects/photobank-studio-02/DELIVERY.html
++        next: owner confirms preferred project and product cards before image edit
+       marketing-week-01:
+         state: LENS + SPARK week-one organic plan (FB/IG/LinkedIn) REVIEW DRAFT 2026-10-11; no DELIVERY page yet
+         checkpoint: TSST/brands/vill-studio/projects/marketing-week-01/README.md
