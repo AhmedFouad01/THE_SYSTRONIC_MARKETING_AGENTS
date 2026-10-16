@@ -99,3 +99,6 @@ TSST/brands/*/archive/photo-bank/**/*.json
 TSST/brands/*/projects/*/final/
 TSST/brands/*/projects/*/work/qa/
 **/__pycache__/
+
+# Client work lives on Drive: G:/My Drive/TSST-Clients (R48). In C:/Work/TSST, TSST/brands is a junction to it.
+TSST/brands

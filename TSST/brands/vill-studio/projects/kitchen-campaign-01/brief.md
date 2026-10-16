@@ -1,4 +1,0 @@
-# Kitchen image experiments
-2026-10-12: user requests photo-bank kitchen sourcing and images resembling five supplied kitchen references. Follow-up explicitly permits changed colors/backgrounds and studio staging, asks for cinematic shots of selected kitchen designs.
-Scope: two independent image-only concepts, approximately 4:5 portrait, 1122x1402 PNG. Audience: kitchen prospects. No text/logo/CTA/claims. Direction: warm natural side-light, sage/forest green cabinet fronts, terracotta accents, quiet editorial interiors. Source kitchen layout and silhouette should remain recognizable; exact built-project fidelity is not claimed.
-Five user references were viewed in conversation; references 184006 and 195137 used as palette/lighting inputs to generation. Do not copy reference furniture, identity, screenshots or UI. Rights and release approval remain pending.

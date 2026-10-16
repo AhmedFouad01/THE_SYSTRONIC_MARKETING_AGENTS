@@ -1,7 +1,0 @@
-{
-  "method": "leftmost white pixel per scanline, y410..610, threshold R/G/B>220; least-squares x versus y",
-  "slope_dx_per_dy": -0.3494443623466822,
-  "angle_off_vertical_degrees": 19.261679888353004,
-  "canvas_1080_delta_x": 377,
-  "logo_sha256": "f743a268847ed6e278274b43fd3ddb0b02bead64662f45be57cda4fe7ae697c7"
-}

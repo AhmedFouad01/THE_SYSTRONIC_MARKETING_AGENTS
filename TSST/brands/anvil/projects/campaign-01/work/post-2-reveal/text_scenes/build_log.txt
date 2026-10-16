@@ -1,8 +1,0 @@
-text 'مرحلة' font=Cairo-Black w=636 h=228
-text 'جديدة' font=Cairo-Black w=644 h=227
-text '8 سنين' font=Cairo-Black w=756 h=230
-text 'ثقة' font=Cairo-Black w=397 h=204
-text 'شكل جديد' font=Cairo-Black w=909 h=215
-text 'اسم جديد' font=Cairo-Black w=819 h=193
-text 'SHARK' font=MonumentExtended-Ultrabold w=724 h=109
-ERROR line 118: ReferenceError: Object is invalid
