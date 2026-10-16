@@ -21,4 +21,4 @@ Ahmed reviews Reveal 01 v03 (approve / fix). Then the queue continues under the 
 
 ## Ahmed, 2026-10-09 (later)
 - Reveal 01 v03: **rejected as weak** ("تعبان ده"). Ahmed has since worked on ANVIL in **ChatGPT** on other things, so this pilot folder is **stale**. Before any production, sync the current ANVIL state from that ChatGPT work.
-- **Synced 2026-10-09:** the current ANVIL state is in `TSST/brands/anvil/STATE_2026-10-09.md` (from the ChatGPT summaries). The gate is Teasing (ANV-001A) IN PROGRESS. The Reveal direction is the "pillar" film (draft in Magnific). The Reveal 01 bag is rejected.
+- **Synced 2026-10-09:** the current ANVIL state is in `TSST/brands/anvil/archive/STATE_2026-10-09.md` (from the ChatGPT summaries). The gate is Teasing (ANV-001A) IN PROGRESS. The Reveal direction is the "pillar" film (draft in Magnific). The Reveal 01 bag is rejected.

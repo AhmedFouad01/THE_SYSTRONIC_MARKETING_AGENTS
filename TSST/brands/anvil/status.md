@@ -2,36 +2,24 @@
 
 Jobs index (generated): [JOBS.md](JOBS.md)
 
-## Roll-up creative workstream update — 2026-10-11
+updated: 2026-10-16
 
-Project: `TSST/brands/anvil/projects/rollup-pre-hell` — **IN PROGRESS / owner-approved visual direction, not print-ready**.
-Full new cross-session checkpoint: `projects/rollup-pre-hell/CHATGPT_CREATIVE_CHECKPOINT_2026-10-11.md`.
-Visual archive with tagged APPROVED / REVIEW / ARCHIVE outputs: `projects/rollup-pre-hell/chatgpt-pack/`.
-Owner approved CINEMATIC V1 and separately approved the FORMAL brand-guideline direction; latest FORMAL quality pass is REVIEW. Official locked logo + supplier packshots still require exact-source QA. Print size 80×200 cm; no final CMYK/preflight/press approval.
-**Scope isolation:** This design workstream does not alter the `campaign-01` week-one planning checkpoint, ANV-001A Teasing gate, brand locked assets or media permissions. The cinematic fire/glow allowance is a job-only exception.
+## Current
+- Folder restructured 2026-10-16 (R48): `photos/` · `approved/` · `projects/<job>/` (brief.md, work/, final/) · `archive/`. Older notes: `status-history.md`.
+- Product photos: `photos/products/`; sorted bank: `photos/bank/BANK.html`. No approved logo registered yet (`approved/ASSETS.yaml`).
 
-## Current campaign pointer — owner correction 2026-10-11 (retained)
+## Open jobs
+- `marketing-week-01` — week-one plan (LENS + SPARK) in review; awaiting owner strategy/copy approval and start date. First Facebook post NOT published; the Shark page will be renamed.
+- `campaign-01` — three posts; reveal (post 2) rebuilt on Ahmed's drafts + AE text scenes; next: re-run the AE script, then QA.
+- `rollup-pre-hell` — 80×200 cm roll-up; cinematic V1 + formal direction approved; latest formal pass in review; not print-ready (logo/packshot QA, CMYK, preflight pending).
+- `product-photo-bank` — round 02 white-background images waiting for review (outputs in `work/external/round-02/outputs/`).
+- `switch-pilot` — old pilot, history only (`archive/pilot-001/`).
 
-- DELIVERY page (R19) built 2026-10-11, in review: client [DELIVERY.html](projects/campaign-01/marketing-week-01/DELIVERY.html) · internal [DELIVERY_INTERNAL.html](projects/campaign-01/marketing-week-01/DELIVERY_INTERNAL.html); render QA passed after 5 generator fixes.
-
-Active scope: campaign-01 week-one marketing planning by LENS and SPARK. [Review package](projects/campaign-01/marketing-week-01/README.md) and [checkpoint](projects/campaign-01/marketing-week-01/08_LEAD_CHECKPOINT.md). Goal: ANVIL awareness and Shark trust transfer. Platforms: Facebook, Instagram, TikTok, LinkedIn. Budget stated: 2000 (EGP planning assumption), planning only.
-
-First ANVIL Facebook post is NOT published; SAME Shark page will change its name. Existing audience/history are not assumed zero. AE/video continuation paused by owner. The old pilot acceptance queue below is historical and must not be resumed for this request. Current package is REVIEW DRAFT, awaiting owner strategy/copy approval and start timing; no release or spend authorized.
-
-## Historical status — retained
-
-updated: 2026-10-04 (from repo evidence dated 2026-09-28)
-
-## Current (historic)
-- `switch-pilot` (TSST-PILOT-001): static campaign `REVEAL_01` v03 — status REVIEW, internally inspected, awaiting user acceptance. No release authorisation.
-
-## Historical next action
-User acceptance or feedback on REVEAL_01 v03. Nothing is published or spent without approval.
+## Next action
+Ahmed approves the week-one plan and start date; then the reveal AE re-run.
 
 ## do_not_repeat
-Pilot stages 01–11 (brief → production v01); REVEAL_01 v01/v02 iterations.
-
-## Verified draft fold — 2026-10-04
-Draft registration is ACTIVE; its memory link and projects folder are recorded as CREATED. These registration facts do not supersede the repository pilot checkpoint or establish user acceptance/release authority.
-
-Source: `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/ANVIL/status.md`.
+- Pilot stages 01–11 and REVEAL_01 v01/v02 (history). Don't resume the old pilot acceptance queue.
+- No spend, release or publication without Ahmed's OK.
+<!-- TSST_JOB_SYNC {"brand":"anvil","job":"campaign-01","manifest_sha256":"121adff5763c3734f09dc455333793e123be916cc53c0c4ffe041bfcebf52ae8","source":"TSST/brands/anvil/projects/campaign-01/DELIVERY.json","status":"progress","version":1} -->
+<!-- TSST_JOB_SYNC {"brand":"anvil","job":"marketing-week-01","manifest_sha256":"16f8f93f97653ff40b1c89f1f52f1ce087a0330b567b9234c96127d20c18fe21","source":"TSST/brands/anvil/projects/marketing-week-01/DELIVERY.json","status":"review","version":1} -->

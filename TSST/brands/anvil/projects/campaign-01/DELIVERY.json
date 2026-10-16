@@ -11,8 +11,8 @@
  "arabic_font": {
   "family": "Cairo",
   "files": {
-   "400": "assets/fonts/Cairo-Regular.ttf",
-   "700": "assets/fonts/Cairo-Bold.ttf"
+   "400": "work/assets/fonts/Cairo-Regular.ttf",
+   "700": "work/assets/fonts/Cairo-Bold.ttf"
   }
  },
  "about": {
@@ -55,7 +55,7 @@
    "id": "post1_teaser",
    "title": "Teaser image",
    "desc": "Static image, PNG. The ANVIL SUPPS mark beneath a black cloth. Final approved file.",
-   "file": "post-1-teaser/creative-02-FINAL.png",
+   "file": "work/post-1-teaser/creative-02-FINAL.png",
    "status": "published",
    "group": "Post 1",
    "date": "2026-10-09",
@@ -67,7 +67,7 @@
    "internal": true,
    "title": "Post 1 · QA notes",
    "desc": "Check notes for the teaser.",
-   "file": "post-1-teaser/FINAL-QA.md",
+   "file": "work/post-1-teaser/FINAL-QA.md",
    "type": "doc",
    "status": "approved",
    "group": "Post 1"
@@ -100,7 +100,7 @@
    "id": "post2_reveal_video",
    "title": "Name reveal video",
    "desc": "Vertical video, 1080 x 1920 px, MP4, about 15 seconds. The covered mark from the teaser is unveiled, the column rises from the Shark heritage at its base to the ANVIL SUPPS mark at the top, with the launch products. The final edit with music will be supplied for review; the caption below accompanies it.",
-   "file": "post-2-reveal/reveal-final.mp4",
+   "file": "work/post-2-reveal/reveal-final.mp4",
    "type": "video",
    "status": "production",
    "group": "Post 2",
@@ -120,7 +120,7 @@
    "internal": true,
    "title": "Rejected · Reveal 01 v03 (the bag)",
    "desc": "PNG 4:5. Kept for history only.",
-   "file": "post-2-reveal/rejected/reveal-01-v03.png",
+   "file": "work/post-2-reveal/rejected/reveal-01-v03.png",
    "status": "rejected",
    "group": "Rejected",
    "date": "2026-10-09",
@@ -303,15 +303,15 @@
  "sources": [
   {
    "label": "STATE_2026-10-09.md",
-   "path": "../../STATE_2026-10-09.md"
+   "path": "../../archive/STATE_2026-10-09.md"
   },
   {
    "label": "INTAKE.md",
-   "path": "INTAKE.md"
+   "path": "brief.md"
   },
   {
    "label": "copy/COPY_REVEAL.md",
-   "path": "copy/COPY_REVEAL.md"
+   "path": "work/copy/COPY_REVEAL.md"
   },
   {
    "label": "SUPPLEMENTS_AD_POLICY.md",
@@ -530,7 +530,7 @@
   ],
   "sources": {
    "STATE_2026-10-09.md": "STATE_2026-10-09.md",
-   "INTAKE.md": "INTAKE.md",
+   "INTAKE.md": "brief.md",
    "copy/COPY_REVEAL.md": "COPY_REVEAL.md",
    "SUPPLEMENTS_AD_POLICY.md": "SUPPLEMENTS_AD_POLICY.md",
    "SV-05 playbook": "دليل خدمة الحملات SV-05",

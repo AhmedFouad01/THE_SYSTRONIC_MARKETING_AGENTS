@@ -21,13 +21,13 @@ One object only: the "ANVIL structure" = 2 concrete pillars + horizontal beam on
 
 ## Historic decisions
 - 2026-10-10 ONE-JOB EXCEPTION: owner waived the ANVIL tone rule (no fire / heavy glow) for this outdoor pre-workout roll-up ONLY. Fire and glow allowed here. brand.md / rules.md unchanged; does not carry over to other ANVIL work.
-- Logo: official mark composited, never regenerated. Source: TSST/PILOTS/TSST-PILOT-001_ANVIL_SWITCH/11_PRODUCTION_V01/source/official-mark-embedded.pdf (vector, preferred); PNG 587x260 (black/reverse) = previs only, too small for print.
+- Logo: official mark composited, never regenerated. Source: TSST/brands/anvil/archive/pilot-001/11_PRODUCTION_V01/source/official-mark-embedded.pdf (vector, preferred); PNG 587x260 (black/reverse) = previs only, too small for print.
 - Tubs: real packshots composited. Magnific makes plate only: structure + ground, no tubs/logo/text.
 - Text APPROVED 2026-10-10: ANVIL-SUPPS.COM / AUTHORIZED DISTRIBUTOR · PREMIUM PRE-HELL.
 - Print APPROVED: no bleed, bottom 22 cm hidden base.
 - Flavours: main = Mango; cells = Red Chili, Red Poll, Trooma, Bad Girl, Moonster Energy, Tequille, Green Apple. Packshots in INBOX/01_RAW_PRODUCTS/premium-pre-hell/.
 - Plate B chosen + 4x upscaled (plates/plate-b-4x.jpg).
-- Pillow composite (historic final/ v1) = REJECTED by owner as final. Magnific Nano Banana Pro integration passes ai-pass/v1,v2 also rejected. Historical transition routed to ChatGPT image (TSST/handoffs/ANVIL_ROLLUP_GPT.md).
+- Pillow composite (historic final/ v1) = REJECTED by owner as final. Magnific Nano Banana Pro integration passes ai-pass/v1,v2 also rejected. Historical transition routed to ChatGPT image (TSST/brands/anvil/archive/handoffs/ANVIL_ROLLUP_GPT.md).
 - Palette: Black #000; Off-black #080808; Charcoal #1F1F1F; Steel #4A4A4A; Concrete #D9D9D4; White; ANVIL Orange #FF6A00.
 
 ## Existing spec

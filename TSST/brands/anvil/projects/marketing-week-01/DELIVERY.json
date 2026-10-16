@@ -893,47 +893,47 @@
  "sources": [
   {
    "label": "README.md",
-   "path": "README.md"
+   "path": "work/README.md"
   },
   {
    "label": "00_BRIEF.md",
-   "path": "00_BRIEF.md"
+   "path": "brief.md"
   },
   {
    "label": "01_STRATEGY.md",
-   "path": "01_STRATEGY.md"
+   "path": "work/01_STRATEGY.md"
   },
   {
    "label": "01b_CONTENT_STRATEGY.md",
-   "path": "01b_CONTENT_STRATEGY.md"
+   "path": "work/01b_CONTENT_STRATEGY.md"
   },
   {
    "label": "02_PLAN.md",
-   "path": "02_PLAN.md"
+   "path": "work/02_PLAN.md"
   },
   {
    "label": "03_COPY.md",
-   "path": "03_COPY.md"
+   "path": "work/03_COPY.md"
   },
   {
    "label": "03b_PILOT_COPY_REVIEW.md",
-   "path": "03b_PILOT_COPY_REVIEW.md"
+   "path": "work/03b_PILOT_COPY_REVIEW.md"
   },
   {
    "label": "05_MEASUREMENT.md",
-   "path": "05_MEASUREMENT.md"
+   "path": "work/05_MEASUREMENT.md"
   },
   {
    "label": "05b_SPARK_REVIEW.md",
-   "path": "05b_SPARK_REVIEW.md"
+   "path": "work/05b_SPARK_REVIEW.md"
   },
   {
    "label": "07_DECISIONS.md",
-   "path": "07_DECISIONS.md"
+   "path": "work/07_DECISIONS.md"
   },
   {
    "label": "08_LEAD_CHECKPOINT.md",
-   "path": "08_LEAD_CHECKPOINT.md"
+   "path": "work/08_LEAD_CHECKPOINT.md"
   }
  ],
  "default_lang": "ar",
@@ -1214,17 +1214,17 @@
    }
   ],
   "sources": {
-   "README.md": "README.md",
-   "00_BRIEF.md": "00_BRIEF.md",
-   "01_STRATEGY.md": "01_STRATEGY.md",
-   "01b_CONTENT_STRATEGY.md": "01b_CONTENT_STRATEGY.md",
-   "02_PLAN.md": "02_PLAN.md",
-   "03_COPY.md": "03_COPY.md",
-   "03b_PILOT_COPY_REVIEW.md": "03b_PILOT_COPY_REVIEW.md",
-   "05_MEASUREMENT.md": "05_MEASUREMENT.md",
-   "05b_SPARK_REVIEW.md": "05b_SPARK_REVIEW.md",
-   "07_DECISIONS.md": "07_DECISIONS.md",
-   "08_LEAD_CHECKPOINT.md": "08_LEAD_CHECKPOINT.md"
+   "README.md": "work/README.md",
+   "00_BRIEF.md": "brief.md",
+   "01_STRATEGY.md": "work/01_STRATEGY.md",
+   "01b_CONTENT_STRATEGY.md": "work/01b_CONTENT_STRATEGY.md",
+   "02_PLAN.md": "work/02_PLAN.md",
+   "03_COPY.md": "work/03_COPY.md",
+   "03b_PILOT_COPY_REVIEW.md": "work/03b_PILOT_COPY_REVIEW.md",
+   "05_MEASUREMENT.md": "work/05_MEASUREMENT.md",
+   "05b_SPARK_REVIEW.md": "work/05b_SPARK_REVIEW.md",
+   "07_DECISIONS.md": "work/07_DECISIONS.md",
+   "08_LEAD_CHECKPOINT.md": "work/08_LEAD_CHECKPOINT.md"
   },
   "marketing_plan": {
    "objective": "التعريف بـANVIL SUPPS ونقل الثقة التي بُنيت باسم Shark إلى الاسم الجديد.",
