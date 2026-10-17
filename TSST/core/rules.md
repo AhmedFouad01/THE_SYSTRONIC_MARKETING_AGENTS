@@ -43,7 +43,8 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   backup only. Check `git branch --show-current` = `master` before any commit. Same method in every runtime.
 - **R46 System freeze until 2026-11-15** (owner rule 2026-10-16). No new tools, layers, rule files,
   folder systems or process steps unless real client work is blocked; Ahmed OKs each exception.
-  Exceptions: 2026-10-17 owner review board (`TSST/services/review`, REVIEW-001).
+  Exceptions: 2026-10-17 owner review board (`TSST/services/review`, REVIEW-001); 2026-10-18 online
+  portal + CRM hosting on Ahmed's AWS EC2, free DuckDNS domain (PORTAL-001).
   A new owner rule = one line here.
 - **R47 No per-task process files** (owner rule 2026-10-16). The job brief is the plan;
   `DELIVERY.json` is the record. Plan/preflight/observation/handoff files only when work moves to
