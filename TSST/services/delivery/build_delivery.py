@@ -227,9 +227,10 @@ def find_logo(job, spec):
         return os.path.join(job, spec)
     d = os.path.abspath(job)
     for _ in range(8):
-        c = os.path.join(d, "TSST", "brands", "t-sag", "assets", "final", "logo", "systronic_logo_white_transparent.png")
-        if os.path.exists(c):
-            return c
+        for sub in (("approved", "brand", "logo"), ("assets", "final", "logo")):  # R48 template; legacy
+            c = os.path.join(d, "TSST", "brands", "t-sag", *sub, "systronic_logo_white_transparent.png")
+            if os.path.exists(c):
+                return c
         d = os.path.dirname(d)
     return None
 

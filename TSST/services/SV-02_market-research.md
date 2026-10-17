@@ -4,7 +4,7 @@
 **Variants:** quick scan (inputs for one decision) · full study.
 
 ## Client deliverables
-**House format:** the Systronic **Market Research canvas**, plus the **Business Model Canvas** where the business model is in question (`TSST/brands/t-sag/assets/IDENTITY.md`). The report expands them.
+**House format:** the Systronic **Market Research canvas**, plus the **Business Model Canvas** where the business model is in question (`TSST/brands/t-sag/approved/IDENTITY.md`). The report expands them.
 
 Research report: questions, method, findings graded by evidence, competitor map, customer segments/ICP/JTBD, implications for the plan. Format: OPEN.
 

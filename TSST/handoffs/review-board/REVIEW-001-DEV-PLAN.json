@@ -1,0 +1,50 @@
+{
+  "team": "build",
+  "agent": "tsst-dev",
+  "skills": [
+    "TSST-DEV-SK-004",
+    "TSST-DEV-SK-011",
+    "TSST-DEV-SK-015"
+  ],
+  "not_selected": "API/auth/data-migration skills: local stdlib server bound to 127.0.0.1, single owner, writes only existing per-job JSON records.",
+  "tier": "CODE",
+  "acceptance": "Owner review board per TSST/handoffs/review-board/REVIEW-001-BRIEF.md: REVIEW.bat opens a local page listing every brand and job under TSST/brands, showing all media and copy found in each job's work/ and final/ (no manual registration), newest first, 'new' badges, noise folders collapsed; Approve / Reject / note per file writes to that job's DELIVERY.json (same indent, other content untouched; created minimal when missing) and re-runs sync_jobs for the brand; tests pass; all 39 existing delivery tests still pass. Client folders (TSST/brands = folder link to G:/My Drive/TSST-Clients, outside the repo) are read-only input for the live check; preflight cannot scope them.",
+  "skill_gap": "none",
+  "track": "master",
+  "read": [
+    "TSST/services/**",
+    "TSST/core/rules.md",
+    "TSST/handoffs/review-board/**",
+    "TSST/DEV/**",
+    "TSST/skills/**",
+    "AGENTS.md"
+  ],
+  "write": [
+    "TSST/services/review/**",
+    "REVIEW.bat",
+    "TSST/services/delivery/README.md",
+    "TSST/handoffs/review-board/REVIEW-001-DEV-RESULT.md"
+  ],
+  "authority": {
+    "source": "Ahmed explicit approval in Claude chat 2026-10-17: 'موافق. افتح القفل للوحة المراجعة بس وابدأ البناء على tsst-dev.' (R46 exception for the owner review board only).",
+    "approved_scope": {
+      "read": [
+        "TSST/services/**",
+        "TSST/core/rules.md",
+        "TSST/handoffs/review-board/**",
+        "TSST/DEV/**",
+        "TSST/skills/**",
+        "AGENTS.md"
+      ],
+      "write": [
+        "TSST/services/review/**",
+        "REVIEW.bat",
+        "TSST/services/delivery/README.md",
+        "TSST/handoffs/review-board/REVIEW-001-DEV-RESULT.md"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": ".claude/agents/tsst-dev.md"
+}

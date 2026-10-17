@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة المراجعة</title>
+<link rel="icon" href="/assets/favicon_64.png">
+<style>
+@font-face{font-family:"IBM Plex Sans Arabic";font-weight:400;font-style:normal;font-display:swap;src:url(/fonts/IBMPlexSansArabic-Regular.ttf) format("truetype")}
+@font-face{font-family:"IBM Plex Sans Arabic";font-weight:500;font-style:normal;font-display:swap;src:url(/fonts/IBMPlexSansArabic-Medium.ttf) format("truetype")}
+@font-face{font-family:"IBM Plex Sans Arabic";font-weight:600;font-style:normal;font-display:swap;src:url(/fonts/IBMPlexSansArabic-SemiBold.ttf) format("truetype")}
+@font-face{font-family:"IBM Plex Sans Arabic";font-weight:700;font-style:normal;font-display:swap;src:url(/fonts/IBMPlexSansArabic-Bold.ttf) format("truetype")}
+@font-face{font-family:"Poppins";font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0000-024F,U+2000-206F,U+20A0-20CF;src:url(/fonts/Poppins-Regular.ttf) format("truetype")}
+@font-face{font-family:"Poppins";font-weight:600;font-style:normal;font-display:swap;unicode-range:U+0000-024F,U+2000-206F,U+20A0-20CF;src:url(/fonts/Poppins-SemiBold.ttf) format("truetype")}
+@font-face{font-family:"Poppins";font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0000-024F,U+2000-206F,U+20A0-20CF;src:url(/fonts/Poppins-Bold.ttf) format("truetype")}
+:root{--bg:#F3F5FA;--card:#fff;--line:#D5D9E4;--txt:#33394F;--mut:#585F7A;--navy:#181D36;--red:#E7213A;--cy:#29BCEF;--cyt:#0B7FAA;--ok:#1F9D5B;--no:#E7213A;--wait:#E8A917;--hh:62px;--r:10px;--sh:0 1px 2px rgba(24,29,54,.06),0 4px 14px rgba(24,29,54,.05)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--txt);font:400 15px/1.75 "Poppins","IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;display:flex;flex-direction:column;-webkit-text-size-adjust:100%}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+button{font:inherit;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:4px 14px;cursor:pointer;line-height:1.6}
+button:hover{border-color:var(--mut)}
+a{color:var(--cyt)}
+bdi{unicode-bidi:isolate}
+.sb{padding:1px 11px;font-size:13px;font-weight:500}
+svg{flex:none;vertical-align:middle}
+/* header */
+header.top{height:var(--hh);flex:none;display:flex;align-items:center;gap:14px;padding:0 20px;background:var(--navy);color:#fff}
+header.top img.logo{height:34px;width:auto}
+header.top h1{margin:0;font-size:18px;font-weight:600;letter-spacing:0}
+header.top .sp{flex:1}
+header.top .msg{font-size:13px;color:#AEB6D6}
+header.top .msg.ok{color:#7FE0A8}header.top .msg.bad{color:#FF9AA7}header.top .msg.wait{color:#F6CF63}
+header.top button{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+header.top button:hover{background:rgba(255,255,255,.12);border-color:#fff}
+header.top .menu{display:none;align-items:center;gap:8px}
+.redline{height:3px;background:var(--red);flex:none}
+main{flex:1;display:flex;min-height:0;position:relative}
+#scrim{display:none}
+/* navigation */
+nav{width:330px;flex:none;overflow:auto;background:var(--card);border-inline-end:1px solid var(--line);padding:10px 0 30px}
+.chev{display:inline-block;width:14px;flex:none;color:var(--mut);font-size:11px;text-align:center}
+nav .brand{margin:8px 12px 0;padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--navy);background:var(--bg);border:1px solid var(--line);border-inline-start:5px solid var(--line);border-radius:var(--r);cursor:pointer;user-select:none}
+nav .brand:hover{border-color:var(--mut)}
+nav .brand.open{border-inline-start-color:var(--cy);background:#EAF6FC;border-color:var(--cy)}
+nav .brand .t{flex:1;line-height:1.35}
+nav .brand .t small{display:block;font-size:11px;font-weight:400;color:var(--mut)}
+nav .sec{margin:14px 16px 4px;padding:9px 4px 3px;border-top:1px solid var(--line);display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--mut);font-size:12.5px;font-weight:600;user-select:none}
+nav .sec:hover{color:var(--navy)}
+nav .sec svg{color:var(--cyt)}
+nav .sec .t{flex:1}
+nav .sec .n{font-size:11.5px;font-weight:400}
+nav .none{margin:2px 16px;padding:4px 30px;color:var(--mut);font-size:12.5px}
+nav .job{margin:1px 12px 1px 8px;padding:6px 10px;padding-inline-start:20px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;border-inline-start:3px solid transparent;border-radius:8px;color:var(--txt)}
+nav .job:hover{background:var(--bg)}
+nav .job.on{background:#EAF6FC;border-inline-start-color:var(--cy);font-weight:600;color:var(--navy)}
+nav .job .t{flex:1;min-width:0;line-height:1.4;font-size:14px}
+nav .job .t .ti{display:block;text-align:right;unicode-bidi:plaintext;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav .job .t .sl{display:block;font-size:11px;color:var(--mut);font-weight:400;direction:ltr;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav .job.ent .t{direction:ltr;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav .grp3{margin:3px 12px 1px 8px;padding:6px 10px;padding-inline-start:20px;display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:600;color:var(--mut);border-radius:8px;user-select:none}
+nav .grp3:hover{background:var(--bg)}
+nav .grp3 .t{flex:1;direction:ltr;text-align:right}
+nav .job.l4 .t{white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+nav .job.l4{margin-inline-start:8px;padding-inline-start:18px;padding-top:3px;padding-bottom:3px;font-size:12.5px;color:var(--mut);border-inline-start:0;border-radius:6px;margin-inline-end:12px}
+nav .l4wrap{margin-inline-start:30px;border-inline-start:1px solid var(--line)}
+nav .job.l4.on{background:#EAF6FC;color:var(--navy);font-weight:600}
+nav .cnt{font-size:12px;color:var(--navy);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:0 8px;min-width:24px;text-align:center;height:20px;line-height:18px;flex:none}
+nav .cnt.p{background:var(--wait);border-color:var(--wait);font-weight:600}
+nav .dot{width:7px;height:7px;border-radius:50%;background:var(--cy);display:inline-block;margin-inline-end:6px}
+/* main */
+section#view{flex:1;min-width:0;overflow:auto;padding:0 28px 90px;position:relative}
+.vhead{padding-top:18px}
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13px;color:var(--mut);margin-bottom:4px}
+.crumb .c1{color:var(--navy);font-weight:700}
+.crumb .sep{opacity:.55}
+.vhead h2{margin:0;font-size:24px;line-height:1.4;color:var(--navy);font-weight:700}
+.vhead .slug{font-size:12px;color:var(--mut);direction:ltr;text-align:right;margin-top:-2px}
+.vhead .what{margin:6px 0 0;font-size:13px;color:var(--mut)}
+.vhead .what b{color:var(--navy);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:0 12px;line-height:26px;color:var(--mut)}
+.chip b{color:var(--navy);font-weight:600}
+.chip.p b{color:#8A5F00}.chip.a b{color:var(--ok)}.chip.r b{color:var(--no)}
+.how{max-width:560px;margin:10vh auto 0;color:var(--mut);font-size:16px;line-height:2}
+.how h2{color:var(--navy);font-size:21px;margin:0 0 12px}
+.how div{padding:7px 0;border-top:1px solid var(--line)}
+.how div b{color:var(--cyt);margin-inline-end:10px}
+.how kbd,.hint kbd{font:600 12px/1 "Poppins",sans-serif;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:2px 6px;background:var(--card);color:var(--navy)}
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:2px;border-bottom:1px solid var(--line);margin:14px 0 14px;flex-wrap:wrap}
+.tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;padding:9px 16px;font-size:15px;color:var(--mut);white-space:nowrap}
+.tabs button:hover{color:var(--navy);border-bottom-color:var(--line)}
+.tabs button.on{color:var(--navy);font-weight:600;border-bottom-color:var(--cy)}
+.tabs .n{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 8px;font-size:12px;margin-inline-start:7px;font-weight:400}
+.tabs .w{background:var(--wait);color:var(--navy);border-radius:10px;padding:0 7px;font-size:12px;margin-inline-start:5px;font-weight:600}
+.filters{display:inline-flex;margin:0 0 16px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.filters button{border:0;border-radius:0;border-inline-end:1px solid var(--line);padding:3px 16px;font-size:13px;color:var(--mut)}
+.filters button:last-child{border-inline-end:0}
+.filters button.on{background:var(--navy);color:#fff}
+/* groups */
+.grp{margin-bottom:28px}
+.grp>.gh{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:0 0 8px;margin-bottom:14px}
+.grp>.gh .gt{font-size:15px;font-weight:600;color:var(--navy);direction:ltr;unicode-bidi:isolate}
+.grp>.gh .gt .pp{color:var(--mut);font-weight:400}
+.grp>.gh .gt.ar{direction:rtl}
+.grp>.gh .sp{flex:1}
+.grp>.gh .n{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 9px;font-size:12px;color:var(--mut)}
+.grp>.gh .nw{color:var(--cyt);font-size:12px}
+.grp>.gh .hint{color:var(--mut);font-size:12px}
+.grp>.gh .zl{font-size:12px;font-weight:600;border-radius:10px;padding:0 10px;background:#ECEEF5;color:var(--mut)}
+.grp>.gh .zl.old{background:#FCE8EB;color:#B3122A}
+.grp.col>.gh{cursor:pointer}
+.bulk{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
+.bulk .ok{border-color:var(--ok);color:var(--ok)}.bulk .no{border-color:var(--no);color:var(--no)}
+.bulk .ok:hover{background:var(--ok);color:#fff}.bulk .no:hover{background:var(--no);color:#fff}
+.bulk .conf{font-size:13px;font-weight:600;color:var(--navy)}
+.more{margin-top:14px;text-align:center}
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px 16px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:8px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile.approved{border-color:var(--ok)}.tile.rejected{border-color:var(--no)}
+.tile .thumb{aspect-ratio:1/1;background:#E9ECF4;border-radius:7px;position:relative;overflow:hidden}
+.tile.vid .thumb{aspect-ratio:16/10}
+.tile .thumb img{width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in}
+.tile .thumb video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+.mark{position:absolute;top:8px;inset-inline-end:8px;font-size:12px;font-weight:600;padding:0 10px;line-height:22px;border-radius:11px;color:#fff;pointer-events:none}
+.mark.approved{background:var(--ok)}.mark.rejected{background:var(--no)}.mark.inh{opacity:.85}
+.newdot{position:absolute;top:10px;inset-inline-start:10px;width:9px;height:9px;border-radius:50%;background:var(--cy);box-shadow:0 0 0 2px #fff;pointer-events:none}
+.hov{position:absolute;inset-inline:0;bottom:0;display:flex;gap:6px;justify-content:center;padding:26px 8px 8px;background:linear-gradient(transparent,rgba(24,29,54,.7));opacity:0;transition:opacity .12s}
+.tile:hover .hov,.tile:focus-within .hov{opacity:1}
+@media (hover:none){.hov{opacity:1}}
+.cap1{font-size:12.5px;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:6px;color:var(--navy)}
+.cap2{font-size:11.5px;color:var(--mut);display:flex;gap:10px;direction:ltr;align-items:center;min-width:0}
+.cap2 .sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;opacity:.85}
+.vbtn{display:flex;gap:6px;margin-top:7px}
+.btns button.ok:hover,.btns button.ok.on{border-color:var(--ok);background:var(--ok);color:#fff}
+.btns button.no:hover,.btns button.no.on{border-color:var(--no);background:var(--no);color:#fff}
+.hov button{background:#fff}
+.note{font-size:12.5px;color:var(--txt);white-space:pre-wrap;margin-top:5px;padding:5px 9px;background:#FFF8E1;border-radius:6px}
+.cm{display:none;margin-top:6px}
+.cm.show{display:block}
+.cm textarea{width:100%;min-height:54px;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:13px;resize:vertical}
+.cm .row{display:flex;gap:6px;margin-top:5px}
+/* post cards */
+.fblock{margin-bottom:30px}
+.fhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:14px}
+.fhead h3{margin:0;font-size:17px;font-weight:700;color:var(--navy)}
+.fhead .fn{font-size:12px;color:var(--mut);direction:ltr}
+.fhead .sp{flex:1}
+.fhead .n{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 9px;font-size:12px;color:var(--mut)}
+.fhead .leg{font-size:12px;border-radius:10px;padding:0 10px;background:#ECEEF5;color:var(--mut)}
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;align-items:start}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pc.approved{border-color:var(--ok)}.pc.rejected{border-color:var(--no)}
+.pc .ph{cursor:pointer}
+.pc .par{font-size:11.5px;color:var(--mut)}
+.pc h4{margin:0;font-size:16px;line-height:1.55;color:var(--navy);font-weight:600}
+.pc .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.plat{display:inline-block;font-size:12px;font-weight:600;line-height:22px;padding:0 10px;border-radius:11px;background:#E3F5FD;color:#0B6F96;direction:auto;unicode-bidi:plaintext}
+.pc .pbody{position:relative;overflow:hidden}
+.pc .pbody.clamp{max-height:19em}
+.pc .pbody.clamp::after{content:"";position:absolute;inset-inline:0;bottom:0;height:4em;background:linear-gradient(rgba(255,255,255,0),#fff)}
+.pc .pbody.clamp.open{max-height:none}.pc .pbody.clamp.open::after{display:none}
+.pc .more1{align-self:flex-start;font-size:12.5px;padding:0 12px}
+.pc .stt{font-size:12.5px;font-weight:600}
+.stt.approved{color:var(--ok)}.stt.rejected{color:var(--no)}
+.pc .btns{display:flex;gap:6px;align-items:center;margin-top:2px}
+.seg{margin:0 0 12px}
+.seg .sh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}
+.seg .sub{font-size:12px;color:var(--mut)}
+.seg .lb{font-weight:600;color:var(--navy);font-size:13.5px}
+.md{font-size:14.5px;line-height:1.95;overflow-wrap:anywhere}
+.md>*:first-child{margin-top:0}.md>*:last-child{margin-bottom:0}
+.md p{margin:0 0 10px}
+.md ul,.md ol{margin:0 0 10px;padding-inline-start:24px}
+.md li{margin:2px 0}
+.md blockquote{margin:0 0 10px;padding:4px 14px;border-inline-start:3px solid var(--line);color:var(--mut)}
+.md .mdh{font-weight:700;color:var(--navy);margin:12px 0 4px}
+.md hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.md code{font:12.5px/1.5 Consolas,monospace;background:#ECEEF5;border-radius:4px;padding:0 5px;direction:ltr;unicode-bidi:isolate}
+.md pre{margin:0 0 10px;padding:8px 12px;background:#ECEEF5;border-radius:8px;overflow:auto;direction:ltr;text-align:left;font:12.5px/1.6 Consolas,monospace}
+.md table{border-collapse:collapse;margin:0 0 10px;font-size:13.5px;max-width:100%;display:block;overflow-x:auto}
+.md th,.md td{border:1px solid var(--line);padding:3px 10px;text-align:start;vertical-align:top}
+.md th{background:#ECEEF5;font-weight:600}
+.tag{display:inline-block;direction:ltr;unicode-bidi:isolate;font-size:12.5px;line-height:21px;padding:0 9px;margin:1px 2px;border-radius:11px;background:#ECEEF5;color:#3B4262}
+.fold{margin:0 0 12px}
+.fold>button{background:transparent;border:1px dashed var(--line);color:var(--mut);font-size:12.5px;padding:1px 12px;border-radius:8px}
+.fold>button:hover{border-color:var(--mut);color:var(--navy)}
+.fold .fb{margin-top:8px;padding:10px 14px;background:#F8F9FC;border:1px solid var(--line);border-radius:8px;font-size:13px}
+.fold .fb h5{margin:10px 0 4px;font-size:13px;color:var(--navy)}
+.fold .fb h5:first-child{margin-top:0}
+.pc .fold{margin:0}
+/* note cards / other rows */
+.tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;display:flex;flex-direction:column;gap:5px;cursor:pointer;min-width:0}
+.tcard:hover{border-color:var(--mut)}
+.tcard h4{margin:0;font-size:15px;line-height:1.5;color:var(--navy)}
+.tcard .ln{color:var(--mut);font-size:13px;line-height:1.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.7em}
+.tcard .fn{font-size:11.5px;color:var(--mut);direction:ltr;text-align:left;margin-top:4px;display:flex;gap:10px;align-items:center}
+.tcard .fn .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.orows{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card)}
+.orow{display:flex;gap:14px;align-items:center;padding:7px 14px;border-bottom:1px solid var(--line);font-size:13px;direction:ltr}
+.orow:last-child{border-bottom:0}
+.orow .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.orow .x{color:var(--mut);font-size:12px;min-width:56px}
+.badge{background:var(--cy);color:#fff;border-radius:9px;padding:0 8px;font-size:11.5px;font-weight:600}
+.vo{color:var(--mut);font-size:12px;border:1px solid var(--line);border-radius:10px;padding:0 10px;margin-inline-start:8px;font-weight:400;vertical-align:middle}
+.empty{color:var(--mut);padding:44px 0;text-align:center}
+/* review overlay: media + posts, keyboard first */
+#rv{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;background:#0E1122;color:#fff}
+#rv.show{display:flex}
+#rv .rvbar{display:flex;align-items:center;gap:12px;padding:10px 18px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.12)}
+#rv .rvn{font:600 15px "Poppins",sans-serif;direction:ltr;min-width:70px}
+#rv .rvname{flex:1;min-width:0;font-size:13px;color:#C7CDE6;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#rv .rvst{font-size:13px;font-weight:600;border-radius:11px;padding:0 12px;line-height:24px;background:rgba(255,255,255,.14)}
+#rv .rvst.approved{background:var(--ok)}#rv .rvst.rejected{background:var(--no)}#rv .rvst.pending{background:var(--wait);color:var(--navy)}
+#rv button{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+#rv button:hover{background:rgba(255,255,255,.14);border-color:#fff}
+#rv button.ok{background:var(--ok);border-color:var(--ok)}#rv button.no{background:var(--no);border-color:var(--no)}
+#rv button.on{box-shadow:0 0 0 2px #fff inset}
+#rv .rvmain{flex:1;min-height:0;display:flex;align-items:stretch}
+#rv .nv{flex:none;width:58px;border:0;border-radius:0;font-size:26px;padding:0;background:transparent}
+#rv .nv:hover{background:rgba(255,255,255,.1)}
+#rv .rvstage{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;padding:10px;overflow:auto;touch-action:pan-y}
+#rv .rvstage img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+#rv .rvstage video{max-width:100%;max-height:100%;display:block;background:#000}
+#rv .rvstage .rvtext{align-self:flex-start;width:min(780px,100%);margin:0 auto;background:var(--card);color:var(--txt);border-radius:var(--r);padding:22px 30px 30px}
+#rv .rvtext h4{margin:0 0 4px;font-size:21px;color:var(--navy);line-height:1.5}
+#rv .rvtext .md{font-size:17.5px;line-height:2.05}
+#rv .rvtext .par{font-size:12.5px;color:var(--mut)}
+#rv .rvfoot{padding:8px 18px 12px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.1)}
+#rv .rvcm{display:none;margin-bottom:8px;max-width:760px}
+#rv .rvcm.show{display:flex;gap:8px}
+#rv .rvcm textarea{flex:1;min-height:52px;background:#fff;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit;font-size:14px}
+#rv .rvnote{font-size:13px;color:#F6CF63;margin-bottom:6px}
+#rv .hint{font-size:12.5px;color:#AEB6D6}
+#rv .hint kbd{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}
+#rv .toast{position:absolute;top:70px;inset-inline:0;margin:auto;width:fit-content;background:var(--navy);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:6px 18px;font-size:14px;display:none}
+#rv .toast.show{display:block}
+/* narrow screens: the tree becomes a drawer */
+@media (max-width:979px){
+  header.top .menu{display:inline-flex}
+  header.top{padding:0 12px;gap:10px}
+  nav{position:fixed;top:var(--hh);bottom:0;inset-inline-start:0;width:min(340px,88vw);z-index:30;transform:translateX(105%);transition:transform .18s ease;margin-top:3px}
+  body.nav-open nav{transform:none;box-shadow:0 0 30px rgba(24,29,54,.3)}
+  body.nav-open #scrim{display:block;position:fixed;inset:0;background:rgba(24,29,54,.45);z-index:25}
+  section#view{padding:0 16px 90px}
+  .tiles{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .pcards{grid-template-columns:1fr}
+  .tcards{grid-template-columns:1fr}
+  .vhead h2{font-size:20px}
+  #rv .nv{width:40px}
+  #rv .rvstage .rvtext{padding:16px 16px 24px}
+}
+@media (max-width:560px){ header.top h1{font-size:16px} #msg{display:none} }
+@media (prefers-reduced-motion:reduce){nav{transition:none}.hov{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="menu" id="menu" aria-label="البراندات"></button>
+  <img class="logo" src="/assets/mark_white_96.png" alt="">
+  <h1>لوحة المراجعة</h1>
+  <span class="msg" id="msg"></span>
+  <span class="msg" id="sync"></span>
+  <span class="sp"></span>
+  <button id="reload">تحديث</button>
+</header>
+<div class="redline"></div>
+<main>
+  <div id="scrim"></div>
+  <nav id="nav"></nav>
+  <section id="view"><div class="how"><h2>طريقة الاستخدام</h2>
+<div><b>١</b>اختر البراند من القائمة الجانبية، ثم افتح المشروع من قسم المشروعات.</div>
+<div><b>٢</b>راجع الصور والفيديو والنصوص من التبويبات. تُعرض المنشورات واحدًا واحدًا.</div>
+<div><b>٣</b>اضغط على أي صورة أو منشور لبدء المراجعة السريعة: <kbd>A</kbd> موافق · <kbd>R</kbd> مرفوض · <kbd>C</kbd> تعليق · الأسهم للتنقل.</div></div></section>
+</main>
+<div id="rv" aria-hidden="true">
+  <div class="rvbar"><span class="rvn" id="rvn"></span><span class="rvname" id="rvname"></span><span class="rvst" id="rvst"></span>
+    <span class="btns" id="rvbtns" style="display:flex;gap:8px"></span><button id="rvx" aria-label="إغلاق">إغلاق</button></div>
+  <div class="rvmain"><button class="nv" id="rvprev" aria-label="السابق"></button><div class="rvstage" id="rvstage"></div><button class="nv" id="rvnext" aria-label="التالي"></button></div>
+  <div class="rvfoot"><div class="rvnote" id="rvnote"></div><div class="rvcm" id="rvcm"><textarea dir="auto" placeholder="تعليق..."></textarea><button id="rvcmsave">حفظ</button></div>
+    <div class="hint"><kbd>←</kbd> <kbd>→</kbd> تنقل · <kbd>A</kbd> موافق · <kbd>R</kbd> مرفوض · <kbd>C</kbd> تعليق · <kbd>Esc</kbd> إغلاق</div></div>
+  <div class="toast" id="rvtoast"></div>
+</div>
+<script>
+"use strict";
+const $ = (s, r) => (r || document).querySelector(s);
+const SEEN = "rb:seen:", BRANDKEY = "rb:openbrand", FRESH_MS = 72 * 3600 * 1000;
+const TABS = [["image", "الصور"], ["video", "الفيديو"], ["copy", "الكوبي"], ["plan", "الخطط"], ["notes", "ملاحظات الشغل"], ["other", "ملفات تانية"]];
+const TEXT_TABS = ["copy", "plan", "notes"];
+const ZONE_RANK = {"": 0, ref: 1, qa: 2, old: 3};
+const ZONE_LABEL = {old: "قديم / مرفوض", ref: "مراجع", qa: "فحوص داخلية"};
+const SECLABEL = {projects: "المشروعات"};
+const PAGE = 60;
+const NS = "http://www.w3.org/2000/svg";
+const ICON = {
+  projects: "M3 7h7l2 2h9v10H3z", approved: "M5 12.5l4.5 4.5L19 7.5", photos: "M4 5h16v14H4zM4 16l5-5 4 4 3-3 4 4", archive: "M3 5h18v4H3zM5 9v10h14V9M10 13h4",
+  menu: "M4 7h16M4 12h16M4 17h16", prev: "M9 5l7 7-7 7", next: "M15 5l-7 7 7 7"
+};
+
+let tree = null, cur = null, data = null, tab = "image", filter = "all", prevSeen = 0, openBrand = null;
+let openGroups = new Set();
+const openSecs = new Set(), seenBrands = new Set(), openSubs = new Set();
+const counts = {};                         // "<brand>|<entry key>" -> file count
+const shown = new Map();                   // "<tab>|<group>" -> cards drawn (paging)
+const units = new Map();                   // decision key -> {key, path, tab, status, inherited}
+const reg = new Map();                     // decision key -> {el, make}  (in-place card updates)
+let bulks = [];                            // bulk bars to refresh after a decision
+const previews = new Map();                // "<scope>|<path>" -> parsed note preview
+
+function h(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const k in (attrs || {})) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") e.className = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(3)) if (c !== null && c !== undefined && c !== false) e.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return e;
+}
+function icon(name, size) {
+  const s = document.createElementNS(NS, "svg");
+  s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("width", size || 16); s.setAttribute("height", size || 16);
+  s.setAttribute("fill", "none"); s.setAttribute("stroke", "currentColor"); s.setAttribute("stroke-width", "1.9");
+  s.setAttribute("stroke-linecap", "round"); s.setAttribute("stroke-linejoin", "round");
+  const p = document.createElementNS(NS, "path"); p.setAttribute("d", ICON[name]); s.append(p);
+  return s;
+}
+function say(text, cls) { const m = $("#msg"); m.textContent = text || ""; m.className = "msg " + (cls || ""); }
+function q(o) { return Object.entries(o).map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&"); }
+function scope() { return cur.entry ? {brand: cur.brand, entry: cur.entry} : {brand: cur.brand, job: cur.job}; }
+function viewOnly() { return !!(cur && cur.entry); }
+function fileUrl(f) { return "/file?" + q(Object.assign(scope(), {path: f.path})); }
+function thumbUrl(f, w) { return "/thumb?" + q(Object.assign(scope(), {path: f.path, w: w || 480})); }
+function p2(n) { return String(n).padStart(2, "0"); }
+function fmtDay(t) { const d = new Date(t * 1000); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
+function fmtSize(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
+function seenKey(b, j) { return SEEN + b + "/" + j; }
+function entSeen(k) { return "entry:" + k; }
+function seenAt(b, j) { const v = localStorage.getItem(seenKey(b, j)); return v ? Number(v) : Date.now() - FRESH_MS; }   // F8: first visit = last 72 h only
+function isNew(f) { return f.mtime * 1000 > prevSeen; }
+function brandLabel(b) { return b.name && b.name !== b.brand ? b.name : b.brand; }
+function brandOf(slug) { const b = tree && tree.brands.find((x) => x.brand === slug); return b ? brandLabel(b) : slug; }
+const STT = {approved: "موافق", rejected: "مرفوض", pending: "مستني"};
+function ustatus(key) { const u = units.get(key); return u ? u.status : "pending"; }
+function fileKeys(f) { return f.doc ? f.doc.cards.map((c) => c.key) : [f.path]; }
+
+async function jget(url) {
+  const r = await fetch(url);
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.status);
+  return j;
+}
+
+/* ------------------------------------------------------------ safe markdown (DOM nodes only, no HTML strings) */
+function inline(text) {
+  const out = [];
+  const re = /\*\*([^*]+?)\*\*|`([^`]+)`|(?<![\w*])\*([^*\s][^*]*?)\*(?![\w*])|(?<!\w)_([^_\s][^_]*?)_(?!\w)|(?<![\w#&])#([\p{L}\p{N}_]+)/gu;
+  let last = 0, m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    if (m[1] !== undefined) out.push(h("strong", {}, inline(m[1])));
+    else if (m[2] !== undefined) out.push(h("code", {}, m[2]));
+    else if (m[3] !== undefined) out.push(h("em", {}, inline(m[3])));
+    else if (m[4] !== undefined) out.push(h("em", {}, inline(m[4])));
+    else out.push(h("span", {class: "tag"}, "#" + m[5]));
+    last = re.lastIndex;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
+const RE_LIST = /^\s*([-*+]|\d+[.)])\s+/, RE_HEAD = /^\s{0,3}(#{1,6})\s+(.*)$/, RE_FENCE = /^\s*(```|~~~)/, RE_QUOTE = /^\s*>/;
+const RE_HR = /^\s*([-*_])(\s*\1){2,}\s*$/, RE_SEP = /^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/;
+function cells(l) { let t = l.trim(); if (t.startsWith("|")) t = t.slice(1); if (t.endsWith("|")) t = t.slice(0, -1); return t.split("|").map((x) => x.trim()); }
+function renderMd(md) {
+  const root = h("div", {class: "md"});
+  const lines = String(md || "").replace(/\r/g, "").split("\n");
+  const starts = (i) => RE_HEAD.test(lines[i]) || RE_LIST.test(lines[i]) || RE_QUOTE.test(lines[i]) || RE_FENCE.test(lines[i]) || RE_HR.test(lines[i]) || (lines[i].trim().startsWith("|") && i + 1 < lines.length && RE_SEP.test(lines[i + 1]));
+  let i = 0;
+  while (i < lines.length) {
+    const l = lines[i];
+    if (!l.trim()) { i++; continue; }
+    let m;
+    if (RE_FENCE.test(l)) {
+      const buf = []; i++;
+      while (i < lines.length && !RE_FENCE.test(lines[i])) buf.push(lines[i++]);
+      i++;
+      root.append(h("pre", {}, buf.join("\n")));
+    } else if ((m = l.match(RE_HEAD))) {
+      root.append(h("div", {class: "mdh", dir: "auto"}, inline(m[2].replace(/\s#+\s*$/, ""))));
+      i++;
+    } else if (RE_HR.test(l)) { root.append(h("hr")); i++; }
+    else if (l.trim().startsWith("|") && i + 1 < lines.length && RE_SEP.test(lines[i + 1])) {
+      const head = cells(l); i += 2;
+      const rows = [];
+      while (i < lines.length && lines[i].trim().startsWith("|")) rows.push(cells(lines[i++]));
+      root.append(h("table", {}, h("thead", {}, h("tr", {}, head.map((c) => h("th", {dir: "auto"}, inline(c))))),
+        h("tbody", {}, rows.map((r) => h("tr", {}, r.map((c) => h("td", {dir: "auto"}, inline(c))))))));
+    } else if (RE_QUOTE.test(l)) {
+      const buf = [];
+      while (i < lines.length && RE_QUOTE.test(lines[i])) buf.push(lines[i++].replace(/^\s*>\s?/, ""));
+      root.append(h("blockquote", {}, renderMd(buf.join("\n"))));
+    } else if (RE_LIST.test(l)) {
+      const ordered = /^\s*\d/.test(l);
+      const items = [];
+      while (i < lines.length && lines[i].trim()) {
+        if (RE_LIST.test(lines[i])) items.push([lines[i].replace(RE_LIST, "")]);
+        else if (/^\s+\S/.test(lines[i]) && items.length) items[items.length - 1].push(lines[i].trim());
+        else break;
+        i++;
+      }
+      root.append(h(ordered ? "ol" : "ul", {}, items.map((it) => h("li", {dir: "auto"}, it.map((t, k) => [k ? h("br") : null, inline(t)])))));
+    } else {
+      const buf = [];
+      while (i < lines.length && lines[i].trim() && (buf.length === 0 || !starts(i))) buf.push(lines[i++]);
+      root.append(h("p", {dir: "auto"}, buf.map((t, k) => [k ? h("br") : null, inline(t)])));
+    }
+  }
+  return root;
+}
+
+/* ------------------------------------------------------------ navigation */
+async function loadTree(refresh) {
+  say("جاري القراءة...");
+  tree = await jget("/api/tree" + (refresh ? "?refresh=1" : ""));
+  if (refresh) for (const k in counts) delete counts[k];
+  for (const b of tree.brands) for (const sec of b.sections) {
+    SECLABEL[sec.id] = sec.label;
+    for (const e of sec.entries) if (e.count !== null && e.count !== undefined) counts[b.brand + "|" + e.key] = e.count;
+  }
+  say("");
+  for (const b of tree.brands) if (!seenBrands.has(b.brand)) { seenBrands.add(b.brand); openSecs.add(b.brand + "|projects"); }
+  if (openBrand === null) {
+    const saved = localStorage.getItem(BRANDKEY);
+    if (saved === "") openBrand = "";
+    else openBrand = tree.brands.some((b) => b.brand === saved) ? saved : ((tree.brands.find((b) => b.pending) || tree.brands[0] || {}).brand || "");
+  }
+  drawNav();
+  loadOpenCounts();
+}
+function loadOpenCounts() { for (const k of openSecs) { const [b, sec] = k.split("|"); if (b === openBrand && sec !== "projects") loadCounts(b, sec); } }
+async function loadCounts(brand, section) {
+  try {
+    const r = await jget("/api/counts?" + q({brand, section}));
+    for (const k in r.counts) counts[brand + "|" + k] = r.counts[k];
+    drawNav();
+  } catch (e) { say("تعذر العد: " + (e.message || e), "bad"); }
+}
+function setBrand(name) { openBrand = name; localStorage.setItem(BRANDKEY, name); }
+function closeDrawer() { document.body.classList.remove("nav-open"); }
+function entryRow(brand, e, label, cls) {
+  const on = cur && cur.brand === brand && cur.entry === e.key;
+  const n = counts[brand + "|" + e.key];
+  return h("div", {class: "job ent " + cls + (on ? " on" : ""), title: e.key, onclick: () => openEntry(brand, e.key)},
+    h("span", {class: "t"}, label), h("span", {class: "cnt"}, n === undefined ? "…" : n));
+}
+function archiveRows(b, sec) {
+  const rows = [], groups = new Map(), order = [];
+  for (const e of sec.entries) {
+    const segs = e.key.split("/");
+    if (segs.length === 3) {
+      if (!groups.has(segs[1])) { groups.set(segs[1], {name: segs[1], own: null, kids: []}); order.push(["g", segs[1]]); }
+      groups.get(segs[1]).kids.push(e);
+    } else order.push(["e", e]);
+  }
+  for (const e of sec.entries) { const segs = e.key.split("/"); if (segs.length === 2 && groups.has(segs[1])) groups.get(segs[1]).own = e; }
+  for (const [t, v] of order) {
+    if (t === "e") {
+      const segs = v.key.split("/");
+      if (segs.length === 2 && groups.has(segs[1])) continue;
+      rows.push(entryRow(b.brand, v, v.name, "l3"));
+      continue;
+    }
+    const g = groups.get(v), gk = b.brand + "|" + sec.id + "|" + g.name;
+    const hasCur = !!(cur && cur.brand === b.brand && cur.entry && (cur.entry.startsWith(sec.id + "/" + g.name + "/") || cur.entry === sec.id + "/" + g.name));
+    const open = openSubs.has(gk) || hasCur;
+    rows.push(h("div", {class: "grp3", onclick: () => { if (hasCur) return; if (open) openSubs.delete(gk); else openSubs.add(gk); drawNav(); }},
+      h("span", {class: "chev"}, open ? "▾" : "◂"), h("span", {class: "t"}, g.name + "/"), h("span", {class: "cnt"}, g.kids.length + (g.own ? 1 : 0))));
+    if (open) {
+      const wrap = h("div", {class: "l4wrap"});
+      if (g.own) wrap.append(entryRow(b.brand, g.own, "(ملفات مباشرة)", "l4"));
+      for (const k of g.kids) wrap.append(entryRow(b.brand, k, k.key.split("/").slice(2).join("/"), "l4"));
+      rows.push(wrap);
+    }
+  }
+  return rows;
+}
+function drawNav() {
+  const nav = $("#nav"), top = nav.scrollTop;
+  nav.replaceChildren();
+  for (const b of tree.brands) {
+    const open = openBrand === b.brand;
+    nav.append(h("div", {class: "brand" + (open ? " open" : ""), title: b.brand, onclick: () => {
+        setBrand(open ? "" : b.brand); drawNav(); if (!open) loadOpenCounts();
+      }},
+      h("span", {class: "chev"}, open ? "▾" : "◂"),
+      h("span", {class: "t", dir: "auto"}, brandLabel(b)),
+      h("span", {class: "cnt" + (b.pending ? " p" : ""), title: "بانتظار القرار"}, b.pending)));
+    if (!open) continue;
+    const toggle = (id) => () => {
+      const k = b.brand + "|" + id;
+      if (openSecs.has(k)) openSecs.delete(k); else { openSecs.add(k); if (id !== "projects") loadCounts(b.brand, id); }
+      drawNav();
+    };
+    const head = (id, label, n) => {
+      const isOpen = openSecs.has(b.brand + "|" + id);
+      nav.append(h("div", {class: "sec", onclick: toggle(id)}, icon(id, 15), h("span", {class: "t"}, label), h("span", {class: "n"}, n), h("span", {class: "chev"}, isOpen ? "▾" : "◂")));
+      return isOpen;
+    };
+    if (head("projects", "المشروعات", b.jobs.length)) {
+      if (!b.jobs.length) nav.append(h("div", {class: "none"}, "لا توجد مشروعات"));
+      for (const j of b.jobs) {
+        const fresh = j.newest * 1000 > seenAt(b.brand, j.job) && j.files > 0;
+        const on = cur && cur.brand === b.brand && cur.job === j.job;
+        nav.append(h("div", {class: "job" + (on ? " on" : ""), title: j.job, onclick: () => { closeDrawer(); openJob(b.brand, j.job); }},
+          h("span", {class: "t"}, h("span", {class: "ti", dir: "auto"}, (fresh ? h("i", {class: "dot"}) : null), j.title || j.job), h("span", {class: "sl"}, j.job)),
+          h("span", {class: "cnt" + (j.pending ? " p" : ""), title: "بانتظار القرار"}, j.pending)));
+      }
+    }
+    for (const sec of b.sections) {
+      if (!head(sec.id, sec.label, sec.entries.length)) continue;
+      if (!sec.entries.length) { nav.append(h("div", {class: "none"}, "لا يوجد شيء هنا")); continue; }
+      if (sec.id === "archive") for (const r of archiveRows(b, sec)) nav.append(r);
+      else for (const e of sec.entries) nav.append(entryRow(b.brand, e, e.name, "l3"));
+    }
+  }
+  nav.scrollTop = top;
+}
+
+/* ------------------------------------------------------------ open a job / entry */
+function resetView() { openGroups = new Set(); shown.clear(); filter = "all"; reg.clear(); bulks = []; }
+function adopt(d) {
+  data = d;
+  units.clear();
+  for (const u of (d.units || [])) units.set(u.key, u);
+  if (!d.review) d.review = {};
+}
+async function openJob(brand, job, keepSeen) {
+  cur = {brand, job};
+  if (!keepSeen) { prevSeen = seenAt(brand, job); resetView(); }
+  $("#view").replaceChildren(h("div", {class: "empty"}, "جاري التحميل..."));
+  try { adopt(await jget("/api/job?" + q(cur))); } catch (e) { say(String(e.message || e), "bad"); return; }
+  if (!keepSeen) { localStorage.setItem(seenKey(brand, job), String(Date.now())); tab = data.default_tab || "image"; }
+  drawNav();
+  drawJob();
+  syncNow(brand);
+}
+async function openEntry(brand, key) {
+  cur = {brand, entry: key};
+  const sv = localStorage.getItem(seenKey(brand, entSeen(key)));
+  prevSeen = sv ? Number(sv) : Date.now() - FRESH_MS;
+  resetView();
+  closeDrawer();
+  $("#view").replaceChildren(h("div", {class: "empty"}, "جاري التحميل..."));
+  try { adopt(await jget("/api/entry?" + q(cur))); } catch (e) { say(String(e.message || e), "bad"); return; }
+  localStorage.setItem(seenKey(brand, entSeen(key)), String(Date.now()));
+  counts[brand + "|" + key] = data.files.length;
+  tab = data.default_tab || "image";
+  drawNav();
+  drawJob();
+}
+
+/* ------------------------------------------------------------ job view: header, tabs, body */
+function tabFiles(k) { return data.files.filter((f) => f.tab === k); }
+function tabPending(k) { let n = 0; for (const u of units.values()) if (u.tab === k && u.status === "pending") n++; return n; }
+function tabCount(k) {
+  if (k !== "copy" && k !== "plan") return tabFiles(k).length;
+  return tabFiles(k).reduce((a, f) => a + (f.doc ? f.doc.cards.length : 1), 0);
+}
+function tally() {
+  let p = 0, a = 0, r = 0;
+  for (const u of units.values()) { if (u.status === "pending") p++; else if (u.status === "approved") a++; else r++; }
+  return {n: data.files.length, p, a, r, fresh: data.files.filter(isNew).length};
+}
+function statsEl() {
+  const c = tally();
+  const el = h("div", {class: "stats", id: "stats"});
+  el.append(h("span", {class: "chip"}, h("b", {}, c.n), " ملف"));
+  if (!viewOnly()) el.append(h("span", {class: "chip p"}, "مستني ", h("b", {}, c.p)), h("span", {class: "chip a"}, "موافق ", h("b", {}, c.a)), h("span", {class: "chip r"}, "مرفوض ", h("b", {}, c.r)));
+  if (c.fresh) el.append(h("span", {class: "chip"}, "جديد ", h("b", {}, c.fresh)));
+  if (data.truncated) el.append(h("span", {class: "chip"}, "العرض اتقطع عند الحد الأقصى"));
+  return el;
+}
+function drawStats() { const s = $("#stats"); if (s) s.replaceWith(statsEl()); }
+
+function drawJob() {
+  const v = $("#view");
+  v.replaceChildren();
+  reg.clear(); bulks = [];
+  const vo = viewOnly();
+  const sid = cur.entry ? cur.entry.split("/")[0] : "projects";
+  const parts = cur.entry ? cur.entry.split("/").slice(1) : [data.title];
+  if (!parts.length) parts.push(SECLABEL[sid] || sid);
+  const crumb = h("div", {class: "crumb"}, h("bdi", {class: "c1"}, brandOf(data.brand)), h("span", {class: "sep"}, "›"), h("span", {}, SECLABEL[sid] || sid));
+  for (const p of parts) crumb.append(h("span", {class: "sep"}, "›"), h("bdi", {}, p));
+  const title = cur.entry ? parts[parts.length - 1] : data.title;
+  const head = h("div", {class: "vhead"}, crumb,
+    h("h2", {dir: "auto"}, title, vo ? h("span", {class: "vo"}, "عرض فقط") : null),
+    cur.entry ? null : h("div", {class: "slug"}, data.job),
+    vo ? h("p", {class: "what"}, h("b", {}, "عرض فقط"), " — للاطلاع، لا توجد موافقة أو رفض هنا")
+       : h("p", {class: "what"}, h("b", {}, "مشروع"), " — يمكنك الموافقة أو الرفض أو التعليق"),
+    statsEl());
+  v.append(head);
+  if (!data.files.length) { v.append(h("div", {class: "empty"}, vo ? "المجلد فارغ" : "لا توجد ملفات في work/ أو final/ لهذا المشروع")); return; }
+  v.append(h("div", {class: "tabs", id: "tabs"}), h("div", {id: "bar"}), h("div", {id: "body"}));
+  drawTabs();
+  drawBody();
+}
+function drawTabs() {
+  const t = $("#tabs");
+  if (!t) return;
+  t.replaceChildren();
+  for (const [k, label] of TABS) {
+    if (!tabFiles(k).length) continue;
+    const pend = viewOnly() ? 0 : tabPending(k);
+    t.append(h("button", {class: tab === k ? "on" : "", onclick: () => { tab = k; reg.clear(); bulks = []; drawTabs(); drawBody(); $("#view").scrollTop = Math.min($("#view").scrollTop, $("#tabs").offsetTop); }},
+      label, h("span", {class: "n"}, tabCount(k)), pend ? h("span", {class: "w", title: "بانتظار القرار"}, pend) : null));
+  }
+}
+function drawBar() {
+  const bar = $("#bar");
+  bar.replaceChildren();
+  if (viewOnly() || !["image", "video", "copy", "plan"].includes(tab)) return;
+  const fl = h("div", {class: "filters"});
+  for (const [k, l] of [["all", "الكل"], ["pending", "مستني قرار"], ["approved", "موافق"], ["rejected", "مرفوض"]])
+    fl.append(h("button", {class: filter === k ? "on" : "", onclick: () => { filter = k; reg.clear(); bulks = []; drawBar(); drawBody(); }}, l));
+  bar.append(fl);
+}
+function visibleKey(key) {
+  if (viewOnly() || filter === "all") return true;
+  return ustatus(key) === filter;
+}
+function fileVisible(f) {
+  if (viewOnly() || !f.reviewable || filter === "all") return true;
+  return fileKeys(f).some(visibleKey);
+}
+/* layout(): the one place that decides what is shown, in order - used by the page and by the review overlay */
+function layout() {
+  const zones = {};
+  for (const g of data.groups) zones[g.dir] = g.zone || "";
+  const all = tabFiles(tab).filter(fileVisible);
+  const m = new Map();
+  for (const f of all) {
+    if (f.doc && f.reviewable) continue;                        // post files are laid out as file blocks
+    const k = f.gkey === undefined ? f.dir : f.gkey;
+    if (!m.has(k)) m.set(k, {dir: k, files: [], newest: 0, zone: zones[k] || ""});
+    const g = m.get(k);
+    g.files.push(f);
+    if (f.mtime > g.newest) g.newest = f.mtime;
+  }
+  const groups = [...m.values()].sort((a, b) => ZONE_RANK[a.zone] - ZONE_RANK[b.zone] || b.newest - a.newest || (a.dir < b.dir ? -1 : 1));
+  for (const g of groups) {
+    g.collapsed = g.zone !== "" || g.files.length > data.big_group;
+    if (g.collapsed && groups.length === 1 && g.zone === "") g.collapsed = false;     // the only group stays open
+    g.open = !g.collapsed || openGroups.has(tab + "|" + g.dir);
+  }
+  const blocks = all.filter((f) => f.doc && f.reviewable);
+  return {groups, blocks};
+}
+function folderTitle(dir) {
+  if (!dir) return h("span", {class: "gt ar"}, "(الجذر)");
+  const i = dir.lastIndexOf("/");
+  return h("span", {class: "gt"}, i < 0 ? h("span", {}, dir) : [h("span", {class: "pp"}, dir.slice(0, i + 1)), h("span", {}, dir.slice(i + 1))]);
+}
+function drawBody() {
+  drawBar();
+  const body = $("#body");
+  body.replaceChildren();
+  reg.clear(); bulks = [];
+  const all = tabFiles(tab);
+  if (!all.length) { body.append(h("div", {class: "empty"}, "لا يوجد شيء في هذا التبويب")); return; }
+  const L = layout();
+  if (!L.groups.length && !L.blocks.length) { body.append(h("div", {class: "empty"}, "لا توجد عناصر بهذا الفلتر")); return; }
+  for (const f of L.blocks) body.append(fileBlock(f));
+  for (const g of L.groups) {
+    const key = tab + "|" + g.dir;
+    const gNew = g.files.filter(isNew).length;
+    const box = h("div", {class: "grp" + (g.collapsed ? " col" : "")});
+    const keys = () => g.files.filter((f) => f.reviewable).flatMap(fileKeys);
+    box.append(h("div", {class: "gh", onclick: g.collapsed ? () => { g.open ? openGroups.delete(key) : openGroups.add(key); drawBody(); } : null},
+      g.collapsed ? h("span", {class: "chev"}, g.open ? "▾" : "◂") : null, folderTitle(g.dir),
+      h("span", {class: "n"}, g.files.length), gNew ? h("span", {class: "nw"}, "جديد " + gNew) : null,
+      g.zone ? h("span", {class: "zl " + g.zone}, ZONE_LABEL[g.zone]) : null,
+      g.collapsed && !g.open ? h("span", {class: "hint"}, g.zone ? "اضغط للعرض" : "مجلد كبير — اضغط للعرض") : null,
+      h("span", {class: "sp"}),
+      !viewOnly() && g.zone === "" && TEXT_TABS.concat(["other"]).indexOf(tab) < 0 ? bulkBar(keys) : null));
+    if (g.open) box.append(groupBody(g, key));
+    body.append(box);
+  }
+}
+function groupBody(g, key) {
+  const wrap = h("div", {});
+  const cls = tab === "image" || tab === "video" ? "tiles" : TEXT_TABS.includes(tab) ? "tcards" : "orows";
+  const grid = h("div", {class: cls});
+  const limit = shown.get(key) || PAGE;
+  const maker = (f) => f.kind === "text" ? noteCard(f) : tab === "other" ? otherRow(f) : tile(f);
+  if (tab === "notes") grid.className = "tiles";
+  const mixed = tab === "notes";
+  if (mixed && g.files.some((f) => f.kind === "text")) {                 // notes: text cards first, then media tiles
+    const tx = g.files.filter((f) => f.kind === "text"), md = g.files.filter((f) => f.kind !== "text");
+    wrap.append(h("div", {class: "tcards"}, tx.slice(0, limit).map(maker)));
+    if (md.length) wrap.append(h("div", {class: "tiles", style: "margin-top:14px"}, md.slice(0, limit).map(maker)));
+    return wrap;
+  }
+  for (const f of g.files.slice(0, limit)) grid.append(maker(f));
+  wrap.append(grid);
+  if (g.files.length > limit) {
+    wrap.append(h("div", {class: "more"}, h("button", {onclick: (ev) => {
+      const n = limit + PAGE;
+      shown.set(key, n);
+      for (const f of g.files.slice(limit, n)) grid.append(maker(f));
+      if (g.files.length <= n) wrap.querySelector(".more").remove();
+      else ev.target.textContent = `عرض المزيد (${g.files.length - n})`;
+    }}, `عرض المزيد (${g.files.length - limit})`)));
+  }
+  return wrap;
+}
+
+/* ------------------------------------------------------------ decisions UI */
+function track(key, make) { const el = make(); reg.set(key, {el, make}); return el; }
+function decisionRow(key, mode) {
+  const s = ustatus(key), dec = data.review[key];
+  const cm = h("div", {class: "cm"});
+  const ta = h("textarea", {dir: "auto", placeholder: "تعليق..."});
+  ta.value = dec && dec.note || "";
+  const save = () => { cm.classList.remove("show"); decide([key], null, ta.value); };
+  ta.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) save(); });
+  cm.append(ta, h("div", {class: "row"}, h("button", {class: "sb", onclick: save}, "حفظ"), h("button", {class: "sb", onclick: () => cm.classList.remove("show")}, "إلغاء")));
+  const btns = h("div", {class: "btns " + (mode === "ov" ? "hov" : "vbtn")},
+    h("button", {class: "sb ok" + (s === "approved" ? " on" : ""), onclick: (e) => { e.stopPropagation(); decide([key], "approved"); }}, "موافق"),
+    h("button", {class: "sb no" + (s === "rejected" ? " on" : ""), onclick: (e) => { e.stopPropagation(); decide([key], "rejected"); }}, "مرفوض"),
+    h("button", {class: "sb", onclick: (e) => { e.stopPropagation(); cm.classList.toggle("show"); if (cm.classList.contains("show")) ta.focus(); }}, "تعليق"));
+  return {btns, cm};
+}
+function noteLine(key) { const d = data.review[key]; return d && d.note ? h("div", {class: "note", dir: "auto"}, d.note) : null; }
+
+function bulkBar(keysFn) {
+  const el = h("span", {class: "bulk"});
+  const draw = () => {
+    el.replaceChildren();
+    const pend = keysFn().filter((k) => ustatus(k) === "pending");
+    if (!pend.length) return;
+    const ask = (st) => {
+      el.replaceChildren(h("span", {class: "conf"}, `متأكد؟ (${pend.length})`),
+        h("button", {class: "sb " + (st === "approved" ? "ok" : "no"), onclick: (e) => { e.stopPropagation(); decide(pend, st); }}, st === "approved" ? "موافق" : "رفض"),
+        h("button", {class: "sb", onclick: (e) => { e.stopPropagation(); draw(); }}, "إلغاء"));
+    };
+    el.append(h("button", {class: "sb ok", onclick: (e) => { e.stopPropagation(); ask("approved"); }}, `موافق على الكل (${pend.length})`),
+      h("button", {class: "sb no", onclick: (e) => { e.stopPropagation(); ask("rejected"); }}, "رفض الكل"));
+  };
+  draw();
+  bulks.push({el, draw});
+  return el;
+}
+
+/* ------------------------------------------------------------ media tiles */
+function tile(f) {
+  return track(f.path, () => {
+    const key = f.path, s = ustatus(key), vo = viewOnly(), canAct = !vo && f.reviewable, u = units.get(key);
+    const ui = canAct ? decisionRow(key, f.kind === "image" ? "ov" : "row") : null;
+    const open = () => openRv(f.path);
+    const media = f.kind === "image"
+      ? h("img", {src: thumbUrl(f), loading: "lazy", decoding: "async", alt: f.name, onclick: open})
+      : h("video", {src: fileUrl(f), controls: true, preload: "metadata"});
+    const thumb = h("div", {class: "thumb"}, media,
+      isNew(f) ? h("span", {class: "newdot", title: "جديد"}) : null,
+      canAct && s !== "pending" ? h("span", {class: "mark " + s + (u && u.inherited ? " inh" : "")}, STT[s]) : null,
+      ui && f.kind === "image" ? ui.btns : null);
+    return h("div", {class: "tile" + (f.kind === "video" ? " vid" : "") + (canAct ? " " + s : "")},
+      thumb,
+      h("div", {class: "cap1", title: f.path}, f.name),
+      h("div", {class: "cap2"}, h("span", {}, fmtDay(f.mtime)), h("span", {}, fmtSize(f.size)), f.sub ? h("span", {class: "sub", title: f.sub}, f.sub) : null),
+      ui && f.kind !== "image" ? [ui.btns, h("div", {class: "vbtn"}, h("button", {class: "sb", onclick: open}, "فتح كبير"))] : null,
+      noteLine(key), ui ? ui.cm : null);
+  });
+}
+
+/* ------------------------------------------------------------ posts: one card per post */
+function fold(label, n, fill) {
+  const box = h("div", {class: "fold"});
+  let body = null;
+  const btn = h("button", {onclick: (e) => {
+    e.stopPropagation();
+    if (body) { body.remove(); body = null; return; }
+    body = h("div", {class: "fb"}, fill());
+    box.append(body);
+  }}, label + (n ? ` (${n})` : ""));
+  box.append(btn);
+  return box;
+}
+function segmentsEl(card) {
+  const wrap = h("div", {});
+  for (const sg of card.segments) {
+    if (sg.kind === "text") { wrap.append(h("div", {class: "seg"}, renderMd(sg.md))); continue; }
+    const hd = sg.kind === "platform"
+      ? h("div", {class: "sh"}, h("span", {class: "plat"}, sg.chip || sg.label), sg.sub ? h("span", {class: "sub", dir: "auto"}, sg.sub) : null)
+      : h("div", {class: "sh"}, h("span", {class: "lb", dir: "auto"}, sg.label));
+    wrap.append(h("div", {class: "seg"}, hd, renderMd(sg.md)));
+  }
+  return wrap;
+}
+function notesFold(card) {
+  if (!card.notes.length) return null;
+  return fold("ملاحظة", card.notes.length, () => card.notes.map((n) => h("div", {}, h("h5", {dir: "auto"}, n.label), renderMd(n.md))));
+}
+function postCard(f, card) {
+  return track(card.key, () => {
+    const key = card.key, s = ustatus(key), u = units.get(key), vo = viewOnly(), canAct = !vo && f.reviewable && !!u;
+    const ui = canAct ? decisionRow(key, "row") : null;
+    const long = card.segments.reduce((a, sg) => a + sg.md.length, 0) > 700;
+    const body = h("div", {class: "pbody" + (long ? " clamp" : "")}, segmentsEl(card));
+    const more = long ? h("button", {class: "more1 sb", onclick: (e) => { const o = body.classList.toggle("open"); e.target.textContent = o ? "إخفاء" : "عرض النص كاملًا"; }}, "عرض النص كاملًا") : null;
+    return h("article", {class: "pc" + (canAct && s !== "pending" ? " " + s : "")},
+      h("div", {class: "ph", title: "فتح للمراجعة", onclick: () => openRv(key)},
+        card.parent ? h("div", {class: "par", dir: "auto"}, card.parent) : null,
+        h("h4", {dir: "auto"}, card.title),
+        card.chips.length ? h("div", {class: "chips"}, card.chips.map((c) => h("span", {class: "plat"}, c))) : null),
+      body, more, notesFold(card),
+      canAct && s !== "pending" ? h("div", {class: "stt " + s}, STT[s] + (u.inherited ? " (بقرار على الملف)" : "")) : null,
+      noteLine(key),
+      ui ? [ui.btns, ui.cm] : null);
+  });
+}
+function fileBlock(f) {
+  const doc = f.doc, multi = !doc.single;
+  const box = h("div", {class: "fblock"});
+  const leg = data.review[f.path];
+  const legacy = multi && leg && leg.status && leg.status !== "pending";
+  if (multi) {
+    box.append(h("div", {class: "fhead"}, h("h3", {dir: "auto"}, doc.title), h("span", {class: "n"}, doc.cards.length + " منشور"),
+      h("span", {class: "fn", title: f.path}, f.name), isNew(f) ? h("span", {class: "badge"}, "جديد") : null,
+      legacy ? h("span", {class: "leg", title: leg.note || ""}, "قرار سابق على الملف: " + STT[leg.status]) : null,
+      h("span", {class: "sp"}),
+      viewOnly() ? null : bulkBar(() => doc.cards.map((c) => c.key))));
+  }
+  if (doc.details.length) box.append(fold("تفاصيل داخلية", doc.details.length, () => renderMd(doc.details.join("\n\n"))));
+  const cards = doc.cards.filter((c) => visibleKey(c.key));
+  box.append(h("div", {class: "pcards"}, cards.map((c) => postCard(f, c))));
+  if (doc.internal.length) box.append(h("div", {style: "margin-top:12px"}, fold("ملاحظات داخلية", doc.internal.length,
+    () => doc.internal.map((s) => h("div", {}, h("h5", {dir: "auto"}, s.title), renderMd(s.md))))));
+  return box;
+}
+
+/* ------------------------------------------------------------ note cards (view only) and other files */
+function parsePreview(text, name) {
+  let lines = text.replace(/^﻿/, "").split(/\r?\n/);
+  if (lines[0] && lines[0].trim() === "---") {
+    const end = lines.findIndex((l, i) => i > 0 && l.trim() === "---");
+    if (end > 0) lines = lines.slice(end + 1);
+  }
+  const clean = (l) => l.replace(/^\s*(#{1,6}\s+|>\s*|[-*+]\s+)/, "").replace(/[*_`]+/g, "").trim();
+  let i = lines.findIndex((l) => l.trim());
+  let title = name.replace(/\.[^.]+$/, "");
+  if (i >= 0 && /^\s*#{1,6}\s+\S/.test(lines[i])) { title = clean(lines[i]); i++; }
+  else if (i < 0) i = 0;
+  const meta = /^\s*(?:[-*+]\s+)?[*_`]*\s*(agent|team|skills?|state|status|date|role|الحالة|التاريخ|الدور)[^:：|\n]{0,25}[:：|]/i;
+  const rest = lines.slice(i).filter((l) => !/^\s*([-=_*]\s*){3,}$/.test(l) && !/^\s*>/.test(l) && !meta.test(l) && !/^\s*\|?[\s:|-]*-[\s:|-]*$/.test(l)).map(clean).filter(Boolean).slice(0, 3);
+  return {title, rest};
+}
+function noteCard(f) {
+  const key = (cur.entry || cur.job) + "|" + f.path;
+  const ttl = h("h4", {dir: "auto"}, f.name.replace(/\.[^.]+$/, ""));
+  const lns = [h("div", {class: "ln", dir: "auto"}, "…"), h("div", {class: "ln", dir: "auto"}), h("div", {class: "ln", dir: "auto"})];
+  const fill = (p) => { ttl.textContent = p.title; lns.forEach((d, i) => { d.textContent = p.rest[i] || ""; }); };
+  const el = h("div", {class: "tcard", onclick: () => openRv(null, f)}, ttl, lns,
+    h("div", {class: "fn"}, h("span", {class: "nm", title: f.path}, f.name), h("span", {}, fmtDay(f.mtime)), isNew(f) ? h("span", {class: "badge"}, "جديد") : null));
+  if (previews.has(key)) fill(previews.get(key));
+  else watchVisible(el, () => jget("/api/text?" + q(Object.assign(scope(), {path: f.path, limit: 900}))).then((t) => {
+    const p = parsePreview(t.text, f.name); previews.set(key, p); fill(p);
+  }).catch(() => { lns[0].textContent = "(تعذر قراءة الملف)"; }));
+  return el;
+}
+let io = null;
+function watchVisible(el, fn) {
+  if (!("IntersectionObserver" in window)) { fn(); return; }
+  if (!io) io = new IntersectionObserver((ents) => {
+    for (const e of ents) if (e.isIntersecting) { io.unobserve(e.target); const f = e.target._load; e.target._load = null; if (f) f(); }
+  }, {rootMargin: "300px"});
+  el._load = fn;
+  io.observe(el);
+}
+function otherRow(f) {
+  return h("div", {class: "orow"}, h("span", {class: "nm", title: f.path}, f.name),
+    h("span", {class: "x"}, f.name.includes(".") ? f.name.split(".").pop().toUpperCase() : ""), h("span", {class: "x"}, fmtSize(f.size)),
+    h("span", {class: "x"}, fmtDay(f.mtime)), isNew(f) ? h("span", {class: "badge"}, "جديد") : null,
+    h("a", {href: fileUrl(f), target: "_blank", rel: "noopener"}, "فتح"));
+}
+
+/* ------------------------------------------------------------ decisions: instant, then a background sync */
+function localCounts() {
+  if (!tree || !cur || cur.entry) return;
+  const b = tree.brands.find((x) => x.brand === cur.brand);
+  const j = b && b.jobs.find((x) => x.job === cur.job);
+  if (!j) return;
+  const c = tally();
+  j.pending = c.p; j.approved = c.a; j.rejected = c.r;
+  b.pending = b.jobs.reduce((a, x) => a + x.pending, 0);
+  drawNav();
+}
+function afterChange(keys) {
+  for (const k of keys) { const r = reg.get(k); if (r) { const el = r.make(); r.el.replaceWith(el); r.el = el; } }
+  drawTabs();
+  for (const b of bulks) b.draw();
+  drawStats();
+  localCounts();
+  if (rv.on) rvStatus();
+}
+let postChain = Promise.resolve();
+function decide(keys, st, note) {
+  if (viewOnly() || !data) return;
+  keys = keys.filter((k) => units.has(k));
+  if (!keys.length) return;
+  const where = {brand: cur.brand, job: cur.job};
+  const prev = keys.map((k) => [k, data.review[k], units.get(k).status, units.get(k).inherited]);
+  const day = fmtDay(Date.now() / 1000);
+  for (const k of keys) {
+    const u = units.get(k), old = data.review[k] || {};
+    data.review[k] = Object.assign({}, old, {status: st || old.status || "pending", date: day, by: "Ahmed",
+      note: note !== undefined && note !== null ? note.trim() : (old.note || "")});
+    if (st) { u.status = st; u.inherited = false; }
+  }
+  afterChange(keys);
+  setSync("بيتحدّث…", "wait");
+  const body = Object.assign(keys.length === 1 ? {path: keys[0]} : {paths: keys}, where);
+  if (st) body.status = st;
+  if (note !== undefined && note !== null) body.note = note;
+  postChain = postChain.then(async () => {
+    try {
+      const r = await fetch("/api/decision", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || r.status);
+      if (data && cur && cur.job === where.job && cur.brand === where.brand) for (const k in (j.entries || {})) data.review[k] = j.entries[k];
+      pollSync(where.brand);
+    } catch (e) {
+      if (data && cur && cur.job === where.job && cur.brand === where.brand) {
+        for (const [k, old, ust, inh] of prev) { if (old === undefined) delete data.review[k]; else data.review[k] = old; const u = units.get(k); if (u) { u.status = ust; u.inherited = inh; } }
+        afterChange(keys);
+      }
+      say("فشل الحفظ: " + (e.message || e), "bad");
+      setSync("", "");
+    }
+  });
+}
+
+/* ------------------------------------------------------------ background sync status */
+let syncTimer = null;
+function setSync(text, cls) { const s = $("#sync"); s.textContent = text; s.className = "msg " + (cls || ""); }
+function showSync(st, brand) {
+  if (st.busy) { setSync("بيتحدّث…", "wait"); return true; }
+  const last = st.last && st.last[brand];
+  if (!last) setSync("", "");
+  else if (last.ok) setSync("اتحدّث ✓", "ok");
+  else setSync("فشل التحديث: " + last.line, "bad");
+  return false;
+}
+function pollSync(brand) {
+  if (syncTimer) return;
+  const tick = async () => {
+    try {
+      const st = await jget("/api/sync");
+      if (showSync(st, brand)) syncTimer = setTimeout(tick, 1000); else syncTimer = null;
+    } catch (e) { syncTimer = null; setSync("تعذر قراءة حالة التحديث", "bad"); }
+  };
+  syncTimer = setTimeout(tick, 600);
+}
+async function syncNow(brand) { try { if (showSync(await jget("/api/sync"), brand)) pollSync(brand); } catch (e) { /* status only */ } }
+
+/* ------------------------------------------------------------ review overlay: media and posts, keyboard first */
+const rv = {on: false, items: [], i: 0, mode: "media"};
+function rvItems() {
+  const L = layout();
+  if (tab === "copy" || tab === "plan") {
+    const out = [];
+    for (const f of L.blocks) for (const c of f.doc.cards) if (visibleKey(c.key)) out.push({key: c.key, f, card: c});
+    return out;
+  }
+  const out = [];
+  for (const g of L.groups) if (g.open) for (const f of g.files) if (f.kind === "image" || f.kind === "video") out.push({key: f.path, f, card: null});
+  return out;
+}
+function openRv(key, noteFile) {
+  if (noteFile) { rv.items = [{key: null, f: noteFile, card: null, text: true}]; rv.i = 0; }
+  else {
+    rv.items = rvItems();
+    rv.i = Math.max(0, rv.items.findIndex((x) => x.key === key));
+  }
+  if (!rv.items.length) return;
+  rv.on = true;
+  $("#rv").classList.add("show");
+  $("#rv").setAttribute("aria-hidden", "false");
+  rvDraw();
+}
+function closeRv() { rv.on = false; $("#rv").classList.remove("show"); $("#rv").setAttribute("aria-hidden", "true"); $("#rvcm").classList.remove("show"); }
+function rvCan(it) { return !!it && !viewOnly() && !!it.key && units.has(it.key) && !!it.f.reviewable; }
+function rvDraw() {
+  const it = rv.items[rv.i], f = it.f, stage = $("#rvstage");
+  $("#rvn").textContent = (rv.i + 1) + " / " + rv.items.length;
+  $("#rvname").textContent = it.card ? f.name + "  ·  " + it.card.title : f.path;
+  stage.replaceChildren();
+  stage.scrollTop = 0;
+  if (it.card) {
+    stage.append(h("div", {class: "rvtext"}, it.card.parent ? h("div", {class: "par", dir: "auto"}, it.card.parent) : null, h("h4", {dir: "auto"}, it.card.title),
+      it.card.chips.length ? h("div", {class: "chips", style: "display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px"}, it.card.chips.map((c) => h("span", {class: "plat"}, c))) : null,
+      segmentsEl(it.card), notesFold(it.card)));
+  } else if (f.kind === "image") {
+    stage.append(h("img", {src: fileUrl(f), alt: f.name}));
+    const nx = rv.items[(rv.i + 1) % rv.items.length]; if (nx && nx.f.kind === "image") new Image().src = fileUrl(nx.f);
+  } else if (f.kind === "video") {
+    stage.append(h("video", {src: fileUrl(f), controls: true, autoplay: false, preload: "metadata"}));
+  } else {
+    const tx = h("div", {class: "rvtext"}, h("h4", {dir: "auto"}, f.name), h("div", {class: "md"}, "..."));
+    stage.append(tx);
+    jget("/api/text?" + q(Object.assign(scope(), {path: f.path}))).then((t) => {
+      if (rv.items[rv.i] === it) tx.replaceChild(renderMd(t.text + (t.truncated ? "\n\n…" : "")), tx.lastChild);
+    }).catch(() => { tx.lastChild.textContent = "(تعذر قراءة الملف)"; });
+  }
+  const multi = rv.items.length > 1;
+  $("#rvprev").style.visibility = multi ? "visible" : "hidden";
+  $("#rvnext").style.visibility = multi ? "visible" : "hidden";
+  $("#rvcm").classList.remove("show");
+  rvStatus();
+}
+function rvStatus() {
+  const it = rv.items[rv.i];
+  if (!it) return;
+  const can = rvCan(it), s = can ? ustatus(it.key) : null, u = can ? units.get(it.key) : null;
+  const st = $("#rvst");
+  st.textContent = can ? STT[s] + (u.inherited ? " (بقرار على الملف)" : "") : (viewOnly() ? "عرض فقط" : (it.text ? "ملاحظات" : "للاطلاع"));
+  st.className = "rvst " + (can ? s : "");
+  const box = $("#rvbtns");
+  box.replaceChildren();
+  if (can) box.append(
+    h("button", {class: "ok" + (s === "approved" ? " on" : ""), onclick: () => rvDecide("approved")}, "موافق (A)"),
+    h("button", {class: "no" + (s === "rejected" ? " on" : ""), onclick: () => rvDecide("rejected")}, "مرفوض (R)"),
+    h("button", {onclick: rvComment}, "تعليق (C)"));
+  const d = can ? data.review[it.key] : null;
+  $("#rvnote").textContent = d && d.note ? "تعليق: " + d.note : "";
+}
+function rvGo(delta) { if (rv.items.length < 2) return; rv.i = (rv.i + delta + rv.items.length) % rv.items.length; rvDraw(); }
+function toast(t) { const el = $("#rvtoast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("show"), 2200); }
+function rvDecide(st) {
+  const it = rv.items[rv.i];
+  if (!rvCan(it)) return;
+  decide([it.key], st);
+  // auto-advance to the next item still waiting for a decision (same tab, wraps around)
+  const n = rv.items.length;
+  for (let step = 1; step <= n; step++) {
+    const j = (rv.i + step) % n, x = rv.items[j];
+    if (rvCan(x) && ustatus(x.key) === "pending") { rv.i = j; rvDraw(); return; }
+  }
+  toast("لا يوجد شيء آخر بانتظار القرار في هذا التبويب");
+}
+function rvComment() {
+  const it = rv.items[rv.i];
+  if (!rvCan(it)) return;
+  const box = $("#rvcm"), ta = $("textarea", box);
+  ta.value = (data.review[it.key] && data.review[it.key].note) || "";
+  box.classList.add("show");
+  ta.focus();
+}
+function rvSaveComment() {
+  const it = rv.items[rv.i], ta = $("#rvcm textarea");
+  if (!rvCan(it)) return;
+  $("#rvcm").classList.remove("show");
+  decide([it.key], null, ta.value);
+}
+$("#rvx").addEventListener("click", closeRv);
+$("#rvprev").addEventListener("click", () => rvGo(-1));     // RTL: the right button goes back, the left one forward
+$("#rvnext").addEventListener("click", () => rvGo(1));
+$("#rvprev").append(icon("next", 24)); $("#rvnext").append(icon("prev", 24));
+$("#rvcmsave").addEventListener("click", rvSaveComment);
+$("#rvcm textarea").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); rvSaveComment(); } });
+$("#rv").addEventListener("click", (e) => { if (e.target.id === "rvstage") closeRv(); });
+let tx0 = null;
+$("#rvstage").addEventListener("touchstart", (e) => { tx0 = e.touches.length === 1 ? e.touches[0].clientX : null; }, {passive: true});
+$("#rvstage").addEventListener("touchend", (e) => {
+  if (tx0 === null) return;
+  const dx = e.changedTouches[0].clientX - tx0; tx0 = null;
+  if (Math.abs(dx) > 60) rvGo(dx > 0 ? 1 : -1);               // RTL: swipe right = next
+});
+document.addEventListener("keydown", (e) => {
+  if (!rv.on) return;
+  const typing = e.target && /^(TEXTAREA|INPUT)$/.test(e.target.tagName);
+  if (e.key === "Escape") { if (typing) { $("#rvcm").classList.remove("show"); e.target.blur(); } else closeRv(); e.preventDefault(); return; }
+  if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === "ArrowLeft") { rvGo(1); e.preventDefault(); }          // RTL: left = forward
+  else if (e.key === "ArrowRight") { rvGo(-1); e.preventDefault(); }
+  else if (e.code === "KeyA") { rvDecide("approved"); e.preventDefault(); }
+  else if (e.code === "KeyR") { rvDecide("rejected"); e.preventDefault(); }
+  else if (e.code === "KeyC") { rvComment(); e.preventDefault(); }
+});
+
+/* ------------------------------------------------------------ shell */
+$("#menu").append(icon("menu", 18), h("span", {}, "البراندات"));
+$("#menu").addEventListener("click", () => document.body.classList.toggle("nav-open"));
+$("#scrim").addEventListener("click", closeDrawer);
+$("#reload").addEventListener("click", async () => {
+  await loadTree(true);
+  if (cur) { if (cur.entry) openEntry(cur.brand, cur.entry); else openJob(cur.brand, cur.job, true); }
+});
+loadTree().catch((e) => say("تعذر تحميل القائمة: " + (e.message || e), "bad"));
+</script>
+</body>
+</html>

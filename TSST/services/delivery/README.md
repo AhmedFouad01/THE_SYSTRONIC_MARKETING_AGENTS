@@ -2,6 +2,10 @@
 
 One manifest per job -> two pages in the job folder, one template, two languages in each file.
 
+## Owner review board (REVIEW-001, 2026-10-17)
+
+`REVIEW.bat` (repo root) starts `TSST/services/review/review.py`, a local page on 127.0.0.1 that lists every brand and job under `TSST/brands` and shows all media and copy found in each job's `work/` and `final/` (newest first, no manual registration). Approve / reject / comment per file is written to that job's `DELIVERY.json` under `"review"` (key = path relative to the job; other content and indent untouched; a minimal manifest is created when the job has none), then `sync_jobs.py <brand>` runs. `build_delivery.py` does not read `review`, so client pages are unchanged. Notes: `TSST/handoffs/review-board/REVIEW-001-DEV-RESULT.md`.
+
 ## Unified brand view (owner requirement, 2026-10-12)
 
 The brand is the entry point: `TSST/brands/<id>/DELIVERY.html` and
@@ -38,7 +42,7 @@ are reviewable artifacts; client publication remains a separate approval.
 - `build_delivery.py` (stdlib only; `VERSION` constant, schema in its docstring)
 - `i18n/en.json`, `i18n/ar.json`: every chrome string (same keys). No sentences are concatenated; placeholders like `{n}` are filled by the generator.
 - `systronic.json`: the agency footer data (website, email, phone, whatsapp, address, social, copyright). Empty fields are hidden on the client page and shown as "not set" on the internal page. Never invent data here.
-- `fonts/`: Poppins (Latin) and IBM Plex Sans Arabic (Arabic), embedded in every page. `assets/`: iconic-mark tints and favicon (made from `TSST/brands/t-sag/assets/final/logo/systronic_iconic-mark_*`).
+- `fonts/`: Poppins (Latin) and IBM Plex Sans Arabic (Arabic), embedded in every page. `assets/`: iconic-mark tints and favicon (made from `TSST/brands/t-sag/approved/brand/logo/systronic_iconic-mark_*`).
 
 ## Start a job (new_job.py)
 - `python TSST/services/delivery/new_job.py <brand-id> <job-path> --service "<SV-.. name>" --title "<title>" [--lang en|ar] [--dry-run]`

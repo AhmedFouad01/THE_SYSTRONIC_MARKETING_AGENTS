@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "mode": "mutate",
+  "errors": [],
+  "warnings": [
+    "Explicit contract mode records the named contract; native auto-loading is unverified."
+  ],
+  "workspace": "C:\\Work\\TSST",
+  "branch": "master",
+  "hashes": {
+    ".claude/agents/tsst-dev.md": "7fb2a7f1459a9303bb781d791547c620e28aae6b8cae9aed646d1e598b0d573f",
+    "TSST/core/rules.md": "7292b0de06af7e43e6b91d68c32c82230d7d86708ba40d960a6c57243c79f534",
+    "TSST/DEV/skills/tsst-dev-sk-004-implementation-planning-decomposition/SKILL.md": "d04f0c39337724fd7f84c5ebc56c3694f6e8d6675b55bc1f502126dd26ec80e3",
+    "TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering/SKILL.md": "1def9f2d619faa17332618c849d4e75e436973be044adcedfd105fc3e188da6f",
+    "TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion/SKILL.md": "3e4f5cfb552fb61838df1d84d95d0580b969fc55f0cdf63c9138f55dc3645a76"
+  },
+  "native_registration": "unverified",
+  "limitations": [
+    "Authority is a recorded reference, not human authentication.",
+    "Hashes identify files; they do not prove reading, method use or approval.",
+    "Preflight does not intercept shell tools or enforce subsequent execution."
+  ],
+  "contract_mode": "explicit",
+  "authority_source": "Ahmed explicit approval in Claude chat 2026-10-17: 'موافق. افتح القفل للوحة المراجعة بس وابدأ البناء على tsst-dev.' (R46 exception for the owner review board only).",
+  "scope": {
+    "read": [
+      "TSST/services/**",
+      "TSST/core/rules.md",
+      "TSST/handoffs/review-board/**",
+      "TSST/DEV/**",
+      "TSST/skills/**",
+      "AGENTS.md"
+    ],
+    "write": [
+      "TSST/services/review/**",
+      "REVIEW.bat",
+      "TSST/services/delivery/README.md",
+      "TSST/handoffs/review-board/REVIEW-001-DEV-RESULT.md"
+    ]
+  }
+}
