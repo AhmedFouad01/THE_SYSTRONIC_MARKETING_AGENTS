@@ -28,7 +28,8 @@ If the IP changes after a stop/start, take the new IP from the EC2 console and u
 | PostgreSQL | 16.15 | Ubuntu (`postgresql-16`), listens on 127.0.0.1:5432 only |
 | Caddy | v2.11.7 | Cloudsmith official repo (`/etc/apt/sources.list.d/caddy-stable.list`) |
 | Node.js / npm | v24.22.0 / 11.19.1 | NodeSource official apt repo (`node_24.x`, key `/usr/share/keyrings/nodesource.gpg`) |
-| git, jq, rclone | 2.43.0, 1.7, 1.60.1 | Ubuntu |
+| git, jq | 2.43.0, 1.7 | Ubuntu |
+| rclone | v1.75.2 | official .deb from downloads.rclone.org, SHA256 verified (replaced Ubuntu 1.60.1, 2026-10-18) |
 | ufw, fail2ban, unattended-upgrades | Ubuntu | see Security |
 
 ## Services (systemd, all enabled at boot)
@@ -85,3 +86,56 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
 - The bare IP still answers on plain HTTP with the placeholder.
 - The IP is not Elastic: after a stop/start, update it in DuckDNS (web page, "update ip"). An automatic updater
   needs the DuckDNS token on the server; Ahmed places it himself (never in the repo or in chat).
+
+## Phase 3 / R3a: portal app deployed (2026-10-18)
+Live: https://portal.the-systronic.duckdns.org (`/login` 200, `/api/tree` 401 without a session, `/` 302 to `/login`).
+Source of all server files: repo `C:\Work\tsst-portal`, folder `scripts/server/` (+ `scripts/deploy.sh`). No secrets in any of them.
+
+| Item | Value |
+|---|---|
+| Service | `tsst-portal.service` (User `tsst`, enabled at boot, Restart=on-failure, hardened: NoNewPrivileges, ProtectSystem=strict, ProtectHome, PrivateTmp, only `/var/cache/tsst-portal` writable). Runs TypeScript through `tsx` (moved to a runtime dependency; no build step). Listens on 127.0.0.1:3100 only |
+| App | `/srv/tsst/portal/releases/<git sha>`; `current` and `previous` are symlinks; the 5 newest releases are kept |
+| Config | `/etc/tsst-portal/portal.env` (root:tsst 640): never print it. `BETTER_AUTH_SECRET` was generated on the server |
+| Database | Postgres role `tsst` + database `portal` (owner `tsst`), peer auth over `/var/run/postgresql`, no password. Included in the daily dump |
+| Caddy | `portal.the-systronic.duckdns.org` reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, noindex kept). Website root and crm stay placeholders. Backups: `Caddyfile.phase1.bak`, `Caddyfile.phase2.bak` |
+| Portfolio | `/srv/tsst/portal/portfolio.yaml` (copy of `TSST/core/portfolio.yaml`, refreshed on every deploy) |
+| Thumb cache | `/var/cache/tsst-portal` |
+| Helper | `/usr/local/bin/tsst-portal-run <npm-script>` (run as `tsst`: loads the env file, runs `npm run`) |
+
+### Deploy (from the PC, Git Bash, in `C:\Work\tsst-portal`)
+```
+scripts/deploy.sh             # HEAD must be committed (refuses uncommitted tracked changes)
+scripts/deploy.sh --dirty     # HEAD + uncommitted tracked changes (release name ends -dirty-<time>)
+```
+Steps: `git archive` -> scp -> unpack to a new release folder -> `npm ci --omit=dev` -> migrations -> atomic symlink switch -> restart -> health check (`/login` on 127.0.0.1:3100, up to 30 s). A failed health check switches back to the previous release by itself. The server holds no GitHub credential.
+The first deploy was `--dirty` (release `b52a81867-dirty-...`): run a normal `scripts/deploy.sh` once the Lead has committed.
+
+### Rollback
+```
+scripts/deploy.sh --rollback     # switch to `previous`, restart, health check
+```
+Manual: `sudo ln -sfn /srv/tsst/portal/releases/<old> /srv/tsst/portal/current.new && sudo mv -T /srv/tsst/portal/current.new /srv/tsst/portal/current && sudo systemctl restart tsst-portal`. Migrations only go forward; a rollback keeps the newer schema, so migrations must stay additive.
+Logs: `sudo journalctl -u tsst-portal -n 50`. Status: `systemctl is-active tsst-portal`.
+
+### Drive mirror (rclone, read-only)
+- Config `/var/lib/tsst-rclone/rclone.conf` (tsst:tsst 600, remote `gdrive`, scope `drive.readonly`). It is NOT under `/etc/tsst-portal/` because rclone rewrites the file when the access token refreshes (needs a folder `tsst` can write to).
+- `tsst-drive-sync.timer`: every 5 min (2 min after boot) -> `tsst-drive-sync.service` -> `/usr/local/bin/tsst-drive-sync`: `rclone sync gdrive:TSST-Clients /srv/tsst/clients` as `tsst`, `flock` lock, `--drive-skip-gdocs`, `--delete-excluded`, `--max-delete 200`, logs in the journal. While the config file is missing it only logs "not linked yet" and exits 0.
+- Filter `/etc/tsst-portal/drive-filter.txt`: includes `<brand>/projects/**`, `approved/**`, `photos/**`, `*.md`, `*.yaml` (root and brand top level); excludes `archive/**`, `desktop.ini`, `Thumbs.db`, `.DS_Store`; everything else is skipped.
+- Receiver `/usr/local/bin/tsst-rclone-token` (root): reads the `rclone authorize` output from stdin, keeps only the token between rclone's paste markers, writes the config, lists the folders in `TSST-Clients`, starts the first sync. It never prints the token.
+- Check: `systemctl list-timers tsst-drive-sync.timer`, `sudo journalctl -u tsst-drive-sync -n 20`.
+- Revoke: `sudo rm /var/lib/tsst-rclone/rclone.conf` and remove the app at https://myaccount.google.com/permissions.
+
+### Authorise Drive (Ahmed, PowerShell on the PC, once)
+The blob is base64 of `{"scope":"drive.readonly"}` WITHOUT `=` padding (rclone rejects the padded form).
+```
+& "C:\Users\10\tsst-tools\rclone\rclone.exe" authorize "drive" "eyJzY29wZSI6ImRyaXZlLnJlYWRvbmx5In0" | ssh -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@54.93.60.74 "sudo tsst-rclone-token"
+```
+A browser opens for the Google sign-in; approve read-only access. The terminal then prints `OK - Drive linked` and the folder names.
+
+### Create the first portal user (Ahmed, PowerShell, interactive; password typed twice, hidden)
+```
+ssh -t -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@54.93.60.74 "sudo -u tsst tsst-portal-run user:add -- --email the.systronic@gmail.com --name 'Ahmed Fouad'"
+```
+
+### Reboot test (2026-10-18)
+Server rebooted once: `tsst-portal`, `caddy`, `postgresql` active, timers back, `/login` 200, `/api/tree` 401, `/` 302. The journal was searched for the auth secret: no hit.
