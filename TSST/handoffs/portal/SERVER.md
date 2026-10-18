@@ -125,9 +125,24 @@ Logs: `sudo journalctl -u tsst-portal -n 50`. Status: `systemctl is-active tsst-
 - Check: `systemctl list-timers tsst-drive-sync.timer`, `sudo journalctl -u tsst-drive-sync -n 20`.
 - Revoke: `sudo rm /var/lib/tsst-rclone/rclone.conf` and remove the app at https://myaccount.google.com/permissions.
 
-### Authorise Drive (Ahmed, PowerShell on the PC, once)
-Own Google OAuth client (since 2026-10-18; rclone's shared client is being retired during 2026): Google Cloud project
-`tsst-drive`, Drive API enabled, consent screen External and **published** (in "Testing" the token expires after 7 days),
+### Authorise Drive with a service account (Ahmed, PowerShell on the PC, once) — preferred since 2026-10-18
+Why: rclone's shared OAuth client is being retired during 2026; an own OAuth client in "Testing" expires every 7 days
+and Google's "Publish app" stayed disabled. A service account never expires and sees only what is shared with it.
+Google Cloud project `tsst-drive` (Drive API enabled) -> IAM & Admin -> Service Accounts -> `tsst-portal-drive`, no
+roles -> Keys -> JSON key into Downloads. In Drive, `TSST-Clients` is shared with the account's
+`...iam.gserviceaccount.com` address as **Viewer**.
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Users\10\tsst-tools\rclone\drive-link-sa.ps1"
+```
+The helper moves the key to `C:\Users\10\.ssh\tsst-drive-sa.json` and pipes it to `/usr/local/bin/tsst-rclone-sa`
+(root). The receiver tests the key with a temporary config (`shared_with_me = true`, `drive.readonly`) and switches only
+when `gdrive:TSST-Clients` lists; otherwise it prints the address to share with and leaves the current link alone.
+On success: key `/var/lib/tsst-rclone/sa.json` (tsst 600), old config kept as `rclone.conf.prev` (rollback:
+`sudo mv /var/lib/tsst-rclone/rclone.conf.prev /var/lib/tsst-rclone/rclone.conf`). Revoke: remove the share in Drive
+and delete the key in Google Cloud.
+
+### Authorise Drive with an OAuth token (older way, kept as a fallback)
+Own Google OAuth client: consent screen External and **published** (in "Testing" the token expires after 7 days),
 client type Desktop app. Its `client_secret_*.json` is downloaded into Downloads; the helper moves it to
 `C:\Users\10\.ssh\tsst-drive-client.json` and reuses it on later runs.
 ```
