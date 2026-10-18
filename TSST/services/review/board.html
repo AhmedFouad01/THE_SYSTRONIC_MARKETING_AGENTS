@@ -110,6 +110,7 @@ section#view{flex:1;min-width:0;overflow:auto;padding:0 28px 90px;position:relat
 .grp>.gh .zl{font-size:12px;font-weight:600;border-radius:10px;padding:0 10px;background:#ECEEF5;color:var(--mut)}
 .grp>.gh .zl.old{background:#FCE8EB;color:#B3122A}
 .grp.col>.gh{cursor:pointer}
+.ro{flex:none;background:#FFF4D6;color:#5a4300;font-size:13px;padding:6px 14px;text-align:center;border-bottom:1px solid #E8D79A}.ro[hidden]{display:none}.ro a{color:#01304A;font-weight:600}.ro span{opacity:.75}
 .bulk{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap}
 .bulk .ok{border-color:var(--ok);color:var(--ok)}.bulk .no{border-color:var(--no);color:var(--no)}
 .bulk .ok:hover{background:var(--ok);color:#fff}.bulk .no:hover{background:var(--no);color:#fff}
@@ -267,6 +268,7 @@ section#view{flex:1;min-width:0;overflow:auto;padding:0 28px 90px;position:relat
   <button id="reload">تحديث</button>
 </header>
 <div class="redline"></div>
+<div class="ro" id="ro" hidden>القرارات بقت من البوابة: <a href="https://portal.the-systronic.duckdns.org" target="_blank" rel="noopener noreferrer">portal.the-systronic.duckdns.org</a> <span>(هنا للقراءة فقط)</span></div>
 <main>
   <div id="scrim"></div>
   <nav id="nav"></nav>
@@ -332,6 +334,7 @@ function icon(name, size) {
 function say(text, cls) { const m = $("#msg"); m.textContent = text || ""; m.className = "msg " + (cls || ""); }
 function q(o) { return Object.entries(o).map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&"); }
 function scope() { return cur.entry ? {brand: cur.brand, entry: cur.entry} : {brand: cur.brand, job: cur.job}; }
+let readOnly = false;                      // REVIEW.bat: decisions are made in the portal (tree.read_only)
 function viewOnly() { return !!(cur && cur.entry); }
 function fileUrl(f) { return "/file?" + q(Object.assign(scope(), {path: f.path})); }
 function thumbUrl(f, w) { return "/thumb?" + q(Object.assign(scope(), {path: f.path, w: w || 480})); }
@@ -426,6 +429,9 @@ function renderMd(md) {
 async function loadTree(refresh) {
   say("جاري القراءة...");
   tree = await jget("/api/tree" + (refresh ? "?refresh=1" : ""));
+  readOnly = !!tree.read_only;
+  $("#ro").hidden = !readOnly;
+  $("#rv .hint").hidden = readOnly;
   if (refresh) for (const k in counts) delete counts[k];
   for (const b of tree.brands) for (const sec of b.sections) {
     SECLABEL[sec.id] = sec.label;
@@ -686,7 +692,7 @@ function drawBody() {
       g.zone ? h("span", {class: "zl " + g.zone}, ZONE_LABEL[g.zone]) : null,
       g.collapsed && !g.open ? h("span", {class: "hint"}, g.zone ? "اضغط للعرض" : "مجلد كبير — اضغط للعرض") : null,
       h("span", {class: "sp"}),
-      !viewOnly() && g.zone === "" && TEXT_TABS.concat(["other"]).indexOf(tab) < 0 ? bulkBar(keys) : null));
+      !viewOnly() && !readOnly && g.zone === "" && TEXT_TABS.concat(["other"]).indexOf(tab) < 0 ? bulkBar(keys) : null));
     if (g.open) box.append(groupBody(g, key));
     body.append(box);
   }
@@ -760,7 +766,7 @@ function bulkBar(keysFn) {
 function tile(f) {
   return track(f.path, () => {
     const key = f.path, s = ustatus(key), vo = viewOnly(), canAct = !vo && f.reviewable, u = units.get(key);
-    const ui = canAct ? decisionRow(key, f.kind === "image" ? "ov" : "row") : null;
+    const ui = canAct && !readOnly ? decisionRow(key, f.kind === "image" ? "ov" : "row") : null;
     const open = () => openRv(f.path);
     const media = f.kind === "image"
       ? h("img", {src: thumbUrl(f), loading: "lazy", decoding: "async", alt: f.name, onclick: open})
@@ -809,7 +815,7 @@ function notesFold(card) {
 function postCard(f, card) {
   return track(card.key, () => {
     const key = card.key, s = ustatus(key), u = units.get(key), vo = viewOnly(), canAct = !vo && f.reviewable && !!u;
-    const ui = canAct ? decisionRow(key, "row") : null;
+    const ui = canAct && !readOnly ? decisionRow(key, "row") : null;
     const long = card.segments.reduce((a, sg) => a + sg.md.length, 0) > 700;
     const body = h("div", {class: "pbody" + (long ? " clamp" : "")}, segmentsEl(card));
     const more = long ? h("button", {class: "more1 sb", onclick: (e) => { const o = body.classList.toggle("open"); e.target.textContent = o ? "إخفاء" : "عرض النص كاملًا"; }}, "عرض النص كاملًا") : null;
@@ -834,7 +840,7 @@ function fileBlock(f) {
       h("span", {class: "fn", title: f.path}, f.name), isNew(f) ? h("span", {class: "badge"}, "جديد") : null,
       legacy ? h("span", {class: "leg", title: leg.note || ""}, "قرار سابق على الملف: " + STT[leg.status]) : null,
       h("span", {class: "sp"}),
-      viewOnly() ? null : bulkBar(() => doc.cards.map((c) => c.key))));
+      viewOnly() || readOnly ? null : bulkBar(() => doc.cards.map((c) => c.key))));
   }
   if (doc.details.length) box.append(fold("تفاصيل داخلية", doc.details.length, () => renderMd(doc.details.join("\n\n"))));
   const cards = doc.cards.filter((c) => visibleKey(c.key));
@@ -910,7 +916,7 @@ function afterChange(keys) {
 }
 let postChain = Promise.resolve();
 function decide(keys, st, note) {
-  if (viewOnly() || !data) return;
+  if (viewOnly() || readOnly || !data) return;
   keys = keys.filter((k) => units.has(k));
   if (!keys.length) return;
   const where = {brand: cur.brand, job: cur.job};
@@ -1032,7 +1038,7 @@ function rvStatus() {
   st.className = "rvst " + (can ? s : "");
   const box = $("#rvbtns");
   box.replaceChildren();
-  if (can) box.append(
+  if (can && !readOnly) box.append(
     h("button", {class: "ok" + (s === "approved" ? " on" : ""), onclick: () => rvDecide("approved")}, "موافق (A)"),
     h("button", {class: "no" + (s === "rejected" ? " on" : ""), onclick: () => rvDecide("rejected")}, "مرفوض (R)"),
     h("button", {onclick: rvComment}, "تعليق (C)"));
@@ -1043,7 +1049,7 @@ function rvGo(delta) { if (rv.items.length < 2) return; rv.i = (rv.i + delta + r
 function toast(t) { const el = $("#rvtoast"); el.textContent = t; el.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("show"), 2200); }
 function rvDecide(st) {
   const it = rv.items[rv.i];
-  if (!rvCan(it)) return;
+  if (readOnly || !rvCan(it)) return;
   decide([it.key], st);
   // auto-advance to the next item still waiting for a decision (same tab, wraps around)
   const n = rv.items.length;
@@ -1055,7 +1061,7 @@ function rvDecide(st) {
 }
 function rvComment() {
   const it = rv.items[rv.i];
-  if (!rvCan(it)) return;
+  if (readOnly || !rvCan(it)) return;
   const box = $("#rvcm"), ta = $("textarea", box);
   ta.value = (data.review[it.key] && data.review[it.key].note) || "";
   box.classList.add("show");
@@ -1063,7 +1069,7 @@ function rvComment() {
 }
 function rvSaveComment() {
   const it = rv.items[rv.i], ta = $("#rvcm textarea");
-  if (!rvCan(it)) return;
+  if (readOnly || !rvCan(it)) return;
   $("#rvcm").classList.remove("show");
   decide([it.key], null, ta.value);
 }

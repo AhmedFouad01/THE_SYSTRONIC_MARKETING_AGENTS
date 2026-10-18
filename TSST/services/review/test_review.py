@@ -510,7 +510,7 @@ class Round4Files(Base):
             review.api_text(self.root, "acme", "j", "work/long.md", limit="abc")
 
 
-class Http(Base):
+class HttpBase(Base):
     def setUp(self):
         super().setUp()
         d = self.job("camp")
@@ -552,6 +552,8 @@ class Http(Base):
             with e:
                 return e.code, json.loads(e.read())
 
+
+class Http(HttpBase):
     def test_page_tree_job_text_and_range(self):
         st, body, _ = self.get("/")
         self.assertEqual(st, 200)
@@ -1072,6 +1074,52 @@ class Round6Http(Http):
         self.assertEqual(st, 200)
         self.assertEqual(len(r["entries"]), 2)
         self.assertEqual(self.post({"brand": "acme", "job": "camp", "path": "work/POSTS.md#zzz", "status": "approved"})[0], 404)
+
+
+class ReadOnlyHttp(HttpBase):
+    """REVIEW.bat starts the board with --read-only: decisions are made in the portal (R3b)."""
+
+    def setUp(self):
+        super().setUp()
+        self.srv.read_only = True
+
+    def test_post_decision_is_403_with_the_portal_link_and_nothing_is_written(self):
+        mf = os.path.join(self.p, "camp", "DELIVERY.json")
+        st, res = self.post({"brand": "acme", "job": "camp", "path": "work/a.png", "status": "approved"})
+        self.assertEqual((st, res["ok"]), (403, False))
+        self.assertIn("https://portal.the-systronic.duckdns.org", res["error"])
+        self.assertIn("البوابة", res["error"])
+        self.assertFalse(os.path.exists(mf))
+        self.assertEqual(self.synced, [])
+        self.assertEqual(self.post({"brand": "acme", "job": "camp", "paths": ["work/a.png"], "status": "rejected"})[0], 403)
+
+    def test_tree_and_ping_expose_read_only_and_reads_still_work(self):
+        tree = json.loads(self.get("/api/tree")[1])
+        self.assertIs(tree["read_only"], True)
+        self.assertIs(json.loads(self.get("/api/ping")[1])["read_only"], True)
+        self.assertEqual(self.get("/api/job?brand=acme&job=camp")[0], 200)
+        self.assertEqual(review.board_running(self.port), {"read_only": True})
+
+    def test_page_hides_decision_ui_and_shows_the_banner(self):
+        page = self.get("/")[1].decode("utf-8")
+        self.assertIn('id="ro"', page)
+        self.assertIn("القرارات بقت من البوابة", page)
+        self.assertIn("https://portal.the-systronic.duckdns.org", page)
+        for guard in ("canAct && !readOnly ? decisionRow", "viewOnly() || readOnly ? null : bulkBar", "if (can && !readOnly) box.append",
+                      "viewOnly() || readOnly || !data", "readOnly || !rvCan(it)"):
+            self.assertIn(guard, page)
+
+
+class WritableByDefault(HttpBase):
+    def test_tree_says_not_read_only_and_post_still_works(self):
+        self.assertIs(json.loads(self.get("/api/tree")[1])["read_only"], False)
+        self.assertEqual(self.post({"brand": "acme", "job": "camp", "path": "work/a.png", "status": "approved"})[0], 200)
+        self.srv.syncer.wait_idle(5)
+
+    def test_cli_flag_reaches_the_server(self):
+        srv = review.make_server(self.root, 0, self.fake_sync, read_only=True)
+        self.addCleanup(srv.server_close)
+        self.assertTrue(srv.read_only)
 
 
 if __name__ == "__main__":

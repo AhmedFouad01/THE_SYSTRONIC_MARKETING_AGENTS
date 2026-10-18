@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """review.py - owner review board (REVIEW-001). Stdlib only, binds 127.0.0.1 only.
 
-Usage: python TSST/services/review/review.py [--port 8790] [--open] [--root <brands dir>]
+Usage: python TSST/services/review/review.py [--port 8790] [--open] [--root <brands dir>] [--read-only]
+
+--read-only (REVIEW.bat): decisions are made in the portal; POST /api/decision answers 403 and the board hides
+its decision buttons. The "review" block is then a mirror written only by pull_decisions.py.
 
 Shows every brand/job under TSST/brands (a folder link to the client store) with all media and
 copy found in each job's work/ and final/ - nothing has to be registered by hand. Per file the
@@ -43,6 +46,8 @@ except Exception:                      # pragma: no cover - depends on the machi
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 DEFAULT_ROOT = os.path.join(REPO, "TSST", "brands")
+PORTAL_URL = "https://portal.the-systronic.duckdns.org"
+READ_ONLY_MSG = "القرارات بقت من البوابة: " + PORTAL_URL
 SYNC_SCRIPT = os.path.join(REPO, "TSST", "services", "delivery", "sync_jobs.py")
 BUILD_SCRIPT = os.path.join(REPO, "TSST", "services", "delivery", "build_delivery.py")
 FONTS_DIR = os.path.join(REPO, "TSST", "services", "delivery", "fonts")
@@ -1286,9 +1291,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
                                            {"Content-Security-Policy": "default-src 'self'; img-src 'self' data:; media-src 'self'; "
                                             "style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'unsafe-inline'"})
             if url.path == "/api/ping":
-                return self.send_json(200, {"app": APP_ID})
+                return self.send_json(200, {"app": APP_ID, "read_only": self.server.read_only})
             if url.path == "/api/tree":
-                return self.send_json(200, api_tree(root, refresh=q.get("refresh") == "1"))
+                return self.send_json(200, dict(api_tree(root, refresh=q.get("refresh") == "1"), read_only=self.server.read_only))
             if url.path == "/api/entry":
                 return self.send_json(200, api_entry(root, q.get("brand"), q.get("entry")))
             if url.path == "/api/counts":
@@ -1385,6 +1390,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
         try:
             if url.path != "/api/decision":
                 raise BadRequest("not found", 404)
+            if self.server.read_only:
+                raise BadRequest(READ_ONLY_MSG, 403)
             if not (self.headers.get("Content-Type") or "").lower().startswith("application/json"):
                 raise BadRequest("json only", 415)
             origin = self.headers.get("Origin")
@@ -1411,9 +1418,10 @@ class Board(http.server.ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = False
 
-    def __init__(self, addr, root, sync, delay=SYNC_DELAY, build=None):
+    def __init__(self, addr, root, sync, delay=SYNC_DELAY, build=None, read_only=False):
         super().__init__(addr, Handler)
         self.root = root
+        self.read_only = bool(read_only)
         self.sync = sync
         self.syncer = SyncWorker(sync, delay, build=build)
 
@@ -1422,22 +1430,24 @@ class Board(http.server.ThreadingHTTPServer):
         super().server_close()
 
 
-def make_server(root, port, sync, tries=20, delay=SYNC_DELAY, build=None):
+def make_server(root, port, sync, tries=20, delay=SYNC_DELAY, build=None, read_only=False):
     last = None
     for p in range(port, port + tries):
         try:
-            return Board(("127.0.0.1", p), root, sync, delay, build)
+            return Board(("127.0.0.1", p), root, sync, delay, build, read_only)
         except OSError as exc:
             last = exc
     raise last
 
 
 def board_running(port):
+    """None when no board answers, else {"read_only": bool}."""
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/ping", timeout=1.5) as r:
-            return json.loads(r.read().decode("utf-8")).get("app") == APP_ID
+            info = json.loads(r.read().decode("utf-8"))
     except (OSError, ValueError, urllib.error.URLError):
-        return False
+        return None
+    return {"read_only": bool(info.get("read_only"))} if info.get("app") == APP_ID else None
 
 
 def main(argv=None):
@@ -1446,6 +1456,7 @@ def main(argv=None):
     ap.add_argument("--open", action="store_true", help="open the browser")
     ap.add_argument("--sync-delay", type=float, default=SYNC_DELAY, help="seconds after the last decision before the background sync")
     ap.add_argument("--root", default=DEFAULT_ROOT, help="brands folder (tests / scratch copies only)")
+    ap.add_argument("--read-only", action="store_true", help="view only: decisions are made in the portal (REVIEW.bat)")
     args = ap.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):                 # Arabic folder names must not crash the console
         try:
@@ -1456,9 +1467,12 @@ def main(argv=None):
     if not os.path.isdir(root):
         print(f"brands folder not found: {root}")
         return 1
-    if board_running(args.port):
+    running = board_running(args.port)
+    if running:
         url = f"http://127.0.0.1:{args.port}/"
         print(f"REVIEW_URL {url} (already running)")
+        if args.read_only and not running["read_only"]:
+            print("WARNING: the board already open is the old writable one - close its window and start REVIEW.bat again")
         if args.open:
             webbrowser.open(url)
         return 0
@@ -1466,9 +1480,10 @@ def main(argv=None):
     real = os.path.normcase(root) == os.path.normcase(DEFAULT_ROOT)
     sync = run_sync if real else (lambda b: {"ok": True, "line": "sync skipped (custom --root)"})
     build = (lambda b, j: run_build(root, b, j)) if real else None
-    srv = make_server(root, args.port, sync, delay=max(0.0, args.sync_delay), build=build)
+    srv = make_server(root, args.port, sync, delay=max(0.0, args.sync_delay), build=build, read_only=args.read_only)
     url = f"http://127.0.0.1:{srv.server_port}/"
-    print(f"REVIEW_URL {url}\nroot {root}\nCtrl+C to stop", flush=True)
+    note = "view only - decisions are made in the portal\n" if args.read_only else ""
+    print(f"REVIEW_URL {url}\nroot {root}\n{note}Ctrl+C to stop", flush=True)
     if args.open:
         threading.Timer(0.4, webbrowser.open, args=(url,)).start()
     try:

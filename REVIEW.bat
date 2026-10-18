@@ -8,5 +8,5 @@ echo.
 echo   لوحة المراجعة — سيب الشباك ده مفتوح
 echo.
 where python >nul 2>nul
-if %errorlevel%==0 (python TSST\services\review\review.py --open) else (py -3 TSST\services\review\review.py --open)
+if %errorlevel%==0 (python TSST\services\review\review.py --open --read-only) else (py -3 TSST\services\review\review.py --open --read-only)
 if errorlevel 1 pause

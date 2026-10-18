@@ -13,8 +13,7 @@ Every job folder under `TSST/brands/<id>/projects/<job>/` is checked by `python 
 ```
 
 ## Review board (owner approvals, 2026-10-17)
-Ahmed reviews every job in the local board (`REVIEW.bat` → http://127.0.0.1:8790, code in
-`TSST/services/review/`). It reads job folders directly, so where and how a file is saved decides
+Ahmed approves in the portal (https://portal.the-systronic.duckdns.org); the portal database is the source of truth. A pull task on his PC ("TSST pull decisions", every 15 min, `TSST/services/review/pull_decisions.py`) mirrors the decisions into each job's `DELIVERY.json` `"review"` block within ~15 min. `REVIEW.bat` (http://127.0.0.1:8790, same folder) is view-only: it shows the files and decisions, and a decision POST answers 403. It reads job folders directly, so where and how a file is saved decides
 where it shows up:
 - Save everything inside the job: drafts in `work/`, finished files in `final/`. Never in Downloads,
   Documents or another tool's folder.
@@ -29,7 +28,7 @@ where it shows up:
 - Folders: QA screenshots in `qa/`; references in `refs/`; superseded work in `rejected/` or `old/`.
   These are never offered for approval.
 - Decisions live in `DELIVERY.json` → `"review"` (`"<path>"` or `"<path>#<post-anchor>"`). Only the
-  board writes it. After you change a manifest yourself: `build_delivery.py <job>`, then
+  pull script writes it (a mirror of the portal); agents never edit it. After you change a manifest yourself: `build_delivery.py <job>`, then
   `sync_jobs.py <brand>`; `job_check.py` must pass.
 
 Legacy layout (README.md, `NN_NAME` slots 00-08, `files/`, `observations/`) is still accepted until a brand is moved; `build_delivery.py` keeps writing to `files/` only for a job that has `files/` and no `final/`.

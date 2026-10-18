@@ -139,3 +139,9 @@ ssh -t -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@54.93.60.74 "sudo -u t
 
 ### Reboot test (2026-10-18)
 Server rebooted once: `tsst-portal`, `caddy`, `postgresql` active, timers back, `/login` 200, `/api/tree` 401, `/` 302. The journal was searched for the auth secret: no hit.
+
+### Review decisions: import / export / pull (R3b, 2026-10-18)
+The portal database is the source of truth for review decisions; the `review` block of each job's `DELIVERY.json` is a mirror.
+- Import (once, after the Drive mirror finished): `sudo -u tsst tsst-portal-run import:review`. Reads every `BRANDS_ROOT/*/projects/**/DELIVERY.json` `review` block into `decision_history` (source `import`, `decided_by` from `by`, `decided_at` from `date` at 00:00 UTC). Idempotent: an entry whose status and note already match is skipped; a different current decision made on or after the file's date is kept (the database wins). Prints one line per job (in file / inserted / same / db newer / skipped). Exit 1 if a manifest is unreadable.
+- Export: `sudo -u tsst tsst-portal-run export:decisions` prints ONE line of JSON `[{brand, job, key, status, note, by, date}]` (current decisions; no ids, no secrets). npm prints a banner before it; the line starts with `[`.
+- Pull (PC): `python TSST/services/review/pull_decisions.py [--dry-run]` runs the export over ssh (key `~/.ssh/tsst-portal-key-fra.pem`, BatchMode), writes changed jobs' `review` blocks (indent and newline kept; local-only keys kept), then `build_delivery.py` for changed jobs that have a DELIVERY.html, then `sync_jobs.py <brand>`. Offline: quiet exit 0. Log `%LOCALAPPDATA%/tsst-review/pull.log` (rotated at 100 KB). Scheduled task "TSST pull decisions": every 15 min, `pythonw`, current user, only when logged on, no admin. Run/stop: `schtasks /Run /TN "TSST pull decisions"`, `schtasks /End ...`, `schtasks /Delete /TN "TSST pull decisions" /F`.
