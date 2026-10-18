@@ -75,3 +75,13 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
 ## Not yet done (later phases)
 - DuckDNS name + HTTPS (Phase 2), UptimeRobot monitor (needs the hostname), Drive upload of backups (needs Ahmed's rclone authorisation).
 - Elastic IP: not allocated (cost watch in the brief: public IPv4 is billed after free-tier coverage). Without it the IP can change on stop/start; Phase 2 then needs the DuckDNS IP updater.
+
+## Phase 2: domain + HTTPS (2026-10-18)
+- DuckDNS: `the-systronic.duckdns.org` → 54.93.60.74 (set by Ahmed in the DuckDNS web page). Sub-names resolve
+  to the same IP: `portal.the-systronic.duckdns.org`, `crm.the-systronic.duckdns.org`.
+- Caddy (`/etc/caddy/Caddyfile`, backup of phase 1 at `Caddyfile.phase1.bak`): automatic Let's Encrypt
+  certificates for the three names (issuer YE1, auto-renew), HTTP → HTTPS 308, HSTS, nosniff; portal and crm send
+  `X-Robots-Tag: noindex`. All three serve the placeholder until their apps exist. No ACME contact email is set.
+- The bare IP still answers on plain HTTP with the placeholder.
+- The IP is not Elastic: after a stop/start, update it in DuckDNS (web page, "update ip"). An automatic updater
+  needs the DuckDNS token on the server; Ahmed places it himself (never in the repo or in chat).
