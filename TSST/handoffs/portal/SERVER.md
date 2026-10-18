@@ -126,11 +126,19 @@ Logs: `sudo journalctl -u tsst-portal -n 50`. Status: `systemctl is-active tsst-
 - Revoke: `sudo rm /var/lib/tsst-rclone/rclone.conf` and remove the app at https://myaccount.google.com/permissions.
 
 ### Authorise Drive (Ahmed, PowerShell on the PC, once)
-The blob is base64 of `{"scope":"drive.readonly"}` WITHOUT `=` padding (rclone rejects the padded form).
+Own Google OAuth client (since 2026-10-18; rclone's shared client is being retired during 2026): Google Cloud project
+`tsst-drive`, Drive API enabled, consent screen External and **published** (in "Testing" the token expires after 7 days),
+client type Desktop app. Its `client_secret_*.json` is downloaded into Downloads; the helper moves it to
+`C:\Users\10\.ssh\tsst-drive-client.json` and reuses it on later runs.
 ```
-& "C:\Users\10\tsst-tools\rclone\rclone.exe" authorize "drive" "eyJzY29wZSI6ImRyaXZlLnJlYWRvbmx5In0" | ssh -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@54.93.60.74 "sudo tsst-rclone-token"
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Users\10\tsst-tools\rclone\drive-link.ps1"
 ```
-A browser opens for the Google sign-in; approve read-only access. The terminal then prints `OK - Drive linked` and the folder names.
+The helper builds the authorize blob (base64 of `{"client_id","client_secret","scope":"drive.readonly"}` WITHOUT `=`
+padding; rclone rejects the padded form) and sends `TSST_CLIENT_ID=` / `TSST_CLIENT_SECRET=` lines plus the
+`rclone authorize` output to the receiver over ssh stdin. A browser opens for the Google sign-in; pick the account that
+owns TSST-Clients, approve read-only access ("not verified" = your own app: Advanced -> Go to TSST Drive). The terminal
+then prints `OK - Drive linked (own Google client)` and the folder names. Without a client file the older one-liner
+with blob `eyJzY29wZSI6ImRyaXZlLnJlYWRvbmx5In0` still links through rclone's shared client.
 
 ### Create the first portal user (Ahmed, PowerShell, interactive; password typed twice, hidden)
 ```
