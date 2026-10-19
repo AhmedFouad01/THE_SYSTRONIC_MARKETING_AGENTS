@@ -8,7 +8,7 @@ its decision buttons. The "review" block is then a mirror written only by pull_d
 
 Shows every brand/job under TSST/brands (a folder link to the client store) with all media and
 copy found in each job's work/ and final/ - nothing has to be registered by hand. Per file the
-owner can approve / reject / comment; the decision is written to that job's DELIVERY.json under
+owner can approve / request changes / comment; the decision is written to that job's DELIVERY.json under
 "review". Round 4: the POST returns at once; sync_jobs.py runs later in ONE debounced background worker
 (SyncWorker, per brand, status at /api/sync).
 
@@ -89,7 +89,10 @@ SYNC_MAX_WAIT = 30.0      # a steady stream of clicks cannot postpone the sync l
 BIG_GROUP = 40
 MAX_BATCH = 500
 MAX_TEXT = 20000
-STATUSES = ("approved", "rejected", "pending")
+# "changes_requested" is the Dash word (not shippable as is, redo per the note); "rejected" is the old word of the same status.
+# Both are read and counted alike; the payloads of this board keep "rejected" as the one internal name.
+CHANGES = ("rejected", "changes_requested")
+STATUSES = ("approved", "rejected", "changes_requested", "pending")
 SEG_BAD = re.compile(r'[\x00-\x1f<>:"|?*\\]')
 BRAND_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 
@@ -595,16 +598,17 @@ def attach_docs(jd, files):
 
 
 def eff_status(review, key, path=None):
-    """(status, inherited). A card with no decision of its own inherits an approved/rejected whole-file decision."""
+    """(status, inherited). A card with no decision of its own inherits an approved / changes-requested whole-file decision.
+    changes_requested (new word) and rejected (old word) are one status, reported as "rejected"."""
     d = review.get(key)
     st = d.get("status") if isinstance(d, dict) else None
-    if st in ("approved", "rejected"):
-        return st, False
+    if st in ("approved",) + CHANGES:
+        return ("rejected" if st in CHANGES else st), False
     if path and path != key:
         d2 = review.get(path)
         st2 = d2.get("status") if isinstance(d2, dict) else None
-        if st2 in ("approved", "rejected"):
-            return st2, True
+        if st2 in ("approved",) + CHANGES:
+            return ("rejected" if st2 in CHANGES else st2), True
     return "pending", False
 
 

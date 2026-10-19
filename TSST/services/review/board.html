@@ -275,14 +275,14 @@ section#view{flex:1;min-width:0;overflow:auto;padding:0 28px 90px;position:relat
   <section id="view"><div class="how"><h2>طريقة الاستخدام</h2>
 <div><b>١</b>اختر البراند من القائمة الجانبية، ثم افتح المشروع من قسم المشروعات.</div>
 <div><b>٢</b>راجع الصور والفيديو والنصوص من التبويبات. تُعرض المنشورات واحدًا واحدًا.</div>
-<div><b>٣</b>اضغط على أي صورة أو منشور لبدء المراجعة السريعة: <kbd>A</kbd> موافق · <kbd>R</kbd> مرفوض · <kbd>C</kbd> تعليق · الأسهم للتنقل.</div></div></section>
+<div><b>٣</b>اضغط على أي صورة أو منشور لبدء المراجعة السريعة: <kbd>A</kbd> موافق · <kbd>R</kbd> Request edit · <kbd>C</kbd> تعليق · الأسهم للتنقل.</div></div></section>
 </main>
 <div id="rv" aria-hidden="true">
   <div class="rvbar"><span class="rvn" id="rvn"></span><span class="rvname" id="rvname"></span><span class="rvst" id="rvst"></span>
     <span class="btns" id="rvbtns" style="display:flex;gap:8px"></span><button id="rvx" aria-label="إغلاق">إغلاق</button></div>
   <div class="rvmain"><button class="nv" id="rvprev" aria-label="السابق"></button><div class="rvstage" id="rvstage"></div><button class="nv" id="rvnext" aria-label="التالي"></button></div>
   <div class="rvfoot"><div class="rvnote" id="rvnote"></div><div class="rvcm" id="rvcm"><textarea dir="auto" placeholder="تعليق..."></textarea><button id="rvcmsave">حفظ</button></div>
-    <div class="hint"><kbd>←</kbd> <kbd>→</kbd> تنقل · <kbd>A</kbd> موافق · <kbd>R</kbd> مرفوض · <kbd>C</kbd> تعليق · <kbd>Esc</kbd> إغلاق</div></div>
+    <div class="hint"><kbd>←</kbd> <kbd>→</kbd> تنقل · <kbd>A</kbd> موافق · <kbd>R</kbd> Request edit · <kbd>C</kbd> تعليق · <kbd>Esc</kbd> إغلاق</div></div>
   <div class="toast" id="rvtoast"></div>
 </div>
 <script>
@@ -347,7 +347,7 @@ function seenAt(b, j) { const v = localStorage.getItem(seenKey(b, j)); return v 
 function isNew(f) { return f.mtime * 1000 > prevSeen; }
 function brandLabel(b) { return b.name && b.name !== b.brand ? b.name : b.brand; }
 function brandOf(slug) { const b = tree && tree.brands.find((x) => x.brand === slug); return b ? brandLabel(b) : slug; }
-const STT = {approved: "موافق", rejected: "مرفوض", pending: "مستني"};
+const STT = {approved: "موافق", rejected: "Changes requested", pending: "مستني"};
 function ustatus(key) { const u = units.get(key); return u ? u.status : "pending"; }
 function fileKeys(f) { return f.doc ? f.doc.cards.map((c) => c.key) : [f.path]; }
 
@@ -585,7 +585,7 @@ function statsEl() {
   const c = tally();
   const el = h("div", {class: "stats", id: "stats"});
   el.append(h("span", {class: "chip"}, h("b", {}, c.n), " ملف"));
-  if (!viewOnly()) el.append(h("span", {class: "chip p"}, "مستني ", h("b", {}, c.p)), h("span", {class: "chip a"}, "موافق ", h("b", {}, c.a)), h("span", {class: "chip r"}, "مرفوض ", h("b", {}, c.r)));
+  if (!viewOnly()) el.append(h("span", {class: "chip p"}, "مستني ", h("b", {}, c.p)), h("span", {class: "chip a"}, "موافق ", h("b", {}, c.a)), h("span", {class: "chip r"}, "Changes requested ", h("b", {}, c.r)));
   if (c.fresh) el.append(h("span", {class: "chip"}, "جديد ", h("b", {}, c.fresh)));
   if (data.truncated) el.append(h("span", {class: "chip"}, "العرض اتقطع عند الحد الأقصى"));
   return el;
@@ -606,8 +606,8 @@ function drawJob() {
   const head = h("div", {class: "vhead"}, crumb,
     h("h2", {dir: "auto"}, title, vo ? h("span", {class: "vo"}, "عرض فقط") : null),
     cur.entry ? null : h("div", {class: "slug"}, data.job),
-    vo ? h("p", {class: "what"}, h("b", {}, "عرض فقط"), " — للاطلاع، لا توجد موافقة أو رفض هنا")
-       : h("p", {class: "what"}, h("b", {}, "مشروع"), " — يمكنك الموافقة أو الرفض أو التعليق"),
+    vo ? h("p", {class: "what"}, h("b", {}, "عرض فقط"), " — للاطلاع، لا توجد موافقة أو طلب تعديل هنا")
+       : h("p", {class: "what"}, h("b", {}, "مشروع"), " — يمكنك الموافقة أو طلب تعديل (Request edit) أو التعليق"),
     statsEl());
   v.append(head);
   if (!data.files.length) { v.append(h("div", {class: "empty"}, vo ? "المجلد فارغ" : "لا توجد ملفات في work/ أو final/ لهذا المشروع")); return; }
@@ -631,7 +631,7 @@ function drawBar() {
   bar.replaceChildren();
   if (viewOnly() || !["image", "video", "copy", "plan"].includes(tab)) return;
   const fl = h("div", {class: "filters"});
-  for (const [k, l] of [["all", "الكل"], ["pending", "مستني قرار"], ["approved", "موافق"], ["rejected", "مرفوض"]])
+  for (const [k, l] of [["all", "الكل"], ["pending", "مستني قرار"], ["approved", "موافق"], ["rejected", "Changes requested"]])
     fl.append(h("button", {class: filter === k ? "on" : "", onclick: () => { filter = k; reg.clear(); bulks = []; drawBar(); drawBody(); }}, l));
   bar.append(fl);
 }
@@ -737,7 +737,7 @@ function decisionRow(key, mode) {
   cm.append(ta, h("div", {class: "row"}, h("button", {class: "sb", onclick: save}, "حفظ"), h("button", {class: "sb", onclick: () => cm.classList.remove("show")}, "إلغاء")));
   const btns = h("div", {class: "btns " + (mode === "ov" ? "hov" : "vbtn")},
     h("button", {class: "sb ok" + (s === "approved" ? " on" : ""), onclick: (e) => { e.stopPropagation(); decide([key], "approved"); }}, "موافق"),
-    h("button", {class: "sb no" + (s === "rejected" ? " on" : ""), onclick: (e) => { e.stopPropagation(); decide([key], "rejected"); }}, "مرفوض"),
+    h("button", {class: "sb no" + (s === "rejected" ? " on" : ""), onclick: (e) => { e.stopPropagation(); decide([key], "rejected"); }}, "Request edit"),
     h("button", {class: "sb", onclick: (e) => { e.stopPropagation(); cm.classList.toggle("show"); if (cm.classList.contains("show")) ta.focus(); }}, "تعليق"));
   return {btns, cm};
 }
@@ -751,11 +751,11 @@ function bulkBar(keysFn) {
     if (!pend.length) return;
     const ask = (st) => {
       el.replaceChildren(h("span", {class: "conf"}, `متأكد؟ (${pend.length})`),
-        h("button", {class: "sb " + (st === "approved" ? "ok" : "no"), onclick: (e) => { e.stopPropagation(); decide(pend, st); }}, st === "approved" ? "موافق" : "رفض"),
+        h("button", {class: "sb " + (st === "approved" ? "ok" : "no"), onclick: (e) => { e.stopPropagation(); decide(pend, st); }}, st === "approved" ? "موافق" : "Request edit"),
         h("button", {class: "sb", onclick: (e) => { e.stopPropagation(); draw(); }}, "إلغاء"));
     };
     el.append(h("button", {class: "sb ok", onclick: (e) => { e.stopPropagation(); ask("approved"); }}, `موافق على الكل (${pend.length})`),
-      h("button", {class: "sb no", onclick: (e) => { e.stopPropagation(); ask("rejected"); }}, "رفض الكل"));
+      h("button", {class: "sb no", onclick: (e) => { e.stopPropagation(); ask("rejected"); }}, "Request edit (all)"));
   };
   draw();
   bulks.push({el, draw});
@@ -1040,7 +1040,7 @@ function rvStatus() {
   box.replaceChildren();
   if (can && !readOnly) box.append(
     h("button", {class: "ok" + (s === "approved" ? " on" : ""), onclick: () => rvDecide("approved")}, "موافق (A)"),
-    h("button", {class: "no" + (s === "rejected" ? " on" : ""), onclick: () => rvDecide("rejected")}, "مرفوض (R)"),
+    h("button", {class: "no" + (s === "rejected" ? " on" : ""), onclick: () => rvDecide("rejected")}, "Request edit (R)"),
     h("button", {onclick: rvComment}, "تعليق (C)"));
   const d = can ? data.review[it.key] : null;
   $("#rvnote").textContent = d && d.note ? "تعليق: " + d.note : "";

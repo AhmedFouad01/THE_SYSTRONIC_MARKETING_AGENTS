@@ -1,0 +1,62 @@
+{
+  "team": "build",
+  "agent": "tsst-dev",
+  "skills": [
+    "TSST-DEV-SK-005",
+    "TSST-DEV-SK-007",
+    "TSST-DEV-SK-013"
+  ],
+  "not_selected": "TSST-DEV-SK-011 tests (follow C1's vitest + unittest patterns, required by acceptance); TSST-DEV-SK-006 data (no new migration: 003 stays as C1 wrote it); TSST-DEV-SK-008 threat model (client leak rules already fixed in DASH-API; covered by tests).",
+  "tier": "CODE",
+  "acceptance": "DASH-001 C2 Phase A, TSST part: pull_decisions.py and review.py accept 'changes_requested' (old 'rejected' still read and counted as changes requested); unittest suites green; AGENTS.md step 2 wording (approved = build on it; changes requested = not shippable as is, redo per the note); JOB_LAYOUT.md 'Review board' section points to the Dash; owner wording rule as one line in TSST/core/rules.md (R22). No DELIVERY.json review block is edited by hand. Client folders (TSST/brands, outside git) are read-only.",
+  "skill_gap": "none",
+  "track": "master",
+  "read": [
+    "AGENTS.md",
+    "TSST/core/rules.md",
+    "TSST/services/**",
+    "TSST/handoffs/portal/**",
+    "TSST/skills/**",
+    "TSST/DEV/**"
+  ],
+  "write": [
+    "TSST/services/review/pull_decisions.py",
+    "TSST/services/review/review.py",
+    "TSST/services/review/test_pull_decisions.py",
+    "TSST/services/review/test_review.py",
+    "TSST/services/review/board.html",
+    "AGENTS.md",
+    "TSST/services/delivery/JOB_LAYOUT.md",
+    "TSST/core/rules.md",
+    "TSST/handoffs/portal/DASH-001-C2-PLAN.json",
+    "TSST/handoffs/portal/SERVER.md"
+  ],
+  "authority": {
+    "source": "Ahmed's DASH-001 request 2026-10-19 (tsst-portal docs/DASH-PLAN.md 'Owner decisions' 1 and 'C2' scope listing these TSST files), under the PORTAL-001 R46 exception (2026-10-18).",
+    "approved_scope": {
+      "read": [
+        "AGENTS.md",
+        "TSST/core/rules.md",
+        "TSST/services/**",
+        "TSST/handoffs/portal/**",
+        "TSST/skills/**",
+        "TSST/DEV/**"
+      ],
+      "write": [
+        "TSST/services/review/pull_decisions.py",
+        "TSST/services/review/review.py",
+        "TSST/services/review/test_pull_decisions.py",
+        "TSST/services/review/test_review.py",
+        "TSST/services/review/board.html",
+        "AGENTS.md",
+        "TSST/services/delivery/JOB_LAYOUT.md",
+        "TSST/core/rules.md",
+        "TSST/handoffs/portal/DASH-001-C2-PLAN.json",
+        "TSST/handoffs/portal/SERVER.md"
+      ]
+    }
+  },
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": ".claude/agents/tsst-dev.md"
+}

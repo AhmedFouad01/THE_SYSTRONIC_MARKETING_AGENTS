@@ -208,5 +208,33 @@ class Main(Base):
             self.assertEqual(json.loads(self.read("j"))["review"], {})
 
 
+class ChangesWord(Base):
+    """changes_requested (Dash) and rejected (old) are one status in a review block."""
+
+    def entry(self, status):
+        return {"status": status, "note": "redo", "date": "2026-10-17", "by": "Ahmed"}
+
+    def test_new_word_from_the_server_is_written(self):
+        self.job("j", {"review": {}})
+        self.run_pull([row(status="changes_requested", note="redo")])
+        self.assertEqual(json.loads(self.read("j"))["review"]["work/a.png"], self.entry("changes_requested"))
+
+    def test_old_word_in_a_file_is_rewritten_to_the_new_word_when_the_server_sends_it(self):
+        self.job("j", {"review": {"work/a.png": self.entry("rejected")}})
+        r = self.run_pull([row(status="changes_requested", note="redo")])
+        self.assertEqual(r["changed"], [("acme", "j", 1)])
+        self.assertEqual(json.loads(self.read("j"))["review"]["work/a.png"]["status"], "changes_requested")
+
+    def test_new_word_in_a_file_is_not_rewritten_while_the_server_still_says_rejected(self):
+        self.job("j", {"review": {"work/a.png": self.entry("changes_requested")}})
+        before = self.read("j")
+        r = self.run_pull([row(status="rejected", note="redo")])
+        self.assertEqual(r["changed"], [])
+        self.assertEqual(self.read("j"), before)
+        # but a real difference (the note) is still written, with the server's word
+        r = self.run_pull([row(status="rejected", note="redo more")])
+        self.assertEqual(r["changed"], [("acme", "j", 1)])
+
+
 if __name__ == "__main__":
     unittest.main()

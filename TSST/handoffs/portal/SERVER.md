@@ -55,6 +55,9 @@ System user `tsst` (no login shell, home `/srv/tsst`) owns:
 - Script `/usr/local/sbin/tsst-pg-backup.sh`: `pg_dumpall | gzip` to `/srv/tsst/backups/<YYYY-MM-DD>.sql.gz` (written as .tmp, then renamed), owner `tsst`, deletes dumps older than 7 days.
 - Timer `tsst-pg-backup.timer`: every day 03:30 Cairo time, `Persistent=true` (runs after boot if a run was missed). Check: `systemctl list-timers tsst-pg-backup.timer`; last run: `journalctl -u tsst-pg-backup.service -n 20`.
 - Run by hand: `sudo systemctl start tsst-pg-backup.service`.
+- Every deploy (`scripts/deploy.sh`, DASH-001 C2) first writes `/srv/tsst/backups/pre-deploy-<release>.sql.gz`
+  (`pg_dump` of the portal database as `tsst`, mode 600, `gzip -t` checked; the 10 newest kept). If the dump fails,
+  the deploy stops before migrate. Migrations are forward-only: a code rollback keeps the database; restore from this dump.
 - Test dump of 2026-10-18 created and verified (`gzip -t` OK; 701 bytes because the cluster is still empty).
 - NOT done yet: copy to Google Drive. Waits for Ahmed to authorise rclone himself (`rclone config` run by him on the server; the token stays in the server's rclone config, never in the repo). Backups are only on the same disk until then. Do not treat them as off-site.
 

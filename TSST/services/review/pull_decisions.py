@@ -28,6 +28,9 @@ KEY = os.environ.get("TSST_KEY") or os.path.join(os.path.expanduser("~"), ".ssh"
 HOST = os.environ.get("TSST_HOST") or "ubuntu@54.93.60.74"
 REMOTE_CMD = "sudo -u tsst tsst-portal-run export:decisions"
 FIELDS = ("status", "note", "date", "by")
+# "changes_requested" (Dash word) and "rejected" (old word) are one status. A file that says "changes_requested" is not
+# rewritten while the server still sends "rejected"; a file that says "rejected" is rewritten to the new word as soon as
+# the server sends it (expected).
 LOG_MAX = 100_000
 LOCK_STALE = 20 * 60
 
@@ -120,6 +123,9 @@ def plan_job(root, brand, job, decisions):
         cur = old.get(key) if isinstance(old.get(key), dict) else None
         if cur is not None and all(cur.get(f) == dec[f] for f in FIELDS):
             continue
+        if cur is not None and dec["status"] == "rejected" and cur.get("status") == "changes_requested" \
+                and all(cur.get(f) == dec[f] for f in FIELDS if f != "status"):
+            continue                                  # old server word vs. our new word: same status, nothing to write
         entry = dict(cur or {})
         entry.update(dec)
         new[key] = entry

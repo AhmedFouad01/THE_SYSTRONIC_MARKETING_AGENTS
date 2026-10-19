@@ -123,6 +123,27 @@ class Collapse(Base):
         summ = review.job_summary(d)[0]
         self.assertEqual((summ["files"], summ["pending"], summ["approved"], summ["rejected"]), (5, 1, 1, 0))
 
+    def test_changes_requested_and_rejected_are_one_status(self):
+        """The Dash word and the old word count alike (a review block may carry either)."""
+        d = self.job("jcr")
+        for n in ("a", "b", "c", "d"):
+            touch(os.path.join(d, "work", n + ".png"))
+        touch(os.path.join(d, "DELIVERY.json"), json.dumps({"review": {
+            "work/a.png": {"status": "changes_requested", "note": "redo"},
+            "work/b.png": {"status": "rejected", "note": "old file"},
+            "work/c.png": {"status": "approved"}}}).encode())
+        summ = review.job_summary(d)[0]
+        self.assertEqual((summ["pending"], summ["approved"], summ["rejected"]), (1, 1, 2))
+        st = {u["key"]: u["status"] for u in review.api_job(self.root, "acme", "jcr")["units"]}
+        self.assertEqual((st["work/a.png"], st["work/b.png"]), ("rejected", "rejected"))   # one internal name
+
+    def test_whole_file_changes_requested_is_inherited_by_cards(self):
+        d = self.job("jci")
+        touch(os.path.join(d, "work", "COPY.md"), COPY03.encode("utf-8"))
+        touch(os.path.join(d, "DELIVERY.json"), json.dumps({"review": {"work/COPY.md": {"status": "changes_requested"}}}).encode())
+        units = review.api_job(self.root, "acme", "jci")["units"]
+        self.assertTrue(units and all(u["status"] == "rejected" and u["inherited"] for u in units))
+
 
 class Decisions(Base):
     def payload(self, **kw):
@@ -220,6 +241,12 @@ class Decisions(Base):
             fh.write(b'{"title": "t"}')
         review.save_decision(self.root, self.payload())
         self.assertEqual(sorted(os.listdir(self.d)), ["DELIVERY.json", "final", "work"])
+
+    def test_save_decision_accepts_the_dash_word(self):
+        review.save_decision(self.root, self.payload(status="changes_requested", note="redo"), today="2026-10-19")
+        e = json.loads(self.raw())["review"]["work/a.png"]
+        self.assertEqual((e["status"], e["note"]), ("changes_requested", "redo"))
+        self.assertEqual(review.job_summary(self.d)[0]["rejected"], 1)
 
     def test_bad_values_rejected(self):
         for bad in (self.payload(status="deleted"), self.payload(note=5), self.payload(note="x" * 2001),

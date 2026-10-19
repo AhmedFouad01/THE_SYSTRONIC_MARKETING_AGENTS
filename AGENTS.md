@@ -23,16 +23,16 @@ plan, review and accept. Specialists do the work. Lead record: [TSST/LEAD/AGENT.
 2. **Brand and state.** [TSST/core/portfolio.yaml](TSST/core/portfolio.yaml) → `TSST/brands/<id>/status.md`
    → the project's `project.md` checkpoint. Respect `do_not_repeat`. Unclear brand → one question.
    Then read the job's `DELIVERY.json` `"review"` block: Ahmed's decisions from the review board
-   (approved = build on it; rejected = never reuse; note = his instruction). Never edit that block
-   (it mirrors the portal, see step 5).
+   (approved = build on it; changes requested = not shippable as is, redo per the note; note = his instruction). Never edit that block
+   (it mirrors the Dash, see step 5).
 3. **Route.** Pick the team below; find ≤3 skills with `python TSST/skills/build_index.py --team <team>`,
    then `--id <ID>`, and open their bodies. Load the matching rules pack (core rules §5).
 4. **Before writing files.** Client job: write only in that job's `work/` and `final/`; the brief is
    the plan (R47). TSST code or cross-runtime work: `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json`.
    The system is frozen until 2026-11-15 (R46).
 5. **Finish.** One checkpoint (status / project). Client jobs: delivery pack (R18–R20). Ahmed approves
-   in the portal (https://portal.the-systronic.duckdns.org); his decisions reach `review` within ~15 min. `REVIEW.bat` is view-only. Name and lay out files so the board sorts them
-   ([JOB_LAYOUT.md](TSST/services/delivery/JOB_LAYOUT.md), "Review board").
+   in the Dash (https://portal.the-systronic.duckdns.org, same URL as before); his decisions reach `review` within ~15 min. `REVIEW.bat` is view-only. Name and lay out files so the board sorts them
+   ([JOB_LAYOUT.md](TSST/services/delivery/JOB_LAYOUT.md), "The Dash (owner approvals)").
 
 | Work | Team → agent |
 |---|---|

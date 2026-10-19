@@ -53,6 +53,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   (`C:\Work`); client work on Drive `TSST-Clients/<brand>/` with one template
   (brand.md, status.md, photos/, approved/, jobs/<job>/{brief.md, work/, final/}, archive/);
   products (CRM, SCC) each in its own repo. Nothing is deleted; old material goes to archive.
+- **R49 Review words** (owner rule 2026-10-19): work is Jobs; review statuses are Pending review / Approved / Changes requested (button Request edit), never Reject/Decline; changes requested = not shippable as is, redo per the note. Status colours green / orange / red.
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.
