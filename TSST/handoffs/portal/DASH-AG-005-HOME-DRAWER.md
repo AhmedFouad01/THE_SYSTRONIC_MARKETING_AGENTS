@@ -19,6 +19,10 @@ rings, milestone map with pulse, review list with thumbnails, footer. REUSE thos
   one milestone map for all clients (next 30 days, merged dots with counts, "today" pulse); "Waiting for review" list
   with thumbnails and sm Approve / Request edit; charts row stays below.
 
+## Two small client-page fixes from the AG-003 review (allowed exception)
+- Mobile job card: the cover image is cut from the left; center it (`object-fit: cover; object-position: center`).
+- Client header "Next payment": when its due date is in the past, show it as Overdue (`#FF003C` chip), not as a plain date.
+
 ## Do not repeat these mistakes (each one already cost a round)
 1. Colours: Dash navy / neutral surfaces only; no green anywhere; royal = identity; cyan `#007DA3` = actions;
    neon `#00BEF6` / `#FF003C` = accents; status colours per R49. No pastel slabs, no beige blocks on navy.
