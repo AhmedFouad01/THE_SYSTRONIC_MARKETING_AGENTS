@@ -54,6 +54,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   (brand.md, status.md, photos/, approved/, jobs/<job>/{brief.md, work/, final/}, archive/);
   products (CRM, SCC) each in its own repo. Nothing is deleted; old material goes to archive.
 - **R49 Review words** (owner rule 2026-10-19): work is Jobs; review statuses are Pending review / Approved / Changes requested (button Request edit), never Reject/Decline; changes requested = not shippable as is, redo per the note. Status colours green / orange / red.
+- **R50 HeroUI only** (owner rule 2026-10-20): Dash and CRM UI use only HeroUI v3 components (or our thin wrappers built from them) for every control, form field, button, chip, card, tab, modal, menu and table, at their documented sizes and spacing; no hand-built look-alikes, no raw HTML controls (R39). Charts stay Chart.js. A missing component = ask the Lead before building one. Every screen is checked at 1440 / 1024 / 390, light + dark, with real-length data before review.
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.
