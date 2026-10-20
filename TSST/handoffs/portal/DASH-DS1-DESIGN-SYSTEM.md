@@ -29,9 +29,10 @@ primitives, components) and move EVERY screen onto it, so a fix in one place fix
   Changes requested = `#E0264B`).
 - R53: no stroke or border on any component; fields and unchecked boxes = filled tint clearly different from the
   surface; cards = surface + soft shadow; row dividers only inside lists / tables; keyboard focus ring `#00BEF6` only.
-- Client header = option A WITH infographic: a thinner brand band (logo + name + industry), then infographic tiles on
-  the page surface: package (name one line + price in plan currency), period progress bar, campaign and ad usage rings,
-  active jobs, awaiting-you count, next payment (only if billing shown, Overdue chip when past). Keep it visual.
+- Client header = KEEP the live client page header exactly as it is now (Ahmed likes it): full brand band with the
+  logo, name, industry AND the infographic tiles inside it (package, period progress, usage rings, active jobs,
+  awaiting-you, next payment). Only move it onto the tokens / components; do not redesign it. Audit item 13 is
+  dropped. Package name on one line + price in plan currency, Overdue chip when the payment date is past.
 - Drawer: top = Dash logo from Settings → Workspace (dark-theme logo) + "by The Systronic" small under it; nav; at the
   bottom only the user and theme controls. ONE footer for the whole app: page bottom, one muted line.
 - Logos render as uploaded on a transparent background (no white plate, no border); only a missing logo gets the
