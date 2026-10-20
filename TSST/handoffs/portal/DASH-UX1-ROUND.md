@@ -1,3 +1,5 @@
+> SUPERSEDED by DASH-DS1-DESIGN-SYSTEM.md (2026-10-20). Do not run.
+
 # DASH-UX1 — one build round for DASH-UX-AUDIT-001 — request (Antigravity or Codex)
 
 Bounded code task: no deploy, no push, no spend, no secrets. Cost rules R52: read only what is named; reply in 3 lines.
