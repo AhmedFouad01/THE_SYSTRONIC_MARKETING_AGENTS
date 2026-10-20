@@ -77,6 +77,7 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 | 2026-10-12 | studio | TSST-CREATIVE-SK-019 | production intake assumes final ad copy and CTA; no explicit image-only experiment path | source-based image experiments |
 | 2026-10-12 | studio | TSST-CREATIVE-SK-014 | exact product fidelity assumes immutable finishes; no explicit scope for owner-authorized recolor and studio-background transformation | source-based image experiments |
 | 2026-10-20 | marketing | TSST-LENS-SK-001 | no method for UI/design-system research (reading DS docs/CSS), no WCAG contrast check, no fallback when product pages block fetches | DASH button research |
+| 2026-10-21 | studio | TSST-CREATIVE-SK-030 | no check that UX proof uses real data shapes (images-only job, real wide logo) and both themes of every screen; placeholder demo data hid P1 bugs | Dash UX audit 002 |
 
 ## Recovered legacy records — original history (inactive)
 
@@ -92,4 +93,5 @@ The eight dated bullets were migrated into the table on 2026-10-12. Original wor
 - 2026-10-11 | DEV_AG | repo-cleanup step2 sync | no git-hygiene skill: split mixed commits by path (diff --binary -M | apply --3way), keep-ours rules.md conflicts, gitleaks docker needs safe.directory env on ro mount, Git Bash mangles robocopy flags, long push hits 120s timeout
 - 2026-10-11 | DEV_AG | new_job.py | job_check d) name-matches loosely (a nested job name can match any brand project.md); build_delivery flags missing ar.title even when default_lang=en
 - 2026-10-19 | MOTION_AG | ANVIL reveal edit v1 | SK-002/003: no guidance for sourcing royalty-free music when sites block scripts (Pixabay Cloudflare 403) -> owner downloads in browser; no scratch-track rule; SK-004: no numeric targets for matching AI plates
+- 2026-10-20 | MOTION_AG | ANVIL reveal edit v2 | SK-002/003: no beat/onset analysis helper (ad hoc code each time); ffmpeg drawtext segfaults (fontconfig) -> contact sheets via PIL; preview spec missing (agent made 540px preview)
 ```
