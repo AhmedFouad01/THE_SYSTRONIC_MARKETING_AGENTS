@@ -35,3 +35,8 @@ Root: `npm run typecheck`, `npm run lint`, `npx vitest run` (full suite). One co
 
 ## Reply (3 lines)
 What changed · checks pass / fail · contract changes (for the Lead to write into DASH-API).
+
+## Lead review (2026-10-20): DONE 939b472, 277/277 green, typecheck OK
+Open (fix at merge, small): POST /jobs still accepts a folder INSIDE a classic job with content (e.g.
+`projects/<job>/work/posts`) or a parent of a nested classic job → same files in two jobs. Fix: refuse (409) when any
+ancestor under `projects/` or any descendant is a classic job with content; `/folders` marks those children as taken.
