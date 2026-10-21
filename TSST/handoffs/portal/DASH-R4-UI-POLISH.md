@@ -5,7 +5,7 @@ Cost rules R52: ONE step per message (Ahmed sends "Step 1", then "Step 2", then 
 in the step; 2–4 screenshots of the changed area per step; front-end gates only until step 3; reply in 3 lines.
 
 ## Where
-Folder `C:\Work\tsst-portal-web`, branch `dash-r4-web` (from `main` b58ca7d = live R3 + sign-in logo + phone top bar
+Folder `C:\Work\tsst-portal-web`, branch `dash-r4-web` (from `main` cd83e29 = live R3 + sign-in logo + phone top bar
 fix). Run `git switch dash-r4-web` first. Rules for every step: `C:/Work/TSST/TSST/core/rules.md` R50–R53 (HeroUI only,
 action-only button colours, no borders), DS tokens only, `npm run ds:check` must pass.
 
