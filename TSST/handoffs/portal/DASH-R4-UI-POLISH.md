@@ -53,5 +53,5 @@ Read: section C paragraph **Client area (link + PIN)** and its dark note.
 - `web/qa/R4/REPORT.md` (≤ 1 page): every item above → done / already fine / not done (why). Screenshots (4): client
   Home 1536 light, client Job 390 dark, Home 390 dark, Jobs 1536 light.
 
-## Reply (3 lines per step)
+## Reply (3 lines per step, in plain Egyptian Arabic — Ahmed reads it directly)
 Step n done · gates pass / fail · items skipped or open (why).
