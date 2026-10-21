@@ -4,7 +4,7 @@ ROLE B (external tool via Ahmed, R41): bounded code task, no deploy, no push, no
 Model: Gemini 4 Argon, effort High. Cost rules R52: read only what is named; reply in 3 lines.
 
 ## Where
-Folder `C:\Work\tsst-portal-ag`, branch `dash-r3` (from `main` 2dccb60). Write ONLY `src/**`, `migrations/012_*.sql`,
+Folder `C:\Work\tsst-portal-ag`, branch `dash-r3` (at `main` 87d7f63 = contract v1.8 incl. the 3 gap fixes below). Write ONLY `src/**`, `migrations/012_*.sql`,
 `tests/**`, and `package.json` / `package-lock.json` for at most ONE new runtime dependency (`pdf-lib`, MIT, for PDF page
 count / size — say so in the reply). Do NOT touch `web/**` (Codex builds the UI in parallel on `dash-r3-web`).
 
@@ -14,6 +14,13 @@ count / size — say so in the reply). Do NOT touch `web/**` (Codex builds the U
 The full table and reasoning: `C:\Work\TSST\TSST\handoffs\portal\DASH-POST-FORMATS-001.md` sections 2 and 5 (numbers
 only from there; Ahmed approved the defaults marked D). A contract gap → your reply, never a silent change.
 
+## Contract gaps found by the UI round (already in DASH-API v1.8 — implement them)
+1. `PostInput.platforms` is explicit and required; store it (`posts.platforms text[]` in migration 012); captions only
+   for those platforms; Story has none.
+2. Team `Deliverable` items (image / video / document) carry `w`, `h`, `pages`, `bytes`, `pages_same_size` from the same
+   measurement cache, so the picker can warn before a post exists.
+3. Document media: `bytes`, `pages`, `pages_same_size`, `w`/`h` = page 1 size.
+
 ## Read first
 `src/service/dash/posts.ts`, `src/server/v1/posts.ts`, `src/service/dash/types.ts`, `src/service/dash/jobs.ts`
 (buildDeliverables / detailOf), `src/core/kinds.ts` (classify), `src/server/thumb.ts`, `migrations/011_posts.sql`,
@@ -22,7 +29,7 @@ only from there; Ahmed approved the defaults marked D). A contract gap → your 
 ## Task
 1. **B1** `src/service/dash/post-formats.json` = the table (per platform × format: label, ratios, default_ratio,
    items [min,max], kinds, caption_max, caption_hard, note) + `version`. Types. Migration 012: `posts.format text NULL`,
-   `posts.ratio jsonb NULL`. Old rows / Drive posts without a stored format get a derived one. `GET /api/v1/post-formats`
+   `posts.ratio jsonb NULL`, `posts.platforms text[] NULL`. Old rows / Drive posts without a stored format get a derived one. `GET /api/v1/post-formats`
    (team) returns the table.
 2. **B2** Validate create / edit against the table: platform × format exists; item count and kinds; document = exactly 1
    PDF ≤ 300 pages and ≤ 100 MB; ratio allowed for that platform × format; LinkedIn caption ≤ 3,000 hard; IG / FB caption
