@@ -30,6 +30,7 @@ If the IP changes after a stop/start, take the new IP from the EC2 console and u
 | Node.js / npm | v24.22.0 / 11.19.1 | NodeSource official apt repo (`node_24.x`, key `/usr/share/keyrings/nodesource.gpg`) |
 | git, jq | 2.43.0, 1.7 | Ubuntu |
 | rclone | v1.75.2 | official .deb from downloads.rclone.org, SHA256 verified (replaced Ubuntu 1.60.1, 2026-10-18) |
+| ffmpeg (ffprobe), poppler-utils (pdftoppm) | 6.1.1, 24.02.0 | Ubuntu, `--no-install-recommends` (2026-10-21, Dash R3: video sizes, PDF page thumbnails) |
 | ufw, fail2ban, unattended-upgrades | Ubuntu | see Security |
 
 ## Services (systemd, all enabled at boot)
