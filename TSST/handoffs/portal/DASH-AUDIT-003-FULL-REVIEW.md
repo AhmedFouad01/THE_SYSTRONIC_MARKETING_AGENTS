@@ -73,8 +73,16 @@ is missing, and why (setting, file type, post rule, visibility). Notes `step-5.m
    width × height at 1536 and 390, and how much of it is real content vs empty space. Then propose ONE size system:
    layout grid (columns, gutters, page max width), spacing scale, card types with min / max sizes driven by their
    content, image ratios inside cards, type scale and line lengths, touch targets. Table: element · today · proposed ·
-   why. If Ahmed drops UX Engine tip images into `web/qa/AUDIT-003/ux-engine/`, use them as references and name which
-   tip each proposal follows.
+   why.
+8. References (Ahmed, 2026-10-22): the free patterns of UX Engine at https://designmotionhq.com/patterns/<slug> (no
+   login; do NOT buy or install the paid plugin, do NOT give any email for the Blueprint). Read only the ones that
+   match a finding, and name the pattern next to each proposal / fix. Start with: perfect-card, grid-system,
+   golden-ratio, proximity-rule, design-tokens, visual-hierarchy, depth-layers (sizes, Section 7); data-table,
+   filter-chips, bulk-actions, pagination (Jobs, Review); undo-ux, destructive-actions, disabled-buttons,
+   behind-the-button (Review, Remove package, Archive / Restore); settings-system, autosave-ux, form-validation-timing,
+   form-field-states (Settings, New post draft); modal-hierarchy, stepper-wizard, file-upload-ux (Create job, New post,
+   Import plan); empty-states, error-states, charts-that-lie (Home, Reports); navigation-patterns, tabs-system,
+   search-experience-system (shell, search). Also any images Ahmed drops into `web/qa/AUDIT-003/ux-engine/`.
 
 ## Reply (3 lines per step, Egyptian Arabic)
 Step n done · biggest 2 findings · notes file path.
