@@ -1,11 +1,14 @@
 # DASH-AG-009 — Import plan backend: Dash-only jobs, plan.md parser, server media (B1–B4)
 
+**ON HOLD until R6 (DASH-AG-010 + DASH-R6-WEB) is merged into main.** Then the Lead resets `dash-r5` to that main
+(contract v1.10); the migration number is 014 (013 = R6).
+
 ROLE B (external tool via Ahmed, R41): bounded code task, no deploy, no push, no spend, no secrets.
 Model: Gemini 4 Argon, effort High. Cost rules R52: read only what is named; reply in 3 lines, in plain Egyptian Arabic.
 
 ## Where
 Folder `C:\Work\tsst-portal-ag`. First: `git switch dash-r5` (= `main` 9f0f7f5, contract v1.9). Write ONLY `src/**`,
-`migrations/013_*.sql`, `tests/**`, `scripts/server/*.env.example` if one exists. No new dependency. Do NOT touch
+`migrations/014_*.sql`, `tests/**`, `scripts/server/*.env.example` if one exists. No new dependency. Do NOT touch
 `web/**` (Codex builds the UI on `dash-r5-web`) or `docs/**` (a contract gap goes into your reply).
 
 ## Read first (only these)
@@ -18,7 +21,7 @@ Folder `C:\Work\tsst-portal-ag`. First: `git switch dash-r5` (= `main` 9f0f7f5, 
    (/file, /thumb), `src/service/dash/media-info.ts`.
 
 ## Task
-1. **B1 data** Migration 013: `job_sources.kind text NOT NULL DEFAULT 'drive' CHECK (kind IN ('drive','dash'))`;
+1. **B1 data** Migration 014: `job_sources.kind text NOT NULL DEFAULT 'drive' CHECK (kind IN ('drive','dash'))`;
    `portal.plan_imports (id, brand, title, text, jobs text[], created_at, created_by)`. Env `DASH_MEDIA_ROOT` (default
    `/srv/tsst/dash-media`; must not be inside BRANDS_ROOT; created on first use, mode 750). A `dash` job's folder =
    `<brand>/<job without @>` under DASH_MEDIA_ROOT. `jobLoc` / scan / detail / /file / /thumb / measurement / client

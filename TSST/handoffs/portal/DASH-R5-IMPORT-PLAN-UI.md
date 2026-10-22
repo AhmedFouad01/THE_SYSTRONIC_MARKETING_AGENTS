@@ -1,5 +1,7 @@
 # DASH-R5 — Import plan UI + media drop zone (Codex)
 
+**ON HOLD until R6 is merged into main.** Then the Lead resets `dash-r5-web` to that main (contract v1.10).
+
 ROLE A (team runtime, front end). Bounded: `web/` only, no deploy, no push, no secrets, no backend files. Effort: High.
 Cost rules R52: read only what is named; ONE commit per step (2 steps); 2–3 screenshots per step; front-end gates only;
 reply in 3 lines, in plain Egyptian Arabic (Ahmed reads it directly). Send only after DASH-R4 is finished.
