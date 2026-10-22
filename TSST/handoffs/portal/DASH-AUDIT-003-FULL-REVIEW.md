@@ -68,6 +68,13 @@ is missing, and why (setting, file type, post rule, visibility). Notes `step-5.m
    track client feedback) with today's clicks vs proposed clicks.
 5. Buttons: a table of broken / confusing / good buttons.
 6. A phased fix plan (P1 first) the Lead can turn into rounds.
+7. Sizes and proportions (Ahmed 2026-10-22: "أحجام الكاردز ضخمة جدا، المفروض تكون منطقية … الأبعاد والنسب محسوبة
+   وبصريًا صح"). Measure, from the step screenshots and the DOM, every card / tile / panel / modal / KPI / list row:
+   width × height at 1536 and 390, and how much of it is real content vs empty space. Then propose ONE size system:
+   layout grid (columns, gutters, page max width), spacing scale, card types with min / max sizes driven by their
+   content, image ratios inside cards, type scale and line lengths, touch targets. Table: element · today · proposed ·
+   why. If Ahmed drops UX Engine tip images into `web/qa/AUDIT-003/ux-engine/`, use them as references and name which
+   tip each proposal follows.
 
 ## Reply (3 lines per step, Egyptian Arabic)
 Step n done · biggest 2 findings · notes file path.
