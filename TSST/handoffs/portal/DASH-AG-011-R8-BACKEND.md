@@ -52,3 +52,13 @@ only the touched test files).
 
 ## Reply (3 lines, Egyptian Arabic)
 Part n done · checks pass / fail · contract gaps / tests changed (for the Lead).
+
+## Part 5 — v1.12b additions (commit; after Part 4)
+Contract v1.12b (main 309a595; `git merge main` into `dash-r8` first): `Bonus.tone` (`BonusTone`, default `cyan`,
+client sees it) and `BrandHeader` on BrandProfile (`settings/clients`, `client-view/profile`), `PUT /settings/clients/:brand`
+with `header_style`, `header_color2`, `header_angle`, `header_overlay`, `header_image` (PNG / JPEG / WebP ≤ 4 MB, never
+SVG, re-encoded to WebP ≤ 2400 px wide, null removes; "image" without a picture → 422) and a route that serves the
+stored picture to team and to that brand's client. Migration 015 is not deployed yet: add the columns there (brands:
+header_style, header_color2, header_angle, header_overlay, header_image; bonuses: tone). Tests in `tests/v1-r8.test.ts`:
+tone round-trip + client view; gradient without color2 → 422; image upload → served to the brand's client, 404 for
+another brand's client; SVG → 415 or 422. Full suite at the end.
