@@ -33,9 +33,9 @@ gemini:
   caps: [fs_read, fs_write, shell, git]
   unverified: [drive_docs_read, image, video]
   roles: []
-  status: active
+  status: pilot
   until:
-  verified: 2026-10-23
+  verified:
   tier_FAST: Gemini 3.8 Flash · low
   tier_WORK: Gemini Pro · high
   tier_CODE: Gemini Pro · high

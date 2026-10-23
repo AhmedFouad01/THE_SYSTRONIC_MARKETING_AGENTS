@@ -1,9 +1,8 @@
 # TSST-ADR-007 — Antigravity joins TSST as a team runtime (ROLE A)
 
 Date: 2026-10-23. Decision owner: Ahmed (owner). Integration owner: TSST Lead.
-Status: PROPOSED (the Lead approves).
+Status: PROPOSED (Ahmed approves).
 Extends: TSST-ADR-003, TSST-ADR-004, TSST-ADR-006.
-Note: Requested as ADR-005 in task brief AG-012; sequenced as ADR-007 to preserve existing ADR-005 (Motion AG) and ADR-006 (Shared preflight) per R33 and R48.
 
 ## Authority
 Owner decision (Ahmed, 2026-10-23, chat): Antigravity comes back into TSST; heavy work goes to Antigravity and Codex, the Claude Lead reviews. This reverses TSST-ADR-004 point 4 for Antigravity only.

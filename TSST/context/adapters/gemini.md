@@ -5,7 +5,7 @@ Entry: root `AGENTS.md` (auto-loaded) → `TSST/core/rules.md`. This file only m
 Bus runtime id: `gemini`. Run locally on this working tree (`C:\Work\TSST`, branch `master`).
 First bus task is its cold-start probe (`AG-012-PROBE`). Near a usage limit: `release` with a resume note, then `limit gemini --until <UTC>`.
 
-## Plan: Antigravity — roster → Gemini runtime (ADR-005/007)
+## Plan: Antigravity — roster → Gemini runtime (ADR-007)
 Routing follows root `AGENTS.md`. The Claude Lead orchestrates and reviews. Antigravity operates as a team runtime (ROLE A) for heavy implementation.
 Antigravity does not spawn autonomous sub-agents and cannot switch models dynamically; every brief explicitly specifies TEAM / AGENT / SKILLS / TIER and the model to run.
 Team work is done by the routed TSST team agent and its loaded skills.

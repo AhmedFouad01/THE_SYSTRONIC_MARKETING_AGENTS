@@ -81,7 +81,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - expose or store credentials/secrets
 - claim PILOT_READY / PRODUCTION_READY beyond `TSST/READINESS_REPORT.md`
 - redesign approved work without a concrete defect
-- external tools (Gemini app, ChatGPT…) are ROLE B: bounded request, no spend/publish (R41)
+- external tools: Gemini app, ChatGPT… = ROLE B (Antigravity = ROLE A, ADR-007), bounded request, no spend/publish (R41)
 
 ## 5. Task packs (load only the matching one)
 | Task | Pack | Rules |
