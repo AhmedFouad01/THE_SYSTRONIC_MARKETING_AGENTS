@@ -29,6 +29,17 @@ and `web/qa/R6/real/` untracked as they are. Read: `DASH-OWNER-NOTES-001.md`; co
 Screenshots (4): sign-in 1440 dark; sidebar expanded + collapsed 1440 light; client page header with ANVIL logo 1440
 light; drawer with search at 390 dark.
 
+## Step 1b — two brand assets from Ahmed (add to the Step 2 commit, or its own small commit)
+The Lead placed two untracked files in `web/public/brand/`; commit them with this change.
+- `dash-icon.svg` (white, Ahmed's compact "Iconic DASH"): use it wherever the DASH logo is small — collapsed sidebar
+  top and phone top bar — instead of the shrunken full wordmark. Height so it reads clearly (about 20–24 px), centred
+  in the collapsed rail. On light surfaces draw it in ink like the workspace logo does.
+- `mark-white.svg` (the spark, white): the "by THE SYSTRONIC" lockup uses it instead of the red `mark.svg`, and the
+  whole lockup is bigger: spark about 18 px tall, "THE SYSTRONIC" about 13 px Raleway caps, "by" the same size,
+  all white (ink on light surfaces), vertically centred on one line. Ahmed: last try — if it still does not read
+  well we remove the lockup.
+Screenshots (2): sign-in 1440 dark (lockup); collapsed + expanded sidebar 1440.
+
 ## Step 2 — heading system PROPOSAL (N3), no app-wide change yet (commit = proposal only)
 Problem: page / section / card headings stack text before the title (`work/screens` group label), after it (file path,
 "Approve ready items or request an edit.", "Campaigns and ads used…", "16 jobs shown", "Select up to 200 items…",
