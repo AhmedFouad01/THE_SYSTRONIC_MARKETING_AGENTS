@@ -96,4 +96,11 @@ The eight dated bullets were migrated into the table on 2026-10-12. Original wor
 - 2026-10-11 | DEV_AG | new_job.py | job_check d) name-matches loosely (a nested job name can match any brand project.md); build_delivery flags missing ar.title even when default_lang=en
 - 2026-10-19 | MOTION_AG | ANVIL reveal edit v1 | SK-002/003: no guidance for sourcing royalty-free music when sites block scripts (Pixabay Cloudflare 403) -> owner downloads in browser; no scratch-track rule; SK-004: no numeric targets for matching AI plates
 - 2026-10-20 | MOTION_AG | ANVIL reveal edit v2 | SK-002/003: no beat/onset analysis helper (ad hoc code each time); ffmpeg drawtext segfaults (fontconfig) -> contact sheets via PIL; preview spec missing (agent made 540px preview)
+- 2026-10-23 | DEV_AG | ANVIL shopify-store-v1 product pack | SK-005: no step for a store-admin CLI (shopify store auth/execute) as the integration channel; no check that vendor rules are current (legacy custom apps)
+- 2026-10-23 | DEV_AG | ANVIL shopify-store-v1 product upload | SK-005: no step to check OAuth scopes before a write (publications scope missing -> products not on Online Store)
+- 2026-10-23 | DEV_AG | ANVIL shopify-store-v1 publish | SK-005/SK-015: no rule for verifying results behind a storefront password (302 to /password; onlineStoreUrl null while password is on)
+- 2026-10-23 | CREATIVE_AG | ANVIL shopify-store-v1 theme brand pass | SK-020/SK-026 are CRM-scoped (no storefront/Shopify theme workflow); SK-010 render QA blocked by storefront password; hit 30-turn limit before report
+- 2026-10-23 | CREATIVE_AG | ANVIL shopify-store-v1 hero/contacts | SK-010: no step for QR asset handling/verification; no rule for a contact detail that differs between brand files (anvi-supps.com vs anvil-supps.com)
+- 2026-10-23 | DEV_AG (Codex) | ANVIL shopify-store-v1 step 6 | Shopify theme check dependency missing; CLI check gave no notes on the two edited files
+- 2026-10-23 | CREATIVE_AG | Dash R8 client header mock | SK-029/004/028/025 CRM-scoped and unvalidated; no Dash token reference, no calm client-facing zero state, SK-029 has no ring/credit-meter pattern
 ```
