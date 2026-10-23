@@ -19,3 +19,13 @@ Raw owner notes from a live walk-through. Round (R8/R9/other) and how to build e
 | N14 | Review card | Reorganise the card (UX): clear order, no scattered chips and rows. | R8B |
 | N7 | Client page header title | The page forces a title next to the logo, so Ahmed typed "." (the logo already is the title). When a logo exists, no text name beside it; the name is used only when there is no logo. | tbd |
 | N15 | Domain | Ahmed registered DuckDNS `systronic` → 54.93.60.74 (checked 2026-10-24: `dash.systronic.duckdns.org` resolves). Move Dash to `https://dash.systronic.duckdns.org`; old `portal.the-systronic.duckdns.org` 301-redirects (old client links keep working); PUBLIC_ORIGIN + runbook updated; ship with the R8 deploy (one re-sign-in). | R8 deploy |
+| N16 | Structure | Client → Projects → Jobs. Projects live inside the client account; jobs live inside projects. Some projects are lifetime (always on), campaigns have dates. | R9 (model) |
+| N17 | Drive | Jobs still appear/sync from Google Drive. Stop it: the Dash is the source; Drive at most a manual import. | R9 |
+| N18 | Admin Clients page | Cards are broken: logos overlap the name and "No package", rings misplaced. Redo. | R9 |
+| N19 | Client access | A link cannot be opened again after sending; any change needs a new link; Ahmed cannot see what the client sees or does. Wants a persistent client profile/account linked to the client, not throw-away links. | R9 |
+| N20 | Client profile control | Owner decides what each client sees (show/hide sections, projects, package, billing). | R9 |
+| N21 | Marketing plan infographic | Per client: where we are in the plan; each campaign's goal stage (Awareness / Acquisition / Activation / Conversion); campaign dates. | R9 |
+| N22 | Bonus + billing pages | The bonus as built and the billing page are not useful as they are. Rethink inside the client profile. | R9 |
+| N23 | Review bulk | Select several items → bulk Approve / bulk Edit; filter by Approved (and other statuses). | R9 |
+| N24 | Workspace name | Settings → Workspace still forces "Product name" (Ahmed typed "."), and the preview shows "." beside the logo. Same rule as N7: logo = title, name optional. | R9 |
+| N25 | Titles | Internal titles leak into cards (e.g. "SCOPE v1 (frozen once Ahmed approves)"); Review cards repeat long job context. | R9 |
