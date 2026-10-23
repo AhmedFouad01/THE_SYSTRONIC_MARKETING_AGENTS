@@ -15,4 +15,6 @@ Raw owner notes from a live walk-through. Round (R8/R9/other) and how to build e
 | N10 | Bonus | Ahmed can open a bonus for a client for a set period (extra credits/hours/items); shows next to the package details. | R8 |
 | N11 | Client header = package infographic | The client page header shows everything about the package: plan, used vs included (campaigns, ads, hours, edit credits), bonus and its end date, what was delivered. Infographic, almost no sentences (clients don't read). Needs a pro UX/UI proposal (desktop + phone) approved by Ahmed before build. | R8 |
 | N12 | Business question | Is 100 hours/month for $300 right? Ahmed is unsure. Decide numbers separately; the system keeps them editable. | open |
+| N13 | Review actions everywhere | Approve / Request edit are huge full-width pairs. Make them small, on the thumbnail / title row; labels "Approve" and "Edit" only. Approve = light Bootstrap green (#28A745), Edit stays red. (rules R49 / R51 updated 2026-10-24) | R8B |
+| N14 | Review card | Reorganise the card (UX): clear order, no scattered chips and rows. | R8B |
 | N7 | Client page header title | The page forces a title next to the logo, so Ahmed typed "." (the logo already is the title). When a logo exists, no text name beside it; the name is used only when there is no logo. | tbd |
