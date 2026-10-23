@@ -13,9 +13,12 @@ and `web/qa/R6/real/` untracked as they are. Read: `DASH-OWNER-NOTES-001.md`; co
 (brand / topbar / auth parts), `web/src/pages/client/ClientShell.tsx`, `web/src/copy.ts`.
 
 ## Step 1 — brand, search, client header (N1, N2, N4, N5, N6, N7) (commit)
-- Sign-in (N1, N4): the wide DASH logo is centred across the card; "by The Systronic" small, right-aligned under the
-  logo's right edge. Remove "For the team.".
-- "by The Systronic" shows ONLY on the sign-in card and the expanded sidebar (under the logo, right-aligned, small).
+- "by The Systronic" is no longer plain text: it is a small lockup = "by" + our spark mark (`web/public/brand/mark.svg`,
+  colours as in the file) + "THE SYSTRONIC" in Raleway, all caps (the font `.cshell__word` already uses). One
+  component (e.g. `ByTheSystronic`) used everywhere it appears; `aria-label="by The Systronic"`.
+- Sign-in (N1, N4): the wide DASH logo is centred across the card; the lockup small, right-aligned under the logo's
+  right edge. Remove "For the team.".
+- The lockup shows ONLY on the sign-in card and the expanded sidebar (under the logo, right-aligned, small).
   Hidden in the collapsed sidebar, the phone top bar and everywhere else (N2: today it wraps into 3 lines).
 - Search (N5): a visible search field in the sidebar right under the logo (same search, same results). No floating box
   over the header, no search icon at the sidebar bottom. Collapsed sidebar = search icon in that same top spot that
