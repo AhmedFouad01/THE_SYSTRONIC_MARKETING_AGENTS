@@ -103,4 +103,5 @@ The eight dated bullets were migrated into the table on 2026-10-12. Original wor
 - 2026-10-23 | CREATIVE_AG | ANVIL shopify-store-v1 hero/contacts | SK-010: no step for QR asset handling/verification; no rule for a contact detail that differs between brand files (anvi-supps.com vs anvil-supps.com)
 - 2026-10-23 | DEV_AG (Codex) | ANVIL shopify-store-v1 step 6 | Shopify theme check dependency missing; CLI check gave no notes on the two edited files
 - 2026-10-23 | CREATIVE_AG | Dash R8 client header mock | SK-029/004/028/025 CRM-scoped and unvalidated; no Dash token reference, no calm client-facing zero state, SK-029 has no ring/credit-meter pattern
+- 2026-10-23 | CREATIVE_AG | Dash R8 header mock round 2 | CRM-scoped skills: no guidance for brand-owner controls (colour / gradient / image upload) or readability over user-chosen backgrounds; contrast rules were the agent's own judgement
 ```
