@@ -60,7 +60,15 @@ System user `tsst` (no login shell, home `/srv/tsst`) owns:
   (`pg_dump` of the portal database as `tsst`, mode 600, `gzip -t` checked; the 10 newest kept). If the dump fails,
   the deploy stops before migrate. Migrations are forward-only: a code rollback keeps the database; restore from this dump.
 - Test dump of 2026-10-18 created and verified (`gzip -t` OK; 701 bytes because the cluster is still empty).
-- NOT done yet: copy to Google Drive. Waits for Ahmed to authorise rclone himself (`rclone config` run by him on the server; the token stays in the server's rclone config, never in the repo). Backups are only on the same disk until then. Do not treat them as off-site.
+- Off-server copy: done by the PC pulling, see "Off-server copy (PC pull)" below (the rclone-on-server idea is dropped).
+
+### Off-server copy (PC pull)
+- What: Ahmed's PC pulls over ssh (read-only `sudo find` / `sudo cat`, nothing changes on the server). `db\`: every nightly dump it does not have yet + the newest `pre-deploy-*` dump, each gzip-verified before it is kept; newest 30 daily dumps kept (10 pre-deploy). `media\`: incremental mirror of `/srv/tsst/dash-media` (new/changed files only; files that vanish on the server are logged, never deleted here).
+- Where: `G:\My Drive\TSST-Backups\dash\` (`db\`, `media\`, `LAST_RUN.txt` = date, counts, newest dump). Deliberately NOT inside TSST-Clients (that folder is mirrored to the server). Script `scripts/pull-backup.py` in the tsst-portal repo (`C:\Work\tsst-portal`). Log `%LOCALAPPDATA%\tsst-review\backup.log` (rotated at 100 KB).
+- Schedule: task "TSST Dash backup", hourly, `pythonw`, current user, only when logged on, no admin. A stamp (`%LOCALAPPDATA%\tsst-review\backup.stamp`) makes it once per day; a failed run leaves no stamp and retries next hour; PC off = it catches up at the next hour after logon. Offline: quiet exit 0.
+- Run/stop: `python C:\Work\tsst-portal\scripts\pull-backup.py [--dry-run] [--force]`; `schtasks /Run /TN "TSST Dash backup"`, `schtasks /End /TN "TSST Dash backup"`, `schtasks /Delete /TN "TSST Dash backup" /F`.
+- Restore: use "How to restore a backup" below, with the file from `G:\My Drive\TSST-Backups\dash\db\` copied to the server (`scp`) instead of `/srv/tsst/backups/`. Media: copy `media\` back into `/srv/tsst/dash-media` (owner `tsst`, mode 750). Dumps hold password hashes: keep the folder private.
+- First real run 2026-10-23: 6 daily dumps + newest pre-deploy copied, all `gzip -t` OK; media empty at that time.
 
 ## How to restore a backup
 A dump holds the whole cluster (all databases, roles, passwords hashes). Restore into a clean cluster:
@@ -78,7 +86,7 @@ sudo -u postgres psql -c '\l'
 Notes: if the cluster is healthy and only one database is bad, load into a spare server/cluster first, then copy the needed database out with `pg_dump`/`pg_restore`. Step 3 prints "role postgres already exists" errors on a fresh cluster; these are expected. To test a restore without risk, restore on another machine with PostgreSQL 16.
 
 ## Not yet done (later phases)
-- DuckDNS name + HTTPS (Phase 2), UptimeRobot monitor (needs the hostname), Drive upload of backups (needs Ahmed's rclone authorisation).
+- DuckDNS name + HTTPS (Phase 2), UptimeRobot monitor (needs the hostname). (Off-server backup copy: done, see Backup.)
 - Elastic IP: not allocated (cost watch in the brief: public IPv4 is billed after free-tier coverage). Without it the IP can change on stop/start; Phase 2 then needs the DuckDNS IP updater.
 
 ## Phase 2: domain + HTTPS (2026-10-18)
