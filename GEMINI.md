@@ -1,4 +1,5 @@
-> **RETIRED 2026-10-05 (TSST-ADR-004).** Antigravity/Gemini is no longer a TSST runtime. Kept as history; do not route work here.
+> **TSST Runtime (ROLE A) — reactivated 2026-10-23 (TSST-ADR-007 / AG-012).**
+> Boot via root `AGENTS.md` → `TSST/core/rules.md` → runtime adapter `TSST/context/adapters/gemini.md`.
 
 # TSST — Gemini Runtime Adapter v0.1
 

@@ -59,6 +59,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R52 Cheap requests to other runtimes** (owner rule 2026-10-20): every request to Codex or any external runtime is one step per message and says which section to read (never a whole growing file); screenshots only of the changed area (2–4, no full size/theme matrices, no recordings unless needed); UI steps run only the front-end typecheck + build, full test suites once at the end; reply in 3 lines, full report only at the end. The Lead estimates the cost before sending and cuts what is not needed to judge the step.
 - **R53 No borders anywhere** (owner rule 2026-10-20): Dash and CRM components have NO stroke or border: buttons, text fields, selects, date pickers, checkboxes, radios, switches, cards, tables, modals, chips. Shapes are told apart by pure colour: fields and unchecked boxes use a filled surface tint that differs clearly from the background (light and dark); checked = solid colour; cards and modals = surface colour + soft shadow; dividers only where a list needs them. Focus: fill change, plus the keyboard focus-visible ring (R51) as the one exception.
 - **R53 Motion AG = AI video only** (owner rule 2026-10-20): MOTION_AG makes video by AI generation (story, shot list, start frames, AI video/music/voice prompts and generation, AI tools for edit/finish). It never uses After Effects again: no AE projects, no JSX/ExtendScript, no aerender, no "Ahmed runs the script" steps. Text, logos and transitions come from AI generation or from the AI tools themselves.
+- **R54 Product photo edits = ChatGPT, intent only** (owner rule 2026-10-23): professional edits of product photos (RAW → Edited) are made in ChatGPT by Ahmed, never by CREATIVE_AG. The team sends Ahmed, per product: the original RAW photo, one existing Edited photo as reference, and a short note of WHAT we want (goal, use, what must stay true, e.g. the real pack unchanged). Never an explicit or detailed prompt: it changes ChatGPT's direction; ChatGPT decides how.
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.
@@ -80,7 +81,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - expose or store credentials/secrets
 - claim PILOT_READY / PRODUCTION_READY beyond `TSST/READINESS_REPORT.md`
 - redesign approved work without a concrete defect
-- external tools (Antigravity, Gemini app, ChatGPT…) are ROLE B: bounded request, no spend/publish (R41)
+- external tools (Gemini app, ChatGPT…) are ROLE B: bounded request, no spend/publish (R41)
 
 ## 5. Task packs (load only the matching one)
 | Task | Pack | Rules |

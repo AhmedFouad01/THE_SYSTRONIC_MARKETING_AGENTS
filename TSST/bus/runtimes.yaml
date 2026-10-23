@@ -30,16 +30,16 @@ codex:
   tier_CODE: gpt-6.1-sol · high
   tier_DEEP: gpt-6-astra · high
 gemini:
-  caps: [fs_read, fs_write, shell]
+  caps: [fs_read, fs_write, shell, git]
   unverified: [drive_docs_read, image, video]
   roles: []
-  status: retired    # Antigravity retired (TSST-ADR-004); kept as history, never claimable
+  status: active
   until:
-  verified: 2026-10-04
+  verified: 2026-10-23
   tier_FAST: Gemini 3.8 Flash · low
-  tier_WORK: Claude Opus 5.5 · high
-  tier_CODE: Claude Opus 5.5 · high
-  tier_DEEP: Claude Opus 5.5 · high (DEEP stays with lead)
+  tier_WORK: Gemini Pro · high
+  tier_CODE: Gemini Pro · high
+  tier_DEEP: Gemini Pro · high
 chatgpt:
   caps: []
   unverified: [drive_docs_read]
