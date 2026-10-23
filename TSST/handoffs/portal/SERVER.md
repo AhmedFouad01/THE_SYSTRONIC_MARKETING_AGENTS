@@ -91,7 +91,7 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
 
 ## Phase 2: domain + HTTPS (2026-10-18)
 - DuckDNS: `the-systronic.duckdns.org` → 54.93.60.74 (set by Ahmed in the DuckDNS web page). Sub-names resolve
-  to the same IP: `portal.the-systronic.duckdns.org`, `crm.the-systronic.duckdns.org`.
+  to the same IP: `dash.systronic.duckdns.org` (old `dash.systronic.duckdns.org` 301-redirects since 2026-10-24), `crm.the-systronic.duckdns.org`.
 - Caddy (`/etc/caddy/Caddyfile`, backup of phase 1 at `Caddyfile.phase1.bak`): automatic Let's Encrypt
   certificates for the three names (issuer YE1, auto-renew), HTTP → HTTPS 308, HSTS, nosniff; portal and crm send
   `X-Robots-Tag: noindex`. All three serve the placeholder until their apps exist. No ACME contact email is set.
@@ -100,7 +100,7 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
   needs the DuckDNS token on the server; Ahmed places it himself (never in the repo or in chat).
 
 ## Phase 3 / R3a: portal app deployed (2026-10-18)
-Live: https://portal.the-systronic.duckdns.org (`/login` 200, `/api/tree` 401 without a session, `/` 302 to `/login`).
+Live: https://dash.systronic.duckdns.org (`/login` 200, `/api/tree` 401 without a session, `/` 302 to `/login`).
 Source of all server files: repo `C:\Work\tsst-portal`, folder `scripts/server/` (+ `scripts/deploy.sh`). No secrets in any of them.
 
 | Item | Value |
@@ -109,7 +109,7 @@ Source of all server files: repo `C:\Work\tsst-portal`, folder `scripts/server/`
 | App | `/srv/tsst/portal/releases/<git sha>`; `current` and `previous` are symlinks; the 5 newest releases are kept |
 | Config | `/etc/tsst-portal/portal.env` (root:tsst 640): never print it. `BETTER_AUTH_SECRET` was generated on the server |
 | Database | Postgres role `tsst` + database `portal` (owner `tsst`), peer auth over `/var/run/postgresql`, no password. Included in the daily dump |
-| Caddy | `portal.the-systronic.duckdns.org` reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, noindex kept). Website root and crm stay placeholders. Backups: `Caddyfile.phase1.bak`, `Caddyfile.phase2.bak` |
+| Caddy | `dash.systronic.duckdns.org` (old `dash.systronic.duckdns.org` 301-redirects since 2026-10-24) reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, noindex kept). Website root and crm stay placeholders. Backups: `Caddyfile.phase1.bak`, `Caddyfile.phase2.bak` |
 | Portfolio | `/srv/tsst/portal/portfolio.yaml` (copy of `TSST/core/portfolio.yaml`, refreshed on every deploy) |
 | Thumb cache | `/var/cache/tsst-portal` |
 | Helper | `/usr/local/bin/tsst-portal-run <npm-script>` (run as `tsst`: loads the env file, runs `npm run`) |
