@@ -11,7 +11,7 @@ Project: `CAFE_RESTAURANT_MS` | TSST Lead -> manual DEV review workflow using `T
 
 - Repository: https://github.com/Do7a193/CAFE_RESTAURANT_MS
 - `main` `5cb20959b35e17620d799e0026d09d881f2c6ad8` (observed 2026-10-24; 2026-10-12 operational workstream merge).
-- UX branch `feat/crms-ux-final-visual-system` `d069073cc17959dbd3e46fffb1ff51d70fe0c332`. Compare to main: **39 ahead / 0 behind**, **17 changed paths**, including 14 CSS, AppLayout TSX and test, BillingPage test and UX gate document; no backend or DB paths.
+- UX branch `feat/crms-ux-final-visual-system` `d069073cc17959dbd3e46fffb1ff51d70fe0c332`. Compare to main: **39 ahead / 0 behind**, **17 changed paths**, including 13 CSS, AppLayout TSX and test, BillingPage test and UX gate document; no backend or DB paths.
 - POS branch `fix/crms-pos-readd-after-empty-cancel` `ca01c872a0c84039ead2713e102f4cf14a7c863f`.
 - https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34 **OPEN / DRAFT / mergeable** to UX base; **7 ahead / 0 behind**, **2 files** `apps/pwa/src/pages/PosPage.tsx` and `PosPage.test.tsx`; +195/-20. No review submissions / review threads recorded at audit time. `mergeable` is mechanical, not an acceptance decision.
 - Combined POS+UX to main **46 ahead / 0 behind**, **19 changed paths**. All changed paths are PWA UI, PWA tests, CSS or UX documentation, no direct Edge/financial/migration/authorization changes.
