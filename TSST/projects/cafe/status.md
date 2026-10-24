@@ -1,5 +1,20 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-001 — audit completed 2026-10-24
+
+**Decision:** `AUDIT_COMPLETE / MERGE_NOT_AUTHORIZED`. POS PR #34 is `CONDITIONALLY_READY_FOR_FORMAL_REVIEW` with no blocking source defect confirmed in scoped diff. Global UX -> main is `NOT_READY`: current UX gate document still says `IN PROGRESS` and no dedicated UX -> main PR exists. Do not merge.
+
+- Audit: [CRMS-TSST-001 POS + UX Merge Readiness](reviews/CRMS-TSST-001-POS-UX-MERGE-READINESS.md).
+- GitHub refs reconfirmed: main `5cb20959`, UX `d069073c` (+39/-0; 17 files), POS PR #34 `ca01c872` (+7/-0 vs UX; 2 files).
+- PR #34 remains OPEN/DRAFT/mergeable; no submitted PR reviews/CI check-runs. Owner QA evidence 2026-10-20 at unchanged exact HEAD: 150/150 full PWA PASS, lint/typecheck/build PASS, cashier UI warning/empty basket PASS. Not rerun by auditor.
+- Gap: strict live HTTP409/Postgres uniqueness proof not demonstrated by manual screenshots; decide whether formal E2E certification is required for intended signoff. Backend row lock and PWA 409 mapping source checked.
+- Issue #32 CSS fix is in UX source but issue remains open; reconcile; issue #33 is held for PR #34 resolution. Reconcile UX gate document with 2026-10-20 RM evidence before final UX PR.
+- Separate printing PR #31 and settings PR #23 unaffected, hardware gate deferred.
+- RM intake `2026-10-24_CAFE_RESTAURANT_MS_CRMS_TSST_001_AUDIT.rm-sync.md` staged, **not canonically applied**.
+- No app code mutation, Actions, autonomous agents, merge, deployment or database operations; core freeze preserved.
+
+## Initial setup checkpoint (retained)
+
 Date: 2026-10-24
 State: `SETUP_STAGED` (administrative onboarding only)
 Project: `CAFE_RESTAURANT_MS`
