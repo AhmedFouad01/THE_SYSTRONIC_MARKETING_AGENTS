@@ -1,5 +1,20 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-002 — evidence reconciled, UX draft PR ready for review (2026-10-24)
+
+**Current decision:** `UX_DOCUMENTATION_GATE_COMPLETE / MERGE_REVIEW_PENDING`. The remaining **release approval gate stays OPEN**, regardless of the completed evidence ledger. No merge or deployment approved.
+
+- [TSST-002 task / handoff](tasks/CRMS-TSST-002-UX-GATE-CLOSURE.md), delivered as a supervised manual task; no DEV_AG execution, skills still UNVALIDATED / NOT_READY.
+- CAFE UX gate updated **docs-only** at `feat/crms-ux-final-visual-system`, commit `1bcb7cf62318d324b9bf26364d5cff240f9b2420`: [UX gate evidence](https://github.com/Do7a193/CAFE_RESTAURANT_MS/blob/feat/crms-ux-final-visual-system/docs/gates/CRMS-UX-FINAL-GLOBAL-VISUAL-SYSTEM.md).
+- Created [Draft UX->main PR #35](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/35), OPEN/DRAFT; UX branch now **40 ahead/0 behind main**, 17 paths (13 CSS / 3 frontend UI/test / doc). POS changes are **not yet in UX branch**.
+- [POS PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34) remains OPEN/DRAFT and unmerged at `ca01c872`. After the UX doc-only commit, compare reports **7 ahead / 1 behind**. Reconcile merge base upon later owner-authorized POS review/integration; **no forced rebase** or unnecessary retest.
+- QA preserved by original SHA: owner local integrated candidate `ca01c872` PWA **150/150 PASS** / 22 files, PWA lint/typecheck/build PASS; responsive sampled manual QA, cashier conflict visible warning with EGP 0 disabled submit. This TSST session executed **no local tests**, no Network 409 capture or DB uniqueness check.
+- Evidence comments logged on issues #32/#33 and PR #34, **no issue closed**. Residuals: formal POS/UX PR review, owner merge approval, strict 409/DB acceptance disposition, accessibility/contrast + all-device disposition, final integrated HEAD verification.
+- Workflows inspected: `workflow_dispatch` only; no Actions executed. Separate printing PR #31 / settings PR #23/hardware remains deferred.
+- Real Memory intake for this task is proposal-only; controlled review/apply required. Canonical RM status unchanged. No app logic/DB/financial mutations, merge/deploy, autonomous agent activation or TSST Core changes.
+
+## Historical checkpoints
+
 ## CRMS-TSST-001 — audit completed 2026-10-24
 
 **Decision:** `AUDIT_COMPLETE / MERGE_NOT_AUTHORIZED`. POS PR #34 is `CONDITIONALLY_READY_FOR_FORMAL_REVIEW` with no blocking source defect confirmed in scoped diff. Global UX -> main is `NOT_READY`: current UX gate document still says `IN PROGRESS` and no dedicated UX -> main PR exists. Do not merge.
@@ -37,7 +52,7 @@ TSST Lead -> DEV_AG: supervised, no agent execution; DEV_AG `NOT_READY`, selecte
 - Responsive and drawer checks at sampled desktop/mobile viewports closed; not full device certification.
 - No need to repeat finished POS/KDS/Billing/Printing operational regression without changed-code risk.
 
-## Next proposed assignment (not executed)
+## Historical proposal — CRMS-TSST-001 (subsequently audited)
 
 `CRMS-TSST-001 — POS + UX merge-readiness audit`: reconcile linked PR #34 against UX branch and latest RM evidence; inspect focused concurrency residual without unnecessary full-suite reruns. Route manually through `SK-010`, `SK-011`, `SK-012`, `SK-015` as applicable (all UNVALIDATED). Report code and evidence gaps to TSST Lead for user decision. A possible merge sequence is POS #34 -> UX -> main **only after explicit approval**.
 
