@@ -1,5 +1,18 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-003 — formal POS source review delivered, no merge signoff (2026-10-24)
+
+**Decision:** `CONDITIONAL CODE REVIEW PASS / RELEASE_SIGNOFF_PENDING`. Checked exact POS `ca01c872...` 2-file diff and backend 409 contract; no new blocking code defect confirmed in reviewed scope. Owner permission and live concurrency evidence not satisfied.
+
+- [TSST-003 task/handoff](tasks/CRMS-TSST-003-POS-PR34-FORMAL-REVIEW.md) | [Detailed source review](reviews/CRMS-TSST-003-POS-PR34-FORMAL-REVIEW.md).
+- PR #34 `OPEN/DRAFT`, head `ca01c872`; UX base now `1bcb7cf6` with **one docs-only commit**, so current compare 7 ahead/1 behind. Review recorded as informational PR #34 comment `6384716095`, **not GitHub APPROVED review**.
+- Backend transactional row-lock and controller HTTP 409 mapping source-confirmed; PWA error display/re-add source path and mocked tests reviewed. Owner historical PWA `150/150 PASS` and static PASS at matching POS head preserved, not rerun in TSST.
+- Residual `R-01`: real two-cashier HTTP409 plus one-active-tab DB verification not evidenced (focused QA recommended). `R-02`: direct negative tests for mismatched releasedTableId/newly occupied/failed refresh absent. `R-03`: generic error fallback if occupancy read fails. `R-04`: formal approvals and deliberate merge authority missing.
+- UX [PR #35](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/35) `OPEN/DRAFT` and **does not yet include POS code**; no merges, rebases, Actions or deployments. No code/DB/finance changes, issue closure, skill promotion, agent activation or TSST Core edits.
+- Next: `CRMS-TSST-004` narrow QA contention evidence or explicit accepted deferral, then owner-approved POS->UX review/merge, followed by exact integrated UX PR #35 review. Real Memory intake staged pending governed apply.
+
+## Historical checkpoints (unchanged as dated)
+
 ## CRMS-TSST-002 — evidence reconciled, UX draft PR ready for review (2026-10-24)
 
 **Current decision:** `UX_DOCUMENTATION_GATE_COMPLETE / MERGE_REVIEW_PENDING`. The remaining **release approval gate stays OPEN**, regardless of the completed evidence ledger. No merge or deployment approved.
