@@ -1,5 +1,19 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-004 — targeted concurrency QA prepared, live execution still OPEN (2026-10-24)
+
+**Decision:** `RUNBOOK_DELIVERED / LIVE_409_AND_DB_E2E_NOT_VERIFIED`; release signoff remains **HOLD**. This is a valid QA-preparation task completion, **not an executed E2E PASS**.
+
+- [CRMS-TSST-004 task/ownership](tasks/CRMS-TSST-004-CASHIER-CONCURRENCY-E2E.md) and [ready-to-run two-cashier QA gate](gates/CRMS-TSST-004-TWO-CASHIER-E2E-QA.md), including no-secrets method/path/status capture and read-only PostgreSQL before/after checks.
+- Existing project `scripts/crms-002c-runtime-verify.mjs` **source** already asserts real API parallel `POST /pos/table-tabs` `[201,409]`; backend integration fixture and partial unique index `ux_table_tabs_one_live_per_table` also verified by static source inspection. Those were **not rerun** by TSST.
+- Owner's prior POS PWA `150/150`, typecheck/lint/build PASS at `ca01c872` preserved unchanged. No fresh local QA test run, no live HTTP 409 capture or read-only DB query on actual QA system in this session (owner's Windows environment not available).
+- PR #34 informational evidence comment ID `6384820609`; POS #34 remains DRAFT/OPEN at `ca01c872`, UX #35 remains DRAFT/OPEN at `1bcb7cf6`; no merge or deployment.
+- Runtime QA acceptance requires independent A/B cashier sessions on an unused QA-Txx fixture, real 409 evidence and unchanged DB count of one live table tab and no extra order/item. Local QA reset utilities are mutating and were not used.
+- TSST task scope and ownership recorded first, with no autonomous agents activated and skills not validated. No code, API, migrations, DB records, customer info, GitHub Actions, TSST Core or canonical Real Memory changes.
+- Next decision: owner-driven runtime QA evidence or explicitly scoped release-risk deferral. **No automatic risk acceptance**.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-003 — formal POS source review delivered, no merge signoff (2026-10-24)
 
 **Decision:** `CONDITIONAL CODE REVIEW PASS / RELEASE_SIGNOFF_PENDING`. Checked exact POS `ca01c872...` 2-file diff and backend 409 contract; no new blocking code defect confirmed in reviewed scope. Owner permission and live concurrency evidence not satisfied.
