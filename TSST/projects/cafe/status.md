@@ -1,5 +1,18 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-005 — exact-head PWA build PASS and focused gates complete (2026-10-25)
+
+**Decision:** `EXACT_HEAD_FOCUSED_GATES_PASS / FORMAL_REVIEW_PENDING / NO_MERGE` on `fix/crms-pos-readd-after-empty-cancel` at `febc7e75e3539a89531365d2b0161bd7be474e59`.
+
+- Owner Windows screenshot: `pnpm.cmd --filter @crms/pwa build` completed cleanly. `vite v8.2.2`, 83 transformed modules, `built in 1.88s`; PWA `v1.3.0` generated `dist/sw.js` and Workbox. No build errors or deployment.
+- Earlier exact-head owner results: **PosPage 35/35 Vitest PASS**, PWA TypeScript typecheck PASS, PWA lint PASS. This is **focused PWA gate**, not an all-project full 150+ regression or new two-cashier E2E run on this new SHA.
+- **Nonblocking performance warning:** minified JavaScript chunk larger than 500 KB; emitted `dist/assets/index-6dLzVN6v.js` about 923.79 KB before gzip (231.52 KB gzip). Track bundle splitting/size optimisation separately, do not mislabel build failure.
+- GitHub PR #34 `OPEN/DRAFT` currently at new head, mechanically mergeable; UX base branch has one docs-only commit newer than POS fork (9 ahead/1 behind); it needs approved integration and exact combined review before merge. UX PR #35 remains independently `OPEN/DRAFT`.
+- Scope remains only `PosPage.tsx` and `PosPage.test.tsx` updates; no Actions, DB, domain/finance, deployment, or merge. Formal code review/explicit owner approval still necessary.
+- [TSST-005 task and evidence](tasks/CRMS-TSST-005-POS-NEGATIVE-PATH-REGRESSION.md), [PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34).
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-005 — owner local PWA lint PASS (2026-10-25)
 
 - Owner PowerShell: `pnpm.cmd --filter @crms/pwa lint` printed `$ eslint src` and returned cleanly without errors. New POS head `febc7e75e3539a89531365d2b0161bd7be474e59` now has focused POS **35/35 Vitest PASS**, PWA Typecheck PASS and PWA Lint PASS from owner local QA.
