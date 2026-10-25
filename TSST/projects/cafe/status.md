@@ -1,5 +1,16 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-004 — owner live attempt inconclusive: HTTP 401, not 409 (2026-10-25)
+
+**Decision:** `AUTH_401_OBSERVED / CONCURRENCY_409_NOT_VERIFIED / RETRY_PENDING`. The user successfully ran real local QA on exact POS `ca01c872`. Baseline PostgreSQL `QA-T02 OCCUPIED / 1 live tab / 1 active order / 1 item` before A attempt. A DevTools `table-tabs` response status **401**, `live` response **200**. A ticket shows generic occupied-table warning, zero basket and disabled submit. This does **not** certify 409 or post-action unchanged DB counts.
+
+- [Detailed evidence and corrective retry](tasks/CRMS-TSST-004-CASHIER-CONCURRENCY-E2E.md); owner screenshots 2026-10-25. 401 method/path and response body not independently inspected.
+- Default access token TTL in current Edge source is 900 seconds (15 minutes); elapsed owner session time ~27 minutes makes expiration plausible, not established. PWA 401 triggers a refresh attempt; `.env` override unknown. Generic occupied-warning derives from cached `liveTabs`, not the special 409 recovery branch.
+- **Next safety step:** rerun **the same read-only SQL** on QA-T02 after A's attempt, no new writes. Then stage fresh active logins on separate available QA-T03 with independent browsers, no reload during stale-state competition; collect actual sanitized POST 409, A warning and unchanged post-action counts. Avoid QR/cleanup/reset, no customer data. Historical owner 150/150 PASS unchanged.
+- PR #34/#35 remain DRAFT/unmerged. No source changes, GitHub Actions, autonomous agent operation, database mutating commands or release signoff performed by assistant.
+
+## Historical checkpoints
+
 ## CRMS-TSST-004 — targeted concurrency QA prepared, live execution still OPEN (2026-10-24)
 
 **Decision:** `RUNBOOK_DELIVERED / LIVE_409_AND_DB_E2E_NOT_VERIFIED`; release signoff remains **HOLD**. This is a valid QA-preparation task completion, **not an executed E2E PASS**.
