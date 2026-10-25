@@ -1,5 +1,14 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-007A — pilot lint PASS after 37/37 (2026-10-25)
+
+- Owner Windows PowerShell screenshot: isolated cashier-first pilot `PosPage.test.tsx` **37/37 PASS**, PWA `typecheck` **PASS**, and PWA `lint` **PASS** (`$ eslint src` completed and returned to prompt with no diagnostics).
+- Local pilot branch was previously verified at `cfce849b2c52313761c817355fa997669829205f`; this screenshot does not itself repeat `git rev-parse HEAD`. No new app edits since the reported tests.
+- **Next:** execute PWA `build` on same pilot checkout, then check visual/operational clarity on actual desktop/mobile with an unfamiliar cashier. Build and novice usability acceptance are **NOT YET VERIFIED**.
+- UX P0 Issue #36 remains open; POS PR #34 and UX PR #35 remain DRAFT/unmerged. No merge, deployment, Actions, data edits, or canonical RM promotion.
+
+## Historical checkpoints
+
 ## CRMS-TSST-007A — owner PWA typecheck PASS after pilot 37/37 (2026-10-25)
 
 - Owner Windows PowerShell screenshot confirms corrected isolated POS UX pilot local test `PosPage.test.tsx` **37/37 PASS** and subsequent command `pnpm.cmd --filter @crms/pwa typecheck` running `tsc --noEmit -p tsconfig.json`, returning to prompt without errors: **typecheck PASS**.
