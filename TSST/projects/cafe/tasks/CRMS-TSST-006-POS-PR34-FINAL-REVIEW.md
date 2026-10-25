@@ -32,3 +32,9 @@ State: `FOCUSED_POS_TESTS_PASS / LATEST_STATIC_GATES_PENDING / NO_MERGE`
 - GitHub PR #34 head independently checked as `5688007cb89fda0444908cbec2bb70ef43302c25`. Screenshot itself does **not** display the local `git rev-parse HEAD` output immediately before Vitest; previous owner step requested fast-forward and HEAD check, so confirm local HEAD if exact-run attribution is needed.
 - **Focused POS unit tests PASS in owner screenshot.** Still need **current HEAD** PWA typecheck, lint, build; prior PASS static gates belong to `febc7e75` not latest revision.
 - PR #34 remains OPEN/DRAFT; no merge/rebase/Actions/deployment/DB operations. Owner permission still required to merge later.
+
+## CRMS-TSST-006 — latest owner PWA typecheck PASS (2026-10-25)
+
+- Owner's PowerShell screenshot shows `pnpm.cmd --filter @crms/pwa typecheck`, `$ tsc --noEmit -p tsconfig.json`, followed by normal PowerShell prompt and no errors.
+- Focused POS Vitest `37/37` PASS evidenced in same screenshot above the typecheck output; new POS PR #34 remote HEAD was `5688007cb89fda0444908cbec2bb70ef43302c25` in last verified GitHub check. The image does not independently include a fresh local SHA readback.
+- Current PWA typecheck PASS, but **latest-head** PWA lint and build still pending. Historic previous-head lint/build PASS not transferable to new commits. PR #34 remains DRAFT/unmerged.
