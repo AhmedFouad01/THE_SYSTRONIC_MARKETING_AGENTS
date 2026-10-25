@@ -75,3 +75,7 @@ Links: [GitHub Issue #36](https://github.com/Do7a193/CAFE_RESTAURANT_MS/issues/3
 - Pilot correction SHA last verified: `cfce849b2c52313761c817355fa997669829205f`. Screenshot does not independently show a fresh local SHA readback, so retain exact-SHA provenance caveat.
 - **Current pilot quality evidence:** focused POS unit 37/37 PASS and PWA typecheck PASS. **ESLint and Vite production build remain pending**, as does actual owner visual / first-time cashier acceptance. No claim of full-project tests or production readiness.
 - Previous 35/37 failures are superseded by this successful rerun, not erased from audit trail. Both PR34 and PR35 remain separate OPEN/DRAFT; independent pilot not merged.
+
+## Pilot lint evidence — 2026-10-25
+
+Owner local Windows PowerShell screenshot shows `pnpm.cmd --filter @crms/pwa lint` printing `$ eslint src` and returning to the prompt without diagnostics. Previously recorded corrected-pilot focused POS test `37/37 PASS` and PWA typecheck PASS remain supported by screenshots. Thus **lint PASS** for the checked-out pilot state. The screenshot itself does not display a fresh local HEAD SHA; the last known pilot correction is `cfce849b2c52313761c817355fa997669829205f`. PWA production build and hands-on operator usability remain pending. No branch merge or deployment.
