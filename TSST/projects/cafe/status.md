@@ -1,5 +1,17 @@
-
 # CAFE — TSST current checkpoint
+
+## CRMS-TSST-006 — focused POS gates complete at latest owner checkout (2026-10-25)
+
+**Decision:** `FOCUSED_PWA_GATES_PASS / PR34_REVIEW_AND_OWNER_MERGE_AUTH_REQUIRED / NO_MERGE`.
+
+- Owner Windows evidence on local POS checkout: focused `PosPage.test.tsx` **37/37 PASS**, PWA `typecheck` **PASS**, PWA `lint` **PASS**, and PWA `build` **PASS**. Final build screenshot shows Vite v8.2.2, 83 modules transformed, built in 931 ms, service worker/PWA v1.3.0 generated; no build errors.
+- Current remote PR #34 source HEAD independently checked on GitHub as `5688007cb89fda0444908cbec2bb70ef43302c25`. Owner previously fast-forwarded as instructed before running 37 tests; latest screenshots do not individually show a fresh `git rev-parse HEAD` alongside the build. Preserve this provenance, do not assert CI validated.
+- Build emitted **nonblocking** chunk size warning >500 KB: `index-BWpxnUvS.js` 924.01 KB before compression / 231.57 KB gzip. Backlog performance follow-up, no build failure.
+- Review record: [CRMS-TSST-006](reviews/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md) / [task](tasks/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md). Source changes are in only two POS PWA paths; the latest 2 regression cases catch reconciliation failures after confirmed cancellation.
+- **Release gate:** POS PR #34 remains `OPEN/DRAFT`, GitHub shows mergeable but **zero submitted reviews**, no explicit owner merge approval. UX PR #35 remains separate `OPEN/DRAFT`. POS is 11 commits ahead and 1 behind UX tip (one gate docs commit). Merge order requires separately authorized POS->UX, then integrated candidate review and separate owner authorization for UX->main. No merge or deployment has occurred.
+- Historical old-HEAD full PWA 150/150 and browser stale-table QA-T03 E2E 409 + post-action DB one tab/order/item remain historical, not new full or browser E2E on latest code.
+
+## Historical checkpoints (retained)
 
 ## CRMS-TSST-006 — owner PWA lint PASS after 37/37 (2026-10-25)
 
