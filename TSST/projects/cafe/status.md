@@ -1,5 +1,13 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-006 — latest owner PWA typecheck PASS (2026-10-25)
+
+- Owner screenshot shows focused `PosPage.test.tsx` Vitest **37/37 PASS** and `pnpm.cmd --filter @crms/pwa typecheck` / `tsc --noEmit -p tsconfig.json` returning cleanly without diagnostics. These are local checks after latest PR #34 changes (remote HEAD last verified `5688007cb89fda0444908cbec2bb70ef43302c25`; local SHA is not displayed in this screenshot).
+- Next: PWA lint, then PWA production build for latest current source, followed by separate formal approval gate. Previous-head lint/build results are historical.
+- PR #34 and UX PR #35 remain DRAFT; no merge or deployment authorized.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-006 — focused Vitest 37/37 observed (2026-10-25)
 
 - Owner Windows Vitest screenshot: `PosPage.test.tsx` **37/37 PASS**, 1/1 test file PASS, 15.59 seconds. Two newly added remaining-order reconciliation failures were included.
