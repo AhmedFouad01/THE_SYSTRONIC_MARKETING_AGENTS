@@ -56,3 +56,11 @@ D. **Pilot and sign off** with real first-time user scenarios; record actual obs
 - [TSST project status](../status.md)
 
 **Decision:** Owner's explicit first-use usability rejection overrides any earlier phrasing of "UX complete" or "program ready". Do not progress to UX product acceptance or merge solely on green automated tests.
+
+## Implementation slice 007-A — active source ownership and exact base (2026-10-25)
+
+- New independent UX pilot branch: `Do7a193/CAFE_RESTAURANT_MS:feat/crms-cashier-first-ux-pilot`, forked from already-tested POS candidate `5688007cb89fda0444908cbec2bb70ef43302c25`. **This does not merge PR #34** and is not the UX PR #35 branch.
+- Active human-supervised owner: TSST Lead. Exclusive scoped paths for this slice: `apps/pwa/src/pages/PosPage.tsx`, `apps/pwa/src/pages/PosPage.test.tsx` and `apps/pwa/src/styles/pos.css`. Do not concurrently edit the same paths from unrelated agents or developers until this pilot is reviewed/handed off.
+- Single low-risk operational simplification: keep one-click `فتح ترابيزة أخرى` always available in occupied dine-in ticket; group `بلايستيشن`, `نقل الترابيزة`, and `إضافة طلب للترابيزة` behind an explicit and keyboard-accessible `إجراءات إضافية` disclosure. Preserve all permission guards, current financial/KDS/Edge mutations and backend authority.
+- Update targeted component tests to verify default collapsed visibility, expansion, and existing gaming/transfer/additional-order flows. No claim of first-time cashier acceptance until owner reviews actual UI screenshots and newcomer task trial.
+- No app production/main/UX base/PR34 merges, financial/DB changes, GitHub Actions or deployment. New code will require owner-local focused Vitest/static gates at exact pilot SHA.
