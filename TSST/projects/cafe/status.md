@@ -1,5 +1,19 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-004 — scoped stale-table claim E2E PASS (2026-10-25)
+
+**Decision:** `STALE_CLAIM_E2E_PASS / PR_RELEASE_SIGNOFF_PENDING / NO_MERGE`.
+
+- Exact POS candidate remains `ca01c872a0c84039ead2713e102f4cf14a7c863f`. On local QA `QA-T03`, cashier B's earlier live draft contained one QA Burger for EGP 50; user executed stale cashier A claim: fresh DevTools `table-tabs` **409**, `live` **200**, actionable other-cashier warning, empty A basket, zero total and disabled submit.
+- Owner then executed read-only PostgreSQL check and shared observed result **`QA-T03 OCCUPIED; 1 live tab; 1 active order; 1 item`**; matches single B QA draft, no duplicate observed. Only **post-conflict SQL** was obtained for QA-T03, not a before/after SQL pair. HTTP method not exposed in Network screenshot; POST backed by code review.
+- Scope is **two independent browser sessions using `System Owner` and a previously available table chosen by A**; does **not** establish different-role/user permissions or deliberately simultaneous parallel calls. Existing backend parallel verification is present in source, not rerun here.
+- Historical QA-T02 401 attempt remains inconclusive for 409. Historical owner 150/150 PWA PASS on unchanged POS head remains historical, no unnecessary rerun.
+- PR #34 remains DRAFT/OPEN, UX PR #35 DRAFT/OPEN; no merge authorization or deployment. Residual: R-02 focused negative-case test coverage; formal reviewer and owner release signoff; integrated UX code review, accessibility scope decision and any distinct-account or parallel-stress signoff the owner requires.
+- [TSST-004 task with live observations](tasks/CRMS-TSST-004-CASHIER-CONCURRENCY-E2E.md) | [QA runbook and outcome](gates/CRMS-TSST-004-TWO-CASHIER-E2E-QA.md).
+- No code/DB changes, GitHub Actions, TSST Core, skill promotion, autonomous agents, or canonical Real Memory applied in this checkpoint.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-004 — HTTP 409 and cashier UI proved; post-race database check pending (2026-10-25)
 
 - Owner's fresh sanitized browser Network after clearing old requests on stale cashier A QA-T03: `table-tabs` status **409**, `live` **200**. User-facing Arabic other-cashier claim warning present; A basket empty, EGP 0.00, submit disabled. This **passes actual browser 409 / UI gate**, unlike first QA-T02 attempt with historical 401.
