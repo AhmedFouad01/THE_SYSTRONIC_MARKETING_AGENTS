@@ -1,5 +1,12 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-005 — owner local Typecheck PASS (2026-10-25)
+
+- Owner's PowerShell TypeScript typecheck `pnpm.cmd --filter @crms/pwa typecheck` returned successfully after `tsc --noEmit -p tsconfig.json` with no errors, at new POS branch HEAD `febc7e75e3539a89531365d2b0161bd7be474e59`.
+- Focused POS Vitest 35/35 previously PASSED on same new head. Next is PWA lint; build not yet run. PR #34 remains DRAFT and no merge authorized.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-005 — focused POS Vitest 35/35 PASS; static gates pending (2026-10-25)
 
 - Owner Windows PowerShell screenshot at local Git HEAD `febc7e75e3539a89531365d2b0161bd7be474e59`: `PosPage.test.tsx` **1/1 file PASS, 35/35 tests PASS**, including cancellation negative conditions and occupancy reload failure. Terminal duration 66.30s. These are **fresh focused tests** at new head.
