@@ -4,7 +4,7 @@ Date: 2026-10-25
 Coordinator: TSST Lead (supervised; no autonomous DEV_AG, skills remain UNVALIDATED)
 Owner continuation: "كمل" following CRMS-TSST-004 scoped stale-claim E2E PASS.
 Scope branch: `Do7a193/CAFE_RESTAURANT_MS`, `fix/crms-pos-readd-after-empty-cancel` PR #34, initial HEAD `ca01c872a0c84039ead2713e102f4cf14a7c863f`.
-State: `PATCH_DELIVERED / NEW_HEAD_TESTS_NOT_RUN`
+State: `EXACT_HEAD_FOCUSED_QA_GATES_PASS / FORMAL_RELEASE_REVIEW_PENDING`
 
 ## Governance and assignment lock — before writes
 - Single owner: TSST Lead supervised code review, small focused unit regression and if demonstrated necessary a minimal bug fix on PR #34 only.
@@ -61,3 +61,11 @@ State: `PATCH_DELIVERED / NEW_HEAD_TESTS_NOT_RUN`
 
 - Owner PowerShell screenshot on previously verified checkout `febc7e75e3539a89531365d2b0161bd7be474e59` shows `pnpm.cmd --filter @crms/pwa lint` invoked; `$ eslint src` completed without diagnostics and returned to the PowerShell prompt. **PWA lint PASS** on the current local checkout, after focused POS Vitest 35/35 PASS and PWA typecheck PASS.
 - PWA build is still **NOT EXECUTED** in the supplied evidence; do not label new exact HEAD release-ready until build, final review and explicit owner approval. PR #34 remains DRAFT; PR #35 remains a separate DRAFT. No merges or deployment.
+
+## CRMS-TSST-005 — owner production PWA build verification PASS (2026-10-25)
+
+- Same local current branch/HEAD as previous focused Vitest `35/35 PASS`, PWA `typecheck PASS`, PWA `lint PASS`: `febc7e75e3539a89531365d2b0161bd7be474e59`.
+- Owner screenshot shows `pnpm.cmd --filter @crms/pwa build` invoking `vite build`, Vite v8.2.2, 83 modules transformed; **built successfully in 1.88s**. Generated PWA v1.3.0 service worker output. Did not deploy.
+- One existing nonblocking Rollup/Vite performance warning: bundle exceeds minified 500 KB recommended threshold; index JS reported ~923.79 KB uncompressed and ~231.52 KB gzip. Track performance debt separately, not an error or blocker in the current functional fix.
+- `CRMS-TSST-005 FOCUSED LOCAL GATES COMPLETE`, but `PR34 DRAFT / NO MERGE`. No all-project rerun, and the owner browser stale-table QA-T03 E2E was previously executed against older `ca01c872`; do not fabricate a new E2E on current head.
+- Additional formal reviewer and owner approval for POS->UX merge, and separately approved UX->main integration, still pending. Existing UX base doc-only drift: POS 9 commits ahead, one behind UX. No GitHub Actions, source/DB writes, merge or deployment from this evidence update.
