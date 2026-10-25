@@ -38,3 +38,13 @@ State: `FOCUSED_POS_TESTS_PASS / LATEST_STATIC_GATES_PENDING / NO_MERGE`
 - Owner's PowerShell screenshot shows `pnpm.cmd --filter @crms/pwa typecheck`, `$ tsc --noEmit -p tsconfig.json`, followed by normal PowerShell prompt and no errors.
 - Focused POS Vitest `37/37` PASS evidenced in same screenshot above the typecheck output; new POS PR #34 remote HEAD was `5688007cb89fda0444908cbec2bb70ef43302c25` in last verified GitHub check. The image does not independently include a fresh local SHA readback.
 - Current PWA typecheck PASS, but **latest-head** PWA lint and build still pending. Historic previous-head lint/build PASS not transferable to new commits. PR #34 remains DRAFT/unmerged.
+
+## CRMS-TSST-006 — owner PWA lint PASS after 37/37 (2026-10-25)
+
+Owner PowerShell screenshot at 2026-10-25 15:02 Cairo time confirms:
+- Focused POS Vitest output `37 passed (37)`.
+- `pnpm.cmd --filter @crms/pwa typecheck` completed with `tsc --noEmit -p tsconfig.json` and no errors.
+- `pnpm.cmd --filter @crms/pwa lint` completed with `eslint src` and returned to prompt without diagnostics: **lint PASS**.
+- Latest remote PR #34 source HEAD previously checked as `5688007cb89fda0444908cbec2bb70ef43302c25`. The screenshot itself does not display a same-session local HEAD command; exact local commit should be reconfirmed if needed.
+- **PWA build at latest HEAD is pending.** Prior build passed at older `febc7e75` and must not be relabelled as a current build PASS.
+- Keep PR #34 OPEN/DRAFT and UX PR #35 separate. No merge, deployment, actions or DB updates authorised.
