@@ -1,5 +1,13 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-005 — owner local PWA lint PASS (2026-10-25)
+
+- Owner PowerShell: `pnpm.cmd --filter @crms/pwa lint` printed `$ eslint src` and returned cleanly without errors. New POS head `febc7e75e3539a89531365d2b0161bd7be474e59` now has focused POS **35/35 Vitest PASS**, PWA Typecheck PASS and PWA Lint PASS from owner local QA.
+- PWA build **PENDING**; PR #34 and UX PR #35 both remain DRAFT/unmerged and explicit owner merge signoff is missing.
+- [CRMS-TSST-005 task](tasks/CRMS-TSST-005-POS-NEGATIVE-PATH-REGRESSION.md). No GitHub Actions, app/DB modifications, merges, deploy or canonical RM changes in this evidence checkpoint.
+
+## Historical checkpoints
+
 ## CRMS-TSST-005 — owner local Typecheck PASS (2026-10-25)
 
 - Owner's PowerShell TypeScript typecheck `pnpm.cmd --filter @crms/pwa typecheck` returned successfully after `tsc --noEmit -p tsconfig.json` with no errors, at new POS branch HEAD `febc7e75e3539a89531365d2b0161bd7be474e59`.
