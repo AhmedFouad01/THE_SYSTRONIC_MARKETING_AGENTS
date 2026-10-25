@@ -1,5 +1,14 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-007A — browser connection recovered; dashboard inspected (2026-10-25)
+
+- Owner screenshots show Edge HTTP server listening on `127.0.0.1:8443`, and subsequently dashboard at `localhost:5174/dashboard` with `النظام متصل` after local proxy URL/protocol correction; previous EPROTO error no longer blocking this dashboard session.
+- Dashboard source + image review: hero and multiple secondary tiles/cards require scrolling; leftover English operational terms. Prior impression of `0` open tables was a **digit misread**: the dashboard count is Arabic `٥` (five), agreeing with attention text `5`. Both displays use `tabs.length` in `DashboardPage.tsx`, so **do not log table-count discrepancy**.
+- Owner environment shows five unpaid bills; avoid bill payment/close operations in UX pilot. Next owner checkpoint is `/pos` screenshot with no mutations, then first-use cashier acceptance on safe QA context.
+- [Pilot running log](reviews/CRMS-TSST-007A-CASHIER-FIRST-POS-PILOT.md). P0 usability acceptance remains OPEN; PR34/PR35 DRAFT/unmerged; no merge/deploy/DB actions.
+
+## Historical checkpoints
+
 ## CRMS-TSST-007A — all scoped pilot local gates PASS, visual acceptance pending (2026-10-25)
 
 - Owner Windows PowerShell screenshot: isolated cashier-first POS pilot focused `PosPage.test.tsx` **37/37 PASS**, PWA `typecheck` PASS, PWA `lint` PASS, PWA production `build` **PASS** on current local `feat/crms-cashier-first-ux-pilot` checkout, last known commit `cfce849b2c52313761c817355fa997669829205f`. Recent screenshots don't print a new local SHA, though the owner confirmed the pilot checkout previously.
