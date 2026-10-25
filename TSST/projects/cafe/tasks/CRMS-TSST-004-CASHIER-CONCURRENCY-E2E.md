@@ -4,7 +4,7 @@ Date: 2026-10-24
 Project: `CAFE_RESTAURANT_MS`
 TSST coordinator: supervised/manual TSST Lead
 Owner-approved task scope: continue last checkpoint and prepare/attempt focused cashier concurrency QA, without authorizing merges, code changes to application, CI or production.
-State: `QA_RUNBOOK_DELIVERED / LIVE_E2E_NOT_EXECUTED`
+State: `SCOPED_LIVE_STALE_CLAIM_E2E_PASS / RELEASE_SIGNOFF_PENDING`
 Upstream: [CRMS-TSST-003](../reviews/CRMS-TSST-003-POS-PR34-FORMAL-REVIEW.md)
 
 ## Lock before work
@@ -49,3 +49,19 @@ Owner captured new DevTools Network log after clearing previous requests. Cashie
 Cashier B previous screenshot showed QA Table 03, new draft order `01a17299`, QA Burger qty 1, total EGP 50, not submitted. Cashier B's order preservation and read-only PostgreSQL `QA-T03` post-conflict table-tab/order/item cardinalities **have not yet been independently checked**. DevTools screenshot has request name/status, but does not show its General/Method section: method `POST` is source-grounded expected, not separately verified from this screenshot.
 
 Next: run the existing read-only SQL query with `QA-T03` as filter in project directory and confirm `OCCUPIED / 1 live tab / 1 active order / 1 item`; verify cashier B unaffected; only then report full scoped E2E PASS. No resets, production data, merges, code edits or GitHub Actions.
+
+
+## Scoped live E2E verification PASS — 2026-10-25
+
+**PASS for precisely defined stale-occupancy competing cashier claim, not simultaneous two-request stress or independent employee-role authorization.**
+
+Final observed evidence from user-provided Windows PowerShell screenshot at 2026-10-25 13:35 Cairo:
+- `BEGIN TRANSACTION READ ONLY` completed successfully with `COMMIT`, querying local PostgreSQL `SITE-001` and `QA-T03`.
+- Returned **`QA-T03 | OCCUPIED | live_tabs=1 | active_orders=1 | items=1`**.
+- Earlier owner screenshot established cashier B's order on QA-T03 (`01a17299#`, QA Burger qty 1, total EGP 50, no order submit), so the one active tab/order/item after A's failed claim matches B's existing draft. This was **not** a pair of before/after SQL snapshots for QA-T03; provenance is B's UI screenshot plus post-conflict SQL.
+- Owner cleared stale DevTools requests, then cashier A attempted to add QA Burger while retaining earlier QA-T03 selection. Browser Network showed **`table-tabs 409`**, **`live 200`**. A displayed the specific other-cashier warning; basket remained empty, total EGP 0.00, send disabled. HTTP method was not expanded in screenshot; POST is expected from reviewed source.
+- Previous QA-T02 attempt with `401` remains explicitly **INCONCLUSIVE**, not retroactively PASS; its 1/1/1 post-check did prove no duplicate there.
+- Both sessions displayed `System Owner`; the tested scenario establishes independent browser session conflict, not separate employee account permission isolation. The backend's existing parallel-call verifier [201,409] was inspected but not executed in this task.
+- The PWA historical 150/150, lint/typecheck/build PASS at `ca01c872` were not rerun or claimed fresh.
+- **Gate decision:** `CRMS-TSST-004 STALE-TABLE CLAIM E2E PASS`. Concurrency evidence blocker R-01 for this specific stale-choice scenario is resolved. Any requirement for strict simultaneous HTTP parallel opens with distinct accounts remains a **separate** acceptance choice, not silently certified. Source risk R-02 negative-branch unit test gaps, formal code review, owner merge authority, and UX integrated review remain separate.
+- No source code changes, GitHub Actions, DB writes, reset, merge, deployment, task automatic closure of PR #34/#35, autonomous agent activation or canonical RM update.
