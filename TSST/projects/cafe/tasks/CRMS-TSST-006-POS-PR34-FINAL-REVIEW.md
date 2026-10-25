@@ -3,7 +3,7 @@
 Date: 2026-10-25
 Project: CAFE_RESTAURANT_MS
 Coordinator: human-supervised TSST Lead
-State: `SOURCE_REVIEW_PATCH_DELIVERED / TESTS_PENDING / NO_MERGE`
+State: `FOCUSED_POS_TESTS_PASS / LATEST_STATIC_GATES_PENDING / NO_MERGE`
 
 ## Controlled scope and lock
 - Review **only** Do7a193/CAFE_RESTAURANT_MS [POS PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34), candidate SHA `febc7e75e3539a89531365d2b0161bd7be474e59`, base UX branch `feat/crms-ux-final-visual-system`.
@@ -24,3 +24,11 @@ State: `SOURCE_REVIEW_PATCH_DELIVERED / TESTS_PENDING / NO_MERGE`
 - Old owner 35/35 focused POS, PWA typecheck/lint/build were proven at `febc7e75`. The new HEAD has **NO fresh tests**; expected focused POS count now 37 (not yet a passing result). Historic 150/150 and stale-table HTTP409/DB E2E at `ca01c872` remain scoped and dated; neither is certified on latest HEAD.
 - POS compare vs UX tip now 11 ahead/1 behind; behind commit is UX docs-only. PR #34 remains OPEN/DRAFT, UX PR #35 separate OPEN/DRAFT; neither merged, no Actions or deployment.
 - Next: owner Windows update with `git pull --ff-only`, verify clean new exact HEAD, run focused PosPage Vitest; if PASS run TypeScript check, lint and build. Formal reviewer/owner merge gate remains separate.
+
+## CRMS-TSST-006 — focused Vitest 37/37 observed (2026-10-25)
+
+- Owner submitted new PowerShell screenshot of `pnpm.cmd --dir apps/pwa exec vitest run src/pages/PosPage.test.tsx --config vitest.config.ts --pool=threads --maxWorkers=1 --no-file-parallelism`.
+- Screenshot shows Vitest `src/pages/PosPage.test.tsx (37 tests)`, `Test Files 1 passed (1)`, `Tests 37 passed (37)`, duration 15.59 seconds; both new remaining-orders failure cases present and passing.
+- GitHub PR #34 head independently checked as `5688007cb89fda0444908cbec2bb70ef43302c25`. Screenshot itself does **not** display the local `git rev-parse HEAD` output immediately before Vitest; previous owner step requested fast-forward and HEAD check, so confirm local HEAD if exact-run attribution is needed.
+- **Focused POS unit tests PASS in owner screenshot.** Still need **current HEAD** PWA typecheck, lint, build; prior PASS static gates belong to `febc7e75` not latest revision.
+- PR #34 remains OPEN/DRAFT; no merge/rebase/Actions/deployment/DB operations. Owner permission still required to merge later.
