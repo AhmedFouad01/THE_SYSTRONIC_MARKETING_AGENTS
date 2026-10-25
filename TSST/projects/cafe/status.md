@@ -1,4 +1,13 @@
+
 # CAFE — TSST current checkpoint
+
+## CRMS-TSST-006 — owner PWA lint PASS after 37/37 (2026-10-25)
+
+- Owner PowerShell screenshot: local POS focused Vitest **37/37 PASS**, PWA `typecheck` **PASS**, PWA `lint` **PASS** on checked-out local POS branch. Latest remote PR #34 HEAD previously verified as `5688007cb89fda0444908cbec2bb70ef43302c25`; the latest image does not independently show local SHA.
+- **Next only:** execute current-branch PWA production build and inspect warnings/results. Historic build at older POS revision does not verify this revision.
+- PR #34 remains OPEN/DRAFT; PR #35 remains distinct OPEN/DRAFT. Explicit owner authorisation is still required before any integration. No GitHub Actions, merge, deployment or DB actions.
+
+## Historical checkpoints
 
 ## CRMS-TSST-006 — latest owner PWA typecheck PASS (2026-10-25)
 
