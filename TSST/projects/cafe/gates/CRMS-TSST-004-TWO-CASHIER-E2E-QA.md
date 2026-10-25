@@ -5,7 +5,7 @@ Project: CAFE_RESTAURANT_MS
 GitHub review target: https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34
 Candidate POS SHA: `ca01c872a0c84039ead2713e102f4cf14a7c863f`
 Last owner QA evidence: 2026-10-20 PWA 150/150 historical PASS, not rerun by this checkpoint.
-**Current state: `E2E_NOT_EXECUTED — REQUIRES_OWNER_LOCAL_QA_SESSION`.** This is a prescribed test and inspected source, not a successful live test.
+**Current state: `SCOPED_STALE_CLAIM_E2E_PASS — 2026-10-25`; historical plan retained below for audit provenance.** See the actual execution section appended at the end; the earlier instructions reflect the pre-execution stage.
 
 ## 0. Safety and boundaries
 
@@ -114,3 +114,26 @@ Record and provide only:
 - SQL table_status, live_tabs, nonterminal_orders, noncancelled_items **before and after A**.
 
 TSST Lead can then mark `CRMS-TSST-004` `PASS` or `FAIL/BLOCKED` and update the scoped PR evidence. Until then it remains `E2E_NOT_EXECUTED`; PRs #34/#35 DRAFT, unmerged. No approval of any merge is implied.
+
+
+## Actual owner execution — 2026-10-25
+
+**Result: `SCOPED PASS` for stale selected-table conflict after competing browser already opened the table.** The preceding text is the original unexecuted plan at time of publication, preserved as historical instructions.
+
+| Acceptance evidence | Recorded result |
+| --- | --- |
+| Candidate | Earlier owner PowerShell clean `fix/crms-pos-readd-after-empty-cancel` at `ca01c872a0c84039ead2713e102f4cf14a7c863f` |
+| Other browser opens table | Cashier B session, `QA-T03`, QA Burger qty 1, order `01a17299#`, EGP 50, not submitted |
+| Fresh A conflict | Cleared Network log, `table-tabs` **409**, follow-up `live` **200**; screenshot shows request name/status but method not expanded |
+| UI handling | Cashier A sees `الترابيزة اتفتحت من كاشير تاني. اختار ترابيزة متاحة أو افتح طلبها الحالي.`, basket empty, EGP 0, send disabled |
+| Authoritative SQL after A | Read-only `QA-T03 | OCCUPIED | live_tabs 1 | active_orders 1 | items 1`, transaction COMMIT |
+| Duplicate tab/order/item | **None observed** in scoped QA-T03 post-action count |
+| Repeat full test suite | Not needed for unchanged code; historical owner PWA 150/150 remains historical |
+| Dual distinct cashier identities | **NOT VERIFIED**: both sessions displayed `System Owner` |
+| Deliberately simultaneous HTTP requests | **NOT RERUN**; pre-existing source verifier tests concurrent `[201,409]`, but owner observed stale-selection claim rather than stress race |
+| Before/after DB snapshots on QA-T03 | Only **post-action SQL** is available for QA-T03; B browser state is the baseline |
+| Release authorization | **NOT GRANTED**; PR #34 and #35 remain DRAFT/OPEN |
+
+QA-T02 earlier attempt yielded 401 and was not a passing 409; it was diagnosed separately. No production records, reset, DB writes, code modification, GitHub Actions, merge or deployment were done by the assistant.
+
+**Scoped gate disposition:** The specific `R-01` browser stale-choice/API409/no-duplicate observation can be considered satisfied for this QA scenario, but broader same-instant parallel stress, distinct-role cashier permissions, R-02 negative-path test gaps and formal PR/release approval remain separate.
