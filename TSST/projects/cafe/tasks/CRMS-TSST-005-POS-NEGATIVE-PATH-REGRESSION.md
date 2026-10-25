@@ -50,3 +50,9 @@ State: `PATCH_DELIVERED / NEW_HEAD_TESTS_NOT_RUN`
 - Actual terminal result: `src/pages/PosPage.test.tsx (35 tests)`, `Test Files 1 passed (1)`, `Tests 35 passed (35)`, duration 66.30s. All 4 parameterized negative table-retention scenarios and the post-cancel refresh-failure test listed as passing; **no failed tests**.
 - **Evidence classification: focused Vitest PASS at exact HEAD.** Typecheck, lint, build and any new runtime E2E on this HEAD **not yet evidenced**; previous full PWA 150/150 and owner browser 409/DB scenario remain historical evidence of earlier commit `ca01c872`.
 - Next: run PWA typecheck individually, review actual output, then PWA lint/build gates separately. PR #34 remains DRAFT/unmerged, PR #35 likewise; no actions or deployment.
+
+## CRMS-TSST-005 — owner local Typecheck PASS (2026-10-25)
+
+- Owner Windows PowerShell screenshot on branch `fix/crms-pos-readd-after-empty-cancel`, after `git rev-parse HEAD` confirmed `febc7e75e3539a89531365d2b0161bd7be474e59` and focused Vitest 35/35 PASS.
+- Ran `pnpm.cmd --filter @crms/pwa typecheck`; terminal showed `tsc --noEmit -p tsconfig.json`, returned to PowerShell prompt with no errors. **Typecheck PASS on the currently checked out new head**.
+- No lint or build result shown yet. PR #34 still requires those checks and formal owner merge approval. Historical 150/150 applies to earlier commit.
