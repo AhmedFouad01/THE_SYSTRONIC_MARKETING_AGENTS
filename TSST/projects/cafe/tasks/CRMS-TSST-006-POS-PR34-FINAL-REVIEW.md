@@ -3,7 +3,7 @@
 Date: 2026-10-25
 Project: CAFE_RESTAURANT_MS
 Coordinator: human-supervised TSST Lead
-State: `FOCUSED_GATE_COMPLETE / FORMAL_REVIEW_AND_OWNER_MERGE_APPROVAL_PENDING`
+State: `TECHNICAL_DIFF_REVIEW_DONE / HUMAN_OWNER_MERGE_DECISION_PENDING`
 
 ## Controlled scope and lock
 - Review **only** Do7a193/CAFE_RESTAURANT_MS [POS PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34), candidate SHA `febc7e75e3539a89531365d2b0161bd7be474e59`, base UX branch `feat/crms-ux-final-visual-system`.
@@ -55,3 +55,11 @@ Owner PowerShell screenshot at 2026-10-25 15:02 Cairo time confirms:
 - Vite v8.2.2, 83 modules, built in ~931ms and PWA v1.3.0 service worker files generated. Minor nonblocking large JS chunk: `index-BWpxnUvS.js` **924.01 KB** uncompressed and **231.57 KB** gzip, size threshold >500 KB.
 - Actual completed checks are **focused PWA** checks, not repo-wide 150+ test rerun and not a fresh distinct-account E2E. Earlier browser QA-T03 concurrency 409 with one DB tab/order/item was on older commit.
 - Final review disposition: implementation candidate tested in owner local workflow; **no GitHub submitted reviews**; PR #34 `OPEN/DRAFT`, `mergeable` does not equal approved. PR #35 UX->main is a distinct DRAFT. Next is human review and explicit owner approval before POS->UX; separately approve UX->main after integrated review. No GitHub Actions, merges, deployments, data migrations or reset.
+
+## PR34 technical review handoff — human/owner signoff still pending (2026-10-25)
+
+- Revalidated two-file POS-only diff at exact remote HEAD `5688007cb89fda0444908cbec2bb70ef43302c25`, 37/37 focused test, typecheck, lint, build PASS in owner-provided screenshots; no new confirmed code defect requiring rerun or branch modification.
+- GitHub attached a **COMMENT-only**, **not APPROVE**, review `5643153123` explaining bounds of QA and proposed merge sequence; do not misrepresent as human approval.
+- GitHub commit combined statuses empty (no CI pass claim). UX branch has one docs-only newer commit in `docs/gates/CRMS-UX-FINAL-GLOBAL-VISUAL-SYSTEM.md`. Current POS 11 ahead/1 behind the UX tip; no actual code overlap with newer UX docs commit.
+- PR #34 remains DRAFT, NO MERGE. Human/owner approval and explicit separate authorization for POS->UX merge needed; UX PR #35->main decision later after integration review.
+- [Audited technical disposition](../reviews/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md).
