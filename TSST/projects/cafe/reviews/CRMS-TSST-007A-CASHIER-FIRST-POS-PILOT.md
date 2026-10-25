@@ -79,3 +79,10 @@ Links: [GitHub Issue #36](https://github.com/Do7a193/CAFE_RESTAURANT_MS/issues/3
 ## Pilot lint evidence — 2026-10-25
 
 Owner local Windows PowerShell screenshot shows `pnpm.cmd --filter @crms/pwa lint` printing `$ eslint src` and returning to the prompt without diagnostics. Previously recorded corrected-pilot focused POS test `37/37 PASS` and PWA typecheck PASS remain supported by screenshots. Thus **lint PASS** for the checked-out pilot state. The screenshot itself does not display a fresh local HEAD SHA; the last known pilot correction is `cfce849b2c52313761c817355fa997669829205f`. PWA production build and hands-on operator usability remain pending. No branch merge or deployment.
+
+## Pilot Vite production build PASS — owner local evidence (2026-10-25)
+
+- Owner shared PowerShell result on current cashier-first pilot checkout after successful scoped 37/37 POS unit, TypeScript and ESLint runs: `pnpm.cmd --filter @crms/pwa build` issued `vite build`, Vite 8.2.2, 83 modules transformed, `built in 1.03s`, generated PWA v1.3.0 service worker output. Command returned to prompt without error.
+- Large bundle warning only (nonblocking): `dist/assets/index-XghCW9Fo.js`, approximately 924.48 KB uncompressed and 231.64 KB gzip; capture as performance follow-up.
+- **Scoped pilot local technical gate PASS**, but **real browser usability acceptance remains NOT RUN**. Prior user requirement that ordinary cafe cashier can operate without coaching remains a separate blocking condition; GitHub issue #36 P0 remains OPEN.
+- Next owner action: run current pilot against local QA Edge, view `http://localhost:5174/pos` and capture screenshots of the new simplified ticket actions. Do not merge either existing PR, don't deploy, and don't change production data.
