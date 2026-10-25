@@ -39,3 +39,13 @@ Upstream: [CRMS-TSST-003](../reviews/CRMS-TSST-003-POS-PR34-FORMAL-REVIEW.md)
 - Source auth default `AUTH_ACCESS_TTL_SECONDS = 900` (15 minutes) in `apps/edge-api/src/modules/identity/identity.service.ts`, and PWA client dispatches `EDGE_UNAUTHORIZED_EVENT` on HTTP 401, with SessionProvider attempting token refresh. The screenshots indicate ~27 minutes between initial A/B login and observed request, which makes access expiration plausible, **not proven**; a deployment-specific `.env` override and Response body were not inspected.
 - **Follow-up controls:** preserve QA-T02 and its order, confirm read-only DB counts remain 1/1/1 after the 401 attempt, then choose *another unused QA fixture (QA-T03)*; refresh/re-authenticate sessions and stage the two-cashier stale-occupancy scenario promptly within the TTL, with sanitized Network method/path/status and the two DB snapshots. A fresh login/refresh may update table selection, so don't claim A's current cached QA-T02 state is suitable for another 409 race. Do not use production data or reset.
 - Source inspection and this evidence log are not a new passing regression or a completed concurrency gate; PR #34/#35 remain DRAFT/no merge.
+
+## Observed live QA recovery — 2026-10-25 HTTP 409
+
+**Gate state: `HTTP_409_AND_UI_PASS / POST_RACE_DB_SNAPSHOT_PENDING` — not full E2E PASS yet.**
+
+Owner captured new DevTools Network log after clearing previous requests. Cashier A on stale QA-T03 selected a QA Burger; Network shows a fresh `table-tabs` fetch response **409** and `live` response **200**. The screen shows the specific error "الترابيزة اتفتحت من كاشير تاني. اختار ترابيزة متاحة أو افتح طلبها الحالي.", zero items, EGP 0.00 total, and disabled submit. This is direct real browser/Edge evidence of conflict handling, unlike the earlier 401.
+
+Cashier B previous screenshot showed QA Table 03, new draft order `01a17299`, QA Burger qty 1, total EGP 50, not submitted. Cashier B's order preservation and read-only PostgreSQL `QA-T03` post-conflict table-tab/order/item cardinalities **have not yet been independently checked**. DevTools screenshot has request name/status, but does not show its General/Method section: method `POST` is source-grounded expected, not separately verified from this screenshot.
+
+Next: run the existing read-only SQL query with `QA-T03` as filter in project directory and confirm `OCCUPIED / 1 live tab / 1 active order / 1 item`; verify cashier B unaffected; only then report full scoped E2E PASS. No resets, production data, merges, code edits or GitHub Actions.
