@@ -1,5 +1,15 @@
 # CAFE — TSST current checkpoint
 
+
+## CRMS-TSST-007A — owner rerun 37/37 PASS on corrected pilot (2026-10-25)
+
+- Owner Windows PowerShell screenshot confirms local pilot revision `cfce849b2c52313761c817355fa997669829205f` and targeted `pnpm.cmd --dir apps/pwa exec vitest run src/pages/PosPage.test.tsx --config vitest.config.ts --pool=threads --maxWorkers=1 --no-file-parallelism` completed with `Test Files 1 passed (1)`, `Tests 37 passed (37)`, duration 17.49s. No failed tests.
+- This **supersedes the earlier failed 35/37 pilot result** only for the corrected test-run state. The two asynchronously loaded advanced-actions regression checks now pass; correction changed test expectations/timing only, not order or payment business logic.
+- **Pilot focused POS Vitest PASS; pilot PWA typecheck, ESLint and production build are still PENDING.** Parent POS PR34 earlier 37/37 / static PASS is historical; must not be transferred without pilot exact-HEAD checks.
+- **UX usability P0 remains OPEN**: no desktop/mobile visual operator acceptance or first-time cashier usability validation yet. PR34 and PR35 remain DRAFT/unmerged; isolated pilot not merged or deployed. Next owner gate: `pnpm.cmd --filter @crms/pwa typecheck`, then lint and build if PASS, followed by screenshots of actual UI.
+
+## Historical checkpoints (retained)
+
 ## Owner pilot Vitest: 35/37 with targeted test sync correction (2026-10-25)
 
 - Owner screenshot from cashier-first isolated pilot showed **2 failed, 35 passed (37 tests)**; trace at `PosPage.test.tsx:1176` followed an occupied-table click and synchronous query for the newly disclosed advanced-actions button.
