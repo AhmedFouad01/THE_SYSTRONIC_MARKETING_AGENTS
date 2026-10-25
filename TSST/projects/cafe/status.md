@@ -1,5 +1,15 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-007A — all scoped pilot local gates PASS, visual acceptance pending (2026-10-25)
+
+- Owner Windows PowerShell screenshot: isolated cashier-first POS pilot focused `PosPage.test.tsx` **37/37 PASS**, PWA `typecheck` PASS, PWA `lint` PASS, PWA production `build` **PASS** on current local `feat/crms-cashier-first-ux-pilot` checkout, last known commit `cfce849b2c52313761c817355fa997669829205f`. Recent screenshots don't print a new local SHA, though the owner confirmed the pilot checkout previously.
+- Vite 8.2.2 successfully built 83 modules in ~1.03s; PWA 1.3.0 `dist/sw.js` emitted. Existing **nonblocking** warning: large JS chunk `index-XghCW9Fo.js` ~924.48 KB before gzip (~231.64 KB gzip).
+- **Technical result:** `PILOT_FOCUSED_TESTS_STATIC_AND_BUILD_PASS`; this is NOT a full repository regression, and NOT cashier usability acceptance. Owner visual inspection on 1366x768 and 390x844 plus first-time novice task pilot still pending; Issue #36 remains P0 OPEN.
+- Next: start existing local QA Docker/Edge/PWA stack (no deployment), visually inspect one dine-in ticket, compare obvious "فتح ترابيزة أخرى" vs "إجراءات إضافية" and confirm advanced functions accessible without causing financial mutation.
+- PR #34 and PR #35 remain separately OPEN/DRAFT/unmerged; independent pilot not integrated, no Actions, DB writes/reset, release or canonical RM apply.
+
+## Historical checkpoints
+
 ## CRMS-TSST-007A — pilot lint PASS after 37/37 (2026-10-25)
 
 - Owner Windows PowerShell screenshot: isolated cashier-first pilot `PosPage.test.tsx` **37/37 PASS**, PWA `typecheck` **PASS**, and PWA `lint` **PASS** (`$ eslint src` completed and returned to prompt with no diagnostics).
