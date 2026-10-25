@@ -41,3 +41,12 @@ After new exact-head checks PASS, perform formal source review disposition (with
 - Task [CRMS-TSST-006](../tasks/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md) registered before new source edits.
 - TSST skill packs remain UNVALIDATED, DEV_AG NOT_READY; review was manual supervised and does not qualify as activating agents/skills.
 - No GitHub Actions, PR merge/rebase, deployment, production writes, financial/permissions changes or canonical Real Memory promotion.
+
+## Owner final QA evidence supplement — 2026-10-25
+
+**Supplement overrides only the previous 'new-HEAD QA pending' evidence status, not merge governance or scope restrictions.**
+
+- Owner local PowerShell submitted sequential QA screenshots: POS focused Vitest 37/37 PASS including two new remaining-order lookup negative-path tests; TypeScript typecheck PASS; ESLint PASS; Vite production build PASS (83 transformed modules, Vite 8.2.2, built in 931 ms, PWA v1.3.0 output).
+- GitHub PR #34 remote HEAD at evidence logging time: `5688007cb89fda0444908cbec2bb70ef43302c25`; direct local SHA capture was not included in the final screenshot, although owner had earlier been directed to fast-forward and verify HEAD.
+- Build warning is performance-only: 924.01 KB JS chunk, gzip 231.57 KB; no build failure.
+- **Decision now:** `FOCUSED_PWA_QA_PASS / FORMAL_CODE_REVIEW_PENDING / OWNER_MERGE_PERMISSION_NOT_GRANTED`. No new repo-wide full suite or latest browser concurrency smoke claimed. Formal GitHub reviews: 0; no unresolved review threads. Existing PR remains OPEN/DRAFT. UX tip has one documentation-only commit not included in POS branch. Integrate only via separately authorized POS->UX merge, then review and separately authorize UX->main.
