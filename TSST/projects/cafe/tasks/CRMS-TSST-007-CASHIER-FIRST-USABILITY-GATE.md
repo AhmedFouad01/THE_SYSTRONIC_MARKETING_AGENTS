@@ -72,3 +72,11 @@ D. **Pilot and sign off** with real first-time user scenarios; record actual obs
 - [Report and exact Windows QA/handoff](../reviews/CRMS-TSST-007A-CASHIER-FIRST-POS-PILOT.md).
 - Pilot tests **NOT RUN**, local UI first-time novice acceptance **NOT MEASURED**. Historical 37/37 POS at base commit cannot be asserted for new SHA.
 - PR #34 and PR #35 remain drafts/unmerged; Issue #36 stays P0 OPEN, no release acceptance. No GitHub Actions, app deployment, DB changes, merge or Real Memory canonical apply.
+
+## Owner pilot Vitest failure — initial 35/37 and targeted test synchronization correction (2026-10-25)
+
+- Owner ran exact local pilot branch `feat/crms-cashier-first-ux-pilot` from previously confirmed `b88f1ba43b31b3c90f32b6a88281d041b9521246`; PowerShell screenshot shows **Test Files 1 failed**, **Tests 2 failed / 35 passed (37 total)**. The screenshot error stack points to `PosPage.test.tsx:1176:28` immediately after an occupied-table click and an immediate `getByRole('button', { name: 'إجراءات إضافية' })` lookup. The top portions naming both failed cases are not visible in the supplied image.
+- Code review identified two occupied-table regression tests attempting to access the new advanced-actions control synchronously before asynchronous `resumeOccupiedTable` loads the active order, at the corresponding additional-batch cases. **Probable test timing issue**; do not assert proof of resolution without rerun or infer that production business logic failed.
+- Minimal **test-only** correction committed to pilot branch: `cfce849b2c52313761c817355fa997669829205f`. Both affected cases now `await screen.findByRole(...'إجراءات إضافية')` after selecting the occupied table before clicking. No change to `PosPage.tsx`, CSS, persistence, financial flows, Edge API or POS PR #34.
+- **State: `35_PASS_2_FAIL_ON_PREVIOUS_PILOT / TEST_SYNC_CORRECTION_PUSHED / CURRENT_HEAD_NOT_TESTED`**. Next owner check: clean checkout on pilot branch, `git pull --ff-only`, confirm HEAD `cfce849...`, rerun targeted 37 PosPage tests. If remaining failure occurs, capture test case name and first assertion error instead of only DOM dump. No lint/build/UX signoff until focused tests pass.
+- PR #34 and PR #35 remain DRAFT/unmerged; P0 usability acceptance Issue #36 still OPEN; no GitHub Actions, deployment, DB writes or merge.
