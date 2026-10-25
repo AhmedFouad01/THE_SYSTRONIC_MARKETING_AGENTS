@@ -1,5 +1,13 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-005 — focused POS Vitest 35/35 PASS; static gates pending (2026-10-25)
+
+- Owner Windows PowerShell screenshot at local Git HEAD `febc7e75e3539a89531365d2b0161bd7be474e59`: `PosPage.test.tsx` **1/1 file PASS, 35/35 tests PASS**, including cancellation negative conditions and occupancy reload failure. Terminal duration 66.30s. These are **fresh focused tests** at new head.
+- Next PWA typecheck; lint/build subsequently, not yet claimed. Historical old exact-HEAD full PWA 150/150 PASS and stale-table QA-T03 E2E PASS remain confined to `ca01c872`.
+- [TSST-005 task](tasks/CRMS-TSST-005-POS-NEGATIVE-PATH-REGRESSION.md); PR #34 OPEN/DRAFT and UX PR #35 OPEN/DRAFT, no owner merge authorization. No GitHub Actions, deploy, DB, or source modifications during evidence logging.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-005 — POS negative paths patched; new HEAD verification pending (2026-10-25)
 
 **Decision:** `POS_PATCH_DELIVERED / EXACT_HEAD_TESTS_NOT_RUN / PR34_MERGE_HOLD`.
