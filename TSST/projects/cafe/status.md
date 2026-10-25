@@ -1,5 +1,21 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-007 — user-facing usability acceptance reopened (2026-10-25)
+
+**Owner rejection / binding product gate:** Despite passing technical POS checks (37/37 focused Vitest, typecheck, lint, build) and source review, the owner reports unfinished interface work and task complexity too high for a new/ordinary cashier. This violates the original simple Arabic RTL, minimum-training POS expectation. **Do not call program finished or UX ready for production.**
+
+**Decision:** `P0_USABILITY_ACCEPTANCE_NOT_MET / RELEASE_UX_HOLD / NO_MERGE`.
+
+- [New cashier-first acceptance task](tasks/CRMS-TSST-007-CASHIER-FIRST-USABILITY-GATE.md); [GitHub issue #36](https://github.com/Do7a193/CAFE_RESTAURANT_MS/issues/36) tracks owner-reported P0 separately from already checked technical POS issues #32/#33.
+- Source-level indicators: `PosPage.tsx` contains routine sale/table/product/quantity/ticket, multi-table/extra batch, gaming, table manager, KDS status and payment flows in a ~2305 line route. One dense route does not alone prove a usability bug; owner explicitly reports difficulty. UX PR #35 evidence supports normalized visuals/responsive samples, not observed novice operator onboarding.
+- Reopen UX gate: audit the order journey at desktop 1366×768, portrait 390×844, landscape 844×390, one primary action per task stage, searchable table chooser, accessible cart/total, short Arabic instructions and recovery, safe advanced-operations disclosure, kitchen/billing handoffs, no accidental financial mutation.
+- Validate usability with an untrained staff member on QA fixtures and owner review before acceptance. Proposed success thresholds are pending owner agreement and must not be represented as measured.
+- Preserve transactional Edge authority, unique live tabs, billing/payment integrity, KDS, printing, staff access controls. No silent redesign on PR #34; use separately scoped/supervised UX implementation and review. Maintain TSST Core freeze, DEV_AG NOT_READY, skill validation governance.
+- POS PR #34 stays OPEN/DRAFT; UX PR #35 stays OPEN/DRAFT and **does not have owner usability acceptance**. No approval to merge either PR; technical review COMMENT is not an approval. Historical QA results remain documented and valid for their tested scope, not evidence of novice usability.
+- No source app edits, data writes, GitHub Actions, merge or deploy from this owner-feedback documentation.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-006 — technical review complete, owner merge approval required (2026-10-25)
 
 **Decision: `FOCUSED_GATES_PASS / DIFF_REVIEW_DONE / EXPLICIT_OWNER_APPROVAL_REQUIRED / NO_MERGE`.**
