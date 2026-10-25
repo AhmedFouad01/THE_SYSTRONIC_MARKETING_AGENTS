@@ -56,3 +56,8 @@ State: `PATCH_DELIVERED / NEW_HEAD_TESTS_NOT_RUN`
 - Owner Windows PowerShell screenshot on branch `fix/crms-pos-readd-after-empty-cancel`, after `git rev-parse HEAD` confirmed `febc7e75e3539a89531365d2b0161bd7be474e59` and focused Vitest 35/35 PASS.
 - Ran `pnpm.cmd --filter @crms/pwa typecheck`; terminal showed `tsc --noEmit -p tsconfig.json`, returned to PowerShell prompt with no errors. **Typecheck PASS on the currently checked out new head**.
 - No lint or build result shown yet. PR #34 still requires those checks and formal owner merge approval. Historical 150/150 applies to earlier commit.
+
+## CRMS-TSST-005 — owner local PWA lint PASS (2026-10-25)
+
+- Owner PowerShell screenshot on previously verified checkout `febc7e75e3539a89531365d2b0161bd7be474e59` shows `pnpm.cmd --filter @crms/pwa lint` invoked; `$ eslint src` completed without diagnostics and returned to the PowerShell prompt. **PWA lint PASS** on the current local checkout, after focused POS Vitest 35/35 PASS and PWA typecheck PASS.
+- PWA build is still **NOT EXECUTED** in the supplied evidence; do not label new exact HEAD release-ready until build, final review and explicit owner approval. PR #34 remains DRAFT; PR #35 remains a separate DRAFT. No merges or deployment.
