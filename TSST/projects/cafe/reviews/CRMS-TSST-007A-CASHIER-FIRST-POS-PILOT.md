@@ -68,3 +68,10 @@ Links: [GitHub Issue #36](https://github.com/Do7a193/CAFE_RESTAURANT_MS/issues/3
 - This **supersedes the earlier failed 35/37 pilot result** only for the corrected test-run state. The two asynchronously loaded advanced-actions regression checks now pass; correction changed test expectations/timing only, not order or payment business logic.
 - **Pilot focused POS Vitest PASS; pilot PWA typecheck, ESLint and production build are still PENDING.** Parent POS PR34 earlier 37/37 / static PASS is historical; must not be transferred without pilot exact-HEAD checks.
 - **UX usability P0 remains OPEN**: no desktop/mobile visual operator acceptance or first-time cashier usability validation yet. PR34 and PR35 remain DRAFT/unmerged; isolated pilot not merged or deployed. Next owner gate: `pnpm.cmd --filter @crms/pwa typecheck`, then lint and build if PASS, followed by screenshots of actual UI.
+
+## CRMS-TSST-007A — owner PWA typecheck PASS after pilot 37/37 (2026-10-25)
+
+- Owner Windows PowerShell screenshot confirms corrected isolated POS UX pilot local test `PosPage.test.tsx` **37/37 PASS** and subsequent command `pnpm.cmd --filter @crms/pwa typecheck` running `tsc --noEmit -p tsconfig.json`, returning to prompt without errors: **typecheck PASS**.
+- Pilot correction SHA last verified: `cfce849b2c52313761c817355fa997669829205f`. Screenshot does not independently show a fresh local SHA readback, so retain exact-SHA provenance caveat.
+- **Current pilot quality evidence:** focused POS unit 37/37 PASS and PWA typecheck PASS. **ESLint and Vite production build remain pending**, as does actual owner visual / first-time cashier acceptance. No claim of full-project tests or production readiness.
+- Previous 35/37 failures are superseded by this successful rerun, not erased from audit trail. Both PR34 and PR35 remain separate OPEN/DRAFT; independent pilot not merged.
