@@ -1,5 +1,14 @@
 # CAFE — TSST current checkpoint
 
+## Owner pilot Vitest: 35/37 with targeted test sync correction (2026-10-25)
+
+- Owner screenshot from cashier-first isolated pilot showed **2 failed, 35 passed (37 tests)**; trace at `PosPage.test.tsx:1176` followed an occupied-table click and synchronous query for the newly disclosed advanced-actions button.
+- Two impacted additional-table-order tests on that separate pilot branch had synchronous `getByRole` before async occupied order was loaded; test-only fix committed at `cfce849b2c52313761c817355fa997669829205f` to use `await findByRole` for both. **Corrected HEAD not yet rerun.** Do not call this a runtime behavior pass.
+- [Evidence and remediation](reviews/CRMS-TSST-007A-CASHIER-FIRST-POS-PILOT.md) · [TSST-007 task](tasks/CRMS-TSST-007-CASHIER-FIRST-USABILITY-GATE.md).
+- Need owner pull updated pilot, verify SHA, rerun focused tests; only after PASS move to static checks and visual usability acceptance. POS PR #34 / UX PR #35 remain DRAFT and unchanged; no merge/deploy.
+
+## Historical checkpoints
+
 ## CRMS-TSST-007A — cashier-first pilot isolated and awaiting QA (2026-10-25)
 
 **Gate:** `P0_USABILITY_OPEN / ISOLATED_UX_PILOT_CODE_READY_FOR_OWNER_QA / NO_MERGE`.
