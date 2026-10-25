@@ -1,5 +1,18 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-007A — cashier-first pilot isolated and awaiting QA (2026-10-25)
+
+**Gate:** `P0_USABILITY_OPEN / ISOLATED_UX_PILOT_CODE_READY_FOR_OWNER_QA / NO_MERGE`.
+
+- Owner reports current program UI too complex for ordinary first-time cashier despite green functional tests. P0 issue #36 and TSST-007 remain OPEN; previous POS PR34 technical readiness does **not** mean whole UX accepted.
+- Independent experimental branch `feat/crms-cashier-first-ux-pilot` from stable POS PR34 SHA `5688007cb89fda0444908cbec2bb70ef43302c25`, latest authored SHA `b88f1ba43b31b3c90f32b6a88281d041b9521246`. **Neither POS PR34 nor UX PR35 merged.**
+- Source+test+CSS pilot: keep one-click `فتح ترابيزة أخرى` visible, hide optional gaming/transfer/additional-batch actions behind accessible `إجراءات إضافية` control, two-column touch sizing on narrow screens, auto-collapse when order changes. All backend mutation/finance/permission handlers unchanged.
+- Exactly 3 POS frontend files changed, 5 pilot commits ahead/0 behind its parent. [Full pilot diff/evidence and Windows test plan](reviews/CRMS-TSST-007A-CASHIER-FIRST-POS-PILOT.md). [Task gate](tasks/CRMS-TSST-007-CASHIER-FIRST-USABILITY-GATE.md).
+- **No new pilot Vitest/typecheck/lint/build or browser screenshots yet**, so **NO PASS** claimed for the pilot branch. Previous 37/37 unit+static passes refer only to parent SHA; live employee usability still unverified.
+- Next: owner Windows git clean check/fetch/checkout this branch, execute focused POS test on exact pilot SHA, validate updated controls at desktop/mobile and first-time cashier tasks; incorporate owner UX feedback before widening scope. PR #34/#35 remain DRAFT/OPEN, zero merge/deployment authorization; TSST skills/DEV_AG remain unvalidated.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-007 — user-facing usability acceptance reopened (2026-10-25)
 
 **Owner rejection / binding product gate:** Despite passing technical POS checks (37/37 focused Vitest, typecheck, lint, build) and source review, the owner reports unfinished interface work and task complexity too high for a new/ordinary cashier. This violates the original simple Arabic RTL, minimum-training POS expectation. **Do not call program finished or UX ready for production.**
