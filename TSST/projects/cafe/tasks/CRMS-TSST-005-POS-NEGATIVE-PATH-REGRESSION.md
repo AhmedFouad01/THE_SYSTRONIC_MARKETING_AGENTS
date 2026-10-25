@@ -43,3 +43,10 @@ State: `PATCH_DELIVERED / NEW_HEAD_TESTS_NOT_RUN`
 - Once focused gates pass: optional PWA build and targeted manual cancellation/re-add smoke at 390×844 only when needed; owner approval separately required before PR #34 POS -> UX integration, and later PR #35 UX -> main.
 - Previous CRMS-TSST-004 QA-T03 stale-selection 409/E2E scoped PASS at old HEAD remains a real historical observation; **this new HEAD has not received a fresh E2E pass**.
 - No GitHub Actions, PR merge/rebase, draft-ready toggle, production data work or Real Memory canonical write.
+
+## Owner Windows QA — Focused POS Vitest PASS (2026-10-25)
+
+- Owner screenshot confirms checked-out exact HEAD `febc7e75e3539a89531365d2b0161bd7be474e59` immediately before running `pnpm.cmd --dir apps/pwa exec vitest run src/pages/PosPage.test.tsx --config vitest.config.ts --pool=threads --maxWorkers=1 --no-file-parallelism`.
+- Actual terminal result: `src/pages/PosPage.test.tsx (35 tests)`, `Test Files 1 passed (1)`, `Tests 35 passed (35)`, duration 66.30s. All 4 parameterized negative table-retention scenarios and the post-cancel refresh-failure test listed as passing; **no failed tests**.
+- **Evidence classification: focused Vitest PASS at exact HEAD.** Typecheck, lint, build and any new runtime E2E on this HEAD **not yet evidenced**; previous full PWA 150/150 and owner browser 409/DB scenario remain historical evidence of earlier commit `ca01c872`.
+- Next: run PWA typecheck individually, review actual output, then PWA lint/build gates separately. PR #34 remains DRAFT/unmerged, PR #35 likewise; no actions or deployment.
