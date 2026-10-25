@@ -64,3 +64,11 @@ D. **Pilot and sign off** with real first-time user scenarios; record actual obs
 - Single low-risk operational simplification: keep one-click `فتح ترابيزة أخرى` always available in occupied dine-in ticket; group `بلايستيشن`, `نقل الترابيزة`, and `إضافة طلب للترابيزة` behind an explicit and keyboard-accessible `إجراءات إضافية` disclosure. Preserve all permission guards, current financial/KDS/Edge mutations and backend authority.
 - Update targeted component tests to verify default collapsed visibility, expansion, and existing gaming/transfer/additional-order flows. No claim of first-time cashier acceptance until owner reviews actual UI screenshots and newcomer task trial.
 - No app production/main/UX base/PR34 merges, financial/DB changes, GitHub Actions or deployment. New code will require owner-local focused Vitest/static gates at exact pilot SHA.
+
+## Implementation slice 007-A delivered — isolated pilot awaiting QA (2026-10-25)
+
+- Separate GitHub branch `feat/crms-cashier-first-ux-pilot` latest commit `b88f1ba43b31b3c90f32b6a88281d041b9521246` based on POS PR34 head `5688007c` (not a merge).
+- First operational clutter reduction completed in `PosPage.tsx`, `PosPage.test.tsx`, `styles/pos.css`; direct new-table action exposed, advanced 3 actions grouped behind accessible toggle, close on order switch; current purchase/payment/Edge state logic unchanged. Updated existing tests to cover disclosure, gaming, transfer and additional batch paths.
+- [Report and exact Windows QA/handoff](../reviews/CRMS-TSST-007A-CASHIER-FIRST-POS-PILOT.md).
+- Pilot tests **NOT RUN**, local UI first-time novice acceptance **NOT MEASURED**. Historical 37/37 POS at base commit cannot be asserted for new SHA.
+- PR #34 and PR #35 remain drafts/unmerged; Issue #36 stays P0 OPEN, no release acceptance. No GitHub Actions, app deployment, DB changes, merge or Real Memory canonical apply.
