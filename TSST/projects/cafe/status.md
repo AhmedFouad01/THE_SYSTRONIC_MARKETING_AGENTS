@@ -1,5 +1,15 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-006 — focused Vitest 37/37 observed (2026-10-25)
+
+- Owner Windows Vitest screenshot: `PosPage.test.tsx` **37/37 PASS**, 1/1 test file PASS, 15.59 seconds. Two newly added remaining-order reconciliation failures were included.
+- Current remote [POS PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34) head: `5688007cb89fda0444908cbec2bb70ef43302c25`. Screenshot does not independently show local git HEAD in same capture; owner had been instructed to fast-forward and verify.
+- PWA TypeScript, lint and build at **latest new head** still NOT verified. Previous static gate PASS on old `febc7e75` only. No full-suite rerun required for unchanged adjacent modules.
+- PR #34 OPEN/DRAFT, UX PR #35 separate OPEN/DRAFT; no merge authorization. [TSST-006 task](tasks/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md).
+- No app/DB changes in logging, no GitHub Actions or deployment.
+
+## Historical checkpoints
+
 ## CRMS-TSST-006 — final source review patch delivered; latest HEAD still untested (2026-10-25)
 
 **Decision:** `CODE_REVIEW_FIX_DELIVERED / EXACT_HEAD_QA_PENDING / NO_MERGE`.
