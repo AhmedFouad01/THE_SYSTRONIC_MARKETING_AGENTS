@@ -1,5 +1,18 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-006 — technical review complete, owner merge approval required (2026-10-25)
+
+**Decision: `FOCUSED_GATES_PASS / DIFF_REVIEW_DONE / EXPLICIT_OWNER_APPROVAL_REQUIRED / NO_MERGE`.**
+
+- On latest remote POS PR #34 HEAD `5688007cb89fda0444908cbec2bb70ef43302c25`, owner Windows local screenshots substantiate 37/37 focused POS Vitest, TypeScript, lint and PWA build PASS. No changed source code or extra tests introduced after this.
+- Reviewer inspected current 2-file GitHub diff and found no further **confirmed** release-blocking defect. An explanatory **COMMENT-only PR review** (ID `5643153123`), NOT APPROVE, was submitted to [PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34). It does not count as human owner approval. PR remains **OPEN/DRAFT/unmerged**.
+- GitHub returned empty commit status checks — do not claim CI PASS. Prior all-PWA 150/150 and actual 2-browser QA-T03 409/one-tab DB result belong to old candidate SHA and were not automatically re-executed.
+- UX target contains one newer **documentation-only** commit on `docs/gates/CRMS-UX-FINAL-GLOBAL-VISUAL-SYSTEM.md`; POS compares 11 commits ahead / 1 behind UX. UX PR #35 also OPEN/DRAFT/unmerged.
+- Next gate is **explicit owner authorization for POS #34 -> UX branch only**, with any required independent human review; after integration, inspect UX PR #35 combined diff and obtain separate owner approval for UX->main. No merge/deploy/rebase/Actions, database writes or source edits carried out at this checkpoint.
+- [Final TSST report](reviews/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md) · [Task handoff](tasks/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md). Canonical Real Memory remains untouched; pending sync packets await governed review.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-006 — focused POS gates complete at latest owner checkout (2026-10-25)
 
 **Decision:** `FOCUSED_PWA_GATES_PASS / PR34_REVIEW_AND_OWNER_MERGE_AUTH_REQUIRED / NO_MERGE`.
