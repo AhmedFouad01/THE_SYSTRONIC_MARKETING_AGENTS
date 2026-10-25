@@ -1,5 +1,14 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-004 — HTTP 409 and cashier UI proved; post-race database check pending (2026-10-25)
+
+- Owner's fresh sanitized browser Network after clearing old requests on stale cashier A QA-T03: `table-tabs` status **409**, `live` **200**. User-facing Arabic other-cashier claim warning present; A basket empty, EGP 0.00, submit disabled. This **passes actual browser 409 / UI gate**, unlike first QA-T02 attempt with historical 401.
+- B had an open QA-T03 draft with QA Burger qty 1, EGP 50. **Do not claim end-to-end database invariant PASS yet**: post-race QA-T03 read-only snapshot and preservation of B's order not yet captured. Next owner step is isolated read-only query yielding `OCCUPIED / 1 live tab / 1 active order / 1 item`.
+- HTTP request method was not shown in the cropped Network details, only fetch name/status; source code path is `POST /pos/table-tabs`, subject to optional explicit method verification.
+- Branch PR #34/#35 both remain DRAFT / no merge authorization. This TSST update changes only documentation.
+
+## Historical checkpoints
+
 ## CRMS-TSST-004 — owner live attempt inconclusive: HTTP 401, not 409 (2026-10-25)
 
 **Decision:** `AUTH_401_OBSERVED / CONCURRENCY_409_NOT_VERIFIED / RETRY_PENDING`. The user successfully ran real local QA on exact POS `ca01c872`. Baseline PostgreSQL `QA-T02 OCCUPIED / 1 live tab / 1 active order / 1 item` before A attempt. A DevTools `table-tabs` response status **401**, `live` response **200**. A ticket shows generic occupied-table warning, zero basket and disabled submit. This does **not** certify 409 or post-action unchanged DB counts.
