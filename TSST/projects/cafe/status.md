@@ -1,5 +1,17 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-006 — final source review patch delivered; latest HEAD still untested (2026-10-25)
+
+**Decision:** `CODE_REVIEW_FIX_DELIVERED / EXACT_HEAD_QA_PENDING / NO_MERGE`.
+
+- [Final source review + risk matrix](reviews/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md); [TSST-006 task](tasks/CRMS-TSST-006-POS-PR34-FINAL-REVIEW.md).
+- Found existing failure path: after confirmed draft cancellation with `tableReleased=false`, failure loading other orders or their details could leave cancelled draft on screen. Made fail-safe state clearing and visible recovery warning, with two new list/detail failure tests. Only POS page and test changed, source commit `ef0dcc737842ea5dc83581c44dcdc43714bc314e`, test commit `5688007cb89fda0444908cbec2bb70ef43302c25`; **new POS HEAD `5688007c...`**.
+- Prior owner 35/35 POS, typecheck/lint/build PASS on `febc7e75` (not latest HEAD); new expected focused count 37, **not executed yet**. Preserve historical 150/150 full regression and stale-table 409+DB E2E at prior `ca01c872` without misattribution.
+- POS PR #34 still DRAFT/OPEN, UX PR #35 still separate DRAFT/OPEN; POS 11 ahead/1 behind UX due to one docs-only UX gate commit. Do not merge/approve/deploy/run Actions; owner explicit authorization required.
+- Next owner Windows: fast-forward pull exact new head, run focused PosPage Vitest, then typecheck, lint and build on matching SHA; report results to TSST. Real Memory packet stays proposal-only.
+
+## Historical checkpoints (retained)
+
 ## CRMS-TSST-005 — exact-head PWA build PASS and focused gates complete (2026-10-25)
 
 **Decision:** `EXACT_HEAD_FOCUSED_GATES_PASS / FORMAL_REVIEW_PENDING / NO_MERGE` on `fix/crms-pos-readd-after-empty-cancel` at `febc7e75e3539a89531365d2b0161bd7be474e59`.
