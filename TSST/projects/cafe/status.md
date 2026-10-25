@@ -1,5 +1,18 @@
 # CAFE — TSST current checkpoint
 
+## CRMS-TSST-005 — POS negative paths patched; new HEAD verification pending (2026-10-25)
+
+**Decision:** `POS_PATCH_DELIVERED / EXACT_HEAD_TESTS_NOT_RUN / PR34_MERGE_HOLD`.
+
+- On `Do7a193/CAFE_RESTAURANT_MS` POS branch `fix/crms-pos-readd-after-empty-cancel`, two commits after historical passed `ca01c872`: tests `ec4fdd8a`, minimal refresh-failure clearing fix `febc7e75` (new HEAD). Only `PosPage.test.tsx` (+95) and `PosPage.tsx` (+16/-1) changed.
+- New tests cover mismatched releasedTableId, newly OCCUPIED table, existing live tab, nonrelease from Edge, and failure refreshing occupancy after confirmed server-side cancellation. Code clears the canceled draft and selection if the refresh fails instead of showing a stale order.
+- **New HEAD has no test execution evidence**, so no fresh PASS. Previously proven 150/150 PWA full regression/static PASS at `ca01c872` and owner CRMS-TSST-004 409 + DB scoped E2E PASS remain dated/historical and must **not** be attributed to `febc7e75`.
+- Owner local Windows should stop dev/watch processes, verify clean working tree, fast-forward pull branch, run **focused** `PosPage.test.tsx` Vitest plus PWA typecheck and lint. Do not rerun full historical suite unnecessarily. Capture actual results and exact HEAD before acceptance.
+- [TSST-005 task/handoff](tasks/CRMS-TSST-005-POS-NEGATIVE-PATH-REGRESSION.md) | [POS PR #34](https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/34).
+- PR #34 and UX PR #35 remain DRAFT/unmerged. No source other than POS PWA page/test, no Actions/deployment/database migration, no TSST Core/agent activation. Canonical Real Memory unchanged.
+
+## Historical checkpoints
+
 ## CRMS-TSST-004 — scoped stale-table claim E2E PASS (2026-10-25)
 
 **Decision:** `STALE_CLAIM_E2E_PASS / PR_RELEASE_SIGNOFF_PENDING / NO_MERGE`.
