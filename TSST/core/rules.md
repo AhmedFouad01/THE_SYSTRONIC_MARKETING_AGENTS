@@ -60,6 +60,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R53 No borders anywhere** (owner rule 2026-10-20): Dash and CRM components have NO stroke or border: buttons, text fields, selects, date pickers, checkboxes, radios, switches, cards, tables, modals, chips. Shapes are told apart by pure colour: fields and unchecked boxes use a filled surface tint that differs clearly from the background (light and dark); checked = solid colour; cards and modals = surface colour + soft shadow; dividers only where a list needs them. Focus: fill change, plus the keyboard focus-visible ring (R51) as the one exception.
 - **R53 Motion AG = AI video only** (owner rule 2026-10-20): MOTION_AG makes video by AI generation (story, shot list, start frames, AI video/music/voice prompts and generation, AI tools for edit/finish). It never uses After Effects again: no AE projects, no JSX/ExtendScript, no aerender, no "Ahmed runs the script" steps. Text, logos and transitions come from AI generation or from the AI tools themselves.
 - **R54 Product photo edits = ChatGPT, intent only** (owner rule 2026-10-23): professional edits of product photos (RAW → Edited) are made in ChatGPT by Ahmed, never by CREATIVE_AG. The team sends Ahmed, per product: the original RAW photo, one existing Edited photo as reference, and a short note of WHAT we want (goal, use, what must stay true, e.g. the real pack unchanged). Never an explicit or detailed prompt: it changes ChatGPT's direction; ChatGPT decides how.
+- **R55 UI quality bar** (owner 2026-10-27): every Dash/CRM screen passes the 10-point list in `TSST/core/rules/build.md` before the Lead shows it to Ahmed; one fail = returned. Product UI is a full redraw by CREATIVE on a strong tier, never a fix list patched by DEV.
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.
@@ -88,5 +89,5 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 |---|---|---|
 | Client job, delivery page | `TSST/core/rules/delivery.md` | R18–R20, R40, R45 |
 | Design, images, video, external production | `TSST/core/rules/creative.md` | R31, R36–R38, R41, Creative |
-| Products, code, UI | `TSST/core/rules/build.md` | R30, R39 |
+| Products, code, UI | `TSST/core/rules/build.md` | R30, R39, R55 |
 | Marketing, research | `TSST/core/rules/marketing.md` | R28, R29 |
