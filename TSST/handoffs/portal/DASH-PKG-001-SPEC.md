@@ -94,6 +94,6 @@ erDiagram
 | 2 | Migration 022 + service + API + tests | all tests pass; ANVIL card and schedule unchanged; a client with 2 subscriptions + 1 lifetime returns correct quotas and payments |
 | 3 | Invoice / quotation package lines | an invoice with Brand setup (lifetime) + a monthly package × 3 months totals correctly in EGP and USD; PDF shows the lines |
 | 4 | UI/UX audit (CREATIVE, read only) of Settings › Packages, client package area, client Plan page, document editor | numbered fix list with 2–4 screenshots per screen; fixes folded into one build round |
-| 5 | Deploy | after Ahmed's OK |
+| 5 | Deploy | after Ahmed's OK; before merge: migration → `023_packages_v3.sql`, contract section → v1.20 (022 / v1.18 = r98c on main, 024 / v1.19 = `CX-R99-ARABIC.md`) |
 
 Out of scope: package-to-project links, automatic invoice generation, online payments.
