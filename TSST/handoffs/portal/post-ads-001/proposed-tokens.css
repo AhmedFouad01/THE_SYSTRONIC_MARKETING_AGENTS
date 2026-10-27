@@ -1,0 +1,65 @@
+/* DASH-PKG-003 + DASH-PKG-004 + DASH-POST-ADS-001 proposed tokens (not in tokens.css yet). DEV adds them to tokens.css; screens use var() only. */
+:root, [data-theme="light"] {
+  --sy-heading: var(--ref-royal-600);          /* page titles, selected segment text (R51 identity) */
+  --sy-seg-selected: var(--sy-surface);        /* selected segment / tab surface */
+  --sy-shell: var(--ref-dk-1);                 /* sidebar + phone top bar */
+  --sy-shell-text: var(--ref-white-100);
+  --sy-shell-text-2: var(--ref-dk-text-3);
+  --sy-shell-active: var(--ref-dk-3);
+  --doc-desk: var(--sy-canvas);                /* backdrop behind the A4 sheet */
+  --doc-rule: var(--ref-legacy-200);           /* row divider on paper */
+  --doc-ink-2: var(--ref-legacy-600);         /* labels, column titles, descriptions on paper */
+  --doc-band: var(--ref-legacy-50);            /* totals band on paper */
+  --doc-logo-h: 88px;                          /* logo height on paper (screen) */
+  --doc-paper-max: 794px;                      /* A4 width at 96 dpi */
+  --money-feature: "tnum" 1;
+  --sy-selection: color-mix(in srgb, var(--sy-button-focus) 14%, var(--sy-surface));  /* selected row: neon accent tint (R51) */
+  --sy-switch-on: var(--sy-button-secondary);  /* switch / checkbox On fill */
+  /* DASH-PKG-004 additions: semantic chips + borderless checkbox (R51 / R53) */
+  --chip-partial-bg: var(--tn-amber-b);
+  --chip-partial-fg: var(--tn-amber-f);
+  --chip-active-bg: var(--tn-royal-b);
+  --chip-active-fg: var(--tn-royal-f);
+  --chip-progress-bg: var(--tn-cyan-b);
+  --chip-progress-fg: var(--tn-cyan-f);
+  --chip-unpaid-bg: var(--tn-neutral-b);
+  --chip-unpaid-fg: var(--tn-neutral-f);
+  --sy-check-bg: var(--sy-control-bg);
+  --sy-check-bg-hover: var(--sy-control-bg-hover);
+  --sy-check-on: var(--sy-switch-on);
+  --sy-check-fg: var(--sy-on-primary);
+  /* DASH-POST-ADS-001 additions: post life status, review chips, frame sizes */
+  --life-draft-bg: var(--sy-surface-sunk);      --life-draft-fg: var(--sy-text-2);
+  --life-scheduled-bg: var(--tn-cyan-b);        --life-scheduled-fg: var(--tn-cyan-f);
+  --life-posted-bg: var(--tn-green-b);          --life-posted-fg: var(--tn-green-f);
+  --life-review-bg: var(--tn-violet-b);         --life-review-fg: var(--tn-violet-f);
+  --life-active-bg: var(--tn-royal-b);          --life-active-fg: var(--tn-royal-f);
+  --life-paused-bg: var(--st-lost-bg);          --life-paused-fg: var(--st-lost-fg);
+  --life-completed-bg: var(--tn-neutral-b);     --life-completed-fg: var(--tn-neutral-f);
+  --life-rejected-bg: var(--st-overdue-bg);     --life-rejected-fg: var(--st-overdue-fg);
+  --review-pending-bg: var(--status-pending-soft);   --review-pending-fg: var(--status-pending-text);
+  --review-approved-bg: var(--status-approved-soft); --review-approved-fg: var(--status-approved-text);
+  --review-changes-bg: var(--status-changes-soft);   --review-changes-fg: var(--status-changes-text);
+  --frame-w: var(--size-360);                   /* feed frame max width */
+  --phone-w: var(--size-270);                   /* Story / Reel phone frame (FORMATS-001 4) */
+  --phone-bg: var(--ref-dk-1);                  /* phone surround, both themes */
+  --grid-tile-w: var(--size-120);               /* IG profile grid tile */
+  --thumb-w: var(--size-104);                   /* post card thumbnail */
+  --rail-w: var(--size-380);                    /* wizard preview rail */
+  --post-overlay-text: var(--ref-white-100);    /* text and icons drawn on media */
+  --stage-bg: var(--sy-surface-sunk);           /* area frames sit on inside a card */
+  --post-safe-zone: color-mix(in srgb, var(--sy-button-focus) 34%, transparent); /* Story / Reel safe-zone tint, readable on light and dark media */
+  --post-safe-band: repeating-linear-gradient(135deg, color-mix(in srgb, var(--sy-button-focus) 48%, transparent) 0 var(--size-3), transparent var(--size-3) var(--size-10)); /* thin stripes: band is clear, the app UI under it stays readable */
+  --frame-w-sm: var(--size-300);                /* frames on the all-placements page */
+}
+[data-theme="dark"] {
+  --sy-heading: var(--ref-dk-royal-text);
+  --sy-seg-selected: var(--ref-dk-5);
+  --sy-shell: var(--ref-dk-0);
+  --sy-shell-active: var(--ref-dk-2);
+  --doc-desk: var(--ref-dk-0);
+  --sy-selection: color-mix(in srgb, var(--sy-button-focus) 22%, var(--sy-surface));
+  --sy-switch-on: var(--sy-button-focus);      /* neon cyan: clearly differs from Off on dark */
+  --sy-check-on: var(--sy-button-focus);
+  --sy-check-fg: var(--ref-dk-0);
+}

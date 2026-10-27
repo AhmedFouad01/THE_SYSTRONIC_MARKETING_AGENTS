@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New post · Sabeel Bakery</title>
+<script src="mock.js"></script>
+<script src="posts.js"></script>
+<link rel="stylesheet" href="posts.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a class="is-active"><svg class="i"><use href="#i-layers"/></svg>Jobs</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review</a>
+      <a><svg class="i"><use href="#i-inbox"/></svg>Requests</a>
+      <a><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a><svg class="i"><use href="#i-users"/></svg>Clients</a>
+      <a><svg class="i"><use href="#i-file"/></svg>Documents</a>
+      <a><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </nav>
+  </aside>
+  <div>
+    <header class="topbar"><img src="assets/dash-wordmark-white.png" alt="Dash"><button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button></header>
+    <main class="main"><div class="page">
+
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Brunch launch"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title"><h1>New post</h1></div>
+        <div class="heading__actions"><button class="button button--primary">Create post</button></div>
+      </div>
+
+      <!-- Stepper: owner's order. Done steps show the choice; click jumps back. -->
+      <nav class="card" aria-label="Steps">
+        <ol class="stepper">
+          <li class="step is-done"><span class="step__dot"><svg class="i"><use href="#i-check"/></svg></span><span class="step__text"><span class="step__name">Organic or ad</span><span class="step__val">Ad</span></span></li>
+          <li class="step is-done"><span class="step__dot"><svg class="i"><use href="#i-check"/></svg></span><span class="step__text"><span class="step__name">Type</span><span class="step__val">Single image</span></span></li>
+          <li class="step is-done"><span class="step__dot"><svg class="i"><use href="#i-check"/></svg></span><span class="step__text"><span class="step__name">Size</span><span class="step__val num">4:5</span></span></li>
+          <li class="step is-done"><span class="step__dot"><svg class="i"><use href="#i-check"/></svg></span><span class="step__text"><span class="step__name">Where it runs</span><span class="step__val">5 placements</span></span></li>
+          <li class="step is-current"><span class="step__dot">5</span><span class="step__text"><span class="step__name">Media and text</span><span class="step__val">In progress</span></span></li>
+          <li class="step"><span class="step__dot">6</span><span class="step__text"><span class="step__name">Preview</span><span class="step__val">5 placements</span></span></li>
+        </ol>
+        <div class="stepper-m">
+          <span class="step__name" style="color:var(--sy-heading)">Step 5 of 6 · Media and text</span>
+          <div class="stepper-m__bars" aria-hidden="true"><i class="is-done"></i><i class="is-done"></i><i class="is-done"></i><i class="is-done"></i><i class="is-current"></i><i></i></div>
+        </div>
+      </nav>
+
+      <div class="wiz">
+        <div class="stack" style="gap:var(--space-6)">
+
+          <!-- 1 Organic or ad -->
+          <section class="card">
+            <div class="card__header"><span class="step-num">1</span><h2 class="card__title">Organic or ad</h2></div>
+            <div class="card__body">
+              <div class="choices choices--2" role="radiogroup" aria-label="Organic or ad">
+                <div class="choice choice--big"><svg class="i choice__icon"><use href="#i-image"/></svg><span class="choice__body"><span class="choice__title">Organic</span><span class="choice__line">Posted on the page by the team. Not counted as an ad.</span></span><span class="choice__radio"></span></div>
+                <div class="choice choice--big is-selected"><svg class="i choice__icon"><use href="#i-megaphone"/></svg><span class="choice__body"><span class="choice__title">Ad</span><span class="choice__line">Paid, set up in Meta by the team. Counts as 1 ad once it goes to Meta.</span></span><span class="choice__radio"></span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2 Type -->
+          <section class="card">
+            <div class="card__header"><span class="step-num">2</span><h2 class="card__title">Type</h2></div>
+            <div class="card__body">
+              <div class="choices choices--3 choices--type" role="radiogroup" aria-label="Type">
+                <div class="choice is-selected"><svg class="i choice__icon"><use href="#i-image"/></svg><span class="choice__body"><span class="choice__title">Single image</span><span class="choice__line">1 image</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><svg class="i choice__icon"><use href="#i-carousel"/></svg><span class="choice__body"><span class="choice__title">Carousel</span><span class="choice__line">2–10 cards · first card sets the size</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><svg class="i choice__icon"><use href="#i-video"/></svg><span class="choice__body"><span class="choice__title">Video</span><span class="choice__line">1 video · shows as a Reel</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><svg class="i choice__icon"><use href="#i-story"/></svg><span class="choice__body"><span class="choice__title">Story</span><span class="choice__line">1 image or video · 9:16</span></span><span class="choice__radio"></span></div>
+                <div class="choice is-disabled" aria-disabled="true"><svg class="i choice__icon"><use href="#i-album"/></svg><span class="choice__body"><span class="choice__title">Album</span><span class="choice__line">Facebook organic only. For an ad, use Carousel.</span></span><span class="choice__radio" aria-label="Not available"><svg class="i i-14"><use href="#i-lock"/></svg></span></div>
+                <div class="choice is-disabled" aria-disabled="true"><svg class="i choice__icon"><use href="#i-doc"/></svg><span class="choice__body"><span class="choice__title">Document</span><span class="choice__line">LinkedIn organic only. Ads run on Meta.</span></span><span class="choice__radio" aria-label="Not available"><svg class="i i-14"><use href="#i-lock"/></svg></span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3 Size -->
+          <section class="card">
+            <div class="card__header"><span class="step-num">3</span><h2 class="card__title">Size</h2></div>
+            <div class="card__body">
+              <div class="choices choices--3 choices--ratio" role="radiogroup" aria-label="Size">
+                <div class="choice is-selected"><span class="choice__body ratio"><span class="ratio__glyph" style="--r:4/5"></span><span class="choice__title num">4:5</span><span class="choice__line">Best for feeds</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><span class="choice__body ratio"><span class="ratio__glyph" style="--r:1/1"></span><span class="choice__title num">1:1</span><span class="choice__line">Marketplace and Right column</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><span class="choice__body ratio"><span class="ratio__glyph" style="--r:9/16"></span><span class="choice__title num">9:16</span><span class="choice__line">Fills Stories and Reels</span></span><span class="choice__radio"></span></div>
+                <div class="choice"><span class="choice__body ratio"><span class="ratio__glyph" style="--r:1.91/1"></span><span class="choice__title num">1.91:1</span><span class="choice__line">Wide, feeds only</span></span><span class="choice__radio"></span></div>
+                <div class="choice is-disabled" aria-disabled="true"><span class="choice__body ratio"><span class="ratio__glyph" style="--r:3/4"></span><span class="choice__title num">3:4</span><span class="choice__line">Organic Instagram only</span></span><span class="choice__radio" aria-label="Not available"><svg class="i i-14"><use href="#i-lock"/></svg></span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4 Where it runs + ad details -->
+          <section class="card">
+            <div class="card__header"><span class="step-num">4</span><h2 class="card__title">Where it runs</h2></div>
+            <div class="card__body">
+              <p class="sub">Platforms</p>
+              <div class="choices choices--3" role="group" aria-label="Platforms">
+                <div class="choice is-multi is-selected"><svg class="i choice__icon"><use href="#i-facebook"/></svg><span class="choice__body"><span class="choice__title">Facebook</span><span class="choice__line">Sabeel Bakery | مخبز سبيل</span></span><span class="choice__radio"><svg class="i i-14" style="color:var(--sy-check-fg)"><use href="#i-check"/></svg></span></div>
+                <div class="choice is-multi is-selected"><svg class="i choice__icon"><use href="#i-instagram"/></svg><span class="choice__body"><span class="choice__title">Instagram</span><span class="choice__line">@sabeel.bakery</span></span><span class="choice__radio"><svg class="i i-14" style="color:var(--sy-check-fg)"><use href="#i-check"/></svg></span></div>
+                <div class="choice is-multi is-disabled" aria-disabled="true"><svg class="i choice__icon"><use href="#i-linkedin"/></svg><span class="choice__body"><span class="choice__title">LinkedIn</span><span class="choice__line">Ads run on Meta only. LinkedIn takes organic posts.</span></span><span class="choice__radio" aria-label="Not available"><svg class="i i-14"><use href="#i-lock"/></svg></span></div>
+              </div>
+
+              <p class="sub sub-gap">Placements</p>
+              <div class="place-groups">
+                <div class="place-group">
+                  <span class="place-group__title"><svg class="i"><use href="#i-facebook"/></svg>Facebook</span>
+                  <div class="place check is-checked"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Feed</span></div>
+                  <div class="place check is-checked"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Marketplace</span></div>
+                  <div class="place check"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Right column</span><span class="place__hint">Computers only</span></div>
+                </div>
+                <div class="place-group">
+                  <span class="place-group__title"><svg class="i"><use href="#i-instagram"/></svg>Instagram</span>
+                  <div class="place check is-checked"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Feed</span></div>
+                  <div class="place check is-checked"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Explore home</span></div>
+                </div>
+                <div class="place-group">
+                  <span class="place-group__title"><svg class="i"><use href="#i-story"/></svg>Facebook and Instagram</span>
+                  <div class="place check is-checked"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Stories</span><span class="place__hint place__hint--warn">4:5 shows smaller, with space around it</span></div>
+                  <div class="place check"><span class="check__box"><svg class="i"><use href="#i-check"/></svg></span><span class="place__label">Reels</span></div>
+                </div>
+              </div>
+              <p class="also"><b>Also runs on, no preview:</b> Facebook profile feed, business explore, search results, in-stream reels, ads on Facebook Reels, Threads, WhatsApp status, Messenger Stories, Audience Network.</p>
+
+              <p class="sub sub-gap">Ad details</p>
+              <div class="form-grid">
+                <div class="field"><span class="field__label">Goal</span><div class="input"><span class="v">Traffic</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div></div>
+                <div class="field"><span class="field__label">Funnel stage</span><div class="input"><span class="v">Acquisition</span><span class="tag">Suggested</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div><span class="field__hint">Suggested from the goal. You can change it.</span></div>
+                <div class="field"><span class="field__label">Start date</span><div class="input"><span class="v num">5 Nov 2026</span><svg class="i end-icon"><use href="#i-calendar"/></svg></div></div>
+                <div class="field"><span class="field__label">End date <span class="text-sm">(optional)</span></span><div class="input"><span class="v num">30 Nov 2026</span><svg class="i end-icon"><use href="#i-calendar"/></svg></div></div>
+                <div class="notice notice--info span-2"><svg class="i"><use href="#i-package"/></svg><span>Counts as 1 ad in the November package once it goes to Meta review. Draft and rejected ads never count. Now: <b class="num">3 of 6 used · 3 left</b>.</span></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5 Media and text -->
+          <section class="card">
+            <div class="card__header"><span class="step-num">5</span><h2 class="card__title">Media and text</h2></div>
+            <div class="card__body">
+              <div class="tray">
+                <div class="tray__item"><span class="tray__thumb"><img src="assets/media/brunch.svg" alt=""></span><span class="stack" style="gap:var(--space-1)"><span class="tray__name">brunch-hero-final.jpg</span><span class="tray__ok"><svg class="i i-14"><use href="#i-check"/></svg>Fits 4:5 · 1440 x 1800</span></span></div>
+                <div class="tray__add"><svg class="i"><use href="#i-upload"/></svg>Replace image</div>
+              </div>
+              <div class="form-grid sub-gap">
+                <div class="field span-2"><span class="field__label">Title</span><div class="input input--area" style="min-height:var(--size-40)"><span class="v" dir="auto">Weekend brunch menu launch, Zamalek branch</span></div><span class="field__hint">Shown in the Dash only, not on the post.</span></div>
+                <div class="field span-2"><span class="field__label">Primary text</span><div class="input input--area is-focus"><span class="v" dir="auto">Weekend brunch is back: buttery croissants, shakshuka and sourdough toast, every Friday and Saturday from 9 am. احجز ترابيزتك أو اطلب مسبقًا من الرابط.</span></div><div class="field__foot"><span>The first 125 characters show before "more".</span><span class="num is-over">151 / 125</span></div></div>
+                <div class="field"><span class="field__label">Headline</span><div class="input"><span class="v">Weekend brunch from 9 am</span></div><div class="field__foot"><span>27 in feeds, 40 in Marketplace</span><span class="num">24 / 27</span></div></div>
+                <div class="field"><span class="field__label">Button</span><div class="input"><span class="v">Order now</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div></div>
+              </div>
+              <div class="notice notice--warn sub-gap" style="margin-block-start:var(--space-4)"><svg class="i"><use href="#i-alert"/></svg><span>Primary text is 26 characters over 125. The end hides behind "more" in Stories and Feed. You can still continue.</span></div>
+            </div>
+          </section>
+
+          <!-- 6 Preview at phone width: rail moves here -->
+        </div>
+
+        <!-- 6 Preview rail -->
+        <aside class="card rail" aria-label="Preview">
+          <div class="card__header"><span class="step-num">6</span><h2 class="card__title">Preview</h2></div>
+          <div class="card__body stack">
+            <div class="field"><span class="field__label">Placement</span><div class="input"><span class="v">Instagram Feed</span><span class="affix num">2 of 5</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div></div>
+            <div class="stage" style="padding:var(--space-4);justify-content:center"><div data-frame="igFeed" data-opts='{"ad":true}'></div></div>
+            <button class="link" style="align-self:flex-start"><svg class="i"><use href="#i-eye"/></svg>See all placements</button>
+          </div>
+        </aside>
+      </div>
+
+    </div></main>
+  </div>
+</div>
+</body></html>

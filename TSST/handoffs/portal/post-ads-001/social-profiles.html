@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client settings · Sabeel Bakery</title>
+<script src="mock.js"></script>
+<link rel="stylesheet" href="posts.css">
+<style>
+.table th:nth-child(1) { width: var(--size-180); }
+.table th:nth-child(2) { width: var(--size-140); }
+.table th:last-child { width: var(--size-140); }
+.prow { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; padding-block: var(--space-4); border-block-end: var(--divider-width) solid var(--sy-line); }
+.prow:last-child { border-block-end: 0; }
+.prow__who { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
+.prow__plat { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--sy-text-2); }
+.prow__name { font-weight: var(--weight-medium); overflow-wrap: anywhere; }
+.prow__handle { font-size: var(--text-sm); color: var(--sy-text-2); overflow-wrap: anywhere; }
+.prow-edit { grid-column: 1 / -1; display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); border-radius: var(--r-control); background: var(--sy-surface-sunk); }
+.brand-row { display: grid; grid-template-columns: var(--size-180) minmax(0, 1fr); gap: var(--space-4); align-items: center; }
+.brand-logo { height: var(--size-56); width: auto; display: block; }
+.fallback { font-size: var(--text-sm); color: var(--sy-text-2); }
+@media (max-width: 767px) { .brand-row { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a><svg class="i"><use href="#i-layers"/></svg>Jobs</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review</a>
+      <a><svg class="i"><use href="#i-inbox"/></svg>Requests</a>
+      <a><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a class="is-active"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+      <a><svg class="i"><use href="#i-file"/></svg>Documents</a>
+      <a><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </nav>
+  </aside>
+  <div>
+    <header class="topbar"><img src="assets/dash-wordmark-white.png" alt="Dash"><button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button></header>
+    <main class="main"><div class="page">
+
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Sabeel Bakery"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title"><h1>Sabeel Bakery settings</h1></div>
+      </div>
+
+      <!-- Brand: source of the fallback -->
+      <section class="card">
+        <div class="card__header"><h2 class="card__title">Brand</h2></div>
+        <div class="card__body stack">
+          <div class="brand-row"><span class="field__label">Logo</span><img class="brand-logo" src="assets/media/logo.svg" alt="Sabeel Bakery logo"></div>
+          <div class="brand-row"><span class="field__label">Brand name</span><span>Sabeel Bakery</span></div>
+        </div>
+      </section>
+
+      <!-- Social profiles: one per platform, used by every post frame -->
+      <section class="card">
+        <div class="card__header"><h2 class="card__title">Social profiles</h2></div>
+        <div class="card__body">
+          <div class="table-wrap" style="margin-inline: calc(var(--space-3) * -1)">
+            <table class="table">
+              <thead><tr><th>Platform</th><th>Profile picture</th><th>Page name</th><th>Username</th><th class="end"></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="plat"><svg class="i"><use href="#i-instagram"/></svg>Instagram</span></td>
+                  <td><span class="ava"><img src="assets/media/avatar.svg" alt="Instagram profile picture"></span></td>
+                  <td class="wrap"><span dir="auto">Sabeel Bakery</span></td>
+                  <td class="wrap"><span>@sabeel.bakery</span></td>
+                  <td class="end"><button class="icon-button" aria-label="Change Instagram profile"><svg class="i"><use href="#i-pencil"/></svg></button></td>
+                </tr>
+                <tr>
+                  <td><span class="plat"><svg class="i"><use href="#i-facebook"/></svg>Facebook</span></td>
+                  <td><span class="ava"><img src="assets/media/avatar.svg" alt="Facebook profile picture"></span></td>
+                  <td class="wrap"><span dir="auto">Sabeel Bakery | مخبز سبيل</span></td>
+                  <td class="wrap"><span>@sabeelbakery</span></td>
+                  <td class="end"><button class="icon-button" aria-label="Change Facebook profile"><svg class="i"><use href="#i-pencil"/></svg></button></td>
+                </tr>
+                <tr class="edit-row">
+                  <td colspan="5">
+                    <div class="edit-grid">
+                      <div class="field"><span class="field__label">Profile picture</span><div class="uploader"><span class="ava"><img src="assets/media/avatar.svg" alt=""></span><button class="button button--sm button--secondary"><svg class="i"><use href="#i-upload"/></svg>Replace</button></div><span class="field__hint">Square, at least 320 x 320.</span></div>
+                      <div class="field"><span class="field__label">Page name</span><div class="input input--area" style="min-height:var(--size-40)"><span class="v" dir="auto">Sabeel Bakery | مخبز سبيل</span></div></div>
+                      <div class="field"><span class="field__label">Username</span><div class="input is-invalid"><span class="affix">@</span><span class="v">sabeel bakery</span></div><span class="field__error">Remove the space. Use letters, numbers, dots or underscores.</span></div>
+                    </div>
+                    <div class="edit-actions"><button class="button button--sm button--secondary">Cancel</button><button class="button button--sm button--primary">Save</button></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="plat"><svg class="i"><use href="#i-linkedin"/></svg>LinkedIn</span></td>
+                  <td><span class="ava ava--logo"><img src="assets/media/logo.svg" alt="Brand logo, used until a profile is set"></span></td>
+                  <td class="wrap"><span class="stack" style="gap:0"><span>Sabeel Bakery</span><span class="fallback">Not set: previews use the brand logo and name.</span></span></td>
+                  <td><span class="fallback">Not set</span></td>
+                  <td class="end"><button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg>Add profile</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 390: list rows -->
+          <div class="plist">
+            <div class="prow">
+              <span class="ava"><img src="assets/media/avatar.svg" alt=""></span>
+              <span class="prow__who"><span class="prow__plat"><svg class="i"><use href="#i-instagram"/></svg>Instagram</span><span class="prow__name" dir="auto">Sabeel Bakery</span><span class="prow__handle">@sabeel.bakery</span></span>
+              <button class="icon-button" aria-label="Change Instagram profile"><svg class="i"><use href="#i-pencil"/></svg></button>
+            </div>
+            <div class="prow">
+              <span class="ava"><img src="assets/media/avatar.svg" alt=""></span>
+              <span class="prow__who"><span class="prow__plat"><svg class="i"><use href="#i-facebook"/></svg>Facebook</span><span class="prow__name" dir="auto">Sabeel Bakery | مخبز سبيل</span><span class="prow__handle">@sabeelbakery</span></span>
+              <button class="icon-button" aria-label="Change Facebook profile"><svg class="i"><use href="#i-pencil"/></svg></button>
+              <div class="prow-edit">
+                <div class="field"><span class="field__label">Profile picture</span><div class="uploader"><span class="ava"><img src="assets/media/avatar.svg" alt=""></span><button class="button button--sm button--secondary"><svg class="i"><use href="#i-upload"/></svg>Replace</button></div></div>
+                <div class="field"><span class="field__label">Page name</span><div class="input input--area" style="min-height:var(--size-40)"><span class="v" dir="auto">Sabeel Bakery | مخبز سبيل</span></div></div>
+                <div class="field"><span class="field__label">Username</span><div class="input is-invalid"><span class="affix">@</span><span class="v">sabeel bakery</span></div><span class="field__error">Remove the space. Use letters, numbers, dots or underscores.</span></div>
+                <div class="edit-actions" style="margin-block-start:0"><button class="button button--sm button--secondary">Cancel</button><button class="button button--sm button--primary">Save</button></div>
+              </div>
+            </div>
+            <div class="prow">
+              <span class="ava ava--logo"><img src="assets/media/logo.svg" alt=""></span>
+              <span class="prow__who"><span class="prow__plat"><svg class="i"><use href="#i-linkedin"/></svg>LinkedIn</span><span class="prow__name">Sabeel Bakery</span><span class="prow__handle">Not set: previews use the brand logo and name.</span></span>
+              <button class="button button--sm button--secondary">Add</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body></html>

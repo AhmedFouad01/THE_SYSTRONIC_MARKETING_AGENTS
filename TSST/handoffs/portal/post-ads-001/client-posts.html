@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Posts · Sabeel Bakery</title>
+<script src="mock.js"></script>
+<script src="posts.js"></script>
+<!-- Client page, one language per view (?lang=ar = formal Arabic, RTL). Swaps [data-ar] text. -->
+<script>document.addEventListener('DOMContentLoaded', () => { if (document.documentElement.lang === 'ar') document.querySelectorAll('[data-ar]').forEach(el => { el.textContent = el.dataset.ar; }); document.querySelectorAll('[data-list]').forEach(el => { el.dataset.lang = document.documentElement.lang; }); }, { capture: true });</script>
+<link rel="stylesheet" href="posts.css">
+</head>
+<body>
+<div class="c-shell">
+  <header class="c-bar">
+    <div class="c-bar__inner">
+      <img class="c-bar__logo" src="assets/dash-wordmark-white.png" alt="Dash">
+      <nav class="c-nav" aria-label="Client navigation">
+        <a data-ar="الرئيسية">Overview</a>
+        <a data-ar="المشروعات">Projects</a>
+        <a class="is-active" data-ar="المنشورات">Posts</a>
+        <a data-ar="خطة">Plan</a>
+      </nav>
+      <div class="c-bar__end">
+        <button class="button button--sm button--secondary" data-ar="تسجيل الخروج">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main"><div class="page">
+    <div class="heading">
+      <div class="heading__title"><h1 data-ar="المنشورات">Posts</h1></div>
+    </div>
+
+    <div class="filters" role="search">
+      <div class="seg" role="tablist">
+        <span class="seg__item is-selected"><span data-ar="الكل">All</span><span class="num">11</span></span>
+        <span class="seg__item"><span data-ar="منشورات عادية">Organic</span><span class="num">5</span></span>
+        <span class="seg__item"><span data-ar="إعلانات">Ads</span><span class="num">6</span></span>
+      </div>
+      <div class="input sel"><span class="v" data-ar="كل الحالات">All statuses</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div>
+      <div class="input sel"><span class="v" data-ar="كل المنصات">All platforms</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div>
+    </div>
+    <div class="filters__m">
+      <div class="seg" role="tablist">
+        <span class="seg__item is-selected"><span data-ar="الكل">All</span><span class="num">11</span></span>
+        <span class="seg__item"><span data-ar="عادية">Organic</span><span class="num">5</span></span>
+        <span class="seg__item"><span data-ar="إعلانات">Ads</span><span class="num">6</span></span>
+      </div>
+      <div class="row"><div class="input"><span class="v" data-ar="كل الحالات">All statuses</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div><div class="input"><span class="v" data-ar="كل المنصات">All platforms</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div></div>
+    </div>
+
+    <div data-list="client"></div>
+  </div></main>
+</div>
+</body></html>

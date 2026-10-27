@@ -1,0 +1,153 @@
+/* DASH-PKG-004 mock: shared look (extends pkg-redraw-003/shared.css). Every value = var(--token). Class names follow HeroUI v3 parts. */
+@import url(assets/fonts.css);
+@import url(tokens.css);
+@import url(proposed-tokens.css);
+
+*, *::before, *::after { box-sizing: border-box; }
+html { font-family: var(--font-latin); font-size: var(--text-md); line-height: 1.5; background: var(--sy-canvas); color: var(--sy-text); -webkit-font-smoothing: antialiased; }
+body { margin: 0; font-weight: var(--weight-regular); }
+h1, h2, h3, p, dl, dd, ul { margin: 0; padding: 0; }
+.num, .money { font-feature-settings: var(--money-feature); white-space: nowrap; }
+.muted { color: var(--sy-text-2); }
+.text-2 { color: var(--sy-text-2); }
+.small { font-size: var(--text-sm); }
+.xs { font-size: var(--text-sm); }
+svg.i { width: var(--size-16); height: var(--size-16); flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- App shell ---------- */
+.shell { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); min-height: 100vh; }
+.sidebar { background: var(--sy-shell); color: var(--sy-shell-text); padding: var(--space-6) var(--space-4); display: flex; flex-direction: column; gap: var(--space-6); }
+.sidebar__brand img { display: block; width: var(--size-200); height: auto; }
+.nav { display: flex; flex-direction: column; gap: var(--space-1); }
+.nav a { display: flex; align-items: center; gap: var(--space-3); height: var(--size-40); padding-inline: var(--space-3); border-radius: var(--r-control); color: var(--sy-shell-text-2); text-decoration: none; font-size: var(--text-md); }
+.nav a.is-active { background: var(--sy-shell-active); color: var(--sy-shell-text); font-weight: var(--weight-medium); }
+.topbar { display: none; }
+.main { min-width: 0; padding: var(--space-8) var(--space-8) var(--space-12); }
+.page { max-width: var(--size-1280); margin-inline: auto; display: flex; flex-direction: column; gap: var(--space-6); }
+
+/* Heading stack (R55 #2): title + its actions on one row, nothing before/after */
+.heading { display: flex; align-items: center; gap: var(--space-3); min-height: var(--size-40); }
+.heading h1 { font-size: var(--text-2xl); line-height: 1.25; font-weight: var(--weight-title); color: var(--sy-heading); }
+.heading__title { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.heading__actions { margin-inline-start: auto; display: flex; align-items: center; gap: var(--space-2); }
+.heading__actions .button { min-width: var(--size-120); }
+
+/* ---------- Card (HeroUI Card) ---------- */
+.card { background: var(--sy-surface); border-radius: var(--r-panel); box-shadow: var(--sy-shadow-panel); }
+.card__header { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-4) var(--space-6) 0; min-height: var(--size-52); }
+.card__title { font-size: var(--text-lg); font-weight: var(--weight-medium); color: var(--sy-text); }
+.card__header .chip { margin-inline-start: auto; }
+.card__actions { margin-inline-start: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+.card__actions .button { width: 100%; }
+.card__body { padding: var(--space-4) var(--space-6) var(--space-6); }
+
+/* ---------- Button (HeroUI Button): flat fill, no border/shadow, white 400 text ---------- */
+.button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: var(--sy-button-md); padding-inline: var(--space-4); border: 0; border-radius: var(--r-control); font: inherit; font-size: var(--text-md); font-weight: var(--weight-regular); line-height: 1; color: var(--sy-button-text); white-space: nowrap; cursor: pointer; min-width: var(--action-min); }
+.button--sm { height: var(--sy-button-sm); padding-inline: var(--space-3); font-size: var(--text-sm); min-width: var(--size-72); }
+.button--lg { height: var(--sy-button-lg); padding-inline: var(--space-6); }
+.button--primary { background: var(--sy-button-primary); } .button--primary.is-hover { background: var(--sy-button-primary-hover); } .button--primary.is-active { background: var(--r94-action-primary-active); }
+.button--secondary { background: var(--sy-button-secondary); } .button--secondary.is-hover { background: var(--sy-button-secondary-hover); } .button--secondary.is-active { background: var(--r94-action-secondary-active); }
+.button--approve { background: var(--sy-button-approve); } .button--approve.is-hover { background: var(--sy-button-approve-hover); } .button--approve.is-active { background: var(--r94-action-approve-active); }
+.button--edit { background: var(--sy-button-edit); } .button--edit.is-hover { background: var(--sy-button-edit-hover); } .button--edit.is-active { background: var(--r94-action-edit-active); }
+.button--danger { background: var(--sy-button-danger); } .button--danger.is-hover { background: var(--sy-button-danger-hover); } .button--danger.is-active { background: var(--r94-action-danger-active); }
+.button.is-focus, .icon-button.is-focus, .seg__item.is-focus, .switch.is-focus .switch__track, .check.is-focus .check__box { outline: var(--focus-width) solid var(--sy-focus); outline-offset: var(--size-2); }
+.button.is-disabled { background: var(--r94-action-disabled); color: var(--r94-action-disabled-text); cursor: not-allowed; }
+/* Ghost / icon button: never filled, light hover tint */
+.icon-button { display: inline-grid; place-items: center; width: var(--sy-button-md); height: var(--sy-button-md); border: 0; border-radius: var(--r-control); background: transparent; color: var(--sy-text-2); cursor: pointer; }
+.icon-button--sm { width: var(--sy-button-sm); height: var(--sy-button-sm); }
+.icon-button.is-hover { background: var(--sy-control-hover); color: var(--sy-text); }
+.icon-button.is-active { background: var(--sy-field-bg-focus); }
+.icon-button.is-disabled { color: var(--sy-text-3); opacity: .5; }
+/* Nav / text link: text + underline */
+.link { color: var(--sy-link); text-decoration: underline; text-underline-offset: var(--size-3); font-size: var(--text-md); display: inline-flex; align-items: center; gap: var(--space-1); background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; white-space: nowrap; }
+.link.is-hover { color: var(--sy-heading); text-decoration-thickness: var(--size-2); }
+.link.is-disabled { color: var(--sy-text-3); text-decoration: none; }
+
+/* ---------- Chip (HeroUI Chip size sm, variant soft) ---------- */
+.chip { display: inline-flex; align-items: center; gap: var(--space-1); height: var(--size-24); padding-inline: var(--space-2); border-radius: var(--r-tag); font-size: var(--text-sm); font-weight: var(--weight-medium); line-height: 1; white-space: nowrap; flex: none; }
+.chip::before { content: ""; width: var(--size-6); height: var(--size-6); border-radius: 50%; background: currentColor; }
+.chip--overdue { background: var(--st-overdue-bg); color: var(--st-overdue-fg); }
+.chip--draft { background: var(--tn-neutral-b); color: var(--tn-neutral-f); }
+.chip--unpaid { background: var(--chip-unpaid-bg); color: var(--chip-unpaid-fg); }
+.chip--ended { background: var(--chip-unpaid-bg); color: var(--chip-unpaid-fg); }
+.chip--sent, .chip--progress { background: var(--chip-progress-bg); color: var(--chip-progress-fg); }
+.chip--paid, .chip--delivered { background: var(--tn-green-b); color: var(--tn-green-f); }
+.chip--active, .chip--approved { background: var(--chip-active-bg); color: var(--chip-active-fg); }
+.chip--partial, .chip--expiring, .chip--paused, .chip--review { background: var(--chip-partial-bg); color: var(--chip-partial-fg); }
+.chip--changes { background: var(--status-changes-soft); color: var(--status-changes-text); }
+.chip--void { background: var(--st-lost-bg); color: var(--st-lost-fg); text-decoration: line-through; }
+.chip--kind { background: var(--sy-surface-sunk); color: var(--sy-text-2); }
+.chip--kind::before { display: none; }
+
+/* ---------- Fields (HeroUI TextField / NumberField / Select / DateField / SearchField) ---------- */
+.field { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.field__label { font-size: var(--text-md); font-weight: var(--weight-medium); color: var(--sy-text-2); line-height: 1.4; }
+.field__hint { font-size: var(--text-sm); color: var(--sy-text-2); }
+.input { display: flex; align-items: center; gap: var(--space-2); height: var(--size-40); padding-inline: var(--space-3); border: 0; border-radius: var(--r-control); background: var(--sy-field-bg); color: var(--sy-text); font: inherit; font-size: var(--text-md); min-width: 0; }
+.input > span.v { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.input .affix { color: var(--sy-text-2); font-size: var(--text-sm); }
+.input .i { color: var(--sy-text-2); }
+.input.is-hover { background: var(--sy-field-bg-hover); }
+.input.is-focus { background: var(--sy-field-bg-focus); outline: var(--focus-width) solid var(--sy-focus); outline-offset: 0; }
+.input.is-disabled { opacity: .55; }
+.input.is-invalid { background: var(--sy-attn-bg); }
+.input.is-readonly { background: var(--sy-surface-sunk); color: var(--sy-text-2); }
+.input--area { height: auto; min-height: var(--size-64); align-items: flex-start; padding-block: var(--space-2); line-height: 1.5; }
+.input--area > span.v { white-space: normal; }
+.input .placeholder { color: var(--sy-text-3); }
+.input--end { justify-content: flex-end; text-align: end; }
+
+/* ---------- Checkbox (HeroUI Checkbox, R53 borderless) ---------- */
+.check { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-md); color: var(--sy-text); cursor: pointer; }
+.check__box { width: var(--size-20); height: var(--size-20); border-radius: var(--r-tag); background: var(--sy-check-bg); display: inline-grid; place-items: center; flex: none; color: transparent; }
+.check__box svg.i { width: var(--size-14); height: var(--size-14); stroke-width: 2.5; }
+.check.is-hover .check__box { background: var(--sy-check-bg-hover); }
+.check.is-checked .check__box { background: var(--sy-check-on); color: var(--sy-check-fg); }
+.check.is-disabled { opacity: .5; cursor: not-allowed; }
+
+/* Segmented (HeroUI Tabs, secondary): never filled; selected = surface + royal text */
+.seg { display: inline-flex; gap: var(--space-1); padding: var(--space-1); border-radius: var(--r-control); background: var(--sy-field-bg); height: var(--size-40); }
+.seg__item { display: inline-flex; align-items: center; justify-content: center; padding-inline: var(--space-3); border-radius: var(--r-tag); color: var(--sy-text-2); font-size: var(--text-sm); white-space: nowrap; }
+.seg__item.is-selected { background: var(--sy-seg-selected); color: var(--sy-heading); font-weight: var(--weight-medium); box-shadow: var(--sy-shadow-panel); }
+.seg__item.is-hover { color: var(--sy-text); }
+.seg__item.is-disabled { opacity: .5; }
+
+/* Switch (HeroUI Switch) */
+.switch { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
+.switch__track { width: var(--size-40); height: var(--size-24); border-radius: var(--size-24); background: var(--sy-control-bg); padding: var(--size-3); display: flex; }
+.switch__thumb { width: var(--size-18); height: var(--size-18); border-radius: 50%; background: var(--sy-surface); box-shadow: var(--sy-shadow-panel); }
+.switch.is-on .switch__track { background: var(--sy-switch-on); justify-content: flex-end; }
+.switch.is-hover .switch__track { background: var(--sy-control-bg-hover); }
+.switch.is-disabled { opacity: .5; }
+
+/* ---------- Table (HeroUI Table) ---------- */
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-md); }
+.table th { text-align: start; font-size: var(--text-md); font-weight: var(--weight-medium); color: var(--sy-text-2); padding: var(--space-3) var(--space-3); background: var(--sy-surface-sunk); white-space: nowrap; }
+.table th:first-child { border-start-start-radius: var(--r-control); border-end-start-radius: var(--r-control); }
+.table th:last-child { border-start-end-radius: var(--r-control); border-end-end-radius: var(--r-control); }
+.table td { padding: var(--space-3) var(--space-3); vertical-align: middle; border-block-end: var(--divider-width) solid var(--sy-line); }
+.table tr:last-child td { border-block-end: 0; }
+.table .end { text-align: end; }
+.table tr.is-hover td { background: var(--sy-surface-hover); }
+.table tr.is-selected td { background: var(--sy-selection); color: var(--sy-text); }
+.table tr.group td { background: transparent; padding-block: var(--space-4) var(--space-2); padding-inline: var(--space-3); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--sy-text); border-block-end: 0; }
+.table tr.group .count { color: var(--sy-text-2); font-weight: var(--weight-regular); margin-inline-start: var(--space-1); }
+.cell-main { font-weight: var(--weight-medium); color: var(--sy-text); }
+.cell-sub { font-size: var(--text-sm); color: var(--sy-text-2); }
+.cell-alert { font-size: var(--text-sm); color: var(--sy-attn-text); font-weight: var(--weight-medium); }
+.cell-warn { font-size: var(--text-sm); color: var(--tn-amber-f); }
+
+@media (max-width: 767px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { display: none; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; height: var(--size-56); padding-inline: var(--space-4); background: var(--sy-shell); color: var(--sy-shell-text); }
+  .topbar img { height: var(--size-18); width: auto; display: block; }
+  .topbar .icon-button { color: var(--sy-shell-text); }
+  .main { padding: var(--space-4) var(--space-4) var(--space-8); }
+  .page { gap: var(--space-4); }
+  .heading h1 { font-size: var(--text-xl); }
+  .card__header { padding: var(--space-4) var(--space-4) 0; flex-wrap: wrap; }
+  .card__actions { flex-basis: 100%; margin-inline-start: 0; }
+  .card__body { padding: var(--space-3) var(--space-4) var(--space-4); }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

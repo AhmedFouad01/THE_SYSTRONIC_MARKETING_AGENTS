@@ -9,6 +9,12 @@
       "autoPort": true
     },
     {
+      "name": "dash-post1-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:/Work/tsst-portal-post1/web", "run", "dev", "--", "--port", "5181", "--strictPort"],
+      "port": 5181
+    },
+    {
       "name": "scc",
       "runtimeExecutable": "cmd",
       "runtimeArgs": ["/c", "set PORT=4000&& npm --prefix C:/dev/systronic-control-center run dev"],

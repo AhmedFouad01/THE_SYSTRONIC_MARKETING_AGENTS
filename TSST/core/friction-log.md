@@ -104,4 +104,6 @@ The eight dated bullets were migrated into the table on 2026-10-12. Original wor
 - 2026-10-23 | DEV_AG (Codex) | ANVIL shopify-store-v1 step 6 | Shopify theme check dependency missing; CLI check gave no notes on the two edited files
 - 2026-10-23 | CREATIVE_AG | Dash R8 client header mock | SK-029/004/028/025 CRM-scoped and unvalidated; no Dash token reference, no calm client-facing zero state, SK-029 has no ring/credit-meter pattern
 - 2026-10-23 | CREATIVE_AG | Dash R8 header mock round 2 | CRM-scoped skills: no guidance for brand-owner controls (colour / gradient / image upload) or readability over user-chosen backgrounds; contrast rules were the agent's own judgement
+- 2026-10-27 | CREATIVE_AG | Dash DASH-POST-ADS-001 D1 posts/ads redraw | SK-011 targets making posts, no rules for preview frames inside a product (frame chrome, safe-zone overlay, ad label); SK-025 no wizard / stepper pattern (HeroUI v3 has none, R50 wrapper needed)
+- 2026-10-27 | CREATIVE_AG | Dash DASH-POST-ADS-001 D1b fixes | render.mjs counts an open dropdown menu inside a small parent as overflow (menu had to be anchored to the card); SK-011 still has no rules for preview frames inside a product
 ```

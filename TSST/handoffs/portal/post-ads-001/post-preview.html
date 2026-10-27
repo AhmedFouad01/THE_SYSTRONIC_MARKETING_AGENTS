@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Post preview · Sabeel Bakery</title>
+<script src="mock.js"></script>
+<script src="posts.js"></script>
+<link rel="stylesheet" href="posts.css">
+<style>.page { --frame-w: var(--frame-w-sm); } .albums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); width: 100%; max-width: var(--frame-w-sm); } .albums .collage { width: 100%; } .heading__chips { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; } .heading__review { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); width: var(--size-180); } .heading__review .button { width: 100%; min-width: 0; } .cat-title { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); font-weight: var(--weight-medium); color: var(--sy-text); margin: 0; } .cat-title .switch { margin-inline-start: auto; font-weight: var(--weight-regular); } .cat .also { grid-column: 1 / -1; margin: 0; } @media (max-width: 767px) { .heading__review { margin-inline-start: auto; } .cat-title { flex-wrap: wrap; } }</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a class="is-active"><svg class="i"><use href="#i-layers"/></svg>Jobs</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review</a>
+      <a><svg class="i"><use href="#i-inbox"/></svg>Requests</a>
+      <a><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a><svg class="i"><use href="#i-users"/></svg>Clients</a>
+      <a><svg class="i"><use href="#i-file"/></svg>Documents</a>
+      <a><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </nav>
+  </aside>
+  <div>
+    <header class="topbar"><img src="assets/dash-wordmark-white.png" alt="Dash"><button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button></header>
+    <main class="main"><div class="page">
+
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Brunch launch"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title"><h1 dir="auto">Weekend brunch menu launch, Zamalek branch</h1>
+          <span class="heading__chips"><span class="chip chip--ad"><svg class="i"><use href="#i-megaphone"/></svg>Ad</span><span class="chip chip--life-draft">Draft</span><span class="chip chip--rv-pending">Pending review</span></span></div>
+        <div class="heading__actions heading__review"><button class="button button--sm button--approve">Approve</button><button class="button button--sm button--edit">Edit</button></div>
+      </div>
+
+      <div class="notice notice--info"><svg class="i"><use href="#i-info"/></svg><span><b>Frame catalogue.</b> Every frame the Dash can draw, all filled with the same post. The real post page shows only this post's kind and chosen placements.</span></div>
+
+      <section class="card">
+        <div class="card__header"><h2 class="card__title">Organic placements</h2></div>
+        <div class="card__body"><div class="cat">
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-instagram"/></svg>Instagram feed · <span class="num">4:5</span></figcaption><div data-frame="igFeed" data-opts='{"ratio":"4 / 5","slides":3}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-instagram"/></svg>Instagram feed · <span class="num">3:4</span><span class="chip chip--organic">Organic only</span></figcaption><div data-frame="igFeed" data-opts='{"ratio":"3 / 4"}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-instagram"/></svg>Instagram profile grid · <span class="num">3:4</span></figcaption><div data-frame="grid"></div><p class="fig__note">Centre crop of the first image. A 4:5 post loses about 3% on each side.</p></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook feed · <span class="num">4:5</span></figcaption><div data-frame="fbFeed" data-opts='{"ratio":"4 / 5"}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook album · by photo count</figcaption><div class="albums"><div class="fig"><span class="fig__note">2 photos</span><div data-frame="collage" data-opts='{"n":2}'></div></div><div class="fig"><span class="fig__note">3 photos</span><div data-frame="collage" data-opts='{"n":3}'></div></div><div class="fig"><span class="fig__note">4 photos</span><div data-frame="collage" data-opts='{"n":4}'></div></div><div class="fig"><span class="fig__note">12 photos</span><div data-frame="collage" data-opts='{"n":12}'></div></div></div><p class="fig__note">A close guide: Facebook picks the final layout.</p></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-linkedin"/></svg>LinkedIn feed · <span class="num">1:1</span></figcaption><div data-frame="liFeed" data-opts='{"ratio":"1 / 1"}'></div><p class="fig__note">No LinkedIn profile yet: the brand logo and name are used.</p></figure>
+          <h3 class="cat-title"><svg class="i"><use href="#i-story"/></svg>Stories and Reels<label class="switch is-on"><span class="switch__track"><span class="switch__thumb"></span></span>Show safe zones</label></h3>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-instagram"/></svg>Instagram Story · <span class="num">9:16</span></figcaption><div data-frame="phone" data-opts='{"kind":"story","safe":true,"img":"assets/media/croissant.svg"}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook Story · <span class="num">9:16</span></figcaption><div data-frame="phone" data-opts='{"kind":"story","safe":true,"platform":"facebook","img":"assets/media/shop.svg"}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-video"/></svg>Reel · <span class="num">9:16</span></figcaption><div data-frame="phone" data-opts='{"kind":"reel","safe":true}'></div><p class="fig__note">Striped bands are covered by the app: 14% top, 35% bottom, 6% each side. Keep text and logos out of them.</p></figure>
+        </div></div>
+      </section>
+
+      <section class="card">
+        <div class="card__header"><h2 class="card__title row"><svg class="i"><use href="#i-megaphone"/></svg>Ad placements</h2></div>
+        <div class="card__body"><div class="cat">
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook Feed · <span class="num">4:5</span></figcaption><div data-frame="fbFeed" data-opts='{"ratio":"4 / 5","ad":true}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-instagram"/></svg>Instagram Feed and Explore home · <span class="num">4:5</span></figcaption><div data-frame="igFeed" data-opts='{"ratio":"4 / 5","ad":true}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-story"/></svg>Stories · <span class="num">4:5</span> on <span class="num">9:16</span></figcaption><div data-frame="phone" data-opts='{"kind":"story","ad":true,"fit":true,"safe":true}'></div><p class="fig__note">A 4:5 image shows smaller, with space around it. Use 9:16 to fill the screen.</p></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-video"/></svg>Reels · <span class="num">9:16</span></figcaption><div data-frame="phone" data-opts='{"kind":"reel","ad":true,"safe":true}'></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook Marketplace · <span class="num">1:1</span></figcaption><div data-frame="mp"></div></figure>
+          <figure class="fig" style="margin:0"><figcaption class="fig__label"><svg class="i"><use href="#i-facebook"/></svg>Facebook Right column · <span class="num">1:1</span></figcaption><div data-frame="rc"></div><span class="fig__label" style="margin-block-start:var(--space-3)">Other size · <span class="num">1.91:1</span></span><div data-frame="rc" data-opts='{"ratio":"1.91 / 1","w":"var(--size-140)"}'></div><p class="fig__note">Meta's two guides differ on this size. 1:1 is the default.</p></figure>
+          <p class="also"><b>Also runs on, no preview:</b> Facebook profile feed, business explore, search results, in-stream reels, ads on Facebook Reels, Threads, WhatsApp status, Messenger Stories, Audience Network.</p>
+        </div></div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body></html>

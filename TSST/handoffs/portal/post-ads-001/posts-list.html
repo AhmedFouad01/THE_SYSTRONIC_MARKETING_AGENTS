@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Posts · Sabeel Bakery</title>
+<script src="mock.js"></script>
+<script src="posts.js"></script>
+<link rel="stylesheet" href="posts.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a><svg class="i"><use href="#i-layers"/></svg>Jobs</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review</a>
+      <a><svg class="i"><use href="#i-inbox"/></svg>Requests</a>
+      <a><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a class="is-active"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+      <a><svg class="i"><use href="#i-file"/></svg>Documents</a>
+      <a><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </nav>
+  </aside>
+  <div>
+    <header class="topbar"><img src="assets/dash-wordmark-white.png" alt="Dash"><button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button></header>
+    <main class="main"><div class="page">
+
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Sabeel Bakery"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title"><h1>Sabeel Bakery posts</h1></div>
+        <div class="heading__actions"><button class="button button--primary"><svg class="i"><use href="#i-plus"/></svg>New post</button></div>
+      </div>
+
+      <!-- Filters: one row, all 40 px (desktop) -->
+      <div class="filters" role="search">
+        <div class="input search"><svg class="i"><use href="#i-search"/></svg><span class="v placeholder">Search by title</span></div>
+        <div class="seg" role="tablist" aria-label="Kind">
+          <span class="seg__item is-selected">All<span class="num">11</span></span>
+          <span class="seg__item">Organic<span class="num">5</span></span>
+          <span class="seg__item">Ads<span class="num">6</span></span>
+        </div>
+        <div class="input sel"><span class="v">All statuses</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div>
+        <div class="input sel"><span class="v">All platforms</span><svg class="i end-icon"><use href="#i-chevron"/></svg></div>
+      </div>
+      <!-- Filters at 390: search + Filters sheet (status, platform); kind tabs stay visible -->
+      <div class="filters__m">
+        <div class="row"><div class="input"><svg class="i"><use href="#i-search"/></svg><span class="v placeholder">Search posts</span></div><button class="button button--secondary"><svg class="i"><use href="#i-filter"/></svg>Filters</button></div>
+        <div class="seg" role="tablist" aria-label="Kind">
+          <span class="seg__item is-selected">All<span class="num">11</span></span>
+          <span class="seg__item">Organic<span class="num">5</span></span>
+          <span class="seg__item">Ads<span class="num">6</span></span>
+        </div>
+      </div>
+
+      <div data-list="team" data-lang="en"></div>
+
+    </div></main>
+  </div>
+</div>
+</body></html>
