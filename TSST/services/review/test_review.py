@@ -1114,7 +1114,7 @@ class ReadOnlyHttp(HttpBase):
         mf = os.path.join(self.p, "camp", "DELIVERY.json")
         st, res = self.post({"brand": "acme", "job": "camp", "path": "work/a.png", "status": "approved"})
         self.assertEqual((st, res["ok"]), (403, False))
-        self.assertIn("https://portal.the-systronic.duckdns.org", res["error"])
+        self.assertIn("https://dash.the-systronic.com", res["error"])
         self.assertIn("البوابة", res["error"])
         self.assertFalse(os.path.exists(mf))
         self.assertEqual(self.synced, [])
@@ -1131,7 +1131,7 @@ class ReadOnlyHttp(HttpBase):
         page = self.get("/")[1].decode("utf-8")
         self.assertIn('id="ro"', page)
         self.assertIn("القرارات بقت من البوابة", page)
-        self.assertIn("https://portal.the-systronic.duckdns.org", page)
+        self.assertIn("https://dash.the-systronic.com", page)
         for guard in ("canAct && !readOnly ? decisionRow", "viewOnly() || readOnly ? null : bulkBar", "if (can && !readOnly) box.append",
                       "viewOnly() || readOnly || !data", "readOnly || !rvCan(it)"):
             self.assertIn(guard, page)

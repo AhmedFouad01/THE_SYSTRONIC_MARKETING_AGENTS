@@ -31,7 +31,7 @@ plan, review and accept. Specialists do the work. Lead record: [TSST/LEAD/AGENT.
    the plan (R47). TSST code or cross-runtime work: `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json`.
    The system is frozen until 2026-11-15 (R46).
 5. **Finish.** One checkpoint (status / project). Client jobs: delivery pack (R18–R20). Ahmed approves
-   in the Dash (https://portal.the-systronic.duckdns.org, same URL as before); his decisions reach `review` within ~15 min. `REVIEW.bat` is view-only. Name and lay out files so the board sorts them
+   in the Dash (https://dash.the-systronic.com; old duckdns links redirect); his decisions reach `review` within ~15 min. `REVIEW.bat` is view-only. Name and lay out files so the board sorts them
    ([JOB_LAYOUT.md](TSST/services/delivery/JOB_LAYOUT.md), "The Dash (owner approvals)").
 
 | Work | Team → agent |

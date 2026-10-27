@@ -9,18 +9,18 @@ Status: Phase 1 (server base) done 2026-10-18. No secrets in this file (keys, pa
 | Type | t3.small, 2 vCPU, ~1.9 GB RAM |
 | OS | Ubuntu 24.04.4 LTS, kernel 7.0.0-1014-aws |
 | Disk | 29 GB root (EBS), ~27 GB free after base install |
-| Public IPv4 | 54.93.60.74 (auto-assigned, NOT Elastic: it can change after a stop/start) |
+| Public IPv4 | 63.185.191.224 (Elastic IP, fixed since 2026-10-28; the old auto-assigned 54.93.60.74 is gone) |
 | Time zone | Africa/Cairo |
 | Swap | 2 GB `/swapfile` (in /etc/fstab), `vm.swappiness=10` (/etc/sysctl.d/99-tsst.conf) |
 | Security group | 22 (owner IP only), 80, 443. Managed in AWS, not on the server |
 
 ## Access
 ```
-ssh -i /c/Users/10/.ssh/tsst-portal-key-fra.pem ubuntu@54.93.60.74
+ssh -i /c/Users/10/.ssh/tsst-portal-key-fra.pem ubuntu@63.185.191.224
 ```
 (Git Bash path; in PowerShell use `C:\Users\10\.ssh\tsst-portal-key-fra.pem`.) The key file stays on the PC only. User `ubuntu` has passwordless sudo.
 sshd (`/etc/ssh/sshd_config.d/00-tsst-hardening.conf`): `PasswordAuthentication no`, `PermitRootLogin no`, `KbdInteractiveAuthentication no`. Key login only.
-If the IP changes after a stop/start, take the new IP from the EC2 console and update the security group rule for port 22 if Ahmed's own IP changed.
+The IP is Elastic, so it survives stop/start. If Ahmed's own IP changed, update the security group rule for port 22.
 
 ## Installed (from Ubuntu repos or the vendors' official apt repos)
 | Software | Version | Source |
@@ -87,7 +87,7 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
 
 ## Not yet done (later phases)
 - DuckDNS name + HTTPS (Phase 2), UptimeRobot monitor (needs the hostname). (Off-server backup copy: done, see Backup.)
-- Elastic IP: not allocated (cost watch in the brief: public IPv4 is billed after free-tier coverage). Without it the IP can change on stop/start; Phase 2 then needs the DuckDNS IP updater.
+- Elastic IP: done 2026-10-28 (63.185.191.224, see "Domain move" below). No DuckDNS IP updater needed.
 
 ## Phase 2: domain + HTTPS (2026-10-18)
 - DuckDNS: `the-systronic.duckdns.org` → 54.93.60.74 (set by Ahmed in the DuckDNS web page). Sub-names resolve
@@ -100,7 +100,7 @@ Notes: if the cluster is healthy and only one database is bad, load into a spare
   needs the DuckDNS token on the server; Ahmed places it himself (never in the repo or in chat).
 
 ## Phase 3 / R3a: portal app deployed (2026-10-18)
-Live: https://dash.systronic.duckdns.org (`/login` 200, `/api/tree` 401 without a session, `/` 302 to `/login`).
+Live: https://dash.the-systronic.com (was dash.systronic.duckdns.org until 2026-10-28; `/login` 200, `/api/tree` 401 without a session, `/` 302 to `/login`).
 Source of all server files: repo `C:\Work\tsst-portal`, folder `scripts/server/` (+ `scripts/deploy.sh`). No secrets in any of them.
 
 | Item | Value |
@@ -109,7 +109,7 @@ Source of all server files: repo `C:\Work\tsst-portal`, folder `scripts/server/`
 | App | `/srv/tsst/portal/releases/<git sha>`; `current` and `previous` are symlinks; the 5 newest releases are kept |
 | Config | `/etc/tsst-portal/portal.env` (root:tsst 640): never print it. `BETTER_AUTH_SECRET` was generated on the server |
 | Database | Postgres role `tsst` + database `portal` (owner `tsst`), peer auth over `/var/run/postgresql`, no password. Included in the daily dump |
-| Caddy | `dash.systronic.duckdns.org` (old `dash.systronic.duckdns.org` 301-redirects since 2026-10-24) reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, noindex kept). Website root and crm stay placeholders. Backups: `Caddyfile.phase1.bak`, `Caddyfile.phase2.bak` |
+| Caddy | `dash.the-systronic.com` (both duckdns Dash names 301-redirect to it since 2026-10-28) reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, noindex kept). Website root and crm stay placeholders. Backups: `Caddyfile.phase1.bak`, `Caddyfile.phase2.bak` |
 | Portfolio | `/srv/tsst/portal/portfolio.yaml` (copy of `TSST/core/portfolio.yaml`, refreshed on every deploy) |
 | Thumb cache | `/var/cache/tsst-portal` |
 | Helper | `/usr/local/bin/tsst-portal-run <npm-script>` (run as `tsst`: loads the env file, runs `npm run`) |
@@ -169,7 +169,7 @@ with blob `eyJzY29wZSI6ImRyaXZlLnJlYWRvbmx5In0` still links through rclone's sha
 
 ### Create the first portal user (Ahmed, PowerShell, interactive; password typed twice, hidden)
 ```
-ssh -t -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@54.93.60.74 "sudo -u tsst tsst-portal-run user:add -- --email the.systronic@gmail.com --name 'Ahmed Fouad'"
+ssh -t -i C:\Users\10\.ssh\tsst-portal-key-fra.pem ubuntu@63.185.191.224 "sudo -u tsst tsst-portal-run user:add -- --email the.systronic@gmail.com --name 'Ahmed Fouad'"
 ```
 
 ### Reboot test (2026-10-18)
@@ -180,3 +180,13 @@ The portal database is the source of truth for review decisions; the `review` bl
 - Import (once, after the Drive mirror finished): `sudo -u tsst tsst-portal-run import:review`. Reads every `BRANDS_ROOT/*/projects/**/DELIVERY.json` `review` block into `decision_history` (source `import`, `decided_by` from `by`, `decided_at` from `date` at 00:00 UTC). Idempotent: an entry whose status and note already match is skipped; a different current decision made on or after the file's date is kept (the database wins). Prints one line per job (in file / inserted / same / db newer / skipped). Exit 1 if a manifest is unreadable.
 - Export: `sudo -u tsst tsst-portal-run export:decisions` prints ONE line of JSON `[{brand, job, key, status, note, by, date}]` (current decisions; no ids, no secrets). npm prints a banner before it; the line starts with `[`.
 - Pull (PC): `python TSST/services/review/pull_decisions.py [--dry-run]` runs the export over ssh (key `~/.ssh/tsst-portal-key-fra.pem`, BatchMode), writes changed jobs' `review` blocks (indent and newline kept; local-only keys kept), then `build_delivery.py` for changed jobs that have a DELIVERY.html, then `sync_jobs.py <brand>`. Offline: quiet exit 0. Log `%LOCALAPPDATA%/tsst-review/pull.log` (rotated at 100 KB). Scheduled task "TSST pull decisions": every 15 min, `pythonw`, current user, only when logged on, no admin. Run/stop: `schtasks /Run /TN "TSST pull decisions"`, `schtasks /End ...`, `schtasks /Delete /TN "TSST pull decisions" /F`.
+
+## Domain move: Dash at https://dash.the-systronic.com (2026-10-28)
+Owner Ahmed approved. The Dash now lives on his own domain; DuckDNS names only redirect.
+- Elastic IP **63.185.191.224** attached to the instance (replaces 54.93.60.74). Every SSH command and the default `TSST_HOST` in `deploy.sh`, `pull-backup.py` and `services/review/pull_decisions.py` use it.
+- DNS: `dash.the-systronic.com` A record (Namecheap) → 63.185.191.224. `dash.systronic.duckdns.org` → 63.185.191.224 (done). `the-systronic.duckdns.org` (and `portal.`/`crm.` under it) still pointed to 54.93.60.74 at move time: **Ahmed updates it in DuckDNS**; until then the old `portal.the-systronic.duckdns.org` links do not reach the server (Caddy's redirect for it works, tested with a forced resolve).
+- Caddy (`scripts/server/Caddyfile` = `/etc/caddy/Caddyfile`): `dash.the-systronic.com` reverse-proxies to 127.0.0.1:3100 (HSTS, nosniff, referrer policy, `X-Robots-Tag: noindex, nofollow`, no Server header). `dash.systronic.duckdns.org` and `portal.the-systronic.duckdns.org` → `301 https://dash.the-systronic.com{uri}` (path and query kept). Certificate for the new name: Let's Encrypt (YE1), issued 2026-10-28, valid to 2027-01-25, auto-renew. No ACME email. Other blocks (root, crm, bare-IP placeholder) untouched; the bare-IP block still names the old IP (`http://54.93.60.74`), so it no longer matches: change it to the new IP only if the plain-HTTP placeholder is wanted.
+- App env: `PUBLIC_ORIGIN=https://dash.the-systronic.com`, `ALLOWED_HOSTS=dash.the-systronic.com` (only these two lines changed; `provision.sh` matches).
+- Verified 2026-10-28: `/login` 200, `/api/tree` 401 without a session, old duckdns URL `/jobs/abc?x=1` → 301 `https://dash.the-systronic.com/jobs/abc?x=1`.
+- Rollback: backups `/etc/caddy/Caddyfile.pre-dash-domain2-20261028-015543.bak` and `/etc/tsst-portal/portal.env.pre-dash-domain2-20261028-015543.bak`.
+  `sudo cp -p /etc/caddy/Caddyfile.pre-dash-domain2-20261028-015543.bak /etc/caddy/Caddyfile && sudo cp -p /etc/tsst-portal/portal.env.pre-dash-domain2-20261028-015543.bak /etc/tsst-portal/portal.env && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy && sudo systemctl restart tsst-portal`

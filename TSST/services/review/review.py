@@ -46,7 +46,7 @@ except Exception:                      # pragma: no cover - depends on the machi
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 DEFAULT_ROOT = os.path.join(REPO, "TSST", "brands")
-PORTAL_URL = "https://portal.the-systronic.duckdns.org"
+PORTAL_URL = "https://dash.the-systronic.com"
 READ_ONLY_MSG = "القرارات بقت من البوابة: " + PORTAL_URL
 SYNC_SCRIPT = os.path.join(REPO, "TSST", "services", "delivery", "sync_jobs.py")
 BUILD_SCRIPT = os.path.join(REPO, "TSST", "services", "delivery", "build_delivery.py")

@@ -13,7 +13,7 @@ Every job folder under `TSST/brands/<id>/projects/<job>/` is checked by `python 
 ```
 
 ## The Dash (owner approvals)
-Ahmed approves in the Dash (https://portal.the-systronic.duckdns.org, same URL as the old portal); its database is the source of truth. Review statuses: Pending review / Approved / Changes requested (button Request edit; changes requested = not shippable as is, redo per the note). An old `rejected` in a `review` block reads as Changes requested. A pull task on his PC ("TSST pull decisions", every 15 min, `TSST/services/review/pull_decisions.py`) mirrors the decisions into each job's `DELIVERY.json` `"review"` block within ~15 min. `REVIEW.bat` (http://127.0.0.1:8790, same folder) is view-only: it shows the files and decisions, and a decision POST answers 403. It reads job folders directly, so where and how a file is saved decides
+Ahmed approves in the Dash (https://dash.the-systronic.com; old duckdns links redirect); its database is the source of truth. Review statuses: Pending review / Approved / Changes requested (button Request edit; changes requested = not shippable as is, redo per the note). An old `rejected` in a `review` block reads as Changes requested. A pull task on his PC ("TSST pull decisions", every 15 min, `TSST/services/review/pull_decisions.py`) mirrors the decisions into each job's `DELIVERY.json` `"review"` block within ~15 min. `REVIEW.bat` (http://127.0.0.1:8790, same folder) is view-only: it shows the files and decisions, and a decision POST answers 403. It reads job folders directly, so where and how a file is saved decides
 where it shows up:
 - Save everything inside the job: drafts in `work/`, finished files in `final/`. Never in Downloads,
   Documents or another tool's folder.

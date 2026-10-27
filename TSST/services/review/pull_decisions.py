@@ -25,7 +25,7 @@ sys.path.insert(0, HERE)
 import review  # noqa: E402  (manifest read/atomic write, run_build, run_sync, job_dir)
 
 KEY = os.environ.get("TSST_KEY") or os.path.join(os.path.expanduser("~"), ".ssh", "tsst-portal-key-fra.pem")
-HOST = os.environ.get("TSST_HOST") or "ubuntu@54.93.60.74"
+HOST = os.environ.get("TSST_HOST") or "ubuntu@63.185.191.224"
 REMOTE_CMD = "sudo -u tsst tsst-portal-run export:decisions"
 FIELDS = ("status", "note", "date", "by")
 # "changes_requested" (Dash word) and "rejected" (old word) are one status. A file that says "changes_requested" is not
