@@ -7,7 +7,8 @@ State: MOBIX_DESKTOP ACTIVE_SUPERVISED / MBX-066 PRINT P0 IN_PROGRESS; TSST DEV_
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-28).
 - Native invoice preview response corrected: `Mobix/Ui/printer-settings.js` commit `08259791`; obsolete `useSystemDialog` does not fall back to WebView `window.print()`; preview opened is no longer falsely described as printer submission.
 - Executable JS regression `Tests/MBX066-PrinterInvoiceResponse.test.cjs` commit `1c976ba`; PowerShell gate update `839bdb0`; documentation commit `bb8828b`.
-- Supervised V8 source-execution checks 5/5 PASS; stored Node test and full Windows PowerShell `-Compile` runtime **NOT RUN**; thermal 58/80 mm, A4, XP-233B physical print and PDF fidelity **NOT VERIFIED**.
+- Windows operator gate on source `f941e1c`: **stored Node invoice regression 5/5 PASS** and static source checks passed. The gate stopped before compilation because `msbuild.exe` was not found on PATH; .NET Framework 4.8 release builds, thermal 58/80 mm, A4, XP-233B printing and PDF fidelity are **NOT VERIFIED**.
+- Script-only MSBuild discovery improvement committed as `0558511`; Windows rerun still pending. Desktop print report checkpoint `37b784a`. No installation or merge performed.
 - Next: exact-HEAD Windows source gate + .NET Framework 4.8 build of Mobix and PrintWorker, printer fault-injection and print-to-PDF/paper parity; then audited plan for remaining report `window.print()` routes. No automatic rerun of paper jobs.
 - No merge, Actions, release, deployment, SQL mutations, financial logic changes or real client data operations.
 
