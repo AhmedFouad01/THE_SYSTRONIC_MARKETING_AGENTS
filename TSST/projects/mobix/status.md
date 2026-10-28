@@ -6,6 +6,8 @@ State: MOBIX_WEB ACTIVE_SUPERVISED / NOT_RELEASE_READY; TSST DEV_AG runtime NOT_
 - Repository: Do7a193/Mobix.Web; branch: architecture/MBX-WEB-CA03-inventory-core.
 - Current source checkpoint: docs/testing/MBX-WEB-TSST-SUPERVISED-CLOSEOUT-2026-10-28.md (Web feature branch).
 - Code-only guarded independent API customer GET helper: scripts/Test-MBX-WEB-CA03-Customer-Persistence-ReadOnly.ps1. **Not yet Windows-executed.**
+- 2026-10-28 source-only P0 principal hardening: test script commit `399b674`; closeout document commit `acc74e5`. Nine manual source-contract assertions PASS, but **PowerShell/Windows runtime remains NOT_RUN** and independent customer GET remains OPEN.
+- Independent P1 source risk logged: browser may restore an expired access token from `sessionStorage` and display empty catalog rows after 401; do not misclassify this as proof that customer SQL data disappeared.
 - Existing verified CA03 test-only SQL supplier/customer/product restart persistence PASS; customer UI edit and browser refresh PASS; independent GET still OPEN.
 - Next: start clean Windows CA03 local API/Web, then execute independent fixture customer GET and capture exact source SHA/result. Later product/supplier UI and private-HTTPS Android, exact-head full gates.
 - UX01 and CA03 branches diverged materially: selective audited integration required before Sales; no blind merge.
