@@ -1,8 +1,17 @@
 # MOBIX — TSST current checkpoint
 Date: 2026-10-28
-State: MOBIX_WEB ACTIVE_SUPERVISED / NOT_RELEASE_READY; TSST DEV_AG runtime NOT_READY and NOT dispatched.
+State: MOBIX_DESKTOP ACTIVE_SUPERVISED / MBX-066 PRINT P0 IN_PROGRESS; TSST DEV_AG runtime NOT_READY and NOT dispatched.
 
-## Active workstream — MOBIX_WEB
+## Active workstream — MOBIX Desktop
+- Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
+- Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-28).
+- Native invoice preview response corrected: `Mobix/Ui/printer-settings.js` commit `08259791`; obsolete `useSystemDialog` does not fall back to WebView `window.print()`; preview opened is no longer falsely described as printer submission.
+- Executable JS regression `Tests/MBX066-PrinterInvoiceResponse.test.cjs` commit `1c976ba`; PowerShell gate update `839bdb0`; documentation commit `bb8828b`.
+- Supervised V8 source-execution checks 5/5 PASS; stored Node test and full Windows PowerShell `-Compile` runtime **NOT RUN**; thermal 58/80 mm, A4, XP-233B physical print and PDF fidelity **NOT VERIFIED**.
+- Next: exact-HEAD Windows source gate + .NET Framework 4.8 build of Mobix and PrintWorker, printer fault-injection and print-to-PDF/paper parity; then audited plan for remaining report `window.print()` routes. No automatic rerun of paper jobs.
+- No merge, Actions, release, deployment, SQL mutations, financial logic changes or real client data operations.
+
+## Paused workstream — MOBIX_WEB
 - Repository: Do7a193/Mobix.Web; branch: architecture/MBX-WEB-CA03-inventory-core.
 - Current source checkpoint: docs/testing/MBX-WEB-TSST-SUPERVISED-CLOSEOUT-2026-10-28.md (Web feature branch).
 - Code-only guarded independent API customer GET helper: scripts/Test-MBX-WEB-CA03-Customer-Persistence-ReadOnly.ps1. **Not yet Windows-executed.**
@@ -14,10 +23,10 @@ State: MOBIX_WEB ACTIVE_SUPERVISED / NOT_RELEASE_READY; TSST DEV_AG runtime NOT_
 - No GitHub Actions, SQL migrations, real customer data, merge or deployment performed.
 
 ## Other products
-- MOBIX Desktop: MBX-066 print P0 remains IN_PROGRESS, draft PR #49 unmerged; previous checkpoint preserved in status-history.md.
+- MOBIX Web: P0 independent customer GET remains OPEN; paused under the owner's explicit switch to Desktop. Its CA03 source checkpoint and tests remain intact.
 - MOBIX_ONE: no change, separate repo/project.
 
 ## Governance
 - TSST Lead supervision and DEV method references: SK-011, SK-012, SK-015 (UNVALIDATED); **no autonomous agent started**, TSST Core/portfolio untouched and frozen through 2026-11-15.
-- Canonical MOBIX_WEB Real Memory controlled review/apply still pending. No production or skills readiness promotion.
-- Do not repeat CA01 and accepted CA02/CA03 gates without change-risk; no Actions without specific owner approval.
+- Canonical Real Memory controlled review/apply remains pending for MOBIX, MOBIX_WEB, MOBIX_ONE. No production or skills readiness promotion.
+- Do not repeat completed MBX-065 (Desktop) or CA01 and accepted CA02/CA03 (Web) gates without change-risk; no Actions without specific owner approval.
