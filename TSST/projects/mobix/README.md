@@ -3,9 +3,9 @@
 Date: 2026-10-24
 Owner instruction: "اعمل Setup لمشروع Mobix على TSST و REAL MEMORY وهشتغل بيهم بعد كده الفترة الجاية"
 Project ID: `mobix`
-Status: `SETUP_STAGED / NO DEVELOPMENT STARTED`
-Routing: TSST Lead -> `DEV_AG` only after an approved scoped development assignment; `DEV_AG` remains `NOT_READY` under current TSST governance.
-Skills used: none (administrative onboarding only; no specialist execution).
+Status: `MOBIX_WEB ACTIVE_SUPERVISED (2026-10-28) / DEV_AG NOT_READY / NO AUTONOMOUS DISPATCH`
+Routing: TSST Lead supervised source/checkpoint work is active for `MOBIX_WEB`; routing to an autonomous `DEV_AG` runtime is NOT activated, and `DEV_AG` remains `NOT_READY` under current governance.
+Skills used: TSST-DEV-SK-011, SK-012, SK-015 as supervised manual methods for the 2026-10-28 Web workstream (all `UNVALIDATED`); original onboarding used none. No specialist runtime dispatched.
 
 ## Source-of-truth map
 
@@ -26,6 +26,14 @@ Each project has an isolated source packet in the `AhmedFouad01/real-memory-os` 
 
 Packets are only source evidence. Canonical `01_PROJECTS/<PROJECT_KEY>/` statuses and decisions must not be created/overwritten without review, source reconciliation, exact targets, and controlled apply.
 
+## Current MOBIX_WEB closeout workstream
+
+- State and next operator gate: [status.md](status.md).
+- Detailed project gates: [Web closeout](https://github.com/Do7a193/Mobix.Web/blob/architecture/MBX-WEB-CA03-inventory-core/docs/testing/MBX-WEB-TSST-SUPERVISED-CLOSEOUT-2026-10-28.md).
+- Tracked read-only fixture verification helper: [customer API GET script](https://github.com/Do7a193/Mobix.Web/blob/architecture/MBX-WEB-CA03-inventory-core/scripts/Test-MBX-WEB-CA03-Customer-Persistence-ReadOnly.ps1).
+- Historical Desktop TSST checkpoint preserved in [status-history.md](status-history.md).
+- This is a supervised code/checkpoint workflow, not confirmation that TSST remote workers or production agents have started.
+
 ## First work-session boot
 
 1. Read [status.md](status.md); choose exactly one of Desktop/Web/One by project key.
@@ -44,4 +52,4 @@ Packets are only source evidence. Canonical `01_PROJECTS/<PROJECT_KEY>/` statuse
 
 ## TSST governance
 
-This is a project pointer in the existing `TSST/projects/` area, not a TSST Core change. The TSST system remains frozen until 2026-11-15; this onboarding neither changes `TSST/core/portfolio.yaml` nor grants any autonomous access, readiness or permission. Portfolio auto-discovery and RM durable activation remain `PENDING` and require the existing governed workflow. No code, customer database, deployment or financial history changed.
+This is a project pointer in the existing `TSST/projects/` area, not a TSST Core change. The TSST system remains frozen until 2026-11-15; neither the original onboarding nor the supervised 2026-10-28 Web update changes `TSST/core/portfolio.yaml` or grants autonomous access/readiness. Portfolio auto-discovery and RM durable activation remain `PENDING`. The later Web feature-branch change adds only one guarded read gate script and a closeout document; no customer database, deployment or financial history changed.
