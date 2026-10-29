@@ -4,13 +4,15 @@ State: MOBIX_DESKTOP ACTIVE_SUPERVISED / MBX-066 PRINT P0 IN_PROGRESS; TSST DEV_
 
 ## Active workstream — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
-- Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-28).
+- Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-29).
 - Native invoice preview response corrected: `Mobix/Ui/printer-settings.js` commit `08259791`; obsolete `useSystemDialog` does not fall back to WebView `window.print()`; preview opened is no longer falsely described as printer submission.
 - Executable JS regression `Tests/MBX066-PrinterInvoiceResponse.test.cjs` commit `1c976ba`; PowerShell gate update `839bdb0`; documentation commit `bb8828b`.
 - 2026-10-29 operator Windows evidence at exact checkout SHA `37b784a`: **Node invoice regression 5/5 PASS** (0 failures) and **MBX-066 STATIC + WINDOWS COMPILATION GATE: PASS**. Both `Mobix.PrintWorker.exe` and `Mobix.exe` were built in the Release output with Visual Studio Community MSBuild 18.9.1.
 - Source packaging review: both projects output beside one another; commercial packaging scripts require and stage `Mobix.PrintWorker.exe` but **no installer or staged package was executed/verified**. Checkpoint recorded in Desktop `docs/print/MBX-066-P0-IMPLEMENTATION.md` commit `2a8e571`; this is documentation only after the tested source SHA.
 - **Synthetic one-page A4 PDF smoke visual PASS (2026-10-29):** isolated PrintWorker produced `MBX066_A4_TEST.pdf`; screenshot shows title, subtitle, two body lines, 3 headers and 2 complete synthetic rows. Footer and actual A4 pagination unverified; no production DB or real invoice. Recorded on Desktop feature branch doc commit `2d52694`.
-- **Physical printer and release QA still OPEN:** A4 multi-page/PDF footer, thermal 58/80 mm, XP-233B barcode RAW/GDI, real invoice UI and output parity, spooler/driver faults, printer queue outcome, stocktaking multi-page and supplier return, and remaining `window.print()` routes. No automatic retries.
+- **A4 multi-page finding (2026-10-29):** operator's 75 synthetic-row PDF has 3 pages; pages 2/3 visibly omit column headings while rendering the visible row data. Last row 075 and footer not shown/confirmed. Source root cause: table headings were guarded by `rowIndex == 0`.
+- **New source-only fix, Windows rebuild OPEN:** repeated headers + keep-header-with-row in `Mobix.PrintWorker/Program.cs` commit `d1951d9`; PowerShell regression gate `969ebc1`; Desktop checkpoint doc `54797e3`. 10/10 targeted source invariants pass, but the Windows build/PDF outcome on these new commits is **NOT RUN**. Prior `37b784a` Windows build PASS does not promote new HEAD.
+- **Physical printer and release QA still OPEN:** revised A4 multi-page/PDF first/last row and footer, thermal 58/80 mm, XP-233B barcode RAW/GDI, real invoice UI and output parity, spooler/driver faults, printer queue outcome, stocktaking multi-page and supplier return, and remaining `window.print()` routes. No automatic retries.
 - Next: controlled test environment and printer/PDF acceptance at exact tested source; preserve production data and verified business logic. No customer installer or PR merge until approved.
 - No merge, Actions, release, deployment, SQL mutations, financial logic changes or real client data operations.
 
