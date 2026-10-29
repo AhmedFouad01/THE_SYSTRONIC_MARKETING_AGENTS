@@ -1,5 +1,5 @@
 # MOBIX — TSST current checkpoint
-Date: 2026-10-28
+Date: 2026-10-29
 State: MOBIX_DESKTOP ACTIVE_SUPERVISED / MBX-066 PRINT P0 IN_PROGRESS; TSST DEV_AG runtime NOT_READY and NOT dispatched.
 
 ## Active workstream — MOBIX Desktop
@@ -7,9 +7,10 @@ State: MOBIX_DESKTOP ACTIVE_SUPERVISED / MBX-066 PRINT P0 IN_PROGRESS; TSST DEV_
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-28).
 - Native invoice preview response corrected: `Mobix/Ui/printer-settings.js` commit `08259791`; obsolete `useSystemDialog` does not fall back to WebView `window.print()`; preview opened is no longer falsely described as printer submission.
 - Executable JS regression `Tests/MBX066-PrinterInvoiceResponse.test.cjs` commit `1c976ba`; PowerShell gate update `839bdb0`; documentation commit `bb8828b`.
-- Windows operator gate on source `f941e1c`: **stored Node invoice regression 5/5 PASS** and static source checks passed. The gate stopped before compilation because `msbuild.exe` was not found on PATH; .NET Framework 4.8 release builds, thermal 58/80 mm, A4, XP-233B printing and PDF fidelity are **NOT VERIFIED**.
-- Script-only MSBuild discovery improvement committed as `0558511`; Windows rerun still pending. Desktop print report checkpoint `37b784a`. No installation or merge performed.
-- Next: exact-HEAD Windows source gate + .NET Framework 4.8 build of Mobix and PrintWorker, printer fault-injection and print-to-PDF/paper parity; then audited plan for remaining report `window.print()` routes. No automatic rerun of paper jobs.
+- 2026-10-29 operator Windows evidence at exact checkout SHA `37b784a`: **Node invoice regression 5/5 PASS** (0 failures) and **MBX-066 STATIC + WINDOWS COMPILATION GATE: PASS**. Both `Mobix.PrintWorker.exe` and `Mobix.exe` were built in the Release output with Visual Studio Community MSBuild 18.9.1.
+- Source packaging review: both projects output beside one another; commercial packaging scripts require and stage `Mobix.PrintWorker.exe` but **no installer or staged package was executed/verified**. Checkpoint recorded in Desktop `docs/print/MBX-066-P0-IMPLEMENTATION.md` commit `2a8e571`; this is documentation only after the tested source SHA.
+- **Physical printer and release QA still OPEN:** thermal 58/80 mm, XP-233B barcode RAW/GDI, A4 print-to-PDF/paper comparison, spooler/driver faults, printer queue outcome, stocktaking multi-page and supplier return, and remaining `window.print()` routes. No automatic retries.
+- Next: controlled test environment and printer/PDF acceptance at exact tested source; preserve production data and verified business logic. No customer installer or PR merge until approved.
 - No merge, Actions, release, deployment, SQL mutations, financial logic changes or real client data operations.
 
 ## Paused workstream — MOBIX_WEB
