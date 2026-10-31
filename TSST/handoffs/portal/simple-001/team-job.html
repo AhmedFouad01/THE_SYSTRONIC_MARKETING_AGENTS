@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Autumn Launch Social Posts · Zad Living · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- Team Sidebar (Nav: Home · Work · Review · Clients; Owner menu: Reports, Documents, Settings) -->
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a href="team-home.html"><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a class="is-active" href="team-job.html"><svg class="i"><use href="#i-layers"/></svg>Work</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review <span class="badge" style="margin-inline-start:auto;background:var(--sy-button-primary);color:var(--ref-white-100);padding:0 var(--size-6);border-radius:var(--r-tag);font-size:var(--text-sm)">4</span></a>
+      <a href="team-client.html"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+    </nav>
+
+    <!-- Owner Menu in Sidebar -->
+    <div style="margin-block-start:auto; padding-block-start:var(--space-4); border-block-start:var(--divider-width) solid var(--sy-shell-active); display:flex; flex-direction:column; gap:var(--space-1)">
+      <div class="text-sm muted" style="padding-inline:var(--space-3); padding-block:var(--space-1)">Owner menu</div>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-doc"/></svg>Documents</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </div>
+  </aside>
+
+  <div>
+    <!-- Mobile Topbar -->
+    <header class="topbar">
+      <img src="assets/dash-wordmark-white.png" alt="Dash">
+      <button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+    </header>
+
+    <main class="main"><div class="page">
+
+      <!-- Heading Row (R55 #2) -->
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Jobs"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title">
+          <h1>Autumn Launch Social Posts</h1>
+          <span class="chip chip--posts">Posts</span>
+          <span class="chip chip--life-active">In progress</span>
+        </div>
+        <div class="heading__actions">
+          <button class="button button--primary">
+            <svg class="i"><use href="#i-plus"/></svg>
+            <span>New item</span>
+          </button>
+          <!-- Options menu (⋯) containing D4 extras: AI mark, hold/release early -->
+          <div class="more-wrap">
+            <button class="icon-button" aria-label="Job options"><svg class="i"><use href="#i-more"/></svg></button>
+            <div class="menu" style="display:none">
+              <a class="menu__item"><svg class="i"><use href="#i-image"/></svg>Mark as AI-generated</a>
+              <a class="menu__item"><svg class="i"><use href="#i-lock"/></svg>Send together after team approval (Batch hold)</a>
+              <a class="menu__item"><svg class="i"><use href="#i-send"/></svg>Release approved items early</a>
+              <a class="menu__item"><svg class="i"><use href="#i-pencil"/></svg>Edit job settings</a>
+              <a class="menu__item menu__item--danger"><svg class="i"><use href="#i-trash"/></svg>Delete job</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Job Meta Strip -->
+      <div class="meta-strip">
+        <div>Client: <strong>Zad Living</strong></div>
+        <div class="divider"></div>
+        <div>Project: <strong>Autumn Campaign 2026</strong></div>
+        <div class="divider"></div>
+        <div>Due: <strong>18 Nov 2026</strong></div>
+        <div class="divider"></div>
+        <div class="muted">5 items total</div>
+      </div>
+
+      <!-- Main Workspace: One View Only (No old tabs!). Items List on Left, Item Panel on Right -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Job items (5)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="workspace-grid">
+
+            <!-- Left column: Items List -->
+            <div class="items-list">
+
+              <div class="group-header">
+                <span>Needs action</span>
+                <span class="count">2</span>
+              </div>
+
+              <!-- Item 1 (Selected): Post v1 with revisions requested -->
+              <div class="item-card is-selected">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <img src="assets/media/linen-bed.svg" alt="Post preview">
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge version-badge--current">v2</span>
+                      <span class="item-title" dir="auto">03 · Luxury Linen Bedding Collection</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--posts">Posts</span>
+                      <span class="chip chip--rv-changes">Changes requested</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Due 15 Nov</span>
+                      <span>•</span>
+                      <span>v2 in review</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 2: Tableware Design -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <img src="assets/media/shop.svg" alt="Design preview">
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge">v1</span>
+                      <span class="item-title" dir="auto">05 · Artisan Ceramic Tableware</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--design">Design</span>
+                      <span class="chip chip--rv-pending">Needs client</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Due 25 Nov</span>
+                      <span>•</span>
+                      <span>Sent to Nadia</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group-header" style="margin-block-start:var(--space-2)">
+                <span>Ready &amp; scheduled</span>
+                <span class="count">3</span>
+              </div>
+
+              <!-- Item 3: Scheduled Reel -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <img src="assets/media/reel.svg" alt="Reel preview">
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge">v1</span>
+                      <span class="item-title" dir="auto">01 · Natural Fabrics Craftsmanship Reel</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--posts">Posts</span>
+                      <span class="chip chip--life-scheduled">Scheduled 12 Nov</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Approved by client</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 4: Ready Post -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <img src="assets/media/croissant.svg" alt="Post preview">
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge">v1</span>
+                      <span class="item-title" dir="auto">02 · Cozy Morning Bedroom Styling</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--posts">Posts</span>
+                      <span class="chip chip--life-delivered">Ready</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Approved</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Item 5: Lookbook Catalog -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <img src="assets/media/lookbook.svg" alt="Lookbook preview">
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge">v2</span>
+                      <span class="item-title" dir="auto">Autumn 2026 Lookbook Catalog · 16 Pages</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--design">Design</span>
+                      <span class="chip chip--life-delivered">Ready</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Delivered</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right column: Integrated Item Panel (Versions, Comments, Files all in one place) -->
+            <div class="side-panel">
+
+              <div class="mobile-item-nav">
+                <button class="button button--secondary button--sm">
+                  <svg class="i"><use href="#i-chevron-left"/></svg>
+                  <span>Back to items</span>
+                </button>
+                <span class="text-sm muted">Item 1 of 5</span>
+              </div>
+
+              <!-- Header & Meta -->
+              <div class="side-panel__header">
+                <div class="side-panel__title-box">
+                  <span class="side-panel__title" dir="auto">03 · Luxury Linen Bedding Collection</span>
+                  <div class="side-panel__sub">
+                    <span class="chip chip--posts">Posts</span>
+                    <span>Due 15 Nov 2026</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <button class="icon-button" aria-label="Item actions"><svg class="i"><use href="#i-more"/></svg></button>
+                </div>
+              </div>
+
+              <!-- Visual Preview -->
+              <div class="preview-box">
+                <img src="assets/media/linen-bed.svg" alt="Bedding post creative preview">
+              </div>
+
+              <!-- 1. Versions inside Panel -->
+              <div class="stack" style="gap:var(--space-2)">
+                <div class="row" style="justify-content:space-between">
+                  <span class="field__label">Versions</span>
+                  <button class="button button--sm button--secondary" style="height:var(--size-28); padding-inline:var(--space-2); min-width:0">
+                    <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-plus"/></svg>
+                    <span>New version</span>
+                  </button>
+                </div>
+                <div class="version-row">
+                  <span class="version-pill is-active">
+                    <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-check"/></svg>
+                    <span>v2 (Current · Ready to send)</span>
+                  </span>
+                  <span class="version-pill">
+                    <span>v1 (Changes requested by client)</span>
+                  </span>
+                </div>
+                <!-- Changes requested note from v1 -->
+                <div class="feedback-box">
+                  <div class="feedback-box__title">
+                    <svg class="i"><use href="#i-alert"/></svg>
+                    <span>Client feedback on v1 (Nadia Mansour):</span>
+                  </div>
+                  <div class="feedback-box__body">
+                    "Love the styling! Please lighten the warm shadow tones slightly and ensure the Egyptian cotton badge is clearly visible."
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. Files attached to this item & version inside Panel -->
+              <div class="stack" style="gap:var(--space-2)">
+                <div class="row" style="justify-content:space-between">
+                  <span class="field__label">Attached files (v2)</span>
+                  <button class="button button--sm button--secondary" style="height:var(--size-28); padding-inline:var(--space-2); min-width:0">
+                    <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-upload"/></svg>
+                    <span>Upload file</span>
+                  </button>
+                </div>
+                <div class="files-grid">
+                  <!-- File 1: Deliverable file (Shared with client) -->
+                  <div class="file-row" style="padding:var(--space-2) var(--space-3)">
+                    <div class="file-row__header">
+                      <div class="file-icon"><svg class="i"><use href="#i-image"/></svg></div>
+                      <div class="file-info">
+                        <span class="file-name">Linen_Bedding_Hero_v2.png</span>
+                        <div class="file-meta">8.4 MB · 1080×1350 px · Shared with client</div>
+                      </div>
+                      <button class="icon-button" aria-label="File options"><svg class="i"><use href="#i-more"/></svg></button>
+                    </div>
+                  </div>
+                  <!-- File 2: Source file (Private to team) -->
+                  <div class="file-row" style="padding:var(--space-2) var(--space-3)">
+                    <div class="file-row__header">
+                      <div class="file-icon"><svg class="i"><use href="#i-file"/></svg></div>
+                      <div class="file-info">
+                        <span class="file-name">Linen_Bedding_Creative.psd</span>
+                        <div class="file-meta">142 MB · Source project · <span class="zone-chip">Team private</span></div>
+                      </div>
+                      <button class="icon-button" aria-label="File options"><svg class="i"><use href="#i-more"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. Comments (Internal & Client) inside Panel -->
+              <div class="stack" style="gap:var(--space-3); padding-block-start:var(--space-2); border-block-start:var(--divider-width) solid var(--sy-line)">
+                <div class="comment-tabs">
+                  <span class="comment-tab is-active"><svg class="i"><use href="#i-comment"/></svg>Client thread</span>
+                  <span class="comment-tab"><svg class="i"><use href="#i-lock"/></svg>Internal team notes</span>
+                </div>
+
+                <div class="comment-feed">
+                  <div class="comment-msg">
+                    <div class="comment-meta">
+                      <span class="comment-author">Nadia Mansour (Client)</span>
+                      <span>Yesterday, 4:30 PM</span>
+                    </div>
+                    <div class="comment-text">
+                      Please make sure the Egyptian cotton badge is placed at the top-right corner.
+                    </div>
+                  </div>
+                  <div class="comment-msg comment-msg--internal">
+                    <div class="comment-meta">
+                      <span class="comment-author">Maya Nour (Team)</span>
+                      <span>Today, 10:15 AM</span>
+                    </div>
+                    <div class="comment-text">
+                      Badge repositioned and warm tones balanced in v2. Ready for Lead review.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="comment-input-row">
+                  <div class="input" style="flex:1">
+                    <span class="v placeholder">Reply to client...</span>
+                  </div>
+                  <button class="button button--sm button--secondary">Send</button>
+                </div>
+              </div>
+
+              <!-- 4. Review & Approval Actions (Schedule available only after client approval) -->
+              <div class="side-panel__actions">
+                <button class="button button--approve">
+                  <svg class="i"><use href="#i-send"/></svg>
+                  <span>Approve &amp; send</span>
+                </button>
+                <button class="button button--secondary">
+                  <svg class="i"><use href="#i-pencil"/></svg>
+                  <span>Edit item</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body>
+</html>

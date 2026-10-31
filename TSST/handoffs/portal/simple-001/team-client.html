@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zad Living · Client Profile · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- Team Sidebar (Nav: Home · Work · Review · Clients; Owner menu: Reports, Documents, Settings) -->
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a href="team-home.html"><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a href="team-job.html"><svg class="i"><use href="#i-layers"/></svg>Work</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review <span class="badge" style="margin-inline-start:auto;background:var(--sy-button-primary);color:var(--ref-white-100);padding:0 var(--size-6);border-radius:var(--r-tag);font-size:var(--text-sm)">4</span></a>
+      <a class="is-active"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+    </nav>
+
+    <!-- Owner Menu in Sidebar -->
+    <div style="margin-block-start:auto; padding-block-start:var(--space-4); border-block-start:var(--divider-width) solid var(--sy-shell-active); display:flex; flex-direction:column; gap:var(--space-1)">
+      <div class="text-sm muted" style="padding-inline:var(--space-3); padding-block:var(--space-1)">Owner menu</div>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-doc"/></svg>Documents</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </div>
+  </aside>
+
+  <div>
+    <!-- Mobile Topbar -->
+    <header class="topbar">
+      <img src="assets/dash-wordmark-white.png" alt="Dash">
+      <button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+    </header>
+
+    <main class="main"><div class="page">
+
+      <!-- Heading Row (R55 #2): Title + Visible Fixed "Open client portal" button -->
+      <div class="heading">
+        <button class="icon-button" aria-label="Back to Clients"><svg class="i"><use href="#i-back"/></svg></button>
+        <div class="heading__title">
+          <h1>Zad Living</h1>
+          <span class="chip chip--active">Active client</span>
+        </div>
+        <div class="heading__actions">
+          <!-- Fixed visible button to enter client portal (not in ⋯) -->
+          <a href="client-home.html" target="_blank" class="button button--secondary">
+            <svg class="i"><use href="#i-external"/></svg>
+            <span>Open client portal</span>
+          </a>
+          <button class="button button--primary">
+            <svg class="i"><use href="#i-plus"/></svg>
+            <span>New job</span>
+          </button>
+          <div class="more-wrap">
+            <button class="icon-button" aria-label="Client options"><svg class="i"><use href="#i-more"/></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Tabs (Summary · Work & plan · Package & billing · Client admin) -->
+      <div class="seg" role="tablist" aria-label="Client profile tabs" style="height:auto; padding:var(--space-1); flex-wrap:wrap">
+        <a class="seg__item">Summary</a>
+        <a class="seg__item">Work &amp; plan</a>
+        <a class="seg__item">Package &amp; billing</a>
+        <a class="seg__item is-selected">Client admin</a>
+      </div>
+
+      <!-- Client Admin Section 1: Links List with Copy link · Renew · Revoke on every row -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Client portal links (3)</h2>
+          </div>
+          <div class="card__actions">
+            <button class="button button--secondary button--sm">
+              <svg class="i"><use href="#i-plus"/></svg>
+              <span>Generate new link</span>
+            </button>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="stack" style="gap:var(--space-3)">
+
+            <div class="notice notice--info">
+              <svg class="i"><use href="#i-info"/></svg>
+              <div>All access links remain findable here. The team can copy, renew, or revoke links at any time.</div>
+            </div>
+
+            <div class="items-list">
+
+              <!-- Link Row 1 -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-lock"/></svg>
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="bold">Nadia Mansour</span>
+                      <span class="chip chip--active">Active</span>
+                      <span class="text-sm muted">Primary Contact · Owner</span>
+                    </div>
+                    <div class="text-sm wrap-any" style="font-family:monospace; color:var(--sy-button-primary)">
+                      https://dash.the-systronic.com/c/zad-living-7f89b42e
+                    </div>
+                    <div class="item-meta">
+                      <span>Created: <strong>15 Oct 2026</strong></span>
+                      <span>•</span>
+                      <span>Expires: <strong>15 Jan 2027</strong></span>
+                      <span>•</span>
+                      <span>Last opened: 2 hours ago</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Controls on EVERY row: Copy link · Renew · Revoke -->
+                <div class="item-actions">
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-copy"/></svg>
+                    <span>Copy link</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-refresh"/></svg>
+                    <span>Renew</span>
+                  </button>
+                  <button class="button button--sm button--danger">
+                    <svg class="i"><use href="#i-close"/></svg>
+                    <span>Revoke</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Link Row 2 -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-lock"/></svg>
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="bold">Omar Tarek</span>
+                      <span class="chip chip--active">Active</span>
+                      <span class="text-sm muted">Marketing Lead</span>
+                    </div>
+                    <div class="text-sm wrap-any" style="font-family:monospace; color:var(--sy-button-primary)">
+                      https://dash.the-systronic.com/c/zad-living-9c21a08f
+                    </div>
+                    <div class="item-meta">
+                      <span>Created: <strong>20 Oct 2026</strong></span>
+                      <span>•</span>
+                      <span>Expires: <strong>20 Jan 2027</strong></span>
+                      <span>•</span>
+                      <span>Last opened: Yesterday</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Controls on EVERY row: Copy link · Renew · Revoke -->
+                <div class="item-actions">
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-copy"/></svg>
+                    <span>Copy link</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-refresh"/></svg>
+                    <span>Renew</span>
+                  </button>
+                  <button class="button button--sm button--danger">
+                    <svg class="i"><use href="#i-close"/></svg>
+                    <span>Revoke</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Link Row 3: Expired link (Renew only, no Copy / Revoke) -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-text-3)"><use href="#i-lock"/></svg>
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="bold">Hani Zaki</span>
+                      <span class="chip chip--ended">Expired</span>
+                      <span class="text-sm muted">Finance Director</span>
+                    </div>
+                    <div class="text-sm wrap-any" style="font-family:monospace; color:var(--sy-text-2)">
+                      https://dash.the-systronic.com/c/zad-living-1d3e87aa
+                    </div>
+                    <div class="item-meta">
+                      <span>Created: <strong>01 Sep 2026</strong></span>
+                      <span>•</span>
+                      <span>Expired: <strong>01 Oct 2026</strong></span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Expired link: Renew only (no Copy / Revoke) -->
+                <div class="item-actions">
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-refresh"/></svg>
+                    <span>Renew</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Client Admin Section 2: People & Contacts -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">People &amp; contacts (2)</h2>
+          </div>
+          <div class="card__actions">
+            <button class="button button--secondary button--sm">
+              <svg class="i"><use href="#i-plus"/></svg>
+              <span>Add person</span>
+            </button>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="items-list">
+
+            <!-- Person 1 -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb" style="width:var(--size-40); height:var(--size-40); border-radius:50%">
+                  <svg class="i"><use href="#i-users"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="bold">Nadia Mansour</span>
+                    <span class="chip chip--active">Approval rights</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Owner &amp; CEO</span>
+                    <span>•</span>
+                    <span>nadia@zadliving.com</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Remove</button>
+              </div>
+            </div>
+
+            <!-- Person 2 -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb" style="width:var(--size-40); height:var(--size-40); border-radius:50%">
+                  <svg class="i"><use href="#i-users"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="bold">Omar Tarek</span>
+                    <span class="chip chip--kind">Feedback &amp; requests</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Marketing Lead</span>
+                    <span>•</span>
+                    <span>omar@zadliving.com</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Remove</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Client Admin Section 3: Visibility & Permissions -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Client portal visibility</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="stack" style="gap:var(--space-3)">
+
+            <div class="row" style="justify-content:space-between; padding-block:var(--space-2); border-block-end:var(--divider-width) solid var(--sy-line)">
+              <div>
+                <div class="bold">Show marketing plan to client</div>
+                <div class="text-sm muted">Client sees current campaign focus and milestones in their portal</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked style="display:none">
+                <span class="switch__track" style="background:var(--sy-button-primary)"><span class="switch__thumb" style="transform:translateX(var(--size-16))"></span></span>
+              </label>
+            </div>
+
+            <div class="row" style="justify-content:space-between; padding-block:var(--space-2); border-block-end:var(--divider-width) solid var(--sy-line)">
+              <div>
+                <div class="bold">Show package quota &amp; progress</div>
+                <div class="text-sm muted">Client sees delivered items count and monthly progress bar</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked style="display:none">
+                <span class="switch__track" style="background:var(--sy-button-primary)"><span class="switch__thumb" style="transform:translateX(var(--size-16))"></span></span>
+              </label>
+            </div>
+
+            <div class="row" style="justify-content:space-between; padding-block:var(--space-2)">
+              <div>
+                <div class="bold">Show billing, invoices &amp; payments</div>
+                <div class="text-sm muted">Expose invoices tab and payment receipt history in client portal</div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" style="display:none">
+                <span class="switch__track"><span class="switch__thumb"></span></span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Client Admin Section 4: Language & Regional -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Language &amp; localization</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="row" style="gap:var(--space-6); flex-wrap:wrap">
+            <div class="field" style="flex:1; min-width:240px">
+              <label class="field__label">Default portal language</label>
+              <div class="input">
+                <span class="v">Arabic (RTL)</span>
+                <svg class="i"><use href="#i-globe"/></svg>
+              </div>
+              <span class="field__hint">Client can also toggle language using the top switcher.</span>
+            </div>
+            <div class="field" style="flex:1; min-width:240px">
+              <label class="field__label">Client timezone</label>
+              <div class="input">
+                <span class="v">Cairo (UTC+02:00)</span>
+                <svg class="i"><use href="#i-globe"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Client Admin Section 5: Activity Log -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Recent client activity (3)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="activity-feed">
+
+            <div class="activity-row">
+              <div class="activity-dot"><svg class="i"><use href="#i-inbox"/></svg></div>
+              <div class="activity-content">
+                <div><strong>Nadia Mansour</strong> submitted new request <strong>REQ-106 · Autumn Linen Flash Sale</strong></div>
+                <div class="activity-time">Today at 11:30 AM</div>
+              </div>
+            </div>
+
+            <div class="activity-row">
+              <div class="activity-dot"><svg class="i"><use href="#i-check"/></svg></div>
+              <div class="activity-content">
+                <div><strong>Nadia Mansour</strong> approved <strong>01 · Natural Fabrics Craftsmanship Reel (v1)</strong></div>
+                <div class="activity-time">28 Oct 2026 at 4:15 PM</div>
+              </div>
+            </div>
+
+            <div class="activity-row">
+              <div class="activity-dot"><svg class="i"><use href="#i-refresh"/></svg></div>
+              <div class="activity-content">
+                <div><strong>Ahmed Fouad</strong> renewed client access link for <strong>Omar Tarek</strong> (valid until 20 Jan 2027)</div>
+                <div class="activity-time">20 Oct 2026 at 10:00 AM</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body>
+</html>

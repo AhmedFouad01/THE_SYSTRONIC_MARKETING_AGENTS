@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · Dash Team</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- Team Sidebar (Nav: Home · Work · Review · Clients; Owner menu: Reports, Documents, Settings) -->
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a class="is-active"><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a href="team-job.html"><svg class="i"><use href="#i-layers"/></svg>Work</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review <span class="badge" style="margin-inline-start:auto;background:var(--sy-button-primary);color:var(--ref-white-100);padding:0 var(--size-6);border-radius:var(--r-tag);font-size:var(--text-sm)">4</span></a>
+      <a href="team-client.html"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+    </nav>
+
+    <!-- Owner Menu in Sidebar (Reports · Documents · Settings) -->
+    <div style="margin-block-start:auto; padding-block-start:var(--space-4); border-block-start:var(--divider-width) solid var(--sy-shell-active); display:flex; flex-direction:column; gap:var(--space-1)">
+      <div class="text-sm muted" style="padding-inline:var(--space-3); padding-block:var(--space-1)">Owner menu</div>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-doc"/></svg>Documents</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-gear"/></svg>Settings</a>
+    </div>
+  </aside>
+
+  <div>
+    <!-- Mobile Topbar -->
+    <header class="topbar">
+      <img src="assets/dash-wordmark-white.png" alt="Dash">
+      <button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+    </header>
+
+    <main class="main"><div class="page">
+
+      <!-- Heading Row (R55 #2) -->
+      <div class="heading">
+        <div class="heading__title">
+          <h1>Today's action &amp; client requests</h1>
+          <span class="chip chip--rv-pending">4 actions today</span>
+          <span class="chip chip--posts">2 new requests</span>
+        </div>
+        <div class="heading__actions">
+          <button class="button button--primary">
+            <svg class="i"><use href="#i-plus"/></svg>
+            <span>Create job</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 1: Needs Action Today -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Needs action today (4)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="items-list">
+
+            <!-- Action 1: Client requested revisions -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/video-hero.svg" alt="Video preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge version-badge--current">v2</span>
+                    <span class="item-title" dir="auto">Autumn Linen Hero Video · 30s</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--video">Video</span>
+                    <span class="chip chip--rv-changes">Changes requested</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Client: <strong>Zad Living</strong></span>
+                    <span>•</span>
+                    <span>Note: "Lower soundtrack and extend logo hold for 2s"</span>
+                    <span>•</span>
+                    <span class="muted">Due tomorrow</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <a href="team-job.html" class="button button--sm button--primary">
+                  <svg class="i"><use href="#i-pencil"/></svg>
+                  <span>Open workspace</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Action 2: Internal review ready to send to client -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/linen-bed.svg" alt="Post preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">v1</span>
+                    <span class="item-title" dir="auto">03 · Luxury Linen Bedding Collection</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--posts">Posts</span>
+                    <span class="chip chip--rv-pending">Internal review</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Client: <strong>Zad Living</strong></span>
+                    <span>•</span>
+                    <span>Creative work complete, waiting Lead approval</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--approve">
+                  <svg class="i"><use href="#i-send"/></svg>
+                  <span>Approve &amp; send</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Action 3: Client revisions needed on design -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/shop.svg" alt="Design preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">v1</span>
+                    <span class="item-title" dir="auto">05 · Artisan Ceramic Tableware</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--design">Design</span>
+                    <span class="chip chip--rv-changes">Changes requested</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Client: <strong>Zad Living</strong></span>
+                    <span>•</span>
+                    <span>Client asked to replace product code with price tag</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-upload"/></svg>
+                  <span>Upload revision</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Action 4: Scheduled post check -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/reel.svg" alt="Reel preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">v1</span>
+                    <span class="item-title" dir="auto">01 · Natural Fabrics Craftsmanship Reel</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--posts">Posts</span>
+                    <span class="chip chip--life-scheduled">Scheduled today 6:00 PM</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Client: <strong>Zad Living</strong></span>
+                    <span>•</span>
+                    <span>Approved by client Nadia Mansour</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-check"/></svg>
+                  <span>Mark as posted</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: New Client Requests (Accept / Decline in place) -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">New client requests (2)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="stack" style="gap:var(--space-3)">
+
+            <div class="notice notice--info">
+              <svg class="i"><use href="#i-info"/></svg>
+              <div>Review requests and accept or decline directly in place. Accepted requests convert into production jobs.</div>
+            </div>
+
+            <div class="items-list">
+
+              <!-- Request Row 1: Accept / Decline in place -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-inbox"/></svg>
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge version-badge--current">REQ-106</span>
+                      <span class="item-title" dir="auto">Autumn Linen Flash Sale Campaign · 4 Posts &amp; 1 Reel</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--posts">Posts</span>
+                      <span class="chip chip--video">Video</span>
+                      <span class="chip chip--rv-pending">Needs acceptance</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Client: <strong>Zad Living</strong></span>
+                      <span>•</span>
+                      <span>Submitted today, 11:30 AM</span>
+                      <span>•</span>
+                      <span>Details: 4 posts and 1 short reel for weekend flash sale.</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Accept / Decline controls IN PLACE -->
+                <div class="item-actions">
+                  <button class="button button--sm button--primary">
+                    <svg class="i"><use href="#i-check"/></svg>
+                    <span>Accept</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-close"/></svg>
+                    <span>Decline</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-eye"/></svg>
+                    <span>Details</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Request Row 2: Accept / Decline in place -->
+              <div class="item-card">
+                <div class="item-card__main">
+                  <div class="item-thumb">
+                    <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--tn-amber-f)"><use href="#i-image"/></svg>
+                  </div>
+                  <div class="item-body">
+                    <div class="item-header">
+                      <span class="version-badge">REQ-105</span>
+                      <span class="item-title" dir="auto">Ceramic Artisans Workshop Poster &amp; Stories</span>
+                    </div>
+                    <div class="item-chips">
+                      <span class="chip chip--design">Design</span>
+                      <span class="chip chip--rv-pending">Needs acceptance</span>
+                    </div>
+                    <div class="item-meta">
+                      <span>Client: <strong>Zad Living</strong></span>
+                      <span>•</span>
+                      <span>Submitted yesterday, 4:15 PM</span>
+                      <span>•</span>
+                      <span>Details: Printed A3 workshop poster and 3 announcement stories.</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Accept / Decline controls IN PLACE -->
+                <div class="item-actions">
+                  <button class="button button--sm button--primary">
+                    <svg class="i"><use href="#i-check"/></svg>
+                    <span>Accept</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-close"/></svg>
+                    <span>Decline</span>
+                  </button>
+                  <button class="button button--sm button--secondary">
+                    <svg class="i"><use href="#i-eye"/></svg>
+                    <span>Details</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body>
+</html>

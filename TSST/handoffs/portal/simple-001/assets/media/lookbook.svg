@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#F3EFEA"/>
+  <rect x="50" y="25" width="140" height="130" rx="4" fill="#E6DFD5"/>
+  <rect x="65" y="45" width="110" height="65" fill="#CBBFAF"/>
+  <text x="120" y="132" font-family="system-ui, sans-serif" font-size="11" fill="#716053" font-weight="600" text-anchor="middle">FALL LOOKBOOK</text>
+</svg>

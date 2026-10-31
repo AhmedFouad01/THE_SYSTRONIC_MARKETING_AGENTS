@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Requests · Zad Living · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="c-shell">
+
+  <!-- Client Navigation Bar (4 links only: Home · For your review · My work · Requests) -->
+  <header class="c-bar">
+    <div class="c-bar__inner">
+      <img class="c-bar__logo" src="assets/dash-wordmark-white.png" alt="Dash">
+
+      <nav class="c-nav" aria-label="Client navigation">
+        <a href="client-home.html"><svg class="i"><use href="#i-home"/></svg><span data-ar="الرئيسية">Home</span></a>
+        <a href="client-review.html"><svg class="i"><use href="#i-check"/></svg><span data-ar="محتاج رأيك">For your review</span><span class="badge">3</span></a>
+        <a href="client-work.html"><svg class="i"><use href="#i-layers"/></svg><span data-ar="شغلي">My work</span></a>
+        <a class="is-active"><svg class="i"><use href="#i-inbox"/></svg><span data-ar="طلباتي">Requests</span></a>
+      </nav>
+
+      <div class="c-bar__end">
+        <button class="button button--sm button--secondary">ع / EN</button>
+        <span class="bold c-bar__client-name" data-ar="زاد ليفنج" style="font-size:var(--text-sm)">Zad Living</span>
+        <button class="icon-button c-bar__menu-btn" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main"><div class="page">
+
+    <!-- Heading Row (R55 #2) -->
+    <div class="heading">
+      <div class="heading__title">
+        <h1 data-ar="طلباتي">Requests</h1>
+        <span class="chip chip--kind" data-ar="طلب شغل جديد ومتابعة السابقة">New request &amp; tracking</span>
+      </div>
+    </div>
+
+    <!-- Section 1: New Request Form -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="طلب شغل جديد">New request</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="stack" style="gap:var(--space-4)">
+
+          <!-- Output types selection (Choice chips) -->
+          <div class="field">
+            <label class="field__label" data-ar="نوع المخرجات المطلوبة">Output types</label>
+            <div class="row" style="gap:var(--space-2); flex-wrap:wrap">
+              <span class="chip chip--posts" style="cursor:pointer; padding-inline:var(--space-3)"><svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-check"/></svg><span data-ar="منشورات">Posts</span></span>
+              <span class="chip chip--video" style="cursor:pointer; padding-inline:var(--space-3)"><svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-check"/></svg><span data-ar="فيديو">Video</span></span>
+              <span class="chip chip--design" style="cursor:pointer; padding-inline:var(--space-3)"><span data-ar="تصميم">Design</span></span>
+              <span class="chip chip--plan" style="cursor:pointer; padding-inline:var(--space-3)"><span data-ar="خطة / حملة">Plan / Campaign</span></span>
+              <span class="chip chip--other" style="cursor:pointer; padding-inline:var(--space-3)"><span data-ar="حاجة تانية">Other</span></span>
+            </div>
+            <span class="field__hint" data-ar="تقدر تختار أكتر من نوع لو الطلب لحملة كاملة.">You can select multiple types for campaign requests.</span>
+          </div>
+
+          <!-- Request Title -->
+          <div class="field">
+            <label class="field__label" data-ar="عنوان الطلب">Request title</label>
+            <div class="input">
+              <span class="v" dir="auto" data-ar="عروض مفارش الكتان الخريفية">Autumn Linen Flash Sale</span>
+            </div>
+          </div>
+
+          <!-- Request Details -->
+          <div class="field">
+            <label class="field__label" data-ar="تفاصيل الطلب والهدف منه">Details &amp; requirements</label>
+            <div class="input input--area" style="min-height:var(--size-80)">
+              <span class="v" dir="auto" data-ar="محتاجين 4 منشورات وريل فيديو قصير لعرض نهاية الأسبوع على أطقم الكتان الطبيعي والقطن المصري، مع التركيز على جودة الخامات المحلية ولمسات الديكور الخريفي.">We need 4 social posts and 1 short reel for a weekend flash sale on our natural linen bedding, focusing on Egyptian cotton textures and cozy autumn aesthetic.</span>
+            </div>
+            <span class="field__hint" data-ar="اكتب أي ملاحظات أو أهداف عشان الفريق يبدأ على طول.">Include any copy hints, key dates, or references for the team.</span>
+          </div>
+
+          <!-- Form Action -->
+          <div class="row" style="justify-content:flex-end">
+            <button class="button button--primary">
+              <svg class="i"><use href="#i-send"/></svg>
+              <span data-ar="إرسال الطلب للفريق">Submit request</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: My Requests List (With Edit & Cancel before acceptance) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="طلباتي السابقة (3)">My requests list (3)</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="stack" style="gap:var(--space-3)">
+
+          <!-- Request status tracking & edit/cancel guardrail -->
+          <div class="notice notice--info">
+            <svg class="i"><use href="#i-info"/></svg>
+            <div>
+              <span data-ar="حالة الطلب بتظهر هنا أول ما الفريق يقبله أو يرفضه. تقدر تعدّل طلبك أو تلغيه طالما لسه ما تقبلش.">Request status shows directly here. You can edit or cancel any request before the creative team accepts it.</span>
+            </div>
+          </div>
+
+          <div class="items-list">
+
+            <!-- Request 1: Pending Team Acceptance (Client can EDIT & CANCEL) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-inbox"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge version-badge--current">REQ-106</span>
+                    <span class="item-title" dir="auto" data-ar="حملة عروض مفارش الكتان - 4 منشورات وريل">Autumn Linen Flash Sale Campaign · 4 Posts &amp; 1 Reel</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                    <span class="chip chip--video" data-ar="فيديو">Video</span>
+                    <span class="chip chip--st-review" data-ar="مستني قبول الفريق">Needs team review</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="اتبعت النهارده، 11:30 ص">Submitted today, 11:30 AM</span>
+                    <span>•</span>
+                    <span data-ar="لم يُقبل بعد (متاح للتعديل والإلغاء)">Pending acceptance (Editable)</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Action buttons for Client: Edit & Cancel before team accepts -->
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-pencil"/></svg>
+                  <span data-ar="تعديل الطلب">Edit request</span>
+                </button>
+                <button class="button button--sm button--danger">
+                  <svg class="i"><use href="#i-close"/></svg>
+                  <span data-ar="إلغاء الطلب">Cancel request</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Request 2: Accepted by Team / In Progress (Edit & Cancel locked) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--life-active-fg)"><use href="#i-layers"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">REQ-105</span>
+                    <span class="item-title" dir="auto" data-ar="تصميم غلاف كتالوج منتجات الشتاء 2026">Winter 2026 Catalog Cover Concept</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--design" data-ar="تصميم">Design</span>
+                    <span class="chip chip--st-progress" data-ar="بنشتغل عليه">In progress</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="قبله الفريق يوم 29 أكتوبر">Accepted 29 Oct</span>
+                    <span>•</span>
+                    <span data-ar="الشغل جاري (لا يمكن الإلغاء)">Job created · Work started</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <a href="client-work.html" class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-eye"/></svg>
+                  <span data-ar="متابعة الشغل">Track work</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Request 3: Completed / Ready -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--tn-green-f)"><use href="#i-check"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">REQ-104</span>
+                    <span class="item-title" dir="auto" data-ar="كتالوج منتجات خريف 2026 (ملف جاهز للطباعة)">Autumn 2026 Lookbook Catalog · 16 Pages</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--design" data-ar="تصميم">Design</span>
+                    <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="خلص واعتمدته يوم 28 أكتوبر">Completed &amp; approved 28 Oct</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <a href="client-work.html" class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-file"/></svg>
+                  <span data-ar="تحميل الملف">Download file</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div></main>
+</div>
+</body>
+</html>

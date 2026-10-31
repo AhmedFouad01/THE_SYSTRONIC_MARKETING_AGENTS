@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My work &amp; files · Zad Living · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="c-shell">
+
+  <!-- Client Navigation Bar (4 links only: Home · For your review · My work · Requests) -->
+  <header class="c-bar">
+    <div class="c-bar__inner">
+      <img class="c-bar__logo" src="assets/dash-wordmark-white.png" alt="Dash">
+
+      <nav class="c-nav" aria-label="Client navigation">
+        <a href="client-home.html"><svg class="i"><use href="#i-home"/></svg><span data-ar="الرئيسية">Home</span></a>
+        <a href="client-review.html"><svg class="i"><use href="#i-check"/></svg><span data-ar="محتاج رأيك">For your review</span><span class="badge">3</span></a>
+        <a class="is-active"><svg class="i"><use href="#i-layers"/></svg><span data-ar="شغلي">My work</span></a>
+        <a href="client-requests.html"><svg class="i"><use href="#i-inbox"/></svg><span data-ar="طلباتي">Requests</span></a>
+      </nav>
+
+      <div class="c-bar__end">
+        <button class="button button--sm button--secondary">ع / EN</button>
+        <span class="bold c-bar__client-name" data-ar="زاد ليفنج" style="font-size:var(--text-sm)">Zad Living</span>
+        <button class="icon-button c-bar__menu-btn" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main"><div class="page">
+
+    <!-- Heading Row (R55 #2) -->
+    <div class="heading">
+      <div class="heading__title">
+        <h1 data-ar="شغلي وكل الملفات">My work &amp; files</h1>
+        <span class="chip chip--kind" data-ar="18 عنصر وملف">18 items &amp; files</span>
+      </div>
+      <div class="heading__actions">
+        <a href="client-requests.html" class="button button--primary">
+          <svg class="i"><use href="#i-plus"/></svg>
+          <span data-ar="طلب جديد">New request</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Filter Bar Card: Single list replaces 4 pages with filters (Posts · Video · Design · Files) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="تصفية حسب النوع (18)">Filter by type (18)</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="stack" style="gap:var(--space-4)">
+
+          <!-- Type Filters (Segmented / Tabs) -->
+          <div class="seg" role="tablist" aria-label="Work types" style="flex-wrap:wrap; height:auto; padding:var(--space-1)">
+            <a class="seg__item is-selected"><span data-ar="كل الشغل والملفات">All (18)</span></a>
+            <a class="seg__item"><span data-ar="المنشورات (8)">Posts (8)</span></a>
+            <a class="seg__item"><span data-ar="الفيديوهات (3)">Videos (3)</span></a>
+            <a class="seg__item"><span data-ar="التصميمات (4)">Designs (4)</span></a>
+            <a class="seg__item"><span data-ar="الملفات المشتركة (3)">Shared files (3)</span></a>
+          </div>
+
+          <!-- Secondary Status Filter: 3 statuses only (Needs review · In progress · Ready) -->
+          <div class="row" style="gap:var(--space-2); flex-wrap:wrap">
+            <span class="text-sm muted" data-ar="الحالة:">Status:</span>
+            <span class="chip chip--kind" style="cursor:pointer" data-ar="الكل (18)">All (18)</span>
+            <span class="chip chip--st-review" style="cursor:pointer" data-ar="محتاج رأيك (3)">Needs your review (3)</span>
+            <span class="chip chip--st-progress" style="cursor:pointer" data-ar="بنشتغل عليه (4)">In progress (4)</span>
+            <span class="chip chip--st-ready" style="cursor:pointer" data-ar="جاهز (11)">Ready (11)</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Items & Files List Card -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="قائمة الأعمال والملفات (6)">All deliverables (6)</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="items-list">
+
+          <!-- Item 1: Post waiting review (no v1/v2, 1 status chip + type chip) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/linen-bed.svg" alt="Linen bedding post preview">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="03 · أطقم مفارش الكتان الفاخرة">03 · Luxury Linen Bedding Collection</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                  <span class="chip chip--st-review" data-ar="محتاج رأيك">Needs your review</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="مطلوب قبل 15 نوفمبر">Due 15 Nov</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a href="client-review.html" class="button button--sm button--primary">
+                <svg class="i"><use href="#i-eye"/></svg>
+                <span data-ar="فتح للمراجعة">Review item</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Item 2: Hero Video waiting review (no v1/v2) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/video-hero.svg" alt="Video preview">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="فيديو إطلاق كولكشن الخريف 30 ثانية">Autumn Linen Hero Video · 30s</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--video" data-ar="فيديو">Video</span>
+                  <span class="chip chip--st-review" data-ar="محتاج رأيك">Needs your review</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="مطلوب قبل 22 نوفمبر">Due 22 Nov</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a href="client-review.html" class="button button--sm button--primary">
+                <svg class="i"><use href="#i-eye"/></svg>
+                <span data-ar="فتح للمراجعة">Review item</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Item 3: Design item in progress (no v1/v2) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/lookbook.svg" alt="Lookbook preview">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="تصميم غلاف كتالوج الشتاء 2026">Winter 2026 Catalog Cover Concept</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--design" data-ar="تصميم">Design</span>
+                  <span class="chip chip--st-progress" data-ar="بنشتغل عليه">In progress</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="مشروع الشتاء">Winter Catalog</span>
+                  <span>•</span>
+                  <span data-ar="الفريق بيجهز النسخة الأولى">Team preparing draft</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-info"/></svg>
+                <span data-ar="تفاصيل العمل">View details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 4: Shared File (PDF Catalog) - Ready (no v1/v2) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-file"/></svg>
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="ملف كتالوج الخريف عالي الدقة للطباعة (PDF)">Autumn 2026 High-Res Lookbook (Print PDF)</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--document" data-ar="ملف مشترك">Shared file</span>
+                  <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="48 ميجابايت · تم التحديث 28 أكتوبر">48 MB · Updated 28 Oct</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-file"/></svg>
+                <span data-ar="تحميل الملف">Download</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 5: Shared File (Brand Assets Pack) - Ready (no v1/v2) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-package"/></svg>
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="حزمة شعارات وهوية زاد ليفنج المعتمدة (ZIP)">Zad Living Approved Brand Assets &amp; Logo Pack (ZIP)</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--document" data-ar="ملف مشترك">Shared file</span>
+                  <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="أصول البراند العامة">General Brand Assets</span>
+                  <span>•</span>
+                  <span data-ar="18 ميجابايت · تم الاعتماد">18 MB · Approved</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-file"/></svg>
+                <span data-ar="تحميل الحزمة">Download pack</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 6: Ready Reel Post (no v1/v2) -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/reel.svg" alt="Reel preview">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="01 · ريل قصة الأقمشة الطبيعية">01 · Natural Fabrics Craftsmanship Reel</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                  <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="مجدول للنشر 12 نوفمبر">Scheduled 12 Nov</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-eye"/></svg>
+                <span data-ar="عرض المنشور">View post</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div></main>
+</div>
+</body>
+</html>

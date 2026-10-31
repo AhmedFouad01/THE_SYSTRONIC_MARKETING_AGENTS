@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#EAE4DC"/>
+  <circle cx="80" cy="50" r="28" fill="#D3C7B9"/>
+  <path d="M40 95 Q80 70 120 95" stroke="#8C7A6B" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <text x="80" y="112" font-family="system-ui, sans-serif" font-size="12" fill="#5A4E45" font-weight="600" text-anchor="middle">KEMET LIVING</text>
+</svg>

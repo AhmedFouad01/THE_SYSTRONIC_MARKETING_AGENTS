@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For your review · Zad Living · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="c-shell">
+
+  <!-- Client Navigation Bar (4 links only: Home · For your review · My work · Requests) -->
+  <header class="c-bar">
+    <div class="c-bar__inner">
+      <img class="c-bar__logo" src="assets/dash-wordmark-white.png" alt="Dash">
+
+      <nav class="c-nav" aria-label="Client navigation">
+        <a href="client-home.html"><svg class="i"><use href="#i-home"/></svg><span data-ar="الرئيسية">Home</span></a>
+        <a class="is-active"><svg class="i"><use href="#i-check"/></svg><span data-ar="محتاج رأيك">For your review</span><span class="badge">3</span></a>
+        <a href="client-work.html"><svg class="i"><use href="#i-layers"/></svg><span data-ar="شغلي">My work</span></a>
+        <a href="client-requests.html"><svg class="i"><use href="#i-inbox"/></svg><span data-ar="طلباتي">Requests</span></a>
+      </nav>
+
+      <div class="c-bar__end">
+        <button class="button button--sm button--secondary">ع / EN</button>
+        <span class="bold c-bar__client-name" data-ar="زاد ليفنج" style="font-size:var(--text-sm)">Zad Living</span>
+        <button class="icon-button c-bar__menu-btn" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main"><div class="page">
+
+    <!-- Heading Row (R55 #2) -->
+    <div class="heading">
+      <div class="heading__title">
+        <h1 data-ar="محتاج رأيك">For your review</h1>
+        <span class="chip chip--st-review" data-ar="3 عناصر مستنية رأيك">3 items waiting for your review</span>
+      </div>
+    </div>
+
+    <!-- Review Workspace: Queue on Left, Selected Item on Right -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="عناصر المراجعة (3)">Review Queue (3)</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="workspace-grid">
+
+          <!-- Left Column: Items waiting for review (grouped by project) -->
+          <div class="items-list">
+
+            <!-- Group 1: Autumn Campaign 2026 -->
+            <div class="group-header">
+              <span data-ar="مشروع: حملة الخريف 2026">Project: Autumn Campaign 2026</span>
+              <span class="count">2</span>
+            </div>
+
+            <!-- Item 1: Post v1 (Bedding) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/linen-bed.svg" alt="Post thumbnail">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">v1</span>
+                    <span class="item-title" dir="auto" data-ar="03 · أطقم مفارش الكتان الفاخرة">03 · Luxury Linen Bedding Collection</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك · v1">Needs your review · v1</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 15 نوفمبر">Due 15 Nov</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2: Tableware Design -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/shop.svg" alt="Post thumbnail">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge">v1</span>
+                    <span class="item-title" dir="auto" data-ar="05 · معرض أطقم السيراميك اليدوي">05 · Artisan Ceramic Tableware</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--design" data-ar="تصميم">Design</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك · v1">Needs your review · v1</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 25 نوفمبر">Due 25 Nov</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 2: Autumn Launch Video -->
+            <div class="group-header" style="margin-block-start:var(--space-2)">
+              <span data-ar="مشروع: فيديو إطلاق الخريف">Project: Fall Launch Video</span>
+              <span class="count">1</span>
+            </div>
+
+            <!-- Item 3 (Selected): Video hero v2 -->
+            <div class="item-card is-selected">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/video-hero.svg" alt="Video thumbnail">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="version-badge version-badge--current">v2</span>
+                    <span class="item-title" dir="auto" data-ar="فيديو إطلاق كولكشن الخريف 30 ثانية">Autumn Linen Hero Video · 30s</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--video" data-ar="فيديو">Video</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك · v2">Needs your review · v2</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="فيديو إطلاق الخريف">Fall Launch</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 22 نوفمبر">Due 22 Nov</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Open Item Detail & Review Action -->
+          <div class="side-panel">
+
+            <div class="mobile-item-nav">
+              <button class="button button--secondary button--sm">
+                <svg class="i"><use href="#i-chevron-left"/></svg>
+                <span data-ar="الرجوع للعناصر">Back to items</span>
+              </button>
+              <span class="text-sm muted" data-ar="عنصر 1 من 3">Item 1 of 3</span>
+            </div>
+
+            <div class="side-panel__header">
+              <div class="side-panel__title-box">
+                <span class="side-panel__title" dir="auto" data-ar="فيديو إطلاق كولكشن الخريف 30 ثانية">Autumn Linen Hero Video · 30s</span>
+                <div class="side-panel__sub">
+                  <span class="chip chip--video" data-ar="فيديو">Video</span>
+                  <span data-ar="فيديو إطلاق الخريف">Fall Launch</span>
+                  <span>•</span>
+                  <span data-ar="الإصدار الحالي: v2">Current: v2</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Large Visual Preview -->
+            <div class="preview-box">
+              <img src="assets/media/video-hero.svg" alt="Video player preview">
+              <div class="preview-play"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-play"/></svg></div>
+            </div>
+
+            <!-- Version Switcher Pills + Change Decision Option -->
+            <div class="stack" style="gap:var(--space-2)">
+              <div class="row" style="justify-content:space-between">
+                <span class="field__label" data-ar="الإصدارات">Versions</span>
+                <span class="text-sm muted" data-ar="النسخ القديمة للعرض فقط">Past versions are view-only</span>
+              </div>
+              <div class="version-row">
+                <span class="version-pill is-active">
+                  <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-check"/></svg>
+                  <span data-ar="إصدار v2 (الحالي · محتاج رأيك)">v2 (Current · Needs your review)</span>
+                </span>
+                <span class="version-pill">
+                  <span data-ar="إصدار v1 (معتمد سابقاً)">v1 (Previously approved)</span>
+                </span>
+              </div>
+
+              <!-- Guardrail & Change Decision option (until scheduled/posted) -->
+              <div class="notice notice--info" style="align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-2)">
+                <div class="row" style="gap:var(--space-2)">
+                  <svg class="i"><use href="#i-info"/></svg>
+                  <span data-ar="إصدار v1 معتمد. تقدر تغيّر قرارك لحد ما يتجدول أو يتنشر.">v1 is approved. You can change your decision until it is scheduled or posted.</span>
+                </div>
+                <button class="button button--secondary button--sm">
+                  <svg class="i"><use href="#i-undo"/></svg>
+                  <span data-ar="تغيير قراري">Change my decision</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Attached Files of sent version -->
+            <div class="stack" style="gap:var(--space-2)">
+              <span class="field__label" data-ar="الملفات المرفقة">Attached files</span>
+              <div class="file-row" style="padding:var(--space-2) var(--space-3)">
+                <div class="file-row__header">
+                  <div class="file-icon"><svg class="i"><use href="#i-video"/></svg></div>
+                  <div class="file-info">
+                    <span class="file-name" data-ar="فيديو_إطلاق_الخريف_v2.mp4">Autumn_Linen_Hero_30s_v2.mp4</span>
+                    <span class="file-meta" data-ar="42.5 ميجابايت · مرفق مع إصدار v2">42.5 MB · Attached to v2</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Client Approval Actions (Approve this version / Request revisions) -->
+            <div class="side-panel__actions">
+              <button class="button button--approve">
+                <svg class="i"><use href="#i-check"/></svg>
+                <span data-ar="أوافق على الإصدار ده">Approve this version</span>
+              </button>
+              <button class="button button--secondary">
+                <svg class="i"><use href="#i-alert"/></svg>
+                <span data-ar="اطلب تعديلات">Request revisions</span>
+              </button>
+            </div>
+
+            <!-- Request Revisions Reason Box (Required) -->
+            <div class="field" style="background:var(--sy-surface-sunk);padding:var(--space-3);border-radius:var(--r-control);border-inline-start:var(--size-4) solid var(--sy-button-edit)">
+              <label class="field__label" style="color:var(--status-changes-text)">
+                <svg class="i"><use href="#i-alert"/></svg>
+                <span data-ar="سبب طلب التعديلات (مطلوب)">Reason for requested revisions (required)</span>
+              </label>
+              <div class="input input--area" style="min-height:var(--size-72)">
+                <span class="v" dir="auto" data-ar="ممكن نهدّي الموسيقى التصويرية ونثبت لوجو البراند ثانيتين كاملين في شاشة النهاية؟">Could we soften the background soundtrack and hold the brand logo for 2 full seconds on the closing screen?</span>
+              </div>
+              <span class="field__hint" data-ar="مطلوب توضيح التعديلات المطلوبة عشان فريق العمل ينفذها بسرعة.">Reason is required so the creative team can make the exact changes needed.</span>
+            </div>
+
+            <!-- Client Comments Thread: Client can Edit & Delete OWN comments -->
+            <div class="stack" style="gap:var(--space-3); padding-block-start:var(--space-3); border-block-start:var(--divider-width) solid var(--sy-line)">
+              <div class="row" style="justify-content:space-between">
+                <span class="bold" data-ar="الملاحظات والمحادثة">Feedback &amp; Comments</span>
+                <span class="text-sm muted" data-ar="مرئي ليك وللفريق فقط">Visible to you and team</span>
+              </div>
+
+              <!-- Message History -->
+              <div class="comment-feed">
+
+                <!-- Client's OWN comment with Edit & Delete controls -->
+                <div class="comment-msg">
+                  <div class="comment-meta">
+                    <span class="comment-author" data-ar="نادية منصور (أنت)">Nadia Mansour (You)</span>
+                    <span data-ar="أمس، 4:30 م">Yesterday, 4:30 PM</span>
+                  </div>
+                  <div class="comment-text" data-ar="حبيت حركة الكاميرا جداً! بس ممكن الموسيقى تبقى أهدى شوية واللوجو يثبت ثانيتين كاملين في الآخر؟">
+                    Love the camera movement! Could we lower the background music slightly and keep the logo static for 2 full seconds at the end?
+                  </div>
+                  <!-- Client controls: Edit + Delete own comment -->
+                  <div class="row" style="gap:var(--space-2); margin-block-start:var(--space-1)">
+                    <button class="button button--secondary button--sm" style="height:var(--size-28); padding-inline:var(--space-2); min-width:0">
+                      <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-pencil"/></svg>
+                      <span data-ar="تعديل">Edit</span>
+                    </button>
+                    <button class="button button--danger button--sm" style="height:var(--size-28); padding-inline:var(--space-2); min-width:0">
+                      <svg class="i" style="width:var(--size-14);height:var(--size-14)"><use href="#i-trash"/></svg>
+                      <span data-ar="مسح">Delete</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Team comment (client CANNOT edit/delete team comment) -->
+                <div class="comment-msg" style="background:var(--sy-surface-sunk)">
+                  <div class="comment-meta">
+                    <span class="comment-author" data-ar="The Systronic">The Systronic</span>
+                    <span data-ar="اليوم، 10:45 ص">Today, 10:45 AM</span>
+                  </div>
+                  <div class="comment-text" data-ar="تمام جداً! عملنا التعديلين في إصدار v2 وجاهز لموافقتك.">
+                    Done! We softened the soundtrack and extended the logo hold in this current v2 cut. Ready for your review.
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Comment Input -->
+              <div class="comment-input-row">
+                <div class="input" style="flex:1">
+                  <span class="v placeholder" data-ar="اكتب ملاحظة...">Add a note...</span>
+                </div>
+                <button class="button button--sm button--secondary" data-ar="إرسال">Send</button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div></main>
+</div>
+</body>
+</html>

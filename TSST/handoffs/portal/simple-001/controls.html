@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Controls &amp; Guardrails Sheet · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- Team Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar__brand"><img src="assets/dash-wordmark-white.png" alt="Dash"></div>
+    <nav class="nav">
+      <a href="team-home.html"><svg class="i"><use href="#i-home"/></svg>Home</a>
+      <a href="team-job.html"><svg class="i"><use href="#i-layers"/></svg>Work</a>
+      <a><svg class="i"><use href="#i-check"/></svg>Review</a>
+      <a href="team-client.html"><svg class="i"><use href="#i-users"/></svg>Clients</a>
+    </nav>
+    <div style="margin-block-start:auto; padding-block-start:var(--space-4); border-block-start:var(--divider-width) solid var(--sy-shell-active); display:flex; flex-direction:column; gap:var(--space-1)">
+      <div class="text-sm muted" style="padding-inline:var(--space-3); padding-block:var(--space-1)">Owner menu</div>
+      <a class="nav-item is-active" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); background:var(--sy-shell-active); color:var(--sy-shell-text); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-gear"/></svg>Controls</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-doc"/></svg>Documents</a>
+      <a class="nav-item" style="display:flex; align-items:center; gap:var(--space-3); height:var(--size-36); padding-inline:var(--space-3); border-radius:var(--r-control); color:var(--sy-shell-text-2); text-decoration:none; font-size:var(--text-md)"><svg class="i"><use href="#i-chart"/></svg>Reports</a>
+    </div>
+  </aside>
+
+  <div>
+    <!-- Mobile Topbar -->
+    <header class="topbar">
+      <img src="assets/dash-wordmark-white.png" alt="Dash">
+      <button class="icon-button" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+    </header>
+
+    <main class="main"><div class="page">
+
+      <!-- Heading Row (R55 #2) -->
+      <div class="heading">
+        <div class="heading__title">
+          <h1>Controls &amp; Guardrails Sheet</h1>
+        </div>
+      </div>
+
+      <!-- Banner: The Core Guardrails -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Core Guardrails &amp; Policies</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="stack" style="gap:var(--space-3)">
+            <div class="notice notice--warn">
+              <svg class="i"><use href="#i-alert"/></svg>
+              <div><strong>Guardrail 1 (Versions):</strong> Deleting a draft version is permitted, but <strong>no delete is ever allowed on the approved or posted version</strong>.</div>
+            </div>
+            <div class="notice notice--info">
+              <svg class="i"><use href="#i-info"/></svg>
+              <div><strong>Guardrail 2 (Documents &amp; Invoices):</strong> Read + Edit only. <strong>Cancel document instead of delete</strong> to preserve audit trail and financial history.</div>
+            </div>
+            <div class="notice notice--info">
+              <svg class="i"><use href="#i-info"/></svg>
+              <div><strong>Client Links:</strong> Generated links must stay findable with <strong>Copy link · Renew · Revoke</strong> on every row. Expired links show Renew only.</div>
+            </div>
+            <div class="notice notice--info">
+              <svg class="i"><use href="#i-info"/></svg>
+              <div><strong>Client Decisions:</strong> The client can change their decision until the item is scheduled or posted.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1: Guardrail 1 in Practice (Versions) -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Guardrail 1: Version Controls (2)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="items-list">
+
+            <!-- Case A: Approved version (DELETE LOCKED) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--status-approved-text)"><use href="#i-lock"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto">Luxury Linen Bedding Collection · Approved Version</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--rv-approved">Approved &amp; Scheduled</span>
+                    <span class="chip chip--kind">Guardrail active</span>
+                  </div>
+                  <div class="item-meta">
+                    <span class="muted">Approved by client Nadia Mansour · Locked against deletion</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">View</button>
+                <button class="button button--sm button--secondary is-disabled" style="opacity:0.4; cursor:not-allowed" title="Approved or posted versions cannot be deleted">
+                  <svg class="i"><use href="#i-lock"/></svg>
+                  <span>Delete locked</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Case B: Draft version (DELETE PERMITTED WITH CONFIRMATION) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-text-2)"><use href="#i-pencil"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto">Luxury Linen Bedding Collection · Working Draft</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--rv-pending">Unsent draft</span>
+                    <span class="chip chip--kind">Deletion allowed</span>
+                  </div>
+                  <div class="item-meta">
+                    <span class="muted">Internal work in progress · Can be edited or deleted before client approval</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">
+                  <svg class="i"><use href="#i-trash"/></svg>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Guardrail 2 in Practice (Documents & Invoices) -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Guardrail 2: Document &amp; Invoice Controls</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="items-list">
+
+            <!-- Document Row: Cancel instead of Delete -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <svg class="i" style="width:var(--size-36);height:var(--size-36);color:var(--sy-button-primary)"><use href="#i-doc"/></svg>
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto">Retainer Services Invoice · Zad Living (October 2026)</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--kind">Financial record</span>
+                    <span class="chip chip--paid">Issued</span>
+                  </div>
+                  <div class="item-meta">
+                    <span>Amount: <strong>EGP 45,000</strong></span>
+                    <span>•</span>
+                    <span class="muted">Never deleted: Cancel preserves tax &amp; audit history</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-eye"/></svg>
+                  <span>View</span>
+                </button>
+                <button class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-pencil"/></svg>
+                  <span>Edit</span>
+                </button>
+                <!-- Cancel document button instead of Delete -->
+                <button class="button button--sm button--danger">
+                  <svg class="i"><use href="#i-close"/></svg>
+                  <span>Cancel</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Delete Confirmation Modal Component -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Delete Confirmation Component</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div style="background:var(--sy-surface-sunk); padding:var(--space-4); border-radius:var(--r-panel); max-width:520px; display:flex; flex-direction:column; gap:var(--space-3)">
+            <div class="row" style="gap:var(--space-2)">
+              <div style="width:var(--size-36); height:var(--size-36); border-radius:50%; background:var(--status-changes-soft); color:var(--status-changes-text); display:grid; place-items:center; flex:none">
+                <svg class="i"><use href="#i-alert"/></svg>
+              </div>
+              <div>
+                <div class="bold" style="font-size:var(--text-lg); color:var(--sy-heading)">Confirm deletion</div>
+                <div class="text-sm muted">Are you sure you want to delete this draft item? This action will be recorded in the audit log.</div>
+              </div>
+            </div>
+            <div class="row" style="justify-content:flex-end; gap:var(--space-2); margin-block-start:var(--space-2)">
+              <button class="button button--secondary button--sm">Cancel</button>
+              <button class="button button--danger button--sm">
+                <svg class="i"><use href="#i-trash"/></svg>
+                <span>Confirm delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Objects & Controls Matrix -->
+      <section class="card">
+        <div class="card__header">
+          <div class="card__title-wrap">
+            <h2 class="card__title">Objects &amp; Controls Matrix (9)</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <div class="items-list">
+
+            <!-- Object: Clients -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-users"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Clients (العملاء)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Read + Edit + Delete (requires confirmation modal)</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg><span>Add</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Packages -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-package"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Packages (الباقات)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Read + Edit terms + Delete unused</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg><span>Add</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Payments -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-chart"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Payments (المدفوعات)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Read + Edit details + Delete entry (logged)</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg><span>Log</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Projects & Jobs -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-layers"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Projects &amp; Jobs (المشروعات والشغلانات)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Read + Edit settings + Delete empty</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg><span>New</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Files -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-file"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Files (الملفات)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Read + Replace version + Delete file</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-upload"/></svg><span>Upload</span></button>
+                <button class="button button--sm button--secondary">Replace</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Client Links -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-lock"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Client Links (لينكات العملاء)</span><span class="chip chip--kind">Team object</span></div>
+                  <div class="text-sm muted">Never lost: Copy link again · Renew · Revoke</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-copy"/></svg><span>Copy</span></button>
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-refresh"/></svg><span>Renew</span></button>
+                <button class="button button--sm button--danger"><svg class="i"><use href="#i-close"/></svg><span>Revoke</span></button>
+              </div>
+            </div>
+
+            <!-- Object: Client Requests (Client side) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-inbox"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Client Requests (طلبات العميل)</span><span class="chip chip--kind">Client object</span></div>
+                  <div class="text-sm muted">Create new · Edit / Cancel before team accepts</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-plus"/></svg><span>Create</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Object: Client Comments (Client side) -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-comment"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Comments (تعليقات العميل والفريق)</span><span class="chip chip--kind">Shared object</span></div>
+                  <div class="text-sm muted">Post note · Edit own comment · Delete own comment</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-comment"/></svg><span>Add</span></button>
+                <button class="button button--sm button--secondary">Edit</button>
+                <button class="button button--sm button--danger">Delete</button>
+              </div>
+            </div>
+
+            <!-- Object: Client Review Decision -->
+            <div class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb"><svg class="i" style="width:var(--size-24);height:var(--size-24)"><use href="#i-check"/></svg></div>
+                <div class="item-body">
+                  <div class="item-header"><span class="bold">Review Decision (قرارات المراجعة)</span><span class="chip chip--kind">Client action</span></div>
+                  <div class="text-sm muted">Approve · Request edits · Change decision (until scheduled/posted)</div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <button class="button button--sm button--approve">Approve</button>
+                <button class="button button--sm button--secondary">Request edits</button>
+                <button class="button button--sm button--secondary"><svg class="i"><use href="#i-undo"/></svg><span>Change</span></button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div></main>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · Zad Living · Dash</title>
+  <script src="mock.js"></script>
+  <link rel="stylesheet" href="job.css">
+</head>
+<body>
+<div class="c-shell">
+
+  <!-- Client Navigation Bar (4 links only: Home · For your review · My work · Requests) -->
+  <header class="c-bar">
+    <div class="c-bar__inner">
+      <img class="c-bar__logo" src="assets/dash-wordmark-white.png" alt="Dash">
+
+      <nav class="c-nav" aria-label="Client navigation">
+        <a class="is-active"><svg class="i"><use href="#i-home"/></svg><span data-ar="الرئيسية">Home</span></a>
+        <a href="client-review.html"><svg class="i"><use href="#i-check"/></svg><span data-ar="محتاج رأيك">For your review</span><span class="badge">3</span></a>
+        <a href="client-work.html"><svg class="i"><use href="#i-layers"/></svg><span data-ar="شغلي">My work</span></a>
+        <a href="client-requests.html"><svg class="i"><use href="#i-inbox"/></svg><span data-ar="طلباتي">Requests</span></a>
+      </nav>
+
+      <div class="c-bar__end">
+        <button class="button button--sm button--secondary">ع / EN</button>
+        <span class="bold c-bar__client-name" data-ar="زاد ليفنج" style="font-size:var(--text-sm)">Zad Living</span>
+        <button class="icon-button c-bar__menu-btn" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main"><div class="page">
+
+    <!-- Heading Row (R55 #2) -->
+    <div class="heading">
+      <div class="heading__title">
+        <h1 data-ar="أهلاً بك في زاد ليفنج">Welcome, Zad Living</h1>
+        <span class="chip chip--st-review" data-ar="3 عناصر محتاجة رأيك">3 items need your review</span>
+      </div>
+      <div class="heading__actions">
+        <a href="client-requests.html" class="button button--primary">
+          <svg class="i"><use href="#i-plus"/></svg>
+          <span data-ar="طلب جديد">New request</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Section 1: Waiting for you (Count at start, actions at end, Approve all with confirm) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="محتاج رأيك (3)">Waiting for your review (3)</h2>
+        </div>
+        <div class="card__actions">
+          <button class="button button--approve button--sm">
+            <svg class="i"><use href="#i-check"/></svg>
+            <span data-ar="موافقة على الكل (3)">Approve all (3)</span>
+          </button>
+          <a href="client-review.html" class="button button--secondary button--sm">
+            <svg class="i"><use href="#i-eye"/></svg>
+            <span data-ar="مراجعة بالتفصيل">Review in detail</span>
+          </a>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="stack" style="gap:var(--space-3)">
+
+          <!-- Approve All Confirmation Prompt -->
+          <div class="notice notice--info" style="align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--space-2)">
+            <div class="row" style="gap:var(--space-2)">
+              <svg class="i"><use href="#i-check"/></svg>
+              <span data-ar="تأكيد اعتماد الـ3 عناصر دفعة واحدة؟ كل عنصر هيتسجل عليه موافقتك.">Approve all 3 items at once? Each item will record your approval.</span>
+            </div>
+            <div class="row" style="gap:var(--space-2)">
+              <button class="button button--secondary button--sm"><span data-ar="إلغاء">Cancel</span></button>
+              <button class="button button--approve button--sm"><span data-ar="تأكيد الموافقة">Confirm approve</span></button>
+            </div>
+          </div>
+
+          <!-- Items list: Rows open in For your review, no v1/v2, 1 status chip + type chip -->
+          <div class="items-list">
+
+            <!-- Item 1: Bedding Post -->
+            <a href="client-review.html" class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/linen-bed.svg" alt="Linen bedding post preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto" data-ar="03 · أطقم مفارش الكتان الفاخرة">03 · Luxury Linen Bedding Collection</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك">Needs your review</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 15 نوفمبر">Due 15 Nov</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <span class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-eye"/></svg>
+                  <span data-ar="مراجعة">Review</span>
+                </span>
+              </div>
+            </a>
+
+            <!-- Item 2: Hero Video -->
+            <a href="client-review.html" class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/video-hero.svg" alt="Video preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto" data-ar="فيديو إطلاق كولكشن الخريف 30 ثانية">Autumn Linen Hero Video · 30s</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--video" data-ar="فيديو">Video</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك">Needs your review</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 22 نوفمبر">Due 22 Nov</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <span class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-eye"/></svg>
+                  <span data-ar="مراجعة">Review</span>
+                </span>
+              </div>
+            </a>
+
+            <!-- Item 3: Ceramic Tableware -->
+            <a href="client-review.html" class="item-card">
+              <div class="item-card__main">
+                <div class="item-thumb">
+                  <img src="assets/media/shop.svg" alt="Design preview">
+                </div>
+                <div class="item-body">
+                  <div class="item-header">
+                    <span class="item-title" dir="auto" data-ar="05 · معرض أطقم السيراميك اليدوي">05 · Artisan Ceramic Tableware</span>
+                  </div>
+                  <div class="item-chips">
+                    <span class="chip chip--design" data-ar="تصميم">Design</span>
+                    <span class="chip chip--st-review" data-ar="محتاج رأيك">Needs your review</span>
+                  </div>
+                  <div class="item-meta">
+                    <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                    <span>•</span>
+                    <span data-ar="مطلوب قبل 25 نوفمبر">Due 25 Nov</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item-actions">
+                <span class="button button--sm button--secondary">
+                  <svg class="i"><use href="#i-eye"/></svg>
+                  <span data-ar="مراجعة">Review</span>
+                </span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Latest ready work (Count at start, actions at end, no v1/v2 chips) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="آخر الشغل الجاهز (2)">Latest ready work (2)</h2>
+        </div>
+        <div class="card__actions">
+          <a href="client-work.html" class="button button--secondary button--sm">
+            <span data-ar="شوف كل الشغل">View all work</span>
+          </a>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="items-list">
+
+          <!-- Ready Item 1 -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/lookbook.svg" alt="Lookbook catalog">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="كتالوج منتجات خريف 2026 (ملف جاهز للطباعة)">Autumn 2026 Lookbook Catalog · 16 Pages</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--design" data-ar="تصميم">Design</span>
+                  <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="اعتمدته يوم 28 أكتوبر">Approved 28 Oct</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a href="client-work.html" class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-file"/></svg>
+                <span data-ar="تحميل">Download</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Ready Item 2 -->
+          <div class="item-card">
+            <div class="item-card__main">
+              <div class="item-thumb">
+                <img src="assets/media/reel.svg" alt="Social post reel">
+              </div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-title" dir="auto" data-ar="01 · ريل قصة الأقمشة الطبيعية">01 · Natural Fabrics Craftsmanship Reel</span>
+                </div>
+                <div class="item-chips">
+                  <span class="chip chip--posts" data-ar="منشورات">Posts</span>
+                  <span class="chip chip--st-ready" data-ar="جاهز">Ready</span>
+                </div>
+                <div class="item-meta">
+                  <span data-ar="حملة الخريف 2026">Autumn Campaign 2026</span>
+                  <span>•</span>
+                  <span data-ar="مجدول للنشر 12 نوفمبر">Scheduled for 12 Nov</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <a href="client-work.html" class="button button--sm button--secondary">
+                <svg class="i"><use href="#i-eye"/></svg>
+                <span data-ar="عرض">View</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Package Summary (Plan inside, no floating chip) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="ملخص باقتك وخطتك">Package summary &amp; marketing plan</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="stack" style="gap:var(--space-4)">
+
+          <!-- Quota metrics & progress -->
+          <div style="background:var(--sy-field-bg); padding:var(--space-4); border-radius:var(--r-control); display:flex; flex-direction:column; gap:var(--space-2)">
+            <div class="row" style="justify-content:space-between">
+              <span class="bold" data-ar="إنجاز الباقة هذا الشهر">Monthly package progress</span>
+              <span class="bold" data-ar="14 من 20 عنصر (70%)">14 of 20 items (70%)</span>
+            </div>
+            <div style="height:var(--size-8); background:var(--sy-surface-sunk); border-radius:var(--r-tag); overflow:hidden">
+              <div style="width:70%; height:100%; background:var(--sy-button-primary); border-radius:var(--r-tag)"></div>
+            </div>
+            <div class="row" style="justify-content:space-between; font-size:var(--text-sm); color:var(--sy-text-2)">
+              <span data-ar="باقي 6 عناصر في الدورة الحالية">6 items remaining in current cycle</span>
+              <span data-ar="تجديد الدورة: 15 نوفمبر">Renews 15 Nov</span>
+            </div>
+          </div>
+
+          <!-- Marketing Plan inside -->
+          <div style="display:flex; flex-direction:column; gap:var(--space-2)">
+            <span class="bold" data-ar="التركيز الحالي في الخطة التسويقية">Current focus in marketing plan</span>
+            <div class="row" style="gap:var(--space-3); flex-wrap:wrap">
+              <div style="flex:1; min-width:200px; background:var(--sy-surface-sunk); padding:var(--space-3); border-radius:var(--r-control)">
+                <div class="bold" data-ar="حملة إطلاق الخريف">Autumn Launch Campaign</div>
+                <div class="muted" style="font-size:var(--text-sm)" data-ar="8 منشورات + 2 فيديو + كتالوج">8 posts · 2 videos · 1 catalog</div>
+                <div style="margin-block-start:var(--space-1)">
+                  <span class="chip chip--st-ready" data-ar="7 جاهزين">7 ready</span>
+                  <span class="chip chip--st-review" data-ar="3 مستنيين رأيك">3 in review</span>
+                </div>
+              </div>
+              <div style="flex:1; min-width:200px; background:var(--sy-surface-sunk); padding:var(--space-3); border-radius:var(--r-control)">
+                <div class="bold" data-ar="المرحلة الجاية: عروض الجمعة البيضاء">Next: Black Friday Push</div>
+                <div class="muted" style="font-size:var(--text-sm)" data-ar="يبدأ العمل: 20 نوفمبر 2026">Work starts 20 Nov 2026</div>
+                <div style="margin-block-start:var(--space-1)">
+                  <span class="chip chip--st-progress" data-ar="بنجهز الأفكار">Planning concepts</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: New Request Callout (No floating chip) -->
+    <section class="card">
+      <div class="card__header">
+        <div class="card__title-wrap">
+          <h2 class="card__title" data-ar="محتاج شغل جديد؟">Need something new?</h2>
+        </div>
+      </div>
+      <div class="card__body">
+        <div class="row" style="justify-content:space-between; flex-wrap:wrap; gap:var(--space-4)">
+          <div style="max-width:600px">
+            <p data-ar="تقدر تطلب أي شغل جديد في أي وقت: منشورات أو فيديوهات أو تصميمات أو حملات. الفريق هيستلم الطلب ويبدأ فيه على طول.">
+              Submit a new request anytime for posts, videos, designs, or campaigns. The team will review and start right away.
+            </p>
+          </div>
+          <a href="client-requests.html" class="button button--primary">
+            <svg class="i"><use href="#i-plus"/></svg>
+            <span data-ar="ابدأ طلب جديد">Start a new request</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div></main>
+</div>
+</body>
+</html>

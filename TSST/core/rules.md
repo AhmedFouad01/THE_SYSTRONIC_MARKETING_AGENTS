@@ -11,6 +11,8 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R16 / R24** Ask open questions and confirm scope + cost before dispatching any agent or runtime.
   A proposed audit/fix round = numbered list (item, done-when, rough cost), never open-ended.
   Ahmed's direct OK of a scope covers it: don't ask again inside it; expansion is a new decision.
+  Facts Ahmed knows himself (is it live, is real work on it, can data go, what matters most): ask him first,
+  never send a runtime to measure them (owner 2026-10-31).
 - **R25** End a track with a short state + one next step, not a menu.
 - **R27** Systems, plans, roadmaps: diagram first.
 
@@ -44,7 +46,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R46 System freeze until 2026-11-15** (owner rule 2026-10-16). No new tools, layers, rule files,
   folder systems or process steps unless real client work is blocked; Ahmed OKs each exception.
   Exceptions: 2026-10-17 owner review board (`TSST/services/review`, REVIEW-001); 2026-10-18 online
-  portal + CRM hosting on Ahmed's AWS EC2, free DuckDNS domain (PORTAL-001).
+  portal + CRM hosting on Ahmed's AWS EC2, free DuckDNS domain (PORTAL-001). 2026-10-27 TSST Design Gate (`TSST/CREATIVE/tools/design-gate`, R57).
   A new owner rule = one line here.
 - **R47 No per-task process files** (owner rule 2026-10-16). The job brief is the plan;
   `DELIVERY.json` is the record. Plan/preflight/observation/handoff files only when work moves to
@@ -61,6 +63,9 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **R53 Motion AG = AI video only** (owner rule 2026-10-20): MOTION_AG makes video by AI generation (story, shot list, start frames, AI video/music/voice prompts and generation, AI tools for edit/finish). It never uses After Effects again: no AE projects, no JSX/ExtendScript, no aerender, no "Ahmed runs the script" steps. Text, logos and transitions come from AI generation or from the AI tools themselves.
 - **R54 Product photo edits = ChatGPT, intent only** (owner rule 2026-10-23): professional edits of product photos (RAW → Edited) are made in ChatGPT by Ahmed, never by CREATIVE_AG. The team sends Ahmed, per product: the original RAW photo, one existing Edited photo as reference, and a short note of WHAT we want (goal, use, what must stay true, e.g. the real pack unchanged). Never an explicit or detailed prompt: it changes ChatGPT's direction; ChatGPT decides how.
 - **R55 UI quality bar** (owner 2026-10-27): every Dash/CRM screen passes the 10-point list in `TSST/core/rules/build.md` before the Lead shows it to Ahmed; one fail = returned. Product UI is a full redraw by CREATIVE on a strong tier, never a fix list patched by DEV.
+- **R58 Cost ladder across runtimes** (owner 2026-10-28): the heaviest work (research, long reads, UX/UI reviews, drafts, specs to check) goes first to the free tools: Gemini app (Pro quota) and ChatGPT (ROLE B). Execution and review climb a ladder: Antigravity executes → Codex reviews / fixes → Claude (Lead) is the top level, judges and accepts only. Claude agents run only where the lower rungs can't.
+- **R57 TSST Design Gate** (owner 2026-10-27): every product screen (Dash, CRM, delivery pages, any new UI) goes spec → drawn from theme tokens → Design Gate checks all 0 → Lead R55 review → Ahmed → build → same checks on the live app + design|build compare images → Lead. Tool and steps: `TSST/CREATIVE/tools/design-gate/README.md`.
+- **R56 Product videos show the live product** (owner 2026-10-27): guide/demo videos show only what the client really sees live (labels, sections, branding such as "Dash by The Systronic"). Redrawn UI is traced from real screenshots of the live screens, component by component; never from repo code, plans or guesses. Diagram furniture must be real and aligned (no invented specs like "W 860 · H 248"; text optically centred in its circle or box).
 - **R22** An owner rule given in any runtime is written here in the same turn; runtime-private
   memory only points to the R-number.
 - **R33** Before creating a request/handoff file, list the folder and take the next free number.
@@ -75,6 +80,12 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 - **Naming** Folders lowercase-kebab-case; daily files short (`status.md`, `project.md`).
 - **R17** The daily board starts only when Ahmed says "ابدأ اليوم"; while locked, work only on
   board rows and park new requests (`TSST/daily/README.md`).
+
+- **R59 Posts model** (owner 2026-10-30): one approval per post, full previous-version copy before edits, accepted uploads always retained and selected with misfit warnings, and bulk post actions; every UI/API follows [the four fixed rules](../handoffs/portal/DASH-JOB-MODEL-001-SPEC.md), last section "Live use → 4 fixed rules".
+- **R60 Ask read / edit / delete first** (owner 2026-10-31). Never assume read-only.
+  - Before a new thing (object, list, field, link, screen) is specced or built, the Lead asks Ahmed which level it gets: read only · read + edit · read + edit + delete.
+  - The spec carries his answers as a table. A build missing an agreed edit / delete control is returned.
+  - Anything the team creates (client link, team link, code, PIN) must be findable again later, with copy again or reset. It is never shown once and then lost.
 
 ## 4. Never without Ahmed's explicit OK in chat
 - publish, post, spend budget, contact clients, deploy

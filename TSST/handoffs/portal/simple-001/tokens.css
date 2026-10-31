@@ -1,0 +1,416 @@
+/* ==========================================================================
+   The Systronic house theme: tokens (TSST-CREATIVE-SK-003 layering)
+   Layer 1  ref-*   raw palette: official D-09 colours + derived ramps (OKLCH, same hue)
+   Layer 2  sy-*    semantic roles, remapped per theme
+   Layer 3  HeroUI variables mapped from the sy-* roles (unlayered, after HeroUI)
+   ========================================================================== */
+
+:root {
+  /* R51 action fills are independent of R49 status colours. */
+  --sy-button-primary: #007da3;
+  --sy-button-primary-hover: #006b8c;
+  --sy-button-approve: #28a745;
+  --sy-button-approve-hover: #218838;
+  --sy-button-edit: #ff003c;
+  --sy-button-edit-hover: #db0034;
+  --sy-button-danger: #e0003a;
+  --sy-button-danger-hover: #bd0031;
+  --sy-button-secondary: #00338d;
+  --sy-button-secondary-hover: #002780;
+  --sy-button-text: #fff;
+  --sy-choice-surface: var(--sy-select-bg);
+  --sy-choice-text: var(--sy-select-text);
+  --sy-control-hover: var(--sy-surface-hover);
+  --sy-button-focus: #00bef6;
+  --sy-button-sm: 32px;
+  --sy-button-md: 36px;
+  --sy-button-lg: 40px;
+  /* Official palette (D-09) */
+  --ref-royal-600: #00338d;
+  --ref-red-600: #c60c30;
+  --ref-legacy-700: #002244;
+  --ref-white-100: #f2f3f3;
+  --ref-cyan-600: #0085b2;
+
+  /* Royal Blue ramp: tints, then darker steps for hover / pressed */
+  --ref-royal-50: #f2f6fd;  --ref-royal-100: #e3ecfa; --ref-royal-200: #c7d8f6;
+  --ref-royal-300: #9cbcf2; --ref-royal-400: #6e9be8; --ref-royal-500: #3f71cb;
+  --ref-royal-700: #002780; --ref-royal-800: #001974;
+  /* Impact Red ramp */
+  --ref-red-50: #fdf3f2; --ref-red-100: #fbe5e4; --ref-red-200: #f7cbc9;
+  --ref-red-400: #e47575; --ref-red-700: #a90018;
+  /* Legacy Blue ramp (light tints = cool neutrals) */
+  --ref-legacy-50: #f2f6fa; --ref-legacy-100: #e4ecf5; --ref-legacy-200: #d8dfe6;
+  --ref-legacy-300: #9fbee0; --ref-legacy-500: #6a7d93; --ref-legacy-600: #3d4f63;
+  --ref-legacy-text-muted: #5b6b7d;
+  /* Cyan ramp */
+  --ref-cyan-100: #dfeef6; --ref-cyan-700: #006185; --ref-cyan-700-hover: #0079a5;
+
+  /* Lifted Legacy Blue steps for dark mode. Floor = #002244, nothing darker. */
+  --ref-dk-0: #002244; --ref-dk-1: #0f2c4b; --ref-dk-2: #183555;
+  --ref-dk-3: #223f5f; --ref-dk-4: #2b4869; --ref-dk-5: #375576;
+  /* Lifted accents for dark surfaces */
+  --ref-dk-royal: #3069d0; --ref-dk-royal-hover: #366fd6; --ref-dk-royal-press: #2a63c9;
+  --ref-dk-royal-text: #a1bff2; --ref-dk-red: #e94e58; --ref-dk-red-text: #f49190;
+  --ref-dk-cyan: #4aaad6; --ref-dk-cyan-text: #7fc9ed;
+  --ref-dk-text-2: #b9c6d4; --ref-dk-text-3: #97a6b7; --ref-dk-field-line: #8499b0;
+
+  /* Type, radius, spacing, motion (theme independent) */
+  --font-latin: "Poppins", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --r-control: 6px; --r-panel: 10px; --r-sheet: 10px; --r-tag: 4px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sidebar-w: 264px;
+}
+
+@media (max-width: 767px) {
+  :root { --sy-button-sm: 36px; --sy-button-md: 40px; --sy-button-lg: 44px; }
+}
+
+/* ---------- Semantic roles: LIGHT ---------- */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --sy-canvas: var(--ref-white-100);
+  --sy-surface: #ffffff;
+  --sy-surface-sunk: var(--ref-legacy-50);      /* table head, hover fill */
+  --sy-surface-hover: var(--ref-legacy-50);
+  --sy-overlay: #ffffff;
+  --sy-text: var(--ref-legacy-700);
+  --sy-text-2: var(--ref-legacy-600);
+  --sy-text-3: var(--ref-legacy-text-muted);
+  --sy-line: var(--ref-legacy-200);              /* row divider in lists and tables only */
+  --sy-field-line: transparent;                  /* R53: no borders anywhere */
+  --sy-field-bg: var(--ref-legacy-100);
+  --sy-field-bg-hover: #d8e4f1;
+  --sy-field-bg-focus: #ccdcf0;
+  --sy-control-bg: #ceddec;
+  --sy-control-bg-hover: #bdd0e4;
+
+  --sy-primary: var(--ref-royal-600);
+  --sy-primary-hover: var(--ref-royal-700);
+  --sy-primary-press: var(--ref-royal-800);
+  --sy-on-primary: #ffffff;
+  --sy-select-bg: #dff3e9;          /* selected row / item tint */
+  --sy-select-text: #17563f;
+  --sy-link: var(--ref-royal-600);
+  --sy-focus: var(--sy-button-focus);
+
+  --sy-attn: var(--ref-red-600);                 /* title bar, tab underline, attention */
+  --sy-attn-text: var(--ref-red-700);
+  --sy-attn-bg: var(--ref-red-50);
+  --sy-detail: var(--ref-cyan-600);
+  --sy-detail-text: var(--ref-cyan-700);
+
+  --sy-chart-1: var(--ref-royal-600); --sy-chart-2: var(--ref-red-600);
+  --sy-chart-3: var(--ref-legacy-700); --sy-chart-4: var(--ref-cyan-600);
+  --sy-grid: var(--ref-legacy-100);
+
+  /* status chips: bg / fg */
+  --st-new-bg: #dff3e9;       --st-new-fg: #17563f;
+  --st-contacted-bg: var(--ref-cyan-100);  --st-contacted-fg: var(--ref-cyan-700);
+  --st-qualified-bg: var(--ref-royal-600); --st-qualified-fg: #ffffff;
+  --st-lost-bg: var(--ref-legacy-100);     --st-lost-fg: var(--ref-legacy-600);
+  --st-overdue-bg: var(--ref-red-50);      --st-overdue-fg: var(--ref-red-700);
+
+
+  /* R49 review chips, dots and charts retain their status palette. */
+  --status-approved: var(--ref-royal-600); --status-approved-soft: color-mix(in srgb, var(--status-approved) 14%, var(--sy-surface)); --status-approved-text: var(--status-approved);
+  --status-pending: #d97706;  --status-pending-soft: #fef4df;  --status-pending-text: #a04a08;
+  --status-changes: var(--sy-button-edit); --status-changes-soft: color-mix(in srgb, var(--status-changes) 14%, var(--sy-surface)); --status-changes-text: var(--status-changes);
+
+  --sy-shadow-panel: 0 1px 2px rgb(0 34 68 / 0.06), 0 6px 20px rgb(0 34 68 / 0.05);
+  --sy-shadow-overlay: 0 4px 12px rgb(0 34 68 / 0.12), 0 16px 40px rgb(0 34 68 / 0.16);
+  --sy-watermark-opacity: 0.07;
+}
+
+/* ---------- Semantic roles: DARK (every surface a lifted Legacy Blue step) ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --sy-canvas: var(--ref-dk-1);
+  --sy-surface: var(--ref-dk-2);
+  --sy-surface-sunk: var(--ref-dk-1);
+  --sy-surface-hover: var(--ref-dk-3);
+  --sy-overlay: var(--ref-dk-4);
+  --sy-text: var(--ref-white-100);
+  --sy-text-2: var(--ref-dk-text-2);
+  --sy-text-3: var(--ref-dk-text-3);
+  --sy-line: var(--ref-dk-5);
+  --sy-field-line: transparent;
+  --sy-field-bg: #26466b;
+  --sy-field-bg-hover: #2f527a;
+  --sy-field-bg-focus: #375d89;
+  --sy-control-bg: #3e6896;
+  --sy-control-bg-hover: #4b78a8;
+
+  --sy-primary: var(--ref-dk-royal);
+  --sy-primary-hover: var(--ref-dk-royal-hover);
+  --sy-primary-press: var(--ref-dk-royal-press);
+  --sy-on-primary: #ffffff;
+  --sy-select-bg: #1c493d;
+  --sy-select-text: #e4faef;
+  --sy-link: var(--ref-dk-royal-text);
+  --sy-focus: var(--sy-button-focus);
+
+  --sy-attn: var(--ref-dk-red);
+  --sy-attn-text: var(--ref-dk-red-text);
+  --sy-attn-bg: #5c1f3c;
+  --sy-detail: var(--ref-dk-cyan);
+  --sy-detail-text: var(--ref-dk-cyan-text);
+
+  --sy-chart-1: #6091e7; --sy-chart-2: var(--ref-dk-red);
+  --sy-chart-3: var(--ref-legacy-300); --sy-chart-4: var(--ref-dk-cyan);
+  --sy-grid: var(--ref-dk-3);
+
+  --st-new-bg: #1c493d;       --st-new-fg: #e4faef;
+  --st-contacted-bg: #0e4a63; --st-contacted-fg: #bfe6f6;
+  --st-qualified-bg: var(--ref-dk-royal); --st-qualified-fg: #ffffff;
+  --st-lost-bg: var(--ref-dk-4);  --st-lost-fg: var(--ref-legacy-200);
+  --st-overdue-bg: #5c1f3c;   --st-overdue-fg: #f7cbc9;
+
+
+  --status-approved: #00bef6; --status-approved-soft: color-mix(in srgb, var(--status-approved) 14%, var(--sy-surface)); --status-approved-text: var(--status-approved);
+  --status-pending: #f59e0b;  --status-pending-soft: #52493a;  --status-pending-text: #fbbf4a;
+  --status-changes: var(--sy-button-edit); --status-changes-soft: color-mix(in srgb, var(--status-changes) 14%, var(--sy-surface)); --status-changes-text: #ff8da3;
+
+  --sy-shadow-panel: 0 2px 6px rgb(0 8 20 / 0.32), 0 10px 24px rgb(0 8 20 / 0.24);
+  --sy-shadow-overlay: 0 16px 44px rgb(0 4 12 / 0.52), 0 4px 14px rgb(0 4 12 / 0.36);
+  --sy-watermark-opacity: 0.06;
+}
+
+/* ---------- HeroUI variable mapping (overrides the default theme) ---------- */
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
+  --background: var(--sy-canvas);
+  --foreground: var(--sy-text);
+  --surface: var(--sy-surface);
+  --surface-foreground: var(--sy-text);
+  --surface-secondary: var(--sy-surface-sunk);
+  --surface-secondary-foreground: var(--sy-text);
+  --surface-tertiary: var(--sy-surface-hover);
+  --surface-tertiary-foreground: var(--sy-text);
+  --overlay: var(--sy-overlay);
+  --overlay-foreground: var(--sy-text);
+  --muted: var(--sy-text-3);
+  --default: var(--sy-field-bg);
+  --default-hover: var(--sy-field-bg-hover);
+  --default-foreground: var(--sy-text);
+  --field-background: var(--sy-field-bg);
+  --field-hover: var(--sy-field-bg-hover);
+  --field-focus: var(--sy-field-bg-focus);
+  --field-foreground: var(--sy-text);
+  --field-placeholder: var(--sy-text-3);
+  --border-width: 0px;
+  --field-border-width: 0px;
+  --border-width-field: 0px;
+  --field-border: transparent;
+  --field-border-hover: transparent;
+  --field-border-focus: transparent;
+  --border: transparent;
+  --border-secondary: transparent;
+  --border-tertiary: transparent;
+  --badge-border: transparent;
+  --field-shadow: none;
+  --surface-shadow: var(--sy-shadow-panel);
+  --overlay-shadow: var(--sy-shadow-overlay);
+  --checkbox-control-bg: var(--sy-control-bg);
+  --radio-control-bg: var(--sy-control-bg);
+  --switch-control-bg: var(--sy-control-bg);
+  --switch-control-bg-hover: var(--sy-control-bg-hover);
+  --separator: var(--sy-line);
+  --focus: var(--sy-focus);
+  --link: var(--sy-link);
+  --accent: var(--sy-primary);
+  --accent-foreground: var(--sy-on-primary);
+  --accent-hover: var(--sy-primary-hover);
+  --accent-soft: var(--sy-select-bg);
+  --accent-soft-foreground: var(--sy-select-text);
+  --danger: var(--sy-attn);
+  --danger-foreground: #ffffff;
+  --danger-soft-foreground: var(--sy-attn-text);
+  --warning: var(--status-pending);
+  --warning-foreground: #ffffff;
+  --success: var(--status-approved);
+  --success-foreground: #ffffff;
+  --radius: var(--r-control);
+  --field-radius: var(--r-control);
+  --surface-shadow: var(--sy-shadow-panel);
+  --overlay-shadow: var(--sy-shadow-overlay);
+  --field-shadow: none;
+  --backdrop: rgb(0 20 45 / 0.55);
+  --scrollbar-thumb: color-mix(in oklab, var(--sy-text) 22%, transparent);
+}
+:root {
+  --surface-0: var(--sy-canvas); --surface-1: var(--sy-surface); --surface-2: var(--sy-surface-hover); --surface-3: var(--sy-overlay);
+  --text-1: var(--sy-text); --text-2: var(--sy-text-2); --text-3: var(--sy-text-3);
+  --brand-royal: #00338d; --brand-cyan: #007da3; --brand-navy: #002244;
+  --accent-cyan: #00bef6; --accent-red: #ff003c;
+  --field-fill: var(--sy-field-bg); --divider: var(--sy-line);
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px; --space-12: 48px;
+  --text-xs: 12px; --text-sm: 13px; --text-md: 14px; --text-lg: 16px; --text-xl: 20px; --text-2xl: 24px; --text-3xl: 32px;
+  --weight-regular: 400; --weight-medium: 500; --weight-title: 600;
+  --shadow-sm: var(--sy-shadow-panel); --shadow-md: var(--sy-shadow-overlay);
+  --z-base: 0; --z-sticky: 10; --z-drawer: 20; --z-overlay: 30; --z-modal: 40; --z-toast: 50;
+  --breakpoint-phone: 390px; --breakpoint-compact: 640px; --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1280px; --breakpoint-wide: 1536px; --breakpoint-cinema: 1920px;
+  --page-max: 1600px; --page-gutter: 24px; --card-min: 320px; --card-max: 420px;
+  --action-min: 96px; --sy-chart-4: var(--brand-cyan);
+  --logo-size: 64px; --thumb-size: 72px; --divider-width: 1px; --focus-width: 2px;
+  --chart-ageing: #c2410c; --chart-planned: var(--ref-legacy-500);
+}
+[data-theme="dark"] { --sy-choice-surface: var(--sy-select-bg); --sy-chart-4: var(--ref-dk-cyan); --chart-ageing: #fb923c; --chart-planned: var(--ref-dk-text-3); }
+/* Container contract: header and content share a single fluid left edge. */
+.ds-container { width: 100%; max-width: var(--page-max); margin-inline: auto; padding-inline: var(--page-gutter); min-width: 0; }
+
+/* Reference dimensions and decorative tones used by shared components. */
+:root {
+  --size-2: 2px;
+  --size-3: 3px;
+  --size-4: 4px;
+  --size-56: 56px;
+  --size-8: 8px;
+  --size--5: -5px;
+  --size-1280: 1280px;
+  --size-32: 32px;
+  --size-38: 38px;
+  --size-6: 6px;
+  --size-34: 34px;
+  --size--2: -2px;
+  --size-17: 17px;
+  --size-72: 72px;
+  --size-420: 420px;
+  --size-44: 44px;
+  --size-220: 220px;
+  --size-40: 40px;
+  --size-1: 1px;
+  --size-52: 52px;
+  --size-26: 26px;
+  --size-320: 320px;
+  --size-440: 440px;
+  --size-20: 20px;
+  --size-24: 24px;
+  --size-7: 7px;
+  --size-280: 280px;
+  --size-340: 340px;
+  --size-64: 64px;
+  --size-112: 112px;
+  --size-460: 460px;
+  --size-380: 380px;
+  --size-150: 150px;
+  --size-84: 84px;
+  --size--4: -4px;
+  --size-16: 16px;
+  --size-28: 28px;
+  --size-76: 76px;
+  --size--60: -60px;
+  --size-120: 120px;
+  --size-36: 36px;
+  --size-82: 82px;
+  --size--23: -23px;
+  --size--9: -9px;
+  --size-49: 49px;
+  --size-91: 91px;
+  --size--26: -26px;
+  --size--10: -10px;
+  --size-30: 30px;
+  --size-1440: 1440px;
+  --size-80: 80px;
+  --size-60: 60px;
+  --size-200: 200px;
+  --size-180: 180px;
+  --size-12: 12px;
+  --size-260: 260px;
+  --size-240: 240px;
+  --size-170: 170px;
+  --size-10: 10px;
+  --size-140: 140px;
+  --size-48: 48px;
+  --size-300: 300px;
+  --size-310: 310px;
+  --size-640: 640px;
+  --size-960: 960px;
+  --size-1200: 1200px;
+  --size-14: 14px;
+  --size-110: 110px;
+  --size-160: 160px;
+  --size--80: -80px;
+  --size--0_3: -0.3px;
+  --size--0_6: -0.6px;
+  --size-88: 88px;
+  --size-15: 15px;
+  --size-820: 820px;
+  --size-22: 22px;
+  --size-352: 352px;
+  --size-104: 104px;
+  --size-248: 248px;
+  --size-264: 264px;
+  --size-148: 148px;
+  --size-68: 68px;
+  --size-57: 57px;
+  --size-92: 92px;
+  --size-900: 900px;
+  --size-560: 560px;
+  --size-760: 760px;
+  --size-360: 360px;
+  --size-224: 224px;
+  --size-13: 13px;
+  --size-11: 11px;
+  --size-18: 18px;
+  --ref-ui-1: #6091e7;
+  --ref-ui-2: #e4ecf5;
+  --ref-ui-3: rgb(255 255 255 / 0.07);
+  --ref-ui-4: rgb(255 255 255 / 0.11);
+  --ref-ui-5: rgb(255 255 255 / 0.1);
+  --ref-ui-6: #7fc9ed;
+  --ref-ui-7: #4aaad6;
+  --ref-ui-8: rgb(127 201 237 / 0.14);
+  --ref-ui-9: rgb(255 255 255 / 0.12);
+  --ref-ui-10: rgb(255 255 255 / 0.18);
+  --ref-ui-11: #ffc9c7;
+  --ref-ui-12: #d8dfe6;
+  --ref-ui-13: rgb(0 34 68 / 0.08);
+  --ref-ui-14: rgb(0 0 0 / 0.35);
+  --ref-ui-15: #001a35;
+  --ref-ui-16: #c4d0dd;
+  --ref-ui-17: #f49190;
+  --ref-ui-18: #9fb2c6;
+  --ref-ui-19: #4a78bd;
+  --ref-ui-20: #e94e58;
+  --ref-ui-21: rgb(255 255 255 / 0.05);
+  --ref-ui-22: #00122a;
+  --ref-ui-23: #8fa3b8;
+  --ref-ui-24: #1f3e62;
+  --ref-ui-25: #24466d;
+  --ref-ui-26: rgb(0 20 45 / 0.65);
+  --ref-ui-27: #5b6b7d;
+  --ref-ui-28: #ffffff24;
+  --ref-ui-29: #f2f6fa;
+  --ref-ui-30: #dbeafe;
+  --ref-ui-31: #ffffffd9;
+  --ref-ui-32: rgb(0 0 0 / .16);
+  --ref-ui-33: rgb(0 190 246 / 0.35);
+  --ref-ui-34: rgb(0 0 0 / .24);
+}
+
+:root { --post-overlay: rgb(0 0 0 / 60%); --drawer-hover: rgb(255 255 255 / 12%); --size-96: 96px; --size-300: 300px; --size-1200: 1200px; }
+
+:root { --size-270:270px; --post-safe-tint:rgb(255 255 255 / 22%); }
+
+/* R8 approved bonus tones (round 2). */
+:root { --tn-cyan-b:#dfeef6;--tn-cyan-f:#006185;--tn-royal-b:#dff3e9;--tn-royal-f:#17563f;--tn-violet-b:#ece6fa;--tn-violet-f:#4c2a9e;--tn-green-b:#dcf3e6;--tn-green-f:#14663a;--tn-amber-b:#fef0d3;--tn-amber-f:#8a4b08;--tn-neutral-b:#e4ecf5;--tn-neutral-f:#3d4f63; }
+[data-theme="dark"] { --tn-cyan-b:#0e4a63;--tn-cyan-f:#bfe6f6;--tn-royal-b:#1c493d;--tn-royal-f:#e4faef;--tn-violet-b:#3a2d6b;--tn-violet-f:#d9ccff;--tn-green-b:#17503a;--tn-green-f:#bdeed3;--tn-amber-b:#5b4318;--tn-amber-f:#fcd98a;--tn-neutral-b:#2b4869;--tn-neutral-f:#d8dfe6; }
+
+/* R8 client identity, image materials and extra-edit accent. */
+:root { --client-header-meta:rgb(255 255 255 / 85%); --client-header-glass:rgb(255 255 255 / 12%); --client-header-image-glass:rgb(0 20 60 / 38%); --client-header-text-shadow:0 1px 6px rgb(0 20 60 / 45%); --client-bonus-glass:rgb(255 255 255 / 60%); --client-extra:#ff003c; }
+[data-theme="dark"] { --client-bonus-glass:rgb(255 255 255 / 12%); }
+
+:root { --r94-action-primary-default:#007da3; --r94-action-primary-hover:#006b8c; --r94-action-primary-active:#005770; --r94-action-secondary-default:#00338d; --r94-action-secondary-hover:#002780; --r94-action-secondary-active:#001974; --r94-action-approve-active:#19692b; --r94-action-edit-active:#b7002b; --r94-action-danger-active:#990028; --r94-action-disabled:#e4ecf5; --r94-action-disabled-text:#5b6b7d; }
+[data-theme="dark"] { --r94-action-disabled:#2b4869; --r94-action-disabled-text:#b9c6d4; }
+
+:root { --r94-paper:#fff; --r94-print-ink:#0b1731; --r94-print-muted:#687793; --r94-print-accent:#c77529; --r94-print-notes:#f5f6f8; --r94-paper-width:297mm; --r94-paper-height:210mm; --r94-paper-padding:14mm; --r94-paper-size:9pt; --r94-paper-small:8pt; --r94-paper-heading:30pt; --r94-paper-total:16pt; --r94-paper-logo:20mm; --r94-print-title:10pt; }
+
+:root { --r94-action-primary-default:#007da3; --r94-action-primary-hover:#006b8c; --r94-action-primary-active:#005770; --r94-action-primary-selected:#007da3; --r94-action-primary-focus:#007da3; --r94-action-primary-disabled:#e4ecf5; --r94-action-secondary-default:#00338d; --r94-action-secondary-hover:#002780; --r94-action-secondary-active:#001974; --r94-action-secondary-selected:#00338d; --r94-action-secondary-focus:#00338d; --r94-action-secondary-disabled:#e4ecf5; --r94-action-approve-default:#28a745; --r94-action-approve-hover:#218838; --r94-action-approve-active:#19692b; --r94-action-approve-selected:#28a745; --r94-action-approve-focus:#28a745; --r94-action-approve-disabled:#e4ecf5; --r94-action-edit-default:#ff003c; --r94-action-edit-hover:#db0034; --r94-action-edit-active:#b7002b; --r94-action-edit-selected:#ff003c; --r94-action-edit-focus:#ff003c; --r94-action-edit-disabled:#e4ecf5; --r94-action-danger-default:#e0003a; --r94-action-danger-hover:#bd0031; --r94-action-danger-active:#960027; --r94-action-danger-selected:#e0003a; --r94-action-danger-focus:#e0003a; --r94-action-danger-disabled:#e4ecf5; --r94-action-text-default:#ffffff; --r94-action-text-hover:#ffffff; --r94-action-text-active:#ffffff; --r94-action-text-selected:#ffffff; --r94-action-text-focus:#ffffff; --r94-action-text-disabled:#e4ecf5; }
+
+[data-theme="dark"] { --r94-action-primary-default:#007da3; --r94-action-primary-hover:#006b8c; --r94-action-primary-active:#005770; --r94-action-primary-selected:#007da3; --r94-action-primary-focus:#007da3; --r94-action-primary-disabled:#2b4869; --r94-action-secondary-default:#00338d; --r94-action-secondary-hover:#002780; --r94-action-secondary-active:#001974; --r94-action-secondary-selected:#00338d; --r94-action-secondary-focus:#00338d; --r94-action-secondary-disabled:#2b4869; --r94-action-approve-default:#28a745; --r94-action-approve-hover:#218838; --r94-action-approve-active:#19692b; --r94-action-approve-selected:#28a745; --r94-action-approve-focus:#28a745; --r94-action-approve-disabled:#2b4869; --r94-action-edit-default:#ff003c; --r94-action-edit-hover:#db0034; --r94-action-edit-active:#b7002b; --r94-action-edit-selected:#ff003c; --r94-action-edit-focus:#ff003c; --r94-action-edit-disabled:#2b4869; --r94-action-danger-default:#e0003a; --r94-action-danger-hover:#bd0031; --r94-action-danger-active:#960027; --r94-action-danger-selected:#e0003a; --r94-action-danger-focus:#e0003a; --r94-action-danger-disabled:#2b4869; --r94-action-text-default:#183555; --r94-action-text-hover:#183555; --r94-action-text-active:#183555; --r94-action-text-selected:#183555; --r94-action-text-focus:#183555; --r94-action-text-disabled:#2b4869; }
+
+:root { --r95-preview-bg: #050b12; --r95-preview-text: #fff; }
