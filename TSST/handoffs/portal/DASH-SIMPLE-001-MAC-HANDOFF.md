@@ -10,11 +10,9 @@ Work moves from the Windows PC to Ahmed's Mac. Start as usual (`AGENTS.md` → `
 
 ## State
 - Steps 0–2 are done.
-- **Step 3 is waiting for Ahmed's OK:** the screens in `simple-001/` (8 pages, Lead R55 accepted; see the R1 sections of
+- **Step 3 done (Ahmed OK 31/10):** the screens in `simple-001/` (8 pages, Lead R55 accepted; see the R1 sections of
   `DASH-AG-021-SIMPLE-DESIGN.md`).
-- **Next, step 4 (build):**
-  - Write `DASH-AG-022` for Antigravity. It builds `simple-001` into `web/`; Codex reviews; the Lead compares live with design (R57).
-  - Inputs:
+- **Step 4 (build): request written, `DASH-AG-022-SIMPLE-BUILD.md`.** Inputs it uses:
     - The R60 table and its 2 guardrails (owner OK).
     - The Codex old-path list (`CX-SIMPLE-000-COUNT_out.md` part A). Post screens still write via the old path, so that is step 5.
     - The duplicate item count on the job page.
