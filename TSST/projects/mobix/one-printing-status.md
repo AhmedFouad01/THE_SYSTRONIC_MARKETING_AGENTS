@@ -58,3 +58,12 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - Scope: code/contract and compilation only; NOT proof of successful PDF appearance, physical printer behavior, isolated database startup, real financial posting, licensing, installer or customer readiness.
 - Next accepted step: run owner-controlled synthetic multi-page A4 PDF fixture with `-RunPdf`, explicitly select `Microsoft Print to PDF` in Windows PrintDialog, inspect pages 1 through last for repeated headers, lines 001-075 and footer. Do not launch Mobix.exe or access SQL for this fixture. Physical printer deferred.
 - No GitHub Actions, PR merge, production SQL change, customer data use, firmware/driver install or runtime AV claimed. TSST DEV_AG NOT_READY, supervised method only.
+
+## 2026-10-31 — multi-page A4 PDF screenshot evidence (3 pages)
+- User supplied 5 Acrobat screenshots from `MO_ONE_MULTIPAGE_QA.pdf` after explicitly selecting the synthetic `Microsoft Print to PDF` route.
+- The Acrobat page indicator shows 3 pages. Repeated 3-column headings (`Item`, `Quantity`, `Amount`) visible at start of pages 1, 2 and 3.
+- Visible rows include 001-011 on page 1, 026-034 and 037-051 on page 2, 052-062 and 065-075 on page 3. The final row `TEST ITEM 075` with amount `225.00` is clearly present.
+- `MBX-066 - TEST DOCUMENT` footer and page numbers visible on all 3 pages; wrapped long-name items 010/030/040/050/060/070 visible without obvious clipping in shown regions. No obvious page-break/header defect in screenshots.
+- **Acceptance: SCREENSHOT VISUAL CHECK PARTIAL PASS** for repeat headers, last row, footer, 3-page layout; full 75-row PDF integrity, text extraction, all values and pixel QA NOT independently verified because actual PDF file not supplied. Do not assert complete PDF PASS or physical printer PASS.
+- No source code changes, merge, actions, financial posting, SQL, commercial release or printer hardware used for this evidence.
+- Next: run synthetic stocktaking 80-row A4 Landscape PDF fixture with `-RunPdf`, choose only Microsoft Print to PDF; inspect 8 headings, every row, signatures, Arabic shaping and page breaks; then Invoice and SupplierReturn fixtures. Keep physical printer and app runtime gates OPEN.
