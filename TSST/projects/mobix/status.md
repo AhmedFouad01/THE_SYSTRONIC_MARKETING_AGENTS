@@ -1,6 +1,6 @@
 # MOBIX — TSST current checkpoint
 Date: 2026-10-31
-State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); synthetic PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
+State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); stocktaking PDF operator visual PASS, financial PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
 
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
@@ -18,6 +18,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - 2026-10-31 owner screenshot: Node 70/70 PASS, WebView2 pinned restore PASS, both Mobix.PrintWorker.exe and Mobix.exe Release MSBuild PASS; exact local SHA not displayed (expected 02382ec). Synthetic PDF inspection and runtime/physical printer OPEN; this supersedes earlier build failure.
 
 - 2026-10-31 synthetic A4 PDF screenshots from One: 3 pages, headers repeated on all three, last row 075 and per-page footers visible. **Screenshot visual partial PASS only**; full 75-row PDF, stocktaking/financial fixtures and printer hardware still OPEN. Tracked under `TSST/projects/mobix/one-printing-status.md`.
+
+- 2026-10-31 stocktaking 80-row / 8-column Arabic A4 Landscape synthetic PDF: owner confirms tables/layout are correct; **owner-reported visual PASS only** (no PDF supplied for independent row audit). Financial Invoice/SupplierReturn PDF QA NEXT; printer hardware / live runtime OPEN.
 
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
