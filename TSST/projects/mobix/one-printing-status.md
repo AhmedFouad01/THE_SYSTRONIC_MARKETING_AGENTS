@@ -5,7 +5,7 @@ Mode: supervised manual TSST routing; DEV_AG NOT_READY; no autonomous agent disp
 ## Repo / refs
 - Mobix One: `Do7a193/Mobix-One`
 - Branch: `fix/MO-PRINT-001-mbx066-isolated-print-foundation`
-- Verified GitHub code head at this checkpoint: `79ca915236464995972e09033eec42eebbd5a7c8`
+- Verified GitHub code head at this checkpoint: `02382eca4d48538ef974cf15e92595f2571f34ee`
 - Baseline: `71cc7387a37c84292da3c9daaae95f7d4b11c907`
 - Reference Desktop MBX-066: `4c37ff6ee32383b65a5efecf9769211c94410a66`
 - Source handoff: `docs/print/MO-PRINT-001-TSST-HANDOFF.md`
@@ -43,3 +43,9 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - One fix `79ca915`: updated supplier return print from browser `window.print()` to isolated native preview; added four Node cases preserving full document and failing closed for absent bridge/incomplete data.
 - **Exact-head Windows acceptance at `79ca915` remains NOT RUN.** Preview static guard PASS pertains to earlier `f0605e1` only; no new results asserted.
 - Next: fast-forward local clone to `79ca915`, rerun preview static gate and combined Node + dual Release build. Resolve first observed failure without treating historical Desktop results as One evidence.
+
+## 2026-10-31 follow-up — missing WebView2 PackageReference restore
+- Owner Windows evidence on One source `79ca915`: Node behavior/source tests PASS and PrintWorker Release compile PASS, main Mobix.exe compile FAILED with CS0234/CS0246 for Microsoft.Web.WebView2, WebView2, CoreWebView2 events/types.
+- Root cause from source: Mobix.csproj already pins WebView2 `1.0.2592.51`; the Print P0 gate previously started Rebuild without restoring the PackageReference in a fresh clone. This is a build prerequisite diagnosis, not independent proof that all errors are resolved.
+- Mobix One new HEAD `02382eca4d48538ef974cf15e92595f2571f34ee`: gate updated to perform MSBuild `/t:Restore`, verify NuGet project.assets.json contains WebView2 1.0.2592.51, fail closed on restore failure, then compile. No package version, financial, SQL, or app startup changes.
+- Updated exact-head Windows RESTORE/BUILD still NOT_RUN. Previous owner results must not be promoted to a new-head PASS.
