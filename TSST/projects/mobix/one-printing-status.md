@@ -67,3 +67,10 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - **Acceptance: SCREENSHOT VISUAL CHECK PARTIAL PASS** for repeat headers, last row, footer, 3-page layout; full 75-row PDF integrity, text extraction, all values and pixel QA NOT independently verified because actual PDF file not supplied. Do not assert complete PDF PASS or physical printer PASS.
 - No source code changes, merge, actions, financial posting, SQL, commercial release or printer hardware used for this evidence.
 - Next: run synthetic stocktaking 80-row A4 Landscape PDF fixture with `-RunPdf`, choose only Microsoft Print to PDF; inspect 8 headings, every row, signatures, Arabic shaping and page breaks; then Invoice and SupplierReturn fixtures. Keep physical printer and app runtime gates OPEN.
+
+## 2026-10-31 — Owner-confirmed stocktaking synthetic PDF
+- Owner reports: "كل حاجه مظبوطه و الجداول ظاهره" after running the synthetic `Run-MBX066-Stocktaking-A4-QA.ps1 -RunPdf` flow. Register **OWNER VISUAL ACCEPTANCE: PASS (reported)** for visible tables/layout on the A4 Landscape 80-row, eight-column Arabic stocktaking QA scenario.
+- User did not upload the actual PDF or new screenshots. Row-by-row completeness, every 1-80 value, Arabic shaping and footer on every page are **not independently verified by assistant**. Preserve distinction between operator acceptance and file-level audit.
+- Scope: synthetic file only, read-only worker fixture; no stock writes or real printer used. Prior 70/70 Node + dual MSBuild PASS and earlier 3-page A4 screenshot partial PASS remain unchanged.
+- Next gate: two separate financial synthetic PDF tests: `-Scenario Invoice -RunPdf` (12 rows / four columns) and `-Scenario SupplierReturn -RunPdf` (43 rows / five columns), always Microsoft Print to PDF. Check last line, totals, headings, long descriptions and footer, and do not claim customer/business financial QA from synthetic PDFs.
+- Physical print, licensing, isolated SQL app startup, installer and PR merge remain OPEN. DEV_AG not dispatched; no Actions.
