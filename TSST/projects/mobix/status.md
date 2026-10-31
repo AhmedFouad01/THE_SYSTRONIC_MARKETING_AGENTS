@@ -23,6 +23,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 
 - 2026-10-31 Invoice PDF mock QA: two Acrobat screenshots show single-page Arabic invoice QA-INV-0001, four columns, items 001-012, wrapping and exact 294.00 fixture arithmetic. **Partial visual PASS**, PDF footer not visible in screenshots. SupplierReturn PDF still OPEN; hardware/SQL/release OPEN.
 
+- 2026-10-31 invoice footer screenshot additionally confirms `MBX-066 QA - NO CUSTOMER DATA — صفحة 1` and row 012: **Invoice synthetic visual checks PASS**, while source-only/fixture-level, not commercial or physical print acceptance. SupplierReturn 43-row / 5-column preview still OPEN.
+
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-29).
