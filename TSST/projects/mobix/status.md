@@ -27,6 +27,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 
 - 2026-10-31 SupplierReturn A4 synthetic PDF screenshots: 2 pages, five RTL columns and repeated headings, final row 043 and two page footers visible, expected total 2080.00 matches fixture arithmetic. Screenshot partial visual PASS only; full PDF file/row audit and physical printer NOT tested. Read-only Windows preflight is next.
 
+- 2026-10-31 owner read-only Windows Preflight passed repo/tool checks (.NET 4.8, MSBuild, SQL LocalDB command, clean branch); `MOBIX_TEST_DATABASE` not yet configured (`False`). No SQL connection/app launch. Next: isolated test DB name existence read-only check and preview license verification before startup.
+
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-29).
