@@ -49,3 +49,12 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - Root cause from source: Mobix.csproj already pins WebView2 `1.0.2592.51`; the Print P0 gate previously started Rebuild without restoring the PackageReference in a fresh clone. This is a build prerequisite diagnosis, not independent proof that all errors are resolved.
 - Mobix One new HEAD `02382eca4d48538ef974cf15e92595f2571f34ee`: gate updated to perform MSBuild `/t:Restore`, verify NuGet project.assets.json contains WebView2 1.0.2592.51, fail closed on restore failure, then compile. No package version, financial, SQL, or app startup changes.
 - Updated exact-head Windows RESTORE/BUILD still NOT_RUN. Previous owner results must not be promoted to a new-head PASS.
+
+## 2026-10-31 — Owner Windows screenshot: full source and compilation gate PASS
+- Owner PowerShell screenshot: Node TAP total **70 tests, 70 pass, 0 fail, 0 skipped**. `MBX-066 INVOICE + WORKER SOURCE CONTRACTS: PASS` explicitly printed.
+- Pinned Microsoft.Web.WebView2 `1.0.2592.51` restored successfully in 4.42 seconds; source gate reports `MO-PRINT-001 WebView2 NuGet restore: PASS (package graph only)`.
+- Windows MSBuild `18.9.1` compiled `Mobix.PrintWorker.exe` and `Mobix.exe` in the Mobix One Release output; `MBX-066 STATIC + WINDOWS COMPILATION GATE: PASS` explicitly printed.
+- Expected source after last user update: `02382eca4d48538ef974cf15e92595f2571f34ee`. Screenshot does not display `git rev-parse HEAD`; confirm local SHA before binding final evidence to exact revision.
+- Scope: code/contract and compilation only; NOT proof of successful PDF appearance, physical printer behavior, isolated database startup, real financial posting, licensing, installer or customer readiness.
+- Next accepted step: run owner-controlled synthetic multi-page A4 PDF fixture with `-RunPdf`, explicitly select `Microsoft Print to PDF` in Windows PrintDialog, inspect pages 1 through last for repeated headers, lines 001-075 and footer. Do not launch Mobix.exe or access SQL for this fixture. Physical printer deferred.
+- No GitHub Actions, PR merge, production SQL change, customer data use, firmware/driver install or runtime AV claimed. TSST DEV_AG NOT_READY, supervised method only.
