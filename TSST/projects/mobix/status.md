@@ -3,13 +3,15 @@ Date: 2026-10-31
 State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 SOURCE STAGED (NOT WINDOWS TESTED); MOBIX_DESKTOP MBX-066 PAUSED, DEV_AG runtime NOT_READY and NOT dispatched.
 
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
-- Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `f0605e1154a7aed46cea7eb40c763dd351948d27`.
+- Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `79ca915236464995972e09033eec42eebbd5a7c8`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
 - Dedicated external print worker, host and fail-closed renderer adapted in Mobix One; Three report print buttons use native report preview; keeps One preview guards on forms, renderer, worker plus existing PrinterService and XP-233B.
 - MBX-066 Node tests and Windows gate source staged, **NOT EXECUTED on Mobix One**. First owner Windows exact-head dual build, Node, preview denial and synthetic PDF gate still OPEN. Physical printer unavailable; defer device/driver test.
 - Independent One code protected: no GL cutover, SQL changes, production customer data, installer, release, Actions or merge.
 - TSST method references (UNVALIDATED): SK-009 failures, SK-011 tests, SK-012 cross-product review, SK-015 verification. DEV_AG runtime NOT_READY; no autonomous dispatch. TSST core/portfolio unchanged.
 - Detailed checkpoint: `TSST/projects/mobix/one-printing-status.md` and the One branch `docs/print/MO-PRINT-001-TSST-HANDOFF.md`.
+
+- 2026-10-31 Windows operator first One source safety gate PASS on previous `f0605e1`; inherited MBX-066 gate FAIL before Node/build due legacy stocktaking route. Corrected One source and supplier print paths, added One Node coverage. New exact head `79ca915` remains NOT_RUN; no PASS claimed for new branch head.
 
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
