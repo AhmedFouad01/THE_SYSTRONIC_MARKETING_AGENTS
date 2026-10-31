@@ -26,7 +26,13 @@ Each project has an isolated source packet in the `AhmedFouad01/real-memory-os` 
 
 Packets are only source evidence. Canonical `01_PROJECTS/<PROJECT_KEY>/` statuses and decisions must not be created/overwritten without review, source reconciliation, exact targets, and controlled apply.
 
-## Current MOBIX_WEB closeout workstream
+## Current Mobix One printing track (2026-10-31)
+- Supervised TSST status: [one-printing-status.md](one-printing-status.md).
+- One feature code and source QA: `Do7a193/Mobix-One` branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`.
+- Windows/Node/physical printer/installer acceptance remains open. Skill methods SK-009/011/012/015 are UNVALIDATED and no autonomous DEV_AG runtime was dispatched.
+- The established Web closeout remains preserved below as a paused workstream.
+
+## Previous MOBIX_WEB closeout workstream
 
 - State and next operator gate: [status.md](status.md).
 - Detailed project gates: [Web closeout](https://github.com/Do7a193/Mobix.Web/blob/architecture/MBX-WEB-CA03-inventory-core/docs/testing/MBX-WEB-TSST-SUPERVISED-CLOSEOUT-2026-10-28.md).
