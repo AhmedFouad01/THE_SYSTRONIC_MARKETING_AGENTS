@@ -25,6 +25,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 
 - 2026-10-31 invoice footer screenshot additionally confirms `MBX-066 QA - NO CUSTOMER DATA — صفحة 1` and row 012: **Invoice synthetic visual checks PASS**, while source-only/fixture-level, not commercial or physical print acceptance. SupplierReturn 43-row / 5-column preview still OPEN.
 
+- 2026-10-31 SupplierReturn A4 synthetic PDF screenshots: 2 pages, five RTL columns and repeated headings, final row 043 and two page footers visible, expected total 2080.00 matches fixture arithmetic. Screenshot partial visual PASS only; full PDF file/row audit and physical printer NOT tested. Read-only Windows preflight is next.
+
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-29).
