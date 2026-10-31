@@ -82,3 +82,11 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - Large blank space below the 12-row A4 table is expected for a fixed-height page and is not itself a failure. However, page footer is **not visible in supplied screenshots**; do not assert absent from the PDF or complete footer PASS. Worker source includes `Footer(...)` in the generic page renderer; verify actual PDF bottom edge or original PDF to close this item.
 - **Evidence classification:** screenshots reviewed, PARTIAL VISUAL PASS for Arabic heading, 12 rows, four columns, wrapping and arithmetic. Full one-page PDF extraction, footer, real invoice branding/logo, customer/tax/discount data, runtime print bridge and physical printer NOT verified. Do not infer commercial readiness.
 - Next: synthetic `SupplierReturn` PDF, 43 rows and 5 columns. Save via Microsoft Print to PDF only, then inspect page breaks/repeated headings, totals, final row, Arabic, footer. No printer or SQL required.
+
+## 2026-10-31 — SupplierReturn synthetic PDF screenshot gate
+- Owner supplied four Acrobat screenshots from MO_ONE_SUPPLIER_RETURN_QA.pdf (2 pages, QA-RETURN-0001, synthetic data only).
+- Arabic title, five columns and RTL headers visible. Page 1 includes visible items 001-020; page 2 begins with item 021 and clearly includes final item 043. Numbered page footers are visible for both pages.
+- Repeated five-column headings visible on page 2. Longer descriptions (items 009, 018, 027, 036) wrap without obvious clipping in supplied screenshots.
+- Expected synthetic total 2080.00 is shown, and arithmetic is consistent with fixture generation (43 lines, alternating quantities 2 and 1 and prices 11..53).
+- SCREENSHOT VISUAL PARTIAL PASS for inspected sections. Actual PDF bytes and every row were not independently audited. This is not live supplier-return, database, physical-printer, or deployment acceptance.
+- Printer QA next: read-only Windows environment preflight, then a separately gated disposable MobixTest_* / legitimate preview license startup review. Hardware, packaging, merge and Actions remain closed/unapproved. TSST DEV_AG remains NOT_READY.
