@@ -90,3 +90,9 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - Expected synthetic total 2080.00 is shown, and arithmetic is consistent with fixture generation (43 lines, alternating quantities 2 and 1 and prices 11..53).
 - SCREENSHOT VISUAL PARTIAL PASS for inspected sections. Actual PDF bytes and every row were not independently audited. This is not live supplier-return, database, physical-printer, or deployment acceptance.
 - Printer QA next: read-only Windows environment preflight, then a separately gated disposable MobixTest_* / legitimate preview license startup review. Hardware, packaging, merge and Actions remain closed/unapproved. TSST DEV_AG remains NOT_READY.
+
+## 2026-10-31 — Windows read-only preflight evidence
+- Owner PowerShell screenshot shows repo at `C:\Users\Do7a\MobixOne-PrintQA`, branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`, HEAD `a2ebf437d0fe77e04a7f4ff6b3888968e810ff51`, working tree clean.
+- `MO-ONE-Windows-Preflight.ps1`: solution, Mobix project, PrintWorker project, UI index all TRUE; MSBuild discovered; .NET Framework >=4.8 TRUE; SqlLocalDB command exists TRUE. `Test database variable valid: False` means `MOBIX_TEST_DATABASE` was unset/invalid in that process.
+- This is READ-ONLY operator preflight only: no program launch, database connection, SQL writes, licensing test or packaging. Red PowerShell errors above preflight are stray pasted test-output lines interpreted as commands, not evidence of this preflight failing.
+- Next: set `MOBIX_TEST_DATABASE=MobixTest_OnePreview01` only in current shell, re-run preflight and query LocalDB `master` only for candidate name existence, without opening Mobix.exe. Confirm a legitimate isolated preview license and runtime paths before any startup.
