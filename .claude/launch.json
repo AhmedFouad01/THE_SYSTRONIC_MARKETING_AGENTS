@@ -15,6 +15,12 @@
       "port": 5181
     },
     {
+      "name": "landing-page",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5190", "--bind", "127.0.0.1", "--directory", "C:/Work/TSST/TSST/brands/t-sag/projects/landing-page/work/site"],
+      "port": 5190
+    },
+    {
       "name": "scc",
       "runtimeExecutable": "cmd",
       "runtimeArgs": ["/c", "set PORT=4000&& npm --prefix C:/dev/systronic-control-center run dev"],

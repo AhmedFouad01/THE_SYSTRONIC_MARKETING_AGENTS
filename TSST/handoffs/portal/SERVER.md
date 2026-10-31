@@ -190,3 +190,20 @@ Owner Ahmed approved. The Dash now lives on his own domain; DuckDNS names only r
 - Verified 2026-10-28: `/login` 200, `/api/tree` 401 without a session, old duckdns URL `/jobs/abc?x=1` → 301 `https://dash.the-systronic.com/jobs/abc?x=1`.
 - Rollback: backups `/etc/caddy/Caddyfile.pre-dash-domain2-20261028-015543.bak` and `/etc/tsst-portal/portal.env.pre-dash-domain2-20261028-015543.bak`.
   `sudo cp -p /etc/caddy/Caddyfile.pre-dash-domain2-20261028-015543.bak /etc/caddy/Caddyfile && sudo cp -p /etc/tsst-portal/portal.env.pre-dash-domain2-20261028-015543.bak /etc/tsst-portal/portal.env && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy && sudo systemctl restart tsst-portal`
+
+## Client share pages (2026-10-30)
+- `https://dash.the-systronic.com/share/<brand>/<page>` serves `/srv/tsst/share/<brand>/<page>.html` (owner `tsst`, 644) as plain static files, no login, no folder listing (404), noindex kept. Everything else still goes to the Dash app.
+- Add a page: `scp` it to `/tmp`, then `sudo install -o tsst -g tsst -m 644 /tmp/x.html /srv/tsst/share/<brand>/<page>.html`. Remove = delete the file.
+- Live: `/share/vill/content-plan` (VILL STUDIO Content & Copy Plan v0.7).
+- Caddy backup before this change: `/etc/caddy/Caddyfile.pre-share-20261030-234830.bak`; repo copy `scripts/server/Caddyfile` updated to match.
+
+## Public website: https://www.the-systronic.com (2026-10-31)
+Owner Ahmed approved. Temporary landing page (job `t-sag/projects/landing-page`, source `work/site/`).
+- DNS (Namecheap, set by Ahmed): `@` and `www` A records → 63.185.191.224. `dash` unchanged.
+- Files: `/srv/tsst/site` (owner `tsst`, dirs 755, files 644). Upload = only `index.html`, `styles.css`, `main.js`, `assets/`
+  (never `_tools/`, `shots/`, `DESIGN.md`, `desktop.ini`). The old "قريباً" placeholder stays in `/srv/tsst/www` for the duckdns/crm names.
+- Caddy (`scripts/server/Caddyfile` in tsst-portal = `/etc/caddy/Caddyfile`): `www.the-systronic.com` serves `/srv/tsst/site`
+  (HSTS, nosniff, indexable, assets cached 1 day, `.webm` sent as `video/webm`); `the-systronic.com` → 301 `https://www.the-systronic.com{uri}`.
+  Let's Encrypt (YE1) for both names, issued 2026-10-31, valid to 2027-01-29, auto-renew. Backup before the change: `/etc/caddy/Caddyfile.pre-site-2026-10-31.bak`.
+- Contact form posts from the browser to Web3Forms (key in `main.js`, Ahmed's account); messages go to the.systronic@gmail.com.
+- Verified 2026-10-31: site 200, bare domain 301 (path kept), http → https 308, Dash `/login` 200 and `/api/tree` 401, one real form test accepted and received in the inbox.
