@@ -17,6 +17,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 
 - 2026-10-31 owner screenshot: Node 70/70 PASS, WebView2 pinned restore PASS, both Mobix.PrintWorker.exe and Mobix.exe Release MSBuild PASS; exact local SHA not displayed (expected 02382ec). Synthetic PDF inspection and runtime/physical printer OPEN; this supersedes earlier build failure.
 
+- 2026-10-31 synthetic A4 PDF screenshots from One: 3 pages, headers repeated on all three, last row 075 and per-page footers visible. **Screenshot visual partial PASS only**; full 75-row PDF, stocktaking/financial fixtures and printer hardware still OPEN. Tracked under `TSST/projects/mobix/one-printing-status.md`.
+
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
 - Current source checkpoint: `docs/print/MBX-066-P0-IMPLEMENTATION.md` on that feature branch (code/documentation as of 2026-10-29).
