@@ -3,7 +3,7 @@ Date: 2026-10-31
 State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 SOURCE STAGED (NOT WINDOWS TESTED); MOBIX_DESKTOP MBX-066 PAUSED, DEV_AG runtime NOT_READY and NOT dispatched.
 
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
-- Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `79ca915236464995972e09033eec42eebbd5a7c8`.
+- Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
 - Dedicated external print worker, host and fail-closed renderer adapted in Mobix One; Three report print buttons use native report preview; keeps One preview guards on forms, renderer, worker plus existing PrinterService and XP-233B.
 - MBX-066 Node tests and Windows gate source staged, **NOT EXECUTED on Mobix One**. First owner Windows exact-head dual build, Node, preview denial and synthetic PDF gate still OPEN. Physical printer unavailable; defer device/driver test.
@@ -12,6 +12,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 SOURCE STAGED (NOT WINDOWS TES
 - Detailed checkpoint: `TSST/projects/mobix/one-printing-status.md` and the One branch `docs/print/MO-PRINT-001-TSST-HANDOFF.md`.
 
 - 2026-10-31 Windows operator first One source safety gate PASS on previous `f0605e1`; inherited MBX-066 gate FAIL before Node/build due legacy stocktaking route. Corrected One source and supplier print paths, added One Node coverage. New exact head `79ca915` remains NOT_RUN; no PASS claimed for new branch head.
+
+- 2026-10-31 second owner Windows gate at One SHA `79ca915`: Node source/behavior PASS, isolated PrintWorker Release PASS, main Mobix.exe Release FAIL on unresolved WebView2. One QA script HEAD `02382ec` now restores pinned NuGet dependency before compile; updated-head Windows PASS not claimed.
 
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
