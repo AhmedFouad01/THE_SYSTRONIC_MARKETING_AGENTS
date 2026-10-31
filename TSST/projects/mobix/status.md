@@ -1,6 +1,6 @@
 # MOBIX — TSST current checkpoint
 Date: 2026-10-31
-State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 SOURCE STAGED (NOT WINDOWS TESTED); MOBIX_DESKTOP MBX-066 PAUSED, DEV_AG runtime NOT_READY and NOT dispatched.
+State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); synthetic PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
 
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
@@ -14,6 +14,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 SOURCE STAGED (NOT WINDOWS TES
 - 2026-10-31 Windows operator first One source safety gate PASS on previous `f0605e1`; inherited MBX-066 gate FAIL before Node/build due legacy stocktaking route. Corrected One source and supplier print paths, added One Node coverage. New exact head `79ca915` remains NOT_RUN; no PASS claimed for new branch head.
 
 - 2026-10-31 second owner Windows gate at One SHA `79ca915`: Node source/behavior PASS, isolated PrintWorker Release PASS, main Mobix.exe Release FAIL on unresolved WebView2. One QA script HEAD `02382ec` now restores pinned NuGet dependency before compile; updated-head Windows PASS not claimed.
+
+- 2026-10-31 owner screenshot: Node 70/70 PASS, WebView2 pinned restore PASS, both Mobix.PrintWorker.exe and Mobix.exe Release MSBuild PASS; exact local SHA not displayed (expected 02382ec). Synthetic PDF inspection and runtime/physical printer OPEN; this supersedes earlier build failure.
 
 ## Paused / retained checkpoint — MOBIX Desktop
 - Repository: `Do7a193/Mobix`; branch: `fix/MBX-066-print-p0-isolation-failclosed`; draft PR #49 remains unmerged.
