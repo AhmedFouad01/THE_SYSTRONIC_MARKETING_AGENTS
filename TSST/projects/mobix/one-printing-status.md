@@ -74,3 +74,11 @@ Real Memory OS proposal-only sync pending; canonical apply requires controlled r
 - Scope: synthetic file only, read-only worker fixture; no stock writes or real printer used. Prior 70/70 Node + dual MSBuild PASS and earlier 3-page A4 screenshot partial PASS remain unchanged.
 - Next gate: two separate financial synthetic PDF tests: `-Scenario Invoice -RunPdf` (12 rows / four columns) and `-Scenario SupplierReturn -RunPdf` (43 rows / five columns), always Microsoft Print to PDF. Check last line, totals, headings, long descriptions and footer, and do not claim customer/business financial QA from synthetic PDFs.
 - Physical print, licensing, isolated SQL app startup, installer and PR merge remain OPEN. DEV_AG not dispatched; no Actions.
+
+## 2026-10-31 — Synthetic sales-invoice PDF screenshots (partial visual PASS)
+- Two user-supplied Acrobat screenshots show a single-page Arabic mock sales invoice (`QA-INV-0001`) in the Invoice fixture of `Tests/Run-MBX066-Financial-A4-QA.ps1 -Scenario Invoice -RunPdf`.
+- Four column headers are visibly legible in RTL (product, quantity, unit sale price, line total). Product rows 001-012 are visible across the two screenshots; the long `QA PRODUCT 009` description wraps without obvious clipping.
+- Displayed expected total `294.00` matches the sum of the fixture line totals: 22+12+26+14+30+16+34+18+38+20+42+22=294.
+- Large blank space below the 12-row A4 table is expected for a fixed-height page and is not itself a failure. However, page footer is **not visible in supplied screenshots**; do not assert absent from the PDF or complete footer PASS. Worker source includes `Footer(...)` in the generic page renderer; verify actual PDF bottom edge or original PDF to close this item.
+- **Evidence classification:** screenshots reviewed, PARTIAL VISUAL PASS for Arabic heading, 12 rows, four columns, wrapping and arithmetic. Full one-page PDF extraction, footer, real invoice branding/logo, customer/tax/discount data, runtime print bridge and physical printer NOT verified. Do not infer commercial readiness.
+- Next: synthetic `SupplierReturn` PDF, 43 rows and 5 columns. Save via Microsoft Print to PDF only, then inspect page breaks/repeated headings, totals, final row, Arabic, footer. No printer or SQL required.
