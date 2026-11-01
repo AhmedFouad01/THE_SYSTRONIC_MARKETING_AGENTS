@@ -46,6 +46,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Next Windows Sandbox step: review QA folder for license/runtime/user data and links, map ONLY the exact sanitized QA TEMP folder read-only using a dedicated `.wsb`, disable network, clipboard, printer, vGPU. Do not mount the Desktop repository, ProgramData, live app data or real SQL DB; do not launch Mobix automatically. Existing Sandbox session must be closed before reopening with folder mapping.
 - License and SQL environment inside sandbox still unprepared; no UI test/print/installer/merge/Actions approved.
 
+## 2026-11-01 MBX-066 Sandbox startup fatal — expected elevated-token guard
+- Operator successfully mapped non-shipping QA copy to `C:\MBX066-QA` in Windows Sandbox; observed Mobix GUI startup error with reference `20261101-121644-30EFAC` (as shown in crash log).
+- `C:\ProgramData\AlAntonyPOS\Logs\crash-20261101.log` stack shows `System.InvalidOperationException` from `DatabaseRuntimeIdentityGuard.EnsureNotElevated()` then `Preflight()` then `Program.Main(string[] args)`. PowerShell title `Administrator: Windows PowerShell` and Windows Sandbox account `WDAGUtilityAccount`. Immediate cause is elevated admin token; no proof of print defect, missing SQL, or license problem from this failure.
+- IMPORTANT: Do not change or bypass production `EnsureNotElevated` / canonical DB protection to accommodate Windows Sandbox. Microsoft documents Sandbox default user `WDAGUtilityAccount` as an administrator; a separate ordinary non-elevated isolated VM or supported limited-token execution is required for app runtime QA.
+- Sandbox also lacks confirmed SQL LocalDB / valid QA license. Next operation should be read-only prerequisite probe; no app relaunch until verified. Prior 68/68 Windows Node + dual Release Build and 6/6 SHA stage PASS unchanged; PR #49 DRAFT.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
