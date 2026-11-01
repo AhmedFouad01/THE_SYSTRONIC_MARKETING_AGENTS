@@ -1,7 +1,14 @@
 # MOBIX — TSST current checkpoint
-Date: 2026-10-31
+Date: 2026-11-01
 State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); stocktaking PDF operator visual PASS, financial PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
 
+## 2026-11-01 Desktop MBX-066 follow-up — preview ACK semantics staged
+- Project: `MOBIX` Desktop only, `Do7a193/Mobix` branch `fix/MBX-066-print-p0-isolation-failclosed`, PR #49 DRAFT; separate from active `MOBIX_ONE` and paused `MOBIX_WEB`.
+- Source base `61ed1b0`; code/tests static gate changes ended at `ebfc510`; Desktop documentation commit `51c5fd7`.
+- Reviewed code: native report-only `printReportDocument` returns `previewRequested=true` after scheduling modeless preview; UI says verify window appeared and denies confirmed paper printing. Legacy `previewOpened` reply is conservatively worded. No financial actions/DB/printer worker/installer touched.
+- Added two report-route tests; independent in-memory V8 mock suite **21/21 PASS**, NOT actual Windows Node/WebView2/C# or physical printing. Previous 66/66 Node and dual Windows Release builds belong to prior source. Current expected **68 Node tests** and new dual Release build **NOT RUN**.
+- Next owner Windows QA: record exact `git rev-parse HEAD`; run `Tests/Run-MBX066-Print-P0-Gate.ps1 -Compile` at clean feature checkout, capture 68-test and dual-build results, then test preview visibility and deny role on isolated non-customer UI without `closeToday` or production SQL.
+- Hardware XP-233B remains unavailable/deferred. No merge, Actions, installer, release or customer deployment. Canonical Real Memory controlled review/apply remains pending.
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
