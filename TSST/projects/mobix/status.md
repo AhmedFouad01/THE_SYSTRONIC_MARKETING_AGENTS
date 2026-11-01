@@ -52,6 +52,11 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - IMPORTANT: Do not change or bypass production `EnsureNotElevated` / canonical DB protection to accommodate Windows Sandbox. Microsoft documents Sandbox default user `WDAGUtilityAccount` as an administrator; a separate ordinary non-elevated isolated VM or supported limited-token execution is required for app runtime QA.
 - Sandbox also lacks confirmed SQL LocalDB / valid QA license. Next operation should be read-only prerequisite probe; no app relaunch until verified. Prior 68/68 Windows Node + dual Release Build and 6/6 SHA stage PASS unchanged; PR #49 DRAFT.
 
+## 2026-11-01 MBX-066 Sandbox basic-user trust level and LocalDB PATH check
+- Operator screenshot inside Windows Sandbox: `runas /showtrustlevels` returned only `0x20000 (Basic User)`; `Get-Command SqlLocalDB.exe -ErrorAction SilentlyContinue` returned no command (`LOCALDB: MISSING`). Absence from PATH does **not** independently prove LocalDB is uninstalled; verify standard SQL tools directories or installation registry in read-only check.
+- Prior crash `DatabaseRuntimeIdentityGuard.EnsureNotElevated()` remains established due elevated Sandbox token. Do not bypass the canonical DB guard or run the GUI again yet. Even a limited-token mode is not an adequate runtime test without verified LocalDB, WebView2, authorized sandbox test license and isolated DB.
+- Next QA: one read-only preflight for `SqlLocalDB.exe` under Program Files and optional known features. If unavailable, mark Windows Sandbox full UI acceptance BLOCKED BY ENVIRONMENT, continue source and isolated UI harness QA or use a separate non-admin VM; do not alter licensing, production SQL, main repo, GitHub Actions, or merge.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
