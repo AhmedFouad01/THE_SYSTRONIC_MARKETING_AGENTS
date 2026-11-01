@@ -9,6 +9,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Added two report-route tests; independent in-memory V8 mock suite **21/21 PASS**, NOT actual Windows Node/WebView2/C# or physical printing. Previous 66/66 Node and dual Windows Release builds belong to prior source. Current expected **68 Node tests** and new dual Release build **NOT RUN**.
 - Next owner Windows QA: record exact `git rev-parse HEAD`; run `Tests/Run-MBX066-Print-P0-Gate.ps1 -Compile` at clean feature checkout, capture 68-test and dual-build results, then test preview visibility and deny role on isolated non-customer UI without `closeToday` or production SQL.
 - Hardware XP-233B remains unavailable/deferred. No merge, Actions, installer, release or customer deployment. Canonical Real Memory controlled review/apply remains pending.
+## 2026-11-01 Desktop MBX-066 Windows 68-test gate: Node PASS, Mobix.exe dependency build BLOCKED
+- Owner Windows clean clone: `C:\Users\Do7a\Projects\Mobix.Desktop-MBX066`, source at `51c5fd7` expected; 68 Node tests PASS / 0 FAIL; worker source-contract checks PASS.
+- Windows compilation continued after remote base ref fetch; `Mobix.exe` Release compilation FAILED with `CS0246` for `Microsoft.Web.WebView2`, `CoreWebView2InitializationCompletedEventArgs`, and related types across multiple host extension files. Worker build success is plausible from gate order, but independently confirm from untruncated log before marking PASS.
+- Source `Mobix/Mobix.csproj` pins `<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />`. Working diagnosis: clean clone requires explicit MSBuild `/t:Restore` before Release build; no evidence that pinned restore has been run yet. Do NOT modify code or replace package version.
+- Next: restore exact pinned package on the same Desktop checkout using the available VS MSBuild (`/t:Restore`), confirm restore success, rerun `Tests/Run-MBX066-Print-P0-Gate.ps1 -Compile` at unchanged SHA and report both Windows binaries. No real customer data, printer, installer, SQL mutation, Actions or merge.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
