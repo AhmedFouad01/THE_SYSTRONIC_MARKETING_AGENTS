@@ -40,6 +40,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Next: create non-shipping local QA staged copy with existing `Tests/Run-MBX066-NonShipping-QA-Stage.ps1` in Desktop only, inspect for sensitive/runtime/activation files before mapping strictly selected files read-only into a NEW Sandbox session. Keep networking, clipboard and printer redirection disabled.
 - Do not launch host `Mobix.exe` or forward host license/runtime state into Sandbox. No client database, merge, Actions, installer or release. MBX-066 PR #49 remains DRAFT.
 
+## 2026-11-01 Desktop MBX-066 non-shipping TEMP QA stage verified (owner Windows)
+- Owner PowerShell screenshot on `C:\Users\Do7a\Projects\Mobix.Desktop-MBX066`, feature HEAD `51c5fd736e3057e810403c3809ea0d9a8cc18db1`: `Tests/Run-MBX066-NonShipping-QA-Stage.ps1` dry-run PASS; explicit `-CreateQaStage` PASS. Source secret/data and junction filename/extension scan PASS. Required local Release pair and six asset files present; all six `MATCH SHA256`; `MBX-066 STAGED PACKAGE BYTE-MATCH: PASS`; `MBX-066 NON-SHIPPING QA COPY: PASS`.
+- Source copy is in a uniquely named directory under `%LOCALAPPDATA%\Temp\MBX066-NonShipping-QA\51c5fd7-*` (the console prints the exact folder). `Mobix.exe` reported FileVersion 15.5.17.0. This is LOCAL QA byte equivalence only; NOT source-to-binary provenance, installer, customer release or UI runtime proof.
+- Next Windows Sandbox step: review QA folder for license/runtime/user data and links, map ONLY the exact sanitized QA TEMP folder read-only using a dedicated `.wsb`, disable network, clipboard, printer, vGPU. Do not mount the Desktop repository, ProgramData, live app data or real SQL DB; do not launch Mobix automatically. Existing Sandbox session must be closed before reopening with folder mapping.
+- License and SQL environment inside sandbox still unprepared; no UI test/print/installer/merge/Actions approved.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
