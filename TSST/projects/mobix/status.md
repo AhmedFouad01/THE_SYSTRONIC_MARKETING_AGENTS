@@ -57,6 +57,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Prior crash `DatabaseRuntimeIdentityGuard.EnsureNotElevated()` remains established due elevated Sandbox token. Do not bypass the canonical DB guard or run the GUI again yet. Even a limited-token mode is not an adequate runtime test without verified LocalDB, WebView2, authorized sandbox test license and isolated DB.
 - Next QA: one read-only preflight for `SqlLocalDB.exe` under Program Files and optional known features. If unavailable, mark Windows Sandbox full UI acceptance BLOCKED BY ENVIRONMENT, continue source and isolated UI harness QA or use a separate non-admin VM; do not alter licensing, production SQL, main repo, GitHub Actions, or merge.
 
+## 2026-11-01 MBX-066 Sandbox LocalDB executable absent in standard SQL Server directories
+- Owner Sandbox PowerShell read-only check ran `Get-Command SqlLocalDB.exe` (missing) then recursively searched both `Program Files\Microsoft SQL Server` and `Program Files (x86)\Microsoft SQL Server` for `SqlLocalDB.exe`; result `LOCALDB FILE NOT FOUND`. This establishes executable absence in those standard install roots, not an exhaustive system-wide inventory.
+- Prior Windows Sandbox app startup was independently blocked at `DatabaseRuntimeIdentityGuard.EnsureNotElevated` with administrator token; full application startup cannot be accepted in current Sandbox. Valid QA license and WebView2 Runtime status unverified.
+- Do NOT install SQL into ephemeral Sandbox or disable production security guard solely to force UI runtime. Recommended next: durable, isolated Windows VM with standard user and official LocalDB install, isolated `MobixTest_*` database and authorized QA license; no live customer DB / host app data transfer.
+- Continue existing Desktop MBX-066 feature branch PR #49 DRAFT. 68/68 Windows Node tests, dual Release MSBuild and 6/6 staged hash checks stay PASS; native UI Preview/roles/real printer remain OPEN. No merge, Actions, installer or shipment.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
