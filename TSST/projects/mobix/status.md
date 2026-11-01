@@ -28,6 +28,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Source review: `Db.DatabaseName` honors `MOBIX_TEST_DATABASE` with `MobixTest_` naming, and `DatabaseRuntimeIdentityGuard.Preflight` bypasses canonical guard in test mode; HOWEVER `AppPaths.ResolveSharedDataRoot()` and `ResolveWebView2Root()` still use shared `AlAntonyPOS` filesystem locations and `Program.Main` performs startup maintenance. Test database selection alone is insufficient to claim full on-device runtime isolation.
 - Next: read-only Windows preflight of shared application data paths and currently running Mobix process. Do not launch Mobix.exe, start migrations or create test DB until protected isolated runtime is agreed. PR #49 DRAFT, no Actions/merge/release.
 
+## 2026-11-01 Desktop MBX-066 shared runtime preflight (read-only)
+- Owner Windows screenshot: `C:\ProgramData\AlAntonyPOS` EXISTS, `%LOCALAPPDATA%\AlAntonyPOS` EXISTS, `%TEMP%\AlAntonyPOS` does not exist; Mobix processes 0; current process vars `MOBIX_TEST_DATABASE` and `MOBIX_TEST_BACKUP_ROOT` both NOT SET.
+- No `Mobix.exe` launched. `Db.DatabaseName` defaults to `ComputerStorePOS_V1` when no test var; `AppPaths` shared data/WebView2 roots remain production locations even if test DB var is set. `LicenseService` also stores license/runtime state in shared dirs and HKCU license registry. `Program.Main` invokes license validation and DB schema startup migrations: DO NOT LAUNCH directly on existing Windows profile for UI QA.
+- Next: determine availability of isolated Windows Sandbox/VM as a separate environment; alternatively design a non-production UI harness that bypasses normal app startup without bypassing commercial licensing. Never modify production database, license, canonical marker, shared AppData or spooler.
+- Retain previous 68/68 Node + dual Release build PASS. PR #49 stays DRAFT; no merge/Actions/release.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
