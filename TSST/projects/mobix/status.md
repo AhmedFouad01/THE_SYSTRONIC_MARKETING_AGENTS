@@ -34,6 +34,12 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - Next: determine availability of isolated Windows Sandbox/VM as a separate environment; alternatively design a non-production UI harness that bypasses normal app startup without bypassing commercial licensing. Never modify production database, license, canonical marker, shared AppData or spooler.
 - Retain previous 68/68 Node + dual Release build PASS. PR #49 stays DRAFT; no merge/Actions/release.
 
+## 2026-11-01 Desktop MBX-066 Windows Sandbox launch PASS (isolated session)
+- Operator screenshots: Windows 10 Pro, hypervisor present, WindowsSandbox.exe present; `MBX066-Isolated.wsb` created under host TEMP with vGPU, networking, clipboard, printer and audio input disabled. `Invoke-Item` launched a distinct Windows Sandbox desktop successfully. **Sandbox launch PASS** only.
+- No Mobix EXE, worker, license, data, SQL or host file was transferred into Sandbox. No UI runtime validation yet; separate Sandbox device normally needs its own valid product activation if full app is run.
+- Next: create non-shipping local QA staged copy with existing `Tests/Run-MBX066-NonShipping-QA-Stage.ps1` in Desktop only, inspect for sensitive/runtime/activation files before mapping strictly selected files read-only into a NEW Sandbox session. Keep networking, clipboard and printer redirection disabled.
+- Do not launch host `Mobix.exe` or forward host license/runtime state into Sandbox. No client database, merge, Actions, installer or release. MBX-066 PR #49 remains DRAFT.
+
 ## Active workstream — MOBIX ONE / MO-PRINT-001 (supervised source port)
 - Repository: `Do7a193/Mobix-One`; print branch `fix/MO-PRINT-001-mbx066-isolated-print-foundation`; source HEAD at update: `02382eca4d48538ef974cf15e92595f2571f34ee`.
 - Desktop MBX-066 reference branch `fix/MBX-066-print-p0-isolation-failclosed` source `4c37ff6ee32383b65a5efecf9769211c94410a66`; historical 61/61 Node plus dual Windows Release build PASS are Desktop-only evidence.
