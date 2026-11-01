@@ -148,3 +148,8 @@ State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS
 - TSST Lead supervision and DEV method references: SK-011, SK-012, SK-015 (UNVALIDATED); **no autonomous agent started**, TSST Core/portfolio untouched and frozen through 2026-11-15.
 - Canonical Real Memory controlled review/apply remains pending for MOBIX, MOBIX_WEB, MOBIX_ONE. No production or skills readiness promotion.
 - Do not repeat completed MBX-065 (Desktop) or CA01 and accepted CA02/CA03 (Web) gates without change-risk; no Actions without specific owner approval.
+
+## 2026-11-01 Owner preference — simplest correct local-first workflows
+- Owner direction (all projects): Always choose the simplest **correct, safe** solution using the existing Windows machine and available software first. Minimize downloads, installations, VM provisioning and steps; preserve data, security and licensing. Prefer one short actionable command and keep English technical tokens in separate LTR code blocks for Arabic readability.
+- **MOBIX Desktop:** Stop proposed Windows ISO / separate VM installation path for MBX-066 unless truly necessary and explicitly agreed. Preserve accepted 68/68 Windows Node, dual Release compilation, 6/6 staged SHA QA. Focus next on safe current-machine independent report print UI/preview checks that do not touch production DB, license or shared runtime state; full integrated preview and physical printer remain NOT VERIFIED.
+- Canonical/global Real Memory proposal (not applied): `05_GLOBAL_SYNC_INBOX/chatgpt/pending/2026-11-01_GLOBAL_PREFERENCE_SIMPLE_CORRECT_LOCAL_FIRST.rm-sync.md` in `AhmedFouad01/real-memory-os`.
