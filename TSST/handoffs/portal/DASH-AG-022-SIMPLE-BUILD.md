@@ -26,6 +26,27 @@ Write `C:\Work\TSST\TSST\handoffs\portal\simple-build-001\GAPS.md`: one row per 
   - Client "change my decision".
   - Team home "today" list.
 - Reply 3 lines and **wait**. The Lead and Ahmed decide who builds the server part. Don't edit `src/` or `migrations/` before that.
+- **Done 01/11.** Lead accepted `GAPS.md` (add the missing `Skills used:` line). Ahmed's decisions are in the plan, R60 section, last bullet.
+
+## Step 0b: server part (Ahmed OK 01/11). Stop and reply before the UI
+Build every server row marked missing or "relax" in `GAPS.md`, section 4, in the `simple-build` worktree.
+Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or changed endpoint gets an API test.
+- **Access:** these move from owner to every team account: client preview (`client-accounts.ts:187` + the owner-only check in
+  `index.ts:72-73`), requests accept / decline / price / delete, client people, packages and payments, release early.
+- **Copy link again:**
+  - New links: store the token encrypted (AES-256-GCM). The key comes only from an env var on the server, never in the repo or `.env.example` values.
+  - `GET /access` returns `url` when it can decrypt it. With no key set, it returns no `url` and nothing breaks.
+  - `POST /access/:id/renew` = new token + new expiry, and the old token stops working. Old links (hash only) get renew only.
+  - Name the env var in your reply: the Lead adds it on the server at deploy.
+- **History stays whole:** keep `item_comments_immutable` and `item_versions_immutable`. Comment edit / delete and version delete
+  are new append-only rows (a revision or a "deleted" mark). Reads show the latest and hide deleted ones.
+  - Version delete: 409 on the approved or posted version.
+  - Client edits / deletes only their own comments.
+- **Change my decision:** the client can change an approved item until it is scheduled or posted, recorded in decision history.
+- **Other deletes** (client, job, client person, team user, plans): hide from lists (soft delete or deactivate). Never hard-delete rows that history points to.
+- **Team home `today`** and **My work `scope=all` + type filter**: as `GAPS.md` says.
+- Checks once at the end: root typecheck, lint, `npx vitest run --no-file-parallelism`.
+- No live DB, no server, no deploy, no push. Reply 3 lines (commits · checks · env var name) and **wait** for the Codex review.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
