@@ -47,6 +47,9 @@ Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or ch
 - **Team home `today`** and **My work `scope=all` + type filter**: as `GAPS.md` says.
 - Checks once at the end: root typecheck, lint, `npx vitest run --no-file-parallelism`.
 - No live DB, no server, no deploy, no push. Reply 3 lines (commits · checks · env var name) and **wait** for the Codex review.
+- **Built 03/11 on the Mac by Claude `tsst-dev` (Ahmed's choice).** `simple-build` `b81e7f0..b183c85` (7 commits, local only, migrations 028–030);
+  typecheck + lint 0 errors; vitest 590/590. Env var `TSST_LINK_TOKEN_KEY` (32 bytes, base64 or hex; wrong length stops the server at start).
+  Open for Ahmed: `/settings/access` (list, copy, renew, revoke) still owner-only; delete client, team user and plan still owner-only. Next: Codex review.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
