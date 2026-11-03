@@ -49,7 +49,8 @@ Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or ch
 - No live DB, no server, no deploy, no push. Reply 3 lines (commits · checks · env var name) and **wait** for the Codex review.
 - **Built 03/11 on the Mac by Claude `tsst-dev` (Ahmed's choice).** `simple-build` `b81e7f0..b183c85` (7 commits, local only, migrations 028–030);
   typecheck + lint 0 errors; vitest 590/590. Env var `TSST_LINK_TOKEN_KEY` (32 bytes, base64 or hex; wrong length stops the server at start).
-  Open for Ahmed: `/settings/access` (list, copy, renew, revoke) still owner-only; delete client, team user and plan still owner-only. Next: Codex review.
+  Ahmed 03/11: client links open to every team account → `c6fc206` (all `/settings/access` routes incl. edit + reset PIN; vitest 592/592).
+  Delete client, team user and plan stay owner-only. Next: Codex review of `origin/main..c6fc206`.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
