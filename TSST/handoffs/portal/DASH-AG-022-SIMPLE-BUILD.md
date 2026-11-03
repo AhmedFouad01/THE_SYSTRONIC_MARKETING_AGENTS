@@ -51,6 +51,9 @@ Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or ch
   typecheck + lint 0 errors; vitest 590/590. Env var `TSST_LINK_TOKEN_KEY` (32 bytes, base64 or hex; wrong length stops the server at start).
   Ahmed 03/11: client links open to every team account → `c6fc206` (all `/settings/access` routes incl. edit + reset PIN; vitest 592/592).
   Delete client, team user and plan stay owner-only. Next: Codex review of `origin/main..c6fc206`.
+- **03/11 Ahmed: Claude reviews (instead of Codex) and builds the screens.** Review `e482084`, `f1a9b24` (3 medium fixed); server 8/8 `7554cf7`
+  (client request edit, comment `mine`); vitest 601/601. Client steps 1–5 `fab1213..06e9b23`, Lead R55 R1 returned (10 points), R2 accepted;
+  gate 0 on 4 pages; compare images in `simple-build-001/cmp-client-*`. Waiting: Ahmed looks at the client pages, then team steps 6–9.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
