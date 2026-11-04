@@ -56,8 +56,11 @@ Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or ch
   gate 0 on 4 pages; compare images in `simple-build-001/cmp-client-*`. Waiting: Ahmed looks at the client pages, then team steps 6–9.
 - **04/11 Ahmed OK'd the client pages; team steps 6–9 built** `330deb8..49455f9` (Lead R55: R1 returned, R2 4 points, R3 people-row reset kept, accepted).
   Root typecheck + lint 0 errors, vitest 601/601; web typecheck, build, ds:check, test:api 131/131; web lint 265 errors vs 266 on main.
-  Gate 0 on 17 shots; images `simple-build-001/cmp-team-*`. Pushed 04/11 (Ahmed OK): tsst-portal PR #27 `simple-build` → `main`, not merged, not deployed. Open: job "AI-made" extra has no UI;
-  shared files not in client My work; no timezone in API. Next: Ahmed looks at the team pages → push branch / PR → deploy (Ahmed OK, add `TSST_LINK_TOKEN_KEY`) → step 5.
+  Gate 0 on 17 shots; images `simple-build-001/cmp-team-*`. Pushed 04/11 (Ahmed OK): tsst-portal PR #27 `simple-build` → `main`, merged `6290115`.
+  **Deployed 04/11 (Ahmed OK):** release `6290115a2` live, migrations 028–030 applied, dump `/srv/tsst/backups/pre-deploy-6290115a2.sql.gz`;
+  `/login` + `/client` 200, API 401 anonymous, live bundle = build. Mac deploy needs GNU tar + grep on PATH (`deploy.sh` uses `--transform`, `grep -P`).
+  Open: `TSST_LINK_TOKEN_KEY` not set (Ahmed adds it; links stay hash-only, Renew works); job "AI-made" extra has no UI;
+  shared files not in client My work; no timezone in API. Next: step 5 (remove the old decision path), only with Ahmed's OK.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
