@@ -54,6 +54,10 @@ Commit per piece: `feat(api): … (DASH-SIMPLE-001 server n/N)`. Every new or ch
 - **03/11 Ahmed: Claude reviews (instead of Codex) and builds the screens.** Review `e482084`, `f1a9b24` (3 medium fixed); server 8/8 `7554cf7`
   (client request edit, comment `mine`); vitest 601/601. Client steps 1–5 `fab1213..06e9b23`, Lead R55 R1 returned (10 points), R2 accepted;
   gate 0 on 4 pages; compare images in `simple-build-001/cmp-client-*`. Waiting: Ahmed looks at the client pages, then team steps 6–9.
+- **04/11 Ahmed OK'd the client pages; team steps 6–9 built** `330deb8..49455f9` (Lead R55: R1 returned, R2 4 points, R3 people-row reset kept, accepted).
+  Root typecheck + lint 0 errors, vitest 601/601; web typecheck, build, ds:check, test:api 131/131; web lint 265 errors vs 266 on main.
+  Gate 0 on 17 shots; images `simple-build-001/cmp-team-*`. Branch local only (not pushed). Open: job "AI-made" extra has no UI;
+  shared files not in client My work; no timezone in API. Next: Ahmed looks at the team pages → push branch / PR → deploy (Ahmed OK, add `TSST_LINK_TOKEN_KEY`) → step 5.
 
 ## Build (after the OK; commit per step: `feat(web): … (DASH-SIMPLE-001 build n/9)`)
 1. **Client shell:** 4 links (Home · For your review · My work · Requests), 390 = one row + menu. Old routes keep working and
