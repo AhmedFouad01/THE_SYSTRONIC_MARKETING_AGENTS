@@ -12,8 +12,9 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Live release: `6290115` (PR #27), since 2026-11-04. `main` is at `8915d14` (S0-01 merged, **not deployed**).
 - Approved to run: **S0 only** (Ahmed, 2026-11-05). S1–S6 are not started and not approved.
 - **Stopped at the S0 deploy gate**, waiting for Ahmed:
-  1. this Mac's public IP in the AWS SSH rule: `196.133.118.237` when checked on 2026-11-05 (it was `154.190.156.141`
-     earlier the same day; port 22 did not answer from this Mac, so the rule still has an old IP). Check it again before the deploy;
+  1. this Mac's public IP in the AWS SSH rule. The IP changed three times on 2026-11-05 (`154.190.156.141` →
+     `196.133.118.237` → `154.181.11.190`) and port 22 did not answer from this Mac, so read the IP at deploy time,
+     Ahmed puts that one in the rule, and the deploy starts right after;
   2. deploy now, or in quiet hours (Cairo 01:00–06:00).
 - After the deploy: live smoke, write the release in the Deploy table, mark S0 deployed, then ask Ahmed about S1
   (S1-02 needs access for the restore drill, S1-03 needs his OK for branch protection).
