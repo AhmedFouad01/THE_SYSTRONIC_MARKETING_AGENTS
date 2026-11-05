@@ -9,9 +9,14 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
-- Live release: `6290115` (PR #27), since 2026-11-04.
+- Live release: `6290115` (PR #27), since 2026-11-04. `main` is at `8915d14` (S0-01 merged, **not deployed**).
 - Approved to run: **S0 only** (Ahmed, 2026-11-05). S1–S6 are not started and not approved.
-- Current ticket: **S0-01**, in progress. Next stop: the S0 deploy gate (Ahmed's OK).
+- **Stopped at the S0 deploy gate**, waiting for Ahmed:
+  1. this Mac's public IP in the AWS SSH rule: `196.133.118.237` when checked on 2026-11-05 (it was `154.190.156.141`
+     earlier the same day; port 22 did not answer from this Mac, so the rule still has an old IP). Check it again before the deploy;
+  2. deploy now, or in quiet hours (Cairo 01:00–06:00).
+- After the deploy: live smoke, write the release in the Deploy table, mark S0 deployed, then ask Ahmed about S1
+  (S1-02 needs access for the restore drill, S1-03 needs his OK for branch protection).
 
 ## Operating rules
 1. **One ticket = one branch = one PR.** The branch is cut from `origin/main` in its own worktree. Never work on `main` directly.
@@ -64,7 +69,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 ### S0 Hotfix: stop the live 404s on client links
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S0-01 | Add missing SPA routes | deploy | — | in progress | — | — | 10 routes, not the plan's 5: see `tickets/S0-01.md`. |
+| S0-01 | Add missing SPA routes | deploy | — | merged, waiting at the deploy gate | [#28](https://github.com/AhmedFouad01/tsst-portal/pull/28) → `8915d14` | pass (2 passes, final head `d8d089a`) | 10 routes, not the plan's 5. Checks at `d8d089a`: typecheck 0, lint 0 errors, vitest 603/603. Evidence: `tickets/S0-01.md`. |
 
 Go / no-go (Ahmed): —
 
