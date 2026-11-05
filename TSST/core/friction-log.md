@@ -80,6 +80,12 @@ Repeats surface as lesson candidates: `python TSST/context/friction_check.py` (r
 | 2026-10-21 | studio | TSST-CREATIVE-SK-030 | no check that UX proof uses real data shapes (images-only job, real wide logo) and both themes of every screen; placeholder demo data hid P1 bugs | Dash UX audit 002 |
 | 2026-10-21 | studio | TSST-CREATIVE-SK-011 | no per-platform format table (ratios, carousel limits, Reel/Story/Document) and no ratio-warning or crop rules for product post previews | Dash post formats 001 |
 | 2026-10-21 | studio | TSST-CREATIVE-SK-030 | method is CRM-scoped (CRM tasks M0-M2); no variant for social-post editors or format previews | Dash post formats 001 |
+| 2026-11-05 | motion | TSST-MOTION-SK-002 | no fit rule for cutdown VO lines recorded before the cutdown scene lengths were set; agent re-timed scenes on its own (fixed: v0.3 rule + kit assertFits) | MOTION-TRAIN-001 15 s cutdown |
+| 2026-11-05 | motion | TSST-MOTION-SK-002 | no template for a shorter edit from a master's scenes; the end-card hold was tied to the master's duration (fixed: kit README cutdown section) | MOTION-TRAIN-001 15 s cutdown |
+| 2026-11-05 | motion | TSST-MOTION-SK-003 | kit loudness_fix left AAC padding, so a 15 s picture became a 15.1 s file and failed the length check (fixed: output cut to picture length) | MOTION-TRAIN-001 15 s cutdown |
+| 2026-11-05 | motion | TSST-MOTION-SK-003 | no rule for fitting music to a short cut (natural ending vs splice) and no definition of the SFX-free end hold (fixed: v0.3) | MOTION-TRAIN-001 15 s cutdown |
+| 2026-11-05 | motion | TSST-MOTION-SK-003 | music_analyze reports 2 s energy bars only; no per-beat energy or list of natural ending positions (open) | MOTION-TRAIN-001 15 s cutdown |
+| 2026-11-05 | motion | TSST-MOTION-SK-007 | review stills fell on scene first frames; no rule to measure text near the safe edge (fixed: v0.3); kit README showed stills only for the master id and omitted macOS sed -i and the missing s16le muxer (fixed) | MOTION-TRAIN-001 15 s cutdown |
 
 ## Recovered legacy records — original history (inactive)
 

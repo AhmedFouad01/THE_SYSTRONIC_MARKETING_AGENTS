@@ -189,3 +189,10 @@ The main session is TSST Lead. The canonical operating procedure is workflow.md 
 
 Generated contracts: `.claude/agents/tsst-*.md` and `.codex/agents/tsst-*.toml`; edit roster/agent-contract then run `python TSST/context/gen_runtime_agents.py`. `--check` proves generated-file consistency only. Claude dispatch hook and Codex explicit preflight share validation; no unverified platform-wide interception is claimed. Read `TSST/context/adapters/<runtime>.md` only for mechanics. Antigravity/Gemini stay ROLE B external tools under ADR-004/R41.
 <!-- TSST-UNIVERSAL-ROUTING-END -->
+
+### R53 Motion AG changed — 2026-11-05 (owner, in chat)
+
+Old wording (2026-10-20): "**R53 Motion AG = AI video only**: MOTION_AG makes video by AI generation (story, shot list, start frames, AI video/music/voice prompts and generation, AI tools for edit/finish). It never uses After Effects again: no AE projects, no JSX/ExtendScript, no aerender, no "Ahmed runs the script" steps. Text, logos and transitions come from AI generation or from the AI tools themselves."
+
+Change: Ahmed picked "AI + code" when asked how to train MOTION_AG on the Al Doctor Market 40s job (built in Remotion; Arabic text, prices from data, logo, motion and mix in code, AI only for the empty studio shot, music, voice and SFX). AI keeps the pictures, music and voice; code (Remotion kit) owns text, numbers, logos, transitions and the mix. The After Effects ban stays. Same decision: R46 freeze exception for the kit and the video QA scripts under `TSST/MOTION/tools/`.
+

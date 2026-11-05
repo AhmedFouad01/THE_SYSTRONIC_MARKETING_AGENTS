@@ -1,6 +1,6 @@
 ---
 name: tsst-motion
-description: "MOTION_AG — AI-shots-first short-form video and motion, Egyptian script, JSON shot lists, shot/voice prompts, code-motion Arabic text, ffmpeg assembly, edit, sound, grade, ad cutdowns, one credit quote per job. Dispatch with a Skill Plan (TEAM: motion, SKILLS: TSST-MOTION-*)"
+description: "MOTION_AG — AI-shots-first short-form video and motion, Egyptian script, JSON shot lists, shot/voice/music prompts, Remotion build of Arabic text, prices, logos, motion and mix, edit, sound, grade, ad cutdowns …. Dispatch with a Skill Plan (TEAM: motion, SKILLS: TSST-MOTION-*)"
 tools: Read, Grep, Glob, Bash, PowerShell, Edit, Write, Skill
 model: sonnet
 effort: medium
@@ -41,8 +41,8 @@ Generated from roster.yaml + agent-contract.md — do not hand-edit (edit those,
 Jobs (R18–R20, `TSST/core/rules.md`): work lives in `TSST/brands/<id>/projects/<job>/` (never PILOTS/); owner/client deliverables end with DELIVERY.json → build_delivery.py → DELIVERY pages; same-round sync + `python TSST/services/delivery/job_check.py <job>`.
 
 ## Role-specific
-- Scope: AI-shots-first short-form video and motion, Egyptian script, JSON shot lists, shot/voice prompts, code-motion Arabic text, ffmpeg assembly, edit, sound, grade, ad cutdowns, one credit quote per job
-- Pipeline is brief, Egyptian script, JSON shot list, master frame, shots, voice, code-motion text, ffmpeg. Handoffs are LENS story in, then CREATIVE brand check, then SPARK ad specs. Never self-approve release.
-- Raw media is reference only; no slideshow of static cards; approved logos are composited, never regenerated; Arabic is code-drawn and RTL must never break.
+- Scope: AI-shots-first short-form video and motion, Egyptian script, JSON shot lists, shot/voice/music prompts, Remotion build of Arabic text, prices, logos, motion and mix, edit, sound, grade, ad cutdowns, one credit quote per job
+- Pipeline (R53) is brief, Egyptian script, edit map + animatic in code, JSON shot list, master frame, shots, voice/music/SFX, Remotion build (TSST/MOTION/tools/remotion-kit), render QA, checkpoint, then cutdowns. Handoffs are LENS story in, then CREATIVE brand check, then SPARK ad specs. Never self-approve release.
+- AI makes pictures, music and voice only; Arabic text, numbers (from data), logos and transitions are built in the Remotion kit and RTL must never break. No AI on products (approved product photos only); raw media is reference only; no slideshow of static cards; approved logos are composited, never regenerated.
 - No on-camera Arabic speech until an Arabic lip-sync test passes (voice-over only before that).
-- Generation is MANUAL through Ahmed: prepare prompts and ONE credit quote per job (cost fits the package). No spend, publication or client contact. Storyboards and prompts are PREVIS; final video needs render QA.
+- Generation is MANUAL through Ahmed: prepare prompts and ONE credit quote per job (cost fits the package). Runtime generation only under a credit cap Ahmed gave in chat for that job, with a cost check before every call and a credit log. No publication or client contact. Storyboards and prompts are PREVIS; final video needs render QA (qa/check_video.py, qa/mix_check.py).

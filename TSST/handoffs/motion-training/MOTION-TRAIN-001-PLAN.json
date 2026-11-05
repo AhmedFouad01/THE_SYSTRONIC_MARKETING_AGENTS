@@ -1,0 +1,21 @@
+{
+  "team": "motion",
+  "agent": "tsst-motion",
+  "skills": ["TSST-MOTION-SK-002", "TSST-MOTION-SK-003", "TSST-MOTION-SK-007"],
+  "not_selected": "SK-001 (reuse master motion code), SK-004 (no grading), SK-005 (no new AI shots), SK-006 (VO already recorded).",
+  "tier": "WORK",
+  "acceptance": "15 s 9:16 cutdown of EX-MO-001 per its plan section 5: check_video.py ALL PASS at 450 frames, mix_check.py MIX OK, safe-box stills with verdicts, captions only on scenes 1/4/5, NOTES.md + return packet with skill_friction.",
+  "skill_gap": "none",
+  "track": "master",
+  "runtime": "claude",
+  "contract_mode": "explicit",
+  "contract_path": ".claude/agents/tsst-motion.md",
+  "read": ["TSST/MOTION/**", ".claude/agents/tsst-motion.md"],
+  "write": [],
+  "actions": [],
+  "authority": {
+    "source": "Ahmed in chat 2026-11-05: train MOTION AG; picked 'AI + code' (R53 change) and 'lessons + practice now' (about one Claude session). Practice job writes only in the owner's local job folder ~/Downloads/Aldoctor market/video/training/motion-ag-15s/ (outside the repo); 0 credits, no generation.",
+    "approved_scope": {"read": ["TSST/MOTION/**", ".claude/agents/tsst-motion.md"], "write": [], "actions": []}
+  },
+  "notes": "Preflight cannot pass on the Mac clone (CANONICAL_ROOT is C:/Work/TSST). Lead-side TSST edits of this training (rules R53/R46, MOTION skills v0.2, kit, EX-MO-001, roster/agent regen, index) are listed in the Lead's report."
+}
