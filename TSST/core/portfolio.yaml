@@ -12,9 +12,10 @@ brands:
     memory: TSST/brands/t-sag/memory/source.md
     projects:
       crm:
-        state: M0/M1/M2 CLOSED; M2 post-close hardening COMPLETE; UI design gate PASSED (prototype, not production code); M3 NOT STARTED
-        checkpoint: TSST/brands/t-sag/projects/crm/project.md
-        next: PAUSED until TSST Core accepted; then CRM_UI_HANDOFF → implementation mapping → CRM_APP UI (no M3, no redesign)
+        state: (checked 2026-11-05) idle since 2026-10-09, not deployed. Built — M0–M2, custom fields B1–B4, Better Auth B1–B5 (TOTP off until launch), CSV/XLSX import, dashboard charts, React Aria UI, fix batches 1–2. Redesign (D-01–D-12, HeroUI theme, wireframes) is design only and needs an R53 no-borders pass
+        repo: AhmedFouad01/tsst-crm (main); full history tag backup/2026-10-16/feat-crm-mvp-ui
+        checkpoint: tsst-crm:docs/crm-project/project.md (refresh in tsst-crm pull/1)
+        next: Ahmed sets the order — redesign into code (HeroUI, R50/R53/R57) · segments S1–S6 · tracking/consent T1–T8 · Meta M1–M14 · launch on EC2 (PORTAL-001 phase 5)
       tsst-ai:
         state: Motion AG team (MOTION_AG, TSST-ADR-005, d5bb15e) registered 2026-10-11, NOT_READY, skills UNVALIDATED; RM-CS-001 applied (D-012 APPROVED); TSST-001A CLOSED 2026-10-05 (TSD-013); TSST NOT_READY
         checkpoint: TSST/archive/research/tsst-ai/project.md
