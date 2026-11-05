@@ -10,24 +10,32 @@ A ticket is never written as merged without its PR and its checks next to it.
 
 ## Now
 - Live release: `6290115` (PR #27), since 2026-11-04. `main` is at `8915d14` (S0-01 merged, **not deployed**).
-- Approved to run: **S0 only** (Ahmed, 2026-11-05). S1–S6 are not started and not approved.
-- **Stopped at the S0 deploy gate**, waiting for Ahmed:
-  1. this Mac's public IP in the AWS SSH rule. The IP changed three times on 2026-11-05 (`154.190.156.141` →
-     `196.133.118.237` → `154.181.11.190`) and port 22 did not answer from this Mac, so read the IP at deploy time,
-     Ahmed puts that one in the rule, and the deploy starts right after;
-  2. deploy now, or in quiet hours (Cairo 01:00–06:00).
-- After the deploy: live smoke, write the release in the Deploy table, mark S0 deployed, then ask Ahmed about S1
-  (S1-02 needs access for the restore drill, S1-03 needs his OK for branch protection).
+- **Ahmed, 2026-11-06: build first, deploy later.** No deploy yet, not even S0. `main` stays as it is (deployable with
+  S0 alone); all new work goes to the integration branch `next`.
+- Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
+  (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
+- Runs as a self-paced loop in one session. Current ticket: see the first row below that is not `merged`.
+- Next owner stops: the S3 preview (Ahmed sees the built client page next to mockups 01–03), then the deploy plan.
+  Proposed deploy order: S0 alone → S1 → S2 (migrations, after the restore drill) → S3, each in quiet hours.
+- Deploy facts kept for later: this Mac's public IP changes within hours (three values on 2026-11-05) and port 22 did
+  not answer from it, so read the IP at deploy time, Ahmed puts that one in the AWS SSH rule, and the deploy starts right after.
 
 ## Operating rules
-1. **One ticket = one branch = one PR.** The branch is cut from `origin/main` in its own worktree. Never work on `main` directly.
-2. **Checks before a PR is merged:** `npm ci`, root typecheck, lint, `npx vitest run --no-file-parallelism`; plus the web typecheck
-   and build when `web/` changes. The repo has no CI until S1-03, so the checks run on this Mac and their result is written on the ticket.
+1. **One ticket = one branch = one PR into `next`.** The branch is cut from `origin/next` in its own worktree. Never work
+   on `main` or `next` directly, and no ticket PR targets `main` (since 2026-11-06): `main` must stay deployable with S0 alone,
+   and `scripts/deploy.sh` refuses to run while a ready PR into `main` is open. `next` goes to `main` only at a deploy gate.
+2. **Checks before a PR is merged:** `npm ci`, root typecheck, lint, `npx vitest run --no-file-parallelism`; plus the web typecheck,
+   build and tests when `web/` changes. Until S1-03 is merged the checks run on this Mac and are written on the ticket; after it,
+   CI must be green on the PR too.
 3. **Independent reviewer on every PR:** a team agent (R1, `tsst-dev`) that sees only the diff and the acceptance list. Its findings
    are fixed or answered before the merge. Merge only when the checks are green and the reviewer says pass.
-4. **The loop stops only at owner gates:** a design approval (R57), a migration on money or decision tables, every deploy, and a
-   decision a ticket depends on. It also stops on a failed restore drill, red checks on `main` or a failed live smoke.
-5. **Deploys only with Ahmed's OK in chat**, at the end of a part, in quiet hours (see Deploy below).
+4. **The loop stops only at owner gates:** a decision a ticket needs, the S3 preview for Ahmed's approval, a Postgres install,
+   restore-drill access, every deploy and every migration on production. It also stops on red checks on `next` or `main`.
+5. **Deploys only with Ahmed's OK in chat**, in quiet hours (see Deploy below).
+8. **Migrations are written and tested on a local database only.** Nothing touches production before a deploy gate, and the
+   restore drill (S1-02) comes before any deploy that carries a migration.
+9. **Preview before a deploy:** Ahmed sees the built pages, not only mockups: the real server and web from `next` on a local
+   database seeded like `mockups/SAMPLE-STATE.md`, with EN 1440 light and AR 390 dark screenshots next to the mockups.
 6. **Never touched by the loop:** `/etc/tsst-portal/portal.env`, `.env` files, `*.pem` contents, `~/.ssh`, AWS, DNS, mail or
    WhatsApp providers. Email sign-in returning 503 is expected (no mail provider on purpose).
 7. Status words: `todo` · `in progress` · `in review` · `merged` · `deployed` · `blocked (<gate>)`.
@@ -37,6 +45,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 |---|---|---|
 | 2026-11-05 | Mockups 01–03 (client page) as drawn | Design gate G2 is open for S3. Settles decisions 1, 2, 3, 7 (below). |
 | 2026-11-05 | "Start S0" | S0-01 may be built and merged. The S0 deploy still needs its own OK. |
+| 2026-11-06 | "طيب ابدأ ف تنفيذ الشكل والهيكلة الجديدة قبل النشر" (said in the Lead's main session, relayed to the sprint session) | Build the new structure and the new look before any deploy. Scope: S1-01, S1-03, S1-04, S1-05, all of S2, S3. Not S1-02, not S4–S6. Integration branch `next`; migrations on a local database only; decisions 4, 5, 6 run on the recommended defaults until he confirms them at the deploy gate. |
 
 ## Decisions (numbers = `decisions_needed` in the plan)
 | # | Decision | State | Answer or recommendation |
@@ -45,9 +54,9 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 2 | Package lines | settled 2026-11-05 | Keep the real lines: campaigns / ads / edit credits / hours. No new package model. |
 | 3 | Account manager per client | settled 2026-11-05 | One "Account manager" line in Settings; needs a new column in S2-05. |
 | 7 | Archive and Delete only in Settings > Danger | settled 2026-11-05 | Approved. |
-| 4 | Requests per month on the client Home | open, before S2-05 (G0) | Recommended: drop the line unless packages really sell a number of requests. |
-| 5 | Growth report link rule | open, before S2-05 (G0) | Recommended: shown when the switch is on and one result is recorded. |
-| 6 | "Approve all" on the client Home | open, before S2-05 (G0) | Recommended: remove; the client approves on the item. |
+| 4 | Requests per month on the client Home | default since 2026-11-06, Ahmed confirms at the deploy gate | No requests-per-month field (S2-05 does not add one). |
+| 5 | Growth report link rule | default since 2026-11-06, Ahmed confirms at the deploy gate | The client's "This month's result" link shows only when the switch is on and a result exists. |
+| 6 | "Approve all" on the client Home | default since 2026-11-06, Ahmed confirms at the deploy gate | Removed; the client approves on the item (built in S5, not now). |
 | 8 | Arabic words: 5 stage names and "milestone" | open | Recommended: keep the current Arabic words; Ahmed confirms. |
 | 9 | Who records a result | open | Recommended: any team member, name recorded, each field saves alone. |
 | 10 | Metric list for v1 | open | Recommended: acquisition = reach; activation = visits or leads; revenue = orders; retention and referral optional. |
@@ -58,10 +67,12 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 15 | Sprint boundary | open, before G5 | Recommended: baselines, next move, ad spend, Meta import, profitability, Remind and the client calendar go to a second sprint. |
 
 ## Gates
-- **G0** Decisions 1–6 before S2-05 and before redrawing 01 / 02 / 07. Open: 4, 5, 6.
-- **G1** Restore drill passed (S1-02) before any migration ticket.
+- **G0** Decisions 1–6 before S2-05 and before redrawing 01 / 02 / 07. 4, 5, 6 run on defaults since 2026-11-06 (confirmed at the deploy gate).
+- **G1** Restore drill passed (S1-02) before any deploy that carries a migration (since 2026-11-06: migrations are built and
+  tested locally first, so the drill gates the deploy, not the ticket).
 - **G2** Design gate per set: 01–03 before S3 (**approved 2026-11-05**), 04–06 before S4, 07–09 before S5. Ahmed approves the drawn files.
-- **G3** Migration gate: S2-02, S2-03, S2-04, S5-01 each need Ahmed's OK and a fresh backup the same day.
+- **G3** Migration gate: S2-02, S2-03, S2-04, S5-01 each need Ahmed's OK and a fresh backup the same day before they run on
+  production. Building and testing them on a local database is approved (2026-11-06).
 - **G4** Deploy gate: end of every part, quiet hours, Ahmed's OK, live smoke green.
 - **G5** Sprint end: S0–S6 demos accepted here; anything else goes to the second sprint.
 
@@ -70,35 +81,35 @@ A ticket is never written as merged without its PR and its checks next to it.
 ### S0 Hotfix: stop the live 404s on client links
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S0-01 | Add missing SPA routes | deploy | — | merged, waiting at the deploy gate | [#28](https://github.com/AhmedFouad01/tsst-portal/pull/28) → `8915d14` | pass (2 passes, final head `d8d089a`) | 10 routes, not the plan's 5. Checks at `d8d089a`: typecheck 0, lint 0 errors, vitest 603/603. Evidence: `tickets/S0-01.md`. |
+| S0-01 | Add missing SPA routes | deploy | — | merged; deploy postponed by Ahmed (2026-11-06) | [#28](https://github.com/AhmedFouad01/tsst-portal/pull/28) → `8915d14` | pass (2 passes, final head `d8d089a`) | 10 routes, not the plan's 5. Checks at `d8d089a`: typecheck 0, lint 0 errors, vitest 603/603. Evidence: `tickets/S0-01.md`. |
 
 Go / no-go (Ahmed): —
 
-### S1 Safety (not approved to start)
+### S1 Safety (approved 2026-11-06, except S1-02)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S1-01 | Tag the live release and write the rollback | none | — | todo | — | — | |
-| S1-02 | Backup and restore drill | decision | — | todo | — | — | Needs decision 12 (access). |
-| S1-03 | CI workflow | none | — | todo | — | — | Branch protection needs Ahmed's OK (decision 12). |
+| S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
+| S1-03 | CI workflow | none | — | todo | — | — | Runs on PRs into `next` and `main`. Branch protection waits for Ahmed's OK (decision 12). |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | todo | — | — | |
 | S1-05 | Evaluation "high" live fixes | deploy | S1-03 | todo | — | — | |
 
 Go / no-go (Ahmed): —
 
-### S2 Foundation (not approved to start)
+### S2 Foundation (approved 2026-11-06; migrations on a local database only)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S2-01 | `shared/routes.json` | none | S1-03 | todo | — | — | Replaces the S0-01 guard test with one route list. |
-| S2-02 | `jobs.id` uuid | migration | S1-02, S2-01 | todo | — | — | |
+| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | todo | — | — | Built and tested on a local database (2026-11-06). |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
-| S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Needs decisions 4, 5, 6 (G0). Carries decision 3's column. |
+| S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Decisions 4, 5, 6 on defaults. Carries decision 3's column (account manager). |
 | S2-06 | Server split by domain | none | S2-03 | todo | — | — | |
 | S2-07 | Delete dead code and rename rounds | none | S2-06 | todo | — | — | |
 
 Go / no-go (Ahmed): —
 
-### S3 Client page (not approved to start; design gate 01–03 open)
+### S3 Client page (approved 2026-11-06; mockups 01–03 approved)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S3-01 | Health word read model | none | S1-04 | todo | — | — | |
