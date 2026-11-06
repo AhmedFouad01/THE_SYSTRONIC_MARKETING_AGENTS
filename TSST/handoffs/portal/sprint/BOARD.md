@@ -26,8 +26,10 @@ A ticket is never written as merged without its PR and its checks next to it.
   2. decision 12, branch protection: not possible on the current GitHub plan (the API answers 403 "Upgrade to GitHub
      Pro or make this repository public"). Whether to upgrade is Ahmed's call. Until then the rule stays ours: merge
      only with the three checks green and the reviewer's pass;
-  3. decision 12, restore drill (S1-02): no answer yet; the Lead's main session is collecting the facts first.
-     S1-02 stays blocked: no SSH, nothing on the server.
+  3. decision 12, restore drill (S1-02): **approved 2026-11-06** ("موافق", in the Lead's main session, relayed) on the
+     terms of `tickets/S1-02.md`: PostgreSQL 16 on the Mac in one locked folder, the Drive copy as the source (SSH
+     only as a fallback with a temporary rule Ahmed adds himself), counts only, cleaned up the same day. The sprint
+     session prepared it up to the source question and waits for Ahmed's answer there.
 - Next owner stops: the S3 preview (Ahmed sees the built client page next to mockups 01–03), then the deploy plan.
   Proposed deploy order: S0 alone → S1 → S2 (migrations, after the restore drill) → S3, each in quiet hours.
 - Deploy facts kept for later: this Mac's public IP changes within hours (three values on 2026-11-05) and port 22 did
@@ -74,7 +76,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 9 | Who records a result | open | Recommended: any team member, name recorded, each field saves alone. |
 | 10 | Metric list for v1 | open | Recommended: acquisition = reach; activation = visits or leads; revenue = orders; retention and referral optional. |
 | 11 | Quiet hours for deploys | open, asked at the S0 deploy gate | Proposed: Cairo 01:00–06:00. Ahmed picks the day of the first migration deploy. |
-| 12 | Restore-drill access and branch protection | open | Branch protection: not available on the current GitHub plan (403, needs GitHub Pro or a public repository); upgrading is Ahmed's call; until then merges follow our own rule (three checks green and the reviewer's pass). Restore drill (S1-02): still open, the Lead's main session is collecting the facts before asking Ahmed. |
+| 12 | Restore-drill access and branch protection | open | Branch protection: not available on the current GitHub plan (403, needs GitHub Pro or a public repository); upgrading is Ahmed's call; until then merges follow our own rule (three checks green and the reviewer's pass). Restore drill (S1-02): approved 2026-11-06 on the terms of `tickets/S1-02.md`. |
 | 13 | What a team member sees on Home and the job page | open | Recommended: own items only. |
 | 14 | Bulk team approval | open | Recommended: moves items to the client queue only. |
 | 16 | Shared files in the client's "My work" (found in S1-05) | settled 2026-11-06 | "شيل الرسالة": remove the notice. No client files list in this sprint; it is decided later with mockups 07–09 (S5) and Ahmed's R60 read / edit / delete answer. |
@@ -103,7 +105,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S1-01 | Tag the live release and write the rollback | none | — | done 2026-11-06 (no code, no PR) | — | — | Tag `v-before-sprint` → `6290115` pushed. Rollback written below (Deploy). Tested: the local half of a deploy of the tag. Not tested: the switch on the server (needs Ahmed's OK). `tickets/S1-01.md`. |
-| S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
+| S1-02 | Backup and restore drill | decision | — | in progress: prepared to step 4, waiting for Ahmed's answer (source, rehearsal, install) | — | — | Approved 2026-11-06 on the terms of `tickets/S1-02.md`. Must pass before any deploy that carries a migration. Counts only, same-day clean-up. |
 | S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | merged into `next` 2026-11-06 | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) → `c34ecc8` | pass (2 passes; 3 small points accepted) | CI green at `b0ed129`. Today, the day of an event and clock times are Cairo, server and web. `tickets/S1-04.md`. |
 | S1-05 | Evaluation "high" live fixes | deploy | S1-03 | merged into `next` 2026-11-06 (all 4 items) | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691`; [#34](https://github.com/AhmedFouad01/tsst-portal/pull/34) → `28806f7` | pass (2 passes on #32; pass on #34) | CI green at `12783d3` and `f387115`. 409 wording, confirm before the 3 deletes, Arabic "Home", the shared-files notice removed (decision 16). `tickets/S1-05.md`. |
