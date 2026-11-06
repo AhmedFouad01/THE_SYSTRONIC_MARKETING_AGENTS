@@ -88,9 +88,9 @@ Go / no-go (Ahmed): —
 ### S1 Safety (approved 2026-11-06, except S1-02)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S1-01 | Tag the live release and write the rollback | none | — | todo | — | — | |
+| S1-01 | Tag the live release and write the rollback | none | — | done 2026-11-06 (no code, no PR) | — | — | Tag `v-before-sprint` → `6290115` pushed. Rollback written below (Deploy). Tested: the local half of a deploy of the tag. Not tested: the switch on the server (needs Ahmed's OK). `tickets/S1-01.md`. |
 | S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
-| S1-03 | CI workflow | none | — | todo | — | — | Runs on PRs into `next` and `main`. Branch protection waits for Ahmed's OK (decision 12). |
+| S1-03 | CI workflow | none | — | in review | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) | running | Runs on PRs into `next` and `main`. Branch protection waits for Ahmed's OK (decision 12). |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | todo | — | — | |
 | S1-05 | Evaluation "high" live fixes | deploy | S1-03 | todo | — | — | |
 
@@ -157,7 +157,18 @@ Go / no-go (Ahmed): —
    (`/opt/homebrew/opt/gnu-tar/libexec/gnubin`, `/opt/homebrew/opt/grep/libexec/gnubin`):
    `TSST_KEY=~/.ssh/tsst-portal-key-fra.pem TSST_PORTFOLIO=/Users/fouad/Work/TSST/TSST/core/portfolio.yaml bash scripts/deploy.sh`
 3. Live smoke for the part (the list is on the part's deploy ticket).
-4. Rollback (same env): `bash scripts/deploy.sh --rollback`.
+4. Rollback: see below.
+
+### Rollback (written by S1-01; the server half is not exercised yet, see `tickets/S1-01.md`)
+Same env as the deploy command in every case.
+- **One step back, code only:** `bash scripts/deploy.sh --rollback`. It swaps the server's `current` and `previous`
+  releases and restarts. Running it twice returns to the newer release. The database is not touched.
+- **Back to the release from before the sprint** (tag `v-before-sprint` = `6290115`), when more than one deploy has
+  happened: in `~/Work/tsst-portal` run `git fetch origin --tags && git checkout --detach v-before-sprint`, then the
+  deploy command with `TSST_ALLOW_OPEN_PRS=1` in front (the script refuses a checkout that is not `origin/main` without it).
+- **After a deploy that carried a migration:** code alone cannot go back, migrations only go forward. The deploy wrote
+  `/srv/tsst/backups/pre-deploy-<release>.sql.gz` before migrating; going back means restoring that dump, then
+  redeploying the older release. The restore procedure is S1-02 (needs Ahmed's access) and must be drilled first.
 
 | Date | Part | Release | Smoke | Rollback | Note |
 |---|---|---|---|---|---|
