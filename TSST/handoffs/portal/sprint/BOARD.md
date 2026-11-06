@@ -15,8 +15,8 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
-  fixes) and so is S2-01 (one route list). The last S1-05 item (remove the shared-files notice) is in review. Next:
-  S2-02, which starts with a written design (`tickets/S2-02.md`).
+  fixes, all four items) and so is S2-01 (one route list). `next` = `28806f7`. Now: S2-02, whose written design
+  (`tickets/S2-02.md`) is under an independent design review before any code.
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -104,7 +104,7 @@ Go / no-go (Ahmed): —
 | S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
 | S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | merged into `next` 2026-11-06 | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) → `c34ecc8` | pass (2 passes; 3 small points accepted) | CI green at `b0ed129`. Today, the day of an event and clock times are Cairo, server and web. `tickets/S1-04.md`. |
-| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | 3 of 4 items merged into `next`; the 4th in review | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691`; [#34](https://github.com/AhmedFouad01/tsst-portal/pull/34) | pass (2 passes) on #32; #34 running | CI green at `12783d3`. 409 wording, confirm before the 3 deletes, Arabic "Home". 4th item (decision 16): the shared-files notice is removed in #34. `tickets/S1-05.md`. |
+| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | merged into `next` 2026-11-06 (all 4 items) | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691`; [#34](https://github.com/AhmedFouad01/tsst-portal/pull/34) → `28806f7` | pass (2 passes on #32; pass on #34) | CI green at `12783d3` and `f387115`. 409 wording, confirm before the 3 deletes, Arabic "Home", the shared-files notice removed (decision 16). `tickets/S1-05.md`. |
 
 Go / no-go (Ahmed): —
 
@@ -112,7 +112,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S2-01 | `shared/routes.json` | none | S1-03 | merged into `next` 2026-11-06 | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) → `5e45149` | pass (2 passes) | CI green at `076c1d8`. One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. `tickets/S2-01.md`. |
-| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | study started, no code | — | — | Starts with a written design and an independent design review: `tickets/S2-02.md`. Built and tested on a local database only. |
+| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | design written, under design review | — | design review running | The id goes on the register (`job_projects`), the working tables are tied to it by foreign key on the key they already hold, the API takes `job_id` everywhere. Three pull requests: database, API, web. `tickets/S2-02.md`. Built and tested on a local database only. |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
 | S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Decisions 4, 5, 6 on defaults. Carries decision 3's column (account manager). |
