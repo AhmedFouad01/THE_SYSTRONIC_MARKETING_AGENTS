@@ -16,8 +16,8 @@ A ticket is never written as merged without its PR and its checks next to it.
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
   fixes, all four items), S2-01 (one route list) and S2-02 (a stable id for every job, five pull requests #35 to
-  #39, migrations 031 and 032). `next` = `ca9f13c`. Now: S2-03 (one approvals service): the facts are gathered in
-  `tickets/S2-03.md`; the design is being written and goes to an independent design review before any code.
+  #39, migrations 031 and 032). `next` = `ca9f13c`. Now: S2-03 (one approvals service): design v1 is in
+  `tickets/S2-03.md` and is with an independent design reviewer; no code before the review.
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -114,7 +114,7 @@ Go / no-go (Ahmed): —
 |---|---|---|---|---|---|---|---|
 | S2-01 | `shared/routes.json` | none | S1-03 | merged into `next` 2026-11-06 | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) → `5e45149` | pass (2 passes) | CI green at `076c1d8`. One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. `tickets/S2-01.md`. |
 | S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | merged into `next` 2026-11-06 (five pull requests) | a: [#35](https://github.com/AhmedFouad01/tsst-portal/pull/35) → `5921e39`; b: [#36](https://github.com/AhmedFouad01/tsst-portal/pull/36) → `d30b260`; d: [#38](https://github.com/AhmedFouad01/tsst-portal/pull/38) → `e9e9d0f`; c: [#37](https://github.com/AhmedFouad01/tsst-portal/pull/37) → `2e36225`; e: [#39](https://github.com/AhmedFouad01/tsst-portal/pull/39) → `ca9f13c` | design review: sound with changes (taken in design v2); each step passed an independent review (a 2 passes, b 2, c 3, d 2, e 2) | Five pull requests: a) the id on the register and on every job card, b) handlers check the register before writing, c) foreign keys from the working tables, d) the API takes `job_id`, e) the web links by id. No way to change a job's key is added. `tickets/S2-02.md`. Built and tested on a local database only. |
-| S2-03 | One approvals service | migration | S2-02 | design: facts gathered, design being written | — | — | `tickets/S2-03.md`. Design first, with an independent design review, then small pull requests. |
+| S2-03 | One approvals service | migration | S2-02 | design v1 under independent review | — | — | `tickets/S2-03.md`. Design first, with an independent design review, then small pull requests. |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
 | S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Decisions 4, 5, 6 on defaults. Carries decision 3's column (account manager). |
 | S2-06 | Server split by domain | none | S2-03 | todo | — | — | |
