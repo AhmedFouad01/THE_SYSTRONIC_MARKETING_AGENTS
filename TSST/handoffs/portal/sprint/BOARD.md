@@ -11,7 +11,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 ## Now
 - Live release: `6290115` (PR #27), since 2026-11-04. `main` is at `8915d14` (S0-01 merged, **not deployed**).
 - **Ahmed, 2026-11-06: build first, deploy later.** No deploy yet, not even S0. `main` stays as it is (deployable with
-  S0 alone); all new work goes to the integration branch `next`.
+  S0 alone, `8915d14`); all new work goes to the integration branch `next` (`d116691` after S1-03, S1-04, S1-05).
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - Runs as a self-paced loop in one session. Current ticket: see the first row below that is not `merged`.
@@ -92,15 +92,15 @@ Go / no-go (Ahmed): —
 | S1-01 | Tag the live release and write the rollback | none | — | done 2026-11-06 (no code, no PR) | — | — | Tag `v-before-sprint` → `6290115` pushed. Rollback written below (Deploy). Tested: the local half of a deploy of the tag. Not tested: the switch on the server (needs Ahmed's OK). `tickets/S1-01.md`. |
 | S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
 | S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
-| S1-04 | Cairo today helper everywhere | none | S1-03 | in review | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) | running | Server + web + docs; 7 server tests at 00:30 Cairo. `tickets/S1-04.md`. |
-| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | in progress | — | — | 409 wording, Arabic "Home", confirm before 3 deletes. The shared-files notice needs Ahmed's answer (decision 16). |
+| S1-04 | Cairo today helper everywhere | none | S1-03 | merged into `next` 2026-11-06 | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) → `c34ecc8` | pass (2 passes; 3 small points accepted) | CI green at `b0ed129`. Today, the day of an event and clock times are Cairo, server and web. `tickets/S1-04.md`. |
+| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | merged into `next` 2026-11-06 (3 of 4 items) | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691` | pass (2 passes) | CI green at `12783d3`. 409 wording, confirm before the 3 deletes, Arabic "Home". Open: the shared-files notice waits for decision 16. `tickets/S1-05.md`. |
 
 Go / no-go (Ahmed): —
 
 ### S2 Foundation (approved 2026-11-06; migrations on a local database only)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S2-01 | `shared/routes.json` | none | S1-03 | todo | — | — | Replaces the S0-01 guard test with one route list. |
+| S2-01 | `shared/routes.json` | none | S1-03 | in progress | — | — | One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. |
 | S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | todo | — | — | Built and tested on a local database (2026-11-06). |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
