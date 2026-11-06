@@ -15,15 +15,17 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
-  fixes). S2-01 (one route list) is reviewed (pass) and merges when its last CI run is green. Next: S2-02, which
-  starts with a written design (`tickets/S2-02.md`).
+  fixes) and so is S2-01 (one route list). The last S1-05 item (remove the shared-files notice) is in review. Next:
+  S2-02, which starts with a written design (`tickets/S2-02.md`).
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
-- **Asked of Ahmed on 2026-11-06 (none of them stops the build):**
-  1. decision 16: shared files in the client's "My work": list them read only, or keep them out and drop the notice;
-  2. decision 12: switch on branch protection (the three CI checks required on `main` and `next`): the sprint
-     session can do it with his OK, or he does it in GitHub;
-  3. decision 12: the restore drill (S1-02): his OK to pull the newest backup from the server and restore it on a
-     scratch database on this Mac. It must pass before any deploy that carries a migration (all of S2).
+- **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
+  1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
+     later with mockups 07–09 and his R60 answer);
+  2. decision 12, branch protection: not possible on the current GitHub plan (the API answers 403 "Upgrade to GitHub
+     Pro or make this repository public"). Whether to upgrade is Ahmed's call. Until then the rule stays ours: merge
+     only with the three checks green and the reviewer's pass;
+  3. decision 12, restore drill (S1-02): no answer yet; the Lead's main session is collecting the facts first.
+     S1-02 stays blocked: no SSH, nothing on the server.
 - Next owner stops: the S3 preview (Ahmed sees the built client page next to mockups 01–03), then the deploy plan.
   Proposed deploy order: S0 alone → S1 → S2 (migrations, after the restore drill) → S3, each in quiet hours.
 - Deploy facts kept for later: this Mac's public IP changes within hours (three values on 2026-11-05) and port 22 did
@@ -70,10 +72,10 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 9 | Who records a result | open | Recommended: any team member, name recorded, each field saves alone. |
 | 10 | Metric list for v1 | open | Recommended: acquisition = reach; activation = visits or leads; revenue = orders; retention and referral optional. |
 | 11 | Quiet hours for deploys | open, asked at the S0 deploy gate | Proposed: Cairo 01:00–06:00. Ahmed picks the day of the first migration deploy. |
-| 12 | Restore-drill access and branch protection | open, before S1-02 and S1-03 | From Ahmed: backup location, a scratch database, and OK for CI to be required on `main`. |
+| 12 | Restore-drill access and branch protection | open | Branch protection: not available on the current GitHub plan (403, needs GitHub Pro or a public repository); upgrading is Ahmed's call; until then merges follow our own rule (three checks green and the reviewer's pass). Restore drill (S1-02): still open, the Lead's main session is collecting the facts before asking Ahmed. |
 | 13 | What a team member sees on Home and the job page | open | Recommended: own items only. |
 | 14 | Bulk team approval | open | Recommended: moves items to the client queue only. |
-| 16 | Shared files in the client's "My work" (found in S1-05) | open, asked 2026-11-06 | Today the page always says "Shared files are not listed here yet". Choose: list the files the team marked as shared (read only), or keep them out and remove the notice. R60: a new list needs Ahmed's read / edit / delete answer. |
+| 16 | Shared files in the client's "My work" (found in S1-05) | settled 2026-11-06 | "شيل الرسالة": remove the notice. No client files list in this sprint; it is decided later with mockups 07–09 (S5) and Ahmed's R60 read / edit / delete answer. |
 | 15 | Sprint boundary | open, before G5 | Recommended: baselines, next move, ad spend, Meta import, profitability, Remind and the client calendar go to a second sprint. |
 
 ## Gates
@@ -102,14 +104,14 @@ Go / no-go (Ahmed): —
 | S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
 | S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | merged into `next` 2026-11-06 | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) → `c34ecc8` | pass (2 passes; 3 small points accepted) | CI green at `b0ed129`. Today, the day of an event and clock times are Cairo, server and web. `tickets/S1-04.md`. |
-| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | merged into `next` 2026-11-06 (3 of 4 items) | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691` | pass (2 passes) | CI green at `12783d3`. 409 wording, confirm before the 3 deletes, Arabic "Home". Open: the shared-files notice waits for decision 16. `tickets/S1-05.md`. |
+| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | 3 of 4 items merged into `next`; the 4th in review | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691`; [#34](https://github.com/AhmedFouad01/tsst-portal/pull/34) | pass (2 passes) on #32; #34 running | CI green at `12783d3`. 409 wording, confirm before the 3 deletes, Arabic "Home". 4th item (decision 16): the shared-files notice is removed in #34. `tickets/S1-05.md`. |
 
 Go / no-go (Ahmed): —
 
 ### S2 Foundation (approved 2026-11-06; migrations on a local database only)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S2-01 | `shared/routes.json` | none | S1-03 | in review: merge when CI is green on `076c1d8` | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) | pass (2 passes) | One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. CI was green on `601b5b6` and `4cd3ad8`; the last commit is one link. `tickets/S2-01.md`. |
+| S2-01 | `shared/routes.json` | none | S1-03 | merged into `next` 2026-11-06 | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) → `5e45149` | pass (2 passes) | CI green at `076c1d8`. One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. `tickets/S2-01.md`. |
 | S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | study started, no code | — | — | Starts with a written design and an independent design review: `tickets/S2-02.md`. Built and tested on a local database only. |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
