@@ -15,7 +15,8 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
-  fixes). S2-01 (one route list) is in review. Next: S2-02, which starts with a written design (`tickets/S2-02.md`).
+  fixes). S2-01 (one route list) is reviewed (pass) and merges when its last CI run is green. Next: S2-02, which
+  starts with a written design (`tickets/S2-02.md`).
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Asked of Ahmed on 2026-11-06 (none of them stops the build):**
   1. decision 16: shared files in the client's "My work": list them read only, or keep them out and drop the notice;
@@ -108,8 +109,8 @@ Go / no-go (Ahmed): —
 ### S2 Foundation (approved 2026-11-06; migrations on a local database only)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S2-01 | `shared/routes.json` | none | S1-03 | in progress | — | — | One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. |
-| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | todo | — | — | Built and tested on a local database (2026-11-06). |
+| S2-01 | `shared/routes.json` | none | S1-03 | in review: merge when CI is green on `076c1d8` | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) | pass (2 passes) | One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. CI was green on `601b5b6` and `4cd3ad8`; the last commit is one link. `tickets/S2-01.md`. |
+| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | study started, no code | — | — | Starts with a written design and an independent design review: `tickets/S2-02.md`. Built and tested on a local database only. |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
 | S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Decisions 4, 5, 6 on defaults. Carries decision 3's column (account manager). |
