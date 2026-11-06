@@ -28,8 +28,9 @@ A ticket is never written as merged without its PR and its checks next to it.
      only with the three checks green and the reviewer's pass;
   3. decision 12, restore drill (S1-02): **approved 2026-11-06** ("موافق", in the Lead's main session, relayed) on the
      terms of `tickets/S1-02.md`: PostgreSQL 16 on the Mac in one locked folder, the Drive copy as the source (SSH
-     only as a fallback with a temporary rule Ahmed adds himself), counts only, cleaned up the same day. The sprint
-     session prepared it up to the source question and waits for Ahmed's answer there.
+     only as a fallback with a temporary rule Ahmed adds himself), counts only, cleaned up the same day. Ahmed then
+     answered in the sprint session ("اه موافق"): the Drive copy, the PostgreSQL 16 install, and rehearsing `next`'s
+     migrations on the copy. The drill is running.
 - Next owner stops: the S3 preview (Ahmed sees the built client page next to mockups 01–03), then the deploy plan.
   Proposed deploy order: S0 alone → S1 → S2 (migrations, after the restore drill) → S3, each in quiet hours.
 - Deploy facts kept for later: this Mac's public IP changes within hours (three values on 2026-11-05) and port 22 did
@@ -105,7 +106,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S1-01 | Tag the live release and write the rollback | none | — | done 2026-11-06 (no code, no PR) | — | — | Tag `v-before-sprint` → `6290115` pushed. Rollback written below (Deploy). Tested: the local half of a deploy of the tag. Not tested: the switch on the server (needs Ahmed's OK). `tickets/S1-01.md`. |
-| S1-02 | Backup and restore drill | decision | — | in progress: prepared to step 4, waiting for Ahmed's answer (source, rehearsal, install) | — | — | Approved 2026-11-06 on the terms of `tickets/S1-02.md`. Must pass before any deploy that carries a migration. Counts only, same-day clean-up. |
+| S1-02 | Backup and restore drill | decision | — | in progress: the drill is running (source = the Drive copy, no SSH) | — | — | Approved 2026-11-06 on the terms of `tickets/S1-02.md`. Must pass before any deploy that carries a migration. Counts only, same-day clean-up. |
 | S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
 | S1-04 | Cairo today helper everywhere | none | S1-03 | merged into `next` 2026-11-06 | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) → `c34ecc8` | pass (2 passes; 3 small points accepted) | CI green at `b0ed129`. Today, the day of an event and clock times are Cairo, server and web. `tickets/S1-04.md`. |
 | S1-05 | Evaluation "high" live fixes | deploy | S1-03 | merged into `next` 2026-11-06 (all 4 items) | [#32](https://github.com/AhmedFouad01/tsst-portal/pull/32) → `d116691`; [#34](https://github.com/AhmedFouad01/tsst-portal/pull/34) → `28806f7` | pass (2 passes on #32; pass on #34) | CI green at `12783d3` and `f387115`. 409 wording, confirm before the 3 deletes, Arabic "Home", the shared-files notice removed (decision 16). `tickets/S1-05.md`. |
