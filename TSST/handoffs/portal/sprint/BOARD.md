@@ -127,7 +127,7 @@ Go / no-go (Ahmed): —
 | S2-03 | One approvals service | migration | S2-02 | merged 2026-11-06 (a, c, b) | a: [#40](https://github.com/AhmedFouad01/tsst-portal/pull/40) → `0d83b98`; c: [#41](https://github.com/AhmedFouad01/tsst-portal/pull/41) → `9739f30`; b: [#42](https://github.com/AhmedFouad01/tsst-portal/pull/42) → `69b4d1a` | design review: sound with changes (taken in design v2); a: pass, two passes; c: pass, two reviewers, two passes each; b: pass, two passes | `tickets/S2-03.md`. Design first, with an independent design review, then small pull requests. |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | merged 2026-11-06 | [#43](https://github.com/AhmedFouad01/tsst-portal/pull/43) | `c412e11` | `tickets/S2-04.md`. Migration 034 (local only). `client_links` is already soft (revoke). |
 | S2-05 | `client_settings` row | decision | S2-01 | merged 2026-11-06 | [#44](https://github.com/AhmedFouad01/tsst-portal/pull/44) | `b5bdadc` | `tickets/S2-05.md`. Migration 035 (local only). Decisions 4, 5, 6 on defaults; decision 3's column. |
-| S2-06 | Server split by domain | none | S2-03 | todo | — | — | |
+| S2-06 | Server split by domain | none | S2-03 | in progress | — | — | `tickets/S2-06.md`. Nine domain files, `guard.ts`, `endpoints.ts` regrouped; no migration. |
 | S2-07 | Delete dead code and rename rounds | none | S2-06 | todo | — | — | |
 
 Go / no-go (Ahmed): —
