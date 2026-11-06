@@ -15,10 +15,11 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
-  fixes, all four items) and so is S2-01 (one route list). `next` = `d30b260`. Now: S2-02 (a stable id for every
-  job), built in five small pull requests (`tickets/S2-02.md`): a (the id) and b (handlers check the register) are
-  merged (PR #35, #36); c (foreign keys, PR #37) and d (the API takes the id, PR #38) are in review; e (the web links
-  by id) is built and checked in the browser, its pull request follows d.
+  fixes, all four items) and so is S2-01 (one route list). `next` = `2e36225`. Now: S2-02 (a stable id for every
+  job), built in five small pull requests (`tickets/S2-02.md`): a (the id), b (handlers check the register), c
+  (foreign keys, migration 032) and d (the API takes the id) are merged (PR #35, #36, #37, #38); e (the web links by
+  id, PR #39) is in review, its checks are green. Next: S2-03 (one approvals service), a design with an independent
+  review first.
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -114,7 +115,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S2-01 | `shared/routes.json` | none | S1-03 | merged into `next` 2026-11-06 | [#33](https://github.com/AhmedFouad01/tsst-portal/pull/33) → `5e45149` | pass (2 passes) | CI green at `076c1d8`. One route list for the server, the app and the tests; old `?view=` links redirect to `?tab=`. `tickets/S2-01.md`. |
-| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | building: a, b merged 2026-11-06; c, d in review; e built | a: [#35](https://github.com/AhmedFouad01/tsst-portal/pull/35) → `5921e39`; b: [#36](https://github.com/AhmedFouad01/tsst-portal/pull/36) → `d30b260`; c: [#37](https://github.com/AhmedFouad01/tsst-portal/pull/37); d: [#38](https://github.com/AhmedFouad01/tsst-portal/pull/38) | design review: sound with changes (taken in design v2); a: pass, two passes; b: pass, two passes | Five pull requests: a) the id on the register and on every job card, b) handlers check the register before writing, c) foreign keys from the working tables, d) the API takes `job_id`, e) the web links by id. No way to change a job's key is added. `tickets/S2-02.md`. Built and tested on a local database only. |
+| S2-02 | `jobs.id` uuid | migration | S2-01 (S1-02 gates its deploy) | building: a, b, c, d merged 2026-11-06; e in review | a: [#35](https://github.com/AhmedFouad01/tsst-portal/pull/35) → `5921e39`; b: [#36](https://github.com/AhmedFouad01/tsst-portal/pull/36) → `d30b260`; d: [#38](https://github.com/AhmedFouad01/tsst-portal/pull/38) → `e9e9d0f`; c: [#37](https://github.com/AhmedFouad01/tsst-portal/pull/37) → `2e36225`; e: [#39](https://github.com/AhmedFouad01/tsst-portal/pull/39) | design review: sound with changes (taken in design v2); a: pass, two passes; b: pass, two passes; c: pass, three passes; d: pass, two passes | Five pull requests: a) the id on the register and on every job card, b) handlers check the register before writing, c) foreign keys from the working tables, d) the API takes `job_id`, e) the web links by id. No way to change a job's key is added. `tickets/S2-02.md`. Built and tested on a local database only. |
 | S2-03 | One approvals service | migration | S2-02 | todo | — | — | |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | todo | — | — | |
 | S2-05 | `client_settings` row | decision | S2-01 | todo | — | — | Decisions 4, 5, 6 on defaults. Carries decision 3's column (account manager). |
