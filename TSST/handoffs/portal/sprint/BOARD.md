@@ -64,6 +64,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 12 | Restore-drill access and branch protection | open, before S1-02 and S1-03 | From Ahmed: backup location, a scratch database, and OK for CI to be required on `main`. |
 | 13 | What a team member sees on Home and the job page | open | Recommended: own items only. |
 | 14 | Bulk team approval | open | Recommended: moves items to the client queue only. |
+| 16 | Shared files in the client's "My work" (found in S1-05) | open, asked 2026-11-06 | Today the page always says "Shared files are not listed here yet". Choose: list the files the team marked as shared (read only), or keep them out and remove the notice. R60: a new list needs Ahmed's read / edit / delete answer. |
 | 15 | Sprint boundary | open, before G5 | Recommended: baselines, next move, ad spend, Meta import, profitability, Remind and the client calendar go to a second sprint. |
 
 ## Gates
@@ -90,9 +91,9 @@ Go / no-go (Ahmed): —
 |---|---|---|---|---|---|---|---|
 | S1-01 | Tag the live release and write the rollback | none | — | done 2026-11-06 (no code, no PR) | — | — | Tag `v-before-sprint` → `6290115` pushed. Rollback written below (Deploy). Tested: the local half of a deploy of the tag. Not tested: the switch on the server (needs Ahmed's OK). `tickets/S1-01.md`. |
 | S1-02 | Backup and restore drill | decision | — | blocked (Ahmed's access, decision 12) | — | — | Not in the approved scope. Must pass before any deploy that carries a migration. |
-| S1-03 | CI workflow | none | — | in review | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) | running | Runs on PRs into `next` and `main`. Branch protection waits for Ahmed's OK (decision 12). |
-| S1-04 | Cairo today helper everywhere | none | S1-03 | todo | — | — | |
-| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | todo | — | — | |
+| S1-03 | CI workflow | none | — | merged into `next` 2026-11-06 | [#29](https://github.com/AhmedFouad01/tsst-portal/pull/29) → `49e2847` | pass (2 passes) | CI green at `118cff4`: Server 1/2, Server 2/2, Web. About 7.5 minutes and 18 billed minutes per run. Branch protection waits for Ahmed's OK (decision 12). `tickets/S1-03.md`. |
+| S1-04 | Cairo today helper everywhere | none | S1-03 | in review | [#31](https://github.com/AhmedFouad01/tsst-portal/pull/31) | running | Server + web + docs; 7 server tests at 00:30 Cairo. `tickets/S1-04.md`. |
+| S1-05 | Evaluation "high" live fixes | deploy | S1-03 | in progress | — | — | 409 wording, Arabic "Home", confirm before 3 deletes. The shared-files notice needs Ahmed's answer (decision 16). |
 
 Go / no-go (Ahmed): —
 

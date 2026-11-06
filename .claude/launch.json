@@ -25,6 +25,12 @@
       "runtimeExecutable": "cmd",
       "runtimeArgs": ["/c", "set PORT=4000&& npm --prefix C:/dev/systronic-control-center run dev"],
       "port": 5173
+    },
+    {
+      "name": "dash-sprint-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/fouad/Work/tsst-portal-preview/web", "run", "dev", "--", "--port", "5183", "--strictPort"],
+      "port": 5183
     }
   ]
 }
