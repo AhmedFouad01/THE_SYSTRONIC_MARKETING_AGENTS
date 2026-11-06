@@ -11,10 +11,18 @@ A ticket is never written as merged without its PR and its checks next to it.
 ## Now
 - Live release: `6290115` (PR #27), since 2026-11-04. `main` is at `8915d14` (S0-01 merged, **not deployed**).
 - **Ahmed, 2026-11-06: build first, deploy later.** No deploy yet, not even S0. `main` stays as it is (deployable with
-  S0 alone, `8915d14`); all new work goes to the integration branch `next` (`d116691` after S1-03, S1-04, S1-05).
+  S0 alone); all new work goes to the integration branch `next`.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
-- Runs as a self-paced loop in one session. Current ticket: see the first row below that is not `merged`.
+- **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
+  fixes). S2-01 (one route list) is in review. Next: S2-02, which starts with a written design (`tickets/S2-02.md`).
+- Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
+- **Asked of Ahmed on 2026-11-06 (none of them stops the build):**
+  1. decision 16: shared files in the client's "My work": list them read only, or keep them out and drop the notice;
+  2. decision 12: switch on branch protection (the three CI checks required on `main` and `next`): the sprint
+     session can do it with his OK, or he does it in GitHub;
+  3. decision 12: the restore drill (S1-02): his OK to pull the newest backup from the server and restore it on a
+     scratch database on this Mac. It must pass before any deploy that carries a migration (all of S2).
 - Next owner stops: the S3 preview (Ahmed sees the built client page next to mockups 01–03), then the deploy plan.
   Proposed deploy order: S0 alone → S1 → S2 (migrations, after the restore drill) → S3, each in quiet hours.
 - Deploy facts kept for later: this Mac's public IP changes within hours (three values on 2026-11-05) and port 22 did
