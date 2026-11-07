@@ -16,10 +16,10 @@ A ticket is never written as merged without its PR and its checks next to it.
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
   fixes, all four items), S2-01 (one route list) and S2-02 (a stable id for every job, five pull requests #35 to
-  #39, migrations 031 and 032). `next` = `b5bdadc`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
+  #39, migrations 031 and 032). `next` = `9e5ddbc`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
   migration 033, PR #40), c (the five old decision routes answer 410, PR #41), b (a read never writes job data, one
   sync, a touched file is not a new version, PR #42). S2-04 (delete = hide, migration 034, one confirm dialog in the
-  web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) are merged. Now: S2-06 (the server by domain) is in review (PR #45).
+  web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) and S2-06 (the server by domain, PR #45) are merged. Now: S2-07 (dead code, round names).
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -127,7 +127,7 @@ Go / no-go (Ahmed): —
 | S2-03 | One approvals service | migration | S2-02 | merged 2026-11-06 (a, c, b) | a: [#40](https://github.com/AhmedFouad01/tsst-portal/pull/40) → `0d83b98`; c: [#41](https://github.com/AhmedFouad01/tsst-portal/pull/41) → `9739f30`; b: [#42](https://github.com/AhmedFouad01/tsst-portal/pull/42) → `69b4d1a` | design review: sound with changes (taken in design v2); a: pass, two passes; c: pass, two reviewers, two passes each; b: pass, two passes | `tickets/S2-03.md`. Design first, with an independent design review, then small pull requests. |
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | merged 2026-11-06 | [#43](https://github.com/AhmedFouad01/tsst-portal/pull/43) | `c412e11` | `tickets/S2-04.md`. Migration 034 (local only). `client_links` is already soft (revoke). |
 | S2-05 | `client_settings` row | decision | S2-01 | merged 2026-11-06 | [#44](https://github.com/AhmedFouad01/tsst-portal/pull/44) | `b5bdadc` | `tickets/S2-05.md`. Migration 035 (local only). Decisions 4, 5, 6 on defaults; decision 3's column. |
-| S2-06 | Server split by domain | none | S2-03 | in review (PR #45) | [#45](https://github.com/AhmedFouad01/tsst-portal/pull/45) | — | `tickets/S2-06.md`. Nine domain files, `guard.ts`, `endpoints.ts` regrouped; no migration. |
+| S2-06 | Server split by domain | none | S2-03 | merged 2026-11-07 | [#45](https://github.com/AhmedFouad01/tsst-portal/pull/45) | `9e5ddbc` | `tickets/S2-06.md`. Nine domain files, `guard.ts`, `endpoints.ts` regrouped; no migration. |
 | S2-07 | Delete dead code and rename rounds | none | S2-06 | todo | — | — | |
 
 Go / no-go (Ahmed): —
