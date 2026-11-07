@@ -16,12 +16,13 @@ A ticket is never written as merged without its PR and its checks next to it.
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
   fixes, all four items), S2-01 (one route list) and S2-02 (a stable id for every job, five pull requests #35 to
-  #39, migrations 031 and 032). `next` = `6f4a3bc`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
+  #39, migrations 031 and 032). `next` = `42cbd7c`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
   migration 033, PR #40), c (the five old decision routes answer 410, PR #41), b (a read never writes job data, one
   sync, a touched file is not a new version, PR #42). S2-04 (delete = hide, migration 034, one confirm dialog in the
   web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) and S2-06 (the server by domain, PR #45) and S2-07 (the old board and the dead decision path gone, round names gone, the route table in the docs tested, PR #46)
-  are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). Now: S3-01 (the
-  health word read model) is in review (PR #47); then S3-02..05 (mockups 01–03, approved 2026-11-05).
+  are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
+  health word read model, PR #47) is merged. Now: S3-02 (Overview tab, mockup 01); then S3-03..05 (mockups 02–03,
+  approved 2026-11-05), the S3 preview for Ahmed and the deploy plan.
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -137,8 +138,8 @@ Go / no-go (Ahmed): —
 ### S3 Client page (approved 2026-11-06; mockups 01–03 approved)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S3-01 | Health word read model | none | S1-04 | in review (PR #47) | [#47](https://github.com/AhmedFouad01/tsst-portal/pull/47) | — | `tickets/S3-01.md`. `health.ts`; thresholds 3 / 7 days (Lead's defaults). |
-| S3-02 | Overview tab | design | S2-02, S2-05, S3-01 | todo | — | — | Mockup 01. |
+| S3-01 | Health word read model | none | S1-04 | merged 2026-11-07 | [#47](https://github.com/AhmedFouad01/tsst-portal/pull/47) | `42cbd7c` | `tickets/S3-01.md`. `health.ts`; thresholds 3 / 7 days (Lead's defaults). |
+| S3-02 | Overview tab | design | S2-02, S2-05, S3-01 | in progress | — | — | Mockup 01. `tickets/S3-02.md`. |
 | S3-03 | Settings tab | design | S2-04, S2-05 | todo | — | — | Mockup 02. |
 | S3-04 | Plan tab and campaign page | design | S2-02 | todo | — | — | Mockup 03, without the calendar. |
 | S3-05 | Clients list cards | none | S3-01 | todo | — | — | |
