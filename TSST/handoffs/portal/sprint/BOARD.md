@@ -128,7 +128,7 @@ Go / no-go (Ahmed): —
 | S2-04 | Soft delete and confirm everywhere | migration | S2-02 | merged 2026-11-06 | [#43](https://github.com/AhmedFouad01/tsst-portal/pull/43) | `c412e11` | `tickets/S2-04.md`. Migration 034 (local only). `client_links` is already soft (revoke). |
 | S2-05 | `client_settings` row | decision | S2-01 | merged 2026-11-06 | [#44](https://github.com/AhmedFouad01/tsst-portal/pull/44) | `b5bdadc` | `tickets/S2-05.md`. Migration 035 (local only). Decisions 4, 5, 6 on defaults; decision 3's column. |
 | S2-06 | Server split by domain | none | S2-03 | merged 2026-11-07 | [#45](https://github.com/AhmedFouad01/tsst-portal/pull/45) | `9e5ddbc` | `tickets/S2-06.md`. Nine domain files, `guard.ts`, `endpoints.ts` regrouped; no migration. |
-| S2-07 | Delete dead code and rename rounds | none | S2-06 | todo | — | — | |
+| S2-07 | Delete dead code and rename rounds | none | S2-06 | in progress | — | — | `tickets/S2-07.md`. Code only; the column/trigger drops wait for a later migration. |
 
 Go / no-go (Ahmed): —
 
