@@ -21,7 +21,7 @@ A ticket is never written as merged without its PR and its checks next to it.
   sync, a touched file is not a new version, PR #42). S2-04 (delete = hide, migration 034, one confirm dialog in the
   web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) and S2-06 (the server by domain, PR #45) and S2-07 (the old board and the dead decision path gone, round names gone, the route table in the docs tested, PR #46)
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). Now: S3-01 (the
-  health word read model), the first S3 ticket (mockups 01–03, approved 2026-11-05).
+  health word read model) is in review (PR #47); then S3-02..05 (mockups 01–03, approved 2026-11-05).
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
@@ -137,7 +137,7 @@ Go / no-go (Ahmed): —
 ### S3 Client page (approved 2026-11-06; mockups 01–03 approved)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S3-01 | Health word read model | none | S1-04 | todo | — | — | |
+| S3-01 | Health word read model | none | S1-04 | in review (PR #47) | [#47](https://github.com/AhmedFouad01/tsst-portal/pull/47) | — | `tickets/S3-01.md`. `health.ts`; thresholds 3 / 7 days (Lead's defaults). |
 | S3-02 | Overview tab | design | S2-02, S2-05, S3-01 | todo | — | — | Mockup 01. |
 | S3-03 | Settings tab | design | S2-04, S2-05 | todo | — | — | Mockup 02. |
 | S3-04 | Plan tab and campaign page | design | S2-02 | todo | — | — | Mockup 03, without the calendar. |
