@@ -1,6 +1,6 @@
 # Dash sprint: deploy plan (proposal, 2026-11-10)
 
-Status: **steps A, B and C deployed 2026-11-10** (live = `3a5554a`, migrations 031–035 applied); step D waits for Ahmed's OK.
+Status: **all four steps deployed 2026-11-10** (live = `1779ad0`; migrations 031–035 applied in step C). The record of each night is on `BOARD.md` → Deploy.
 From now on a rollback past step C means restoring `pre-deploy-3a5554a6e.sql.gz` first.
 Note for step C: `main` now carries the test-only commit `fd5370b` (the same one-line fix as `ba5b974` on `next`), so step C is a merge of `next` at `6f4a3bc` into `main`, not a fast-forward.
 Everything built sits on `next` = `3191704`; `main` = `8915d14` (S0-01 only). How a deploy runs and how to roll back is on

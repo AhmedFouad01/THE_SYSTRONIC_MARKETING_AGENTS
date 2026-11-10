@@ -9,7 +9,16 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
-- Live release: **`3a5554a`** (deploy step C: S0 + S1 + S2, migrations 031–035 applied) since 2026-11-10 20:04 Cairo; before it `94e1a5b` (step B), `8915d14` (step A), `6290115` (PR #27). `main` = `3a5554a`.
+- Live release: **`1779ad0`** (deploy step D: S0 + S1 + S2 + S3) since 2026-11-10 21:05 Cairo; before it `3a5554a` (step C, migrations 031–035), `94e1a5b` (B), `8915d14` (A), `6290115` (PR #27). `main` = `1779ad0` = `next` (`3191704`) plus the merge commits.
+- **The sprint's approved scope (S0–S3) is built and deployed (2026-11-10).** The loop is stopped. Left for Ahmed:
+  1. the signed-in check of step D (the new client page, the campaign page, the Clients cards);
+  2. mockups 04–06 (S4) and 07–09 (S5) need his approval before any of S4–S6 starts; decisions 8–15 are open;
+  3. confirm or change at leisure: decisions 4, 5, 6 (running on defaults), the health thresholds 3 / 7 days;
+  4. not built, his call: an Arabic switch for the team pages, "Archive client", "Team on this client";
+  5. follow-ups on the tickets: migration 036 (drop `brands.ui_lang`, the old visibility row, the 027 trigger) once
+     step C has settled; 12 tests that use the real `now()`; an archived project should stop the "waiting" count and
+     `owed` still counts for delivered jobs (S3-06); the client Home reads a paused package's lines unguarded
+     (S3-02); the nits of S3-05; `settings/Access.tsx` still offers PIN links (S4-06).
 - **Ahmed, 2026-11-06: build first, deploy later.** No deploy yet, not even S0. `main` stays as it is (deployable with
   S0 alone); all new work goes to the integration branch `next`.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
@@ -23,7 +32,7 @@ A ticket is never written as merged without its PR and its checks next to it.
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
   health word read model, PR #47) and S3-02 (Overview tab, mockup 01, PR #48) and S3-03 (Settings tab, mockup 02, PR #49) and S3-04 (Plan tab and campaign page, mockup 03, PR #50) are merged. S3-05 (Clients list cards, PR #51) is merged:
   **S3 is built** (five tickets, PRs #47–#51, no migration). Ahmed saw the preview on 2026-11-10 and said to fix its
-  seven findings: S3-06 is merged (PR #52). Deploy steps A, B and C are live (2026-11-10; migrations 031–035 are applied on production). Ahmed confirmed C signed in. **Waiting on Ahmed** for step D's OK; the plan is `DEPLOY-PLAN.md`
+  seven findings: S3-06 is merged (PR #52). Deploy steps A, B and C are live (2026-11-10; migrations 031–035 are applied on production). All four deploy steps are live (2026-11-10); the plan is `DEPLOY-PLAN.md`
   (four steps A–D, one per night; step C carries migrations 031–035). Nothing deploys without his OK per step.
 - **S3 preview (2026-11-10):** the real server and built web from `next` (`c9cd03e`) on a local PGlite database, in
   `~/Work/tsst-portal-s3-preview/.preview/` (untracked: `start.sh`, `seed.mjs`, `backdate.ts`, `shots.mjs`; launch entry
@@ -219,3 +228,4 @@ Same env as the deploy command in every case.
 | 2026-11-10 | A: S0 (the missing SPA routes) | `8915d14a7` | `/login` 200; the ten routes answer the app shell (200 `text/html`); an unknown path 404 JSON; `/api/v1/me` 401 | not needed; `deploy.sh --rollback` goes back to `6290115` (code only) | Ahmed: "انشر دلوقتي". Pre-deploy dump `pre-deploy-8915d14a7.sql.gz` (768K). Migrations: none applied, 30 already applied. Deployed outside the proposed quiet hours at his word (code only). |
 | 2026-11-10 | B: S1 (CI, Cairo day, live fixes, the shared-files notice removed, one route list) | `94e1a5b08` | signed out only: `/login`, `/jobs`, `/clients`, `/review`, `/client/work`, `/jobs/post`, `/clients/project` answer the app shell; an unknown path 404 JSON; `/api/v1/me`, `/jobs`, `/clients` 401; `/` answers 200 (the shell) where the old release redirected to `/login` | not needed; `deploy.sh --rollback` goes back to `8915d14` (code only) | Ahmed: "أيوه انشر B". PR #53 (`28806f7` + the one-line test date fix `fd5370b`, test only). Pre-deploy dump `pre-deploy-94e1a5b08.sql.gz`. Migrations: none applied. Signed in: Ahmed checked the live site on 2026-11-10 and said "تمام شغال". |
 | 2026-11-10 | C: S2 (a stable job id, one approvals service, delete = hide, one settings row per client, the server by domain, the old board gone) | `3a5554a6e` | signed out: `/login`, `/jobs`, `/clients` 200; `/legacy` 404; `/api/tree`, `/api/v1/me`, `/api/v1/clients`, `POST /api/decision` 401; unknown path 404. Server (read-only, counts): `schema_migrations` 35, last `035_client_settings.sql`; register `job_projects` 8 = `job_meta` 8 = `job_sources` 8; `client_settings` 5 = `brands` 5; service active; no error line in the journal after the start | **the database restore**, not the code switch: restore `pre-deploy-3a5554a6e.sql.gz`, then redeploy `94e1a5b` | Ahmed: "ابدأ c". PR #54 (`next` at `6f4a3bc` merged into `main`). Pre-checks: today's nightly dump and the off-server copy (19:03, 0 errors) present; `bridge_item_decision()` owned by `tsst`; 15G free. Pre-deploy dump `pre-deploy-3a5554a6e.sql.gz` (768K). Migrate: applied 031–035. Deployed at 20:04 Cairo, outside the proposed quiet hours, at his word. Signed in: Ahmed checked the live site on 2026-11-10 and said "تمام شغال". |
+| 2026-11-10 | D: S3 (the new client page, the campaign page, the Clients cards) | `1779ad0d0` | signed out: `/login`, `/clients`, `/clients/view`, `/clients/project`, `/jobs`, `/documents` 200; `/api/v1/me`, `/api/v1/clients` 401; unknown path 404. Server (read-only): `schema_migrations` still 35; service active; no error line in the journal after the start; `current` = `1779ad0d0`, `previous` = `3a5554a6e` | `deploy.sh --rollback` goes back to `3a5554a` (code only; the database is the same for both) | Ahmed: "ابدأ دي. هدخل انام وتخلص كل السيستم." PR #55 (`next` at `3191704` merged into `main`). Pre-deploy dump `pre-deploy-1779ad0d0.sql.gz`. Migrate: none applied, 35 already applied. The signed-in check is Ahmed's. |
