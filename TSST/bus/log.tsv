@@ -381,3 +381,4 @@
 2026-11-10T10:38Z	CRMS-TSST-008	codex	progress	Resumed at TSST 5faf79d; preflight PASS. Corrected B only: HTTP 409 and unchanged state, then serve/close. A/C/D evidence retained from round 1.
 2026-11-10T10:44Z	CRMS-TSST-008	codex	done	B-only PASS twice: generic HTTP 409 with unchanged state, then 201 CLOSED. Retained A/C/D evidence. Cafe branch pushed; Actions count 0.
 2026-11-10T10:48Z	CRMS-TSST-008	claude	close	Lead rerun full 002w on 3815b60: A/B/C/D PASS, cleanup PASS, QA env intact. Accepted.
+2026-11-10T10:58Z	CRMS-TSST-009	claude	new	

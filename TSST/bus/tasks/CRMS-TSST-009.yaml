@@ -1,0 +1,26 @@
+id: CRMS-TSST-009
+title: CRMS clear Arabic message when closing a bill while kitchen work is live (Edge mapping + POS/Billing + tests; Cafe branch codex/crms-close-kds-message-009)
+kind: work
+status: ready
+to: codex
+needs: [fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST/DEV/skills/tsst-dev-sk-005-api-integration-engineering, TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering, TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion]
+brand: t-sag
+spec: TSST/projects/cafe/tasks/CRMS-TSST-009-CLOSE-WHILE-KITCHEN-LIVE-MESSAGE.md
+read: [TSST/projects/cafe]
+write: [TSST/bus/out/CRMS-TSST-009.md]
+after: []
+done_when: 002w full PASS twice with new kitchen 409 message; POS+Billing show exact Arabic text (tests); PWA vitest/typecheck/lint/build + edge-api typecheck/lint/build pass; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-009.md
+issued_by: claude
+created: "2026-11-10T10:58Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:
