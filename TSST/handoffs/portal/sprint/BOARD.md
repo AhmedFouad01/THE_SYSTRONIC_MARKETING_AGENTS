@@ -9,7 +9,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
-- Live release: **`8915d14`** (S0-01, deploy step A) since 2026-11-10 18:20 Cairo; before it `6290115` (PR #27). `main` = `8915d14`.
+- Live release: **`94e1a5b`** (deploy step B: S0 + S1) since 2026-11-10 19:00 Cairo; before it `8915d14` (step A), `6290115` (PR #27). `main` = `94e1a5b`.
 - **Ahmed, 2026-11-06: build first, deploy later.** No deploy yet, not even S0. `main` stays as it is (deployable with
   S0 alone); all new work goes to the integration branch `next`.
 - Approved to build now: **S1-01, S1-03, S1-04, S1-05, all of S2, then S3** (mockups 01–03). Not approved: S1-02
@@ -23,7 +23,7 @@ A ticket is never written as merged without its PR and its checks next to it.
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
   health word read model, PR #47) and S3-02 (Overview tab, mockup 01, PR #48) and S3-03 (Settings tab, mockup 02, PR #49) and S3-04 (Plan tab and campaign page, mockup 03, PR #50) are merged. S3-05 (Clients list cards, PR #51) is merged:
   **S3 is built** (five tickets, PRs #47–#51, no migration). Ahmed saw the preview on 2026-11-10 and said to fix its
-  seven findings: S3-06 is merged (PR #52). Deploy step A is live (2026-11-10). **Waiting on Ahmed** for step B's OK; the plan is `DEPLOY-PLAN.md`
+  seven findings: S3-06 is merged (PR #52). Deploy steps A and B are live (2026-11-10). **Waiting on Ahmed** for step C's OK (the one with migrations); the plan is `DEPLOY-PLAN.md`
   (four steps A–D, one per night; step C carries migrations 031–035). Nothing deploys without his OK per step.
 - **S3 preview (2026-11-10):** the real server and built web from `next` (`c9cd03e`) on a local PGlite database, in
   `~/Work/tsst-portal-s3-preview/.preview/` (untracked: `start.sh`, `seed.mjs`, `backdate.ts`, `shots.mjs`; launch entry
@@ -217,3 +217,4 @@ Same env as the deploy command in every case.
 |---|---|---|---|---|---|
 | 2026-11-04 | before the sprint | `6290115` | — | — | PR #27, migrations 028–030. Detail: `../DASH-AG-022-SIMPLE-BUILD.md`. |
 | 2026-11-10 | A: S0 (the missing SPA routes) | `8915d14a7` | `/login` 200; the ten routes answer the app shell (200 `text/html`); an unknown path 404 JSON; `/api/v1/me` 401 | not needed; `deploy.sh --rollback` goes back to `6290115` (code only) | Ahmed: "انشر دلوقتي". Pre-deploy dump `pre-deploy-8915d14a7.sql.gz` (768K). Migrations: none applied, 30 already applied. Deployed outside the proposed quiet hours at his word (code only). |
+| 2026-11-10 | B: S1 (CI, Cairo day, live fixes, the shared-files notice removed, one route list) | `94e1a5b08` | signed out only: `/login`, `/jobs`, `/clients`, `/review`, `/client/work`, `/jobs/post`, `/clients/project` answer the app shell; an unknown path 404 JSON; `/api/v1/me`, `/jobs`, `/clients` 401; `/` answers 200 (the shell) where the old release redirected to `/login` | not needed; `deploy.sh --rollback` goes back to `8915d14` (code only) | Ahmed: "أيوه انشر B". PR #53 (`28806f7` + the one-line test date fix `fd5370b`, test only). Pre-deploy dump `pre-deploy-94e1a5b08.sql.gz`. Migrations: none applied. The signed-in check is Ahmed's (the loop has no live account). |

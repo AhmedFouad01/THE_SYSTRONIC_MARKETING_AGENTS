@@ -1,6 +1,7 @@
 # Dash sprint: deploy plan (proposal, 2026-11-10)
 
-Status: **step A deployed 2026-11-10** (live = `8915d14`); steps B, C, D wait for Ahmed's OK, one by one.
+Status: **steps A and B deployed 2026-11-10** (live = `94e1a5b`); steps C and D wait for Ahmed's OK, one by one.
+Note for step C: `main` now carries the test-only commit `fd5370b` (the same one-line fix as `ba5b974` on `next`), so step C is a merge of `next` at `6f4a3bc` into `main`, not a fast-forward.
 Everything built sits on `next` = `3191704`; `main` = `8915d14` (S0-01 only). How a deploy runs and how to roll back is on
 `BOARD.md` → Deploy. Each step below needs its own explicit OK in chat, on its day.
 
