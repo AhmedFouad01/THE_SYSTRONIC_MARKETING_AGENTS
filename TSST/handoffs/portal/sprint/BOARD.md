@@ -142,7 +142,7 @@ Go / no-go (Ahmed): —
 | S3-02 | Overview tab | design | S2-02, S2-05, S3-01 | merged 2026-11-07 | [#48](https://github.com/AhmedFouad01/tsst-portal/pull/48) | `019d459` | Mockup 01. `tickets/S3-02.md`. Found: the team pages have no Arabic switch (the AR frame needs one; ask at the S3 preview); the client Home reads `included` unguarded (pre-existing, a paused package would break it). |
 | S3-03 | Settings tab | design | S2-04, S2-05 | merged 2026-11-10 | [#49](https://github.com/AhmedFouad01/tsst-portal/pull/49) | `d350334` | Mockup 02. `tickets/S3-03.md`. Not built: Archive client and Team on this client (no model for either; ask at the S3 preview). |
 | S3-04 | Plan tab and campaign page | design | S2-02 | merged 2026-11-10 | [#50](https://github.com/AhmedFouad01/tsst-portal/pull/50) | `4c2c2fb` | Mockup 03, without the calendar. `tickets/S3-04.md`. |
-| S3-05 | Clients list cards | none | S3-01 | in progress | — | — | `tickets/S3-05.md`. |
+| S3-05 | Clients list cards | none | S3-01 | in review (PR #51) | [#51](https://github.com/AhmedFouad01/tsst-portal/pull/51) | — | `tickets/S3-05.md`. |
 
 Go / no-go (Ahmed): —
 
