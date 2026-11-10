@@ -1,0 +1,26 @@
+id: CRMS-TSST-008
+title: CRMS Beta single-order HTTP E2E + close-while-live + table transfer (tests only, Cafe repo branch codex/crms-beta-e2e-008)
+kind: work
+status: ready
+to: codex
+needs: [fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering, TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion]
+brand: t-sag
+spec: TSST/projects/cafe/tasks/CRMS-TSST-008-BETA-SINGLE-ORDER-E2E.md
+read: [TSST/projects/cafe]
+write: [TSST/bus/out/CRMS-TSST-008.md]
+after: []
+done_when: "verify:crms-002w:local PASS twice from clean tree (full cycle + kds_work_still_live + transfer + 403s); existing @crms/testing + typecheck + lint pass; no leftover containers; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-008.md"
+issued_by: claude
+created: "2026-11-10T04:32Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:
