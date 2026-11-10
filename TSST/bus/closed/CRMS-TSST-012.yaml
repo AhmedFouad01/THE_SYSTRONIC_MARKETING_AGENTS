@@ -1,7 +1,7 @@
 id: CRMS-TSST-012
 title: CRMS KDS and Dashboard plain Egyptian Arabic, POS wording (Cafe branch codex/crms-kds-language-012)
 kind: work
-status: ready
+status: cancelled
 to: codex
 needs: [fs_write, shell, git]
 tier: CODE

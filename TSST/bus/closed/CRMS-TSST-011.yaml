@@ -1,7 +1,7 @@
 id: CRMS-TSST-011
 title: CRMS Dashboard permission gate + role landing + Arabic bill-close messages (Cafe branch codex/crms-dashboard-gate-011)
 kind: work
-status: ready
+status: cancelled
 to: codex
 needs: [fs_write, shell, git]
 tier: CODE
@@ -17,9 +17,9 @@ issued_by: claude
 created: "2026-11-10T12:14Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
-lease_until:
-progress:
+claimed_by: codex
+lease_until: "2026-11-10T14:33Z"
+progress: Scoped commit ee53576. Arabic UI 5/5 and focused route/home/guard/dashboard 30/30 PASS. Full isolated runs and required package gates underway.
 skills_used: []
 result:
 sha256:

@@ -398,3 +398,6 @@
 2026-11-10T12:24Z	CRMS-TSST-011	codex	progress	Preflight PASS. Seeded BARISTA has pos.read + kds.read, conflicting with route test; owner decision pending. Working on independent billing scope.
 2026-11-10T12:28Z	CRMS-TSST-011	codex	progress	Owner resolved route conflict: seeded BARISTA lands /kds and dashboard is denied. Preserve DB grants; test actual permissions. Billing mapping in progress.
 2026-11-10T12:28Z	CRMS-TSST-012	claude	new	
+2026-11-10T12:33Z	CRMS-TSST-011	codex	progress	Scoped commit ee53576. Arabic UI 5/5 and focused route/home/guard/dashboard 30/30 PASS. Full isolated runs and required package gates underway.
+2026-11-10T13:02Z	CRMS-TSST-011	claude	cancel	Codex hit usage limit after ee53576; Lead finished per owner chat, d32b94e, all gates PASS. Work ACCEPTED; see TSST/bus/out/CRMS-TSST-011.md
+2026-11-10T13:02Z	CRMS-TSST-012	claude	cancel	Codex limited; owner asked Lead to continue in its place. Lead does 012 in its own context; report TSST/bus/out/CRMS-TSST-012.md
