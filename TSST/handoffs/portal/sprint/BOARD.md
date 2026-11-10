@@ -16,14 +16,14 @@ A ticket is never written as merged without its PR and its checks next to it.
   (needs Ahmed's access), S4–S6 (mockups 04–09 not approved), any deploy, any migration on production.
 - **Where it stands (2026-11-06):** S1 is built and merged into `next` (S1-01 tag, S1-03 CI, S1-04 Cairo day, S1-05
   fixes, all four items), S2-01 (one route list) and S2-02 (a stable id for every job, five pull requests #35 to
-  #39, migrations 031 and 032). `next` = `c9cd03e`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
+  #39, migrations 031 and 032). `next` = `3191704`. S2-03 (one approvals service) is merged, in three pull requests: a (one writer of decisions,
   migration 033, PR #40), c (the five old decision routes answer 410, PR #41), b (a read never writes job data, one
   sync, a touched file is not a new version, PR #42). S2-04 (delete = hide, migration 034, one confirm dialog in the
   web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) and S2-06 (the server by domain, PR #45) and S2-07 (the old board and the dead decision path gone, round names gone, the route table in the docs tested, PR #46)
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
   health word read model, PR #47) and S3-02 (Overview tab, mockup 01, PR #48) and S3-03 (Settings tab, mockup 02, PR #49) and S3-04 (Plan tab and campaign page, mockup 03, PR #50) are merged. S3-05 (Clients list cards, PR #51) is merged:
   **S3 is built** (five tickets, PRs #47–#51, no migration). Ahmed saw the preview on 2026-11-10 and said to fix its
-  seven findings: S3-06 now, then the deploy plan.
+  seven findings: S3-06 is merged (PR #52). Now: the deploy plan proposal for Ahmed.
 - **S3 preview (2026-11-10):** the real server and built web from `next` (`c9cd03e`) on a local PGlite database, in
   `~/Work/tsst-portal-s3-preview/.preview/` (untracked: `start.sh`, `seed.mjs`, `backdate.ts`, `shots.mjs`; launch entry
   `dash-s3-preview`, port 3299; owner `owner@preview.invalid`, password in `.preview/credentials.txt`). Seeded like
@@ -156,7 +156,7 @@ Go / no-go (Ahmed): —
 | S3-03 | Settings tab | design | S2-04, S2-05 | merged 2026-11-10 | [#49](https://github.com/AhmedFouad01/tsst-portal/pull/49) | `d350334` | Mockup 02. `tickets/S3-03.md`. Not built: Archive client and Team on this client (no model for either; ask at the S3 preview). |
 | S3-04 | Plan tab and campaign page | design | S2-02 | merged 2026-11-10 | [#50](https://github.com/AhmedFouad01/tsst-portal/pull/50) | `4c2c2fb` | Mockup 03, without the calendar. `tickets/S3-04.md`. |
 | S3-05 | Clients list cards | none | S3-01 | merged 2026-11-10 | [#51](https://github.com/AhmedFouad01/tsst-portal/pull/51) | `c9cd03e` | `tickets/S3-05.md`. |
-| S3-06 | Fixes from the S3 preview | none | S3-01..05 | in progress | — | — | `tickets/S3-06.md`. Ahmed 2026-11-10: "أيوه صلّحهم". |
+| S3-06 | Fixes from the S3 preview | none | S3-01..05 | merged 2026-11-10 | [#52](https://github.com/AhmedFouad01/tsst-portal/pull/52) | `3191704` | `tickets/S3-06.md`. Ahmed 2026-11-10: "أيوه صلّحهم". |
 
 Go / no-go (Ahmed): —
 
