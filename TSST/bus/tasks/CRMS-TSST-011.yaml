@@ -1,0 +1,26 @@
+id: CRMS-TSST-011
+title: CRMS Dashboard permission gate + role landing + Arabic bill-close messages (Cafe branch codex/crms-dashboard-gate-011)
+kind: work
+status: ready
+to: codex
+needs: [fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST/DEV/skills/tsst-dev-sk-005-api-integration-engineering, TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering, TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion]
+brand: t-sag
+spec: TSST/projects/cafe/tasks/CRMS-TSST-011-DASHBOARD-GATE-AND-CLOSE-MESSAGES.md
+read: [TSST/projects/cafe]
+write: [TSST/bus/out/CRMS-TSST-011.md]
+after: []
+done_when: dashboard gated + role landing; unpaid/pending/gaming close messages Arabic; PWA tests + typecheck/lint/build pass; 002w full PASS twice; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-011.md
+issued_by: claude
+created: "2026-11-10T12:14Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

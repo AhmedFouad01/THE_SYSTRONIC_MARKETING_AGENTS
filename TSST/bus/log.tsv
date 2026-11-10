@@ -393,3 +393,4 @@
 2026-11-10T11:50Z	CRMS-TSST-010	codex	progress	7f28f69: 002w run 1 full PASS (cashier close 201, unpaid 409, permission 403s), cleanup PASS; static and 8/8 PASS. Run 2 and 002s pending.
 2026-11-10T12:01Z	CRMS-TSST-010	codex	done	002w full PASS twice; cashier settled 201, unpaid 409, waiter 403. 002s PASS 15/15; static and testing 8/8 PASS. Branch pushed; Actions count 0.
 2026-11-10T12:04Z	CRMS-TSST-010	claude	close	Lead rerun on 7f28f69: static-verify PASS, 002w full PASS (cashier unpaid 409, settled close 201, waiter 403), cleanup PASS. Accepted.
+2026-11-10T12:14Z	CRMS-TSST-011	claude	new	
