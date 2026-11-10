@@ -22,7 +22,20 @@ A ticket is never written as merged without its PR and its checks next to it.
   web, PR #43) and S2-05 (one `client_settings` row per client, migration 035, PR #44) and S2-06 (the server by domain, PR #45) and S2-07 (the old board and the dead decision path gone, round names gone, the route table in the docs tested, PR #46)
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
   health word read model, PR #47) and S3-02 (Overview tab, mockup 01, PR #48) and S3-03 (Settings tab, mockup 02, PR #49) and S3-04 (Plan tab and campaign page, mockup 03, PR #50) are merged. S3-05 (Clients list cards, PR #51) is merged:
-  **S3 is built** (five tickets, PRs #47–#51, no migration). Now: the S3 preview for Ahmed, then the deploy plan.
+  **S3 is built** (five tickets, PRs #47–#51, no migration). Now: **waiting on Ahmed at the S3 preview gate**
+  (asked 2026-11-10), then the deploy plan.
+- **S3 preview (2026-11-10):** the real server and built web from `next` (`c9cd03e`) on a local PGlite database, in
+  `~/Work/tsst-portal-s3-preview/.preview/` (untracked: `start.sh`, `seed.mjs`, `backdate.ts`, `shots.mjs`; launch entry
+  `dash-s3-preview`, port 3299; owner `owner@preview.invalid`, password in `.preview/credentials.txt`). Seeded like
+  SAMPLE-STATE through the API (Nour Studio, Alpha Gym, Cairo Dental). Screenshots EN 1440 light and EN 390 dark; no
+  page errors, no horizontal overflow. Not like the sample: no AR on team pages (no language switch), no scheduled /
+  posted jobs (no posts seeded), "Ad" type does not exist.
+- **Found at the preview, not fixed yet (one polish PR proposed):** (1) Settings › People rows are misaligned at 1440
+  (name pushed to the far side, chip under the avatar); (2) Language & branding fields do not line up (logo / header
+  image); (3) Plan board chips overflow their card ("Closed · hidden from client", "We are here"); (4) the four package
+  meters sit in one cramped row (mockup: two by two); (5) client cards do not align their names; (6) the health
+  "waiting" count includes items of delivered jobs and of projects hidden from the client (Nour shows 7, real 3);
+  (7) "Waiting on client · today" where the sample says 1 day (the age is read from the send time).
 - Runs as a self-paced loop in one session. Current ticket: the first row below that is not merged.
 - **Ahmed's answers on 2026-11-06 (said in the Lead's main session, relayed):**
   1. decision 16: "شيل الرسالة": remove the shared-files notice; no client files list in this sprint (it is decided
