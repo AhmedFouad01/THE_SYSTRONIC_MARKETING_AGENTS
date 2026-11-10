@@ -1,7 +1,7 @@
 id: CRMS-TSST-010
 title: "CRMS cashier (CASH_CUSTODIAN) can close a settled bill: migration 0032 + tests (Cafe branch codex/crms-cashier-close-010)"
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_write, shell, git]
 tier: CODE
@@ -17,10 +17,10 @@ issued_by: claude
 created: "2026-11-10T11:32Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-skills_used: []
-result:
-sha256:
-note:
+progress: "7f28f69: 002w run 1 full PASS (cashier close 201, unpaid 409, permission 403s), cleanup PASS; static and 8/8 PASS. Run 2 and 002s pending."
+skills_used: [TSST-DEV-SK-006, TSST-DEV-SK-007, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/bus/out/CRMS-TSST-010.md
+sha256: a5d7b10eb6e5694ec0af930bca9b74b256c1ba71de509674a56f9e1feda7070f
+note: "Lead rerun on 7f28f69: static-verify PASS, 002w full PASS (cashier unpaid 409, settled close 201, waiter 403), cleanup PASS. Accepted."
