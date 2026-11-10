@@ -81,6 +81,8 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 2026-11-05 | Mockups 01–03 (client page) as drawn | Design gate G2 is open for S3. Settles decisions 1, 2, 3, 7 (below). |
 | 2026-11-05 | "Start S0" | S0-01 may be built and merged. The S0 deploy still needs its own OK. |
 | 2026-11-06 | "طيب ابدأ ف تنفيذ الشكل والهيكلة الجديدة قبل النشر" (said in the Lead's main session, relayed to the sprint session) | Build the new structure and the new look before any deploy. Scope: S1-01, S1-03, S1-04, S1-05, all of S2, S3. Not S1-02, not S4–S6. Integration branch `next`; migrations on a local database only; decisions 4, 5, 6 run on the recommended defaults until he confirms them at the deploy gate. |
+| 2026-11-10 | "أيوه صلّحهم" (the seven findings of the S3 preview) | S3-06 built and merged. |
+| 2026-11-10 | "أيوه ابدأ A" (to: start step A, S0 alone, in the first quiet night?) | Step A of `DEPLOY-PLAN.md` may be deployed: `main` = `8915d14`, code only. Steps B, C, D each still need their own OK. The hour and the AWS SSH rule are his. |
 
 ## Decisions (numbers = `decisions_needed` in the plan)
 | # | Decision | State | Answer or recommendation |
