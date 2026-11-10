@@ -394,3 +394,7 @@
 2026-11-10T12:01Z	CRMS-TSST-010	codex	done	002w full PASS twice; cashier settled 201, unpaid 409, waiter 403. 002s PASS 15/15; static and testing 8/8 PASS. Branch pushed; Actions count 0.
 2026-11-10T12:04Z	CRMS-TSST-010	claude	close	Lead rerun on 7f28f69: static-verify PASS, 002w full PASS (cashier unpaid 409, settled close 201, waiter 403), cleanup PASS. Accepted.
 2026-11-10T12:14Z	CRMS-TSST-011	claude	new	
+2026-11-10T12:19Z	CRMS-TSST-011	codex	claim on gpt-6.1-sol	
+2026-11-10T12:24Z	CRMS-TSST-011	codex	progress	Preflight PASS. Seeded BARISTA has pos.read + kds.read, conflicting with route test; owner decision pending. Working on independent billing scope.
+2026-11-10T12:28Z	CRMS-TSST-011	codex	progress	Owner resolved route conflict: seeded BARISTA lands /kds and dashboard is denied. Preserve DB grants; test actual permissions. Billing mapping in progress.
+2026-11-10T12:28Z	CRMS-TSST-012	claude	new	

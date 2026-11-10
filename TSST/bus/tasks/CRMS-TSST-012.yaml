@@ -1,0 +1,26 @@
+id: CRMS-TSST-012
+title: CRMS KDS and Dashboard plain Egyptian Arabic, POS wording (Cafe branch codex/crms-kds-language-012)
+kind: work
+status: ready
+to: codex
+needs: [fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering, TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion]
+brand: t-sag
+spec: TSST/projects/cafe/tasks/CRMS-TSST-012-KDS-DASHBOARD-LANGUAGE.md
+read: [TSST/projects/cafe]
+write: [TSST/bus/out/CRMS-TSST-012.md]
+after: [CRMS-TSST-011]
+done_when: no user-visible Edge/English in KDS+Dashboard; KDS header table/mode not UUID; PWA vitest+typecheck+lint+build pass; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-012.md
+issued_by: claude
+created: "2026-11-10T12:28Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:

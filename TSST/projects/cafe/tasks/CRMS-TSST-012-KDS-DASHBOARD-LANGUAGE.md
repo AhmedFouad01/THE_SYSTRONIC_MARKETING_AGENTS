@@ -1,6 +1,6 @@
 # CRMS-TSST-012 — KDS and Dashboard plain Egyptian Arabic (same wording as POS)
 
-Date: 2026-11-10 · Issued by: TSST Lead (Claude, R61) · Status: **DRAFT, not issued**. It is issued after `CRMS-TSST-011` closes and the owner says OK. Bus task: `CRMS-TSST-012` · Worker: Codex (`tsst-dev`, CODE tier)
+Date: 2026-11-10 · Issued by: TSST Lead (Claude, R61) · Owner OK: "Yes, after 011" (chat 2026-11-10). Issued with `after: CRMS-TSST-011`, so it can only be claimed after the Lead closes 011. Bus task: `CRMS-TSST-012` · Worker: Codex (`tsst-dev`, CODE tier)
 Team: build · Skills: `TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering`, `TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion`
 Follows: `CRMS-TSST-011` (branch from its accepted tip).
 
