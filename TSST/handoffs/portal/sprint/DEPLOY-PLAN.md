@@ -1,6 +1,6 @@
 # Dash sprint: deploy plan (proposal, 2026-11-10)
 
-Status: **proposal, waiting for Ahmed's OK**. Nothing is deployed. Live is still `6290115` (tag `v-before-sprint`).
+Status: **step A deployed 2026-11-10** (live = `8915d14`); steps B, C, D wait for Ahmed's OK, one by one.
 Everything built sits on `next` = `3191704`; `main` = `8915d14` (S0-01 only). How a deploy runs and how to roll back is on
 `BOARD.md` → Deploy. Each step below needs its own explicit OK in chat, on its day.
 
