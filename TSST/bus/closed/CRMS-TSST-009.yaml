@@ -1,7 +1,7 @@
 id: CRMS-TSST-009
 title: CRMS clear Arabic message when closing a bill while kitchen work is live (Edge mapping + POS/Billing + tests; Cafe branch codex/crms-close-kds-message-009)
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_write, shell, git]
 tier: CODE
@@ -17,10 +17,10 @@ issued_by: claude
 created: "2026-11-10T10:58Z"
 rounds: 0
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress:
-skills_used: []
-result:
-sha256:
-note:
+progress: Scoped commit 2be3e6e. Both Arabic tests red on base, then PWA 183/183 (POS 50), testing 8/8 and both typechecks PASS. Full isolated runs underway.
+skills_used: [TSST-DEV-SK-005, TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/bus/out/CRMS-TSST-009.md
+sha256: ee449faa56b715c64c7caf7bc2db1162a37e0425effb631c1eae2809ebc1880b
+note: "Lead rerun on 2be3e6e: PWA 183/183, 002w full A/B/C/D PASS with new kitchen 409 message, cleanup PASS. Accepted."

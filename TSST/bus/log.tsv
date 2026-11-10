@@ -382,3 +382,9 @@
 2026-11-10T10:44Z	CRMS-TSST-008	codex	done	B-only PASS twice: generic HTTP 409 with unchanged state, then 201 CLOSED. Retained A/C/D evidence. Cafe branch pushed; Actions count 0.
 2026-11-10T10:48Z	CRMS-TSST-008	claude	close	Lead rerun full 002w on 3815b60: A/B/C/D PASS, cleanup PASS, QA env intact. Accepted.
 2026-11-10T10:58Z	CRMS-TSST-009	claude	new	
+2026-11-10T11:08Z	CRMS-TSST-009	codex	claim on gpt-6.1-sol	
+2026-11-10T11:09Z	CRMS-TSST-009	codex	progress	Claimed from latest TSST fbc4a12. Preflight PASS. Implementing scoped billing 409 mapping and Arabic POS/Billing message with tests.
+2026-11-10T11:18Z	CRMS-TSST-009	codex	progress	Scoped commit 2be3e6e. Both Arabic tests red on base, then PWA 183/183 (POS 50), testing 8/8 and both typechecks PASS. Full isolated runs underway.
+2026-11-10T11:25Z	CRMS-TSST-009	codex	done	Full 002w PASS twice, Arabic POS/Billing tests PASS, PWA 183/183, POS 50/50, testing 8/8; exact branch pushed and Actions count 0.
+2026-11-10T11:31Z	CRMS-TSST-009	claude	close	Lead rerun on 2be3e6e: PWA 183/183, 002w full A/B/C/D PASS with new kitchen 409 message, cleanup PASS. Accepted.
+2026-11-10T11:32Z	CRMS-TSST-010	claude	new	

@@ -1,0 +1,26 @@
+id: CRMS-TSST-010
+title: "CRMS cashier (CASH_CUSTODIAN) can close a settled bill: migration 0032 + tests (Cafe branch codex/crms-cashier-close-010)"
+kind: work
+status: ready
+to: codex
+needs: [fs_write, shell, git]
+tier: CODE
+team: build
+skills: [TSST/DEV/skills/tsst-dev-sk-006-data-sql-migration-engineering, TSST/DEV/skills/tsst-dev-sk-007-identity-access-secrets-engineering, TSST/DEV/skills/tsst-dev-sk-011-testing-tdd-engineering, TSST/DEV/skills/tsst-dev-sk-015-verification-before-completion]
+brand: t-sag
+spec: TSST/projects/cafe/tasks/CRMS-TSST-010-CASHIER-BILL-CLOSE.md
+read: [TSST/projects/cafe]
+write: [TSST/bus/out/CRMS-TSST-010.md]
+after: []
+done_when: 002w full PASS twice (cashier closes in A, unsettled close 409, waiter 403); 002s PASS; static-verify + testing 8/8 + typecheck/lint pass; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-010.md
+issued_by: claude
+created: "2026-11-10T11:32Z"
+rounds: 0
+max_rounds: 1
+claimed_by:
+lease_until:
+progress:
+skills_used: []
+result:
+sha256:
+note:
