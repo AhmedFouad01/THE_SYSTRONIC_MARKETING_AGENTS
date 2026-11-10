@@ -5,7 +5,7 @@ Read root `AGENTS.md` → `TSST/core/rules.md` first (R61: Claude is the direct 
 ## Where things are
 
 - **Cafe repo:** https://github.com/Do7a193/CAFE_RESTAURANT_MS. Nothing below is merged; no PRs. Each branch is built on the one before it:
-  - `codex/crms-cashier-first-036` @ `470fb92`: docs only since `545f595` (handoff, checklist, paper fallback, QA run, 014 and 015 rows).
+  - `codex/crms-cashier-first-036` @ `2695d3a`: docs only since `545f595` (handoff, checklist, paper fallback, QA run, 014–016 rows).
   - `codex/crms-beta-e2e-008` @ `3815b60`: runner `verify:crms-002w:local` (one-order HTTP E2E).
   - `codex/crms-close-kds-message-009` @ `2be3e6e`: Arabic kitchen-close message.
   - `codex/crms-cashier-close-010` @ `7f28f69`: migration 0032, CASH_CUSTODIAN can close.
@@ -13,7 +13,8 @@ Read root `AGENTS.md` → `TSST/core/rules.md` first (R61: Claude is the direct 
   - `claude/crms-kds-language-012` @ `8f46c25`: KDS/Dashboard wording.
   - `claude/crms-pending-payment-guard-013` @ `24adf83`: pending payments reserve the balance.
   - `claude/crms-cashier-grants-014` @ `15e31e2`: migration 0033, the cashier runs takeaway and dine-in alone (F1–F3).
-  - `claude/crms-offline-session-015` @ `44fa3bf`: Edge outage shows Arabic "offline", and the saved session survives it (F4). PWA only. **This is the tip.**
+  - `claude/crms-offline-session-015` @ `44fa3bf`: Edge outage shows Arabic "offline", and the saved session survives it (F4). PWA only.
+  - `claude/crms-billing-labels-016` @ `bf276e6`: Billing names bills by table or takeaway, with Arabic status, clean quantities, default amount and payment confirm (F5). Read-only `table_name`/`service_mode` on the bills API. **This is the tip.**
 - **Records:** `TSST/bus/out/CRMS-TSST-00{8..12}.md`, `TSST/projects/cafe/tasks/CRMS-TSST-0{08..13}-*.md`, and Cafe `docs/gates/CRMS-CLOUD-HANDOFF.md` (log rows) + `CRMS-BETA-ACCEPTANCE-CHECKLIST.md` + `CRMS-BETA-PAPER-FALLBACK.md` + `CRMS-BETA-QA-RUN-2026-11-10.md`.
 - **Owner decisions (2026-11-10):** the cashier closes bills; printing is out of the Beta (KDS only); the offline plan is paper.
 - **Bus:** 008, 009 and 010 closed. 011 and 012 were cancelled on the bus because Codex hit its usage limit; the Lead finished them and the work was accepted (see their out files). 013 was done by the Lead without a bus task. 3 old VILL tasks are still `done` and waiting for a Lead close (not Cafe).
@@ -35,12 +36,13 @@ Also:
 
 1. Done: F3 = yes (Ahmed: "صالة وتيك أواي"). F1–F3 were fixed in `CRMS-TSST-014` (`15e31e2`, `TSST/projects/cafe/tasks/CRMS-TSST-014-CASHIER-ALONE-GRANTS.md`).
 2. Done: F4 in `CRMS-TSST-015` (`44fa3bf`, `TSST/projects/cafe/tasks/CRMS-TSST-015-OFFLINE-WORDING-SESSION.md`). Left open there: a rare logout when a refresh reply is lost (needs an Edge grace window), and the "Edge" wording on manager screens.
-2a. Next: F5 (Billing page labels, status, quantities, default amount, cash confirm), then F6–F9.
+2a. Done: F5 in `CRMS-TSST-016` (`bf276e6`, `TSST/projects/cafe/tasks/CRMS-TSST-016-BILLING-LABELS.md`).
+2b. Next: F6–F9 (minor: POS pick-up of a bill from another device, KDS/POS kitchen labels, touch sizes, a11y names).
 3. Still needed from Ahmed: a real Android phone run with the QA CA (checklist A–H, a first-time cashier).
 
 ## QA environment (dies when the session that started it ends)
 
-- QA clone `C:\Users\Do7a\Projects\CAFE_RESTAURANT_MS_BETAGATE_20261109`, detached at `44fa3bf` (0033 applied). Its origin is a local mirror, so fetch new commits from the E2E008 clone path. Postgres/Redis are compose project `crmsbetaqa-20261109` (tmpfs: the data is lost when the containers stop). The Edge runs from `tmp/beta-qa/qa-env.sh` + `node apps/edge-api/dist/main.js`. The PWA runs from `vite preview --config tmp/beta-qa/vite.qa-https.config.mjs` (https://192.168.1.25:5194, QA CA in `tmp/beta-qa/tls`, valid until 2026-12-09).
+- QA clone `C:\Users\Do7a\Projects\CAFE_RESTAURANT_MS_BETAGATE_20261109`, detached at `bf276e6` (0033 applied). Its origin is a local mirror, so fetch new commits from the E2E008 clone path. Postgres/Redis are compose project `crmsbetaqa-20261109` (tmpfs: the data is lost when the containers stop). The Edge runs from `tmp/beta-qa/qa-env.sh` + `node apps/edge-api/dist/main.js`. The PWA runs from `vite preview --config tmp/beta-qa/vite.qa-https.config.mjs` (https://192.168.1.25:5194, QA CA in `tmp/beta-qa/tls`, valid until 2026-12-09).
 - Rebuild if it is down: `docker compose -p crmsbetaqa-20261109 -f infra/docker/compose.crms-002a-verify.yaml up -d`, then `pnpm db:migrate` with qa-env, then `node tmp/beta-qa/seed-qa.mjs` (it writes new passwords to `QA-ACCOUNTS.local.md`; never print them), then build edge-api and the PWA **from PowerShell** with `VITE_EDGE_API_URL=/api/v1`, and copy `tls/crms-qa-ca.der.crt` to `apps/pwa/dist/crms-qa-ca.crt`.
 - Lead browser runs: `tmp/beta-qa/session-for.py <user>` writes a one-time session for the loopback preview copy (`vite.qa-local.config.mjs`, 127.0.0.1:5195). Copy `apps/pwa/dist` to `tmp/beta-qa/dist-local` first, and delete that folder afterwards. `tmp/beta-qa/qa-api.py serve|bill <orderId>` runs the setup steps that are not under test.
 
