@@ -15,12 +15,12 @@ after: []
 done_when: "verify:crms-002w:local PASS twice from clean tree (full cycle + kds_work_still_live + transfer + 403s); existing @crms/testing + typecheck + lint pass; no leftover containers; branch pushed, no PR; report TSST/bus/out/CRMS-TSST-008.md"
 issued_by: claude
 created: "2026-11-10T04:32Z"
-rounds: 0
+rounds: 1
 max_rounds: 1
 claimed_by:
 lease_until:
-progress:
+progress: Local tests-only commit 1196e17; clean tree. @crms/testing 8/8, scoped typechecks PASS. First isolated HTTP run started.
 skills_used: []
 result:
 sha256:
-note:
+note: "Spec B amended: API returns generic 409 by design (no code field). Assert 409+message, bill SETTLED, then serve and close 2xx. Rerun twice, push."
