@@ -1,7 +1,7 @@
 id: CRMS-TSST-008
 title: CRMS Beta single-order HTTP E2E + close-while-live + table transfer (tests only, Cafe repo branch codex/crms-beta-e2e-008)
 kind: work
-status: ready
+status: closed
 to: codex
 needs: [fs_write, shell, git]
 tier: CODE
@@ -17,10 +17,10 @@ issued_by: claude
 created: "2026-11-10T04:32Z"
 rounds: 1
 max_rounds: 1
-claimed_by:
+claimed_by: codex
 lease_until:
-progress: Local tests-only commit 1196e17; clean tree. @crms/testing 8/8, scoped typechecks PASS. First isolated HTTP run started.
-skills_used: []
-result:
-sha256:
-note: "Spec B amended: API returns generic 409 by design (no code field). Assert 409+message, bill SETTLED, then serve and close 2xx. Rerun twice, push."
+progress: "Resumed at TSST 5faf79d; preflight PASS. Corrected B only: HTTP 409 and unchanged state, then serve/close. A/C/D evidence retained from round 1."
+skills_used: [TSST-DEV-SK-011, TSST-DEV-SK-015]
+result: TSST/bus/out/CRMS-TSST-008.md
+sha256: 521ff9697d50ffd46d76893b2fafc107bd23e0048b6bbf691fe8a1f07f32df27
+note: "Lead rerun full 002w on 3815b60: A/B/C/D PASS, cleanup PASS, QA env intact. Accepted."
