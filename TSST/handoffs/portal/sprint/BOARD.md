@@ -141,7 +141,7 @@ Go / no-go (Ahmed): —
 |---|---|---|---|---|---|---|---|
 | S3-01 | Health word read model | none | S1-04 | merged 2026-11-07 | [#47](https://github.com/AhmedFouad01/tsst-portal/pull/47) | `42cbd7c` | `tickets/S3-01.md`. `health.ts`; thresholds 3 / 7 days (Lead's defaults). |
 | S3-02 | Overview tab | design | S2-02, S2-05, S3-01 | merged 2026-11-07 | [#48](https://github.com/AhmedFouad01/tsst-portal/pull/48) | `019d459` | Mockup 01. `tickets/S3-02.md`. Found: the team pages have no Arabic switch (the AR frame needs one; ask at the S3 preview); the client Home reads `included` unguarded (pre-existing, a paused package would break it). |
-| S3-03 | Settings tab | design | S2-04, S2-05 | in progress | — | — | Mockup 02. `tickets/S3-03.md`. |
+| S3-03 | Settings tab | design | S2-04, S2-05 | in review (PR #49) | [#49](https://github.com/AhmedFouad01/tsst-portal/pull/49) | — | Mockup 02. `tickets/S3-03.md`. Not built: Archive client and Team on this client (no model for either; ask at the S3 preview). |
 | S3-04 | Plan tab and campaign page | design | S2-02 | todo | — | — | Mockup 03, without the calendar. |
 | S3-05 | Clients list cards | none | S3-01 | todo | — | — | |
 
