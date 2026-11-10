@@ -23,7 +23,8 @@ A ticket is never written as merged without its PR and its checks next to it.
   are merged: **S2 is complete** (seven tickets, PRs #35–#46, migrations 031–035, all local only). S3-01 (the
   health word read model, PR #47) and S3-02 (Overview tab, mockup 01, PR #48) and S3-03 (Settings tab, mockup 02, PR #49) and S3-04 (Plan tab and campaign page, mockup 03, PR #50) are merged. S3-05 (Clients list cards, PR #51) is merged:
   **S3 is built** (five tickets, PRs #47–#51, no migration). Ahmed saw the preview on 2026-11-10 and said to fix its
-  seven findings: S3-06 is merged (PR #52). Now: the deploy plan proposal for Ahmed.
+  seven findings: S3-06 is merged (PR #52). **Waiting on Ahmed:** the deploy plan proposal is `DEPLOY-PLAN.md`
+  (four steps A–D, one per night; step C carries migrations 031–035). Nothing deploys without his OK per step.
 - **S3 preview (2026-11-10):** the real server and built web from `next` (`c9cd03e`) on a local PGlite database, in
   `~/Work/tsst-portal-s3-preview/.preview/` (untracked: `start.sh`, `seed.mjs`, `backdate.ts`, `shots.mjs`; launch entry
   `dash-s3-preview`, port 3299; owner `owner@preview.invalid`, password in `.preview/credentials.txt`). Seeded like
