@@ -10,7 +10,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 
 ## Now
 - Live release: **`1779ad0`** (deploy step D: S0 + S1 + S2 + S3) since 2026-11-10 21:05 Cairo; before it `3a5554a` (step C, migrations 031–035), `94e1a5b` (B), `8915d14` (A), `6290115` (PR #27). `main` = `1779ad0` = `next` (`3191704`) plus the merge commits.
-- **2026-11-11: Ahmed reported two live problems** (the client sign-in card; post review does not show the work properly and never the copy). Diagnosed by a workflow (five readers, each re-checked); tickets F-01 and F-02 are being built on `next`. No deploy without his OK.
+- **2026-11-11: Ahmed reported two live problems** (the client sign-in card; post review does not show the work properly and never the copy). Diagnosed by a workflow (five readers, each re-checked); tickets **F-01 and F-02 are built, reviewed and merged into `next`** (PR #56 `9e560ea`, PR #57 `c7d4859`; `next` = `c7d4859`). **Not deployed: waiting for Ahmed's OK** after he sees the screenshots. Before that deploy: Ahmed uploads the tight light logo in Settings › Workspace (the stored 1281×1281 one is not re-trimmed by the deploy and would show very small under the new height cap); check `GET /api/v1/workspace` shows a tight `header_logo_light` first. The deploy is code only (no migration): rollback `deploy.sh --rollback`.
 - **The sprint's approved scope (S0–S3) is built and deployed (2026-11-10).** The loop is stopped. Left for Ahmed:
   1. (done: Ahmed confirmed step D signed in, "تمام شغال");
   2. mockups 04–06 (S4) and 07–09 (S5) need his approval before any of S4–S6 starts; decisions 8–15 are open;
@@ -176,8 +176,8 @@ Go / no-go (Ahmed): —
 ### F Live fixes after the deploy (reported by Ahmed on the live site)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| F-01 | The sign-in card (logo block, language button, glued words, footer, submit button) | deploy | S3 | in progress | — | — | `tickets/F-01.md`. Ahmed 2026-11-11, with a screenshot. Main cause: the stored light logo is a padded 1281×1281 square. |
-| F-02 | Reviewing a post shows the work and its copy (team and client) | deploy | S3 | in progress | — | — | `tickets/F-02.md`. Ahmed 2026-11-11. Main cause: the web reads captions in the old shape; the client page never reads them; media is cropped and not the version's own. |
+| F-01 | The sign-in card (logo block, language button, glued words, footer, submit button) | deploy | S3 | **merged into `next`** | #56 (`9e560ea`) | CI 3/3; browser gate 20 cards | `tickets/F-01.md`. Ahmed 2026-11-11, with a screenshot. Main cause: the stored light logo is a padded 1281×1281 square. Not deployed. |
+| F-02 | Reviewing a post shows the work and its copy (team and client) | deploy | S3 | **merged into `next`** | #57 (`c7d4859`) | CI 3/3; real local server check | `tickets/F-02.md`. Ahmed 2026-11-11. Main cause: the web reads captions in the old shape; the client page never reads them; media is cropped and not the version's own. Not deployed. |
 
 ### S4 Team daily (not approved to start; mockups 04–06 not approved)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
