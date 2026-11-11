@@ -46,7 +46,8 @@ Also:
 3. Still needed from Ahmed: a real Android phone run with the QA CA (checklist A–H, a first-time cashier). **Ahmed 2026-11-10: paused for now; the next Cafe session starts with this run** (rebuild the QA env first, see below). Merge decision comes after it.
    **Done 2026-11-11 (real Android phone, QA CA trusted, `47b5747`, first-time cashier):** core path PASS per the DB. 4 dine-in orders + 1 takeaway; 6 kitchen items QUEUED → SERVED; 2 bills (QA-T02 190.00 cash, QA-T05 85.00 InstaPay with reference) closed by the cashier at 16:51 Cairo, paid = total, 0 outstanding, 0 overpaid; tabs CLOSED, all 5 tables AVAILABLE. Ahmed: "the cashier found it simple". Not seen in data (not run or not observable): D2 split payment, D3 overpay refusal, D4 pending payment, D7 reversal, C3/C4, B7, E roles. The waiter's smoke takeaway order is still SUBMITTED with no bill.
    Fixes done the same day (Ahmed: "ابدأ"): (1) `CRMS-TSST-018` Arabic page title and app name; (2) `CRMS-TSST-019` "Edge" wording off the manager screens. Gates PASS on `f6be50f`, and the QA env is on it. (3) The refresh grace window was **dropped** by Ahmed ("سيبه بره"), because it breaks the 002a replay check.
-4. Next: Ahmed decides whether to merge PR #38 (use a merge commit; rollback is `git revert -m 1`). Merging deploys nothing. Migrations 0032/0033 apply only when `db:migrate` runs on a site.
+4. **Merged 2026-11-11** (Ahmed: "نعمل merge"): PR #38 → `main` as the merge commit `618def6` (parents `5cb2095` + `514717f`). The `main` tree equals the RC exactly. Rollback: `git revert -m 1 618def6`. Nothing was deployed. Migrations 0032/0033 apply only when `db:migrate` runs on a site. The stacked branches are kept as they are.
+5. Next (Ahmed's call): when and where the Beta goes on a real cafe server (deploy = `db:migrate` 0032/0033 + Edge + PWA build), or the next feature.
 
 ## QA environment (dies when the session that started it ends)
 
