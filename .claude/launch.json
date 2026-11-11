@@ -37,6 +37,12 @@
       "runtimeExecutable": "bash",
       "runtimeArgs": ["/Users/fouad/Work/tsst-portal-s3-preview/.preview/start.sh"],
       "port": 3299
+    },
+    {
+      "name": "dash-aldoctor-fit",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["/Users/fouad/Work/tsst-portal-aldoctor-fit/.fit/start.sh"],
+      "port": 3298
     }
   ]
 }
