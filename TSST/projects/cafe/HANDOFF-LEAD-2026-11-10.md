@@ -19,6 +19,7 @@ Read root `AGENTS.md` → `TSST/core/rules.md` first (R61: Claude is the direct 
   - `claude/crms-app-title-018` @ `b5ac7e0`: Arabic page title and app name. Pushed.
   - `claude/crms-edge-wording-019` @ `f6be50f`: manager screens say "النظام" instead of "Edge". **This is the tip.** Pushed.
   - The log row for both and for the Android run is on `codex/crms-cashier-first-036` @ `7ccf592`, pushed. Clone: `C:\Users\Do7a\Projects\CAFE_RESTAURANT_MS_E2E008`.
+  - **RC:** `claude/crms-beta-rc` @ `514717f` = 019 + the 036 docs (merge, docs only), pushed. **PR https://github.com/Do7a193/CAFE_RESTAURANT_MS/pull/38 → `main`** (opened 2026-11-11 with Ahmed's OK "ابدأ 1–3"). GitHub says MERGEABLE/CLEAN, and there are no CI checks (both workflows are `workflow_dispatch` only). Gates on `514717f`: static, typecheck, lint and build exit 0; `@crms/testing` 8/8; 002e PASS (65/65, PWA 240/240); 002s PASS; 002w PASS twice (`317d0721c26d`, `5cec8fc78c8d`). Some runs failed earlier, all on timeouts: the PC had 0.5 GB of RAM free and rebooted at 20:05.
 - **Records:** `TSST/bus/out/CRMS-TSST-00{8..12}.md`, `TSST/projects/cafe/tasks/CRMS-TSST-0{08..13}-*.md`, and Cafe `docs/gates/CRMS-CLOUD-HANDOFF.md` (log rows) + `CRMS-BETA-ACCEPTANCE-CHECKLIST.md` + `CRMS-BETA-PAPER-FALLBACK.md` + `CRMS-BETA-QA-RUN-2026-11-10.md`.
 - **Owner decisions (2026-11-10):** the cashier closes bills; printing is out of the Beta (KDS only); the offline plan is paper.
 - **Bus:** 008, 009 and 010 closed. 011 and 012 were cancelled on the bus because Codex hit its usage limit; the Lead finished them and the work was accepted (see their out files). 013 was done by the Lead without a bus task. 3 old VILL tasks are still `done` and waiting for a Lead close (not Cafe).
@@ -45,7 +46,7 @@ Also:
 3. Still needed from Ahmed: a real Android phone run with the QA CA (checklist A–H, a first-time cashier). **Ahmed 2026-11-10: paused for now; the next Cafe session starts with this run** (rebuild the QA env first, see below). Merge decision comes after it.
    **Done 2026-11-11 (real Android phone, QA CA trusted, `47b5747`, first-time cashier):** core path PASS per the DB. 4 dine-in orders + 1 takeaway; 6 kitchen items QUEUED → SERVED; 2 bills (QA-T02 190.00 cash, QA-T05 85.00 InstaPay with reference) closed by the cashier at 16:51 Cairo, paid = total, 0 outstanding, 0 overpaid; tabs CLOSED, all 5 tables AVAILABLE. Ahmed: "the cashier found it simple". Not seen in data (not run or not observable): D2 split payment, D3 overpay refusal, D4 pending payment, D7 reversal, C3/C4, B7, E roles. The waiter's smoke takeaway order is still SUBMITTED with no bill.
    Fixes done the same day (Ahmed: "ابدأ"): (1) `CRMS-TSST-018` Arabic page title and app name; (2) `CRMS-TSST-019` "Edge" wording off the manager screens. Gates PASS on `f6be50f`, and the QA env is on it. (3) The refresh grace window was **dropped** by Ahmed ("سيبه بره"), because it breaks the 002a replay check.
-4. Next: Ahmed decides on merging the stack. 018, 019 and the 036 log `7ccf592` were pushed on 2026-11-11 (no PR).
+4. Next: Ahmed decides whether to merge PR #38 (use a merge commit; rollback is `git revert -m 1`). Merging deploys nothing. Migrations 0032/0033 apply only when `db:migrate` runs on a site.
 
 ## QA environment (dies when the session that started it ends)
 
