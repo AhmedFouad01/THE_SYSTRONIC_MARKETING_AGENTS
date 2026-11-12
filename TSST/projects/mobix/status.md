@@ -7,7 +7,8 @@ State: MOBIX_WEB ACTIVE_SUPERVISED (2026-11-12, phase 0 scope lock) / MOBIX_ONE 
 - Local commits on top of `0512428` (= origin): `661742e` minQty JsonRequired fix + test, `363ce9b` frontend `package-lock.json`, `a959918` plan/audit/status/scope-lock docs. **NOT pushed** (needs owner OK).
 - Verified this session: .NET Release build 0 warnings, tests **239/239 PASS**; frontend clean `npm ci` + build PASS (contract tests 43/43).
 - Owner decisions and draft M0–M10 estimate (28–41 work days before external waits): `docs/architecture/MBX-WEB-PHASE0-SCOPE-LOCK-2026-11-12.md`. No VAT/e-invoice; legacy data = Desktop + Excel; first Lead = landing page (Lead recommendation). Open: cut-off date, Pixel/Dataset (unknown), hosting, owner confirm posted-document edit = reversal (blocks M1).
-- Open fixture step: restore `CA03-E2E-PRODUCT-38bdea1cfb` minQty 1→0 via UI + SELECT. Next: owner answers open items, then M1 accounting/FIFO design.
+- Owner approved reversal-only edits (posted docs corrected by return/cancel). M1 design draft `docs/architecture/MBX-WEB-M1-ACCOUNTING-FIFO-DESIGN-2026-11-12.md` (5 local Web commits, not pushed): FIFO per product+warehouse, roll stock in meters (fixes 1/30 drift), no back-dating. Open Q1 transfers, Q2 external sale, Q3 wallets, Q4 quotes.
+- Open fixture step: restore `CA03-E2E-PRODUCT-38bdea1cfb` minQty 1→0 via UI + SELECT. Next: owner OK of M1 decisions D4/D10 + Q1–Q4, then M2 critical sale path.
 
 ## 2026-11-01 Desktop MBX-066 follow-up — preview ACK semantics staged
 - Project: `MOBIX` Desktop only, `Do7a193/Mobix` branch `fix/MBX-066-print-p0-isolation-failclosed`, PR #49 DRAFT; separate from active `MOBIX_ONE` and paused `MOBIX_WEB`.
