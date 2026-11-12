@@ -1,6 +1,13 @@
 # MOBIX — TSST current checkpoint
-Date: 2026-11-01
-State: MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); stocktaking PDF operator visual PASS, financial PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
+Date: 2026-11-12
+State: MOBIX_WEB ACTIVE_SUPERVISED (2026-11-12, phase 0 scope lock) / MOBIX_ONE ACTIVE_SUPERVISED / MO-PRINT-001 NODE 70/70 PASS + DUAL WINDOWS RELEASE BUILD PASS (owner screenshot, local SHA not shown); stocktaking PDF operator visual PASS, financial PDF QA OPEN; MOBIX_DESKTOP MBX-066 PAUSED; DEV_AG runtime NOT_READY and not dispatched.
+
+## 2026-11-12 MOBIX_WEB resumed — client release plan, phase 0 scope lock
+- Owner resumed `MOBIX_WEB` for first client release; Claude is project Lead (R61). Same repo `Do7a193/Mobix.Web`, branch `architecture/MBX-WEB-CA03-inventory-core`, clone `C:/Users/Do7a/Mobix.Web`. Not a new repo.
+- Local commits on top of `0512428` (= origin): `661742e` minQty JsonRequired fix + test, `363ce9b` frontend `package-lock.json`, `a959918` plan/audit/status/scope-lock docs. **NOT pushed** (needs owner OK).
+- Verified this session: .NET Release build 0 warnings, tests **239/239 PASS**; frontend clean `npm ci` + build PASS (contract tests 43/43).
+- Owner decisions and draft M0–M10 estimate (28–41 work days before external waits): `docs/architecture/MBX-WEB-PHASE0-SCOPE-LOCK-2026-11-12.md`. Open: VAT/e-invoice, legacy data source + cut-off date, first Lead source, existing Pixel/Dataset, hosting, posted-document edit = reversal.
+- Open fixture step: restore `CA03-E2E-PRODUCT-38bdea1cfb` minQty 1→0 via UI + SELECT. Next: owner answers open items, then M1 accounting/FIFO design.
 
 ## 2026-11-01 Desktop MBX-066 follow-up — preview ACK semantics staged
 - Project: `MOBIX` Desktop only, `Do7a193/Mobix` branch `fix/MBX-066-print-p0-isolation-failclosed`, PR #49 DRAFT; separate from active `MOBIX_ONE` and paused `MOBIX_WEB`.
