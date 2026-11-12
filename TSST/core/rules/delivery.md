@@ -20,3 +20,5 @@ Original wording: `TSST/decisions/rules-history.md`.
   under the brand and shows, with current status, in the shared brand Delivery System. New
   campaigns extend that system; never a separate campaign-specific one. Brand entry pages link the
   job pages; refresh them (`sync_jobs.py <brand>`) whenever work is added or its status changes.
+- **R66 Client PDFs are formal** (owner 2026-11-12): client reports and PDFs are in simple formal Arabic (MSA), agency voice,
+  findings and next steps only. Internal asks (top-ups, account issues, questions for Ahmed) go in chat, never in the file.

@@ -20,3 +20,6 @@ Original wording: `TSST/decisions/rules-history.md`. Production standard: `TSST/
 - **PREVIS.** HTML layouts, prompts, briefs and storyboards are `PREVIS`; final assets need render QA
   through `TSST/CREATIVE/FINAL_ASSET_GATE.md`. Video/motion belongs to MOTION (`TSST/MOTION/AGENT.md`);
   CREATIVE does its final brand check.
+- **R63 Photos first, temporary = fast** (owner 2026-11-12): a page that needs imagery starts with a one-line ask for Ahmed's
+  best photos, not a social-media scrape. When he calls something temporary: one version built in the session, a screenshot
+  within the hour, no multi-direction workflows.

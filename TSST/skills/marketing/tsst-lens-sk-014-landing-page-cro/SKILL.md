@@ -5,12 +5,15 @@ id: TSST-LENS-SK-014
 team: marketing
 owner: LENS_AG
 status: UNVALIDATED
-version: 0.1
+version: 0.2
 ---
 
 # TSST-LENS-SK-014 Landing Page & CRO
 
 Status: `UNVALIDATED`
+
+Gate checklist (R65): for an order, menu or ad landing page, load `~/.claude/skills/landing-page-build/SKILL.md`
+(lessons from client design/QA gates) before building or reviewing, and self-check against it.
 
 ## Objective
 
@@ -114,3 +117,4 @@ Given an ad, a page screenshot or description, and a metrics snapshot, deliver a
 ## Changelog
 
 - 0.1: initial draft (ADR-003 P1 gap closure). Unvalidated; no registry entry yet.
+- 0.2 (2026-11-13): points to the landing-page-build gate checklist (R65).

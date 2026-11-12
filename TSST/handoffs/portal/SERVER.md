@@ -207,3 +207,11 @@ Owner Ahmed approved. Temporary landing page (job `t-sag/projects/landing-page`,
   Let's Encrypt (YE1) for both names, issued 2026-10-31, valid to 2027-01-29, auto-renew. Backup before the change: `/etc/caddy/Caddyfile.pre-site-2026-10-31.bak`.
 - Contact form posts from the browser to Web3Forms (key in `main.js`, Ahmed's account); messages go to the.systronic@gmail.com.
 - Verified 2026-10-31: site 200, bare domain 301 (path kept), http → https 308, Dash `/login` 200 and `/api/tree` 401, one real form test accepted and received in the inbox.
+
+## Ya Kebda order page (2026-11-12)
+- `https://www.the-systronic.com/yakebda/`: Caddy `handle @yakebda` inside the `www.the-systronic.com` block → `file_server`
+  from `/srv/yakebda/public/yakebda` (root-owned). The block carries a "keep this block" comment: another edit dropped it
+  once. After any Caddyfile change, check `/yakebda/` returns 200. The printed QR stands depend on this path.
+- Deploy from the Mac: `python3 build.py` in `~/Work/yakebda-landing` → rsync `dist/` → `/tmp/yk_dist` → `sudo rsync` into place.
+- `https://www.the-systronic.com/privacy/` (Meta app privacy page) is the static file `/srv/tsst/site/privacy/index.html`,
+  not in any repo: a redeploy of `/srv/tsst/site` would wipe it. Source: `~/Work/meta-ads/privacy/index.html`.

@@ -53,11 +53,39 @@ brands:
   yakebda-ms:
     name: YAKEBDA_MS
     kind: client
-    active: not_recorded  # state lives in canonical source; fetch on demand
+    active: true
     memory: TSST/brands/yakebda-ms/memory/source.md
-    memory_roots: 3   # authority NOT reconciled; see source.md
-    projects: {}
-    next: canonical-root reconciliation before durable work
+    memory_roots: 3   # July roots = the platform (ykms-platform); Nov work = pointers in projects/
+    projects:
+      ops-dashboard:
+        state: plan v1 2026-11-13 (build inside ~/yakebda-ms recommended); Gemini checks own vs WordPress vs Shopify
+        checkpoint: TSST/brands/yakebda-ms/projects/ops-dashboard/brief.md
+        next: Ahmed picks the option
+      order-landing:
+        state: live 2026-11-12 at the-systronic.com/yakebda (static, Dash EC2), pixel on
+        checkpoint: TSST/brands/yakebda-ms/projects/order-landing/project.md
+        next: CAPI phase 2; confirm address / hours / delivery fees
+      qr-stands:
+        state: 10 stands s01-s10 delivered as PNGs 2026-11-12; links frozen
+        checkpoint: TSST/brands/yakebda-ms/projects/qr-stands/project.md
+        next: Ahmed prints after a test scan
+      meta-campaigns:
+        state: Orders + Retarget on (Ahmed); website campaign YKW PAUSED
+        checkpoint: TSST/brands/yakebda-ms/projects/meta-campaigns/project.md
+        next: YKW activation and top-up = Ahmed's call
+      video-15s:
+        state: v3 approved 2026-11-12, not on Meta
+        checkpoint: TSST/brands/yakebda-ms/projects/video-15s/project.md
+        next: ask before adding to YKW
+      content-plan-30d:
+        state: PDF delivered; 28 Dash posts carry the old copy
+        checkpoint: TSST/brands/yakebda-ms/projects/content-plan-30d/project.md
+        next: sync copy.json into posts.csv before any Dash push
+      ykms-platform:
+        state: ~/yakebda-ms idle since 2026-07-26, never deployed, repo public
+        checkpoint: TSST/brands/yakebda-ms/projects/ykms-platform/project.md
+        next: decided in ops-dashboard
+    next: Ahmed picks the dashboard option (ops-dashboard)
   anvil:
     name: ANVIL (ANVIL SUPPS)
     kind: client

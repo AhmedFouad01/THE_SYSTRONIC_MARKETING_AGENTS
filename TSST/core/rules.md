@@ -15,6 +15,8 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   never send a runtime to measure them (owner 2026-10-31).
 - **R25** End a track with a short state + one next step, not a menu.
 - **R27** Systems, plans, roadmaps: diagram first.
+- **R62 Small deliverables** (owner 2026-11-09/11): build the smallest version that answers; extra scope = one line, then wait for a yes;
+  one short page over a long file; no codes or long rule lists in team docs; while Ahmed reviews, produce nothing new.
 
 ## 2. How work gets done
 - **Team + skills, never ad hoc** (Must 9, R1–R5, R7, R10). Deliverables come only from
@@ -100,7 +102,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 ## 5. Task packs (load only the matching one)
 | Task | Pack | Rules |
 |---|---|---|
-| Client job, delivery page | `TSST/core/rules/delivery.md` | R18–R20, R40, R45 |
-| Design, images, video, external production | `TSST/core/rules/creative.md` | R31, R36–R38, R41, Creative |
+| Client job, delivery page | `TSST/core/rules/delivery.md` | R18–R20, R40, R45, R66 |
+| Design, images, video, external production | `TSST/core/rules/creative.md` | R31, R36–R38, R41, R63, Creative |
 | Products, code, UI | `TSST/core/rules/build.md` | R30, R39, R55 |
-| Marketing, research | `TSST/core/rules/marketing.md` | R28, R29 |
+| Marketing, research | `TSST/core/rules/marketing.md` | R28, R29, R64, R65 |
