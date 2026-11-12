@@ -48,6 +48,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   Exceptions: 2026-10-17 owner review board (`TSST/services/review`, REVIEW-001); 2026-10-18 online
   portal + CRM hosting on Ahmed's AWS EC2, free DuckDNS domain (PORTAL-001). 2026-10-27 TSST Design Gate (`TSST/CREATIVE/tools/design-gate`, R57). 2026-11-05 MOTION_AG Remotion kit + video QA scripts (`TSST/MOTION/tools/`, R53). 2026-11-10 R61 (Claude as direct Lead), written with Ahmed's OK in chat.
   A new owner rule = one line here.
+  2026-11-13: the owner ended R46 early, in chat: «هنفك حظر التطوير ده بتاع يوم 15». The freeze no longer applies.
 - **R47 No per-task process files** (owner rule 2026-10-16). The job brief is the plan;
   `DELIVERY.json` is the record. Plan/preflight/observation/handoff files only when work moves to
   another runtime or changes TSST code. Agents write only inside their job's `work/` and `final/`.

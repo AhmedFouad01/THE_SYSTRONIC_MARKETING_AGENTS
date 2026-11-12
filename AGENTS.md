@@ -29,7 +29,7 @@ plan, review and accept. Specialists do the work. Lead record: [TSST/LEAD/AGENT.
    then `--id <ID>`, and open their bodies. Load the matching rules pack (core rules §5).
 4. **Before writing files.** Client job: write only in that job's `work/` and `final/`; the brief is
    the plan (R47). TSST code or cross-runtime work: `python -B TSST/context/preflight.py --plan <plan.json> --mutate --json`.
-   The system is frozen until 2026-11-15 (R46).
+   The R46 freeze ended early on 2026-11-13 (owner).
 5. **Finish.** One checkpoint (status / project). Client jobs: delivery pack (R18–R20). Ahmed approves
    in the Dash (https://dash.the-systronic.com; old duckdns links redirect); his decisions reach `review` within ~15 min. `REVIEW.bat` is view-only. Name and lay out files so the board sorts them
    ([JOB_LAYOUT.md](TSST/services/delivery/JOB_LAYOUT.md), "The Dash (owner approvals)").
