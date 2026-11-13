@@ -58,7 +58,7 @@ brands:
     memory_roots: 3   # July roots = the platform (ykms-platform); Nov work = pointers in projects/
     projects:
       ops-dashboard:
-        state: plan v2 2026-11-13 - simple menu dashboard for the landing only (Ahmed: no yakebda-ms, no Claude API)
+        state: plan v3 2026-11-13 - menu editor + order log for the landing only (Ahmed: no yakebda-ms, no Claude API)
         checkpoint: TSST/brands/yakebda-ms/projects/ops-dashboard/brief.md
         next: Ahmed answers the 4 plan questions
       order-landing:
