@@ -217,7 +217,7 @@ Owner Ahmed approved. Temporary landing page (job `t-sag/projects/landing-page`,
   not in any repo: a redeploy of `/srv/tsst/site` would wipe it. Source: `~/Work/meta-ads/privacy/index.html`.
 
 ## Ya Kebda admin `yk-admin` (deployed 2026-11-13, Ahmed's OK «انشر اه»)
-- Code: GitHub `AhmedFouad01/yakebda-web` (private) = `~/Work/yakebda-landing`. Releases in `/srv/yakebda/app/releases/<sha>` (root-owned), `/srv/yakebda/app/current` symlink; first release `bd26e8a`.
+- Code: GitHub `AhmedFouad01/yakebda-web` (private) = `~/Work/yakebda-landing`. Releases in `/srv/yakebda/app/releases/<sha>` (root-owned), `/srv/yakebda/app/current` symlink; first release `bd26e8a`; current `f5520e0` (2026-11-13: Safari fixes for login and edit sheets, Ahmed «انشر», tests 88 + 29 on the server).
 - Service: systemd `yk-admin` (user `ykadmin`, Python 3.12 stdlib only) on `127.0.0.1:8740`, sandboxed (`ProtectSystem=strict`, writes only `/srv/yakebda/data` and `/srv/yakebda/public`).
 - Data: `/srv/yakebda/data` (0700): `app.db` (orders, users, audit), `menu.json` (the live menu source now, not the Mac copy), `draft.json`, `versions/`, `uploads/`, `backups/` (nightly sqlite copy, 14 kept; 180-day PII purge after an encrypted export). Backup key: `/etc/yk-admin/backup.pass` (root:ykadmin 0640; Ahmed keeps a copy). No off-server copy yet.
 - Publish: the service owns `/srv/yakebda/public` and swaps `yakebda` atomically, keeping 5 `yakebda.prev-*`. The page before the admin: `/srv/yakebda/backup-live-20261113`.

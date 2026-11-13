@@ -58,9 +58,9 @@ brands:
     memory_roots: 3   # July roots = the platform (ykms-platform); Nov work = pointers in projects/
     projects:
       ops-dashboard:
-        state: LIVE 2026-11-13 at the-systronic.com/yakebda/admin/ (yk-admin, release bd26e8a); design gate 0 fails
+        state: LIVE 2026-11-13 at the-systronic.com/yakebda/admin/ (yk-admin, release f5520e0 = Safari fixes); owner account made; gates in WebKit + Chrome
         checkpoint: TSST/brands/yakebda-ms/projects/ops-dashboard/brief.md
-        next: owner account + phone test order
+        next: phone test order (QR link), cancel as «تجربة»; check Safari autofill on the iPhone
       order-landing:
         state: live 2026-11-12 at the-systronic.com/yakebda (static, Dash EC2), pixel on
         checkpoint: TSST/brands/yakebda-ms/projects/order-landing/project.md
@@ -85,7 +85,7 @@ brands:
         state: ~/yakebda-ms idle since 2026-07-26, never deployed, repo public
         checkpoint: TSST/brands/yakebda-ms/projects/ykms-platform/project.md
         next: not used for the dashboard (Ahmed 2026-11-13)
-    next: Ahmed picks the dashboard option (ops-dashboard)
+    next: ops-dashboard phone test order; then the off-server backup copy
   anvil:
     name: ANVIL (ANVIL SUPPS)
     kind: client
