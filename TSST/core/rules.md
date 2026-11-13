@@ -15,6 +15,8 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   never send a runtime to measure them (owner 2026-10-31).
 - **R25** End a track with a short state + one next step, not a menu.
 - **R27** Systems, plans, roadmaps: diagram first.
+- **R62 Small deliverables** (owner 2026-11-09/11): build the smallest version that answers; extra scope = one line, then wait for a yes;
+  one short page over a long file; no codes or long rule lists in team docs; while Ahmed reviews, produce nothing new.
 
 ## 2. How work gets done
 - **Team + skills, never ad hoc** (Must 9, R1–R5, R7, R10). Deliverables come only from
@@ -48,6 +50,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
   Exceptions: 2026-10-17 owner review board (`TSST/services/review`, REVIEW-001); 2026-10-18 online
   portal + CRM hosting on Ahmed's AWS EC2, free DuckDNS domain (PORTAL-001). 2026-10-27 TSST Design Gate (`TSST/CREATIVE/tools/design-gate`, R57). 2026-11-05 MOTION_AG Remotion kit + video QA scripts (`TSST/MOTION/tools/`, R53). 2026-11-10 R61 (Claude as direct Lead), written with Ahmed's OK in chat.
   A new owner rule = one line here.
+  2026-11-13: the owner ended R46 early, in chat: «هنفك حظر التطوير ده بتاع يوم 15». The freeze no longer applies.
 - **R47 No per-task process files** (owner rule 2026-10-16). The job brief is the plan;
   `DELIVERY.json` is the record. Plan/preflight/observation/handoff files only when work moves to
   another runtime or changes TSST code. Agents write only inside their job's `work/` and `final/`.
@@ -99,7 +102,7 @@ Task packs below hold the task-specific rules; load only the one the task needs.
 ## 5. Task packs (load only the matching one)
 | Task | Pack | Rules |
 |---|---|---|
-| Client job, delivery page | `TSST/core/rules/delivery.md` | R18–R20, R40, R45 |
-| Design, images, video, external production | `TSST/core/rules/creative.md` | R31, R36–R38, R41, Creative |
+| Client job, delivery page | `TSST/core/rules/delivery.md` | R18–R20, R40, R45, R66 |
+| Design, images, video, external production | `TSST/core/rules/creative.md` | R31, R36–R38, R41, R63, Creative |
 | Products, code, UI | `TSST/core/rules/build.md` | R30, R39, R55 |
-| Marketing, research | `TSST/core/rules/marketing.md` | R28, R29 |
+| Marketing, research | `TSST/core/rules/marketing.md` | R28, R29, R64, R65 |

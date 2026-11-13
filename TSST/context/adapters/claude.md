@@ -8,7 +8,15 @@ Requests the Lead sends to other tools/runtimes carry a ROLE block: `TSST/contex
 Near a usage limit: `release` open claims with a resume
 note and `limit claude --until <UTC>` (`TSST/context/bus.md`).
 
-## Plan: Claude Pro — roster → runtime agent (ADR-003/004)
+## Plan and usage (Ahmed's account)
+- Claude Ultra since 2026-11-03 (renews 2026-12-03). `get_usage` labels it "Pro": that label is wrong, never repeat it.
+  The meter is Ultra: weekly limit only (no 5-hour window), reset Mondays 14:00 Cairo.
+- API credits: $200/month once Ahmed links a Console org (claude.ai → Settings → Billing; he clicks, it accepts terms;
+  one org, ever). They cover the API, Agent SDK and Managed Agents, not Claude Code; no rollover.
+- On the Mac (`~/Work/TSST`) `preflight.py` rejects the root (canonical `C:/Work/TSST`); the Lead runs the same checks
+  through `inspect_plan(..., expected_root=ROOT)` and says so.
+
+## Roster → runtime agent (ADR-003/004)
 Routing follows root `AGENTS.md`. Agent files are generated from
 `TSST/context/roster.yaml` (`gen_runtime_agents.py`); never hand-edit them.
 

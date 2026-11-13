@@ -207,3 +207,21 @@ Owner Ahmed approved. Temporary landing page (job `t-sag/projects/landing-page`,
   Let's Encrypt (YE1) for both names, issued 2026-10-31, valid to 2027-01-29, auto-renew. Backup before the change: `/etc/caddy/Caddyfile.pre-site-2026-10-31.bak`.
 - Contact form posts from the browser to Web3Forms (key in `main.js`, Ahmed's account); messages go to the.systronic@gmail.com.
 - Verified 2026-10-31: site 200, bare domain 301 (path kept), http → https 308, Dash `/login` 200 and `/api/tree` 401, one real form test accepted and received in the inbox.
+
+## Ya Kebda order page (2026-11-12)
+- `https://www.the-systronic.com/yakebda/`: Caddy `handle @yakebda` inside the `www.the-systronic.com` block → `file_server`
+  from `/srv/yakebda/public/yakebda` (root-owned). The block carries a "keep this block" comment: another edit dropped it
+  once. After any Caddyfile change, check `/yakebda/` returns 200. The printed QR stands depend on this path.
+- Deploy from the Mac: `python3 build.py` in `~/Work/yakebda-landing` → rsync `dist/` → `/tmp/yk_dist` → `sudo rsync` into place.
+- `https://www.the-systronic.com/privacy/` (Meta app privacy page) is the static file `/srv/tsst/site/privacy/index.html`,
+  not in any repo: a redeploy of `/srv/tsst/site` would wipe it. Source: `~/Work/meta-ads/privacy/index.html`.
+
+## Ya Kebda admin `yk-admin` (deployed 2026-11-13, Ahmed's OK «انشر اه»)
+- Code: GitHub `AhmedFouad01/yakebda-web` (private) = `~/Work/yakebda-landing`. Releases in `/srv/yakebda/app/releases/<sha>` (root-owned), `/srv/yakebda/app/current` symlink; first release `bd26e8a`.
+- Service: systemd `yk-admin` (user `ykadmin`, Python 3.12 stdlib only) on `127.0.0.1:8740`, sandboxed (`ProtectSystem=strict`, writes only `/srv/yakebda/data` and `/srv/yakebda/public`).
+- Data: `/srv/yakebda/data` (0700): `app.db` (orders, users, audit), `menu.json` (the live menu source now, not the Mac copy), `draft.json`, `versions/`, `uploads/`, `backups/` (nightly sqlite copy, 14 kept; 180-day PII purge after an encrypted export). Backup key: `/etc/yk-admin/backup.pass` (root:ykadmin 0640; Ahmed keeps a copy). No off-server copy yet.
+- Publish: the service owns `/srv/yakebda/public` and swaps `yakebda` atomically, keeping 5 `yakebda.prev-*`. The page before the admin: `/srv/yakebda/backup-live-20261113`.
+- Caddy: `@ykadmin path /yakebda/admin /yakebda/admin/* /yakebda/api/*` → `reverse_proxy 127.0.0.1:8740`, placed before the `@yakebda` block (keep both). Backup: `/etc/caddy/Caddyfile.pre-ykadmin-20261113-041512.bak`.
+- Owner account: `cd /srv/yakebda/app/current && sudo -u ykadmin python3 -m admin.manage --data /srv/yakebda/data create-owner|reset-password …` (Ahmed types the password).
+- Rollback: `systemctl stop yk-admin`, remove the `@ykadmin` block, reload Caddy; restore the page from `yakebda.prev-*` or the backup dir. The page works without the service.
+- New release: rsync a `git archive` of the repo into `releases/<sha>`, repoint `current`, `systemctl restart yk-admin`.
