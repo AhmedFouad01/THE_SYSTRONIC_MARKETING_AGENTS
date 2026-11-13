@@ -58,9 +58,9 @@ brands:
     memory_roots: 3   # July roots = the platform (ykms-platform); Nov work = pointers in projects/
     projects:
       ops-dashboard:
-        state: plan v1 2026-11-13 (build inside ~/yakebda-ms recommended); Gemini checks own vs WordPress vs Shopify
+        state: plan v2 2026-11-13 - simple menu dashboard for the landing only (Ahmed: no yakebda-ms, no Claude API)
         checkpoint: TSST/brands/yakebda-ms/projects/ops-dashboard/brief.md
-        next: Ahmed picks the option
+        next: Ahmed answers the 4 plan questions
       order-landing:
         state: live 2026-11-12 at the-systronic.com/yakebda (static, Dash EC2), pixel on
         checkpoint: TSST/brands/yakebda-ms/projects/order-landing/project.md
@@ -84,7 +84,7 @@ brands:
       ykms-platform:
         state: ~/yakebda-ms idle since 2026-07-26, never deployed, repo public
         checkpoint: TSST/brands/yakebda-ms/projects/ykms-platform/project.md
-        next: decided in ops-dashboard
+        next: not used for the dashboard (Ahmed 2026-11-13)
     next: Ahmed picks the dashboard option (ops-dashboard)
   anvil:
     name: ANVIL (ANVIL SUPPS)
