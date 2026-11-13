@@ -58,9 +58,9 @@ brands:
     memory_roots: 3   # July roots = the platform (ykms-platform); Nov work = pointers in projects/
     projects:
       ops-dashboard:
-        state: plan v3 2026-11-13 - menu editor + order log for the landing only (Ahmed: no yakebda-ms, no Claude API)
+        state: plan v4 2026-11-13 - menu editor + order log at /yakebda/admin/; roles; hide-only; data 6 months + backup
         checkpoint: TSST/brands/yakebda-ms/projects/ops-dashboard/brief.md
-        next: Ahmed answers the 4 plan questions
+        next: Ahmed OKs phase 0
       order-landing:
         state: live 2026-11-12 at the-systronic.com/yakebda (static, Dash EC2), pixel on
         checkpoint: TSST/brands/yakebda-ms/projects/order-landing/project.md
