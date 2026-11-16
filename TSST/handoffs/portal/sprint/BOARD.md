@@ -9,7 +9,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
-- **2026-11-16: Ahmed asked for the rest ("كمل الباقي كله، قولي عليه الأول واديني زرار ابدأ").** The Lead listed it to him and waits for his "ابدأ"; nothing is started. Proposed order: (1) the recorded small follow-ups of F-01 to F-05 and S3 (no gate); (2) S4 on the re-cut of `ALDOCTOR-FIT-001.md` › Build plan (S4-00, S4-08, S4-01, S4-07, S4-03, S4-04, S4-02, S4-05, S4-06; design source `mockups/s4-r2/`, whose approval on 2026-11-11 is recorded on the branch `systronic/recursing-jackson-0b574a`, commit `d6f9606`, not yet on `master`); (3) stop at mockups 07–09 for his approval before S5; (4) S6. Not included: the Al Doctor install and the in-house tickets IH-01 to IH-07 (postponed by Ahmed on 2026-11-13). Every deploy and every production migration still needs his OK. The domain answers again from the Mac (`/login` 200 on 2026-11-16).
+- **2026-11-16: Ahmed said "ابدأ"** to the rest, listed to him first ("كمل الباقي كله، قولي عليه الأول واديني زرار ابدأ"): (1) the recorded small follow-ups: **F-06** (web) and **F-07** (server) are being built; (2) **S4 on the re-cut** of `../ALDOCTOR-FIT-001.md` › Build plan, adopted below (core only: the in-house "plus" lines of S4-02, S4-05, S4-06 and the tickets IH-01 to IH-07 wait, Ahmed postponed the Al Doctor Dash on 2026-11-13); design source `mockups/s4-r2/` (his "start" also confirms the round-2 drawings, said to him in the list); **S4-00's design note is being written** for an independent review; (3) the loop stops at mockups 07–09 for his approval before S5; (4) S6 after it. Every deploy and every production migration still needs his OK. The domain answers again from the Mac (`/login` 200 on 2026-11-16). The product worktrees of F-01 to F-05, the deploy checkout and the S3 preview folder (with its untracked `.preview/` scripts) are no longer on the Mac; new worktrees: `~/Work/tsst-portal-f06`, `-f07`, `-s400`.
 - **INCIDENT, closed at the source (2026-11-12): Ahmed verified the registrant email at Namecheap; the registry lists `dns1/dns2.registrar-servers.com` again (WHOIS "Updated Date" 2026-11-12T00:22:05Z), the authoritative answer for `dash` is `63.185.191.224` and the MX records are back; Google, Cloudflare and Quad9 resolvers answer the right address, some ISP caches still held the parking address when checked (they expire by themselves). The same verification covered `anvilsupps.store`. To prevent a repeat: keep the registrant email of every domain reachable and verified within 15 days of a registration or a contact change. What happened:** the domain `the-systronic.com` was suspended at the registrar. Its nameservers are now `failed-whois-verification.namecheap.com` / `verify-contact-details.namecheap.com` (WHOIS "Updated Date" 2026-11-11T22:13Z = 00:13 Cairo on 2026-11-12); every name of the domain (apex, `www`, `dash`) answers the registrar's parking address `198.54.117.242`, there is no MX record, and `https://dash.the-systronic.com` does not connect for anyone. Not caused by any deploy: the server `63.185.191.224` is healthy and answers the site when asked directly; its certificate runs to 2027-01-25. Only Ahmed can fix it (verify the registrant contact email in the Namecheap account; the Lead never touches DNS or the registrar). Found by the Lead during the F-05 deploy smoke.
 - Live release: **`6a28ba3`** (live fix F-05 on top of F-01 to F-04) since 2026-11-12; before it `d086f9e` (F-03 + F-04, 2026-11-11), `496e255` (F-01 + F-02, 2026-11-11 08:47 Cairo), `1779ad0` (step D, 2026-11-10 21:05 Cairo), `3a5554a` (step C, migrations 031–035), `94e1a5b` (B), `8915d14` (A), `6290115` (PR #27). `main` = `6a28ba3` = `next` (`4b27eef`) plus the merge commits.
 - **2026-11-11: Ahmed reported two live problems** (the client sign-in card; post review does not show the work properly and never the copy). Tickets **F-01 and F-02 are built, merged (PR #56, #57) and deployed** the same day with his OK ("أيوه انشر"; release PR #58, live `496e255`, code only). **Open, his action:** upload the tight light logo in Settings › Workspace: at deploy time the stored `header_logo_light` was still the padded 1281×1281 canvas, which the new 40px cap shows very small on the light sign-in cards until it is uploaded again (any upload is now trimmed by the server). Then his signed-in look at the sign-in card and at a post under review (team and client).
@@ -17,7 +17,8 @@ A ticket is never written as merged without its PR and its checks next to it.
 - **2026-11-12: F-05 opened** (the team's client page: stages on Overview, a campaign under every stage, a Posts tab, milestones editable), with Ahmed's OK ("أيوه افتحها"); **built, reviewed, merged (PR #62) and deployed 2026-11-12** with Ahmed's OK ("أيوه انشر"; release PR #63, live `6a28ba3`, web only), which also carries his OK for the four decisions listed to him (Posts as a fourth tab, the stage strip as rows, the Overdue / hidden chips, a campaign under every stage). His signed-in check waits for the domain to come back.
 - **The sprint's approved scope (S0–S3) is built and deployed (2026-11-10).** The loop is stopped. Left for Ahmed:
   1. (done: Ahmed confirmed step D signed in, "تمام شغال");
-  2. mockups 04–06 (S4) and 07–09 (S5) need his approval before any of S4–S6 starts; decisions 8–15 are open;
+  2. mockups 07–09 (S5) need his approval before S5 starts (04–06 were redrawn and approved on 2026-11-11, round 2);
+     decisions 8–12 and 15 are open;
   3. confirm or change at leisure: decisions 4, 5, 6 (running on defaults), the health thresholds 3 / 7 days;
   4. not built, his call: an Arabic switch for the team pages, "Archive client", "Team on this client";
   5. follow-ups on the tickets: migration 036 (drop `brands.ui_lang`, the old visibility row, the 027 trigger) once
@@ -97,6 +98,9 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 2026-11-06 | "طيب ابدأ ف تنفيذ الشكل والهيكلة الجديدة قبل النشر" (said in the Lead's main session, relayed to the sprint session) | Build the new structure and the new look before any deploy. Scope: S1-01, S1-03, S1-04, S1-05, all of S2, S3. Not S1-02, not S4–S6. Integration branch `next`; migrations on a local database only; decisions 4, 5, 6 run on the recommended defaults until he confirms them at the deploy gate. |
 | 2026-11-10 | "أيوه صلّحهم" (the seven findings of the S3 preview) | S3-06 built and merged. |
 | 2026-11-10 | "أيوه ابدأ A" (to: start step A, S0 alone, in the first quiet night?) | Step A of `DEPLOY-PLAN.md` may be deployed: `main` = `8915d14`, code only. Steps B, C, D each still need their own OK. The hour and the AWS SSH rule are his. |
+| 2026-11-11 | S4 mockups, round 2 (`mockups/s4-r2/`: Home › Today, Home › Week, Job, Review). To "do you approve the four drawings as drawn?": "ايوه بس اللوجو مختلف، وكلمة كلاينتس دي ما تنفعش، احنا عايزينها بستايل الدكتور" (said in the Al Doctor fit session; recorded there on the branch `systronic/recursing-jackson-0b574a`, commit `d6f9606`) | Yes to the four screens; the two objections are about Al Doctor's own look and words. Design gate G2 is open for S4 on the round-2 files. Settles decisions 13, 14 and 17–20 as drawn (below). |
+| 2026-11-11 | The Al Doctor version of the same four screens (`mockups/s4-r2/aldoctor/`): "موافق" (same session) | The Al Doctor theme and the in-house wording are approved as drawn. No build, install or deploy is approved by this. **Postponed by Ahmed on 2026-11-13** ("وقفت تطوير داش للدكتور دلوقتي، اجلته"). |
+| 2026-11-16 | "ابدأ" (to the list: small follow-ups → S4 on the round-2 drawings → stop at mockups 07–09 → S6; the Al Doctor version left out; "pressing start means you agree to the round-2 drawings") | F-06, F-07 and S4 (re-cut, core) may be built and merged into `next`. S5 still needs mockups 07–09 approved. No deploy and no production migration is approved by this. |
 
 ## Decisions (numbers = `decisions_needed` in the plan)
 | # | Decision | State | Answer or recommendation |
@@ -113,10 +117,14 @@ A ticket is never written as merged without its PR and its checks next to it.
 | 10 | Metric list for v1 | open | Recommended: acquisition = reach; activation = visits or leads; revenue = orders; retention and referral optional. |
 | 11 | Quiet hours for deploys | open, asked at the S0 deploy gate | Proposed: Cairo 01:00–06:00. Ahmed picks the day of the first migration deploy. |
 | 12 | Restore-drill access and branch protection | open | Branch protection: not available on the current GitHub plan (403, needs GitHub Pro or a public repository); upgrading is Ahmed's call; until then merges follow our own rule (three checks green and the reviewer's pass). Restore drill (S1-02): approved 2026-11-06 on the terms of `tickets/S1-02.md`. |
-| 13 | What a team member sees on Home and the job page | open | Recommended: own items only. |
-| 14 | Bulk team approval | open | Recommended: moves items to the client queue only. |
+| 13 | What a team member sees on Home and the job page | settled 2026-11-11 (round-2 mockups) | Own rows only. The workspace owner has a switch Mine / Everyone. |
+| 14 | Bulk team approval | settled 2026-11-11 (round-2 mockups) | It moves the items to the next person in the review order only; it never schedules or posts. |
 | 16 | Shared files in the client's "My work" (found in S1-05) | settled 2026-11-06 | "شيل الرسالة": remove the notice. No client files list in this sprint; it is decided later with mockups 07–09 (S5) and Ahmed's R60 read / edit / delete answer. |
 | 15 | Sprint boundary | open, before G5 | Recommended: baselines, next move, ad spend, Meta import, profitability, Remind and the client calendar go to a second sprint. |
+| 17 | The word for a dated to-do with one owner | settled 2026-11-11 (round-2 mockups) | Task / «تاسك». It is the same object as a milestone; a campaign's milestones keep their name on the Plan tab. |
+| 18 | Review order | settled 2026-11-11 (round-2 mockups) | Per client: a reviewer from the team, then the approver (the client's approver, or a team member for an in-house team). The maker cannot approve their own item. |
+| 19 | Scheduling | settled 2026-11-11 (round-2 mockups) | Only after the approver's approval. One exception, "Schedule without approval", for the owner or the reviewer, behind a confirm, recorded in Activity. |
+| 20 | A team member's primary button | settled 2026-11-11 (round-2 mockups); in-house part waits | "New request" instead of "New job" where the workspace says so (in-house teams); the owner accepts requests into the plan. Not built in the core S4 (the in-house workspace kind is postponed). |
 
 ## Gates
 - **G0** Decisions 1–6 before S2-05 and before redrawing 01 / 02 / 07. 4, 5, 6 run on defaults since 2026-11-06 (confirmed at the deploy gate).
@@ -126,7 +134,7 @@ A ticket is never written as merged without its PR and its checks next to it.
   both restore, every table's count matches, the live release starts on the copy, and `next`'s migrations 031 to 033
   apply on real data. Limits: the off-server copy was five days old, and the drill does not cover media, secrets or
   a server rebuild.
-- **G2** Design gate per set: 01–03 before S3 (**approved 2026-11-05**), 04–06 before S4, 07–09 before S5. Ahmed approves the drawn files.
+- **G2** Design gate per set: 01–03 before S3 (**approved 2026-11-05**), 04–06 before S4 (**round 2 approved 2026-11-11**: `mockups/s4-r2/`, not the first 04–06), 07–09 before S5. Ahmed approves the drawn files.
 - **G3** Migration gate: S2-02, S2-03, S2-04, S5-01 each need Ahmed's OK and a fresh backup the same day before they run on
   production. Building and testing them on a local database is approved (2026-11-06).
 - **G4** Deploy gate: end of every part, quiet hours, Ahmed's OK, live smoke green.
@@ -185,16 +193,24 @@ Go / no-go (Ahmed): —
 | F-03 | Reviewing takes fewer taps and less scrolling (client and team) | deploy | F-02 | **deployed 2026-11-11** (`d086f9e`) | #59 (`ca03144`) | CI 3/3; browser gate 26 cases; real local server check | `tickets/F-03.md`. Ahmed 2026-11-11: "حتى المراجعة متعبة". Also fixes a LIVE bug found on the way: "Open item" on the team Review queue links by the item id and lands on "This job could not be loaded" (since step C). Not deployed. |
 | F-04 | The plan comes back to the client portal (plan page with the five stages, a richer Home) | deploy | F-02 | **deployed 2026-11-11** (`d086f9e`) | #60 (`5b6f5c0`) | CI 3/3; web gate 16 cases; server tests 11; real local server check | `tickets/F-04.md`. Ahmed 2026-11-11: "أيوه رجّعها". Gated by the per-client "Marketing plan" switch (off by default). Also closes older leaks of hidden campaigns' milestones and names in client reads (server, team reads unchanged). |
 | F-05 | The team's client page shows the plan again (five stages on Overview, a campaign under every stage, a Posts tab, milestones editable) | deploy | F-04 | **deployed 2026-11-12** (`6a28ba3`) | #62 (`4b27eef`) | CI 3/3; web 282/282; gates F-05/F-04/F-03/F-01; independent review; real local server check | `tickets/F-05.md`. Ahmed 2026-11-12: "أيوه افتحها". Reverses one line of S3-04 (a campaign under its first stage only) with his OK. |
+| F-06 | Small recorded follow-ups, web (posts count, attention → the row, milestone dialog words, video tile, 44px back link, gate holes, versions row, `?brand=` filter, dead code, 320 bar, Arabic plural, year on dates) | deploy | F-05 | in progress | — | — | `tickets/F-06.md`. Ahmed 2026-11-16: "ابدأ". Web only. |
+| F-07 | Small recorded follow-ups, server (health counts for archived projects and delivered jobs, tests off the real clock, API docs for F-04) | deploy | F-04 | in progress | — | — | `tickets/F-07.md`. Ahmed 2026-11-16: "ابدأ". No migration. |
 
-### S4 Team daily (not approved to start; mockups 04–06 not approved)
+### S4 Team daily (started 2026-11-16 with Ahmed's "ابدأ"; re-cut adopted; design source `mockups/s4-r2/` and its `SPEC.md`)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S4-01 | Home needs-action list | design | S2-02, S3-01 | todo | — | — | Mockup 04. |
-| S4-02 | Work page with one New job modal | none | S2-02 | todo | — | — | |
-| S4-03 | Job page | design | S2-03, S4-02 | todo | — | — | Mockup 05. |
-| S4-04 | Review queues | design | S2-03 | todo | — | — | Mockup 06. |
-| S4-05 | Requests in owner nav | none | S2-06 | todo | — | — | |
-| S4-06 | Global settings pages | none | S3-03 | todo | — | — | |
+| S4-00 | Makers and review order (one maker per item; per client a reviewer then the approver; decisions by step and person; the maker cannot decide on their own item; "Planned" until the maker sends) | migration | S2-03 | in progress: design note | — | — | New in the re-cut. `tickets/S4-00.md`. Design first with an independent design review, then small pull requests (as S2-02, S2-03). Migration on a local database only. |
+| S4-08 | Tasks (a milestone with an owner shown as a Task: New task sheet, the check as its one control, filter by owner, overdue never hidden) | none | S4-00 | todo | — | — | New in the re-cut. Decision 17. |
+| S4-01 | Home › Today (per-person needs action, Mine / Everyone for the owner, tasks due and overdue, the "with …" line, New requests card) | design | S4-00, S4-08, S3-01 | todo | — | — | `s4-r2/04-home-today.html`. Decision 13. |
+| S4-07 | Home › Week (the week by day, working days a workspace setting, folded days on the phone) | design | S4-01 | todo | — | — | New in the re-cut. `s4-r2/10-home-week.html`. |
+| S4-03 | Job page (each post's own publish date, one control per row, the review line, Schedule only after approval with the one recorded exception, bulk schedule) | design | S4-00 | todo | — | — | `s4-r2/05-job.html`. Decision 19. |
+| S4-04 | Review queues ("Needs your review" and "Waiting on others", with whom and for how long, bulk approve to the next person only) | design | S4-00 | todo | — | — | `s4-r2/06-review.html`. Decision 14. |
+| S4-02 | Work page with one New job modal | none | S2-02 | todo | — | — | As planned. The in-house "New request" primary waits (decision 20). |
+| S4-05 | Requests in owner nav | none | S2-06 | todo | — | — | As planned. Requests filed by team members wait (in-house). |
+| S4-06 | Global settings pages | none | S3-03 | todo | — | — | As planned, plus the working week and weekday labels S4-07 needs. Workspace kind waits (in-house). Also: `settings/Access.tsx` PIN links. |
+
+Order: S4-00 → S4-08 → S4-01 → S4-07 → S4-03 → S4-04 → S4-02, S4-05, S4-06. The in-house tickets IH-01 to IH-07
+(`../ALDOCTOR-FIT-001.md` › Build plan) are not in the sprint: postponed by Ahmed on 2026-11-13.
 
 Go / no-go (Ahmed): —
 
