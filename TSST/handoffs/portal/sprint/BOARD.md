@@ -235,7 +235,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S5-01 | Goals and results migration | migration | S2-02, S3-04 | merged into `next` 2026-11-22 on local checks (Ahmed's OK); not deployed, not run on production (G3) | [#89](https://github.com/AhmedFouad01/tsst-portal/pull/89) | `4d655a4` | `tickets/S5-01.md`. |
-| S5-02 | Campaign page goal and result entry | none | S5-01 | in progress: ticket written; waits for S5-01; the entry block has no approved drawing yet (being drawn) | — | — | `tickets/S5-02.md`. |
+| S5-02 | Campaign page goal and result entry | none | S5-01 | built and reviewed (routes, `direction.goal`, the card with the client note); waits to merge (Ahmed's word or working CI); part c (Direction tile row) not built | [#90](https://github.com/AhmedFouad01/tsst-portal/pull/90) | — | `tickets/S5-02.md`. |
 | S5-03 | Growth report (owner + client) | design | S5-02, S2-05 | in progress: ticket written; waits for S5-02 | — | — | `tickets/S5-03.md`. Mockup 09. |
 | S5-04 | Client Home and review | design | S2-03, S5-03 | in progress: ticket written; waits for S5-03 (parts b, c, d can start earlier) | — | — | `tickets/S5-04.md`. Mockups 07 and 08. |
 
