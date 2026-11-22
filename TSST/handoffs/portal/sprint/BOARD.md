@@ -231,7 +231,7 @@ Go / no-go (Ahmed): —
 ### S5 Growth (started 2026-11-22; mockups 07–09 round 2 approved by Ahmed)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S5-01 | Goals and results migration | migration | S2-02, S3-04 | in progress: ticket written; PR a + b (migration 038, catalogue, functions) building | — | — | `tickets/S5-01.md`. |
+| S5-01 | Goals and results migration | migration | S2-02, S3-04 | built and reviewed, waits to merge (Ahmed's word or working CI); not run on production (G3) | [#89](https://github.com/AhmedFouad01/tsst-portal/pull/89) | — | `tickets/S5-01.md`. |
 | S5-02 | Campaign page goal and result entry | none | S5-01 | in progress: ticket written; waits for S5-01; the entry block has no approved drawing yet (being drawn) | — | — | `tickets/S5-02.md`. |
 | S5-03 | Growth report (owner + client) | design | S5-02, S2-05 | in progress: ticket written; waits for S5-02 | — | — | `tickets/S5-03.md`. Mockup 09. |
 | S5-04 | Client Home and review | design | S2-03, S5-03 | in progress: ticket written; waits for S5-03 (parts b, c, d can start earlier) | — | — | `tickets/S5-04.md`. Mockups 07 and 08. |
