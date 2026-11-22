@@ -9,6 +9,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
+- **2026-11-23: S5-02 (routes and the Goal and results card) merged into `next` (PR #90) on local checks**, Ahmed's word "ادمج بالمحلي" (to: merge PR #90 into next on local checks). `next` = `578e50d`, equal to the checked head `c71e50f` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #90 only. Open: part c, Arabic team words of the card, dark theme and multi-stage campaign not browser-tested.
 - **2026-11-22: S5-01 merged into `next` (PR #89) on local checks**, Ahmed's word "ادمج بالمحلي" (to: merge #89 while GitHub CI is down). `next` = `4d655a4`, equal to the checked head `ade3750` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #89 only. Migration 038 now has three tables (`campaign_goals`, `result_entries`, `result_notes`); it joins 036 and 037 in the rehearsal before any deploy.
 - **2026-11-22: Ahmed approved the "Goal and results" card drawing with the monthly client note** ("بالملاحظة", to: the card with or without the monthly note for the client). Drawing `~/Work/DASH-SPRINT0/mockups/s5-r2/10-campaign-goal-results.html`. So S5-02 builds the card with the note field (160 characters, per campaign per month) and S5-03 shows it on the client report as "A word from your account manager", no name, never `updated_by`, as escaped plain text.
 - **GitHub CI, exact message (read 2026-11-22 on PR #89):** "The job was not started because recent account payments have failed or your spending limit needs to be increased." Ahmed's to fix in Billing and plans; the Lead does not touch billing.
@@ -235,7 +236,7 @@ Go / no-go (Ahmed): —
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S5-01 | Goals and results migration | migration | S2-02, S3-04 | merged into `next` 2026-11-22 on local checks (Ahmed's OK); not deployed, not run on production (G3) | [#89](https://github.com/AhmedFouad01/tsst-portal/pull/89) | `4d655a4` | `tickets/S5-01.md`. |
-| S5-02 | Campaign page goal and result entry | none | S5-01 | built and reviewed (routes, `direction.goal`, the card with the client note); waits to merge (Ahmed's word or working CI); part c (Direction tile row) not built | [#90](https://github.com/AhmedFouad01/tsst-portal/pull/90) | — | `tickets/S5-02.md`. |
+| S5-02 | Campaign page goal and result entry | none | S5-01 | parts a and b merged into `next` 2026-11-23 on local checks (Ahmed's OK); part c (Direction tile row) not built; not deployed | [#90](https://github.com/AhmedFouad01/tsst-portal/pull/90) | `578e50d` | `tickets/S5-02.md`. |
 | S5-03 | Growth report (owner + client) | design | S5-02, S2-05 | in progress: ticket written; waits for S5-02 | — | — | `tickets/S5-03.md`. Mockup 09. |
 | S5-04 | Client Home and review | design | S2-03, S5-03 | in progress: ticket written; waits for S5-03 (parts b, c, d can start earlier) | — | — | `tickets/S5-04.md`. Mockups 07 and 08. |
 
