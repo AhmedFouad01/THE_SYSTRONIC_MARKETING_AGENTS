@@ -9,6 +9,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
+- **2026-11-23: Ahmed started S6** ("ابدأ S6", to: start S6 with the drawing of the calendar view, S6-01, for his approval). Tickets S6-01 to S6-03 being written; the calendar view (and the WhatsApp link action) are drawn first and wait for his approval before any build (R57). S6-03 keeps its deploy gate: no deploy without his word.
 - **2026-11-23: PR #94 (S5-04) merged into `next` on local checks; S5 is built.** Ahmed's word "ادمج بالمحلي" (to: merge PR #94, S5-04, into next on local checks). `next` = `ff2add3`, equal to the checked head `c9e504d` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #94 only. S5-01 to S5-04 are all on `next`, nothing deployed. Open for Ahmed from S5: the viewer note field (read-only viewer or comment without decision); the Arabic table `sprint/s5-04-arabic-pass.md`; inset b of the report; "مديرة حسابك"; the older `client-view/reports` count; credits usage in the header with Billing off; GitHub billing; the rehearsal of 036, 037, 038 before any deploy. Next: S6.
 - **2026-11-23: PR #93 (S5-03 web: the client report page) merged into `next` on local checks**, Ahmed's word "ادمج بالمحلي" (to: merge PR #93, the client report page, into next on local checks). `next` = `ad7964f`, equal to the checked head `912c6b3` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #93 only. No client sees the page: `show_growth_report` is off for every client by default and nothing is deployed. Open for Ahmed: Arabic stage words, "العملاء المحتملين", feminine "مديرة حسابك", inset b, year on "Coming up" dates.
 - **2026-11-23: PR #91 (S5-02 c) and PR #92 (S5-03 server) merged into `next` on local checks**, Ahmed's word "ادمج بالمحلي", sent after the Lead said #91 waited and the S5-03 server PR would open when its suite finished; the Lead read it as covering both and told him so before merging #92. `next` = `c744dee`: #91 head `1ba78a2` equal at its merge (0 diff lines); #92 head `e00437d` full suite 1344 passed, 9 skipped, 0 failed, `next` differs from it by the web files of #91 only (0 non-web files). `main` unchanged `6a28ba3`. The exception covers #91 and #92 only. Not checked: the combined tree was not re-run as one suite (server tests do not read the web files of #91).
@@ -246,7 +247,7 @@ Go / no-go (Ahmed): —
 
 Go / no-go (Ahmed): —
 
-### S6 Polish and docs (not approved to start)
+### S6 Polish and docs (started 2026-11-23)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
 | S6-01 | Calendar view on Work | none | S4-02 | todo | — | — | |
