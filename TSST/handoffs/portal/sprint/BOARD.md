@@ -239,7 +239,7 @@ Go / no-go (Ahmed): —
 |---|---|---|---|---|---|---|---|
 | S5-01 | Goals and results migration | migration | S2-02, S3-04 | merged into `next` 2026-11-22 on local checks (Ahmed's OK); not deployed, not run on production (G3) | [#89](https://github.com/AhmedFouad01/tsst-portal/pull/89) | `4d655a4` | `tickets/S5-01.md`. |
 | S5-02 | Campaign page goal and result entry | none | S5-01 | all parts merged into `next` (a+b #90, c #91) on local checks (Ahmed's OK); not deployed | [#90](https://github.com/AhmedFouad01/tsst-portal/pull/90), [#91](https://github.com/AhmedFouad01/tsst-portal/pull/91) | `5c8ecc3` | `tickets/S5-02.md`. |
-| S5-03 | Growth report (owner + client) | design | S5-02, S2-05 | server (PR a: client read, builder, `sections.growth`) merged into `next` 2026-11-23 on local checks (Ahmed's OK); web page, menu link and `shared/routes.json` line not built; not deployed | [#92](https://github.com/AhmedFouad01/tsst-portal/pull/92) | `c744dee` | `tickets/S5-03.md`. Mockup 09. |
+| S5-03 | Growth report (owner + client) | design | S5-02, S2-05 | server merged into `next` (#92); web page, menu link and route built and reviewed (#93), waits to merge (Ahmed's word or working CI); not deployed | [#92](https://github.com/AhmedFouad01/tsst-portal/pull/92), [#93](https://github.com/AhmedFouad01/tsst-portal/pull/93) | `c744dee` | `tickets/S5-03.md`. Mockup 09. |
 | S5-04 | Client Home and review | design | S2-03, S5-03 | in progress: ticket written; waits for S5-03 (parts b, c, d can start earlier) | — | — | `tickets/S5-04.md`. Mockups 07 and 08. |
 
 Go / no-go (Ahmed): —
