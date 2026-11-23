@@ -9,6 +9,7 @@ A ticket is never written as merged without its PR and its checks next to it.
 - Product repo: `~/Work/tsst-portal` (GitHub `AhmedFouad01/tsst-portal`, branch `main`). Live: https://dash.the-systronic.com.
 
 ## Now
+- **2026-11-23: S6 drawings 10 (Work calendar) and 11 (Share on WhatsApp) drawn, wait for Ahmed.** `~/Work/DASH-SPRINT0/mockups/s6/` (`index.html`, `10-work-calendar.html`, `11-share-whatsapp.html`, `SPEC.md` with 10 owner questions, `check-s6.mjs`: 0 findings, re-run by the Lead; `shots/`). Not approved: no web part of S6-01 or S6-02 is built before his word (R57). Tickets S6-01 to S6-03 written; S6-01 part a (server read `GET /calendar`) building. Facts from the tickets: no week-start setting exists (Saturday fixed); a client link to an item does not return to the item after sign-in today (S6-02 part b changes the sign-in return, with an open-redirect guard); no client phone number is stored (wa.me with text only); the shared link carries no token.
 - **2026-11-23: Ahmed started S6** ("ابدأ S6", to: start S6 with the drawing of the calendar view, S6-01, for his approval). Tickets S6-01 to S6-03 being written; the calendar view (and the WhatsApp link action) are drawn first and wait for his approval before any build (R57). S6-03 keeps its deploy gate: no deploy without his word.
 - **2026-11-23: PR #94 (S5-04) merged into `next` on local checks; S5 is built.** Ahmed's word "ادمج بالمحلي" (to: merge PR #94, S5-04, into next on local checks). `next` = `ff2add3`, equal to the checked head `c9e504d` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #94 only. S5-01 to S5-04 are all on `next`, nothing deployed. Open for Ahmed from S5: the viewer note field (read-only viewer or comment without decision); the Arabic table `sprint/s5-04-arabic-pass.md`; inset b of the report; "مديرة حسابك"; the older `client-view/reports` count; credits usage in the header with Billing off; GitHub billing; the rehearsal of 036, 037, 038 before any deploy. Next: S6.
 - **2026-11-23: PR #93 (S5-03 web: the client report page) merged into `next` on local checks**, Ahmed's word "ادمج بالمحلي" (to: merge PR #93, the client report page, into next on local checks). `next` = `ad7964f`, equal to the checked head `912c6b3` (0 diff lines); `main` unchanged `6a28ba3`. The exception covers #93 only. No client sees the page: `show_growth_report` is off for every client by default and nothing is deployed. Open for Ahmed: Arabic stage words, "العملاء المحتملين", feminine "مديرة حسابك", inset b, year on "Coming up" dates.
@@ -250,9 +251,9 @@ Go / no-go (Ahmed): —
 ### S6 Polish and docs (started 2026-11-23)
 | ID | Title | Gate | Depends on | Status | PR | Review | Note |
 |---|---|---|---|---|---|---|---|
-| S6-01 | Calendar view on Work | none | S4-02 | todo | — | — | |
-| S6-02 | WhatsApp deep link to an item | none | S5-04 | todo | — | — | No sending, no provider. |
-| S6-03 | Docs and rules | deploy | S6-01, S6-02 | todo | — | — | |
+| S6-01 | Calendar view on Work | none | S4-02 | in progress: ticket written; part a (server read) building; web waits for drawing 10's approval | — | — | |
+| S6-02 | WhatsApp deep link to an item | none | S5-04 | ticket written; waits for drawing 11's approval (server parts may start) | — | — | No sending, no provider. |
+| S6-03 | Docs and rules | deploy | S6-01, S6-02 | ticket written; the deploy needs Ahmed's word, a same-day backup and the 036-038 rehearsal | — | — | |
 
 Go / no-go (Ahmed): —
 
