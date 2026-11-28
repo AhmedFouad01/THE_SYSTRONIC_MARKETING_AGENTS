@@ -56,3 +56,4 @@ Method: a throwaway owner made with the live release's own `user:add` (a generat
 ## Clean-up
 - The server and the cluster were stopped: no postgres process, nothing listening on 3199, no socket file. The folder (351 MB: the cluster, the dump, two unpacked releases, logs, answer hashes) is for Ahmed to delete by hand the same day: `rm -rf ~/tsst-rehearsal-2026-11-28.noindex`. The session checks afterwards that it is gone.
 - Nothing from the copy was written outside that folder: this file holds counts, table names, column names and route shapes only.
+- **Checked at 17:04 EET, after Ahmed ran the `rm -rf` himself:** the folder is gone, no folder of that name pattern is left in the home folder, no postgres process, nothing listens on 3199, no dump, count or answer file in the session's scratch folder. Still installed by his earlier choice: Homebrew's `postgresql@16`.
