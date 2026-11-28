@@ -27,7 +27,8 @@ Approval: Ahmed, 2026-11-28, "أيوه اعمل البروفة" (to: rehearse mi
 - 74 live items; after 036, **0 have a maker**.
 - Why (counts only): all 74 carry one creator name (50 made by "Drive sync", each with a post; 24 direct). That name belongs to **two** users: one active owner and one disabled team user. The backfill only assigns when exactly one user has the name, and it counts disabled users by design, so every item is "ambiguous".
 - Effect after a release: every item is "no maker" (the design covers it: `unassigned`, the owner's line "N items have no maker", the first submitter becomes the maker). Nothing a client sees changes. A wrong guess was the risk the reviewer named; on real data there is no guess at all.
-- Ahmed's choice, before the release: leave it (set makers by hand or let the first submit set them), or change the rule to ignore disabled users (all 74 would go to the one active owner). 036 is not deployed, so the rule can still change; it would need a new review and a new rehearsal run.
+- **Decided 2026-11-28: Ahmed, "سيبه زي ما هو" (leave it). 036 is not changed.**
+- The choice that was put to him: leave it (set makers by hand or let the first submit set them), or change the rule to ignore disabled users (all 74 would go to the one active owner). 036 is not deployed, so the rule can still change; it would need a new review and a new rehearsal run.
 
 ## The live release on the migrated database (copies 3 and 4)
 Method: a throwaway owner made with the live release's own `user:add` (a generated password in a 600 file in the folder); the live release started on the copy; a script signed in and read a fixed list of team GET routes, and client GET routes through the owner's "view as client" for each of the 5 brands. It stored the status and a hash of each answer, and the field names (never a value). Two runs before the migration were identical, so a later difference is the migration's.
