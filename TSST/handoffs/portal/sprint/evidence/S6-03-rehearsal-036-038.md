@@ -2,6 +2,8 @@
 
 **Verdict: passed.** The three migrations apply on real data in under a second, change no existing row count, and the live release keeps answering the same on the migrated database (the rollback case). Two findings for Ahmed below.
 
+**Against the gate (`tickets/S6-03.md` section 4, item 3): partly met.** The ticket also asks for the app opened and walked in a browser, the full suite's database tests on the copy, and the first-start timing; this run did none of the three (reads through the API only, a stub as the web shell). Found by the plan's reviewer the same day; a second rehearsal is proposed in `DEPLOY-PLAN-2.md`.
+
 Approval: Ahmed, 2026-11-28, "أيوه اعمل البروفة" (to: rehearse migrations 036 to 038 on a restored production copy). Terms as S1-02 (`tickets/S1-02.md`): one locked folder on the Mac, a throwaway PostgreSQL 16 on a Unix socket, counts and names only, no row value in chat or in any file here, same-day clean-up (Ahmed deletes the folder by hand). Nothing on the server was read or written; no ssh, no fresh dump.
 
 ## Source and set-up
