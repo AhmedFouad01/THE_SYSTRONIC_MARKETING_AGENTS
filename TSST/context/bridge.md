@@ -8,7 +8,8 @@ runtime has the needed capability **verified** in `TSST/bus/runtimes.yaml` (e.g.
 ## Rules
 1. The `.gdoc` original stays canonical and is never moved, renamed or deleted.
 2. The export is written **beside** it with the `.gdoc` suffix removed:
-   `CRM_UI_HANDOFF/docs/ui-system/DESIGN_TOKENS.md.gdoc` → `…/DESIGN_TOKENS.md`;
+   `tsst-crm:CRM_UI_HANDOFF/docs/ui-system/DESIGN_TOKENS.md.gdoc` → `…/DESIGN_TOKENS.md`
+   (the example is in the `tsst-crm` repo since 2026-10-16, R48);
    prototype `…/SystronicUIDesignSystem.tsx.gdoc` → `…/SystronicUIDesignSystem.tsx`.
    A `.gdoc` without an inner extension (`CURRENT_STATUS.gdoc`) exports to `.md`.
 3. Content is exported verbatim — no summarising, redesign or "fixes". Code exports must
@@ -39,8 +40,8 @@ exports:
 ## Expected intake (prepared 2026-10-04) — file list: `TSST/context/bridge-request-001.md`
 | set | originals | manifest |
 |---|---|---|
-| CRM UI handoff | `CRM_UI_HANDOFF/**/*.gdoc` (15) | `CRM_UI_HANDOFF/EXPORTS.yaml` |
-| CRM UX docs | `CRM_APP/*.md.gdoc` (13) | `CRM_APP/EXPORTS.yaml` |
+| CRM UI handoff (in the `tsst-crm` repo since 2026-10-16, R48) | `CRM_UI_HANDOFF/**/*.gdoc` (15) | `tsst-crm:CRM_UI_HANDOFF/EXPORTS.yaml` |
+| CRM UX docs (in the `tsst-crm` repo since 2026-10-16, R48) | `CRM_APP/*.md.gdoc` (13) | `tsst-crm:CRM_APP/EXPORTS.yaml` |
 | TSST sync packets | `REAL_MEMORY/TSST_REAL_MEMORY/07_SYNC_INBOX/chatgpt-gradual/incoming/*.gdoc` (9) | `…/chatgpt-gradual/EXPORTS.yaml` |
 | Brand drafts | `REAL_MEMORY/TSST_REAL_MEMORY/BRANDS/**/*.gdoc` (26) | `…/BRANDS/EXPORTS.yaml` |
 

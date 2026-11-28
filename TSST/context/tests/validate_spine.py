@@ -3,7 +3,11 @@
 
 Checks: structural integrity, provider neutrality, brand isolation / no duplication,
 and a cold-start router simulation with byte-size accounting against a naive baseline.
-Exit code is non-zero on any failure.
+
+Client work is not in git (R48): `TSST/brands` is a folder link to the client Drive folder. Where it
+is present (a workstation) every check runs. Where it is absent (a git clone, CI) the checks that
+read client files are reported as SKIP with the reason, never as PASS, and their count is printed.
+Exit code is 0 only when every check that could run passed.
 
 Run from anywhere:  python TSST/context/tests/validate_spine.py
 """
@@ -62,6 +66,30 @@ def read(rel_path):
 
 def size(rel_path):
     return os.path.getsize(P(rel_path))
+
+
+# ---------------------------------------------------------------- client folders (R48)
+# Client work left git on 2026-10-17 (R42/R48): TSST/brands is a folder link to the client Drive
+# folder, so it exists on a workstation and not in a git clone or on a CI runner.
+BRANDS = "TSST/brands"
+CLIENTS_PRESENT = os.path.isdir(P(BRANDS))
+# A link whose target cannot be reached (Drive not mounted) is a broken workspace, not a clean clone.
+CLIENTS_LINK_BROKEN = os.path.lexists(P(BRANDS)) and not CLIENTS_PRESENT
+SKIP_REASON = "client folders are not in git (R48): TSST/brands is absent in this checkout"
+# Products have their own repos (R48). A pointer written `<repo>:<path>` names a file there; it can
+# never be checked from this repo, on any machine.
+OTHER_REPOS = ("tsst-crm",)
+OTHER_REPO_REASON = "the file is in another repo (R48: products have their own repos)"
+
+
+def other_repo(pointer):
+    return ":" in pointer and pointer.split(":", 1)[0] in OTHER_REPOS
+
+
+def is_client(rel_path):
+    """True for a repo-relative path inside the client folders."""
+    r = rel_path.replace(os.sep, "/")
+    return r == BRANDS or r.startswith(BRANDS + "/")
 
 
 # ---------------------------------------------------------------- YAML loading
@@ -171,34 +199,67 @@ def is_text_spine(path):
 
 
 # ---------------------------------------------------------------- results
-RESULTS = []  # (group, name, ok, detail)
+RESULTS = []  # (group, name, ok, detail); ok = True (passed) | False (failed) | None (skipped)
+LABEL = {True: "PASS", False: "FAIL", None: "SKIP"}
 
 
 def check(group, name, ok, detail=""):
     RESULTS.append((group, name, bool(ok), detail))
 
 
+def skip(group, name, reason=SKIP_REASON):
+    """A check that cannot run here (by default: it reads client files and this checkout has none).
+    Never counted as passed."""
+    RESULTS.append((group, name, None, reason))
+
+
+def client_check(group, name, ok, detail=""):
+    """Record a check that needs the client folders: its real verdict where they are present,
+    SKIP where they are not. `ok` / `detail` may be callables, evaluated only when the check runs."""
+    if not CLIENTS_PRESENT:
+        skip(group, name)
+        return
+    check(group, name, ok() if callable(ok) else ok, detail() if callable(detail) else detail)
+
+
 # ---------------------------------------------------------------- 1. structural
 def structural(portfolio):
     brands = portfolio["brands"]
     missing = []
-    for bid in brands:
-        for sub in ("brand.md", "rules.md", "scope.md", "status.md", "memory/source.md"):
-            if not os.path.isfile(P(f"TSST/brands/{bid}/{sub}")):
-                missing.append(f"{bid}/{sub}")
-        if not os.path.isdir(P(f"TSST/brands/{bid}/projects")):
-            missing.append(f"{bid}/projects/")
-    check("structural", "brand folders complete", not missing, ", ".join(missing))
+    if CLIENTS_PRESENT:
+        for bid in brands:
+            for sub in ("brand.md", "rules.md", "scope.md", "status.md", "memory/source.md"):
+                if not os.path.isfile(P(f"TSST/brands/{bid}/{sub}")):
+                    missing.append(f"{bid}/{sub}")
+            if not os.path.isdir(P(f"TSST/brands/{bid}/projects")):
+                missing.append(f"{bid}/projects/")
+    client_check("structural", "brand folders complete", not missing, ", ".join(missing))
 
-    bad = []
+    # Pointers into the client folders are checked only where those folders are; the rest always.
+    bad, bad_client, n_repo, n_client, elsewhere = [], [], 0, 0, []
     for bid, b in brands.items():
         ptrs = [b.get("memory")]
         for pid, pr in (b.get("projects") or {}).items():
             ptrs += [pr.get("checkpoint"), pr.get("memory")]
         for ptr in ptrs:
-            if ptr and not os.path.exists(P(ptr)):
-                bad.append(f"{bid}:{ptr}")
-    check("structural", "portfolio checkpoint/memory paths exist", not bad, ", ".join(bad))
+            if not ptr:
+                continue
+            if other_repo(ptr):
+                elsewhere.append(f"{bid}:{ptr.split(' ', 1)[0]}")
+            elif is_client(ptr):
+                n_client += 1
+                if CLIENTS_PRESENT and not os.path.exists(P(ptr)):
+                    bad_client.append(f"{bid}:{ptr}")
+            else:
+                n_repo += 1
+                if not os.path.exists(P(ptr)):
+                    bad.append(f"{bid}:{ptr}")
+    check("structural", f"portfolio checkpoint/memory paths exist: in git ({n_repo})", not bad, ", ".join(bad))
+    client_check("structural", f"portfolio checkpoint/memory paths exist: client folders ({n_client})",
+                 not bad_client, ", ".join(bad_client))
+    if elsewhere:
+        skip("structural", f"portfolio checkpoint/memory paths exist: other repos ({len(elsewhere)}: "
+                           f"{', '.join(elsewhere)})", OTHER_REPO_REASON)
 
     # backticked repo paths
     files = (
@@ -207,8 +268,12 @@ def structural(portfolio):
         + [f for f in glob.glob(P("TSST/context/*.md"))]
     )
     prefixes = ("TSST/", "CRM_", "REAL_MEMORY/", ".agents/", ".claude/")
+    # Two tallies: paths that live in git (always checked) and paths that need the client folders
+    # (a path under TSST/brands, or any path cited by a file there; checked where they are present).
     broken, n_checked = [], 0
+    broken_client, n_client = [], 0
     for f in files:
+        from_client = is_client(rel(f))
         if os.path.basename(f).startswith(("bridge-request-", "MORNING_QUESTIONS")):
             # bridge requests list future targets; MORNING_QUESTIONS cite unmerged feature-branch paths
             continue
@@ -229,20 +294,38 @@ def structural(portfolio):
                         tok = "CRM_APP/" + tok  # bare doc name in CRM_APP
                     if tok.startswith(prefixes):
                         parent_dir = os.path.dirname(tok.rstrip("/"))
-                        n_checked += 1
+                        if from_client or is_client(tok):
+                            n_client += 1
+                            if not CLIENTS_PRESENT:
+                                continue
+                            bucket = broken_client
+                        else:
+                            n_checked += 1
+                            bucket = broken
                         # Drive-native stubs: `X.md` may exist only as `X.md.gdoc` (documented)
                         if not (marked or os.path.exists(P(tok)) or os.path.exists(P(tok + ".gdoc")) or drive_only(tok)
                                 or gdoc_expected_absent(tok)):
-                            broken.append(f"{rel(f)} -> {tok}")
+                            bucket.append(f"{rel(f)} -> {tok}")
                     elif parent_dir and re.fullmatch(r"[A-Za-z0-9_.\-]+", tok) and "/" not in tok \
                             and "." not in tok and tok.startswith(("tsst-",)) and "-sk-" in tok:
                         # bare sibling skill names (`tsst-<team>-sk-NNN-...`) after a prefixed path in the
                         # same row; agent names like `tsst-dev` are not siblings
-                        n_checked += 1
+                        if from_client or is_client(parent_dir):
+                            n_client += 1
+                            if not CLIENTS_PRESENT:
+                                continue
+                            bucket = broken_client
+                        else:
+                            n_checked += 1
+                            bucket = broken
                         if not os.path.exists(P(f"{parent_dir}/{tok}")):
-                            broken.append(f"{rel(f)} -> {parent_dir}/{tok}")
-    check("structural", f"backticked repo paths exist ({n_checked} checked)", not broken,
+                            bucket.append(f"{rel(f)} -> {parent_dir}/{tok}")
+    check("structural", f"backticked repo paths exist: in git ({n_checked} checked)", not broken,
           "; ".join(broken[:40]))
+    client_check("structural",
+                 f"backticked repo paths exist: client folders ({n_client} "
+                 f"{'checked' if CLIENTS_PRESENT else 'cited from files in git, none checked'})",
+                 not broken_client, "; ".join(broken_client[:40]))
 
     # skill ids in studio / build maps
     def ids_for(team_file, section_dir_glob, prefix):
@@ -295,17 +378,26 @@ def neutrality_exempt(rp):
 def neutrality():
     targets = [P("TSST/context/boot.md"), P("TSST/context/router.yaml"), P("TSST/context/models.yaml"),
                P("TSST/context/bus.md"), P("TSST/context/bridge.md")]
-    targets += files_under("TSST/core") + files_under("TSST/teams") + files_under("TSST/brands")
-    hits = []
-    for f in targets:
-        if not is_text_spine(f) or neutrality_exempt(rel(f)):
-            continue
-        txt = open(f, encoding="utf-8").read()
-        for name, pat in NEUTRAL_PATTERNS:
-            for m in re.finditer(pat, txt, re.I):
-                hits.append(f"{rel(f)}:{name}")
-                break
-    check("neutrality", f"no provider model names ({len(targets)} files)", not hits, ", ".join(hits))
+    targets += files_under("TSST/core") + files_under("TSST/teams")
+    client_targets = files_under(BRANDS)
+
+    def scan(paths):
+        hits = []
+        for f in paths:
+            if not is_text_spine(f) or neutrality_exempt(rel(f)):
+                continue
+            txt = open(f, encoding="utf-8").read()
+            for name, pat in NEUTRAL_PATTERNS:
+                for m in re.finditer(pat, txt, re.I):
+                    hits.append(f"{rel(f)}:{name}")
+                    break
+        return hits
+
+    hits = scan(targets)
+    check("neutrality", f"no provider model names: in git ({len(targets)} files)", not hits, ", ".join(hits))
+    client_hits = scan(client_targets)
+    client_check("neutrality", f"no provider model names: client folders ({len(client_targets)} files)",
+                 not client_hits, ", ".join(client_hits))
 
 
 # ---------------------------------------------------------------- 3. isolation
@@ -316,7 +408,7 @@ def isolation():
             if n.lower() in ("source.md", "desktop.ini"):
                 continue
             extra.append(rel(os.path.join(bdir, n)))
-    check("isolation", "brand memory/ holds only source.md", not extra, ", ".join(extra))
+    client_check("isolation", "brand memory/ holds only source.md", not extra, ", ".join(extra))
 
     rm_files = files_under("REAL_MEMORY/TSST_REAL_MEMORY", {".md"})
     rm_hash = {hashlib.sha256(open(f, "rb").read()).hexdigest() for f in rm_files}
@@ -329,7 +421,7 @@ def isolation():
         # for it only identical content (hash, above) counts as a copy.
         elif os.path.basename(f).lower() in rm_names and os.path.basename(f).lower() != "source.md":
             dup.append(rel(f) + " (same filename as RM file)")
-    check("isolation", "t-sag/memory has no copied Real Memory files", not dup, ", ".join(dup))
+    client_check("isolation", "t-sag/memory has no copied Real Memory files", not dup, ", ".join(dup))
 
     # Size budget = the boot/spine files the router loads at task start (see resolve() below):
     # per brand status.md, memory/source.md, rules.md and each projects/*/project.md. Project work docs
@@ -343,8 +435,10 @@ def isolation():
         spine += glob.glob(os.path.join(bdir, "projects", "*", "project.md"))
     spine.append(P("TSST/core/portfolio.yaml"))
     total = sum(os.path.getsize(f) for f in spine)
-    check("isolation", f"brand spine (router-loaded boot files, {len(spine)} files) < 60 KB ({total} bytes)",
-          total < 60 * 1024)
+    client_check("isolation",
+                 f"brand spine (router-loaded boot files, {len(spine)} files) < 60 KB ({total} bytes)"
+                 if CLIENTS_PRESENT else "brand spine (router-loaded boot files) < 60 KB",
+                 total < 60 * 1024)
 
     # WARNING (printed, not failing): media/binary files under TSST/brands outside assets/ belong in assets/.
     media = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".mp4", ".mov", ".webm", ".mp3", ".wav",
@@ -486,19 +580,26 @@ def router_sim(router, portfolio):
         if not r["clarify"]:
             allf = r["files_to_load"] + r["overhead"]
             r["n"] = len(allf)
-            r["bytes"] = sum(size(f) for f in allf)
-            r["ratio"] = base_b / r["bytes"]
+            if CLIENTS_PRESENT:  # the pack holds client files: its size is known only where they are
+                r["bytes"] = sum(size(f) for f in allf)
+                r["ratio"] = base_b / r["bytes"]
         rows.append(r)
         return r
 
+    # Cases A, C and D each have two parts: the routing (computed from portfolio.yaml and router.yaml,
+    # both in git) and a look inside the brand's own files (client folders). The parts are recorded
+    # as two checks so that a checkout without client folders still runs the routing.
     A = run("A", "كمل CRM")
     ok = (not A["clarify"] and A["brand"] == "t-sag" and A["project"] == "crm"
           and A["other_brands_loaded"] == [] and A["tier"] != "DEEP")
-    if ok:
+    check("router", "A  كمل CRM -> t-sag/crm", ok)
+
+    def a_content():
         pm = read(A["files_to_load"][3])
         m = re.search(r"## do_not_repeat\s*(.*?)(?:\n## |\Z)", pm, re.S)
-        ok = bool(m) and "UI discovery" in m.group(1)
-    check("router", "A  كمل CRM -> t-sag/crm, do_not_repeat has UI discovery", ok)
+        return bool(m) and "UI discovery" in m.group(1)
+    client_check("router", "A  t-sag/crm project.md: do_not_repeat has UI discovery",
+                 (lambda: a_content()) if ok else False)
 
     B = run("B", "كمل ANVIL")
     ok = (not B["clarify"] and B["brand"] == "anvil" and B["project"] == "switch-pilot"
@@ -509,19 +610,26 @@ def router_sim(router, portfolio):
     C = run("C", "اعمل Campaign لـ VILL")
     ok = (not C["clarify"] and C["brand"] == "vill-studio" and C["team"] == "marketing"
           and not any(k in f.lower() for f in C["files_to_load"] for k in ("anvil", "yakebda", "crm")))
-    src = read("TSST/brands/vill-studio/memory/source.md") if not C["clarify"] else ""
-    ok = ok and (".gdoc" in src.lower() or "Google-native" in src) and \
-        "SOURCE_UNREADABLE_IN_CURRENT_RUNTIME" in src and "SOURCE_AVAILABLE" in src
-    check("router", "C  Campaign لـ VILL -> vill-studio/marketing, per-runtime source state", ok)
+    check("router", "C  Campaign لـ VILL -> vill-studio/marketing", ok)
+
+    def c_content():
+        src = read("TSST/brands/vill-studio/memory/source.md")
+        return (".gdoc" in src.lower() or "Google-native" in src) and \
+            "SOURCE_UNREADABLE_IN_CURRENT_RUNTIME" in src and "SOURCE_AVAILABLE" in src
+    client_check("router", "C  vill-studio source.md: per-runtime source state",
+                 (lambda: c_content()) if ok else False)
 
     D = run("D", "كمل YAKEBDA_MS")
     ok = not D["clarify"] and D["brand"] == "yakebda-ms" and \
         not any("akyro" in f.lower() for f in D["files_to_load"]) and D["other_brands_loaded"] == []
-    if ok:
+    check("router", "D  كمل YAKEBDA_MS -> yakebda-ms", ok)
+
+    def d_content():
         src = read("TSST/brands/yakebda-ms/memory/source.md")
         roots = len(re.findall(r"^\|\s*R\d\s*\|", src, re.M))
-        ok = roots >= 2 and "Authority resolution" in src
-    check("router", "D  كمل YAKEBDA_MS -> yakebda-ms, multi-root + authority rule", ok)
+        return roots >= 2 and "Authority resolution" in src
+    client_check("router", "D  yakebda-ms source.md: multi-root + authority rule",
+                 (lambda: d_content()) if ok else False)
 
     E = run("E", "كمل")
     check("router", "E  ambiguous 'كمل' -> clarification, no brand", E["clarify"] and "brand" not in E)
@@ -549,14 +657,19 @@ def source_semantics():
     boot = read("TSST/context/boot.md")
     check("semantics", "boot.md defines the 3 per-runtime source states",
           all(st in boot for st in STATES) and "bridge" in boot.lower())
-    bad = []
-    for b in ("vill-studio", "yakebda-ms"):
-        src = read(f"TSST/brands/{b}/memory/source.md")
-        if "SOURCE_UNREADABLE_IN_CURRENT_RUNTIME" not in src or "MEMORY_SOURCE_UNAVAILABLE" in src:
-            bad.append(b)
-    check("semantics", "gdoc brands use runtime-specific state, not global unavailable", not bad, ", ".join(bad))
-    glob_unknown = [f for f in files_under("TSST/brands", (".md",)) if "UNKNOWN in repo" in read(f)]
-    check("semantics", "no brand state reported as globally UNKNOWN", not glob_unknown, ", ".join(glob_unknown))
+    def gdoc_brands_bad():
+        bad = []
+        for b in ("vill-studio", "yakebda-ms"):
+            src = read(f"TSST/brands/{b}/memory/source.md")
+            if "SOURCE_UNREADABLE_IN_CURRENT_RUNTIME" not in src or "MEMORY_SOURCE_UNAVAILABLE" in src:
+                bad.append(b)
+        return bad
+    bad = gdoc_brands_bad() if CLIENTS_PRESENT else []
+    client_check("semantics", "gdoc brands use runtime-specific state, not global unavailable",
+                 not bad, ", ".join(bad))
+    glob_unknown = [rel(f) for f in files_under(BRANDS, (".md",)) if "UNKNOWN in repo" in read(f)]
+    client_check("semantics", "no brand state reported as globally UNKNOWN", not glob_unknown,
+                 ", ".join(glob_unknown))
     gd = [a for a in ("claude", "codex") if "SOURCE_UNREADABLE_IN_CURRENT_RUNTIME" not in read(f"TSST/context/adapters/{a}.md")]
     check("semantics", "filesystem adapters map .gdoc to UNREADABLE_IN_CURRENT_RUNTIME", not gd, ", ".join(gd))
     check("semantics", "chatgpt adapter declares Drive bridge",
@@ -609,8 +722,12 @@ def bus_protocol():
     spec = importlib.util.spec_from_file_location("tsst_bus", P("TSST/bus/bus.py"))
     bus = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(bus)
-    errs, _warns = bus.check_all()
-    check("bus", "bus tasks valid (scopes, locks, hashes, sizes)", not errs, "; ".join(errs[:5]))
+    skipped = []  # spec/result files of tasks that live in the client folders, where those are absent
+    errs, _warns = bus.check_all(skipped)
+    check("bus", "bus tasks valid (scopes, locks, hashes, sizes)", not errs,
+          "; ".join(errs[:5]) + (f"; ... +{len(errs) - 5} more" if len(errs) > 5 else ""))
+    if skipped:
+        skip("bus", f"bus tasks: spec and result files in client folders ({len(skipped)} files)")
     boot = read("TSST/context/boot.md")
     check("bus", "boot.md runs the bus check", "TSST/bus/bus.py ls" in boot)
 
@@ -623,6 +740,9 @@ def main():
     load_yaml("TSST/context/models.yaml")
     check("structural", "yaml parse (portfolio/router/models)",
           "brands" in portfolio and "brand_aliases" in router)
+    if CLIENTS_LINK_BROKEN:
+        check("workspace", "TSST/brands link reaches the client folders", False,
+              "the link exists but its target cannot be opened (is Drive mounted?)")
 
     structural(portfolio)
     neutrality()
@@ -632,20 +752,31 @@ def main():
     bus_protocol()
     rows, base_n, base_b = router_sim(router, portfolio)
 
-    w = max(len(r[1]) for r in RESULTS)
-    print(f"{'RESULT':6} {'GROUP':11} CHECK")
+    if CLIENTS_PRESENT:
+        print("client folders: PRESENT (TSST/brands) - every check runs")
+    else:
+        print("client folders: ABSENT - checks that read client files are SKIPPED, not passed")
+        print(f"  reason: {SKIP_REASON}")
+    print(f"\n{'RESULT':6} {'GROUP':11} CHECK")
     for g, n, ok, d in RESULTS:
-        print(f"{'PASS' if ok else 'FAIL':6} {g:11} {n}" + (f"  <-- {d}" if (d and not ok) else ""))
+        print(f"{LABEL[ok]:6} {g:11} {n}" + (f"  <-- {d}" if (d and ok is False) else ""))
 
     print("\nCold-start cases (files/bytes include boot.md + router.yaml + team.md overhead; bytes, not tokens)")
     print(f"{'case':4} {'brand':13} {'project':14} {'team':10} {'tier':5} {'files':5} {'bytes':6} baseline/pack")
     for r in rows:
         if r["clarify"]:
             print(f"{r['label']:4} CLARIFY ({r['reason']})")
-        else:
+        elif "bytes" in r:
             print(f"{r['label']:4} {r['brand']:13} {str(r['project']):14} {str(r['team']):10} "
                   f"{r['tier']:5} {r['n']:5} {r['bytes']:6} {r['ratio']:.0f}x")
-    print(f"naive baseline: {base_n} files, {base_b} bytes")
+        else:
+            print(f"{r['label']:4} {r['brand']:13} {str(r['project']):14} {str(r['team']):10} "
+                  f"{r['tier']:5} {r['n']:5} {'n/a':>6} n/a")
+    if CLIENTS_PRESENT:
+        print(f"naive baseline: {base_n} files, {base_b} bytes")
+    else:
+        print("sizes and baseline: n/a here (they count client files; teams are routed from the "
+              "request text only)")
     if WARNINGS:
         print(f"\nWARNING: {len(WARNINGS)} item(s) (not failing)")
         for w_ in WARNINGS[:10]:
@@ -659,8 +790,27 @@ def main():
         if len(set(NOTES)) > 5:
             print(f"  note: ... +{len(set(NOTES)) - 5} more")
 
-    failed = [r for r in RESULTS if not r[2]]
-    print(f"\n{len(RESULTS) - len(failed)}/{len(RESULTS)} checks passed")
+    failed = [r for r in RESULTS if r[2] is False]
+    skipped = [r for r in RESULTS if r[2] is None]
+    ran = len(RESULTS) - len(skipped)
+    print(f"\n{ran - len(failed)}/{ran} checks passed" + (f", {len(failed)} FAILED" if failed else ""))
+    reasons = []
+    for r in skipped:
+        if r[3] not in reasons:
+            reasons.append(r[3])
+    for reason in reasons:
+        n = sum(1 for r in skipped if r[3] == reason)
+        print(f"{n} check{'s' if n != 1 else ''} SKIPPED: {reason}")
+    if SKIP_REASON in reasons:
+        print("  run on a workstation with the client folders for the full set")
+    elif CLIENTS_PRESENT:
+        print("client folders present: every check that reads them ran")
+    if os.environ.get("GITHUB_ACTIONS"):
+        # one line on the run page, so a green run never hides what it could not check
+        level = "error" if failed else ("warning" if skipped else "notice")
+        print(f"::{level} title=TSST spine validator::{ran - len(failed)}/{ran} checks passed, "
+              f"{len(failed)} failed, {len(skipped)} skipped"
+              + (f" ({'; '.join(reasons)})" if skipped else ""))
     return 1 if failed else 0
 
 

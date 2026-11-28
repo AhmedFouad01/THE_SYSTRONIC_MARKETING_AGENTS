@@ -4,6 +4,7 @@
 Run: python TSST/context/tests/test_bus.py   (never touches the live bus)
 """
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -20,13 +21,16 @@ def setup():
         os.makedirs(os.path.join(bus, d))
     for f in ("bus.py", "runtimes.yaml"):
         shutil.copy(os.path.join(REPO, "TSST", "bus", f), bus)
-    # gemini is retired in the live registry (ADR-004); these protocol tests use it as a generic second runtime
+    # gemini is not an active runtime in the live registry (retired by ADR-004, `pilot` since ADR-005);
+    # these protocol tests use it as a generic second runtime, so its status is set to available here
+    # whatever the live value is
     rp = os.path.join(bus, "runtimes.yaml")
     with open(rp, encoding="utf-8") as fh:
         txt = fh.read()
-    assert "status: retired" in txt
+    txt, n = re.subn(r"(?m)^(gemini:\n(?:[ \t]+.*\n)*?[ \t]+status:)[^\n#]*", r"\1 available", txt)
+    assert n == 1, "runtimes.yaml: no `gemini:` block with a status line"
     with open(rp, "w", encoding="utf-8", newline=NL) as fh:
-        fh.write(txt.replace("status: retired", "status: available"))
+        fh.write(txt)
     os.makedirs(os.path.join(root, "TSST", "context"))
     shutil.copy(os.path.join(REPO, "TSST", "context", "roster.yaml"), os.path.join(root, "TSST", "context"))
     open(os.path.join(bus, "log.tsv"), "w").close()
@@ -192,8 +196,50 @@ def main():
         n1 = len(log_lines())
         expect("second rehash is a no-op", run(R, "rehash", "H-1", "--me", "claude", "--note", "again"), True)
         expect("second rehash logs nothing", "" if len(log_lines()) == n1 else "REFUSED", True)
+        # --- client folders (R42/R48): TSST/brands is a folder link out of the repo, absent in a git clone
+        clients = R + "-clients"
+        other = R + "-elsewhere"
+        os.makedirs(os.path.join(clients, "acme"))
+        os.makedirs(other)
+        with open(os.path.join(clients, "acme", "brief.md"), "w", encoding="utf-8") as f:
+            f.write("brief")
+        link = os.path.join(R, "TSST", "brands")
+        try:
+            os.symlink(clients, link, target_is_directory=True)
+            os.symlink(other, os.path.join(R, "docs", "leak"), target_is_directory=True)
+            linked = True
+        except (OSError, NotImplementedError):
+            linked = False   # no right to create links here (Windows without developer mode)
+            print("SKIP client folder link tests: this system cannot create folder links")
+        if linked:
+            C = ["--spec", "TSST/brands/acme/brief.md", "--done-when", "d", "--title", "t", "--kind", "probe"]
+            expect("client folder link is inside the workspace",
+                   run(R, "new", "C-1", "--me", "claude", *C, "--to", "gemini", "--write", "TSST/brands/acme/out.md"), True)
+            expect("any other link out of the repo still refused",
+                   run(R, "new", "C-2", "--me", "claude", *NEW, "--kind", "probe", "--write", "docs/leak/x.md"), False)
+            run(R, "claim", "C-1", "--me", "gemini")
+            with open(os.path.join(clients, "acme", "out.md"), "w", encoding="utf-8") as f:
+                f.write("client result")
+            expect("done with a result in the client folders",
+                   run(R, "done", "C-1", "--me", "gemini", "--result", "TSST/brands/acme/out.md"), True)
+            out = run(R, "check")
+            expect("check reads client files where they are present",
+                   "" if "FAIL C-1:" not in out and "SKIP" not in out else "REFUSED", True)
+            with open(os.path.join(clients, "acme", "out.md"), "w", encoding="utf-8") as f:
+                f.write("edited after done")
+            expect("check flags an edited client result",
+                   "" if "C-1: result sha256 mismatch" in run(R, "check") else "REFUSED", True)
+            os.remove(link)   # a git clone: no client folders at all
+            out = run(R, "check")
+            expect("without client folders: client files are skipped, not failed and not passed",
+                   "" if "FAIL C-1:" not in out and "SKIP 2 spec/result files not checked" in out
+                   and "2 skipped" in out else "REFUSED", True)
+            expect("without client folders: a new task on a client spec is still refused",
+                   run(R, "new", "C-3", "--me", "claude", *C, "--write", "out/c3.md"), False)
     finally:
         shutil.rmtree(R, ignore_errors=True)
+        shutil.rmtree(R + "-clients", ignore_errors=True)
+        shutil.rmtree(R + "-elsewhere", ignore_errors=True)
     print(f"\n{'all bus tests passed' if not FAILS else str(len(FAILS)) + ' FAILED'}")
     for f in FAILS:
         print("  " + f)
