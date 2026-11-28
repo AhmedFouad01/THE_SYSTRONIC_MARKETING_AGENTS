@@ -23,6 +23,11 @@ LOG = os.path.join(BUS, "log.tsv")
 RUNTIMES = os.path.join(BUS, "runtimes.yaml")
 ROSTER = os.path.join(ROOT, "TSST", "context", "roster.yaml")
 LOCK = os.path.join(BUS, ".lock")
+# Client work is not in git (R42/R48): it is reached in the clone as TSST/brands, a folder link to the
+# client Drive folder. It is the one sanctioned link out of the repo, and it is absent in a git clone / CI.
+CLIENT_REL = "TSST/brands"
+CLIENT_LINK = os.path.join(ROOT, "TSST", "brands")
+CLIENT_SKIP_REASON = "client folders are not in git (R48): TSST/brands is absent in this checkout"
 
 FIELDS = ["id", "title", "kind", "status", "to", "needs", "tier", "team", "skills", "brand", "spec", "read",
           "write", "after", "done_when", "issued_by", "created", "rounds", "max_rounds",
@@ -212,23 +217,46 @@ def norm_scope(path, allow_drive=False):
     return '/'.join(parts)
 
 
+def _relative_inside(path, root):
+    """`path` relative to `root` ('/'-separated) when it lies inside it, else None."""
+    try:
+        if os.path.normcase(os.path.commonpath([root, path])) != os.path.normcase(root):
+            return None
+    except ValueError:  # different drives
+        return None
+    return os.path.relpath(path, root).replace('\\', '/')
+
+
+def is_client(relative):
+    """True for a repo-relative path inside the client folders (TSST/brands)."""
+    r = str(relative).replace('\\', '/').strip('/').casefold()
+    return r == CLIENT_REL.casefold() or r.startswith(CLIENT_REL.casefold() + '/')
+
+
+def clients_present():
+    return os.path.isdir(CLIENT_LINK)
+
+
 def resolved_scope(relative):
     """Resolve literal components before a glob, then return a repo-relative scope.
 
     Does not enumerate globs. Concrete result paths are resolved again before use.
     Links can change after validation; this workflow check is not an OS sandbox.
+    A path that resolves into the client folders through the TSST/brands link (R42) is
+    returned in its `TSST/brands/...` spelling; every other path out of the repo is refused.
     """
     rel = norm_scope(relative)
     parts = rel.split('/')
     first_glob = next((i for i, part in enumerate(parts) if any(c in part for c in '*?[')), len(parts))
     path = os.path.realpath(os.path.join(ROOT, *parts[:first_glob]))
-    try:
-        inside = os.path.normcase(os.path.commonpath([ROOT, path])) == os.path.normcase(ROOT)
-    except ValueError as exc:
-        raise ValueError('resolved path outside repo: ' + rel) from exc
-    if not inside:
+    target = _relative_inside(path, ROOT)
+    if target is None and clients_present():
+        client_root = os.path.realpath(CLIENT_LINK)
+        sub = _relative_inside(path, client_root)
+        if sub is not None:
+            target = CLIENT_REL if sub == '.' else CLIENT_REL + '/' + sub
+    if target is None:
         raise ValueError('resolved path outside repo: ' + rel)
-    target = os.path.relpath(path, ROOT).replace('\\', '/')
     suffix = '/'.join(parts[first_glob:])
     return norm_scope('/'.join(p for p in ('' if target == '.' else target, suffix) if p))
 
@@ -764,7 +792,9 @@ def cmd_verify(a):
 
 
 # ------------------------------------------------------------------ validation
-def task_errors(t):
+def task_errors(t, skipped=None):
+    """`skipped` (a list, passed only by `check`) collects the client-folder files that cannot be
+    looked at in a checkout without client folders; every other caller keeps the strict answer."""
     e = []
     tid = t.get("id", "?")
     for k in ("id", "title", "kind", "status", "to", "tier", "spec", "done_when", "issued_by"):
@@ -781,7 +811,10 @@ def task_errors(t):
     spec = (t.get("spec") or "").split("#", 1)[0]
     if spec:
         try:
-            if not os.path.exists(repo_path(spec)):
+            if skipped is not None and is_client(spec) and not clients_present():
+                norm_scope(spec)  # the spelling is still checked
+                skipped.append(f"{tid}: spec {spec}")
+            elif not os.path.exists(repo_path(spec)):
                 e.append(f"{tid}: spec not found {spec}")
         except ValueError as exc:
             e.append(f'{tid}: {exc}')
@@ -857,9 +890,16 @@ def lookup_skill(index, ref):
     return None
 
 
-def check_all():
+def check_all(skipped=None):
+    """Audit the whole queue. Returns (errors, warnings).
+
+    Pass a list as `skipped` to audit a checkout without client folders (a git clone, CI): the spec
+    and result files that live under TSST/brands are then listed there instead of being reported as
+    missing. Nothing is skipped where the client folders are present, or when `skipped` is None.
+    """
     ensure_dirs()
     errs, warns = [], []
+    no_clients = skipped is not None and not clients_present()
     rts = runtimes()
     for name, r in rts.items():
         if isinstance(r, dict) and set(r.get("caps") or []) & set(r.get("unverified") or []):
@@ -873,11 +913,13 @@ def check_all():
         if not ID_RE.fullmatch(str(t.get("id", ""))) or not path_of(t["id"]):
             errs.append(f"task id/file mismatch: {t.get('id')!r}")
             continue
-        errs += task_errors(t)
+        errs += task_errors(t, skipped)
         if t["status"] in ("done", "closed"):
             try:
-                _, result_path = validated_result(t, t.get('result'))
-                if not os.path.isfile(result_path):
+                resolved, result_path = validated_result(t, t.get('result'))
+                if no_clients and is_client(resolved):
+                    skipped.append(f"{t['id']}: result {resolved}")  # scope was still validated above
+                elif not os.path.isfile(result_path):
                     errs.append(f"{t['id']}: result missing")
                 elif not same(t['result'], t.get('sha256')):
                     errs.append(f"{t['id']}: result sha256 mismatch (edited after done)")
@@ -902,12 +944,21 @@ def check_all():
 
 
 def cmd_check(a):
-    errs, warns = check_all()
+    skipped = []
+    errs, warns = check_all(skipped)
     for w in warns:
         print("WARN " + w)
     for e in errs:
         print("FAIL " + e)
-    print("bus OK" if not errs else f"bus FAILED ({len(errs)})")
+    if skipped:
+        # never counted as passed: these files exist only where the client folders are
+        print(f"SKIP {len(skipped)} spec/result files not checked: {CLIENT_SKIP_REASON}")
+        for x in skipped[:5]:
+            print("  skip: " + x)
+        if len(skipped) > 5:
+            print(f"  skip: ... +{len(skipped) - 5} more")
+    print(("bus OK" if not errs else f"bus FAILED ({len(errs)})")
+          + (f" - {len(skipped)} skipped" if skipped else ""))
     sys.exit(1 if errs else 0)
 
 
